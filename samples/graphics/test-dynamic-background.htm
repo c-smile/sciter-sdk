@@ -1,0 +1,74 @@
+<html>
+  <head>
+    <title>Sciter, Image generators for CSS</title>
+    <style>
+      html { background: transparent; }
+      
+      div.test {
+        background: url(in-memory:test) stretch;
+        size:50%;
+        margin:*;
+        border:1px solid red;
+      }
+      
+    </style>
+    <script type="text/tiscript">
+
+      var dynImage = null;
+
+      function generate()
+      {
+        function painter(gfx) // generates 1000 random lines on graphics
+        {            
+          for(var n = 0; n < 1000; ++n) 
+          {
+            var x1 = rand(500);
+            var x2 = rand(500);
+            var y1 = rand(500);
+            var y2 = rand(500);
+            gfx.lineWidth(1 + rand(6)); // 1..7
+            gfx.lineColor(color(rand(256),rand(256),rand(256)));
+            gfx.line(x1,y1,x2,y2);
+          }
+        }
+        var newImage = new Image(500,500,painter);
+        // bind image with the URL:
+        self.bindImage("in-memory:test", newImage);
+        if( dynImage ) dynImage.destroy();
+        dynImage = newImage;
+        // testing second mode of bindImage(url)
+        assert self.bindImage("in-memory:test") instanceof Image;
+        
+      }      
+      
+      generate();
+      
+      $(button#test).onClick = function()
+      {
+        generate();
+      }
+      
+      $(button#save).onClick = function()
+      {
+        var bytes = dynImage.toBytes();
+        var filter = "PNG Files (*.png)|*.PNG|All Files (*.*)|*.*";
+        var ext = "png";
+        var path = view.selectFile(#save, filter, ext);
+        if( path )
+           bytes.save(path);
+      }
+      $(button#to-clipboard).onClick = function()
+      {
+        view.clipboard(#put, dynImage);
+      }
+      
+      
+    </script>
+  </head>
+<body>
+  <button #test>ReGenerate</button>
+  <button #save>Save image to file</button>
+  <button #to-clipboard>Save image to clipboard</button>
+  <div .test>Test</div>
+</body>
+</html>

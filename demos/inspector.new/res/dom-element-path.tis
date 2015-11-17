@@ -1,0 +1,53 @@
+class ElementPath : Behavior 
+{
+  this var shownUID = null;
+
+  function attached() 
+  {
+    this.driver = this.$p(.view-driver);
+    var me = this;
+    this.driver.on("element-selected.element-path", function( evt ) {
+      if( evt.target !== me)
+        me.show( evt.data );
+    });
+  }
+  
+  function detached() { this.driver.off(".element-path"); }
+  
+  function show(uid)
+  { 
+    function emit(sym,val) { return val? sym + val:"" }
+    function emitclass(val) { 
+      var r = "";
+      if(val) for(var c1 in val.split(" ")) r += emit(".",c1);
+      return r;
+    }
+    var me = this;
+    function receiver(stack) 
+    {
+      //stdout.printf("stack %V\n",stack);
+      me.clear();
+      for(var td in stack)
+        me.$append(<li uid={td.uid} {td === stack.last?"checked":""} >{td.tag}{emit("|",td.type)}{emit("#",td.id)}{emitclass(td.cls)}</li>);
+      me.last.scrollToView(false,false);
+    }
+    
+    if( typeof uid == #array )
+      receiver(uid);
+    else {
+      assert typeof uid == #integer;
+      this.driver.rq("getElementStack", uid, receiver ); 
+    }
+  }
+ 
+  function onControlEvent(evt)
+  {
+    if(evt.type == Event.BUTTON_CLICK)
+    {
+      var uid = evt.target.attributes["uid"].toInteger();
+      this.postEvent("element-selected", uid);
+      return true;
+    }
+  }
+  
+}

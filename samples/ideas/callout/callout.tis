@@ -1,0 +1,70 @@
+
+const CALLOUT_OFFSET_X = 16; //px
+const CALLOUT_OFFSET_Y = 20; //px
+
+// g
+const callout = function() // creates or gets common callout element
+  {
+    var elements = {};
+    return function(calloutType) 
+    {
+      var callout = elements[calloutType];
+      if( callout ) return callout;
+
+      callout = new Element("popup");
+      callout.attributes["class"] = "callout " + calloutType;
+      self.$(head).append(callout);
+      elements[calloutType] = callout;
+      return callout;
+    }
+  }();
+
+class SliderCallout: Behavior
+{
+  function attached()
+  {
+    this.callout = callout("slider");
+    this.slider = this.$(button);
+  }
+  function onMouse(evt)
+  {
+    if( !evt.mainButton || !this.callout )
+      return;
+  
+    switch(evt.type) 
+    {
+      case Event.MOUSE_UP:
+        this.callout.move(); // re-move the callout
+        break;
+    }
+  }
+  function onControlEvent(evt)
+  {
+    if(evt.type == Event.BUTTON_STATE_CHANGED)
+    {
+      var (x,y,w,h) = this.slider.box(#rectw,#border,#view);
+      x += w/2;
+      y += h;
+      this.callout.value = this.value.toString();
+      var hueAngle = this.value * 120 / 100; // 0 - red, 60 - yellow, 120 - green;
+      this.callout.style["background-image-transformation"] = "hue("+ hueAngle +")";
+      x -= CALLOUT_OFFSET_X;
+      y += CALLOUT_OFFSET_Y;
+      this.callout.move(x, y,#view);
+    }
+  }
+}
+
+function ShowCallout( forElement, message, timeout = 1000 )
+{
+  var (x,y,w,h) = forElement.box(#rectw,#border,#view);
+  var balloon = callout("message");
+  balloon.value = message.toString();
+  y += h;
+  y += CALLOUT_OFFSET_Y;
+  balloon.move(x, y,#view); 
+  forElement.timer(timeout,::balloon.move());
+  
+}
+
+

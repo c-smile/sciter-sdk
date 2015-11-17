@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+      section { flow:"1 2" "3 4"; border-spacing: 10px; size:*; }  
+      section > div 
+      { 
+        size:*;
+        background: url(images/leather.png) repeat;
+      }  
+      section > div.red { background-image-transformation:hue(red); }
+      section > div.green { background-image-transformation:hue(green); }
+      section > div.magenta { background-image-transformation:hue(300deg); }
+
+      section.dark > div 
+      { 
+        size:*;
+        background: url(images/tiles.png) repeat;
+      }  
+
+   
+    </style>
+    <script type="text/tiscript"></script>
+  </head>
+<body>
+  <h2>background-image-transformation:hue(color)</h2> 
+  <h3>Leather</h3>
+  <section>
+    <div>Original</div>
+    <div .red>Red</div>
+    <div .magenta>magenta</div>
+    <div .green>Green</div>
+  </section>
+  <h3>Tiles</h3>
+  <section .dark>
+    <div>Original</div>
+    <div .red>Red</div>
+    <div .magenta>magenta</div>
+    <div .green>Green</div>
+  </section>
+
+</body>
+</html>

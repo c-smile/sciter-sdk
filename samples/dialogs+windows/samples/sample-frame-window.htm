@@ -1,0 +1,37 @@
+<html resizeable >
+  <head>
+    <title>Hello world!</title>
+    <style>
+    
+      button { display:block; }
+    
+    </style>
+    <script type="text/tiscript">
+
+    include "../../decorators.tis";
+    
+    function self.ready() {
+      view.state = View.WINDOW_SHOWN;
+      $(#resizable).value = view.isResizeable;
+      $(#minimizable).value = view.isMinimizable;
+      $(#maximizable).value = view.isMaximizable;
+    }
+    @click @on "#resizable"   :evt,el: view.isResizeable = el.value ;
+    @click @on "#minimizable" :evt,el: view.isMinimizable = el.value ;
+    @click @on "#maximizable" :evt,el: view.isMaximizable = el.value ;
+    
+    isResizable
+  
+    </script>
+  </head>
+<body>
+  Dynmaic frame styles:
+  
+  <button|checkbox id="resizable" >resizable</button>
+  <button|checkbox id="minimizable" >minimizable</button>
+  <button|checkbox id="maximizable" >maximizable</button>
+  
+  
+  
+</body>
+</html>

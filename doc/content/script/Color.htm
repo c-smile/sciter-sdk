@@ -1,0 +1,79 @@
+﻿<html>
+  <head>
+    <title>TIScript - Date object</title>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>Color object</h1>
+  <p>Just a color.</p>
+  <dl>
+    <p>Color values are constructed by the global function color():</p>
+    <dt>color</dt>
+    <dd>(<strong>r</strong>: int, <strong>g</strong>: int, <strong>b</strong>: int [, <strong>opacity</strong>: int | float]) : color<br/>(<strong>s</strong>: string ) : color
+      <p>The <em>color</em> function constructs color value from red, green, blue and opacity components. Or by parsing the sting using CSS syntax rules.</p></dd>
+    <h2>Constants</h2>
+    <dd><strong>N/A</strong></dd>
+    <h2>Properties</h2>
+    <dt>r</dt>
+    <dd>read-only, <em>integer</em> 0..255, red channel.</dd>
+    <dt>g</dt>
+    <dd>read-only, <em>integer</em> 0..255, green channel.</dd>
+    <dt>b</dt>
+    <dd>read-only, <em>integer</em> 0..255, blue channel.</dd>
+    <dt>a</dt>
+    <dd>read-only, <em>integer</em> 0..255, alpha value.</dd>
+    <dt>opacity</dt>
+    <dd>read-only, <em>float</em> 0.0 .. 1.0, that is alpha value expressed as a float.</dd>
+    <h2>Methods</h2>
+    <dt>rgba</dt>
+    <dd>
+      <p>(<strong>r</strong>: int, <strong>g</strong>: int, <strong>b</strong>: int [, <strong>opacity</strong>: int | float]) : color</p>
+      <p>Static method (of the class), В constructs color value from red, green, blue and opacity components.</p></dd>
+    <dt>hsv</dt>
+    <dd>
+      <p>(<strong>hue</strong>: float | angle, <strong>saturation</strong>: float, <strong>value</strong>: float [, <strong>opacity</strong>: int | float]) : color</p>
+      <p>Static method (of the class), В constructs the color from HSV values, see: <a href="http://en.wikipedia.org/wiki/HSL_color_space">http://en.wikipedia.org/wiki/HSL_color_space</a></p></dd>
+    <dt>hsl</dt>
+    <dd>
+      <p>(<strong>hue</strong>: float | angle, <strong>saturation</strong>: float, <strong>lightness</strong>: float [, <strong>opacity</strong>: int | float]) : color</p>
+      <p>Static method (of the class), В constructs the color from HSL values, see: <a href="http://en.wikipedia.org/wiki/HSL_color_space">http://en.wikipedia.org/wiki/HSL_color_space</a></p></dd>
+    <dt>tint</dt>
+    <dd>
+      <p>( <strong>luminance</strong>: float [, <strong>saturation</strong>: float[, <strong>hue</strong>: float | angle]] ) : color</p>
+      <p>Returns color - tint of the color this method is applied to. luminance and saturation are float numbers in the range -1.0 ... +1.0. <em>hue</em> is either angle or float (degrees 0 .. 360)</p></dd>
+    <dt>parse</dt>
+    <dd>
+      <p>( <strong>text</strong>: string )</p>
+      <p>Static method (of the class), В parses the string and constructs the color value. Supported formats:</p>
+      <ul>
+        <li>&quot;#RGB&quot;</li>
+        <li>&quot;#RRGGBB&quot;</li>
+        <li>&quot;rgb(r,g,b)&quot;</li>
+        <li>&quot;rgba(r,g,b,a)&quot;</li>
+        <li>literal color names like: &quot;yellow&quot;, &quot;gold&quot;, &quot;red&quot;, etc.</li></ul></dd>
+    <dt>toString</dt>
+    <dd>
+      <p>( [#RGB | #rgb | #rgba] ) : string</p>
+      <p>Returns string representation of the color value according to the format provided by the symbol defining one of formats:</p>
+      <ul>
+        <li><em>#RGB</em> - outputs color as &quot;#RRGGBB&quot;;</li>
+        <li><em>#rgb</em> - outputs color as &quot;rgb(r,g,b)&quot; string;</li>
+        <li><em>#rgba</em> - as &quot;rgba(r,g,b,a)&quot; string.</li></ul></dd>
+    <dt>toInteger</dt>
+    <dd>
+      <p>( ) : int</p>
+      <p>Converts the color to 32bit integer.</p></dd>
+    <dt>toHSV</dt>
+    <dd>
+      <p>( ) : float,float,float</p>
+      <p>Returns three values - H,S, and V color components .</p></dd>
+    <dt>toHSL</dt>
+    <dd>
+      <p>( ) : float,float,float</p>
+      <p>Returns three values - H,S, and L color components .</p></dd>
+    <dt>morph</dt>
+    <dd>
+      <p>( from : color, to:color, ratio: float ) : color</p>
+      <p>Computes the average color using the formula: <code>(to - from) * ratio + from</code> for each color component. Transformation is made in premultiplied color space.</p></dd></dl>
+</body>
+</html>

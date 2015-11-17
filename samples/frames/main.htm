@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <title>Frame namespace</title>
+    <style>
+    
+      frame { border:3px gray solid; }
+    
+    </style>
+    <script type="text/tiscript">
+    
+      include "../decorators.tis";
+    
+      function bar() { view.msgbox(#information,"Got call of bar()!"); }
+      function on_something_click() { view.msgbox(#information,"Got call of bar()!"); }
+      
+      @click @on "#test" :: view.msgbox(#information,"Got click on #test!"); 
+    
+    </script>
+  </head>
+<body>
+<p>This sample demonstrates accessibility of host objects in slave frames</p>
+Slave frame:
+<frame src="slave.htm" />
+</body>
+</html>

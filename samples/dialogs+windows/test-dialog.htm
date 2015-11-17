@@ -1,0 +1,98 @@
+<html>
+  <head>
+  <title></title>
+<style></style>
+<script type="text/tiscript">
+
+  include "../decorators.tis";
+
+  @click @on "#show-dialog-1": 
+    {
+      var v = view.dialog( self.url("samples/sample-dialog-1.htm"), true, -5); // -5 - in the middle of its parent window
+      stdout.$n(sample-dialog-1 result:{v});
+    }
+
+  @click @on "#show-dialog-2": 
+    {
+      var params = { one: "first", two: "second" }; // parameters to pass
+      var v = view.dialog {
+         url: self.url("samples/sample-dialog-2.htm"), 
+         // screen:1, // on second screen
+         //x:100,
+         //y:100,
+         parameters: params 
+      };
+      stdout.printf("sample-dialog-2 result:%v\n",v);
+    }
+
+  @click @on "#show-dialog-3": 
+    {
+      var params = { one: "one", two: "two" }; // parameters to pass
+      var v = view.dialog {
+         url: self.url("samples/sample-dialog-2.htm"),
+         x:300,  
+         y:300,
+         alignment:5, // with window center at 300,300
+         parameters: params 
+      };
+      stdout.printf("sample-dialog-2 result:%v\n",v);
+    }
+
+
+  @click @on "#show-dialog-resizeable": 
+    {
+      var v = view.dialog( self.url("samples/sample-dialog-resizeable.htm"));
+      stdout.printf("sample-dialog-resizeable result:%v\n",v);
+    }
+
+  @click @on "#show-dialog-custom-frame-1": 
+    {
+      var v = view.dialog( self.url("samples/sample-dialog-layred.htm"));
+      stdout.printf("sample-dialog-with-custom-frame result:%v\n",v);
+    }
+
+  @click @on "#show-dialog-custom-frame-2": 
+    {
+      var v = view.dialog( self.url("samples/sample-dialog-custom-frame-solid.htm"));
+      stdout.printf("sample-dialog-with-custom-frame result:%v\n",v);
+    }
+
+  @click @on "#show-dialog-custom-frame-3": 
+    {
+      var v = view.dialog( self.url("samples/sample-dialog-custom-frame-solid-with-shadow.htm"));
+      stdout.printf("sample-dialog-with-custom-frame result:%v\n",v);
+    }
+
+
+  @click @on "#show-dialog-custom-behavior": 
+    {
+      var v = view.dialog( self.url("samples/sample-dailog-with-tabs.htm"));
+      stdout.printf("sample-dailog-with-tabs result:%v\n",v);
+    }
+
+  @click @on "#show-hole-dialog": 
+    {
+      var v = view.dialog( self.url("samples/sample-dialog-layred-hole.htm"));
+      stdout.printf("sample-dialog-layred-hole.htm result:%v\n",v);
+    }
+
+
+</script>
+  </head>
+<body>
+ Custom HTML dialogs:
+ <ol>
+    <li><button #show-dialog-1>Show simple dialog</button></li>
+    <li><button #show-dialog-2>Show dialog with parameters</button></li>
+    <li><button #show-dialog-3>Show dialog at coordinates</button></li>
+    <li><button #show-dialog-resizeable>Show resizeable dialog</button></li>
+    <li><button #show-dialog-custom-frame-1>Show custom frame dialog: layered</button></li>
+    <li><button #show-dialog-custom-frame-2>Show custom frame dialog: solid</button></li>
+    <li><button #show-dialog-custom-frame-3>Show custom frame dialog: solid with shadow</button></li>
+    <li><button #show-dialog-custom-behavior>Show dialog with custom behavior (tabs)</button></li>
+    
+    <li><button #show-hole-dialog>Show "hole" dialog</button></li>
+    
+ </ol>
+</body>
+</html>

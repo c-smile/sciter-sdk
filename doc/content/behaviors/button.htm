@@ -1,0 +1,44 @@
+﻿<html>
+  <head>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>behavior:button</h1>
+  <p>Standard button behavior. It can be applied to any DOM element converting it to focusable and clickable area.</p>
+  <h2>Elements</h2>
+  <p>These elements have behavior:button applied by default:</p>
+  <ul>
+    <li><code>&lt;button&gt;&lt;/button&gt;</code></li>
+    <li><code>&lt;input type=button&gt;</code></li>
+    <li><code>&lt;input type=reset&gt;</code></li>
+    <li><code>&lt;input type=submit&gt;</code></li></ul>
+  <h2>Attributes</h2>
+  <p>This behavior knows about:</p>
+  <ul>
+    <li><code>value=&quot;string&quot;</code> caption that will appear on the &lt;input type=button&gt;.</li>
+    <li><code>name=&quot;name&quot;</code> - standard attribute <em>name</em> - name of the input element on a form.</li></ul>
+  <h2>Events</h2>
+  <p>Other than standard set of events (mouse, keyboard, focus) behavior:button generates:</p>
+  <ul>
+    <li>BUTTON_CLICK event, generated on mouse down/up or <code>spacebar</code> key press events when button is in focus. Posted (asynchronous) event.</li>
+    <li>BUTTON_PRESS event, generated on mouse down or <code>spacebar</code> key down when button is in focus. Synchronous event.</li></ul>
+  <h2>Methods</h2>
+  <p>N/A - behavior:button does not introduce any specific methods.</p>
+  <h2><code>value</code></h2>
+  <p>true/false - read-only, value of the button reflects pressed state of the button.</p>
+  <h2>Button clicks handling in script</h2>
+  <h3>raw <code>onClick</code> handler</h3>
+  <pre>var btn = $(button#some);
+btn.onClick = function() { ... event handling code ... }
+</pre>
+  <h3><code>on()</code> subscription</h3>
+  <pre>var btn = $(button#some);
+btn.on(&quot;click&quot;, function() { ... event handling code ... });
+self.on(&quot;click&quot;, &quot;button#some&quot;, function() { ... event handling code ... });
+</pre>
+  <h3>decorators.tis handler</h3>
+  <pre>include &quot;decorators.tis&quot;;
+@click @on &quot;button#some&quot; :: ... event handling code ...;
+</pre>
+</body>
+</html>

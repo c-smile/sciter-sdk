@@ -1,0 +1,46 @@
+<html>
+<head>
+  <style>
+  
+    body
+    {
+      flow:vertical;
+      background: url(images/back.png) repeat;
+      color:white;
+      margin:0; padding:0;
+    }
+    div#test
+    {
+      color:black;
+      opacity:0.5;
+      size:100px 70px;
+      margin:*;
+      padding:6px;
+      text-align: center;
+      border:3px solid red;
+      background-image: url(images/lighthouse.jpg);
+      background-repeat: stretch;
+      border-radius:10px;
+    }
+    div#test:hover
+    {
+      opacity:1.0;
+      size:800px 560px;
+      //padding:24px;
+      //border-radius:40px 40px 0 0;
+      //border-radius:40px;
+      transition: opacity(linear,400ms)
+                  size(cubic-out,400ms,cubic-in);
+    }
+  </style>  
+</head>
+<body>
+  <h1>Extended transition property demo</h1>
+  <p>Opacity animation</p>
+
+  <div #test>
+    Hover me!
+  </div>  
+
+</body>
+</html>

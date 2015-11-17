@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      div#test 
+      { 
+        behavior:button;
+        size:100px; 
+        border:1px solid; 
+        margin-left:*; 
+      }
+      
+      #test > popup { background:gold; size:100px; border: 1px solid; margin:0 6px; }
+      #test > popup > ol { overflow-y:auto; height:*; background:white; }
+      
+      #test > popup > ol > li { 
+        overflow-x:hidden;
+        text-overflow:ellipsis;
+        white-space:nowrap; }
+    
+    </style>
+    <script type="text/tiscript">
+    
+      $(div#test).onClick = function() 
+      {
+        this.popup(this.$(popup),0x16);
+      } 
+    
+    
+    </script>
+  </head>
+<body>
+
+  <div #test>
+    Click to see popup
+    <popup>
+      Scrollable test:
+      <ol> 
+        <li>111111111111111111111111111111111111</li>
+        <li>2222222222222222222222222222222222222222</li>
+        <li>3333</li>
+        <li>4444</li>
+        <li>5555</li>
+        <li>6666</li>
+        <li>7777</li>
+        <li>8888</li>
+        <li>9999</li>
+      </ol>
+    </popup>
+  </div>
+
+</body>
+</html>

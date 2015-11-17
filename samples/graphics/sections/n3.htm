@@ -1,0 +1,99 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+      html { background-color: rgb(196,196,255); }
+      div.h-flow
+      {
+        flow:horizontal-flow;
+        padding:0;
+        border-spacing:10px;
+      }
+      div.h-flow > *
+      {
+        //display:block;
+        height:*;
+        min-height:100px;
+      }
+      
+    </style>
+    <script type="text/tiscript"></script>
+  </head>
+<body>
+  <h1>Contacts</h1>
+  <picture src="n3.png" />
+  
+  <h2>Standard HTML4 inputs</h2>
+  
+  <h3>Inline-block versions</h3>
+  select:
+  <select size=4>
+    <optgroup label="First quater">
+      <option>One</option>
+      <option selected>Two</option>
+      <option>Three</option>
+      <option>Four</option>
+    </optgroup>
+    <option>Five</option>
+    <option>Six</option>
+    <option>Seven</option>
+    <option>Eight</option>
+    <option>Nine</option>
+    <option>Ten</option>
+    <option>Eleven</option>
+    <option>Twelve</option>
+  </select>
+  combobox <select>
+    <option>One</option>
+    <option>Two</option>
+    <option>Three</option>
+    <option selected>Four</option>
+    <option>Five</option>
+    <option>Six</option>
+    <option>Seven</option>
+    <option>Eight</option>
+    <option>Nine</option>
+    <option>Ten</option>
+    <option>Eleven</option>
+    <option>Twelve</option>
+  </select>
+
+  textarea <textarea cols=40 rows=4>Sample</textarea>
+  edit <input type="text" value="sample" />
+  <button type="checkbox">Checkbox</button>
+  <button type="radio" name="rg1" checked>radio 1</button>
+         <button type="radio" name="rg1">radio 2</button>
+         <button type="radio" name="rg1">radio 3</button>
+  
+  <h2>HTML5 + HSMILE inputs</h2>  
+  
+  <p>Date: <input type="date" value="today" /> Time: <input type="time" value="now" /><p>
+  <p>Calendar: <input type="calendar" value="today" /><p>
+  
+  <h2>Block versions</h2>
+  <div .h-flow>
+    <select size=4 .block>
+      <optgroup label="First quarter">
+        <option>One</option>
+        <option>Two</option>
+        <option>Three</option>
+        <option>Four</option>
+      </optgroup>
+      <optgroup label="Second quarter">
+        <option>Five</option>
+        <option>Six</option>
+        <option>Seven</option>
+        <option>Eight</option>
+      </optgroup>
+      <optgroup label="Third quarter">
+        <option>Nine</option>
+        <option>Ten</option>
+        <option>Eleven</option>
+        <option>Twelve</option>
+      </optgroup>
+    </select>
+    <textarea cols=40 rows=4>Sample</textarea>
+  </div>
+  
+</body>
+</html>

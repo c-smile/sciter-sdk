@@ -1,0 +1,70 @@
+
+class Notification : Behavior 
+{
+	 const WAIT_TIMER = 5s; // duration to show it
+
+	 var msg; // singleton, one message at the same time
+     
+	 function cancel() { // call if you want to cancel it
+		 if( msg.shown ) {
+      msg.off(".notification");
+			msg.attributes["state"] = undefined;
+			msg.move();
+		 }		 
+	 }
+   
+  function show(message, title = "Some message:") { 
+   
+		cancel();
+		msg.$( content ).html = message;
+		msg.$( header ).text = title;
+
+    // NOTE: state animations are defined in CSS
+    function closeIt() {
+      if(!msg.isVisible) return;
+      msg.attributes["state"] = "closed";
+      msg.on("animationend.notification", function(evt) { 
+        msg.off(this function); // do it once
+        msg.attributes["state"] = undefined;
+        msg.move();
+        return true;
+      });
+    }
+
+    function revealIt() {
+      if(!msg.isVisible) return;
+      msg.attributes["state"] = "shown";
+      msg.on("animationend.notification", function(evt) { 
+        if(!msg.isVisible) return;
+        msg.off(this function); // do it once
+        msg.timer( WAIT_TIMER, closeIt );
+        return true;
+      });
+    }
+
+    // getting this monitor's box
+    var (screenX1,screenY1,screenX2,screenY2) = view.screenBox(#workarea, #rect );
+
+    // set initial "off stage" state 
+    msg.attributes["state"] = "initial";
+    
+    // measure its real sizes
+    var (w,h) = msg.box(#dimension,#margin);
+    var (oleft,otop,oright,obottom) = msg.box(#rect,#margin,#inner);
+    //stdout.println(oleft,otop,oright,obottom);
+    
+    // position it at bottom / right corner
+		msg.move( screenX2 - w, 
+              screenY2 - h, 
+              #screen, 
+              #detached-topmost-window );
+    // request to start animation
+    msg.post( revealIt );
+		
+  }
+     
+  function attached() {
+		msg = this;
+	}
+
+}

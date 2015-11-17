@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <title>http.download test</title>
+    <style>
+    
+      button,progress,code { display: inline-block; vertical-align: middle; }
+    
+    </style>
+    <script type="text/tiscript">
+    
+      include "http.tis";
+   
+      $(button#download).onClick = function() {
+      
+        var out = $(code#out);
+        var progress = $(progress#downloading);
+        
+        function onprogress(loaded, total) 
+        {
+          progress.value = loaded;
+          out.text = String.printf("received %d bytes from %d",loaded, total || 0);
+        }
+        function onsuccess(md5) {
+          progress.attributes["hidden"] = true;
+          if(md5)
+            out.text = String.printf("done");
+          else
+            out.text = "error writing file";
+        }
+        function onerror(err) {
+          out.text = String.printf("failure:%s", err.toString());
+        }
+        
+        progress.attributes["hidden"] = undefined; // show the progress bar
+        
+        http.download(
+            "http://www.terrainformatica.com/photos/last-diligence.jpg",
+            self.url("photo.jpg"),
+            onsuccess, onerror, onprogress );
+      
+      };
+    
+    
+    </script>
+  </head>
+<body>
+  
+  <button#download>download terrainformatica.com/photos/last-diligence.jpg</button> <progress#downloading hidden /> <code#out></code>
+
+</body>
+</html>

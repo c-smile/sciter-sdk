@@ -1,0 +1,90 @@
+<html>
+  <head>
+    <title>XMLScanner</title>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>XMLScanner object</h1>
+  <p>XMLScanner - XML/HTML tokenzier. Also known as XML push parser.</p>
+  
+    <dl>
+      
+        
+      <h2>Constants</h2>
+      <p>return values of token() method</p>
+      
+        <dt>ERROR</dt>
+        <dd>- error in markup of input stream</dd>
+      
+        <dt>EOF</dt>
+        <dd>- end of stream reached</dd>
+      
+        <dt>HEAD</dt>
+        <dd>
+          <div>- head of the element parsed:</div>
+          <pre>&lt;tag ...<br/> &nbsp;^-- happens here</pre></dd>
+      
+        <dt>HEAD_END</dt>
+        <dd>
+          <div>- end of head of non-empty element parsed:</div>
+          <pre>&lt;tag ... &gt;<br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^-- happens here</pre></dd>
+      
+        <dt>EMPTY_HEAD_END</dt>
+        <dd>
+          <div>- end of head of empty element parsed:</div>
+          <pre>&lt;tag ... /&gt;<br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^-- happens here</pre></dd>
+      
+        <dt>TAIL</dt>
+        <dd>
+          <div>- tail of the non-empty element parsed:</div>
+          <pre>&lt;/tag&gt;<br/> ^-- happens here</pre></dd>
+      
+        <dt>ATTR</dt>
+        <dd>
+          <div>- attribute parsed:</div>
+          <pre>&lt;tag attr=&quot;value&quot; &gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^-- happens here</pre>
+          <p>Attribute can be with or without (html style) value. <em>scanner.attribute</em> is the name of attribute and <em>scanner.value</em> - is a value of attribute.</p></dd>
+      
+        <dt>TEXT</dt>
+        <dd>
+          <div>- text parsed.</div>
+          <p><em>scanner.value</em> contains the text.</p></dd>
+      
+        <dt>CDATA</dt>
+        <dd>
+          <div>- cdata parsed:</div>
+          <pre>&lt;![CDATA[ ...value... ]]&gt;<br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^-- happens here</pre>
+          <p><em>scanner.value</em> contains text of the cdata.</p></dd>
+      
+        <dt>PI</dt>
+        <dd>
+          <div>- processing instruction parsed:</div>
+          <pre>&lt;? ...value... ?&gt;<br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^-- happens here</pre>
+          <p><em>scanner.value</em> contains text of the instruction.</p></dd>
+      
+        <dt>DOCTYPE</dt>
+        <dd>- doctype declaration parsed:
+          <pre>&lt;!DOCTYPE ...value... &gt;<br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^-- happens here</pre>
+          <p><em>scanner.value</em> contains text of the doctype declaration: characters after <font face="Courier New">&lt;!DOCTYPE</font> and before closing '<code>&gt;</code>' </p></dd>
+      
+        
+          <h2>Properties</h2>
+      
+        <dt>value</dt>
+        <dd>- <em>string</em>, text of attribute value, text, cdata or pi.</dd>
+      
+        <dt>attribute</dt>
+        <dd>- <em>string</em>, name of the attribute. Valid if <font face="Courier New">token == XMLScanner.ATTR</font></dd>
+      
+        <dt>tag</dt>
+        <dd>- <em>string</em>, name of the tag. Valid if <font face="Courier New">token</font> is <font face="Courier New">XMLScanner.HEAD</font>, <font face="Courier New">XMLScanner.TAIL or XMLScanner.HEAD_END</font>.</dd>
+      
+        
+          <h2>Methods</h2>
+      
+        <dt>token</dt>
+        <dd>
+          <p><strong>( </strong>&nbsp;<strong>)</strong> returns: <em>int</em></p>
+          <p>Returns one of constants above. Use them in fully qualified form, e.g. <font face="Courier New">XMLScanner.HEAD, XMLScanner.TAIL</font>, etc.</p></dd></dl>
+</body>
+</html>

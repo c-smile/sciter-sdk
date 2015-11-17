@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <title>Plus: very basic sample</title>
+    <style>
+      @import url(../plus.css); /* the only thing needed to include Plus framework */
+      @import url(../../note.css); 
+
+      div { size:100dip; border:2px solid; }      
+      div.ok { background:green; }
+      div.warning { background:gold; }
+      div.alarm { background:red; }
+      
+    </style>
+    
+    <script type="text/tiscript">
+    
+      include "../plus.tis"; // we use @observing so need to include plus.tis upfront.
+  
+      namespace Data // our model
+      {  
+        var status = "ok"; // observable variable 
+      }    
+    
+    </script>
+  </head>
+
+<body model="Data"> <!-- define data model we observe -->
+
+  <note>This sample demonstrates CSS class name binding. Class name is taken from <code>status</code> variable.</note>
+
+  <div class="{{status}}">Status: <(status)>
+  </div>
+  
+  Change status 
+  <select(status)>
+    <option value="ok">OK</option>
+    <option value="warning">Warning</option>
+    <option value="alarm">Achtung, minen!</option>
+  </select>
+  
+</body>
+</html>

@@ -1,0 +1,88 @@
+﻿<html>
+  <head>
+    <title>Sciter Script syntax</title>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>Expressions</h1><input type="checkbox"  checked=""  id="show-defintions" />&nbsp;show/hide defintions.
+  <h2>Assignment expressions</h2>
+  <ol>
+    <li>&lt;name&gt; <strong><code>=</code></strong> &lt;expression&gt;</li>
+    <li>&lt;object&gt; <strong><code>.</code></strong> &lt;property-name&gt; <code>=</code> &lt;expression&gt;</li>
+    <li>&lt;array&gt; <strong><code>[</code></strong> &lt;int-expression&gt; <strong><code>]</code></strong> <code>=</code> &lt;expression&gt;</li>
+    <li>&lt;object&gt; <strong><code>[</code></strong> &lt;key-expression&gt; <strong><code>]</code></strong> <code>=</code> &lt;expression&gt;</li></ol>
+  <p>All expressions on the left side of the assignments above are so called <em>l-value expressions</em> - expressions that can appear on the left side of the &nbsp;assignment operator.</p>
+  <p>The assignment expressions allows to:</p>
+  <ol>
+    <li>assign the value to the variable given by the &lt;name&gt;;</li>
+    <li>assign the value to the property (a.k.a. deep assignment) of an object (with creation of property, local to the object, if it does not exist), given by &lt;property-name&gt;;</li>
+    <li>change the value of an array element at the index, given by the &lt;int-expression&gt;;</li>
+    <li>assign or create the local property (shallow assignment) at &lt;key-expression&gt; of the object. Here, &lt;key-expression&gt; is an expression of any type.</li></ol>
+  <h3>Multi-target assignments.</h3>
+  <p>TIScript also supports so called multi-target assignments that allows to assign value(s) to the group of l-values in a single assignment operation:</p>
+  <ol>
+    <li><code><strong>(</strong></code> &lt;lvalue-expression&gt; [ <strong><code>,</code></strong> &lt;lvalue-expression&gt; ]* <code><strong>)</strong></code> = &lt;expression&gt; | <code><strong>(</strong></code> &lt;expression&gt; [ <strong><code>,</code></strong> &lt;expression&gt; ]* <code><strong>)</strong></code></li></ol>
+  <p>Examples:</p>
+  <pre>var a,b,c;
+   (a,b,c) = 1; // a, b and c will all get value 1;
+   (a,b,c) = (1,2,3); // a will get 1, b - 2 and c will get value 3;
+   (a,b) = (b,a); // swaps values of a and b variables.
+</pre>
+  <p>Sequence of expressions separated by the comma <code><strong>,</strong></code> &nbsp;and enclosed by <code><strong>(</strong></code> &nbsp;<code><strong>)</strong></code> &nbsp;parentheses are known as <em>&lt;expression-list&gt;</em>. If all members of the list are l-value expressions then such a list is <em>&lt;lvlaue-expression-list&gt;</em>.</p>
+  <h2>Operators</h2>
+  <dl class="flat">
+    <dt>&lt;expression&gt; <strong><code>?</code></strong> &lt;if-true-expression&gt; <strong><code>:</code></strong> &lt;if-false-expression&gt;</dt>
+    <dd>Executes &lt;if-true-expression&gt; if the &lt;expression&gt; evaluates to <em>true</em>, and &lt;if-false-expression&gt; otherwise.</dd>
+    <dt>&lt;expression&gt; <strong><code>+</code></strong> &lt;expression&gt;<br/>&lt;expression&gt; <strong><code>-</code></strong> &lt;expression&gt;<br/>&lt;expression&gt; <strong><code>*</code></strong> &lt;expression&gt;<br/>&lt;expression&gt; <strong><code>/</code></strong> &lt;expression&gt;<br/>&lt;expression&gt; <strong><code>%</code></strong> &lt;expression&gt;<br/><strong>-</strong> &lt;expression&gt;</dt>
+    <dd>Standard arithmetic operators: addition, subtraction, multiplication, division, modulo, and negation. Operands of these operators have to be one of the numeric types: integer, float or length. Addition can also be used with string operands. In this case, it will concatenate two strings into one.</dd>
+    <dt>&lt;lvalue&gt; <strong><code>+=</code></strong> &lt;expression&gt;<br/>&lt;lvalue&gt; <strong><code>-=</code></strong> &lt;expression&gt;<br/>&lt;lvalue&gt; <strong><code>*=</code></strong> &lt;expression&gt;<br/>&lt;lvalue&gt; <strong><code>/=</code></strong> &lt;expression&gt;<br/>&lt;lvalue&gt; <strong><code>%=</code></strong> &lt;expression&gt;</dt>
+    <dd>Shortcut assignment with the arithmetic operation, equivalent of: &lt;lvalue&gt; = &lt;lvalue&gt; op &lt;expression&gt;.</dd>
+    <dt><code><strong>++</strong></code> &lt;lvalue&gt;<br/><code>--</code> &lt;lvalue&gt;</dt>
+    <dd>Increment and decrement operators. These operators increment or decrement &lt;lvalue&gt;, and return the changed value.</dd>
+    <dt>&lt;lvalue&gt; <code><strong>++</strong></code><br/>&lt;lvalue&gt; <code><strong>--</strong></code></dt>
+    <dd>Post-increment and post-decrement operators. These operators increment or decrement &lt;lvalue&gt;, and return the initial value (which it had before being incremented or decremented).</dd>
+    <dt>&lt;expression&gt; <strong><code>==</code></strong> &lt;expression&gt;<br/>&lt;expression&gt; <strong><code>===</code></strong> &lt;expression&gt; (strong equality)<br/>&lt;expression&gt; <strong><code>!=</code></strong> &lt;expression&gt;<br/>&lt;expression&gt; <strong><code>!==</code></strong> &lt;expression&gt; (strong inequality)<br/>&lt;expression&gt; <strong><code>&lt;</code></strong> &lt;expression&gt;<br/>&lt;expression&gt; <strong><code>&lt;=</code></strong> &lt;expression&gt;<br/>&lt;expression&gt; <strong><code>&gt;=</code></strong> &lt;expression&gt;<br/>&lt;expression&gt; <strong><code>&gt;</code></strong> &lt;expression&gt;</dt>
+    <dd>Standard relational operators that evaluate to either <em>true</em> or <em>false</em> values. All expressions (except of the strong variants) compare values of operands. Strong counterparts compare the &quot;naked&quot; values. For example: <br/><code>0 == null</code> &nbsp;&nbsp;evaluates to <em>true</em> <br/><code>0 === null</code> &nbsp;evaluates to false</dd>
+    <dt>&lt;expression-1&gt; <strong><code>||</code></strong> &lt;expresssion-2&gt;<br/>&lt;expression-1&gt; <strong><code>&amp;&amp;</code></strong> &lt;expression-2&gt;<br/><strong><code>!</code></strong> &lt;expression&gt;</dt>
+    <dd>Standard logical (boolean) operators: <em>or</em>, <em>and</em>, and <em>not</em>. The result of the <strong>||</strong> operator is either the value of &lt;expression-1&gt; if it evaulates to not <em>false</em> (i.e. not <em>null</em> or not <em>undefined</em>), or the value of &lt;expression-2&gt;. Operators <strong>&amp;&amp;</strong> and <strong>!</strong> return either <em>true</em> or <em>false</em>. Examples:<br/><code>(123 || 323)</code> evaluates to 123<br/><code>(0 || 323)</code> evaluates to 323<br/><code>(null || 323)</code> evaluates to 323<br/><code>(null &amp;&amp; 323)</code> evaluates to <em>false</em><br/><code>(123 &amp;&amp; 323)</code> evaluates to <em>true</em></dd>
+    <dt>&lt;expression&gt; <strong><code>&amp;=</code></strong> &lt;expression&gt; (bitwise-and)<br/>&lt;expression&gt; <strong><code>|</code></strong> &lt;expression&gt; (bitwise-or)<br/>&lt;expression&gt; <strong><code>^</code></strong> &lt;expression&gt; (bitwise-xor)<br/>&lt;expression&gt; <strong><code>&lt;&lt;</code></strong> &lt;expression&gt; (bitwise-shift-left)<br/>&lt;expression&gt; <strong><code>&gt;&gt;</code></strong> &lt;expression&gt; (bitwise-shift-right)<br/>&lt;expression&gt; <strong><code>&lt;&lt;&lt;</code></strong> &lt;expression&gt; (bitwise-unsigned-shift-left)<br/>&lt;expression&gt; <strong><code>&gt;&gt;&gt;</code></strong> &lt;expression&gt; (bitwise-unsigned-shift-right)<strong><br/><code>~</code></strong> &lt;expression&gt; (bitwise-not)</dt>
+    <dd>Standard (for JavaScript or Java) bitwise (binary) operators. &lt;expression&gt;s here must be of the <em>integer</em> type.</dd>
+    <dt>&lt;lvalue&gt; <strong><code>&amp;=</code></strong> &lt;expression&gt;<br/>&lt;lvalue&gt; <strong><code>|=</code></strong> &lt;expression&gt;<br/>&lt;lvalue&gt; <strong><code>^=</code></strong> &lt;expression&gt;<br/>&lt;lvalue&gt; <strong><code>&lt;&lt;=</code></strong> &lt;expression&gt;<br/>&lt;lvalue&gt; <strong><code>&gt;&gt;=</code></strong> &lt;expression&gt;<br/>&lt;lvalue&gt; <strong><code>&lt;&lt;&lt;=</code></strong> &lt;expression&gt;<br/>&lt;lvalue&gt; <strong><code>&gt;&gt;&gt;=</code></strong> &lt;expression&gt;</dt>
+    <dd>Shortcut assignment with binary operation above, equivalent of: &lt;lvalue&gt; = &lt;lvalue&gt; op &lt;expression&gt;.</dd>
+    <dt><strong><code>typeof</code></strong> &lt;expression&gt;</dt>
+    <dd>The result is a symbol with the typename of the &lt;expression&gt; value. One of: <strong>#undefined</strong>, <strong>#nothing</strong>, <strong>#null</strong>, <strong>#boolean</strong> (for <em>true</em> or <em>false</em> values), <strong>#integer</strong>, <strong>#float</strong>, <strong>#string</strong>, <strong>#array</strong>, <strong>#object</strong>, <strong>#symbol</strong>, &nbsp;<strong>#function</strong>, <strong>#date</strong>, <strong>#color</strong>, <strong>#length</strong>, <strong>#tuple</strong> and <strong>#class</strong> (for <em>namespace</em> and <em>class</em> objects). Example, following statement will print value of the <em>obj</em> variable if it is an object:<br/><code>if ( typeof obj == #object ) stdout.printf(&quot;got an object %V\n&quot;, obj);</code></dd>
+    <dt>&lt;expression&gt; <strong><code>instanceof</code></strong> &lt;class-expression&gt;<br/>&lt;expression&gt; <strong><code>!instanceof</code></strong> &lt;class-expression&gt; (not-an-instance-of)</dt>
+    <dd>Returns <em>true</em> if the value of the &lt;expression&gt; is an instance of the class returned by &lt;class-expression&gt;. <strong>!instanceof</strong> returns true if &lt;expression&gt; is not an instance of the class (on the right). Example, following statement will print value of the <em>obj</em> variable if it is an instance of user defined class MyClass:<br/><code>if ( obj instanceof MyClass ) stdout.printf(&quot;got an object %V of class MyClass\n&quot;, obj);</code></dd>
+    <dt><strong><code>new</code></strong> &lt;class-name&gt; <strong><code>(</code></strong> [ &lt;arguments&gt; ] <strong><code>)</code></strong></dt>
+    <dd>The <strong>new</strong> operator creates an instance of the class defined by the &lt;class-name&gt;. After creation, it calls t he constructor function of the class, passing it the &lt;arguments&gt;.</dd>
+    <dt><strong><code>this</code></strong></dt>
+    <dd>The <em>this</em> keyword inside body of a function refers to the object &nbsp;this function was invoked with.</dd>
+    <dt><strong><code>this function</code></strong></dt>
+    <dd>These two keywords constitute single keyword that is reference to the function being executed. Useful for making recursive calls to a function within its own body. Inside body of anonymous function use <em>this function</em> is the only way to get reference to the function itself.</dd>
+    <dt><strong><code>this super [ super super ...]</code></strong></dt>
+    <dd>In nested functions: <strong><code>this super</code></strong> used in inner function allows to get reference to <em>this</em> object of outer function. Number of <em>super</em>'s after the <em>this</em> designates number of levels up to lookup.</dd>
+    <dt>&lt;expression&gt; <strong><code>(</code></strong> [ &lt;arguments&gt; ] <strong><code>)</code></strong></dt>
+    <dd>- function call. The function is called if &lt;expression&gt; evaluates to a function. If it's not a function, a runtime error will be generated. The result of this operator is the function return value or <em>nothing</em> if the function reaches the end without return. The nothing value is used in cases when the fuction has no value to return, e.g. in iterator functions used in <code>for(var el in &lt;function&gt;)</code> statement. In this case enumeration stops then the function returns <em>nothing</em> value.</dd>
+    <dt>&lt;expression&gt; <code>{</code> &lt;object literal &gt; <code>}</code></dt>
+    <dd>- function call, if the &lt;expression&gt; evaluates to function then it is called with single paramenter - that literal object. Example, this:<br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>foo { one:1, two:2 }</code><br/>will call function <em>foo</em> with the object as a single parameter, exactly as in this case: <code>foo({ one:1, two:2 })</code>;</dd>
+    <dt>&lt;expression&gt; <strong><code>.</code></strong> &lt;name&gt;</dt>
+    <dd>Retrieves the value of the property by its name. If there is no such property, result of the expression is the value <em>undefined</em>.</dd>
+    <dt>&lt;expression&gt; <strong><code>[</code></strong> &lt;index-expression&gt; <strong><code>]</code></strong></dt>
+    <dd>Retrieves the element value at the &lt;index-expression&gt; position in the &lt;expression&gt; - presumably an object, an array, or a class. If no such element exists, returns the <em>undefined</em> value.</dd>
+    <dt>&lt;array-or-string&gt; <strong><code>[</code></strong> [&lt;int-expression-start&gt;] <strong><code>..</code></strong> [&lt;int-expression-end&gt;] <strong><code>]</code></strong></dt>
+    <dd>A slice of a string or an array. Returns the sub-array or the sub-string from &lt;start&gt; (inclusive) to &lt;end&gt; (exclusive). If &lt;int-expression-start&gt; is omitted, index <em>0</em> is used, and if &lt;int-expression-end&gt; is omitted, then the value of <em>.length</em> is used. Example, following fragment will print &quot;Spain&quot; in stdout:<br/><code>var str = &quot;The rain in Spain&quot;;<br/>stdout.println( str[12..] );</code></dd></dl>
+  <dt>&lt;expression&gt; <strong><code>like</code></strong> &lt;pattern-expression&gt;<br/>&lt;expression&gt; <strong><code>!like</code></strong> &lt;pattern-expression&gt; (not like)</dt>
+  <dd>&lt;pattern&gt; can be on of the following expressions:
+    <ul>
+      <li><strong>string</strong>(pattern) or <strong>regular expression</strong>. If &lt;expression&gt; is a string this operator matches the string against the pattern given by the regular expression &lt;regexp&gt; or by the simple string pattern. String pattern is a string that contains the placeholder '<code>?</code>' character for any single character, and '<code>*</code>' for any substrings. For example, the statement <code>&quot;page.htm&quot; like &quot;*.htm&quot;</code> evaluates to <em>true</em>, while <code>&quot;page.htm&quot; like &quot;*.html&quot;</code> evaluates to <em>false</em>.</li>
+      <li><strong>object</strong>. If &lt;expression&gt; is an object then &lt;expression&gt; is matched against this object-pattern-expression. Result of the expression is <em>true</em> if object-pattern-expression is a subset of the object. Values in pattern-object-expression may contain <code>#any</code> symbol that will match any value.</li>
+      <li><strong>array</strong>. &nbsp;If &lt;expression&gt; is an array and that array starts from this array-pattern-expression then the operator evalutes to <em>true</em>.</li>
+      <li>otherwise result of the like operator is equivalent to <code>==</code> operator.</li></ul></dd>
+  <h2>String Operators</h2>
+  <dl class="flat">
+    <dt>&lt;string-expression&gt; <strong><code>~/</code></strong> &lt;string-splitter&gt; (split-and-head operator)<br/>&lt;string-expression&gt; <strong><code>~%</code></strong> &lt;string-splitter&gt; (split-and-tail operator)</dt>
+    <dd>These two operators look up the substring &lt;string-splitter&gt; in the &lt;string-expression&gt;, and return either the head part of &lt;string-expression&gt; (from start of the string up to the &lt;string-splitter&gt; position) or the tail part (from the &lt;string-splitter&gt; position up to the end of the string). Both opeartors look for the &lt;string-splitter&gt; from the <em>start</em> of the &lt;string-expression&gt;. If &lt;string-splitter&gt; is not found, <strong><code>~/</code></strong> returns the &lt;string-expression&gt; itself, and <strong><code>~%</code></strong> returns the empty string. Examples:<br/><code>&quot;file://something:anything.htm&quot; ~/ &quot;:&quot;</code> evaluates to the <code>&quot;file&quot;</code> string,<br/><code>&quot;file://something:anything.htm&quot; ~% &quot;:&quot;</code> evaluates to the <code>&quot;//something:anything.htm&quot;</code> string,</dd>
+    <dt>&lt;string-expression&gt; <strong><code>/~</code></strong> &lt;string-splitter&gt; (reversed split-and-head operator)<br/>&lt;string-expression&gt; <strong><code>%~</code></strong> &lt;string-splitter&gt; (reversed split-and-tail operator)</dt>
+    <dd>These two operators do lookup similarly to <strong><code>~/</code></strong> and <strong><code>~%</code></strong>, but from the <em>end</em> of the &lt;string-expression&gt;. If &lt;string-splitter&gt; is not found, <strong><code>/~</code></strong> returns &lt;string-expression&gt; itself, and <strong><code>%~</code></strong> returns the empty string. Examples:<br/><code>&quot;something.anything.htm&quot; /~ &quot;.&quot;</code> evaluates to the <code>&quot;something.anything&quot;</code> string,<br/><code>&quot;something.anything.htm&quot; %~ &quot;.&quot;</code> evaluates to the <code>&quot;htm&quot;</code> string.</dd></dl>
+</body>
+</html>

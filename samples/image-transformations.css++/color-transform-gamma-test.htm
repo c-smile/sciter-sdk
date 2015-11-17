@@ -1,0 +1,23 @@
+<html>
+  <head>
+  <title></title>
+<style>
+  .gamma1 { foreground-image-transformation: contrast-brightness-gamma(0.5,0.5, 1.0); }
+  .gamma2 { foreground-image-transformation: contrast-brightness-gamma(0.5,0.5, 2.0); }
+  .gamma05 { foreground-image-transformation: contrast-brightness-gamma(0.5,0.5, 0.5); }
+  .gamma025 { foreground-image-transformation: contrast-brightness-gamma(0.5,0.5, 0.25); }
+
+</style>
+<script type="text/tiscript"></script>
+  </head>
+<body>
+
+  <p>See: <a href="http://en.wikipedia.org/wiki/Gamma_correction">http://en.wikipedia.org/wiki/Gamma_correction</a></p>
+
+  &gamma; = 2  <picture.gamma2 src="images/from-wiki.png"  />
+  Original, &gamma; = 1 <picture.gamma1 src="images/from-wiki.png" />
+  &gamma; = 0.5 <picture.gamma05 src="images/from-wiki.png" />
+  &gamma; = 0.25 <picture.gamma025 src="images/from-wiki.png" />
+ 
+</body>
+</html>

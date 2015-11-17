@@ -1,0 +1,95 @@
+
+
+class EditableImage: Behavior {
+
+  function attached() { 
+    this.refresh();
+    this.paintOutline = this.renderActiveState;
+    //stdout.println("attached"); 
+  }
+  function detached() { 
+    this.refresh();
+    this.paintOutline = null;
+    this.resizing = false;
+  }
+  
+  function onMouse( evt ) {
+    switch(evt.type) {
+      case Event.MOUSE_UP:   return this.onMouseUp(evt); 
+      case Event.MOUSE_DOWN: return this.onMouseDown(evt); 
+      case Event.MOUSE_MOVE: return this.onMouseMove(evt); 
+    }
+  }
+  
+  property richtext(v) {
+    for(var p = this.parent; p; p = p.parent)
+      if( p.style#behavior && (p.style#behavior like "*richtext*")) 
+        return p;
+    assert false;
+    return null;
+  }
+
+  function isMouseOnCorner(evt) {
+    var (w,h) = this.box(#dimension,#border);
+    return evt.x > (w - 15) && evt.y > (h - 15);
+  }
+  
+  function onMouseUp(evt) { 
+
+    if( this.resizing ) {
+      this.capture(false);
+      this.resizing = false;
+      this.state.pressed = false;
+      
+      var img = this;
+      
+      // make undoable "change width" transaction:
+      function changeWidth(transaction) {
+        transaction.attr(img,"width",img.newWidth.toString());
+        img.style#width = undefined;
+        img.newWidth = undefined;
+        return true;
+      }
+      this.richtext.transact(changeWidth,"change width");      
+      
+      return true;
+    } 
+    // else
+    //  return this.state.pressed ? this.activate(): false;   
+  }
+  
+  function onMouseDown(evt) { 
+    if(this.isMouseOnCorner(evt)) {
+      var (x,y,w,h) = this.box(#rectw,#border,#view);
+      this.ratio = w.toFloat() / h.toFloat();
+      this.xs = x;
+      this.ys = y;
+      this.dx = w - evt.x;
+      this.dy = h - evt.y;
+      this.resizing = true;
+      this.capture(true);
+      return true; 
+    }
+    return false; 
+  }
+  function onMouseMove(evt) { 
+    if(this.resizing) {
+      var neww = (evt.xView - this.xs + this.dx).toInteger();
+      this.newWidth = neww;
+      this.style#width = px(neww);
+      return true;
+    }
+    else
+      this.attributes.toggleClass("mouse-on-corner",this.isMouseOnCorner(evt));
+    return false; 
+  }
+  
+  function renderActiveState(gfx) {
+    var (w,h) = this.box(#dimension,#border);
+    gfx.lineWidth(1);
+    gfx.fillColor(color("highlight"));
+    gfx.lineColor(color("highlighttext"));
+    gfx.rectangle(w-7.5,h-7.5,7,7);
+  }
+  
+}

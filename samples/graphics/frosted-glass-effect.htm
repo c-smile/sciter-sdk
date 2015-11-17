@@ -1,0 +1,77 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      body { margin:0; }
+    
+      main {
+        display:block;
+        background:gold;
+        size:*;
+        clear:both;
+        overflow:auto;
+      }
+      
+      footer 
+      {
+        position:fixed;
+        bottom:0;
+        left:0;
+        right:0;
+        height:50%;
+      }
+      footer.shim 
+      {
+        background: url(in-memory:footer-back) no-repeat 0 100%;
+        filter: blur(5dip) ;
+      }
+      
+      footer.content 
+      {
+        background: rgba(255,255,255,0.75);
+        text-align:center;
+        vertical-align:middle;
+      } 
+      
+    
+    </style>
+    <script type="text/tiscript">
+    
+    function self.ready()
+    {
+      const main = $(main);
+      var   image = null;
+      
+      function update() {
+        var (x,y,w,h) = main.box(#rectw,#border, #view);
+        var newImage = new Image(w,h,main); // make snapshot of the element in the image
+        self.bindImage("in-memory:footer-back", newImage);
+        if(image)
+          image.destroy();
+        image = newImage;
+        return true;
+      }
+      main.onSize = update;
+      main.post(update);
+    }
+    
+   
+    </script>
+  </head>
+<body>
+  <main>
+    <p>Lorem ipsum dolor sit amet, asperiores ullam amet volutpat platea tempus,                                                               </p>
+    <p>est lacus sit vestibulum. Mollis donec at ac nibh praesent. Ut et urna mus vitae, in non mi,                                            </p>
+    <p><img src="sections/n2.png" align=left>venenatis pulvinar elementum nulla eget est vulputate. Aliquam nostra ac duis eros urna aliquam,                                        </p>
+    <p>molestie mi, amet ipsum rutrum ac sem. Cursus dolor commodo in netus pulvinar nulla, aliquam natoque mi vestibulum                      </p>
+    <p><img src="sections/n1.png" align=right> arcu vestibulum volutpat, nunc arcu urna sit. Justo nulla nec blandit arcu, luctus feugiat rhoncus magna iaculis id malesuada,          </p>
+    <p>turpis maecenas sollicitudin condimentum magna, sed et nibh mi, in proin ut faucibus sit. Odio euismod odio urna lobortis pretium,      </p>
+    <p>eget volutpat libero vestibulum volutpat ullamcorper.                                                                                   </p>
+  </main>
+  <footer.shim></footer>
+  <footer.content>
+    Frosty background
+  </footer>
+</body>
+</html>

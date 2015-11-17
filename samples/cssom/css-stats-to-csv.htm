@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+   
+      /* demo rules */
+      #one { color:red; }
+      #two { color:blue; }
+      .three { color:green; }
+      #three { color:orange; }
+      
+   
+    </style>
+    <script type="text/tiscript">
+    
+      function cssStatsToCSV()
+      {
+        var out = Stream.openFile( self.url("css-stats.csv") , "wt");
+        
+        out.println("selector,file,lineNo,usageCounter");
+      
+        self.style.documentRules( function( selector, file, lineNo, usageCounter ) {
+          out.println(selector,",",file,",",lineNo,",",usageCounter); 
+        });
+        out.close();
+      }
+    
+      function self.ready() {
+        cssStatsToCSV();
+      }  
+    
+    
+    </script>
+  </head>
+<body>
+  <div id="one">#one</div>
+  <div id="two" class="three">#two.three</div>
+  <div class="three">.three</div>
+
+  <p>CSS usage stats (in selector specificity order) are in css-stats.csv</p>
+
+
+</body>
+</html>

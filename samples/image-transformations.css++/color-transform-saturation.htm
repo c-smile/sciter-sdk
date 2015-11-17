@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      @const HOVER_COLOR : #b8d3ee;
+    
+      div.button { 
+        width: 55px; 
+        line-height: 28px; 
+        text-align:center;
+        background:url(images/button-normal.png) no-repeat;
+      }
+      
+      div.button:hover { 
+        background-image-transformation:
+           saturation(0.1)
+           hue(@HOVER_COLOR); 
+        
+      }
+
+    </style>
+    <script type="text/tiscript"></script>
+  </head>
+<body>
+
+  <div.button>test</div>
+
+</body>
+</html>

@@ -1,0 +1,360 @@
+﻿<html>
+  <head>
+    <style>
+      html { behavior:sticky-scroll; }
+      body { font:10pt sans-serif; padding-left:1em; behavior:htmlarea; }
+      p.note { border-left:3px #E00 solid; padding-left: 0.7em;}
+      code { font-family:consolas, monospace; }
+      pre { border:1px dotted #888; padding: 0.5em; background:#F8FAFF; font-family:consolas, monospace; }
+      dt { font-size:120%; font-weight:bold; margin-top:0.7em; }
+    </style>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h2>Basic principles, ElementList</h2>
+  <p>All built-in Sciter methods produce lists of &nbsp;Element instances - array of class ElementList that contain Element's.</p>
+  <p>As any other built-in classes the ElementList is extendable and q.tis implementation (partial) of the jQuery is simply a set of functions extending ElementList class.</p>
+  <p>Therefore these functions return ready to use query object:</p>
+  <ul>
+    <li><code>$$(selector) : ElementList</code> - global &quot;stringizer&quot; function;</li>
+    <li><code>element.$$(selector) : ElementList </code>- method function of the DOM element - returns elements in scope of the element;</li>
+    <li><code>element.selectAll(&quot;selector&quot;) &nbsp;: ElementList</code> - same as <code>element.$$(selector)</code> but with plain string parameter;</li>
+    <li><code>element.selectParents(&quot;selector&quot;) &nbsp;: ElementList</code> - same as <code>element.$$(selector)</code> but with plain string parameter;</li></ul>
+  <p>Note that provided ElementList extends standard Array object so all methods of arrays are also available in ElementList's.</p>
+  <h3>The q() function</h3>
+  <p>q.tis defines <code>q()</code> function that is an equivalent of <code>$()</code> in jQuery realm. <code>q()</code> accepts following parameters and returns array of type ElementList:</p>
+  <ul>
+    <li><code>q(&quot;selector&quot;)</code> - given the selector it returns list of matched elements - array instanceof ElementList;</li>
+    <li><code>q(&quot;&lt; some html &gt;&quot;)</code> - if the strings starts from '&lt;' and ends with '&gt;' it is treated as html source. In this case the function parses the html and returns list of elements parsed.</li>
+    <ul>
+      <p>example: <code>q(&quot;&lt;p&gt;Some text&lt;/p&gt;&quot;)</code> returns list that contains single DOM element - the paragraph.</p></ul>
+    <li><code>q(element)</code> - wraps the element into single element array and returns the ElementList.</li>
+    <li><code>q(elementlist)</code> - if the parameter is instanceof ElementList already it simply returns it.</li>
+    <li><code>q(function)</code> - puts the function invocation into event queue and returns immediately. The function will be executed later. That is similar to <code>window.setTimeout(function,0);</code> in conventional browsers. Script execution in Sciter happens after the DOM is ready so there is no need for any special jQuery-alike handling here.</li></ul>
+  <dl>
+    <h2>DOM operations</h2>
+    <dt>add</dt>
+    <dd>
+      <p><code>add(selector, [context]) &nbsp;⇒ collection</code></p>
+      <p>Add elements satifying the selector to the list of elements. returns new, updated collection.</p></dd>
+    <dt>addClass</dt>
+    <dd>
+      <p><code>addClass(name) &nbsp;⇒ self</code><br/><code>addClass(function(index, oldClassName){ ... }) &nbsp;⇒ self</code></p>
+      <p>Add class[es] to elements in the list. <em>name</em> can contain multiple, space separated names.</p></dd>
+    <dt>removeClass</dt>
+    <dd>
+      <p><code>removeClass() &nbsp;⇒ self<br/>removeClass(name) &nbsp;⇒ self</code><br/><code>removeClass(function(index, oldClassName){ ... }) &nbsp;⇒ self</code></p>
+      <p>Remove class[es] from elements in the list. <em>name</em> can contain multiple, space separated names. If no name is given removes &quot;class&quot; attribute from elements.</p></dd>
+    <dt>toggleClass</dt>
+    <dd>
+      <p><code>toggleClass(name) &nbsp;⇒ self</code><br/><code>toggleClass(function(index, oldClassName){ ... }) &nbsp;⇒ self</code></p>
+      <p>Toggles (add or remove) class[es] from elements in the list. <em>name</em> can contain multiple, space separated names.</p></dd>
+    <dt>after</dt>
+    <dd>
+      <p><code>after(content) &nbsp;⇒ self</code></p>
+      <p>Add content after each element in the list. The <em>content</em> can be html string, DOM element or array of elements.</p>
+      <pre>q(&quot;form input&quot;).after(&quot;&lt;span&gt;A note after the input&lt;/span&gt;&quot;);
+</pre></dd>
+    <dt>before</dt>
+    <dd>
+      <p><code>before(content) &nbsp;⇒ self</code></p>
+      <p>Add content after each element in the list. The <em>content</em> can be html string, DOM element or array of elements.</p>
+      <pre>q(&quot;form input&quot;).before(&quot;&lt;label&gt;field:&lt;/label&gt;&quot;);
+</pre></dd>
+    <dt>replaceWith</dt>
+    <dd>
+      <p><code>replaceWith(content) &nbsp;⇒ self</code></p>
+      <p>Replace each element in the collection by the new content. The <em>content</em> can be html string, DOM element or array of elements.</p></dd>
+    <dt>append</dt>
+    <dd>
+      <p><code>append(content) &nbsp;⇒ self</code></p>
+      <p>Append content of each element in the list. The <em>content</em> can be html string, DOM element or array of elements.</p>
+      <pre>q(&quot;ul&quot;).append(&quot;&lt;li&gt;New list item&lt;/li&gt;&quot;);
+</pre></dd>
+    <dt>appendTo, $appendTo</dt>
+    <dd>
+      <p><code>appendTo(target) &nbsp;⇒ self</code><br/><code>$appendTo(selector) &nbsp;⇒ self</code></p>
+      <p>Append content from this list to the target. Same as <em>append</em> but with reversed operands.</p>
+      <pre>q(&quot;ol&gt;li&quot;).appendTo(&quot;ul&quot;);
+</pre></dd>
+    <dt>attr</dt>
+    <dd>
+      <p><code>attr(name) &nbsp;⇒ string<br/>attr(name, value) &nbsp;⇒ self<br/>attr(name, function(index, oldValue){ ... }) &nbsp;⇒ self<br/>attr({ name: value, name2: value2, ... }) &nbsp;⇒ self</code></p>
+      <p>Read or set attributes of DOM elements. <code>attr(name)</code> reads the attribute from first element in the list. All other variants set attribute value in each element in the list.</p>
+      <pre>var form = q(&quot;form&quot;);
+form.attr(&quot;action&quot;);                 //=&gt; read value
+form.attr(&quot;action&quot;, &quot;/create.php&quot;);  //=&gt; set value
+form.attr(&quot;action&quot;, undefined);      //=&gt; remove attribute
+
+// multiple attributes at once:
+form.attr {
+  action: &quot;/create.php&quot;,
+  method: &quot;post&quot;
+};
+</pre></dd>
+    <dt>removeAttr</dt>
+    <dd>
+      <p><code>removeAttr(name) &nbsp;⇒ self</code></p>
+      <p>Remove the attribute in each element of the list.</p></dd>
+    <dt>children, $children</dt>
+    <dd>
+      <p><code>children([&quot;selector&quot;]) &nbsp;⇒ collection</code><br/><code>$children(selector) &nbsp;⇒ collection</code></p>
+      <p>Get immediate children of each element in the current list. Returns new list.</p>
+      <pre>q(&quot;ol&quot;).children(&quot;li:nth-child(2n)&quot;); // returns list of
+$$(ol).$children(li:nth-child(2n));   // every even items in the &lt;ol&gt;
+</pre></dd>
+    <dt>closest, $closest</dt>
+    <dd>
+      <p><code>closest([&quot;selector&quot;]) ⇒ collection<br/>closest(collection) ⇒ collection<br/>closest(element) ⇒ collection<br/>closest(function(){}) ⇒ collection<br/>$closest(selector) &nbsp;⇒ collection</code></p>
+      <p>Gets closest parents of elements in the list. Returns new list.</p>
+      <pre>var input = q(&quot;input[type=text]&quot;);
+var itsForm = input.closest(&quot;form&quot;);
+</pre></dd>
+    <dt>contents</dt>
+    <dd>
+      <p><code>contents() &nbsp;⇒ list (array) of nodes</code></p>
+      <p>Returns array of content nodes - combined list of all child nodes of all elements in the list.</p></dd>
+    <dt>css</dt>
+    <dd>
+      <p><code>css(property) &nbsp;⇒ value<br/>css(property, value) &nbsp;⇒ self<br/>css({property: value, property2: value2, ... }) &nbsp;⇒ self</code></p>
+      <p>Get or set style properties on DOM elements in the list.</p>
+      <pre>var elem = q(&quot;h1&quot;);
+elem.css(&quot;background-color&quot;);                         // read property
+elem.css(&quot;background-color&quot;, &quot;#369&quot;);                 // set property
+elem.css(&quot;background-color&quot;, color(0x33,0x66,0x99));  // set property
+elem.css(&quot;background-color&quot;, undefined);              // remove property
+
+// set multiple properties:
+elem.css { background-color: &quot;#8EE&quot;,
+           opacity: 0.75,
+           font-size: 28pt };
+</pre></dd>
+    <dt>each</dt>
+    <dd>
+      <p><code>each(function(index, item){ ... }) &nbsp;⇒ self</code></p>
+      <p>Call the function for each element in the list. <em>this</em> variable in each call is set to the current element.</p>
+      <pre>q(&quot;form input&quot;).each(function(index){
+  stdout.println(&quot;input at &quot;,index,&quot; is &quot;, this);
+});
+</pre>
+      <p>note that the above can be written simply as this:</p>
+      <pre>for(var (idx,el) in q(&quot;form input&quot;))
+  stdout.println(&quot;input at &quot;,idx,&quot; is &quot;, el);
+</pre>
+      <p>- less brackets and no function calls on each iteration.</p></dd>
+    <dt>empty</dt>
+    <dd>
+      <p><code>empty() &nbsp;⇒ self</code></p>
+      <p>Clears content of each element in the list.</p></dd>
+    <dt>eq</dt>
+    <dd>
+      <p><code>eq(index) &nbsp;⇒ collection</code></p>
+      <p>Get the item at index position in the list.</p>
+      <pre>q(&quot;li&quot;).eq(0);  // gets first item
+q(&quot;li&quot;).eq(-1); // gets last item
+</pre></dd>
+    <dt>filter, $filter</dt>
+    <dd>
+      <p><code>filter(&quot;selector&quot;) &nbsp;⇒ collection<br/>filter(function(index){ ... }) &nbsp;⇒ collection</code><br/><code>$filter(selector) &nbsp;⇒ collection</code></p>
+      <p>Filter the list of elements so it contains only elements satisfying the selector or those that passed through the filter function that returns <em>true</em> for passed element.</p></dd>
+    <dt>find, $find</dt>
+    <dd>
+      <p><code>find(&quot;selector&quot;) &nbsp;⇒ collection<br/>find(collection) &nbsp;⇒ collection<br/>find(element) &nbsp;⇒ collection</code><br/><code>$find(selector) &nbsp;⇒ collection</code></p>
+      <p>Find descendants of elements in the list satisfying the selector. If the collection (list of elements) is given then the result is the list (subset) of that collection - all elements that contianed inside the self.</p>
+      <pre>var form = $$(#myform);
+var inputs = form.$find(input,textarea,select,widget,button);
+</pre></dd>
+    <dt>first</dt>
+    <dd>
+      <p><code>first() &nbsp;⇒ collection</code></p>
+      <p>Get the first element from the list, returns list of single element, &nbsp;or empty list if self one was empty by itself.</p>
+      <pre>var form = q(&quot;form&quot;).first();
+</pre></dd>
+    <dt>get</dt>
+    <dd>
+      <p><code>get() &nbsp;⇒ array<br/>get(index) &nbsp;⇒ DOM element</code></p>
+      <p>Get element at <em>index</em> from the list, or if no index is given - the whole list as a plain array.</p>
+      <pre>var items = q(&quot;li&quot;);
+var li2 = items.get(2);
+</pre>
+      <p class="note">Note: you can always use indexed access for the same purpose:</p>
+      <pre>var li2 = items[2];
+</pre></dd>
+    <dt>has, $has</dt>
+    <dd>
+      <p><code>has(&quot;selector&quot;) &nbsp;⇒ collection<br/>has(element) &nbsp;⇒ collection<br/>$has(selector) &nbsp;⇒ collection</code></p>
+      <p>Filter the list to include only elements that have descendants that match selector, or that contain specific DOM element.</p>
+      <pre>q(&quot;dl &gt; dd&quot;).has(&quot;a[href]&quot;)
+//=&gt; get only DD elements that contain links
+</pre></dd>
+    <dt>hasClass</dt>
+    <dd>
+      <p><code>hasClass(&quot;name&quot;) &nbsp;⇒ true/false</code></p>
+      <p>Checks if any element in the list has specified class name.</p></dd>
+    <dt>hide</dt>
+    <dd>
+      <p><code>hide() &nbsp;⇒ self</code></p>
+      <p>Here it simply does <code>this.addClass(&quot;hidden&quot;)</code>. So in order this method to work your CSS should have <code>*.hidden { display:none; }</code> or similar declaration.</p>
+      <p class="note">Note this implementation is conceptually different from what jQuery or Zepto do in that case. The <code>hide()</code> there do <code>el.style.display = &quot;none&quot;</code> making <code>show()</code> impossible to implement reliably.</p></dd>
+    <dt>show</dt>
+    <dd>
+      <p><code>show() &nbsp;⇒ self</code></p>
+      <p>Here it simply does <code>this.removeClass(&quot;hidden&quot;)</code>. In order this method to work your CSS should have <code>*.hidden { display:none; }</code> or similar declaration.</p></dd>toggle
+    <dd>
+      <p><code>toggle() &nbsp;⇒ self</code><br/><code>toggle(onoff) &nbsp;⇒ self</code></p>
+      <p>Calls show() or hide() for each element depending on presence of hidden class in it. If onoff is present then it acts self.show() or self.hide().</p></dd>
+    <dt>html</dt>
+    <dd>
+      <p><code>html() ⇒ string<br/>html(&quot;content&quot;) ⇒ collection<br/>html(function(index, oldHtml){ ... }) ⇒ collection</code></p>
+      <p>First method gets HTML content of the first element in the list. Other methods set HTML content of elements in the collection.</p>
+      <pre>g(&quot;.comment:empty&quot;).html(&quot;&lt;em&gt;no comments yet!&lt;/em&gt;&quot;);
+</pre></dd>
+    <dt>index</dt>
+    <dd>
+      <p><code>index([element]) &nbsp;⇒ integer | undefined</code></p>
+      <p>Get position of the <em>element</em> in the list or -1 if the element is not in the list. If no element is given, returns position of the first element among its siblings.</p>
+      <pre>g(&quot;li:nth-child(2)&quot;).index() //=&gt; 1
+</pre></dd>
+    <dt>insertAfter, insertBefore</dt>
+    <dd>
+      <p><code>insertAfter(target) &nbsp;⇒ self</code><br/><code>insertBefore(target) &nbsp;⇒ self</code></p>
+      <p>Insert elements from the list after/before the target element in the DOM. &nbsp;Same as <em>after()</em> or <em>before()</em> but with reversed operands.</p>
+      <pre>var fields = q(&quot;form input&quot;);<br/>q(&quot;&lt;em&gt;Required field&lt;/em&gt;&quot;).insertAfter(fields.filter(&quot;.required&quot;));
+</pre></dd>
+    <dt>is, $is</dt>
+    <dd>
+      <p><code>is(&quot;selector&quot;) &nbsp;⇒ true/false<br/>$is(selector) &nbsp;⇒ true/false</code></p>
+      <p>Check if the first element matches the selector.</p></dd>
+    <dt>last</dt>
+    <dd>
+      <p><code>last() &nbsp;⇒ collection</code></p>
+      <p>Get the last element from the list, returns list of single element, &nbsp;or empty list if the self was empty.</p>
+      <pre>var form = q(&quot;form&quot;).last();
+</pre></dd>
+    <dt>next, $next</dt>
+    <dd>
+      <p><code>next() &nbsp;⇒ collection<br/>next(&quot;selector&quot;) &nbsp;⇒ collection<br/>$next(selector) &nbsp;⇒ collection</code></p>
+      <p>Get the next sibling element for each element in the list.</p>
+      <pre>var dd = q(&quot;dl &gt; dt&quot;).next(); // all elements next to DTs
+</pre></dd>
+    <dt>not, $not</dt>
+    <dd>
+      <p><code>not(&quot;selector&quot;) &nbsp;⇒ collection<br/>not(collection) &nbsp;⇒ collection<br/>not(function(index){ ... }) &nbsp;⇒ collection<br/>$not(selector) &nbsp;⇒ collection</code></p>
+      <p>Filter the current collection to get a new collection of elements that don’t match the CSS selector. If another list is given instead of selector, return only elements not present in it. If a function is given, return only elements for which the function returns <em>false</em>. Inside the function, the <em>this</em> refers to the current element.</p>
+      <p>For the opposite, see <em>filter()</em>.</p></dd>
+    <dt>parent, $parent</dt>
+    <dd>
+      <p><code>parent() &nbsp;⇒ collection<br/>parent(&quot;selector&quot;) &nbsp;⇒ collection<br/>$parent(selector) &nbsp;⇒ collection</code></p>
+      <p>Get immediate parents of each element in the collection. If CSS selector is given, it returns only immediate parents that satisfy the selector.</p></dd>
+    <dt>parents, $parents</dt>
+    <dd>
+      <p><code>parents() &nbsp;⇒ collection<br/>parents(&quot;selector&quot;) &nbsp;⇒ collection<br/>$parents(selector) &nbsp;⇒ collection</code></p>
+      <p>Get all ancestors of each element in the collection. If CSS selector is given, filter results to include only ones satisfying the selector.</p>
+      <p>To get only immediate parents, use <em>parent()</em>. To get only first ancestor matches the selector, use <em>closest()</em></p>
+      <pre>var all_parents = $('h1').parents();
+</pre></dd>
+    <dt>prepend</dt>
+    <dd>
+      <p><code>prepend(content) &nbsp;⇒ self</code></p>
+      <p>Prepend content of each element in the list. The <em>content</em> can be html string, DOM element or array of elements.</p>
+      <pre>q(&quot;ul&quot;).prepend(&quot;&lt;li&gt;New list item&lt;/li&gt;&quot;);
+</pre></dd>
+    <dt>prependTo, $prependTo</dt>
+    <dd>
+      <p><code>proependTo(target) &nbsp;⇒ self</code><br/><code>$prependTo(selector) &nbsp;⇒ self</code></p>
+      <p>Prepend content from this list to the target. Same as <em>prepend()</em> but with reversed operands.</p>
+      <pre>q(&quot;ol&gt;li&quot;).prependTo(&quot;ul&quot;);
+</pre></dd>
+    <dt>prev, $prev</dt>
+    <dd>
+      <p><code>prev() &nbsp;⇒ collection<br/>prev(&quot;selector&quot;) &nbsp;⇒ collection<br/>$prev(selector) &nbsp;⇒ collection</code></p>
+      <p>Get the previous sibling element for each element in the list.</p>
+      <pre>var dd = q(&quot;dl &gt; dd&quot;).prev(); // all elements prior to DTs
+</pre></dd>
+    <dt>remove</dt>
+    <dd>
+      <p><code>remove() &nbsp;⇒ self</code></p>
+      <p>Remove elements in the current collection from their parent nodes detaching them from the DOM.</p></dd>
+    <dt>siblings, $siblings</dt>
+    <dd>
+      <p><code>siblings() &nbsp;⇒ collection</code><br/><code>siblings(&quot;selector&quot;) &nbsp;⇒ collection</code><br/><code>$siblings(selector) &nbsp;⇒ collection</code></p>
+      <p>Get sibling elements of each element in the list. If selector is provided it returns only matched siblings.</p></dd>
+    <dt>size</dt>
+    <dd>
+      <p><code>size() &nbsp;⇒ integer</code></p>
+      <p>Reports number of elements in the list. Note that you can use the <em>length</em> property instead of this method.</p></dd>
+    <dt>unwrap</dt>
+    <dd>
+      <p><code>unwrap() &nbsp;⇒ self</code></p>
+      <p>Remove immediate parent of each element in the collection and put their children in their place.</p>
+      <pre>q(&quot;body&quot;).append(&quot;&lt;div id=wrapper&gt;&lt;p&gt;Content&lt;/p&gt;&lt;/div&gt;&quot;)
+q(&quot;#wrapper p&quot;).unwrap().parent()  //=&gt; [&lt;body&gt;]
+</pre></dd>
+    <dt>wrap</dt>
+    <dd>
+      <p><code>wrap(&quot;html&quot;) &nbsp;⇒ self<br/>wrap(element) &nbsp;⇒ self<br/>wrap(function(index){ ... }) &nbsp;⇒ self</code></p>
+      <p>Wrap each element of the collection separately in a DOM structure. The html can contain single element or several nested elements. If function provided then it is called for each element and returns html or element reference.</p>
+      <pre>// wrap each &lt;a&gt; in .buttons in a separate span:
+q(&quot;.buttons a&quot;).wrap(&quot;&lt;span/&gt;&quot;);
+
+// wrap each code block in a div and pre:
+q(&quot;code&quot;).wrap(&quot;&lt;div class=code&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/div&gt;&quot;);
+
+// wrap all inputs in a span with classname
+// corresponding to input type:
+q(&quot;input&quot;).wrap( :: &quot;&lt;span class=&quot; + this.attributes[&quot;type&quot;] + &quot;-field /&gt;&quot; );
+//=&gt; &lt;span class=text-field&gt;&lt;input type=text /&gt;&lt;/span&gt;,
+//   &lt;span class=search-field&gt;&lt;input type=search /&gt;&lt;/span&gt;
+</pre></dd>
+    <h2>Events</h2>List of standard supported events that ara bound with Sciter native events:
+    <ul>
+      <li>click, dblclick,</li>
+      <li>mousedown, mouseenter, mouseleave, mousemove, mouseout, &nbsp;mouseover, mouseup,</li>
+      <li>focusout, focusin, blur, focus,</li>
+      <li>keydown, keypress, keyup,</li>
+      <li>scroll, change, submit, reset,</li></ul>
+    <p>List of Sciter specific events:</p>
+    <ul>
+      <li>expanded, collapsed</li></ul>
+    <p>The event types may contain namespace in &quot;event.namespace&quot; notation. Please read <a href="http://docs.jquery.com/Namespaced_Events" title="Namespaced Events" target="_blank">Namespaced Events</a> chapter in jQuery docs.</p>
+    <p>Custom events are supported: you may subscribe on something like &quot;dosomething.mylib&quot; and trigger() that event in your code.</p>
+    <dt>on, Element.on</dt>
+    <dd><code>on(type, [selector], function(event){ ... }) &nbsp;⇒ self<br/>on({ type: handler, type2: handler2, ... }, [selector]) &nbsp;⇒ self</code>
+      <p>Add event handlers to all elements in the list. Multiple event types can be passed in a space-separated string, or as an object where event types are keys and handlers are values. If a CSS selector is given, the handler function will only be called when an event originates from an element that matches the selector.</p>
+      <p>Event handlers are executed in the context of the element to which the handler is attached, or the matching element in case a selector is provided.</p>
+      <p class="note">Note #1: when an event handler function returns <em>false</em> it means that event is &quot;consumed&quot; and its normal propagation is stopped. That is different from normal Sciter practice where <code>return true;</code> in event handlers means &quot;event consumed&quot;.</p>
+      <p class="note">Note #2: for a while the event passed to event handlers is a raw Event object used in Sciter.</p>
+      <pre>var elem = q(&quot;#content&quot;);
+// observe all clicks inside #content:
+elem.on(&quot;click&quot;, function(e){ ... });
+// observe clicks inside navigation links in #content
+elem.on(&quot;click&quot;, &quot;nav a&quot;, function(e){ ... });
+// all clicks inside links in the document
+self.on(&quot;click&quot;, &quot;a&quot;, function(e){ ... });
+</pre></dd>
+    <dt>off, Element.off</dt>
+    <dd><code>off(type, [selector], function(e){ ... }) &nbsp;⇒ self<br/>off({ type: handler, type2: handler2, ... }, [selector]) &nbsp;⇒ self<br/>off(type, [selector]) &nbsp;⇒ self<br/>off() &nbsp;⇒ self</code>
+      <p>Detach event handlers added with on() method. To detach a specific event handler, the same function must be passed that was used for on(). Otherwise, just calling this method with an event type with detach all handlers of that type. To unsubscribe all events from a namespace use <code>off(&quot;.mylib&quot;);</code> form - no name but namespace only. When called without arguments, it detaches all event handlers registered on current elements.</p>
+      <pre>var elem = q(&quot;#content&quot;);
+// detach all click handlers from the element:
+elem.off(&quot;click&quot;);
+// detach all event handlers set with .mylib namespace:
+elem.off(&quot;.mylib&quot;);
+</pre></dd>
+    <dt>one, Element.one</dt>
+    <dd><code>one(type, [selector], function(event){ ... }) &nbsp;⇒ self<br/>one({ type: handler, type2: handler2, ... }, [selector]) &nbsp;⇒ self</code>
+      <p>Similar to on() but attached event handlers will be fired only once - detached about first invocation.</p></dd>
+    <dt>trigger, Element.trigger</dt>
+    <dd><code>trigger(event[, param1, param2,...]) &nbsp;⇒ true/false</code>
+      <p>Trigger the specified event on elements of the list. Event here is a string that contains event name and optionally namespace.</p>
+      <p>If addition parameters are presented then they will be passed as they are to the handler function after the first event parameter.</p>
+      <p>The method returns <em>true</em> if any one of event handlers &quot;consumes&quot; the event returning precisely <em>false</em> value.</p>
+      <pre>// subscribing for the custom event:
+q(&quot;#content&quot;).on(&quot;show-alert.myapp&quot;, function(evt,msg) { view.msgbox(#alert,msg) } );
+// invoke the event with additional parameter:
+q(&quot;#content &gt; a&quot;).trigger(&quot;show-alert.myapp&quot;, &quot;Red alert!&quot;);
+// note the even will be bubbled up to the container
+</pre></dd></dl>
+  <p class="note">Note: the t.tis module adds on(), off(), one() &nbsp;and trigger() methods to the Element class too. For the convenience and uniform event handling.</p>
+</body>
+</html>

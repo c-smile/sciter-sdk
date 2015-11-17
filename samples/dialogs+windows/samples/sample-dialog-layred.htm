@@ -1,0 +1,66 @@
+<html custom-frame="layered" resizeable >
+<head>
+  <title>Resizeable dialog</title>
+  <style>
+    html 
+    { 
+      font:system;
+      min-width:min-content;  /* content will not overflow, no scrollbars */
+      max-width:100%;         /* max width - whole screen */
+      width:300dip;           /* preferred/initial width */
+      height:240dip;          /* content will not overflow, no vertical scrollbars on the window */  
+      min-height:min-content; 
+      max-height: 70%;        /* 70% of screen height */
+      overflow:none;
+      padding:0;
+      background-color:transparent;
+      background-image: url(custom-frame.png);
+      background-repeat: expand;
+      background-position: 36 36 36 36;
+    }
+    
+    window-button  { display:inline-block; width:max-content; font-family: Marlett; font-size:14px; outline-color:red; behavior:clickable; }
+    window-caption { display:block; flow:text; width:*; font:system; padding: 4px 8px; }
+    window-button#window-close { background-color:#dbb7ab; color:white; }
+    window-button#window-close:hover { background-color:red; outline:5px glow red -1px; transition: outline(linear,200ms) background-color(linear,200ms); }
+        
+    body { 
+      padding:0; margin:18px 20px 20px 20px; 
+      flow: "1 2" 
+            "3 3";
+    }
+    
+    html > body > section { height:*; }
+    
+    h1, p { text-align:center; }
+
+    #content { flow:horizontal; size:*; }   
+    #content > picture { display:block; size:auto; margin:6px; }
+    #content > textarea { display:block; size:*; min-width:16em; min-height:6em; }   
+    
+  </style>
+  <script type="text/tiscript">
+  
+    include "../../decorators.tis";
+    
+    @click @on "#close-dialog" :: view.close( $(textarea).value );
+    @click @on "#cancel-dialog" :: view.close( null );
+
+    </script>
+</head>
+<body>
+  <window-caption role="window-caption">Resizeable dialog</window-caption>
+  <window-button #window-close role="window-close">r</window-button>
+  <section>
+    <p>Try to resize the window</p>
+    <div #content>
+      <picture src="../user-login-48.png" />
+      <textarea novalue="Paste your PGP public key here"></textarea>
+    </div>
+    <p>
+      <button id="close-dialog">Ok</button>
+      <button id="cancel-dialog" tabindex=1 >Cancel</button>
+    </p>
+  </section>  
+</body>
+</html>

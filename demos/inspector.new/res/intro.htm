@@ -1,0 +1,15 @@
+﻿  <p><img src="sciter:busy.png" style="vertical-align:middle;"> Waiting for a connection with Sciter's view ...</p>
+  <p>To enable inspector in your application place call of either one of these in the code of your application:</p>
+  <ol>
+    <li><code>SciterSetOption(NULL, SCITER_SET_DEBUG_MODE, TRUE);</code> at the beginning of your main function. This will enable Inspector for any Sciter window/view, or</li>
+    <li><code>SciterSetOption(hwndSciter, SCITER_SET_DEBUG_MODE, TRUE);</code> for the particular Sciter window but before loading HTML in it.</li></ol>
+  <p>Shortcuts that are active in inspector-enabled view:</p>
+  <ul>
+    <li><code>CTRL+SHIFT+I</code> &nbsp;- connect current view to the Inspector;</li>
+    <li><code>CTRL+SHIFT+{mouse click}</code> on some DOM element - select the element for the inpection (styles, attributes, etc.).</li></ul>
+  <p>To connect with the Inspector from script put the following:</p>
+  <pre>if( view.connectToInspector ) <span.comment>// the view is in debug mode</span>
+  view.connectToInspector(rootElement, inspectorIpAddress);
+</pre>
+  <p>where <em>rootElement</em> and &nbsp;<em>inspectorIpAddress</em> are optional - if they are omitted it will try to connect root of the view with the inspector running on localhost.</p>
+

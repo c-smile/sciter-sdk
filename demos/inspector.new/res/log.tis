@@ -1,0 +1,166 @@
+include "decorators.tis";
+include "settings.tis";
+
+class Log: Behavior 
+{
+  const MAX_ITEMS = 500;
+  const MAX_MRU = 16;
+  
+  const EVAL_MSG_TYPE = 4;
+
+  const SUBSYSTEM = ["dom","csss","css","tis","eval"];
+  const SEVERITY = ["info","warning","error"];
+  const RE_FILE_LINE = /[(](file:[^()]+[(](\d+)[)])[)]/g;
+
+  
+  var   mruList = []; 
+  var   mruListValid = false;
+  var   instance = null; 
+
+  function attached() 
+  {
+    //this.driver = this.$p(.view-driver);
+  
+    function crackText(text)
+    {
+      text = text.replace("\t","    ").htmlEscape();
+      var wrapFileLine = : str,g,n : "(<a href='" + (g /~ "(") + "' line=" + n + " >" + (g %~ "/") + "</a>)"; 
+      return text.replace(RE_FILE_LINE, wrapFileLine);
+    }
+
+    var lastSub, lastSev, lastMsg, repeats; 
+     
+    this.addMsg = function(sub, sev, msg, vid = null)
+    {
+      var sx = this.scroll(#left);
+      var text = crackText(msg);
+            
+      const cvid = ViewDriver.currentViewID;
+      vid = vid || cvid;
+     
+      var insp = this.length - 2;
+      // check for duplicates
+      if(lastSub == sub && lastSev == sev && lastMsg == msg && this.last) 
+      {
+        this[insp].remove();
+        --insp;
+        msg = String.printf("<option class='%s %s %s' msg='%s'><var>%d</var>%s</option>", SUBSYSTEM[sub],SEVERITY[sev], (cvid == vid ? "current-view" : ""), msg.htmlEscape(),++repeats, text);
+      }
+      else {
+        lastSub = sub; lastSev = sev; lastMsg = msg;
+        repeats = 1;
+        msg = String.printf("<option class='%s %s %s' msg='%s'>%s</option>", SUBSYSTEM[sub],SEVERITY[sev], (cvid == vid ? "current-view" : ""), msg.htmlEscape(),text);
+      }
+      this.insert(msg, insp + 1);
+      var item = this[insp + 1];
+      item.vid = vid;
+      if( !this.state.focus )
+        this.post( :: this.scrollTo(sx,10000) );
+    }
+    // called by current view driver to highlight this view log messages
+    this.setCurrentView = function(vid) {
+      for( var el in this )
+        el.attributes.toggleClass("current-view", vid == el.vid);
+    };
+   
+  }
+  
+  @key Event.VK_C @CTRL : { this.selection2clipboard(); return true; }
+  
+  @click @on "a[href][line]" : evt, target { 
+    var data = {
+      url : target.attributes["href"],
+      lineNo : target.attributes["line"].toInteger()
+    };
+    var option = target.$p(option);
+    var vid = option.vid;
+    var views = $(#views);
+    //stdout.println("a[href][line]", option, vid, views, data.url, data.lineNo);
+    for( var driver in views.$$(.view-driver))
+    {
+      if( driver.vid == vid ) 
+      {
+        views.current = driver;
+        driver.postEvent("navigate-to-source", data);
+        break;
+      }
+    }
+    return true;
+  }
+
+  @click @on "menu#for-log-list>li[command='edit:copy']"  : { this.selection2clipboard(); return true; }
+  @click @on "menu#for-log-list>li[command='edit:clear']" : { var ed = this.last; this.clear(); this.append(ed); return true; }
+  
+  
+  @when Event.CONTEXT_MENU_SETUP @on "menu#for-log-list" :evt {
+    var menu = evt.source;
+    // copy item is enabled if there are :current or :checked options.
+    menu.$(li[command='edit:copy']).state.disabled = ! this.$(option:checked);
+	  // clear is enabled if there is at least one <option> in the list
+	  menu.$(li[command='edit:clear']).state.disabled = ! this.$(option);
+	  return true;
+  }
+  
+  @when (Event.CONTEXT_MENU_REQUEST | Event.SINKING ) @on "input.eval" :evt {
+    var menu = $(menu#for-input-eval);
+    if(!mruListValid) {
+      mruListValid = true;
+      var mrus = menu.$$(li.mru);
+      for( var el in mrus )
+        el.remove();
+      for( var item in Log.mruList )
+        menu.$append(<li.code.mru command="paste-code"><code>{item}</code></li>);
+    }
+  }
+  
+  function selection2clipboard()
+  {
+    var text = "";
+    for(var opt in this.$$(option:checked))
+      text += opt.attributes["msg"];
+    view.clipboard(#put,text);
+  }
+  
+  function updateMru(text) {
+    var index = mruList.indexOf(text);
+    if( index == 0 )
+      return;
+    if( index > 0 )
+      mruList.remove(index);
+    mruList.unshift(text);
+    if( mruList.length > MAX_MRU )
+      mruList.pop();
+    mruListValid = false;
+  }
+  
+  
+  @sinkingkey Event.VK_RETURN @on "input.eval" :evt, input { 
+    var text = input.value.trim();
+    if( text ) {
+      $(.view-driver:expanded).send(#evalIt, text);
+      this.addMsg(EVAL_MSG_TYPE, 1, text);
+      this.updateMru(text);
+      return true;
+    }
+  }
+  
+  @click @on "menu#for-input-eval > li[command=paste-code]" : evt, menuItem { 
+    var input = this.$(input.eval);
+    input.value = menuItem.$(code).text;
+    input.state.focus = true;
+    return true;
+  }
+
+}
+
+Settings.add {
+  store: function(data) 
+  {
+    data.codeSnippets = Log.mruList;  
+  },
+  restore: function(data) 
+  {
+    Log.mruList = data.codeSnippets || [];
+  }
+};
+

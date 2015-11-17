@@ -1,0 +1,41 @@
+<html>
+  <head>
+  <title></title>
+<style src="style.css"></style>
+<style> 
+  div#box { flow:horizontal; overflow:hidden;}  
+  picture { transform: translate(200px,0px); }
+</style>
+<script type="text/tiscript" src="script.tis"></script>
+  </head>
+<body>
+  <h2>Repeating animation</h2>
+  <div #box>
+    <picture src="heart.png" />
+    <picture src="spade.png" />
+    <picture src="diamond.png" />
+    <picture src="tref.png" />
+  </div>
+  <form>
+    <button #run>Run</button>
+    <button #clear>Clear</button>
+  </form>
+  
+  <div .explanation>
+    <p>FROM state - current state of the DOM element.</p>
+    <p>TO state - defined in code:</p>
+    <p>Note 1: $$(picture) returns list of picture elements. Each animation is offset by interval:0.3s.</p>
+    <p>Note 2: Initially all pictures are offset by translate(200px,0px); in CSS</p>
+    <p>Note 3: repeats:8 with swing means 4 pairs of back and fourth cycles</p>
+  </div>
+  
+  <textarea #src>Timeline.on(this)
+
+  .to( $$(picture), { duration:1s, interval:0.3s, ease: #quadInOut,
+                      repeats:8, swing:true  }, 
+                    { transform: translate(0px,0px) } )
+  .play();
+  </textarea>
+  
+</body>
+</html>

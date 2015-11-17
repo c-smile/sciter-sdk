@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      div { margin:1em; }
+    
+      .custom-back { background-color: rgb(255,229,0); }
+    
+    </style>
+    <script type="text/tiscript">
+    
+      function updateCustomBack(clr) {
+      
+        function mutateProps(rule) 
+        {
+          return { background-color: clr }; // update the rule by these values
+        }
+      
+        self.style.documentRules {
+          selector:".custom-back",
+          properties: mutateProps
+        };
+      
+      }
+      
+      
+      $(#hue).on("change", function(){
+      
+        var clr = Color.hsv( deg(this.value), 1, 1 );
+        updateCustomBack(clr);
+        stdout.println(clr, this.value);
+      
+      });
+    
+    
+    </script>
+  </head>
+<body>
+
+  <p>By changing slider value below you will change <code>.custom-back { background-color: rgb(255,229,0); }</code> rule in CSS</p>
+
+  <div id="one" class="custom-back">one</div>
+  <div id="two" class="custom-back">two</div>
+  <div>and the <span class="custom-back">three</span></div>
+  
+  Background color: <input|hslider id="hue" min=0 max=360 value=54 />
+ 
+</body>
+</html>

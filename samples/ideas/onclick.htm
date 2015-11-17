@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <title></title>
+    <style></style>
+    <script type="text/tiscript">
+    
+    function alert(msg) { view.msgbox(#information, msg.htmlEscape()); }
+    
+    self.on("click","[onclick]",function() {
+      return eval.call(this, this.attributes["onclick"] );
+    });
+    
+    </script>
+  </head>
+<body>
+
+  <button onclick='alert(this.text)'>Say Foo</button>
+  <button onclick='alert(this.text)'>Say Bar</button>
+
+</body>
+</html>

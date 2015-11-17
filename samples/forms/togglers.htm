@@ -1,0 +1,61 @@
+<html>
+  <head>
+  <title></title>
+<style>
+
+  @import url(toggler.css);
+
+  body { font:system;  }
+
+  form { flow:row(label,button); border-spacing: 1em; }
+  form > label { min-width:max-content; text-align:right; display:block; }
+
+  button.switch { flow: stack; }  
+  button.switch > caption { display:block; visibility:hidden; }  
+  button.switch:checked > caption.true { visibility:visible; }
+  button.switch:not(:checked) > caption.false { visibility:visible; }
+  
+</style>
+<script type="text/tiscript">
+
+  $(form).subscribe("change", function()
+  {
+    $(pre#out).text = String.printf("%V",this.value).replace("\t","  ");
+  });
+
+</script>
+  </head>
+<body>
+  
+  <form>
+    <label>Standard:</label>
+      <button|checkbox name="standard">Test</button>
+    <label>Standard(checked):</label>
+      <button|checkbox checked name="standardChecked">Test</button>
+    <label>Standard tri-state checkbox:</label>
+      <button|checkbox mixed name="standardMixed">Checkbox with indetermined state</button>
+    <label>Standard with state labels:</label>    
+      <button|checkbox .switch name="standardWithLabels">
+        <caption .true>in on state</caption>
+        <caption .false>in off state</caption>
+      </button>
+    <label>Standard with state labels (checked):</label>    
+      <button|checkbox .switch checked name="standardWithLabelsChecked">
+        <caption .true>in on state</caption>
+        <caption .false>in off state</caption>
+      </button>
+    <label>Toggler:</label>
+      <button|toggler name="toggler">
+        <caption .true>True</caption>
+        <caption .false>False</caption>
+      </button>
+    <label>Toggler(checked) :</label>
+      <button|toggler checked name="togglerChecked">
+        <caption .true>Truth</caption>
+        <caption .false>Falsehood</caption>
+      </button>
+  </form>
+  <pre #out></pre>
+
+</body>
+</html>

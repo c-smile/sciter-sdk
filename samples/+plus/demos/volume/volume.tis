@@ -1,0 +1,15 @@
+class Volume: Behavior
+{  
+  property value(v)
+  {  // tying 'value' attribute with the 'value' property
+    get return this.attributes["value"].toInteger(0); //'value' here is an integer 
+    set this.attributes["value"] = v.toString();
+  }
+  function onMouse(evt)
+  {
+    if( evt.type == Event.MOUSE_CLICK || evt.type == Event.MOUSE_DCLICK ) {
+      this.value = (this.value + 1) % 5; // increment the value on mouse click
+      return true;
+    }
+  }
+}

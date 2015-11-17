@@ -1,0 +1,124 @@
+<html>
+  <head>
+    <title>TIScript - Date object</title>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>Length value type and object</h1>
+  
+    <dl>
+      
+        
+          <div>Length type reperesents length (distance) values such as mm, cm, px, in, pt, etc.</div>
+          <p>Length values are constructed by following</p>
+          <h2>Constructor functions</h2>
+      
+        <dt>em</dt>
+        <dd>
+          <div>(<strong> v</strong>: int | float ) : length, these functions constructs length values of corresponding type.</div></dd>
+      
+        <dt>ex</dt>
+        <dd>
+          <div>(<strong> v</strong>: int | float ) : length</div></dd>
+      
+        <dt>pr</dt>
+        <dd>
+          <div>(<strong> v</strong>: int | float ) : length/percentage</div></dd>
+      
+        <dt>fx</dt>
+        <dd>
+          <div>(<strong> v</strong>: int | float ) : length</div></dd>
+      
+        <dt>px</dt>
+        <dd>
+          <div>(<strong> v</strong>: int | float ) : length</div></dd>
+      
+        <dt>in</dt>
+        <dd>
+          <div>(<strong> v</strong>: int | float ) : length</div></dd>
+      
+        <dt>cm</dt>
+        <dd>
+          <div>(<strong> v</strong>: int | float ) : length</div></dd>
+      
+        <dt>mm</dt>
+        <dd>
+          <div>(<strong> v</strong>: int | float ) : length</div></dd>
+      
+        <dt>pt</dt>
+        <dd>
+          <div>(<strong> v</strong>: int | float ) : length</div></dd>
+      
+        <dt>pc</dt>
+        <dd>
+          <div>(<strong> v</strong>: int | float ) : length</div></dd>
+      
+        <dt>dip</dt>
+        <dd>
+          <div>(<strong> v</strong>: int | float ) : length</div></dd>
+      
+        <dt>length</dt>
+        <dd>
+          <div>(<strong> v</strong>: int | float, units: symbol ) : length</div></dd>
+      
+        
+          <h2>Constants</h2>
+      
+        <dt/>
+        <dd><strong>N/A</strong></dd>
+      
+        
+          <h2>Properties</h2>
+      
+        <dt>units</dt>
+        <dd>read-only, <em>symbol</em>, one of:
+          <ul>
+            <li>#em - em font units;</li>
+            <li>#ex - ex font units;</li>
+            <li>#pr - percents '%';</li>
+            <li>#fx - flex units (in h-smile CSS core): 1fx = '1*' or '100%%';</li>
+            <li>#px - pixels, usually device dependent;</li>
+            <li>#in - inches;</li>
+            <li>#cm - centimeters;</li>
+            <li>#mm - millimeters;</li>
+            <li>#pt - typographical point (1/72 of inch)</li>
+            <li>#pc - typographical pica (1/12 of point)</li>
+            <li>#dip - device independent pixels ( 1/96 of inch )</li></ul></dd>
+      
+        
+          <h2>Methods</h2>
+      
+        <dt>parse</dt>
+        <dd>
+          <p>( <strong>text</strong>: string [, defval: undefined ) : length | defval</p>
+          <p>static method (method of the class), parses text for the length value. In case of parsing failure returns value defined by defval.</p></dd>
+      
+        <dt>make</dt>
+        <dd>
+          <div>(<strong> v</strong>: int | float, <strong>units</strong>: symbol ) : length</div>
+          <p>static function, constructs length of correspondent value and the unit symbol (above).</p></dd>
+      
+        <dt>toString</dt>
+        <dd>
+          <p>( ) : string</p>
+          <p>Returns string representation of the value, e.g. &quot;12.5pt&quot;,  &quot;1px&quot;, etc.</p></dd>
+      
+        <dt>toInteger</dt>
+        <dd>
+          <p>( ) : int</p>
+          <p>Converts the length to integer.</p></dd>
+      
+        <dt>toFloat</dt>
+        <dd>
+          <p>( [<strong>unit</strong>: symbol [, <strong>defvalue</strong>: any ]) : float</p>
+          <p>Converts the length to float. If <em>unit</em> is provided and its value is one the units above then the result be float representation in that units. If conversion is not possible the <em>defvalue</em> is returned (or 0.0 if it is omitted)</p></dd>
+      
+        <dt>morph</dt>
+        <dd>
+          <p>( <strong>lengthFrom</strong>, <strong>lengthTo</strong>, ratio ) : length</p>
+          <p>Computes the average length using the formula: (lengthTo - lengthFrom) * ratio + lengthFrom;</p></dd>
+      
+        <dt/>
+        <dd/></dl>
+</body>
+</html>

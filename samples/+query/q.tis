@@ -1,0 +1,679 @@
+﻿//|
+//| jquery/zepto alike thing, note uses 'q' instead of '$'
+//|
+
+//| Note: all Sciter DOM functions that return list of elements like $$(selector) and selectAll("selector") return
+//| array object that has prototype set to ElementList object.
+//|
+//| Therefore it is enough to define methods in that object and do the following:
+
+const q = function(subj) {
+  if( typeof subj == #string ) {
+    if( subj like "<*" ) // seems like html
+    {
+      subj = self.parseHtml(subj);
+      assert subj instanceof ElementList: "only pure elements for a while";
+      return subj;
+    }
+    return self.selectAll(subj);         // select elements, it will return array of type ElementList
+  }
+  else if( typeof subj == #function )
+    return self.post(subj);              // post it for the later time
+  else if( subj instanceof Element ) {
+    var wrapper = [subj];                // element, wrap it into ElementList array
+    wrapper.prototype = ElementList;
+    return wrapper; 
+  }
+  else if( subj instanceof ElementList ) // already it, just return it
+    return subj; 
+  assert false: "q does not know what to do with " + (typeof subj);
+}
+
+//| add(selector, [context])  -> self
+function ElementList.add(sel, context = self) 
+{
+  return Array.concat.call(this,context.selectAll(sel));
+}
+
+//| addClass(name)  ? self
+//| addClass(function(index, oldClassName){ ... })  ? self
+function ElementList.addClass(that) 
+{
+  if( typeof that == #string ) {
+    var classes = that.split(" ");
+    for(var el in this) 
+      for(var cls in classes) 
+        el.attributes.addClass(cls);
+  } else if( typeof that == #function ) {
+      var oldcls = el.attributes["class"];
+      for(var (idx,el) in this) el.attributes.addClass(that.call(el,idx,oldcls));
+  }
+  return this;
+}
+
+//| removeClass()  ? self
+//| removeClass(name)  ? self
+//| removeClass(function(index, oldClassName){ ... })  ? self
+function ElementList.removeClass(that) 
+{
+  if( !that )
+    for(var el in this) el.attributes["class"] = undefined;
+  else if( typeof that == #string ) {
+    var classes = that.split(" ");
+    for(var el in this) for(var cls in classes) el.attributes.removeClass(cls);
+  } else if( typeof that == #function ) {
+    var oldcls = el.attributes["class"];
+    for(var (idx,el) in this) el.attributes.removeClass(that.call(el,idx,oldcls));
+  }
+  return this;
+}
+
+//| toggleClass(names [,onoff])  ? self
+//| toggleClass(function(index, oldClassName){ ... } [,onoff] )  ? self
+function ElementList.toggleClass(that, onoff = undefined) 
+{
+  if( typeof that == #string ) {
+    var classes = that.split(" ");
+    for(var el in this) for(var cls in classes)  el.attributes.toggleClass(cls,onoff);
+  } else if( typeof that == #function ) {
+    var oldcls = el.attributes["class"];
+    for(var (idx,el) in this) el.attributes.toggleClass(that.call(el,idx,oldcls),onoff);
+  }
+  return this;
+}
+
+
+//| after(content)  ? self
+//| before(content)  ? self
+//| replaceWith(content)  ? self
+
+!function() { 
+  function insert(at,what,after,repl = false) 
+  {
+    if(typeof what == #array ) {
+      for(var el in at)
+        if(var p = el.parent) {
+          var idx = el.index;
+          if(repl) el.remove();
+          for(var that in what) p.insert( typeof that == #string? that : that.clone() ,idx++,after);
+        }
+    } else
+      for(var el in at) 
+        if(var p = el.parent) {
+          var idx = el.index;
+          if(repl) el.remove();
+          p.insert(what,idx,after);
+        }
+    return at;
+  }
+  ElementList.after = function(what) { return insert(this,what,true) };
+  ElementList.before = function(what) { return insert(this,what,false) };
+  ElementList.replaceWith = function(what) { return insert(this,what,false,true) };
+}();
+
+
+
+//| append(content)  ? self
+function ElementList.append(what) 
+{
+  if(typeof what == #array )
+    for(var el in this) for(var that in what) el.append( typeof that == #string? that : that.clone() );
+  else
+    for(var el in this) el.append(what);
+  return this;
+}
+//| prepend(content)  ? self
+function ElementList.prepend(what) 
+{
+  if(typeof what == #array )
+    for(var el in this) for(var that in what) el.prepend( typeof that == #string? that : that.clone() );
+  else
+    for(var el in this) el.prepend(what);
+  return this;
+}
+
+//| appendTo(target)  ? self
+function ElementList.appendTo(target) 
+{
+  if(typeof target == #string) target = self.selectAll(target);
+  for(var el in this) target.append(el);
+  return this;
+}
+function ElementList.$appendTo(params..) { return this.appendTo(params.join("")); }
+
+//| prependTo(target)  ? self
+function ElementList.prependTo(target) 
+{
+  if(typeof target == #string) target = self.selectAll(target);
+  for(var el in this) target.prepend(el);
+  return this;
+}
+function ElementList.$prependTo(params..) { return this.prependTo(params.join("")); }
+
+//| attr(name)  ? string
+//| attr(name, value)  ? self
+//| attr(name, function(index, oldValue){ ... })  ? self
+//| attr({ name: value, name2: value2, ... })  ? self
+
+function ElementList.attr(name, val = #nothing-there) 
+{
+  if( val == #nothing-there ) {
+    if( typeof name == #string || typeof name == #symbol ) 
+      return this.length? this[0].attributes[name] : undefined;
+    else if( typeof name == #object ) 
+      for(var el in this) el.attributes.set(name);
+    else
+      assert false: "name is neither string nor object";
+  } else if( typeof val == #function ) 
+     for(var (idx,el) in this) el.attributes[name] = val.call(el,idx,el.attributes[name]);
+  else
+     for(var (idx,el) in this) el.attributes[name] = val;
+  return this;
+}
+
+//| make ElementList from arguments  -> collection
+function ElementList.make(args..) {
+  args.prototype = ElementList;
+  return args;
+}
+
+//| children([selector])  ? collection
+function ElementList.children(selector = null) 
+{
+  selector = selector? ("> " + selector) : "> *";
+  var r = ElementList.make(); 
+  for( var el in this ) r = r.concat(el.selectAll(selector));
+  return r;
+}
+function ElementList.$children(params..)  { return this.children(params.join("")); }
+
+//| closest(selector)  ? collection
+//| closest(collection)  ? collection 
+//| closest(element)  ? collection 
+//| closest(function)  ? collection 
+function ElementList.closest(param) 
+{
+  if(typeof param == #array)
+    return this.closest( :: param.indexOf(this) >= 0);
+
+  var r = ElementList.make();
+  if(typeof param == #string)
+    for(var el in this) { var t = el.selectParent(param); if(t) r.push(t); }
+  else if(typeof param == #function)
+    for(var el in this) {
+      var p = el.parent;
+      while(p) {
+        if( param.call(p) ) { r.push(p); break; }
+        if( p === self ) break;
+        p = p.parent;
+      }
+    }
+  else if(param instanceof Element)
+    for(var el in this) {
+      var p = el.parent;
+      while(p) {
+        if( p === param ) { r.push(p); break; }
+        if( p === self ) break;
+        p = p.parent;
+      }
+    }
+  return r;
+}
+// stringizer version of the above
+function ElementList.$closest(params..) { return this.closest(params.join("")); }
+
+//| contents()  ? array of nodes
+function ElementList.contents() 
+{
+  var r; 
+  for( var el in this ) r = r? r.concat(el.nodes()) : el.nodes();
+  return r;
+}
+
+//| css(property)  ? value
+//| css(property, value)  ? self
+//| css({ property: value, property2: value2, ... })  ? self
+function ElementList.css(name, val = #nothing-there) 
+{
+  if( typeof name == #string || typeof name == #symbol )
+  {
+    if(val == #nothing-there) 
+      return this.length ? this[0].style[name] : undefined;
+    for(var el in this) el.style[name] = val;
+  } else if(typeof name == #object ) 
+    for(var el in this) el.style.set(name);
+  return this;
+}
+
+//| each(function(index, item){ ... })  ? self
+function ElementList.each(func) 
+{
+  if( typeof func == #function )
+    for(var (idx,el) in this) func.call(el,idx,el);
+  return this;
+}
+
+//| empty()  ? self
+//| Clear DOM contents of each element in the collection.
+function ElementList.empty() 
+{
+  if( typeof func == #function )
+    for(var el in this) el.clear();
+  return this;
+}
+
+//| eq()  ? self
+//| Clear DOM contents of each element in the collection.
+function ElementList.eq(index) 
+{
+  return (index >= 0 && index < this.length) ? ElementList.make(this[index]) 
+       : (index < 0 && -index <= this.length) ? ElementList.make(this[this.length + index]) 
+       : ElementList.make();
+}
+
+//| filter(selector) -> ElementList
+//| filter(function(index){ ... }) -> ElementList
+function ElementList.filter(sf) 
+{
+  if( typeof sf == #string ) return Array.filter.call(this, :el: el.match(sf) );
+  else if(typeof sf == #function) return Array.filter.call(this, :el,idx: sf.call(el,idx) );
+  return ElementList.make();
+}
+// stringizer version of the above
+function ElementList.$filter(params..) { return this.filter(params.join("")); } 
+
+//| find(selector)  ? collection
+//| find(collection)  ? collection 
+//| find(element)  ? collection 
+function ElementList.find(param) 
+{
+  if( typeof param == #string ) {
+    var r = ElementList.make();
+    for(var el in this) r = r.concat( el.selectAll(param) );
+    return r;
+  }
+  else if( typeof param == #array )
+    return this.filter(
+      function() {
+        for(var parent in params)
+          if( this.belongsTo(parent) )
+            return true;
+        return false;
+      });
+  else if( typeof param == #array )
+    return this.filter(:: this.belongsTo(param) );
+}
+// stringizer version of the above
+function ElementList.$find(params..) { return this.find(params.join("")); } 
+
+
+//| first()  ? collection
+function ElementList.first() { return this.eq(0); }
+//| last()  ? collection
+function ElementList.last() { return this.eq(-1); }
+
+//| get()  ? array
+//| get(index)  ? DOM node
+ElementList[#get] = function(index = null) 
+{
+  if(index === null) {
+    var r = this.clone(); r.prototype = undefined;
+    return r; // plain array
+  }
+  return (index >= 0 && index < this.length) ? this[index]
+       : (index < 0 && -index <= this.length) ? this[this.length + index] 
+       : undefined;
+}
+
+//| has(selector)  -> ElementList
+//| has(element)  -> ElementList
+function ElementList.has(that) 
+{
+  if( typeof that == #string ) return Array.filter.call(this, :el: !!el.select(that) );
+  else return Array.filter.call(this, :el: el === that );
+}
+// stringizer version of the above
+function ElementList.$has(params..) { return this.has(params.join("")); } 
+
+//| hasClass(name)  ? boolean
+function ElementList.hasClass(name) 
+{
+  for(var el in this) if( el.attributes.hasClass(name) ) return true;
+  return false;
+}
+
+//| hide()  -> ElementList
+//| NOTE: these two are conceptually different from what jQuery/Zepto provide.
+//| the show()/hide() methods simply add/remove .hidden class on DOM elements.
+//| So in order this to work the CSS shall contain something like 
+//|   *.hidden { display:none; } or
+//|   *.hidden { visibility:collapse; }
+//| - thus, for particular situations .hidden class can be defined properly.
+function ElementList.hide() 
+{
+  for(var el in this) el.attributes.addClass("hidden");
+  return this;
+}
+//| show()  -> ElementList
+function ElementList.show() 
+{
+  for(var el in this) el.attributes.removeClass("hidden");
+  return this;
+}
+
+//| html()  ? string
+//| html(content)  ? self
+//| html(function(index, oldHtml){ ... })  ? self
+function ElementList.html(content = null)
+{
+  if(content === null)
+    return this.length ? this[0].html : "";
+  else if(typeof content == #string)    
+    for(var el in this) el.html = content;
+  else if(typeof content == #function)    
+    for(var (idx,el) in this) el.html = content.call(el,idx,el.html);
+  return this;
+}
+
+//| index([element])  ? integer
+function ElementList.index(element = null)
+{
+  if(element === null)
+    return this.length ? this[0].index : undefined;
+  else 
+    return this.indexOf(element);
+}
+
+//| insertAfter(target)  ? self
+//| like after, but with reversed operands.
+function ElementList.insertAfter(target)
+{
+  if( target.prototype === ElementList )
+    target.after(this); 
+  else if(target instanceof Element)
+    ElementList.make(target).after(this); 
+  return this;
+}
+
+//| insertBefore(target)  ? self
+//| like before, but with reversed operands.
+function ElementList.insertAfter(target)
+{
+  if( target.prototype === ElementList )
+    target.before(this); 
+  else if(target instanceof Element)
+    ElementList.make(target).before(this); 
+  return this;
+}
+
+//| is(selector)  ? boolean
+function ElementList.is(selector)
+{
+  return this.length ? this[0].match(selector) : false;
+}
+// stringizer version of the above
+function ElementList.$is(params..) { return this.is(params.join("")); } 
+
+//| map(function(index, item){ ... })  ? collection
+function ElementList.map(func) {
+  var r = [];
+  for(var (idx,el) in this ) {
+    var t = func.call(el,this,el);
+    if( t !== null && t !== undefined && t !== #nothing )
+      r.push(t);
+  }
+  return r;
+}
+
+//| next()  ? collection
+//| next(selector)  ? collection
+function ElementList.next(selector = null) {
+  var r = ElementList.make();
+  var n;
+  if(selector)
+    for(var el in this ) if( (n = el.next) && n.match(selector) ) r.push(n);
+  else      
+    for(var el in this ) if( n = el.next) r.push(n);
+  return r;
+}
+// stringizer version of the above
+function ElementList.$next(params..) { return this.next(params.join("")); } 
+
+//| prev()  ? collection
+//| prev(selector)  ? collection
+function ElementList.prev(selector = null) {
+  var r = ElementList.make();
+  var n;
+  if(selector)
+    for(var el in this ) if( (n = el.prior) && n.match(selector) ) r.push(n);
+  else      
+    for(var el in this ) if( n = el.prior) r.push(n);
+  return r;
+}
+// stringizer version of the above
+function ElementList.$prev(params..) { return this.prev(params.join("")); } 
+
+//| not(selector)  ? collection
+//| not(collection)  ? collection
+//| not(function(index){ ... })  ? collection
+//| Note: opposite to filter().
+function ElementList.not(param) 
+{
+  if( typeof param == #string ) return Array.filter.call(this, :el: !el.match(param) );
+  else if(typeof param == #function) return Array.filter.call(this, :el,idx: !param.call(el,idx) );
+  else if(typeof param == #array) return Array.filter.call(this, :el: param.indexOf(el) < 0 );
+  return ElementList.make();
+}
+// stringizer version of the above
+function ElementList.$not(params..) { return this.not(params.join("")); } 
+
+//| offset()  ? object
+//| offset(coordinates)  ? self
+//| offset(function(index, oldOffset){ ... })  ? self
+function ElementList.offset(param = null) 
+{
+  assert false: "not yet!";
+}
+
+//| offsetParent()  ? collection
+//| Find first ancestor element that is positioned - its CSS position value is “relative”, “absolute” or “fixed”.
+function ElementList.offsetParent() 
+{
+  assert false: "not yet!";
+}
+
+//| parent([selector])  ? collection
+function ElementList.parent(selector = null) {
+  var r = ElementList.make();
+  var n;
+  if(selector)  for(var el in this ) if( (n = el.parent) && n.match(selector) )  r.push(n);
+  else          for(var el in this ) if( n = el.parent) r.push(n);
+  return r;
+}
+// stringizer version of the above
+function ElementList.$parent(params..) { return this.parent(params.join("")); } 
+
+//| parent([selector])  ? collection
+function ElementList.parents(selector = null) {
+  var r = ElementList.make();
+  var n;
+  if(selector) for(var el in this ) r = r.concat(el.selectParents(selector));
+  else         for(var el in this ) r = r.concat(el.selectParents("*"));
+  return r;
+}
+function ElementList.$parents(params..) { return this.parents(params.join("")); } 
+
+//| position()  ? object
+//| Get the position of the first element in the collection, relative to the offsetParent. This information is useful when absolutely positioning an element to appear aligned with another.
+//| Returns an object with properties: top, left.
+function ElementList.position() 
+{
+  assert false: "not yet!";
+}
+
+//| remove()  ? self
+//| remove elements from the DOM
+function ElementList.remove() { for(var el in this ) el.remove(); return this; }
+
+//| removeAttr(name)  ? self
+function ElementList.removeAttr(name) { return this.attr(name,undefined); }
+
+//| siblings([selector])  ? collection
+function ElementList.siblings(selector = null) {
+  var p, r = ElementList.make();
+  if(selector)
+    for(var el in this ) {
+      if( !(p = el.parent) ) continue;
+      for( var n in p ) if( n !== el && n.match(selector) ) r.push(n);
+    }
+  else      
+    for(var el in this ) {
+      if( !(p = el.parent) ) continue;
+      for( var n in p ) if( n !== el ) r.push(n);
+    }
+  return r;
+}
+function ElementList.$siblings(params..) { return this.siblings(params.join("")); } 
+
+//| size()  ? number
+function ElementList.size() { return this.length; }
+
+//| text()  ? string
+//| text(content)  ? self
+
+function ElementList.text(content = null) { 
+  if( content === null ) return this.length ? this[0].text : ""; 
+  else { text = text.toString(); for(var el in this ) el.text = text; }
+  return this; 
+}
+
+//| toggle([setting])  ? self
+function ElementList.toggle(onoff = null) { 
+  if( onoff === null )  for(var el in this ) if(el.attributes.hasClass("hidden")) el.attributes.removeClass("hidden") else el.attributes.addClass("hidden");
+  else { var off = !onoff; for(var el in this ) if(off) el.attributes.removeClass("hidden") else el.attributes.addClass("hidden"); }
+  return this; 
+}
+
+//| unwrap()  -> self
+//| Removes the element's parent from DOM, so moves this element in place of its parent.
+function ElementList.unwrap() { for(var el in this ) if(el.parent) el.parent.remove(#unwrap); }
+
+//| wrap(structure)  -> self
+//| wrap(function(index){ ... })  -> self
+
+function ElementList.wrap(towhat) { 
+  function dowrap(el,towhat) {
+    var to;
+    if( typeof towhat == #string ) {
+      var idx = el.index;
+      el.parent.insert(towhat,idx);
+      to = el.parent[idx];
+      to = to.select(":empty") || to;
+      to.append(el);
+    }
+    else if( towhat instanceof Element ) {
+      to = towhat.clone();
+      var idx = el.index;
+      el.parent.insert(towhat,idx);
+      to = towhat.select(":empty") || towhat;
+      to.append(el);
+    }
+    else if( typeof towhat == #function )
+      return dowrap(el,towhat.call(el));
+    else 
+      return;  
+  }
+  for(var el in this ) dowrap(el,towhat);
+  return this;
+}
+
+//| val()  ? string
+//| val(value)  ? self
+//| val(function(index, oldValue){ ... })  ? self
+
+function ElementList.val(v = #nothing-here) { 
+  if( v === #nothing-here ) {
+    if(this.length) return this[0].value;
+    return undefined;
+  } 
+  else if( typeof v == #function )
+    for( var (idx,el) in this ) el.value = v.call(el,idx,el.value);
+  else      
+    for( var el in this ) el.value = v;
+  return this;
+}
+
+
+//|
+//| Events
+//|
+
+!function() {
+
+  //| on(type, [selector], function(e){ ... })  -> self
+  //| on({ type: handler, type2: handler2, ... }, [selector])  -> self
+  Element.on = function (evtype, selector = null, func = null)
+  {
+    if( typeof evtype == #object ) { for(var (k,v) in evtype) this.on(k,selector,v); return this; }
+    if( func === null && typeof selector == #function ) (func,selector) = (selector,func);
+    selector? this.subscribe( evtype, selector, func ) 
+            : this.subscribe( evtype, func );
+    return this;
+  }
+  // adds the same to all elements in the list:
+  ElementList.on = function (evtype, selector = null, func = null) { for(var el in this) el.on(evtype, selector, func); return this; }
+  
+  //| off(type, [selector], function(e){ ... })  -> self
+  //| off({ type: handler, type2: handler2, ... }, [selector])  -> self
+  //| off(type, [selector])  -> self
+  //| off()  -> self
+  
+  // Bonus: adds the same for single Element:
+  Element.off = function (evtype = null, selector = null, func = null) {
+    if( evtype && typeof evtype == #object ) { for(var (k,v) in evtype) this.off(k,selector,v); return this; }
+    // if !evtype delete all that was set through ElementList.on()
+    if(!evtype) { this.unsubscribe(); return this; } 
+    if( func === null && typeof selector == #function ) (func,selector) = (selector,func);    
+    if( selector )
+      func? this.unsubscribe( evtype, selector, func ): this.unsubscribe( evtype, selector);
+    else 
+      func? this.unsubscribe( evtype, func ): this.unsubscribe( evtype);
+    return this;
+  }
+  // the same but for all elements in the list
+  ElementList.off = function (evtype = null, selector = null, func = null) { for(var el in this) el.off(evtype, selector, func); return this; }
+    
+  //| one(type, function(e){ ... })  ? self
+  //| one({ type: handler, type2: handler2, ... })  ? self
+  //| adds an event handler that fires only once.  
+    
+  Element.one = function (evtype, func = null) {
+    if( evtype && typeof evtype == #object ) { for(var (k,v) in evtype) this.one(k,v); return this; }
+    var autod = function(evt) { 
+      var r = func.call(this,evt);
+      this.unsubscribe(autod);
+      return r;
+    } 
+    this.subscribe( evtype, autod );
+    return this;
+  }  
+  // the same but for all elements in the list
+  ElementList.one = function (evtype, func = null) { for(var el in this) el.one(evtype, func); return this;  }
+  
+  // trigger for the Element instance
+  Element.trigger = function( evtype, params..) 
+  {
+    if( params.length == 0 ) 
+      this.postEvent(evtype);
+    else if( params.length == 1 ) 
+      this.postEvent(evtype,params[0]);
+    else 
+      this.postEvent(evtype,params);
+  }
+  
+  // trigger for the ElementList instance
+  ElementList.trigger = function (evtype, params..) { 
+    for(var el in this) Element.trigger.apply(el, evtype, params);
+  }
+  
+}();

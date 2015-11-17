@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <style>
+      #results li.failure { color:red; }   
+      text#behavior-test
+      {
+        prototype:bhvB;
+      }
+    </style>
+  <script type="text/tiscript">
+  
+    var ulr = self.select("#results");
+  
+    function run(TestFunc)
+    {
+      var li = new Element("li");
+      ulr.insert(li);
+      try 
+      {
+        TestFunc();
+        li.text = String.printf("%s passed", TestFunc );
+      }
+      catch(err)
+      {
+        li.html = String.printf("%s failed with <pre>%s</pre>", TestFunc, err );
+        li.@#class = "failure";
+      }
+    }
+    include "tiscript-tests.tis";
+    include "tiscript-behaviors-tests.tis";
+    
+    function self.ready()
+    {
+      run( Super_Behavior_test );    
+    }
+    
+  </script>
+  </head>
+<body>
+  <h1>TIScript basic tests</h1> 
+  <ul #results>
+    
+  </ul>
+  <text #behavior-test>behavior-test</text>
+</body>
+</html>

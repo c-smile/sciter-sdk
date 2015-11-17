@@ -1,0 +1,99 @@
+<html>
+  <head>
+  <title></title>
+<style>
+
+  #container { size:*; flow:horizontal; border-spacing: 10px; vertical-align:middle; }
+  #container > widget { 
+    behavior: button;
+    size:* 200px; display:block; 
+    vertical-align:middle; 
+    text-align:center; 
+    cursor:pointer;
+    border-radius:8dip;
+    border:2px solid transparent;
+  }
+    
+  #container > div { display:none; size:*; background:gold; vertical-align:middle; text-align:center; border-radius:8dip;}
+  #container > widget > text:hover { color:white; }
+  
+  #container[state] > widget { size:70px; }
+  #container[state] > widget > text { display:none; }
+  
+  #container[state=1]
+  {
+    flow: "1 2"
+          "3 2"
+          "5 2"
+          "7 2";
+  }      
+  #container[state=1] > div:nth-child(2) { display:block; } 
+  #container[state=1] > widget:nth-child(1) { border-color:blue; } 
+
+  #container[state=2]
+  {
+    flow: "1 4"
+          "3 4"
+          "5 4"
+          "7 4";
+  }      
+  #container[state=2] > div:nth-child(4) { display:block; } 
+  #container[state=2] > widget:nth-child(3) { border-color:blue; } 
+
+  #container[state=3]
+  {
+    flow: "1 6"
+          "3 6"
+          "5 6"
+          "7 6";
+  }      
+  #container[state=3] > div:nth-child(6) { display:block; } 
+  #container[state=3] > widget:nth-child(5) { border-color:blue; } 
+
+  #container[state=4]
+  {
+    flow: "1 8"
+          "3 8"
+          "5 8"
+          "7 8";
+  }      
+  #container[state=4] > div:nth-child(8) { display:block; } 
+  #container[state=4] > widget:nth-child(7) { border-color:blue; } 
+ 
+
+</style>
+<script type="text/tiscript">
+
+  include "../decorators.tis";
+  include "replace-animator.tis";
+  
+  @click @on "#container > widget" : evt
+  {
+    var c = $(#container);
+    var w = evt.target;
+    var s = (w.index / 2 + 1).toString();
+    function stateChanger() { 
+      if( c.attributes["state"] == s)
+        c.attributes["state"] = undefined;
+      else
+        c.attributes["state"] = s;
+    }
+    AniReplace(c, stateChanger, 400);
+  }
+  
+</script>
+  </head>
+<body>
+  <div #container>
+    <widget style="background:gold" #test><text>First</text></widget>
+    <div style="background:gold">Content First</div>
+    <widget style="background:red"><text>Second</text></widget>
+    <div style="background:red">Content Second</div>
+    <widget style="background:orange"><text>Third</text></widget>
+    <div style="background:orange">Content Third</div>
+    <widget style="background:magenta"><text>Fourth</text></widget>
+    <div style="background:magenta">Content Fourth</div>
+  </ul>
+
+</body>
+</html>

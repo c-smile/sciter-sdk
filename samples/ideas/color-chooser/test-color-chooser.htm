@@ -1,0 +1,59 @@
+<html>
+<head>
+<style> 
+
+  html 
+  { 
+    background-color: #fff #e9e8f3 #e9e8f3 #fff; 
+  }
+  #sandbox 
+  { 
+    margin:20px; 
+    padding:10px; 
+    overflow:auto;
+    background-color:window; 
+    border:1px solid threedface; 
+    width:*; height:*;
+  }
+  
+  #result { border:1px solid threedface; }
+   
+</style>
+  
+  <style  src="color-chooser.css" />
+  
+  <script type="text/tiscript" > 
+  
+    var sandbox = self.select("#sandbox");
+    var result = self.select("#result");
+    var textColor = self.select("#textColor");
+    
+    textColor.onValueChanged = function( ctl )
+    {
+      sandbox.value = "Got new color " + ctl.value + " on " + ctl.attributes["id"];
+    }
+    textColor.onClick = function( ctl )
+    {
+      result.style["background-color"] = ctl.value;
+    }
+    
+  
+  </script>
+  
+  
+</head>
+<body>
+
+<h1>Popup sample</h1>
+
+Please choose your <input type="color-chooser" id="textColor" /> color. And another one: <input type="color-chooser" id="backColor" /><br/> 
+<img id="result" width="16" height="16" src="none" /> 
+
+
+<pre id="sandbox">
+  sandbox
+</pre>
+
+</body>
+
+</html>

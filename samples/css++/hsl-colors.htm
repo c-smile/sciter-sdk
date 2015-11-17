@@ -1,0 +1,142 @@
+<html>
+  <head>
+    <style>
+      table td { border:1px solid black; }
+      
+      @const BASE_HUE:120;
+      @const ALT_HUE:0;
+      
+      H1.t1 b:nth-child(1) { color:hsl(@BASE_HUE,100%,50%);}
+      H1.t1 b:nth-child(2) { color:hsl(@BASE_HUE,75%,50%); }
+      H1.t1 b:nth-child(3) { color:hsl(@BASE_HUE,50%,50%); }
+      H1.t1 b:nth-child(4) { color:hsl(@BASE_HUE,25%,50%); }
+      H1.t1 b:nth-child(5) { color:hsl(@BASE_HUE,0%,50%); }
+
+      H1.t1 b:nth-child(10) { color:hsl(@ALT_HUE,100%,50%);}
+      H1.t1 b:nth-child(9)  { color:hsl(@ALT_HUE,75%,50%); }
+      H1.t1 b:nth-child(8)  { color:hsl(@ALT_HUE,50%,50%); }
+      H1.t1 b:nth-child(7)  { color:hsl(@ALT_HUE,25%,50%); }
+      H1.t1 b:nth-child(6)  { color:hsl(@ALT_HUE,0%,50%);  }
+      
+      @const BASE_COLOR:orange;
+     
+      ul.t2 li { font-size:16pt; font-weight:bold; }
+      ul.t2 li:nth-child(1) { color: tint(@BASE_COLOR,-0.5 ); }
+      ul.t2 li:nth-child(2) { color: tint(@BASE_COLOR,-0.25); }
+      ul.t2 li:nth-child(3) { color: tint(@BASE_COLOR, 0.0 ); }
+      ul.t2 li:nth-child(4) { color: tint(@BASE_COLOR, 0.25); }
+      ul.t2 li:nth-child(5) { color: tint(@BASE_COLOR, 0.5 ); }
+
+      ul.t3 li { font-size:16pt; font-weight:bold; }
+      ul.t3 li:nth-child(1) { color: tint(@BASE_COLOR,-0.5 ,-0.5); }
+      ul.t3 li:nth-child(2) { color: tint(@BASE_COLOR,-0.25,-0.5); }
+      ul.t3 li:nth-child(3) { color: tint(@BASE_COLOR, 0.0 ,-0.5); }
+      ul.t3 li:nth-child(4) { color: tint(@BASE_COLOR, 0.25,-0.5); }
+      ul.t3 li:nth-child(5) { color: tint(@BASE_COLOR, 0.5 ,-0.5); }
+      
+      @const THEME_COLOR:infobackground;
+      
+      pre
+      {
+        border: 4px solid tint(@THEME_COLOR,-0.25);
+        background-color: tint(@THEME_COLOR,0.25);
+      }
+
+
+
+    </style>
+  </head>
+<body>
+  
+<table>
+  <tr>
+    <th></th>
+    <th colspan="5">Hue=30, Orange</th>
+  </tr> 
+  <tr>
+    <th></th>
+    <th colspan="5">Luminance</th>
+  </tr> 
+  <tr>
+    <th></th>
+    <th>100%</th>
+    <th>75%</th>
+    <th>50%</th>
+    <th>25%</th>
+    <th>0%</th>
+  </tr>
+  <tr>
+    <th>100</th>
+    <td style="background:hsl(30,100%,100%)">&nbsp;</td>
+    <td style="background:hsl(30,100%,75% )">&nbsp;</td>
+    <td style="background:hsl(30,100%,50% )">&nbsp;</td>  
+    <td style="background:hsl(30,100%,25% )">&nbsp;</td>
+    <td style="background:hsl(30,100%,0%  )">&nbsp;</td>
+  </tr>  
+  <tr>
+    <th>75</th>
+    <td style="background:hsl(30,75%,100%)">&nbsp;</td>
+    <td style="background:hsl(30,75%,75% )">&nbsp;</td>
+    <td style="background:hsl(30,75%,50% )">&nbsp;</td>  
+    <td style="background:hsl(30,75%,25% )">&nbsp;</td>
+    <td style="background:hsl(30,75%,0%  )">&nbsp;</td>
+  </tr>  
+  <tr>
+    <th>50</th>
+    <td style="background:hsl(30,50%,100%)">&nbsp;</td>
+    <td style="background:hsl(30,50%,75% )">&nbsp;</td>
+    <td style="background:hsl(30,50%,50% )">&nbsp;</td>  
+    <td style="background:hsl(30,50%,25% )">&nbsp;</td>
+    <td style="background:hsl(30,50%,0%  )">&nbsp;</td>
+  </tr>  
+  <tr>
+    <th>25</th>
+    <td style="background:hsl(30,25%,100%)">&nbsp;</td>
+    <td style="background:hsl(30,25%,75% )">&nbsp;</td>
+    <td style="background:hsl(30,25%,50% )">&nbsp;</td>  
+    <td style="background:hsl(30,25%,25% )">&nbsp;</td>
+    <td style="background:hsl(30,25%,0%  )">&nbsp;</td>
+  </tr>  
+  <tr>
+    <th>0</th>
+    <td style="background:hsl(30,0%,100%)">&nbsp;</td>
+    <td style="background:hsl(30,0%,75% )">&nbsp;</td>
+    <td style="background:hsl(30,0%,50% )">&nbsp;</td>  
+    <td style="background:hsl(30,0%,25% )">&nbsp;</td>
+    <td style="background:hsl(30,0%,0%  )">&nbsp;</td>
+  </tr>  
+  
+</table>
+  
+<h1 .t1><b>H</b><b>e</b><b>l</b><b>l</b><b>o</b> <b>w</b><b>o</b><b>r</b><b>l</b><b>d</b>!</h1>  
+
+  <h1>Tints of <span style="color:orange">Orange</span>:</h1>
+  
+  <div style="flow:horizontal"> 
+    <ul .t2>
+      <li>luminance delta:-0.5</li>
+      <li>luminance delta:-0.25</li>
+      <li>luminance delta:0.0 (color itself)</li>
+      <li>luminance delta:+0.25</li>
+      <li>luminance delta:+0.5</li>
+      <caption>saturation delta 0.0</caption>
+    </ul>
+    <ul .t3>
+      <li>luminance delta:-0.5</li>
+      <li>luminance delta:-0.25</li>
+      <li>luminance delta:0.0</li>
+      <li>luminance delta:+0.25</li>
+      <li>luminance delta:+0.5</li>
+      <caption>saturation delta -0.5</caption>
+    </ul>
+  </div>
+  
+  <pre>
+  @const THEME_COLOR:infobackground; // system color
+
+  border: 4px solid tint(@THEME_COLOR,-0.25);
+  background-color: tint(@THEME_COLOR,0.25);
+  </pre>
+  
+</body>
+</html>

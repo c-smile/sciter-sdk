@@ -1,0 +1,216 @@
+/*
+ *
+ * extensions of standard menu style definitions, see master style sheet for more menu related styles.
+ *
+ */
+
+menubar /*top level menu*/
+{
+  font: system; font-rendering-mode:classic;
+  display:block;
+  behavior:menu-bar;
+  flow: horizontal;
+  color:@MENU-TEXT; 
+  margin:0;  
+}
+
+menubar > li /* menu item in menu bar */ 
+{  
+  padding:2px 8px;
+  margin:0;
+  white-space:nowrap;
+  width:max-intrinsic;
+  display:block;
+  flow:horizontal;
+}
+
+menubar > li:hover,
+menubar > li:current /* current menu item in menu bar */ 
+{  
+  background-color:@MENU-HILITE-BACK; color:@MENU-HILITE-TEXT; 
+}
+
+button[type="menu"]
+{
+  behavior:button popup-menu; 
+}
+
+button[type="menu"]:owns-popup /* button when popup is shown */
+{
+	background-image:url(theme:button-pressed); /* ?? */  
+}
+
+menu  /* popup menu */
+{
+  font: system; font-rendering-mode:classic;
+  behavior:menu; /*is a menu*/
+  flow: vertical;
+  display:none; 
+  margin:0;  
+  padding:1px;
+  max-width:max-intrinsic;
+  /*min-width: max-intrinsic;*/
+  border:1px solid threedshadow;
+  background-color: window;
+  color:windowtext;
+  margin:0 1px; /* to offset it from parent li */    
+}
+
+menu menu /* secondary popup menu */
+{
+  max-width: max-intrinsic;
+}
+
+/* menu item in popup menus */
+menu li
+{  
+  width:*;
+  flow:horizontal;
+  padding-left:24px; /* room for icon */
+  padding-right:12px; /* room for the arrow */
+  padding-top:4px; 
+  padding-bottom:4px; 
+  foreground-repeat: no-repeat;
+  foreground-position: 2px 50%;
+  color:windowtext;
+}
+
+menu li:rtl 
+{  
+  width:*;
+  padding-right:24px; /* room for icon */
+  padding-left:12px; /* room for the arrow */
+  foreground-repeat: no-repeat;
+  foreground-position-right: 2px;
+  foreground-position-top: 50%;
+  text-align:right;
+  color:windowtext;
+}
+
+
+menu li:disabled { color:graytext; foreground-image: none; }
+
+/* accesskey label (span) */
+menu li span.accesskey
+{
+  display:block;
+  width:max-intrinsic;
+  white-space:nowrap;
+  margin-left:*; /* spring to attach it to the right */
+  padding-left:1em;
+  color:threedshadow;
+}
+
+menu li:current span.accesskey
+{
+  color:#FFD700;
+}
+
+
+/* menu with single <menu> inside - submenu */
+menu li:has-child-of-type(menu)
+{
+  foreground-image:url(stock:arrow-right); /* that arrow */
+  foreground-repeat: no-repeat;
+  foreground-position: 100% 50%;
+}
+
+menu li:has-child-of-type(menu):rtl
+{
+  foreground-image:url(stock:arrow-left); /* that arrow */
+  foreground-repeat: no-repeat;
+  foreground-position: 0% 50%;
+}
+
+
+/* current menu item */
+menu li:hover:owns-popup,
+menu li:current
+{ 
+  //background-color:highlight; 
+  //color:highlighttext;  
+  //border-radius:3px;
+  background:url(theme:list-view-item-selected) stretch;
+}
+
+/* menu separator */
+menu hr 
+{
+  margin:2px; 
+}
+
+
+/* radio menu item */
+menu li[type="radio"]
+{ 
+	behavior:radio; 
+	background-repeat:no-repeat; 
+	background-position:3px 50%;
+	background-image:url(theme:radio-normal);  
+}
+menu li[type="radio"]:hover
+{ 
+	background-image:url(theme:radio-hover);  
+}
+menu li[type="radio"]:active
+{ 
+	background-image:url(theme:radio-pressed);  
+}
+menu li[type="radio"]:disabled
+{ 
+	background-image:url(theme:radio-disabled);  
+}
+menu li[type="radio"]:checked
+{ 
+	background-image:url(theme:radio-checked-normal);  
+}
+menu > li[type="radio"]:checked:hover
+{ 
+	background-image:url(theme:radio-checked-hover);  
+}
+menu li[type="radio"]:checked:active
+{ 
+	background-image:url(theme:radio-checked-pressed);  
+}
+menu li[type="radio"]:checked:disabled
+{ 
+	background-image:url(theme:radio-checked-disabled);  
+}
+
+/* checkmark menu item */
+menu li[type="check"]
+{ 
+	behavior:check; 
+	background-repeat:no-repeat; 
+	background-position:3px 50%;
+	background-image:url(theme:check-normal);  
+}
+menu li[type="check"]:hover
+{ 
+	background-image:url(theme:check-hover);  
+}
+menu li[type="check"]:active
+{ 
+	background-image:url(theme:check-pressed);  
+}
+menu li[type="check"]:disabled
+{ 
+	background-image:url(theme:check-disabled);  
+}
+menu li[type="check"]:checked
+{ 
+	background-image:url(theme:check-checked-normal);  
+}
+menu li[type="check"]:checked:hover
+{ 
+	background-image:url(theme:check-checked-hover);  
+}
+menu li[type="check"]:checked:active
+{ 
+	background-image:url(theme:check-checked-pressed);  
+}
+menu li[type="check"]:checked:disabled
+{ 
+	background-image:url(theme:check-checked-disabled);  
+}
+

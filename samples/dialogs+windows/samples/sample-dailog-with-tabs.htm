@@ -1,0 +1,138 @@
+<html custom-frame="glassy" resizeable>
+<head>
+<title>Custom dialog with custom behaviors(tabs here)</title>
+<style>
+
+html 
+{ 
+  font:system;
+  min-width:300dip;       
+  max-width:100%;         /* max width - whole screen */
+  width:300dip;           /* preferred/initial width */
+  height:240dip;     /* content will not overflow, no vertical scrollbars on the window */  
+  min-height:240dip;  
+  max-height: 70%;        /* 70% of screen height */
+  overflow:none;
+  padding:0;
+}
+
+@media composition-supported /* Aero DWM is in effect*/
+{
+  html 
+  {
+    background:transparent; /* so background is that aged plastic */
+  }
+}
+
+
+h1, p { text-align:center; }
+
+.tabs 
+{
+  font:system;
+  behavior:tabs;
+  size:*;
+  min-height:40px;
+  overflow:hidden;
+}
+
+.tabs > .strip /* tab strip */
+{
+  flow: horizontal;
+  margin-bottom:-1px;
+  padding: 2px 2px 0 2px;
+}
+
+.tabs > .strip > [panel] /* all tabs, passive by default */
+{
+  padding: 3px 8px;
+  margin-bottom:1px;
+  height: 100%%;
+  max-width: auto; /* not wider than max-intrinsic  */
+  background-image:url(theme:tab-item-normal);
+  background-repeat:stretch;
+}
+.tabs > .strip > [panel]:hover /* passive tab */
+{
+  background-image:url(theme:tab-item-hover);
+  transition:blend;
+}
+.tabs > .strip > [panel]:current  /*active tab*/
+{
+  background-image:url(theme:tab-item-selected);
+  margin:-2px -2px -1px -2px;
+  padding: 4px 10px 5px 10px; 
+  position:relative;
+}
+.tabs > .strip > [panel]:current:hover /*active tab*/
+{
+  background-image:url(theme:tab-item-selected);
+  transition:none;
+}
+
+.tabs > .strip > [panel]:current:first-child,
+.tabs > .strip > [panel]:current:hover:first-child
+{
+  background-image:url(theme:tab-item-leftmost-selected);
+}
+
+
+/*.tabs:focus .strip [panel]:current 
+{
+  background-image:url(theme:tab-item-focused);
+}*/
+
+.tabs:tab-focus > .strip > [panel]:current > * /* outline active tab content if we've gotten focus by tab*/
+{
+  outline: 1px dotted invert;
+}
+
+.tabs > [name] { display:none; }
+
+.tabs > [name]:expanded 
+{ 
+  background-image:url(theme:tab-panel);
+  background-repeat:stretch;
+  padding:4px;
+  display:block; 
+  height:100%%;
+}
+
+</style>
+
+<script type="text/tiscript">
+  
+    include "../../decorators.tis";
+    
+    @click @on "#close-dialog" :: view.close( #ok );
+    @click @on "#cancel-dialog" :: view.close( null );
+
+</script>
+
+</head>
+
+<body>
+  <div class="tabs" #test>
+    <div class="strip" role="page-tab-list"> <!-- our tab strip, can be placed on any side of tab container. -->
+       <div panel="panel-id1" selected role="page-tab">tab1 caption</div>
+       <div panel="panel-id2" role="page-tab">tab2 caption</div>
+       <div panel="panel-id3" role="page-tab">tab3 caption</div>         
+    </div>
+    <div name="panel-id1"> first panel content 
+    <select name="country">
+      <OPTION VALUE=1 >Afghanistan</OPTION>
+      <OPTION VALUE=2 >Albania</OPTION>
+      <OPTION VALUE=3 >Algeria</OPTION>
+      <OPTION VALUE=4 >American Samoa</OPTION>
+    </select> 
+    </div>
+    <div name="panel-id2"> second panel content <button>Test1</button> </div>
+    <div name="panel-id3"> third panel content </div>      
+  </div>
+  <p>
+    <button id="close-dialog">Ok</button>
+    <button id="cancel-dialog" tabindex=1 >Cancel</button>
+  </p>
+   
+</body>   
+</html>   

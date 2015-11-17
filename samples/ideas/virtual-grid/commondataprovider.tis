@@ -1,0 +1,93 @@
+
+class CommonDataProvider {
+  
+  property rowCount(v) { get return this.data ? this.data.length : 0; }
+  
+  function rowData(rowNo)
+  {
+    return this.data[rowNo];
+  }
+ 
+  function deleteRow(rowNo)
+  {
+    assert rowNo >= 0 && rowNo < this.rowCount;
+    
+    var selectLast = this.grid.index == this.rowCount - 1;
+    this.data.remove(rowNo);
+    this.grid.bindDataSource(this);
+    
+    if( selectLast )
+      this.grid.index = this.rowCount - 1;
+  }
+
+  function updateGridSorting()
+  {
+    assert this.columns;
+    assert this.grid;
+    
+    for(var i=0; i < this.columns.length; i++)
+    {
+      var sortOrder = this.columns[i]#sortOrder;
+      if( sortOrder )
+      {
+        this.grid.updateSorting(i, sortOrder); 
+        return;
+      }
+    }
+  }
+
+  function createDefaultSortMapping()
+  {
+    this.columnsSortMapping = [];
+    for(var (i,v) in this.columns)
+      this.columnsSortMapping[i] = i;
+  }
+  
+  // override it in your data sources
+  function updateSorting0(columnIndex, sortOrder) 
+  {
+    var src = this.data;
+    if( !src ) throw "To use virtual-grid sortind data source should keep data in array 'data'";
+
+    if( sortOrder == #ascending )
+     src.sort( :e1, e2 {
+         var r1 = e1[columnIndex];
+         var r2 = e2[columnIndex];
+         if( r1 < r2 ) return -1;
+         if( r1 == r2 ) return 0;
+         return 1;
+      }
+    ) else
+    if( sortOrder == #descending )
+     src.sort( :e1, e2 {
+         var r1 = e1[columnIndex];
+         var r2 = e2[columnIndex];
+         if( r1 < r2 ) return 1;
+         if( r1 == r2 ) return 0;
+         return -1;
+      });
+     else throw "sortOrder should be either #ascending or #descending";     
+
+  }
+  
+  // sortOrder - #ascending and #decending
+  function updateSorting(columnIndex, sortOrder) 
+  {   
+    for(var i = 0; i < this.columns.length; i++)
+    {
+      if( i == columnIndex )
+        this.columns[i]#sortOrder = sortOrder;
+      else
+        this.columns[i]#sortOrder = 0;
+    }
+    
+    var realColumnIndex;
+    
+    if( !this.columnsSortMapping )
+      realColumnIndex = columnIndex;
+    else
+      realColumnIndex = this.columnsSortMapping[columnIndex];
+
+    this.updateSorting0(realColumnIndex, sortOrder);
+  }
+};

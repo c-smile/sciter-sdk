@@ -1,0 +1,36 @@
+<html>
+  <head>
+      <style type="text/css">
+      
+        picture#masked { size : 785px 568px; foreground-image: url(in-memory:test); cursor:default; }
+        picture#masked.hovered { background:orange; cursor:pointer;}
+        
+      </style>
+      <script type="text/tiscript">
+           
+        (function() {
+        
+          var baseImage = self.loadImage(self.url("last-diligence-from-gabriola.jpg"));
+          var maskImage = self.loadImage(self.url("mask.jpg"));
+          
+          baseImage.alphaMask( maskImage, #r );
+        
+          self.bindImage("in-memory:test", baseImage);
+          
+          $(picture#masked).onMouse = function(evt) {
+            var alpha = baseImage.colorAt(evt.x,evt.y).a;
+            this.attributes.toggleClass("hovered", alpha > 16); // treat alpha > 16 as non-transparent for hit-testing
+          }
+          
+        })();      
+        
+      </script>
+  </head>
+    <body>
+      <p><code>Image.alphaMask(otherImage);</code> and <code>Image.colorAt(x,y);</code> demo.</p>
+      <p>Move mouse over the image, on almost transparent pixels you should see cursor change.</p>
+      <picture#masked />
+      Mask used:
+      <picture#mask src="mask.jpg"/>
+   </body>
+</html>

@@ -1,0 +1,35 @@
+<html custom-frame="layered" >
+  <head>
+    <title>Hello world!</title>
+    <style>
+    
+      html {  background-color:transparent; 
+              size:400dip; } 
+      body {  background:gold; 
+              border:2px solid brown; 
+              margin:30dip;
+              border-radius: 50%;
+              vertical-align:middle;
+              horizontal-align:center; } 
+
+      body:hover { background-color: yellow; }
+      
+      body > p,
+      body > button { display:block; width:max-content; }
+    
+    </style>
+    <script type="text/tiscript">
+    
+    function self.ready() {
+      view.state = View.WINDOW_SHOWN;
+    }
+    
+    $(button).onClick = ::view.close(); 
+    
+    </script>
+  </head>
+<body>
+  <p>Hello world!</p>
+  <button>Close window</button>
+</body>
+</html>

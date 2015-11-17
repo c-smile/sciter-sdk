@@ -1,0 +1,155 @@
+
+namespace Tests {
+
+  function add() {         
+    var t = q("#arena > div:first-child");
+    //stdout.println(t, t.length);
+    var tr = q("#arena > div:first-child").add("#arena > div:last-child");
+    //stdout.println(tr, tr.length);
+    assert tr.length == 2;
+    assert tr[0] === $(#arena>div:first-child);
+    assert tr[1] === $(#arena>div:last-child);
+  }
+
+  function addClass() {         
+    q("#arena > div").addClass("visited");
+    var tr = q("#arena > div.visited");
+    assert tr.length == 2;
+    assert tr[0] === $(#arena>div:first-child);
+    assert tr[1] === $(#arena>div:last-child);
+  }
+
+  function after() {         
+    q("#arena-for-after > div").after("<p>test</p>");
+    var tr = q("#arena-for-after > *");
+    assert tr.length == 4;
+    assert tr[0].tag == "div";
+    assert tr[1].tag == "p";
+    assert tr[2].tag == "div";
+    assert tr[3].tag == "p";
+  }
+
+  function append() {         
+    q("#arena-for-after > div").append("<b>appended</b>");
+    var tr = q("#arena-for-after > div > b");
+    assert tr.length == 2;
+  }
+
+  function appendTo() {         
+  
+    var tr = q("<p>Appended text</p>").appendTo("#arena-for-appendTo");
+    assert tr.length == 1;
+    assert tr[0].tag == "p" &&
+           tr[0].parent == $(#arena-for-appendTo);
+  }
+
+  function attr() {         
+    q("#arena-for-attr > div").attr("test","test");
+    var tr = q("#arena-for-attr > div[test=test]");
+    assert tr.length == 2;
+    q("#arena-for-attr > div").attr{ one:1, two:2 };
+    tr = q("#arena-for-attr > div[one=1]");
+    assert tr.length == 2;
+    tr = q("#arena-for-attr > div[two=2]");
+    assert tr.length == 2;
+    tr = q("#arena-for-attr > div").attr("one", undefined);
+    assert q("#arena-for-attr > div[one]").length == 0;
+    tr = q("#arena-for-attr > div").attr { two: undefined };
+    assert q("#arena-for-attr > div[two]").length == 0;
+  }
+
+  function before() {         
+    q("#arena-for-before > div").before("<p>test</p>");
+    var tr = q("#arena-for-before > *");
+    assert tr.length == 4;
+    assert tr[0].tag == "p";
+    assert tr[1].tag == "div";  
+    assert tr[2].tag == "p";
+    assert tr[3].tag == "div";
+  }
+
+  function children() {         
+    var tr = q("#arena").children();
+    assert tr.length == 2;
+    assert tr[0].tag == "div";
+    assert tr[1].tag == "div";
+    tr = q("#arena>div").children("a");
+    assert tr.length == 1;
+    assert tr[0].tag == "a";
+
+  }
+
+  function closest() {         
+    var tr = q("#arena a").closest("div");
+    assert tr.length == 1;
+    var c = $(#arena>div:last-child);
+    assert tr[0] === c;
+    tr = q("#arena>div>a").closest(c);
+    assert tr.length == 1;
+    assert tr[0] === c;
+
+  }
+
+  function css() {         
+    q("#arena").css { display:"block" };
+    assert q("#arena").css("display") == "block";
+  }
+
+
+  function has() {         
+    var divWithA = q("#arena > div").has("a");
+    assert divWithA.length == 1;
+    assert divWithA[0] === $(#arena>div:last-child);
+  }
+
+  function filter() {         
+    var tr = q("#arena > div").filter(":last-child");
+    assert tr.length == 1;
+    assert tr[0] === $(#arena>div:last-child);
+  }
+
+  function find() {         
+    var tr = q("#arena > div").find("a");
+    assert tr.length == 1;
+    assert tr[0] === $(#arena>div>a);
+  }
+
+  function html() {
+    q("#arena > div > a").html("link");
+    assert q("#arena > div > a").html() == "link";
+  }
+
+  function unwrap() {
+    q("#arena-for-unwrap span").unwrap();
+    assert q("#arena-for-unwrap > span").length == 2;
+  }
+
+  function wrap() {
+    q("#arena-for-wrap span").wrap("<button/>");
+    assert q("#arena-for-wrap > button > span").length == 2;
+  }
+  
+  function on_off_one() {
+    function test() { view.msgbox(#alert,"Got it!"); }
+    q("#arena-for-onoff > button.not-once").on("click.my", test );
+    
+    q("#test-off").off("click.my");
+    q("#test-one").one("click.my", test );
+  }
+
+  function trigger() {
+  
+    q("#arena-for-onoff").on("show.alert", :evt: view.msgbox(#alert,evt.data) );
+  
+    function test1() { q("button#test-on").trigger("click.my"); }
+    function test2() { q("button#test-on").trigger("click.other"); } //- will not trigger anything - no subscribers for click.other
+    function test3() { q("button#test-on").trigger("show.alert","Red alert!"); } //- will trigger show.alert handler on "#arena-for-onoff" because of bubbling
+    q("#test-trigger-1").on("click", test1 );
+    q("#test-trigger-2").on("click", test2 );
+    q("#test-trigger-3").on("click", test3 );
+  }
+  
+}
+
+for(var (name,test) in Tests) 
+  run(test);

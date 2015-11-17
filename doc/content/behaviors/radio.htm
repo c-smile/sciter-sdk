@@ -1,0 +1,27 @@
+﻿<html>
+  <head>
+    <meta name="source" content="http://www.terrainformatica.com/wiki/doku.php?id=h-smile:built-in-behaviors:radio"/>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>behavior: radio</h1>
+  <p>Standard radio button implementation. Can be applied to any group of elements having the same name to achieve one-of-group checked functionality.</p>
+  <h2>Elements</h2>
+  <p>that have this behavior applied by default:</p>
+  <ul>
+    <li><code>&lt;input type=&quot;radio&quot;&gt;</code> - standard HTML inline radio button;</li>
+    <li><code>&lt;button type=&quot;radio&quot;&gt;</code> - inline radio button, use it as <code>&lt;button|radio(group)&gt;first&lt;/button&gt;</code> <code>&lt;button|radio(group)&gt;second&lt;/button&gt;</code>.</li></ul>
+  <h2>Attributes</h2>
+  <p>that this behavior knows about:</p>
+  <ul>
+    <li><code>checked</code> - if provided will initialize value of runtime state of the flag <em>checked</em>.</li>
+    <li><code>name=&quot;groupname&quot;</code> - standard attribute <em>name</em> has special meaning for the radio: radio buttons with the same name constitute single group.</li>
+    <li><code>value=&quot;...&quot;</code> - standard value attribute (used by <code>behavior:form</code>).</li></ul>
+  <h2>Events</h2>
+  <p>Aside of standard set of events (mouse, keyboard, focus) <em>behavior:radio</em> generates:</p>
+  <ul>BUTTON_STATE_CHANGED event - the button just changed its state to checked. Asynchronous event.BUTTON_PRESS event - mouse down or <code>spacebar</code> key down when button is in focus. Synchronous event.</ul>
+  <h2>Value</h2>
+  <p><code>true/false</code>, reflects current status of <code>:checked</code> state flag.</p>
+  <p>Note: behavior:form treats all radio radio elements of the group as a single value.</p>
+</body>
+</html>

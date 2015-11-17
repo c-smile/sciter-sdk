@@ -1,0 +1,39 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      div.dyn-tip { 
+        aspect: DynTip;
+        width:max-content;
+        border:1px solid;
+      }
+    
+    </style>
+    <script type="text/tiscript">
+    
+      function DynTip() {
+      
+        var tooltip = $(popup#dyn-tooltip); // element will be shown as tooltip 
+        var format = tooltip.attributes["format"]; // message format
+        var counter = 0;
+        
+        function provideTip(evt) {
+          tooltip.text = String.printf(format,++counter);
+          evt.source = tooltip;
+          return true;
+        }
+      
+        this.subscribe(provideTip, Event.BEHAVIOR_EVENT,  Event.REQUEST_TOOLTIP);
+      }
+    
+    </script>
+    
+    <popup role="tooltip" id="dyn-tooltip" format="Tooltip # %d"></popup>
+  </head>
+<body>
+
+  <div.dyn-tip>Hover me</div>
+
+</body>
+</html>

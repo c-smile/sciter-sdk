@@ -1,0 +1,173 @@
+      @image-map tb-icons 
+      {
+        src:url(images/richtext-icons.png);
+        cells:15 2; /* 15 columns, 2 rows */
+        /* logical names of the parts, see toolbar-icons.png */ 
+        items:  ulist, olist, 
+                unindent, indent,
+                picture, table, link,
+                align-left, align-center, align-right, align-justify, align,
+                fullscreen, unfullscreen,
+                props,
+                bold, italic, underline, strikethrough,
+                font-family, font-size, text-color, text-back-color, source,
+                dlist;
+      }
+      
+      popup[role="tooltip"] { padding:5px; font:system; /*background:infobackground; border:1px solid threedlight;*/ }
+      
+      kbd { 
+        display:inline-block;
+        font-size:8.5pt;
+        font-weight:bold;
+        vertical-align:middle;
+        padding:3px 6px;
+        background-image:url(images/kbd-back.png);
+        background-repeat:expand stretch-top stretch-bottom stretch-left stretch-right stretch-middle;
+        background-position:4px 4px 4px 4px;
+      }
+      
+      richtext {
+        display:block;
+        display-model:blocks-inside;
+        style-set: std-richtext;
+        prototype: Richtext url(richtext.tis);
+      }
+    
+      @set std-richtext 
+      {
+        :root { size:*; border: 1px solid #BBB; flow:vertical;
+                /*font-rendering-mode: snap-pixel;*/ }
+        
+        :root > toolbar { 
+          display:block;
+          display-model:block-inside; 
+          flow:horizontal-wrap; border-spacing:2px; 
+          padding:0;
+          border-left: 1px solid #F4F4F4;
+          border-bottom: 1px solid #BBB;
+          background:linear-gradient(top, #F1F1F1, #DADADA);
+        }
+        :root > toolbar button { 
+          size:21px; 
+          padding:0;
+          behavior:clickable;
+          foreground:no-repeat 50% 50%; padding:3px; 
+          background-image:none; 
+          background-repeat:expand(stretch-left stretch-right stretch-middle); 
+          background-position:4 4 4 4; 
+          hit-margin: 2px;
+          margin: 2px;
+          transition:none;
+        }
+        
+        :root > toolbar button[type=menu] {
+          behavior:clickable popup-menu; 
+        }
+        :root > toolbar button:hover { 
+          background-image: url(sciter:toolbar-button-hover.png)
+        }
+        :root > toolbar button:active { 
+          background-image:url(sciter:toolbar-button-pressed.png); 
+          foreground-position:57% 57%; 
+        }
+        :root > toolbar button:checked { 
+          background-image:url(sciter:toolbar-button-checked.png); 
+        }
+        :root > toolbar button:checked:hover { 
+          background-image:url(sciter:toolbar-button-checked-hover.png); 
+        }
+        :root > toolbar button:disabled { 
+          background-image:none; 
+          opacity:0.25;
+        }
+        :root > toolbar > splitter {
+          width:0;
+          height:*;
+          border-left: 1px solid #BBB;
+          border-right: 1px solid #F4F4F4;
+        }
+                        
+        :root > toolbar > button.bold { foreground-image:image-map(tb-icons,bold); } 
+        :root > toolbar > button.italic { foreground-image:image-map(tb-icons,italic); } 
+        :root > toolbar > button.underline { foreground-image:image-map(tb-icons,underline); } 
+        :root > toolbar > button.strikethrough { foreground-image:image-map(tb-icons,strikethrough); } 
+       
+        :root > toolbar > button.font-family { foreground-image:image-map(tb-icons,font-family); } 
+        :root > toolbar > button.font-size { foreground-image:image-map(tb-icons,font-size); } 
+        :root > toolbar > button.text-color { foreground-image:image-map(tb-icons,text-color); }       
+        :root > toolbar > button.text-back-color { foreground-image:image-map(tb-icons,text-back-color); } 
+        
+        :root > toolbar > button.ulist { foreground-image:image-map(tb-icons,ulist); } 
+        :root > toolbar > button.olist { foreground-image:image-map(tb-icons,olist); } 
+        :root > toolbar > button.dlist { foreground-image:image-map(tb-icons,dlist); } 
+        :root > toolbar > button.unindent { foreground-image:image-map(tb-icons,unindent); } 
+        :root > toolbar > button.indent { foreground-image:image-map(tb-icons,indent); } 
+        :root > toolbar > button.align { foreground-image:image-map(tb-icons,align); } 
+        
+        :root > toolbar > button.pre { foreground-image:image-map(tb-icons,props); } 
+        
+        :root > toolbar > button.picture { foreground-image:image-map(tb-icons,picture); } 
+        :root > toolbar > button.table { foreground-image:image-map(tb-icons,table); } 
+        :root > toolbar > button.link { foreground-image:image-map(tb-icons,link); } 
+        
+        :root > toolbar > button.fullscreen { foreground-image:image-map(tb-icons,fullscreen); margin-left:*; } 
+        :root > toolbar > button.fullscreen:checked { foreground-image:image-map(tb-icons,unfullscreen); } 
+        
+        :root > toolbar > button > menu { padding:4dip; }
+        :root > toolbar > button > menu > li { padding-left:32px; }
+        :root > toolbar > button > menu > li:checked { foreground:url(stock:checkmark) 6px 50% no-repeat; }
+        :root > toolbar > button.font-size > menu.popup { min-width:max-content; max-width:200px;}
+        
+        .align-left {foreground-image:image-map(tb-icons,align-left);}
+        .align-right {foreground-image:image-map(tb-icons,align-right);}
+        .align-center {foreground-image:image-map(tb-icons,align-center);}
+        .align-justify {foreground-image:image-map(tb-icons,align-justify);}
+        
+        :root > textarea { size:*; background:window; padding:0; visibility:collapse;}
+        
+        :root > htmlarea { size:*; background:window; padding:0; padding-left:32px; overflow: scroll-indicator; font-rendering-mode:snap-pixel; }
+        :root > htmlarea dt:content-editable { font-weight:bold; }
+        :root > htmlarea br:content-editable { width:8px; background:url(images/br.png) no-repeat 1px 50%; }
+        
+        /*:root > htmlarea img { prototype:EditableImage url(richtext-utils.tis); cursor:pointer; }
+          :root > htmlarea img:focus { outline:2px dotted highlight -2px; }
+          :root > htmlarea img:focus.mouse-on-corner { cursor:nw-resize; } */
+        
+        :root > htmlarea img:selected { prototype:EditableImage url(richtext-utils.tis); }          
+        :root > htmlarea img:selected.mouse-on-corner { cursor:se-resize; } 
+        :root > htmlarea img::selection { background:rgba(255,255,255,0.65); outline: 5px nesw-hatch highlight -5px; }
+        
+        :root > htmlarea input::selection, 
+        :root > htmlarea textarea::selection, 
+        :root > htmlarea button::selection, 
+        :root > htmlarea select::selection, 
+        :root > htmlarea th::selection, 
+        :root > htmlarea td::selection { background:rgba(highlight,0.25); outline: 3px nesw-hatch highlight -3px; }
+        
+        :root > htmlarea input, 
+        :root > htmlarea textarea, 
+        :root > htmlarea button, 
+        :root > htmlarea select { -disabled:true; }
+        
+        :root > htmlarea table td,
+        :root > htmlarea table th { padding:2px 4px; }
+        
+        :root > htmlarea table:not([border]) td, 
+        :root > htmlarea table:not([border]) th { outline:1px dotted #ccc -1px; }
+                
+        :root[mode=source] > textarea { visibility:visible; }
+        :root[mode=source] > htmlarea { visibility:collapse; }
+        
+        :root > toolbar > button.table > menu > table { size:*; border-spacing:-1px; }
+        :root > toolbar > button.table > menu > table > tr { height:*; }
+        :root > toolbar > button.table > menu > table > tr > td { size:1.6em; background:stretch; background-clip:padding-box; border:1px solid activecaption; -role:"menu-item"; }
+        :root > toolbar > button.table > menu > table > tr > td[selected] { background-color:activecaption; border:1px solid threedface; }
+        :root > toolbar > button.table > menu > table > tr > td:hover { background-image:url(theme:toolbar-button-hover); }
+        :root > toolbar > button.table > menu > table > tr > td:active { background-image:url(theme:toolbar-button-pressed); }
+        
+        :root > toolbar > button.table > menu > header { behavior:form; text-align:center;  }
+        :root > toolbar > button.table > menu > header > button.radio { behavior:radio; width:max-content; height:auto; padding:4px 8px;  }
+        
+        
+      }

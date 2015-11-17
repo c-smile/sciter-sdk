@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <title></title>
+    <style></style>
+    <script type="text/tiscript">
+    
+    function readData() { 
+    
+      var stream = Stream.openFile(self.url("data.json"), "ru");
+      if( !stream )
+          return;
+
+      return parseData(stream);
+    }
+    
+    function self.ready() {
+      var data = readData();
+      $(pre#out).value = JSON.stringify(data, "  ");
+    }
+    
+    </script>
+  </head>
+<body><pre #out /></body>
+</html>

@@ -1,0 +1,32 @@
+
+function Repeatable() 
+{
+  var template = this.first;
+  assert template : "should have one or two children";
+  template.remove();
+  var norecsTemplate = this.first;
+  if( norecsTemplate )
+    norecsTemplate.remove();
+      
+  this[#value] = property(v) {
+    get {
+      v = [];
+      for( var el in this ) v.push(el.value);
+      return v;
+    }
+    set {
+      this.clear();
+      if( v && v.length )
+        for(var rec in v) {
+          var el = template.clone();
+          this.append(el); 
+          el.value = rec;
+        }
+      else if( norecsTemplate ) {
+        var el = norecsTemplate.clone();
+        this.append(el); 
+        el.value = rec;
+      }
+    }
+  }
+}

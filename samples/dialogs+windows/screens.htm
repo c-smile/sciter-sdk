@@ -1,0 +1,138 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      canvas { 
+        aspect: ScreenMap;
+        display:block;
+        size:*;
+        border:1px solid red;
+        /*image-rendering:optimize-quality;*/
+      }
+      
+      canvas.quality {
+        image-rendering:optimize-quality;
+      }
+      
+      button#optimize-quality {
+       display:block; margin:1em;
+      }
+    
+    </style>
+    <script type="text/tiscript">
+    
+    function ScreenMap() {
+    
+
+      var nmons = View.screens;
+      // desktop overall size
+      var minx = 0;
+      var miny = 0;
+      var maxx = 0;
+      var maxy = 0;
+      
+      var snapshots = [];
+      
+      
+      function downScaleTwice(image) 
+      {
+        var w = image.width / 2;
+        var h = image.height / 2;
+        
+        function draw(gfx) { gfx.drawImage(image,0,0,w,h);  }
+        
+        var r = new Image(w,h,draw);
+        image.destroy(); // free resources of original image
+        return r;
+      }
+      
+      self.timer(1s, function() { 
+      
+        for(var m = 0; m < snapshots.length; ++m ) 
+          snapshots[m].destroy();
+        snapshots = [];          
+        for(var m = 0; m < nmons; ++m )
+          //snapshots.push( downScaleTwice(downScaleTwice(View.screenBox(m,#snapshot))) );
+          snapshots.push( View.screenBox(m,#snapshot));
+        self.refresh();
+        return true;
+      });
+      
+      function getMonitors() {
+        var monitors = [];
+        
+        for(var m = 0; m < nmons; ++m ) {
+          var (x,y,w,h) = View.screenBox(m,#frame,#rectw);
+            minx = Integer.min(minx,x);
+            miny = Integer.min(miny,y);
+            maxx = Integer.max(maxx,x + w - 1);
+            maxy = Integer.max(maxy,y + h - 1);
+          var (ax,ay,aw,ah) = View.screenBox(m,#workarea,#rectw);
+          
+          var mdef = { 
+            x: x, y: y, w: w, h: h,
+            ax: ax, ay: ay, aw: aw, ah: ah,
+            primary: View.screenBox(m,#isPrimary),
+            caption: new Graphics.Text( (m + 1).toString() ),
+          };
+          mdef.caption.font("Verdana",200.0);
+          monitors.push(mdef);
+        }
+        return monitors;
+      } 
+      this.paintContent = function(gfx) {
+      
+        var monitors = getMonitors();
+        var (wx,wy,ww,wh) = view.box( #rectw, #border,#screen );
+      
+        var (w,h) = this.box(#dimension);
+        var ratio = w.toFloat() / (maxx - minx).toFloat();
+        //
+        gfx.scale(ratio,ratio);
+        gfx.translate(-minx,-miny);
+
+        for(var m = 0; m < nmons; ++m ) {
+          var mdef = monitors[m];
+          gfx.noFill();
+          gfx.lineWidth( 1 );
+          gfx.lineColor( color(0,0,0) );
+          gfx.rectangle( mdef.x, mdef.y, mdef.w, mdef.h );
+          gfx.noLine();
+          gfx.fillColor( mdef.primary ? color(248,0,0,0.4) : color(0,0,248,0.4) );
+          gfx.rectangle( mdef.ax, mdef.ay, mdef.aw, mdef.ah );
+          if(snapshots.length)
+            gfx.drawImage( snapshots[m], mdef.x, mdef.y, mdef.w, mdef.h );
+
+          gfx.fillColor( color(255,255,255) );
+          gfx.lineColor( color(0,0,0) );
+          gfx.lineWidth( 2 );
+          gfx.drawText( mdef.caption, mdef.x + mdef.w / 2, mdef.y + mdef.h / 2, 5);
+          
+          // draw this window projection on the desktop 
+          gfx.fillColor( color(248,232,0,0.4) );
+          gfx.rectangle( wx, wy, ww, wh );
+
+        }
+      }
+      
+      view.onMove = function() {
+        (this super).refresh();
+      }
+      
+    }
+    
+    $(#optimize-quality).on("change", function() 
+    {
+      $(canvas).attributes.toggleClass("quality",this.value);
+    });
+        
+    </script>
+  </head>
+<body>
+  Layout of your screen(s) and projection of the window on it:
+  <button|checkbox #optimize-quality>apply image-rendering:optimize-quality</button>
+  <canvas />
+
+</body>
+</html>

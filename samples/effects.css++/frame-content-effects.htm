@@ -1,0 +1,56 @@
+<html>
+  <head>
+  <title></title>
+  <style>
+  
+    frame#content 
+    {
+      transition: blend(cubic-in-out,800ms);
+    }
+  
+  </style>
+  <script type="text/tiscript">
+    
+    self.onControlEvent = function(evt)
+    {
+      if( evt.type == Event.BUTTON_STATE_CHANGED && evt.target.$is([name=at]))
+      {
+        $(frame#content).style#transition = evt.target.text + "(cubic-in-out,800ms)"; 
+      }
+    }
+   
+  </script>
+  </head>
+<body>
+
+  <h2>Select effect type and click on hyperlinks:</h2>
+
+  <div>
+    Transition effect:
+<br><button !radio checked name=at>blend</button>
+    <button !radio name=at>blend-atop</button>
+<br><button !radio name=at>slide-top</button>
+    <button !radio name=at>slide-bottom</button>
+    <button !radio name=at>slide-left</button>
+    <button !radio name=at>slide-right</button>
+<br><button !radio name=at>slide-over-top</button>
+    <button !radio name=at>slide-over-bottom</button>
+    <button !radio name=at>slide-over-left</button>
+    <button !radio name=at>slide-over-right</button>
+<br><button !radio name=at>scroll-top</button>
+    <button !radio name=at>scroll-bottom</button>
+    <button !radio name=at>scroll-left</button>
+    <button !radio name=at>scroll-right</button>
+  </div>
+
+  <div>
+    Content: 
+    <a href="docs/html32.htm" target="content">docs/html32.htm</a>
+    <a href="docs/photo1.htm" target="content">docs/photo1.htm</a>
+    <a href="docs/photo2.htm" target="content">docs/photo2.htm</a>
+  </div>
+  
+  <frame #content src="docs/html32.htm" />
+  
+</body>
+</html>

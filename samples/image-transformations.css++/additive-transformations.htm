@@ -1,0 +1,33 @@
+﻿<html>
+<head>
+  <style>
+
+    div.container div.example
+    {
+      background-image:url(images/arrow.png);
+      background-size:48dip 48dip;
+      background-repeat:no-repeat;
+      size:48dip;
+      background-image-transformation: hue(red);
+      border:1px solid red;
+    }
+    div.container div.example:hover
+    {
+      background-image-transformation: hue(orange);
+    }
+
+    .RtlBkGrndImgFlipX:rtl
+    {
+      background-image-transformation: ~ flip-x();  /* '~' is list combining operator so flip-x() will be added to the list rather than to replace it */
+    }
+
+
+  </style>
+ </head>
+  <body >
+    You should see this arrow <img src="images/arrow.png"> but in red color and pointing leftwards. On :hover it shall change color to yellow:
+    <div class="container" dir="rtl">
+      <div class="example RtlBkGrndImgFlipX" />
+    </div>
+  </body>
+</html>

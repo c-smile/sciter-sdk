@@ -1,0 +1,154 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+      @image-map tb-icon 
+      {
+        src:url(rttb.png);
+        cells:15 2; /* 15 columns, 2 rows */
+        /* logical names of the parts, see toolbar-icons.png */ 
+        items:  ulist,
+                olist,
+                unindent,
+                indent,
+                picture,
+                table,
+                link,
+                align-left,
+                align-center,
+                align-right,
+                align-justify,
+                align,
+                fullscreen,
+                unfullscreen,
+                props,
+                
+                bold,
+                italic,
+                underline,
+                strikethrough,
+                font-family,
+                font-size,
+                text-color,
+                text-back-color,
+                source;
+      }
+    
+      toolbar { 
+        display:block;
+        display-model:block-inside; 
+        flow:horizontal; border-spacing:2px; 
+        padding:0;
+        border-left: 1px solid #F4F4F4;
+        border-bottom: 1px solid #BBB;
+        background:linear-gradient(top, #F1F1F1, #DADADA);
+      }
+      toolbar > button { 
+        size:21px; 
+        padding:0;
+        behavior:clickable;
+        foreground:no-repeat 50% 50%; padding:3px; 
+        background-image:none; 
+        hit-margin: 2px;
+        margin: 2px;
+        transition:none;
+      }
+      
+      toolbar > button:rtl {
+        mapping: left-to-right(margin,foreground-image); 
+      }
+      
+      toolbar > button:hover { 
+        background-image:url(theme:toolbar-button-hover); 
+        foreground-image-transformation: colorize(#70F);
+      }
+      toolbar > button:active { 
+        background-image:url(theme:toolbar-button-pressed); 
+        foreground-position:57% 57%; 
+      }
+      toolbar > button:disabled { 
+        background-image:none; 
+        opacity:0.5;
+      }
+      toolbar > splitter {
+        width:0;
+        height:*;
+        border-left: 1px solid #BBB;
+        border-right: 1px solid #F4F4F4;
+      }
+      
+      toolbar > button.bold { foreground-image:image-map(tb-icon,bold); } 
+      toolbar > button.italic { foreground-image:image-map(tb-icon,italic); } 
+      toolbar > button.underline { foreground-image:image-map(tb-icon,underline); } 
+      toolbar > button.strikethrough { foreground-image:image-map(tb-icon,strikethrough); } 
+     
+      toolbar > button.font-family { foreground-image:image-map(tb-icon,font-family); } 
+      toolbar > button.font-size { foreground-image:image-map(tb-icon,font-size); } 
+      toolbar > button.text-color { foreground-image:image-map(tb-icon,text-color); }       
+      toolbar > button.text-back-color { foreground-image:image-map(tb-icon,text-back-color); } 
+      
+      toolbar > button.ulist { foreground-image:image-map(tb-icon,ulist); } 
+      toolbar > button.olist { foreground-image:image-map(tb-icon,olist); } 
+      toolbar > button.unindent { foreground-image:image-map(tb-icon,unindent); } 
+      toolbar > button.indent { foreground-image:image-map(tb-icon,indent); } 
+      toolbar > button.align { foreground-image:image-map(tb-icon,align); } 
+      
+      toolbar > button.picture { foreground-image:image-map(tb-icon,picture); } 
+      toolbar > button.table { foreground-image:image-map(tb-icon,table); } 
+      toolbar > button.link { foreground-image:image-map(tb-icon,link); } 
+      
+      toolbar > button.fullscreen { foreground-image:image-map(tb-icon,fullscreen); margin-left:*; } 
+      toolbar > button.fullscreen:checked { foreground-image:image-map(tb-icon,unfullscreen); } 
+      
+      .editor { size:*; border: 1px solid #BBB; }
+      .editor > richtext { size:*; background:window; padding:0 }
+    
+    </style>
+    <script type="text/tiscript">
+    
+      $(#dirswitch).onValueChanged = :: $(div.editor).attributes["dir"] = this.value.dir;
+    
+    </script>
+  </head>
+<body>
+  <p>Demo of @image-map usage. Single rttb.png image is used as a source of different images (toolbar buttons here).</p>
+  <form #dirswitch>
+    Change UI directionality:
+    <button type=radio value=ltr name="dir">LTR</button>
+    <button type=radio value=rtl name="dir">RTL</button>
+  </form>
+  <div .editor>
+  <toolbar>
+    <button .bold />
+    <button .italic />
+    <button .underline />
+    <button .strikethrough />
+    <splitter/>
+    <button .font-family />
+    <button .font-size />
+    <button .text-color />
+    <button .text-back-color />
+    <splitter/>
+    <button .ulist />
+    <button .olist />
+    <button .unindent />
+    <button .indent />
+    <splitter/>
+    <button .align />
+    <splitter/>
+    <button .picture />
+    <button .table />
+    <button .link />
+    
+    <button .fullscreen />
+  </toolbar>
+  <richtext>
+    Note that while in RTL mode icons are also mirrored due to this declaration:
+    <pre dir=ltr>toolbar > button:rtl {
+  mapping: left-to-right(margin,foreground-image); 
+}</pre>
+  In reality not all icons shall be mirrored that way.
+  </richtext>
+  </div>
+</body>
+</html>

@@ -1,0 +1,80 @@
+
+class Carousel: Behavior
+{
+  const STEP_DELAY = 4; // milliseconds
+
+  function attached()
+  {
+    // this will create following structure: 
+    // <widget.button.left>
+    // <widget.list> 
+    //   ... original items ...
+    // </widget>
+    // <widget.button.right>
+    this.list = new Element("widget"); this.list.@#class = "list";
+    while(this.length)
+      this.list.insert(this[0]); // move original items to the list
+    this.lb = new Element("widget"); this.lb.@#class = "button prev";
+    this.rb = new Element("widget"); this.rb.@#class = "button next";
+    this.insert(this.lb);
+    this.insert(this.list);
+    this.insert(this.rb);
+  }
+  
+  function onControlEvent(evt)
+  {
+    if(evt.type != Event.BUTTON_CLICK) return false;
+    if(evt.target === this.lb) {  this.scrollLeft(); return true; }
+    if(evt.target === this.rb) {  this.scrollRight(); return true; }
+  }
+  
+  function visibleItems(prev)
+  {
+    var list = this.list;
+    var first,last; 
+    var (sx,sy,sw,sh) = list.scroll(#rectw);
+    if( prev ) { sx -= sw; if(sx < 0) sx = 0; }
+    for(var el in list)
+    {
+      var (x1,y1,x2,y2) = el.box(#rect,#border,#content);
+      if( x1 >= sx && x2 < sx + sw ) // it is visible in full
+      {
+        if(!first) first = el;
+        last = el;
+      } 
+    }
+    return (first,last);
+  }
+
+  function scrollLeft()
+  {
+    var (f,l) = this.visibleItems(true);
+    this.doScrollAnumation( f.box(#left,#margin,#content) );
+  }
+  function scrollRight()
+  {
+    var (f,l) = this.visibleItems(false);
+    if( l.next ) this.doScrollAnumation( l.next.box(#left,#margin,#content) );
+  }
+  
+  function doScrollAnumation(finalx)
+  {
+    function ease(p, start, stop) { return (stop-start)*((p=p-1.)*p*p + 1.) + start; } // simple cubic-out ease function
+    
+    var list = this.list;
+    var xmax = list.box(#width,#content) - list.box(#width);
+    if( finalx > xmax  ) finalx = xmax;
+    var initx = list.scroll(#left);
+    
+    var progress = 0.0;
+    
+    function animationStep()
+    {
+      progress += 0.02;
+      if(progress >= 1.0) { list.scrollTo( finalx.toInteger(),0 ); return 0; }
+      list.scrollTo( ease(progress, initx, finalx).toInteger(),0 );
+      return STEP_DELAY;
+    }
+    this.animate(animationStep);
+  }
+}

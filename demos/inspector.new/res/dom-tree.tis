@@ -1,0 +1,214 @@
+
+class DomTree : Behavior
+{
+  function attached() {
+    this.driver = this.$p(.view-driver);
+    var me = this;
+    this.driver.on("element-selected.dom-tree", function( evt ) {
+      if( evt.target !== me )
+        me.selectElement( evt.data );
+    });
+    this.driver.on("element-content-changed.dom-tree", function( evt ) {
+      if( evt.target !== me )
+        me.onElementChanged(evt.data);
+    });
+    
+    this.driver.on("connected.dom-tree", function( evt ) {
+      me.clear();
+      me.expandOption(me);
+    });
+  }
+
+  function detached() { this.driver.off(".dom-tree"); }
+
+  function appendOption(parentOpt, caption, uid, nodeState)
+  {
+    parentOpt.append("<option value='" + uid + "'><text>" + caption + "</text></option>");
+    var opt = parentOpt.last;
+    if( nodeState === true ) // expanded folder
+      opt.state.expanded = true;
+    else if( nodeState === false ) // collapsed folder
+      opt.state.collapsed = true;
+    // else 
+    //   neither state.expanded nor state.collapsed
+    return opt;
+  }
+
+  function expandOption(opt,whendone = null)
+  {
+    var me = this;
+  
+    //stdout.println("expand");
+    function appendChild(caption, uid, isFolder,tag) { 
+      return me.appendOption(opt, caption, uid, isFolder? false: undefined); 
+    }
+    
+    function elementCaption(n)
+    {
+      var folder = false;
+      var t = String.printf("<span.head>&lt;%s",n.tag);
+      var atts = n.atts;
+      if(atts)
+        for( var av in atts) {
+          t += String.printf(" <span.attrn>%s=</span>\"<span.attrv>%s</span>\"",av[0],av[1].htmlEscape()); 
+        }
+      if( n.text ) {
+        t += String.printf("&gt;</span><span.text>%s</span><span.tail>&lt;/%s&gt;</span>", n.text.htmlEscape().htmlEscape(),n.tag); 
+      } else if( n.nodes ) {
+        t += String.printf("&gt;</span><span.text>...</span><span.tail>&lt;/%s&gt;</span>", n.tag); 
+        folder = true;
+      } else {
+        t += "/&gt;</span>";
+      }
+      return (folder,t);
+    }    
+    
+    const AUTO_EXPAND_TAGS = ["html","body"];
+    
+    var uid = null;
+    
+    function receiver(children) {
+      //stdout.printf("receiver(children) %V\n",children);
+      var optToExpand = null;
+      for( var n in children )
+      {
+        if( typeof n == #string ) // text node
+        {
+          n = n.trim();
+          if(n) appendChild("\"" + n.htmlEscape() + "\"",uid,false,null);
+        }
+        else 
+        {
+          var (folder, text) = elementCaption(n);
+          var opt = appendChild(text,n.uid, folder,n.tag);
+          if( n.tag in AUTO_EXPAND_TAGS )
+            optToExpand = opt;
+        }
+      }  
+      if(whendone) 
+        whendone(opt);
+      else if(optToExpand)
+        me.expandOption(optToExpand);
+    }
+
+    while(opt.length > 1) opt.last.remove();
+    if( opt !== this ) 
+    {
+      opt.state.expanded = true;
+      uid = opt.attributes["value"].toInteger();
+    }
+    me.driver.rq("getElementContent", uid, receiver );
+  }
+  function collapseOption(opt)
+  {
+    //stdout.println("collapse");
+    opt.state.collapsed = true; 
+    while(opt.length > 1)
+      opt.last.remove();
+  }
+ 
+  function onControlEvent(evt)
+  {
+    switch(evt.type)
+    {
+      case Event.ELEMENT_EXPANDED: this.expandOption(evt.target); return true;
+      case Event.ELEMENT_COLLAPSED: this.collapseOption(evt.target); return true; 
+      case Event.SELECT_SELECTION_CHANGED: 
+        // Òotify other parties that our user selected something on the treeþ
+        // 200ms throttling is used to prevent UI flutter
+        this.timer( 200ms, function() { this.postEvent("element-selected", this.value ); return false; }); 
+        return true;
+    }
+  }
+  
+  function onKey(evt)
+  {
+    if( evt.type == Event.KEY_DOWN  
+       && evt.keyCode == 'C' 
+       && evt.ctrlKey ) 
+    {
+      var opt = tree.$(option:node:current);
+      var uid = opt? opt.attributes["value"].toInteger() : null;
+      ds.copyToClipboard(uid);
+    }
+  }
+   
+  function appendRoot(caption, path, isFolder)
+  {
+    var rn = appendOption(this, caption, path, isFolder? true: undefined);
+    if(isFolder) {
+      var bodyNode = expandOption(rn);
+      if(bodyNode)
+        expandOption(bodyNode);
+    }
+  }
+   
+  function onElementChanged(uid)
+  {
+     var node = this.$(option[value={uid}]);
+     //view.log("onNodeModelChanged",node);
+     if(node && node.state.expanded) {
+       collapseOption(node);
+       expandOption(node);
+       return true;
+     }
+     return false;
+  }
+  
+  function showRoot(src = null) {
+    this.clear();
+    //ds.eachRoot(appendRoot);
+  }
+
+  function showStack(/*uid*/stack, opt = null) 
+  {
+    var uid = stack.shift().uid;
+    var node = (opt || this).$(:root > option[value={uid}]);
+    //stdout.println("showStack, uid",uid, (opt || this), node);
+    if( !node ) { 
+      return;
+    }
+        
+    if( stack.length )
+    {
+      if(node.state.expanded)
+        this.showStack(stack,node);
+      else {
+        node.state.expanded = true; 
+        this.expandOption(node, function(node) { (this super).showStack(stack,node); } );
+      }
+    }
+    else
+    {
+      node.state.current = true;
+      this.value = uid;
+    }
+  }
+
+  
+  function selectElement(uid) 
+  {
+    if( typeof uid == #array) {
+      // we've got stack 
+      this.showStack(uid,this);
+    }
+    this.value = uid;
+  }  
+  
+  function navigateToElement(uid) 
+  {
+    if( typeof uid == #array )
+      this.showStack(uid);
+    else if(typeof uid == #integer)
+      assert false : "TODO navigateToElement";
+  }
+  
+  /*
+  App.onElementHighlighted.push(show);
+  App.onElementContentChanged.push( function(uid) {
+    if( !uid || !onNodeModelChanged(uid))
+      showRoot();
+  });
+  */
+}
+

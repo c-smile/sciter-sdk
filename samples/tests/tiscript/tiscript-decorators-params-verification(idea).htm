@@ -1,0 +1,55 @@
+<html>
+<head>
+  <script type="text/tiscript">
+
+    // decorator '@params' - verification of parameters passed to the function
+    function @params(func, param_types..)
+    {
+      return function(params..)
+      {
+        var n = 0;
+        for(var p in params)
+          if(typeof p != param_types[n++]) 
+            throw String.printf("parameter '%s', expected %s but got %s", func.arguments[n-1], param_types[n-1], typeof p);
+        return func.apply(this,params);
+      }
+    }
+    // decorator '@returns' - verification of returned value of the function
+    function @returns(func, return_type)
+    {
+      return function(params..)
+      {
+        var rv = func.apply(this,params);
+        if( typeof rv != return_type )
+          throw String.printf("expected to return %s but got %s", return_type, typeof rv);
+        return rv;
+      }
+    }
+    
+    // testing it:
+
+    @returns #integer    
+    @params #integer #integer
+    function SumInt(a,b)
+    {
+      return a + b;  
+    }
+    
+    stdout << SumInt(2,2) << "\n"; // shall pass
+    try 
+    {
+      stdout << SumInt(2,2.0) << "\n"; // shall throw an error: "parameter 'b', expected integer but got float"
+    }
+    catch(e)
+    {
+      stdout << "OK:" << e << "\n";
+    }
+    
+  </script>
+  <style>
+  </style>
+</head>
+<body>
+  See console...
+</body>
+</html>

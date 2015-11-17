@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <script type="text/tiscript">
+    
+    include "xml-parser.tis";
+    
+    const xml = "<movie id='1'><img src='ddd'>first movie</movie><movie>second movie</movie>";
+   
+    function printMovieHtml(attributes,text)  { stdout.println(text); }
+    
+    const callbacks =
+    {
+     /* node path      |  node callback */
+      "/movie"         : { html : printMovieHtml },
+    };
+    
+    parseXML(xml,callbacks);
+    
+    </script>
+  </head>
+<body>
+</body>
+</html>

@@ -1,0 +1,40 @@
+﻿<html>
+  <head>
+    <meta name="source" content="http://www.terrainformatica.com/wiki/doku.php?id=h-smile:built-in-behaviors:edit"/>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>behavior: date</h1>
+  <p>date input element with dropdown calendar.</p>
+  <h2>Elements</h2>
+  <p>that have this behavior applied by default:</p>
+  <ul>
+    <li><code>&lt;input type=&quot;date&quot; /&gt;</code> - inline date input element</li></ul>
+  <h2>Model</h2>
+  <p>Upon initialization the behavior creates following DOM structure:</p>
+  <pre>&lt;input&gt;
+ <code> &lt;caption&gt;
+    &lt;span.year&gt;
+    &lt;span.month&gt;
+    &lt;span.day&gt;
+  &lt;/caption&gt;
+  &lt;button&gt;
+</code>&lt;/input&gt;
+</pre>
+  <p>Where <code>&lt;caption&gt;</code> will have <code>behavior:masked</code> applied. <code>&lt;button&gt;</code> triggers appearance of popup calendar.</p>
+  <h2>Attributes</h2>
+  <p>that this behavior knows about:</p>
+  <ul>
+    <li><code>value=&quot;YYYY-MM-DD&quot;</code> - initial date of the input element</li>
+    <li><code>timezone=&quot;TZ&quot;</code> - timezone to convert the date to. TZ can be either <code>&quot;local&quot;</code> or <code>&quot;+HH:MM&quot; / &quot;-HH:MM&quot;</code>.</li></ul>
+  <h2>Events</h2>
+  <p>Aside of standard set of events (mouse, keyboard, focus) <em>behavior: button</em> generates:</p>
+  <ul>
+    <li>SELECT_SELECTION_CHANGED event - value of the element (date) was changed due to user actions. Posted (asynchronous) event.</li></ul>
+  <h2>Value</h2>
+  <p>Date or undefined, reflects current status of internal editing buffer.</p>
+  <h2>Methods</h2>
+  <p>N/A - this input element has no specific methods but &lt;caption&gt; sub-element has <code>behavior:masked</code> specific methods.</p>
+  <dl></dl>
+</body>
+</html>

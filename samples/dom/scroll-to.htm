@@ -1,0 +1,34 @@
+<html>
+  <head>
+  <title></title>
+  <style>
+  
+    ol { size:*; overflow:auto; border:1px solid; }
+    ol > li { margin-top:10px; margin-bottom:10px; }
+  
+  </style>
+  <script type="text/tiscript">
+
+    function self.ready() {
+      var list = $(ol);
+      for(var i in 100)
+        list.$append(<li>item no {i}</li>);  
+    }
+
+    $(button#to-first).onClick = function() { $(ol).first.scrollToView(); }
+    $(button#to-last).onClick = function() { $(ol).last.scrollToView(); }
+    $(button#to-top).onClick = function() { $(ol).scrollTo(0,0); }
+    $(button#to-bottom).onClick = function() { $(ol).scrollTo(0,100000); }
+  
+  </script>
+  </head>
+<body>
+  <button #to-first>To the first</button>
+  <button #to-last>To the last</button>
+  <button #to-top>To the top</button>
+  <button #to-bottom>To the bottom</button>
+  <ol>
+  </ol>
+
+</body>
+</html>

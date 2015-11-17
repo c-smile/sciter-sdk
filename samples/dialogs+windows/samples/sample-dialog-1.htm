@@ -1,0 +1,22 @@
+<html>
+<head>
+  <title>Simple dialog</title>
+  <style>
+    @import url(sample-dialog-1.css);
+  </style>
+  <script type="text/tiscript">
+    include "../../decorators.tis";
+    
+    @click @on "#close-dialog":
+    {
+      view.close("Hello from Dialog");
+    }
+    </script>
+</head>
+<body>
+<h1>Sample dialog</h1>
+
+<button id="close-dialog">Close Dialog and return value</button>
+
+</body>
+</html>

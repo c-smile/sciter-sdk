@@ -1,0 +1,76 @@
+﻿<html>
+  <head>
+    <meta name="GENERATOR" content="BLOCKNOTE.NET"/>
+    <meta name="source"/>
+    <meta name="source"/>
+    <basefont face="Verdana" size="2"/>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>System object</h1>
+  <p class="note">Methods of this object are not always available to the script - they depend on feature parameters of VM creation.</p>
+  <dl>
+    <h2>Constants</h2>
+    <dt>IS_READONLY</dt>
+    <dd>- int, scanFiles callback/attributes, file/dir is readonly.</dd>
+    <dt>IS_DIR</dt>
+    <dd>- int, scanFiles callback/attributes, file is directory(folder).</dd>
+    <dt>IS_HIDDEN</dt>
+    <dd>- int, scanFiles callback/attributes, file/dir is marked as hidden.</dd>
+    <dt>IS_SYSTEM</dt>
+    <dd>- int, scanFiles callback/attributes, file/dir is marked as internal for the system.</dd>
+    <dt>MOBILE_OS</dt>
+    <dd>- true for the <em>mosciter</em> that is running on mobile platform, false otherwise.</dd>
+    <dt>DESKTOP_OS</dt>
+    <dd>- true for the <em>sciter</em> running on desktop PC/platform, false otherwise.</dd>
+    <dt>OS</dt>
+    <dd>- symbol, on Windows it is one of these:
+      <ul>
+        <li><code>#Windows-98</code></li>
+        <li><code>#Windows-98-SE</code></li>
+        <li><code>#Windows-ME</code></li>
+        <li><code>#Windows-CE</code> - Windows CE or Windows Mobile</li>
+        <li><code>#Windows-NT4</code></li>
+        <li><code>#Windows-2000</code></li>
+        <li><code>#Windows-2003</code></li>
+        <li><code>#Windows-XP</code></li>
+        <li><code>#Windows-Vista</code></li>
+        <li><code>#Windows-7</code></li></ul></dd>
+    <h2>Methods</h2>
+    <dt>scanFiles</dt>
+    <dd>
+      <p><strong>( </strong><em>path</em>:string [,<em> callback</em>:function]<strong> )</strong> :integer</p>
+      <p>Function calls <em>callback</em> function for each entry found in directory defined by the <em>path. Path</em> can contain wildcards like ? or *. Function returns number of entries scanned.</p>
+      <p>If callback is ommited then function just returns number of items satisfying path condition. In this form the scan can be used for testing of some file existence as an example.</p>
+      <p>Callback function shall accept two parameters:</p>
+      <blockquote>
+        <p>function <em>callback</em>( <em>filename</em>: string, <em>attributes</em>: integer ): bool</p></blockquote>
+      <p>where <em>filename</em> is an name of the file and <em>attributes</em> is an integer - OR-ed combination of IS_*** flags. Callback function shall return <em>true</em> if further scanning needed and <em>false</em> to stop enumeration.</p></dd>
+    <dt>home</dt>
+    <dd>
+      <div><strong>(</strong>[<em>relpath</em>:string]<strong>)</strong> returns: <em>string</em></div>
+      <p>Returns home folder of the application - folder where sciter started from. If <em>relpath</em> is some string then it will be appended to the return value. Use this if you need to find fully qualified file name residing in sciter folder or subfolder.</p></dd>
+    <dt>path</dt>
+    <dd>
+      <div><strong>(</strong>system-folder: symbol [,<em>relpath</em>:string]<strong>)</strong> returns: <em>string</em></div>
+      <p>Returns path of one of the system folders. <em>system-folder</em> here is one of:</p>
+      <ul>
+        <li><code>#SYSTEM</code></li>
+        <li><code>#SYSTEM_BIN</code></li>
+        <li><code>#PROGRAM_FILES</code></li>
+        <li><code>#USER_APPDATA</code></li>
+        <li><code>#COMMON_APPDATA</code></li>
+        <li><code>#USER_DOCUMENTS</code></li>
+        <li><code>#COMMON_DOCUMENTS</code></li></ul></dd>
+    <dt>exec</dt>
+    <dd>
+      <div><strong>(</strong>exe-path: string [,arg1:string ... argN: string]<strong>)</strong> returns: integer</div>
+      <p>Starts excutable asynchronously passing optional commnad line parameters. The method does not wait for executable to complete.</p>
+      <p>Retuns 0 if executable has started successfully and C runtime <code>errno</code> variable code otherwise (<span style="color: rgb(51, 51, 51); font-family: verdana, tahoma, helvetica, arial, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: bold; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; display: inline !important; float: none; background-color: rgb(255, 255, 255);">EACCES</span>, <span style="color: rgb(51, 51, 51); font-family: verdana, tahoma, helvetica, arial, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: bold; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; display: inline !important; float: none; background-color: rgb(255, 255, 255);">ENOTDIR</span>, etc.). &nbsp;&nbsp;</p></dd>
+    <h2>Prperties</h2>
+    <dt>language</dt>
+    <dd>The abbreviated name of the language, ISO Standard 639 names.</dd>
+    <dt>country</dt>
+    <dd>Country/region name, based on ISO Standard 3166.</dd></dl>
+</body>
+</html>

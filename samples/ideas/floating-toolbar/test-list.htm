@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      toolbar#floating { opacity:0.1; background:#EEE; border:1px solid; flow:horizontal; }
+      toolbar#floating > button { size:18dip; }
+      toolbar#floating > caption { width:max-content; line-height:18dip;  }
+      
+      toolbar#floating:popup { opacity:1; transition: opacity(linear,400ms); }
+      
+      ol { width:max-content; }
+      ol > li:hover { background:gold; }
+    
+    </style>
+   
+    <toolbar#floating>
+      <caption>{item caption}</caption>
+      <button>1</button>
+      <button>2</button>
+    </toolbar>
+  </head>
+<body>
+
+  <ol>
+    <li>First item</li>
+    <li>Second item</li>
+    <li>Third item</li>
+  </ol>
+  
+</body>
+
+<script type="text/tiscript">
+
+  $(ol).on("mouseidle", "li", function(evt) 
+  {
+    var tb = $(toolbar#floating); 
+    tb.state.popup = false;
+    tb.$(caption).text = this.text;
+    var (x,y,w,h) = this.box(#rectw,#border,#view);
+    this.popup( tb, x, y + h);
+    return true;
+  });
+  
+</script>
+</html>

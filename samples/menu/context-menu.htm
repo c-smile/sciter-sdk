@@ -1,0 +1,128 @@
+<html>
+  <head>
+  <style>
+    .with-context-menu
+    {
+      context-menu: selector(menu#context);
+    }
+    .with-context-menu-ext
+    {
+      context-menu: url(res/c-menu.htm); /* use some custom url schema for generating it on the fly */
+    }
+
+    menu
+    {
+      width:max-intrinsic;
+    }
+  
+    select#test { font:16pt Verdana; }
+  
+    select#test option:nth-child(odd)
+    {
+      background-color: beige;
+      context-menu: selector(menu#option-odd); /* selector of context menu element */
+    }
+    select#test option:nth-child(even)
+    {
+      background-color: lavender;
+      context-menu: selector(menu#option-even);
+    }
+    
+    select#test option:current
+    {
+      background-color:highlight; color:highlighttext; 
+    }
+    
+    caption 
+    { 
+      color:graytext; text-align:center; 
+      border-bottom:1px solid graytext;
+    }
+    
+    menu#option-odd
+    {
+      width:max-intrinsic;
+      background-color: beige;
+    }
+    menu#option-even
+    {
+      width:max-intrinsic;
+      background-color: lavender;
+    }
+    
+    
+  </style>
+  </head>
+
+<body>
+
+<h2>Context menu</h2>
+Right-Click on the button to see its context menu
+<button class="with-context-menu">Right-Click</button>
+<button class="with-context-menu-ext">Right-Click/External URL</button>
+
+<p>These selects shall show different context menus for odd and even options
+<select id="test" size="5">
+  <option>item 1</option>
+  <option>item 2</option>  
+  <option>item 3</option>  
+  <option>item 4</option>
+  <option>item 5</option>  
+  <option>item 6</option>  
+  <option>item 7</option>
+  <option>item 8</option>  
+  <option>item 9</option>  
+</select>
+<select id="test" style="font:system">
+  <option>item 1</option>
+  <option>item 2</option>  
+  <option>item 3</option>  
+  <option>item 4</option>
+  <option>item 5</option>  
+  <option>item 6</option>  
+  <option>item 7</option>
+  <option>item 8</option>  
+  <option>item 9</option>  
+</select>
+
+</p>
+
+
+<popup> <!-- I've enclosed it popup just for grouping reasons. -->
+  <!-- note class .context here, it is with purpose here 
+       master CSS has all needed definitions for menu.context -->
+  <menu.context id="context">
+    <li id="i1">First item</li>
+    <li id="i2">Second item</li>
+    <li id="i3">Third item</li>
+    <li id="i4">Fourth item</li>
+    <li>Sub menu
+        <menu>
+          <li id="i5">5 item</li>
+          <li id="i6">6 item</li>
+        </menu>  
+    </li>
+    
+  </menu>
+  
+  <menu.context id="option-odd">
+    <caption>Odd row operations</caption>
+    <li id="i1">First item</li>
+    <li id="i2">Second item</li>
+    <li id="i3">Third item</li>
+    <li id="i4">Fourth item</li>
+  </menu>
+  
+  <menu.context id="option-even">
+    <caption>Even row operations</caption>
+    <li id="i1">First item</li>
+    <li id="i2">Second item</li>
+    <li id="i3">Third item</li>
+  </menu>
+</popup>
+
+</body>
+
+</html>
+	
+	

@@ -1,0 +1,42 @@
+<html>
+  <head>
+  <title></title>
+<style>
+
+  dl { flow:row(dt, dd); font:system; border-spacing:4px;}
+  dt,dd { margin:0;padding:0; width:max-intrinsic; }
+  dt { text-align:right; line-height:1.6em;}
+  
+  input[type="masked"] > span:hover { outline:1px solid red; color:green; } 
+  input#medit4 > span:last-child { color:red; }
+  input#medit4 > span:last-child[value=pm] { color:blue; }
+
+</style>
+<script type="text/tiscript">
+
+const mask4 = [
+                { type:"integer", width:2, min:1, max:12 }, ":",
+                { type:"integer", width:2, min:0, max:59, #leading-zero:true }, " ",
+                [ "am", "pm" ]
+              ];
+$(input#medit4).mask(mask4);
+$(input#medit4).value = [1,0,"am"];
+
+</script>
+  </head>
+<body>
+
+  <h3>input type="masked"</h3>
+  <dl>
+    <dt>mask="( ### ) ### - ####"</dt>
+      <dd><input type="masked" id="medit1" mask="( ### ) ### - ####" value="2223334444" /></dd>
+    <dt>mask="( 000 ) 000 - 0000"</dt>
+      <dd><input type="masked" id="medit2" mask="( 000 ) 000 - 0000" value="2223334444" /></dd>
+    <dt>mask="( ___ ) ___ - ____"</dt>
+      <dd><input type="masked" id="medit3" mask="( ___ ) ___ - ____" value="aaabbbcccc" /></dd>
+    <dt>mask={defined in code}</dt>
+      <dd><input type="masked" id="medit4" mask="#" /></dd>
+  </dl>
+
+</body>
+</html>

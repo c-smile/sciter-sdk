@@ -1,0 +1,53 @@
+﻿<html>
+  <head>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>Bytes object</h1>
+  <p>Bytes is an array of bytes.</p>
+  <dl>
+    <h2>Constants</h2>
+    <dd>N/A</dd>
+    <h2>Properties</h2>
+    <dt>[index]</dt>
+    <dd><strong>- </strong><em>integer</em>, element of the array at the <em>index</em> position, read-write index accessor. Zero-based integer index.</dd>
+    <dt>length</dt>
+    <dd>- <em>integer</em>, read-only, number of bytes in the byte vector.</dd>
+    <dt>type</dt>
+    <dd>- <em>any</em>, could be used for any purposes but sciter uses it to report mime-type (string) of the data received or sent by request() method.</dd>
+    <dt>name</dt>
+    <dd>- <em>any</em>, could be used for any purposes but sciter uses it to report file name (string) of the data received or sent by request() method.</dd>
+    <h2>Methods</h2>
+    <dt>this</dt>
+    <dd>
+      <p>( <em>numBytes</em>: integer )</p>
+      <p>Constructs object of type Bytes - sequence of bytes of <em>numBytes</em> length.</p></dd>
+    <dt>toString</dt>
+    <dd>
+      <p><strong>( </strong>[<em>encoding</em>:string] <strong>)</strong> returns: <em>string</em></p>
+      <p>If encoding is not provided or is equal to &quot;base64&quot; then the method returns <em>base64</em> representation of the byte vector. Otherwise if encoding is one of supported encondings from IANA charset list <a href="http://www.iana.org/assignments/character-sets">http://www.iana.org/assignments/character-sets</a> the function returns decoded string.</p>
+      <p>E.g. <code>var str = bytes.toString(&quot;UTF-8&quot;);</code> returns a string from UTF-8 encoded bytes.</p></dd>
+    <dt>fromString</dt>
+    <dd>
+      <p><strong>( </strong><em>str</em>: string<strong> </strong>[, <em>encoding</em>:string] <strong>)</strong> returns: <em>Bytes</em></p>
+      <p>Static method, constructs Bytes object (byte array) &nbsp;from string using specified encoding.</p>
+      <p>If encoding is not specified or is equal to &quot;base64&quot; then base64 encoding is used. Otherwise if encoding is one of supported encondings from IANA charset list <a href="http://www.iana.org/assignments/character-sets">http://www.iana.org/assignments/character-sets</a> the function returns encoded bytes.</p>
+      <p>E.g. <code>var bytes = Bytes.fromString(&quot;Привет, мир!&quot;, &quot;utf-8&quot;);</code> returns utf-8 encoded bytes of the string.</p></dd>
+    <dt>md5</dt>
+    <dd>
+      <p><strong>( </strong>&nbsp;<strong>)</strong> returns: <em>string</em></p>
+      <p>returns 32 chars string that represents MD-5 digest of the byte array.</p></dd>
+    <dt>crc32</dt>
+    <dd>
+      <p><strong>( </strong>&nbsp;<strong>)</strong> returns: <em>integer</em></p>
+      <p>returns integer that is a result of CRC32 computation of given byte array.</p></dd>
+    <dt>save</dt>
+    <dd>
+      <div><strong>( </strong><em>filename</em>:string <strong>)</strong> returns: <em>true|false</em></div>
+      <p>Saves content of the byte vector into the file. If file exists then it will be overwritten.</p></dd>
+    <dt>load</dt>
+    <dd>
+      <div><strong>( </strong><em>filename</em>:string <strong>)</strong> returns: <em>Bytes</em></div>
+      <p>Static method. Creates new Bytes object, loads file into it and returns that object.</p></dd></dl>
+</body>
+</html>

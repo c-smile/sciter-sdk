@@ -1,0 +1,125 @@
+<html>
+  <head>
+  <title></title>
+  <style>
+    
+    
+    table {
+      font:system;
+      height:*; width:500px; 
+      border:1px solid black; 
+      flow:table-fixed; // ATTN: this value is mission critical!
+    }
+    
+    table > tbody, table > tbody { border-spacing:0; }
+
+    table > tbody 
+    { 
+      overflow: scroll-indicator;
+      size:*;
+    }
+
+    table > tbody > tr {
+      behavior:form; // mission critical: each repeated child is treated as a form so it can accept object values  
+    } 
+    
+    table > tbody > tr.highlighted {
+      background: #da9;
+    }
+
+    table > tbody > tr:hover {
+      background: #bcd;
+    }
+
+    table > tbody > tr:current {
+      background:gold;
+    } 
+
+    table td:nth-child(2),   
+    table th:nth-child(2) { width:*; }
+
+    table td:last-child,   
+    table th:last-child { width:8em; }
+      
+  </style>
+  <script type="text/tiscript">
+  
+  include "../vlist.tis";
+  
+  function self.ready() {
+  
+    var records = new Array(500);
+    
+    for(var i = 0; i < records.length; ++i)
+      records[i] = {index: i, caption:"Item", status:"" };
+
+    var n = records.length;
+    var p = 0;
+    
+   
+    var vlist = VirtualList {
+      container     : $(table>tbody),
+      bufferSize    : 100 // records in sliding window
+    };
+    
+    // feed it by these records
+    vlist.value = records;
+    
+    $(#mutate).onClick = function() {
+    
+      function add() { 
+        var at = rand(records.length + 1);
+        records.splice(at,0, {index: ++n, caption:"Item", status:"Added" });
+      }
+      
+      function del() { 
+        var at = rand(records.length);
+        var r = records[at];
+        records.splice(at,1);
+      }
+      
+      function upd() { 
+        var at = rand(records.length);
+        var r = records[at];
+        var times = r.nupdates || 0;
+        ++times;
+        r.nupdates = times;
+        r.status = String.$(Updated {times});
+      }
+      
+      function noop() {}
+      
+      var ops = [add,del,upd,noop];
+
+      self.timer(60ms, function() {
+        if(!vlist.state.animating) // prevent updates on animation
+          ops[ rand(ops.length) ]();
+        return true;
+      });
+
+    }
+    
+  }
+  
+  </script>
+  </head>
+<body>
+
+  <h2>Dynamic recordset mutation in virtual table list</h2>
+  
+  <p>Records array is created with 500 records initially and gets modified dynamically (added,removed,updated). Each 60ms</p> 
+
+  <button #mutate>Start random updates</button>
+
+  <table>
+    <thead>
+      <tr><th(index)>index</th><th(caption)>caption</th><th(status)>status</th></tr>
+    </thead>
+    <tbody>
+      <tr><td(index)></td><td(caption)></td><td(status)></td></tr>
+    </tbody>
+  </table>
+ 
+  
+</body>
+</html>

@@ -1,0 +1,40 @@
+<html>
+  <head>
+  <title></title>
+<style>
+
+  #container { size:*; flow:vertical-flow; border-spacing: 10px; }
+  #container > li { size:70px; display:block; vertical-align:middle; text-align:center; }
+  
+  #container:checked { flow:horizontal-flow; }
+  #container:checked > li { /*border-radius: 8px;*/ }
+
+</style>
+<script type="text/tiscript">
+
+  include "replace-animator.tis";
+  
+  $(#test).onClick = function() 
+  {
+    var container = $(#container);
+    function stateChanger() { container.state.checked = !container.state.checked; }
+    AniReplace(container, stateChanger);
+  }
+
+</script>
+  </head>
+<body>
+  <button #test>Switch layout</button>
+  <ul #container>
+    <li style="background:gold">First</li>
+    <li style="background:red">Second</li>
+    <li style="background:orange">Third</li>
+    <li style="background:magenta">Fourth</li>
+    <li style="background:cyan">Fifth</li>
+    <li style="background:green">Sixth</li>
+    <li style="background:blue">Seventh</li>
+    <li style="background:khaki">Eighth</li>
+  </ul>
+
+</body>
+</html>

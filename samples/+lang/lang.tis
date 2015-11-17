@@ -1,0 +1,118 @@
+
+// quasi namespace Lang
+
+const Lang = function() {
+
+  var   xlation = null; // current translation map 
+  var   langId = null;  // current lang id: "en", "ru", "jp", etc. 
+  
+  var   notfound = null; // items that were *not* found in xlation (for reporting purposes) 
+  var   used = null; // items that were used in xlation (for reporting purposes) 
+  
+  const ON_LANG_CHANGE = #onLangChange; // name of the event
+  
+  function loadTranslation(lang = null) { 
+    
+    langId = lang || self.attributes["lang"]; assert langId;
+    
+    //<link href="lang/ru.tis" hreflang="ru" rel="translation" >
+    
+    var link = self.$(>head>link[hreflang={langId}]);
+    assert link : "link element for lang " + langId + " not found";
+    
+    var href = link.attributes["href"];
+    assert href : "no href";
+    
+    var data = self.request(10000, #get, self.url(href) );
+    
+    if( data instanceof Stream )
+      xlation = eval(data);  
+      
+    assert xlation : "bad translation file";
+  }
+  
+  function updateLang(el) {
+    var evh = el[ON_LANG_CHANGE];
+    if( evh ) evh();
+    for( var child in el ) // do this for the whole tree 
+      updateLang(child); 
+  }
+
+  function Controller() {
+  
+    if(!xlation) loadTranslation();
+    
+    this.language = property(v) {
+      get return langId;
+      set {
+        this.attributes["lang"] = v;
+        this.attributes["dir"] = v == "ar" || v == "he" ? "rtl" : "ltr";
+        loadTranslation(v);
+        updateLang(this);
+      }
+    }
+  }
+  
+  // static label updater, used by <dfn> or <xxx .dfn>
+  function Label() {
+    var key = this.text;
+    function update() {
+      var text = xlation[key];
+      if( !text ) { if(notfound) notfound[key] = #text; (this super).text = key; }
+      else { this super.text = text; if(used) used[key] = true; }
+    }
+    this[ON_LANG_CHANGE] = update;
+    update();
+  }
+  
+  // dynamic text updater, used by <var> or <xxx .var>
+  // calls pluralizer/formatting function defined in the language map.
+  function Formatter() {
+    var key = this.text;
+    var val = parseData(this.attributes["value"] || "0");
+    var fmt = xlation[key];
+    if( fmt && used) used[key] = true;
+    if( !fmt && notfound) notfound[key] = #function;
+    
+    function update() { 
+      fmt = xlation[key]; 
+      if( !fmt ) { if(notfound) notfound[key] = #function; }
+      else { (this super).value = val; }
+    }
+    this[ON_LANG_CHANGE] = update;
+    
+    this[#value] = property(v) {
+      get return val;
+      set {
+        val = v;
+        var text = ( typeof fmt == #function ) ? fmt.call(this, v) :  fmt.replace("#",v.toString() );
+        this.text = text;
+      }
+    }
+    this.value = val;
+  }
+  
+  function initStats() {
+    notfound = {}; // items that were not found in xlation (for reporting purposes) 
+    used = {}; // items that were used in xlation (for reporting purposes) 
+
+    function notFoundItems() { return notfound; }
+    function notUsedItems() { 
+      var nused = {};
+      for(var (k,v) in xlation) {
+        if( used[k] === undefined ) nused[k] = v;
+      }
+      return nused; 
+    }
+    return (notFoundItems,notUsedItems);
+  }
+  
+
+  return {
+      Controller    : Controller,
+      Label         : Label,
+      Formatter     : Formatter,
+      initStats     : initStats
+   };
+
+}();

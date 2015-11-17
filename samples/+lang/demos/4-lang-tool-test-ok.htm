@@ -1,0 +1,32 @@
+﻿<html lang="en">
+  <head>
+    <title>Basic UI translation sample</title>
+    
+    <!-- these two links define two translation files for en and ru languages. -->
+    <link href="lang/ru.tis" hreflang="ru" rel="translation" >
+    <link href="lang/en.tis" hreflang="en" rel="translation" >
+    
+    <style>
+      @import url(../lang.css);
+    </style>
+    
+    <script type="text/tiscript">
+      include "../lang.tis";
+      include "../lang-tool.tis"; // included to generate report
+   
+      $(input[name=nmatches]).onValueChanged = function() { $(var[name=nmatches]).value = this.value; }      
+    </script>
+    
+  </head>
+  <body>
+    <h2>Basic UI translation sample using Lang framework</h2>
+    <p>Press <kbd>CTRL+SHIFT+F11</kbd> to generate translation TODO report. You shall see report as this:</p>
+<pre>// OK, all items found
+// OK, no unused items</pre>
+    <hr>
+    <span>Matches (not declared as translatable)</span>: <input|integer(nmatches) min=0 max=100 step=1 value=0 >
+    <p><var(nmatches) value=0>There are # matches in the box</var>.</p> 
+    <dfn>UNUSED</dfn> ("UNUSED" is included here to flag it as used)
+  </body>
+</html>
+

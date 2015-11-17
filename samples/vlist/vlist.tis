@@ -1,0 +1,190 @@
+
+class VList : Behavior 
+{
+  function attached() { this.setup(); }
+
+  function setup() {
+
+    const BUFFER_SIZE = 100; // sliding buffer size, number of DOM elements in the view
+    var records = []; 
+    var template = this.first;
+    var item_height = 31;   // will be adjusted later
+    var buffer_start = 0;   // index of first buffer element in _records
+    var visible_items = 0;  // number of visible items in the view
+    var current_index = undefined;  // index of current record 
+    var cache = [];         // cache of DOM elements - list items
+    
+    var pumpAfter = null;   // forward function declarations
+    var pumpBefore = null;  //
+    var showRecord = null;  // 
+ 
+    this.onSize = function() 
+    {
+      if(this.last)
+        item_height = this.last.box(#height,#client); // adjust real item height
+      var ch = this.box(#height,#client);
+      var vi = (ch + item_height - 1) / item_height;
+      if( vi != visible_items )
+        visible_items = vi;
+    }
+  
+    this.onScroll = function(evt) 
+    {
+      if( evt.type == Event.SCROLL_POS ) {
+        var i = evt.scrollPos / item_height; 
+        if( i + visible_items >= buffer_start + BUFFER_SIZE )
+          pumpAfter.call(this,i);
+        else if( i < buffer_start )
+          pumpBefore.call(this,i);
+      }
+    }
+  
+    pumpAfter = function(i) { 
+
+      var bso = buffer_start;
+      var bsn = buffer_start = i;
+      
+      if(this.last) {
+        this.last.style#margin-bottom = undefined;
+        this.first.style#margin-top = undefined;
+      }
+      
+      for( var i = bso; i < bsn; ++i)
+        if(!this.first) break;
+        else { cache.push(this.first); this.first.detach(); }
+     
+      var ni = bsn + this.length;
+      var niend = Integer.min(ni + BUFFER_SIZE - this.length, records.length);
+    
+      for( var i = ni; i < niend; ++i )
+      {
+        var t = cache.pop() || template.clone();
+        this.append(t);
+        showRecord(i,t);
+      }
+    
+      if(this.first) {
+        this.first.style#margin-top = px( bsn * item_height );
+        if(niend < records.length) {
+          var extra = (records.length - niend) * item_height;
+          this.last.style#margin-bottom = px(extra);
+        }
+      }
+      this.update();
+    };
+    
+    pumpBefore = function(i) {
+  
+      var nve = Integer.max(BUFFER_SIZE,Integer.max(0,i) + visible_items);
+      
+      if(this.last) {
+        this.last.style#margin-bottom = undefined;
+        this.first.style#margin-top = undefined;
+      }
+      
+      while( this.length )
+        if( this.last.index + buffer_start < nve) break;
+        else { cache.push(this.last); this.last.detach(); }
+      
+      var n = this.length ? buffer_start 
+            : Integer.min(records.length, i + BUFFER_SIZE);
+            
+      for(--n; n >= 0 && this.length < BUFFER_SIZE ; --n)
+      {
+        var t = cache.pop() || template.clone();
+        this.prepend(t);
+        showRecord(n,t);
+        buffer_start = n;
+      }
+      
+      if(this.first) {
+        this.first.style#margin-top = px( buffer_start * item_height );
+        if(buffer_start + this.length < records.length) {
+          var extra = (records.length - buffer_start - this.length) * item_height;
+          if(extra > 0)
+            this.last.style#margin-bottom = px(extra);
+        }
+      }
+      this.update();
+    };
+ 
+    this.records = property(v) 
+    {
+      get return records;
+      set { records = v; this.clear(); pumpAfter.call(this,0); }
+    } 
+  
+    showRecord = function(i,el) 
+    {
+      var r = records[i];
+      function setField(fel) {
+        var name = fel.attributes["name"];
+        fel.value = r[symbol(name)];
+      }
+      el.select(setField,"[name]");
+      el.state.current = (current_index !== undefined) && (i == current_index);
+    };
+        
+    function setCurrent(index) {
+      if( var old = this.$(>li:current) ) {
+        if(old.index + buffer_start == index) return; // already set
+        old.state.current = false;
+      }
+      current_index = undefined;
+      if( index < 0 || index >= records.length )
+        return; // out of records range
+      
+      current_index = index;
+      
+      var y = current_index * item_height;
+      
+      if( current_index < buffer_start )
+        this.scrollTo(0, y, true); 
+      else if( current_index >= buffer_start + this.length )
+        this.scrollTo(0, y - this.scroll(#height) + item_height,true); 
+      else {
+        var el = this[current_index - buffer_start];
+        el.state.current = true;
+        var sy = this.scroll(#top);
+        if( y < sy )
+          this.scrollTo(0, y,true); 
+        else if( y + item_height > sy + this.scroll(#height) )
+          this.scrollTo(0, y - this.scroll(#height) + item_height ,true); 
+      }
+    }
+                
+    this.onMouse = function(evt) {
+      if( evt.type == (Event.MOUSE_DOWN | Event.SINKING) )
+      {
+        var li = evt.target.$p(li);
+        if( li && li.parent === this )
+          setCurrent.call(this, li.index + buffer_start);
+      }
+    }
+    this.onKey = function(evt) {
+      if( evt.type == Event.KEY_DOWN )
+      {
+        switch(evt.keyCode)
+        {
+          case Event.VK_HOME:  setCurrent.call(this, 0); return true;
+          case Event.VK_END:   setCurrent.call(this, records.length - 1); return true;
+          case Event.VK_UP:    setCurrent.call(this, Integer.max(0,current_index - 1)); return true;
+          case Event.VK_DOWN:  setCurrent.call(this, Integer.min(records.length - 1, current_index + 1)); return true;
+          case Event.VK_PRIOR: setCurrent.call(this, Integer.max(0,current_index - visible_items + 1)); return true;
+          case Event.VK_NEXT:  setCurrent.call(this, Integer.min(records.length - 1, current_index + visible_items - 1)); return true;
+        }
+      } 
+    }
+    
+    this.currentIndex = property(v) 
+    {
+      get return current_index;
+      set { setCurrent.call(this,index); }
+    } 
+  
+    this.clear();
+    pumpAfter.call(this,0);
+  }
+  
+}
+

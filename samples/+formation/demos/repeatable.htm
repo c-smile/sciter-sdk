@@ -1,0 +1,67 @@
+<html>
+  <head>
+    <title>Demo of Formation + Repeatable</title>
+    <style>
+    
+      div { flow:row(label,input); font:system; border-spacing:4px; margin:4px; }
+      div > label { vertical-align: baseline; }
+      section[name=person] { border:1px solid; padding:4px; margin:4px; }
+    
+    </style>
+    <script type="text/tiscript">
+    
+      include "../formation.tis";
+      
+      var root = formation( self );
+      
+      var data = {
+        person: { 
+          details : {
+            name: { first: "John", last: "Programmer"},
+            age: 34 
+          },
+          friends: [
+            { name: "Monica" },
+            { name: "Leister" },
+            { name: "Adam" },
+          ]
+        }
+      }
+      
+      // set the value in one shot. Note: it will generate <li>s in <ol(friends)> automagically.
+      $(#set).onClick = function() { root.value = data; }
+      
+      // get the value in one shot too: 
+      $(#get).onClick = function() { $(#out).text = String.printf("%V", root.value ).replace("\t","  "); }
+      
+      // show the formation structure:
+      $(#show).onClick = function() { 
+        view.msgbox( #information, root.toHtmlString());
+      }
+    
+    </script>
+  </head>
+<body>
+
+  <h1>Demo of Formation + Repeatable</h1>
+
+  <section(person)>
+    <div(details)>
+      <label for=name.first >First</label> <input(name.first)>
+      <label for=name.last >Second</label> <input(name.last)>
+      <label for=age >Age</label> <input|integer(age)>
+    </div>
+    Friends: <!-- repeatable, sic! -->
+    <ol(friends)>
+      <li><output|text(name) /></li>
+    </ol>
+  </section>
+  
+  <button #get>Get</button>
+  <button #set>Set</button>
+  <button #show>Formation structure</button>
+  
+  <pre #out></pre>
+
+</body>
+</html>

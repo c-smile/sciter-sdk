@@ -1,0 +1,131 @@
+<html>
+<head>
+  <style>
+
+  @import url(lightbox-dialog.css);
+
+  body {
+    font:system;
+    margin: 0px;
+    background-color: white;
+  }
+
+
+  form { 
+    font:system; 
+    padding:4px;
+  }
+
+  
+  form#data-dialog > table > tr > td:nth-child(1)
+  {
+    white-space:nowrap;
+    //text-align:right;
+    vertical-align:top;
+  }
+  
+  </style>
+
+  <script type="text/tiscript">
+
+    include "lightbox-dialog.tis";
+
+    $(#button1).onClick = function() 
+    {
+      $(#result1).value = "waiting...";
+
+      // show the dialog:      
+      var res = dialog { body:$(form#simple-dialog) };
+     
+      $(#result1).value = String.printf("result = %v", res);
+    }
+
+    $(#button2).onClick = function() 
+    {
+      $(#result2).value = "waiting...";
+
+      // show the dialog:      
+      var res = dialog { body:$(form#data-dialog),
+                         returns: #values };
+     
+      $(#result2).value = String.printf("result = %v", res);
+    }
+
+    $(#button3).onClick = function() 
+    {
+      $(#result3).value = "waiting...";
+
+      // show the dialog:
+      var res = dialog { body   : $(form#data-dialog),
+                         returns: #values,
+                         initial: {
+                                    #secret-wish:"I actually wanted the Sciter but got that .NET\nCan I finally get it? Santa, please!",
+                                    #gender     :"male",
+                                    #birthday   :new Date("1955-10-28"),
+                                    #last-name  :"Gates",
+                                    #first-name :"Bill"
+                                  }
+                       };
+     
+      $(#result3).value = String.printf("result = %v", res);
+    }
+
+    $(#button4).onClick = function() 
+    {
+      $(#result4).value = "waiting...";
+      
+      function onApply(form)
+      { 
+        $(#result4).value = String.printf("%v", form.value); 
+        // return true; - if you want to close the dialog after handling this 
+      }
+
+      // show the dialog:      
+      var res = dialog { body:$(form#data-dialog),
+                         returns: #values,
+                         buttons: [ { caption: "Yep!", role:#ok, value:true },
+                                    { caption: "Apply!", value: onApply },
+                                    { caption: "No way!", role:#cancel, value:false } ]
+                        };
+     
+      $(#result4).value = String.printf("result = %v", res);
+    }
+
+  </script>
+  
+  <form #simple-dialog caption="Simple!">
+    <input type="text" #test />
+    <label>Title:</label>
+  </form>
+
+  <form #data-dialog caption="Please identify yourself:">
+    <table>
+      <tr><td>First name:</td>
+          <td><input name="first-name" type="text" /></td></tr>
+      <tr><td>Second name:</td>
+          <td><input name="last-name" type="text" /></td></tr>
+      <tr><td>Birthday:</td>
+          <td><input name="birthday" type="date" /></td></tr>
+      <tr><td>Gender:</td>
+          <td><button name="gender" type="radio" value="male">Male</button><button name="gender" type="radio" value="female">Female</button></td></tr>
+      <tr><td>What do you want<br>
+              to ask Santa about?</td>
+          <td><textarea name="secret-wish" rows=4 cols=30 /></td></tr>
+    </table>
+  </form>
+  
+</head>
+<body>
+<h1>lightbox dialog demo</h1>
+<div style="margin: 20px">
+<p>Input: <input type="text" value="text"></p>
+<p>Input: <input type="text" value="text"></p>
+<p><input type="button" #button1 value="Open Simple Dialog and Wait Until Closed"> <span id="result1"></span></p>
+<p><input type="button" #button2 value="Open Data Dialog and Wait Until Closed"> <span id="result2"></span></p>
+<p><input type="button" #button3 value="Gather Data with Initialization"> <span id="result3"></span></p>
+<p><input type="button" #button4 value="Gather Data and Apply"> <span id="result4"></span></p>
+</div>
+
+
+</body>
+</html>

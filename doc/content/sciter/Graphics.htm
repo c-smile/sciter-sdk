@@ -1,0 +1,348 @@
+﻿<html>
+  <head>
+    <meta name="source"/>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>Graphics, Path and Text objects</h1>
+  <h2>Graphics object</h2>
+  <p>Represents graphic surface of the element.</p>
+  <p>Pretty much all methods return Graphic object itself allowing cascading of calls so following <font face="Courier New">gfx.lineWidth(2).line(0,0,100,100)</font>will draw 2px line from (0,0) to (100,100).</p>
+  <dl>
+    <h3>Constants</h3>
+    <dt>JOIN_MITER<br/>JOIN_ROUND<br/>JOIN_BEVEL</dt>
+    <dd>Join types, values of <em>lineJoin</em> property</dd>
+    <dt>CAP_BUTT<br/>CAP_SQUARE<br/>CAP_ROUND</dt>
+    <dd>Line cap type, values of <em>lineCap</em> property</dd>
+    <dt>ALIGN_DEFAULT<br/>ALIGN_START<br/>ALIGN_END<br/>ALIGN_CENTER</dt>
+    <dd>text alignment type, parameter values of <em>Text.Alignment</em> function</dd>
+    <dt>FILL_ONLY<br/>STROKE_ONLY<br/>STROKE_AND_FILL<br/>FILL_BY_LINE_COLOR</dt>
+    <dd><em>drawPath</em> flags.</dd>
+    <h3>Properties</h3>
+    <dt>lineJoin</dt>
+    <dd>rw - <em>integer</em>, one of JOIN_xxx constants. Type of line join.</dd>
+    <dt>lineCap</dt>
+    <dd>rw - <em>integer</em>, one of CAP_xxx constants. Type of line cap.</dd>
+    <dt>blendMode</dt>
+    <dd>rw - <em>integer</em>, one of BLEND_xxx constants. Blend mode of drawing operations.</dd>
+    <dt>imageBlendMode</dt>
+    <dd>rw - <em>integer</em>, one of BLEND_xxx constants. Blend mode of image renderings.</dd>
+    <dt>imageBlendColor</dt>
+    <dd>rw - <em>integer</em>, color. Image blending color.</dd>
+    <h3>Static Methods</h3>
+    <dt>RGBA</dt>
+    <dd>
+      <div>(<strong>red</strong><em>:integer</em> , <strong>green</strong><em>:integer</em>, <strong>blue</strong><em>:integer</em> [, <strong>alpha</strong><em>:integer|float (0.0 .. 1.0)</em>]) <em>:color</em> or<br/>(<strong>s</strong><em>:</em>string) <em>:color</em></div>
+      <p>Returns color rgba value. Example: var c = Graphics.RGBA(0xff,0,0); - pure red color or Graphics.RGBA(&quot;red&quot;); or Graphics.RGBA(&quot;#ff0000&quot;);</p></dd>
+    <h3>Methods</h3>
+    <dt><strike>constructor</strike></dt>
+    <dd>(non-creatable object)</dd>
+    <dt>clearAll</dt>
+    <dd>
+      <div>( [color: color] ): Graphics</div>
+      <p>Clears the graphics.</p></dd>
+    <dd></dd>
+    <dt>line</dt>
+    <dd>
+      <div>( <strong>x1</strong>:<em>float</em>, <strong>y1</strong>:<em>float</em>, <strong>x2</strong>:<em>float</em>, <strong>y2</strong>:<em>float</em> ) : Graphics</div>
+      <p>Draws line from x1,y1 to x2,y2 using current lineColor and lineGradient.</p></dd>
+    <h4>Shapes and Lines</h4>
+    <dt>triangle</dt>
+    <dd>
+      <div>( x1:<em>float</em>, y1:<em>float</em>, x2:<em>float</em>, y2:<em>float</em>, x3:<em>float</em>, y3:<em>float</em> ) : Graphics</div>
+      <p>Draws triangle using current lineColor/lineGradient and fillColor/fillGradient.</p></dd>
+    <dt>rectangle</dt>
+    <dd>
+      <div>( x:<em>float</em>, y:<em>float</em>, w:<em>float</em>, h:<em>float</em> ) or</div>
+      <div>( x:<em>float</em>, y:<em>float</em>, w:<em>float</em>, h:<em>float</em>, r:<em>float</em> ) or</div>
+      <div>( x:<em>float</em>, y:<em>float</em>, w:<em>float</em>, h:<em>float</em>, rx:<em>float</em>, ry:<em>float</em> ) or</div>
+      <div>( x:<em>float</em>, y:<em>float</em>, w:<em>float</em>, h:<em>float</em>, rx_top:<em>float</em>, ry_top:<em>float</em>, rx_bottom:<em>float</em>, ry_bottom:<em>float</em> ) : Graphics</div>
+      <p>Draws rectangle using current lineColor/lineGradient and fillColor/fillGradient with (optional) rounded corners.</p></dd>
+    <dt>ellipse</dt>
+    <dd>
+      <div>( x1:<em>float</em>, y1:<em>float</em>, r:<em>float</em> ) : Graphics or</div>
+      <div>( x1:<em>float</em>, y1:<em>float</em>, rx:<em>float</em>, ry:<em>float</em> ) : Graphics</div>
+      <p>Draws circle or ellipse using current lineColor/lineGradient and fillColor/fillGradient.</p></dd>
+    <dt>arc</dt>
+    <dd>
+      <div>( x1:<em>float</em>, y1:<em>float</em>, rx:<em>float</em>, ry:<em>float</em>, startAngle:<em>float</em>, endAngle:<em>float</em> ) : Graphics</div>
+      <p>Draws closed arc using current lineColor/lineGradient and fillColor/fillGradient.</p></dd>
+    <dt>star</dt>
+    <dd>
+      <div>( x1:<em>float</em>, y1:<em>float</em>, r1:<em>float</em>, r2:<em>float</em>, startAngle:<em>float</em>, numRays:<em>integer</em> ) : Graphics</div>
+      <p>Draws star using current lineColor/lineGradient and fillColor/fillGradient.</p></dd>
+    <dt>polygon</dt>
+    <dd>
+      <div>( x1:<em>float</em>, y1:<em>float</em>, x2:<em>float</em>, y2:<em>float</em>, .... ) : Graphics or</div>
+      <div>( v1:array, v2:<em>array</em>, .... ) : Graphics</div>
+      <p>Draws polygon using current lineColor/lineGradient and fillColor/fillGradient.</p></dd>
+    <dt>pointInPolygon</dt>
+    <dd>
+      <div>( x:<em>float</em>, y:<em>float, </em>polyX1:<em>float</em>, polyY1:<em>float</em>, polyX2:<em>float</em>, polyY2:<em>float</em>, ....<em> </em>&nbsp;): <em>true</em> | <em>false</em> or</div>
+      <div>( x:<em>float</em>, y:<em>float, </em>polygon:<em>array</em> ): <em>true</em> | <em>false</em></div>
+      <p>Checks if point (x,y) is inside the polygon.</p></dd>
+    <dt>polyline</dt>
+    <dd>
+      <div>( x1:<em>float</em>, y1:<em>float</em>, x2:<em>float</em>, y2:<em>float</em>, .... ) : Graphics or</div>
+      <div>( v1:array, v2:<em>array</em>, .... ) : Graphics</div>
+      <p>Draws polyline (multi-segment line) using current lineColor/lineGradient and fillColor/fillGradient.</p></dd>
+    <dt>drawPath</dt>
+    <dd>
+      <div>( path: Graphics.Path ) : Graphics</div>
+      <p>Draws the path object using current fill and stroke brushes.</p></dd>
+    <dd>
+      <div>
+        <div>Path primitives</div>
+        <div></div></div></dd>
+    <dt>copyImage</dt>
+    <dd>
+      <div>( img:<a href="Image.htm">Image</a> , x:<em>float</em>, y:<em>float</em> [, xIimg:<em>integer</em>, yImg:<em>integer, </em>wIimg:<em>integer</em>, hImg:<em>integer</em> ] ) : Graphics</div>
+      <p>Does bit-blit of the image pixels onto the graphics surface. No transformation applied to the image.</p></dd>
+    <h4>Image rendering</h4>
+    <dt>blendImage</dt>
+    <dd>
+      <div>( img:<a href="Image.htm">Image</a> , x:<em>float</em>, y:<em>float</em> [, xIimg:<em>integer</em>, yImg:<em>integer, </em>wIimg:<em>integer</em>, hImg:<em>integer</em> ] [, alpha: float | integer] ) : Graphics</div>
+      <p>Blends <em>img</em> onto the graphics surface. Operation takes in account per pixel alpha of the imeage and optional <em>alpha</em> value. alpha here is either float [ 0.0 .. 1.0 ] or integer [ 0 .. 255 ].</p></dd>
+    <dt>drawImage</dt>
+    <dd>
+      <div>( img:<a href="Image.htm">Image</a> , x:<em>float</em>, y:<em>float</em> [, w:<em>float</em>, h:<em>float</em>]<em> </em>[, xIimg:<em>integer</em>, yImg:<em>integer, </em>wIimg:<em>integer</em>, hImg:<em>integer</em> ] ) : Graphics</div>
+      <p>Draws <em>img</em> onto the graphics surface with current transformation applied (scale, rotation).</p></dd>
+    <h4>Storke and Fill attributes</h4>
+    <dt>strokeWidth</dt>
+    <dd>
+      <div>( width: float ) : Graphics</div>
+      <p>Set line width for subsequent drawings.</p></dd>
+    <dt>strokeColor</dt>
+    <dd>
+      <div>( color: color ) : Graphics</div>
+      <p>Set line color for subsequent drawing operations.</p></dd>
+    <dt>strokeJoin</dt>
+    <dd>
+      <div>( cap: #mitter | #round | #bevel ) : Graphics</div>
+      <p>Stroke join rendering type.</p></dd>
+    <dt>strokeCap</dt>
+    <dd>
+      <div>( cap: #butt | #square | #round ) : Graphics</div>
+      <p>Stroke cap - stroke dash ending style.</p></dd>
+    <dt>strokeDash</dt>
+    <dd>
+      <div>( dash: #solid | #dotted | #dashed ) : Graphics</div>
+      <p>Stroke dash type.</p></dd>
+    <dt>noStroke</dt>
+    <dd>
+      <div>() : Graphics</div>
+      <p>Disables line (outline) drawing.</p></dd>
+    <dt>fillColor</dt>
+    <dd>
+      <div>( color: color ) : Graphics</div>
+      <p>Set color for solid fills.</p></dd>
+    <dt>strokeLinearGradient</dt>
+    <dd>
+      <div>( x1: float, y1: float, x2: float, y2: float, color1: rgba, color2: rgba [, p: float] ) : Graphics</div>
+      <p>Setup parameters of gradient linear of lines.</p></dd>
+    <dt>strokeLinearGradient</dt>
+    <dd>
+      <div>( x1: float, y1: float, x2: float, y2: float, colors: [color1, color2, color3, .. ] ) : Graphics</div>
+      <p>Setup parameters of gradient linear fills using multiple colors.</p></dd>
+    <dt>strokeLinearGradient</dt>
+    <dd>
+      <div>( x1: float, y1: float, x2: float, y2: float, colors: [color1, color2, color3], colorstops: [float, float, float] ) : Graphics</div>
+      <p>Setup parameters of gradient linear fills using multiple colors and color stop position (0.0 ... 1.0).</p></dd>
+    <dt>fillLinearGradient</dt>
+    <dd>
+      <div>( x1: float, y1: float, x2: float, y2: float, color1: rgba, color2: rgba [, p: float] ) : Graphics</div>
+      <p>Setup parameters of gradient linear of lines.</p></dd>
+    <dt>lineRadialGradient</dt>
+    <dd>
+      <div>( x1: float, y1: float, r: float, color1: rgba, color2: rgba [, p: float] ) : Graphics</div>
+      <p>Setup parameters of gradient radial drawing of lines.</p></dd>
+    <dd></dd>
+    <dt>fillRadialGradient</dt>
+    <dd>
+      <div>( x1: float, y1: float, r: float, color1: rgba, color2: rgba [, p: float] ) : Graphics</div>
+      <p>Setup parameters of gradient radial fills.</p></dd>
+    <dt>noFill</dt>
+    <dd>
+      <div>( ) : Graphics</div>
+      <p>Disables fills for subsequent drawing operations.</p></dd>
+    <h4>Affine transformations</h4>
+    <dt>rotate</dt>
+    <dd>
+      <div>( radians: float ) : Graphics</div>
+      <p>Rotate coordinate system on <em>radians</em> angle.</p></dd>
+    <dt>scale</dt>
+    <dd>
+      <div>( xsc: float, ysc: float ) : Graphics</div>
+      <p>Scale coordinate system. <code>xsc</code> is the scale factor in the horizontal direction and <code>ysc</code> is the scale factor in the vertical direction. Both parameters must be positive numbers. Values smaller than <code>1.0</code> reduce the unit size and values larger than <code>1.0</code> increase the unit size.</p></dd>
+    <dt>translate</dt>
+    <dd>
+      <div>( x: float, y: float ) : Graphics</div>
+      <p>Move origin of coordinate system to the (x,y) point.</p></dd>
+    <dt>skew</dt>
+    <dd>
+      <div>( sx: float, sy: float ) : Graphics</div>
+      <div>
+        <div>Setup skewing (shearing) transformation.</div></div></dd>
+    <dt>screenToWorld</dt>
+    <dd>
+      <div>(r: number) : float</div></dd>
+    <dt>screenToWorld</dt>
+    <dd>
+      <div>(x: number, y: number) : (float, float)</div>
+      <p>These two functions translate coordinates from screen coordinate system to the one defined by rotate(),scale(), translate() and/or skew().</p></dd>
+    <dt>worldToScreen</dt>
+    <dd>
+      <div>(r: number) : float</div></dd>
+    <dt>worldToScreen</dt>
+    <dd>
+      <div>x: number, y: number) : (float, float)</div>
+      <p>These two functions translate coordinates from coordinate system defined by rotate(),scale(), translate() and/or skew() to screen coordinate system.</p></dd>
+    <h4>Text output</h4>
+    <dt>drawText</dt>
+    <dd>
+      <div>( text: <em>Graphics.Text</em>, x: float, y: float [, clr: color] [, pointOf: integer] ) : Graphics</div>
+      <p>Renders text layout object (see below) at position (x,y) with optional parameters:</p>
+      <ul>
+        <li>clr - color, if provided it is used to render the text. If no color is given then current fill an stroke brushes are used to render text with outlines.</li>
+        <li>pointOf - number in the range 1..9, defines what part of text layout corresponds to point (x,y). For meaning of numbers see numeric pad on keyboard. &nbsp;Example:<br/><code>gfx.drawText(text, 100,100, 5);</code> - text will drawn with its center loacated at (100,100) point.<br/>By default pointOf=7 is used - x,y are coordinates of top/left corner of the text.</li></ul></dd>
+    <dt>fonts</dt>
+    <dd>
+      <div>( [template:string] ) : array of strings, class method (a.k.a. static method).</div>
+      <p>Returns array of strings - list of installed font names. <em>template</em> if defined is a template for font name. E.g. Graphics.fonts(&quot;Arial*&quot;) may return array like [&quot;Arial&quot;, &quot;Arial Black&quot;, &quot;Arial Narrow&quot;] on your OS.</p></dd>
+    <h4>State</h4>
+    <dt>save</dt>
+    <dd>
+      <div>( ) : Graphics</div>
+      <p>Saves current Graphics attributes on top of internal state stack.</p></dd>
+    <dt>restore</dt>
+    <dd>
+      <div>( ): Graphics</div>
+      <p>Restores Graphics attributes from top of internal state stack.</p></dd>
+    <h4>Layers</h4>
+    <dt>pushLayer</dt>
+    <dd>
+      <div>( <strong>x</strong>: float, <strong>y</strong>: float, <strong>width</strong>: float, <strong>height</strong>: float [, <strong>opacity</strong>: 0.0... 1.0] ) : Graphics</div>
+      <p>Sets rectangular clip region with optional opacity.</p></dd>
+    <dt>pushLayer</dt>
+    <dd>
+      <div>( <strong>region</strong>: Graphics.Path [, <strong>opacity</strong>: 0.0... 1.0] ) : Graphics</div>
+      <p>Sets clip region equal to the path object, with optional opacity.</p></dd>
+    <dt>pushLayer</dt>
+    <dd>
+      <div>( <strong>area</strong>: Symbol ) : Graphics</div>
+      <p>Sets clip region equal to one of the following:</p>
+      <ul>
+        <li><code>#background-area</code> - background area of the element, including rounded borders if they are dclared for the element;</li>
+        <li><code>#client-box</code> - client box of the element ( inner box minus areeas occupied by scrollbars );</li>
+        <li><code>#margin-box</code> - margin box of the element;</li>
+        <li><code>#border-box</code> - border box of the element;</li>
+        <li><code>#padding-box</code> - padding box of the element;</li>
+        <li><code>#inner-box</code> - inner, content box of the element;</li></ul></dd>
+    <dt>popLayer</dt>
+    <dd>
+      <div>( ): Graphics</div>
+      <p>pops graphics layer from the graphics. If the layer uses opacity it gets rendered at this moment.</p></dd></dl>
+  <h2>Graphics.Path object</h2>
+  <dl>
+    <dt>this</dt>
+    <dd>
+      <div>( ) : Graphics</div>
+      <p>Constructor, starts new path. Use as <code>var path = new Graphics.Path();</code> &nbsp;to construct new path object.</p></dd>
+    <dt>moveTo</dt>
+    <dd>
+      <div>( x:<em>float</em>, y:<em>float </em>[, relative <em>= false</em> ] ) : Graphics.Path</div>
+      <p>Moves current drawing path position to x,y. If <em>relative</em> is <em>true</em> then <em>x</em> and <em>y</em> are interpreted as deltas from the current path position.</p></dd>
+    <dt>lineTo</dt>
+    <dd>
+      <div>( x:<em>float</em>, y:<em>float </em>[, relative <em>= false</em> ] ) : Graphics.Path</div>
+      <p>Draws line and moves current drawing path position to x,y. If <em>relative</em> is <em>true</em> then <em>x</em> and <em>y</em> are interpreted as deltas from the current path position.</p></dd>
+    <dt>hlineTo</dt>
+    <dd>
+      <div>( x:<em>float </em>[, relative <em>= false</em> ] ) : Graphics.Path</div>
+      <p>Draws horizontal line and moves current drawing path position to x, (current)y. If <em>relative</em> is <em>true</em> then <em>x</em> is interpreted as a delta from the current path position.</p></dd>
+    <dt>vlineTo</dt>
+    <dd>
+      <div>( y:<em>float </em>[, relative <em>= false</em> ] ) : Graphics.Path</div>
+      <p>Draws vertical line and moves current drawing path position to (current)x, y. If <em>relative</em> is <em>true</em> then <em>y</em> is interpreted as a delta from the current path position.</p></dd>
+    <dt>arcTo</dt>
+    <dd>
+      <div>( x:<em>float</em>, y:<em>float,</em> angle:<em>float, </em>rx:<em>float</em>, ry:<em>float, </em>largeArc:<em>bool, </em>sweep: <em>bool </em>[, relative <em>= false</em> ] ) : Graphics.Path</div>
+      <p>(tbd)</p></dd>
+    <dt>ellipseTo</dt>
+    <dd>
+      <div>( x:<em>float</em>, y:<em>float, </em>rx:<em>float</em>, ry:<em>float, </em>[, clockwise <em>= true</em> ] ) : Graphics.Path</div>
+      <p>(tbd)</p></dd>
+    <dt>quadraticCurveTo</dt>
+    <dd>
+      <div>( xc:<em>float</em>, yc:<em>float</em> , x:<em>float</em>, y:<em>float</em> [, relative <em>= false</em> ] ) : Graphics.Path</div>
+      <p>(tbd)</p></dd>
+    <dt>bezierCurveTo</dt>
+    <dd>
+      <div>( xc1:<em>float</em>, yc1:<em>float</em> , xc2:<em>float</em>, yc2:<em>float, </em>x:<em>float</em>, y:<em>float</em> [, relative <em>= false</em> ] ) : Graphics.Path</div>
+      <p>(tbd)</p></dd>
+    <dt>close</dt>
+    <dd>
+      <div>( &nbsp;) : Graphics.Path</div>
+      <p>closes current path/figure.</p></dd>
+    <dt>fillEvenOdd</dt>
+    <dd>
+      <div>( even: true|false ) : Graphics.Path</div>
+      <p>Set even/odd rule for polygon fills.</p></dd>
+    <dt>isPointInside</dt>
+    <dd>
+      <div>( x: float, y: float ) : true | false</div>
+      <p>Tests if point (x,y) is inside the path</p></dd></dl>
+  <h2>Graphics.Text object</h2>
+  <p>Represents text layout object to be rendered on graphics.</p>
+  <p>All length metrics of the Text are in DIPs - device independent pixels (1/96 of inch).</p>
+  <dl>
+    <h3>Properties</h3>
+    <dt>lines</dt>
+    <dd>r - integer, reports number of lines in text layout. To get meaningful values you should set width of the text layout object first like <code>text.width(100);</code></dd>chars
+    <dd>r/w - string, characters rendered by the text layout. Changing charcters after construction invalidates min/max width and height of the object.</dd>
+    <h3>Methods</h3>
+    <dt>this</dt>
+    <dd>
+      <div>(str: <em>string</em> [, styleSource: <em>Element</em>])</div>
+      <p>Constructs Text object from a string. &nbsp;When <em>styleSource</em> is provided it is used for assigning initial style (font,alignment, etc) to the text.</p></dd>
+    <dt>font</dt>
+    <dd>
+      <div>( name: <em>string</em>, size: <em>float</em>, [ bold: <em>true|false</em>, [ italic: <em>true|false</em>]] ) : Graphics.Text</div>
+      <p>Defines font attributes of this Text object.</p></dd>
+    <dt>width</dt>
+    <dd>
+      <div>( ) : ( maxWidth:<em>float</em>, minWidth:<em>float</em>, boxWidth:<em>float</em> )</div>
+      <p>Returns maximal/minimal widths of the text and box width previously set by width(w).</p>
+      <p>Maximal width is the width of the text without wrapping. If the text contains new line [sequences] then function returns width of widest string. And minimal width is a width of widest word (non-breakable sequence) in the text.</p></dd>
+    <dt>width</dt>
+    <dd>
+      <div>( w:float ) : Graphics.Text</div>
+      <p>Sets width of the Text object. After width is set all dependent attributes (height, lines) can be retrieved.</p></dd>
+    <dt>height</dt>
+    <dd>
+      <div>( ) : (textHeight:float, boxHeight:float)</div>
+      <div>Returns pair: computed height of the Text object and box height previously set by height(h).</div></dd>
+    <dt>height</dt>
+    <dd>
+      <div>( boxHeight: <em>float</em> ) : Text</div>
+      <div>Sets box height of the Text object.</div></dd>
+    <dt>line</dt>
+    <dd>
+      <div>(linNo: <em>integer</em>) : ( y: <em>float</em>, height: <em>float</em>, baselineOffset: float, length:<em>integer</em> )</div>
+      <p>Returns metrics of particular line in text layout object:</p>
+      <ul>
+        <li>y - distance the line from the start of the text;</li>
+        <li>height - height of the line;</li>
+        <li>baselineOffset - offset of the baseline from y value of the line;</li>
+        <li>length - number of characters (UTF16 code units to be precise) in this line including new line sequence if there is any.</li></ul></dd>
+    <dt>alignment</dt>
+    <dd>
+      <div>( textAlignment: ALIGN_***, verticalAlignment: ALIGN_*** ) : Graphics.Text</div>
+      <p>Sets text and vertical alignment of the text object.</p></dd>
+    <dt>alignment</dt>
+    <dd>
+      <div>( ) : ( ALIGN_***, ALIGN_***)</div>
+      <p>Returns text and vertical alignment of the text object.</p></dd></dl>
+  <div>TBD.</div>
+</body>
+</html>

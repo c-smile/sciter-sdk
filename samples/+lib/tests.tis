@@ -1,0 +1,72 @@
+
+function isEqual(a,b) {
+  
+  if( a == b ) return true;
+
+  function isCollection(obj) { var t = typeof obj; return t == #object || t == #array; }
+
+  if( isCollection(a) && isCollection(b) && a.length == b.length) {
+    for( var (k,v) in a )
+      if( ! isEqual(b[k],v) )
+        return false;
+    return true;
+  }
+  return false;
+} 
+
+
+function Array_tests() {
+
+  // zip()
+  
+  var z1 = Array.zip(["moe", "larry", "curly"], [30, 40, 50], [true, false, false]);
+  var z2 = [["moe", "larry", "curly"], [30, 40, 50], [true, false, false]].zip();
+  
+  var r = [["moe", 30, true], ["larry", 40, false], ["curly", 50, false]];
+  
+  assert z1 == r;
+  assert z2 == r;
+  
+  // groupBy
+  var ug = [
+    {name:"A", val:1},
+    {name:"A", val:2},
+    {name:"B", val:3},
+    {name:"B", val:4},
+    {name:"C", val:5}
+  ]; 
+  var grouped = {
+    "A": [{name:"A", val:1}, {name:"A", val:2}],
+    "B": [{name:"B", val:3}, {name:"B", val:4}],
+    "C": [{name:"C", val:5}],
+  };
+  
+  //stdout.printf("%V\n",t);
+  
+  assert isEqual(ug.groupBy(#name), grouped);
+  
+}
+
+function Function_tests() 
+{
+   function a(n) { return n + 1; }
+   function b(n) { return n + 2; }
+   function c(n) { return n + 3; }
+   
+   assert Function.batch(a,b,c)(0) == 6;
+   
+   var r = 0;
+   
+   const d = function(arg) { r = arg; }.once();
+   
+   d(1);
+   d(2);
+   
+   assert r == 1;
+   
+   
+   
+}
+
+run(Array_tests);
+run(Function_tests);

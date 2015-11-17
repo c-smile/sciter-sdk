@@ -1,0 +1,66 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      section {
+        flow:verical;
+        border-spacing: 4dip; /* inter-child spacing */
+        border:2dip dotted brown;
+        height:*;
+        width:*;
+      }
+      
+      section > div {
+        background: gold;
+        width: *;
+        border-color: brown;
+      }
+      
+      columns {
+        flow: "1 3 5 7"
+              "2 4 6 8";
+        display:block;
+        size:*;
+        border-spacing: 1em;
+      }
+    
+    </style>
+    
+  </head>
+<body>
+
+  <h1>CSS Layout managers: flow:vertical</h1>
+    
+  <columns>
+    <h3>flexible height</h3>
+    <section>
+      <div style="height:64dip">64dip</div>
+      <div style="height:*">*</div>
+      <div style="height:64dip">64dip</div>
+    </section>
+
+    <h3>flexible margin</h3>
+    <section>
+      <div style="height:64dip">64dip</div>
+      <div style="height:64dip">64dip</div>
+      <div style="height:64dip;margin-top:*">64dip/margin-top:*</div>
+    </section>
+
+    <h3>flexible height and margin</h3>
+    <section>
+      <div style="height:64dip">64dip</div>
+      <div style="height:2*">2*</div>
+      <div style="height:64dip;margin-top:1*">64dip/margin-top:1*</div>
+    </section>
+
+    <h3>flexible height and border</h3>
+    <section>
+      <div style="height:64dip">64dip</div>
+      <div style="height:2*">2*</div>
+      <div style="height:64dip;border-width:* 0 0 0; border-style:solid">64dip/border-top-height:1*</div>
+    </section>
+  </columns>
+
+</body>
+</html>

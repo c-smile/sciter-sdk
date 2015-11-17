@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <title>Plus: very basic sample</title>
+    <style>
+      @import url(../plus.css); /* the only thing needed to include Plus framework */
+      @import url(../../note.css); 
+      
+      .hide { display:none; }
+      .pwd { color:red; }
+      
+      .comment { font-size:85%; }
+      
+    </style>
+    
+    <script type="text/tiscript">
+    
+      include "../plus.tis"; // we use @observing so need to include plus.tis upfront.
+  
+      namespace Data // our model
+      {  
+        var pass = ""; // observable variable 
+        
+        var passStrength;
+        
+        @observing "pass"
+          function checkPasswordStrength() {
+            if( pass.length >= 8 )
+              passStrength = #strong;
+            else if( pass.length >= 1 )
+              passStrength = #weak;
+            else
+              passStrength = null;
+          }
+      }    
+    
+    </script>
+  </head>
+
+<body model="Data"> <!-- define data model we observe -->
+
+  <note>This sample demonstrates basic CSS class binding. Class <code>hide</code> in this sample is bound with <code>passStrength</code> variable.</note>
+
+  <p>Type password: <input|password(pass)> 
+                    <span class="pwd {{hide:passStrength != #weak}}">Weak!</span>
+                    <strong class="pwd {{hide:passStrength != #strong}}">Strong!</strong> </p>
+                    
+  <p .comment>(pass.length >= 8 is considered as a strong one here)</p>
+</body>
+</html>

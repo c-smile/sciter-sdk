@@ -1,0 +1,59 @@
+<html>
+  <head>
+    <title>Plus: very basic sample</title>
+    <style>
+      @import url(../plus.css); /* the only thing needed to include Plus framework */
+      @import url(../../note.css); 
+      
+      ol { width:*; }
+      ol > li { flow:horizontal; border-bottom:1px solid dotted;}
+      ol > li > output { display: block; }
+      ol > li > output[name="fruit.price"] { margin-left:*; }
+    </style>
+    
+    <script type="text/tiscript">
+  
+      namespace Data // our model
+      {  
+        var fruits = [{name:"apple", price:1.2},
+                      {name:"orange", price:1.0}];
+      
+        var newName = undefined;   
+        var newPrice = undefined;
+
+        function add() { // invoked by <button click="add()"> below
+          if(newName && newPrice) { // add the item to the array, note: list DOM will be updated accordingly.
+            fruits.push {name:newName,price:newPrice};
+            newPrice = undefined;
+            newName = undefined;
+          }
+        }
+        
+        function clear() { fruits.length = 0; }
+        
+      }    
+      
+    </script>
+  </head>
+
+<body model="Data"> <!-- define data model we observe -->
+
+  <note>List below is bound with <code>Data.fruits</code> array and so it reflects list items in that array. Inputs below allow to populate that array</note>
+
+  <!-- the repeateable section -->
+  <ol each="fruit in fruits">
+      <li><output(fruit.name)/> <output|currency(fruit.price)/> </li>
+  </ol>
+  
+  <!-- to add new item -->
+  <div>
+    New fruit: 
+      <input|text(newName) novalue="name" / >
+      <input|decimal(newPrice) novalue="price" />
+      <button click="add()">Add</button>
+  </div>
+  
+  <button click="clear()">Clear list</button> 
+  
+</body>
+</html>

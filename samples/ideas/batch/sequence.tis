@@ -1,0 +1,15 @@
+
+function sequence(funcs..) {
+    var idx = -1;
+    function tm() 
+    {
+      if( idx >= 0 )
+        funcs[idx]();
+      if( ++idx >= funcs.length ) return;
+      var timeout = funcs[idx];
+      assert typeof timeout == #duration;
+      self.timer( timeout == 0ms ? 20ms : funcs[idx], tm );
+      ++idx;
+    }
+    tm();
+}

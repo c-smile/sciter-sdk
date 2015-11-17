@@ -1,0 +1,96 @@
+include "../decorators.tis";
+
+class SwipeableList : Behavior
+{
+  function attached()
+  {
+    this.menu = this.$(menu);
+  }
+  
+  function onFocus(evt)
+  {
+    //stdout.println("focus");
+    this.hideMenu();
+  }
+    
+  @when Event.SWIPE : evt
+  {
+    var li = evt.source.$p(li);
+    if(li && evt.reason == 6) // swipe right
+    {
+      stdout.println(li, evt.reason);
+      this.showMenuFor(li);
+    }
+    else if(li && evt.reason == 4) // swipe left
+    {
+      this.hideMenu();
+      this.deleteItem(li);
+    }
+  }
+  @when Event.BUTTON_CLICK @on "menu > button.delete" : evt
+  {
+    this.deleteItem(this.menuItem);
+  }
+  @mouse (Event.MOUSE_DOWN | Event.SINKING) : evt 
+  {
+    if( !evt.target.belongsTo(this.menu) ) 
+      this.hideMenu();
+  }
+  @when Event.BUTTON_CLICK @on "menu > button" : evt
+  {
+    this.post(::this.hideMenu());
+  }
+    
+  function showMenuFor(li)
+  {
+    this.hideMenu();
+    //this.menu.attributes#class = undefined; // reset the class
+    var (x,y,w,h) = li.box(#rectw,#border,#content);      
+    var (mleft,mtop,mright,mbottom) = this.menu.box(#rect,#border,#inner);      
+    
+    this.menu.style#top = px(y);
+    this.menu.style#height = px(h - mtop - mbottom);
+	
+    this.post(::this.menu.attributes#class = "show");
+    this.menuItem = li;
+  }
+
+  function hideMenu()
+  {
+    if(!this.menuItem) return;
+    this.menu.attributes#class = undefined; // reset the class
+    this.menu.style.clear();
+    this.menuItem = null;
+	this.refresh();
+	this.update();
+	//stdout.println("hideMenu");
+  }
+  
+  function deleteItem(li)
+  {
+    li.attributes.addClass("deletion");
+    var vbottom = this.box(#bottom,#border,#view);
+    var nli;
+    var anitems = [];
+    var me = this;
+    for( var i = li.index + 1; i < this.length; ++i )
+    {
+      nli = this[i];
+      nli.attributes.addClass("shifting");
+      anitems.push(nli);
+      if(nli.box(#top,#border,#view) > vbottom)
+        break;
+    }
+    (nli || li).onAnimationEnd = :{
+      //stdout.println("deleted ",li);
+      li.remove();
+      for(var el in anitems)
+        el.attributes.removeClass("shifting");
+      this.onAnimationEnd = undefined;
+      //me.update();
+    }
+    
+  }
+
+
+}

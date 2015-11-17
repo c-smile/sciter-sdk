@@ -1,0 +1,73 @@
+﻿<html>
+  <head>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>behavior:tree-checkmarks</h1>
+  <p>Behavior of hierarchical &lt;select&gt; lists with checkmarks. It can be applied to any block level container.</p>
+  <h2>Elements</h2>
+  <p>These elements have behavior:select applied by default:</p>
+  <ul>
+    <li><code>&lt;select|tree multiple=checkmarks&gt;&lt;/select&gt;</code></li></ul>
+  <h2>Model</h2>
+  <p>The behavior recoginizes two types &lt;option&gt;s:</p>
+  <ul>
+    <li>&quot;Leaf&quot; &lt;option&gt;'s that do not contain other &lt;option&gt;s;</li>
+    <li>&quot;Node&quot; &lt;option&gt;s that contain textual element followed by other &lt;option&gt;s.</li></ul>
+  <pre>&lt;option&gt;
+    &lt;caption&gt;Node caption&lt;/caption&gt;
+    &lt;option&gt;Leaf 1&lt;/option&gt;
+    &lt;option&gt;Leaf 2&lt;/option&gt;
+&lt;/option&gt;
+</pre>
+  <p>Selected option will have <code>:current</code> &nbsp;state flag set.</p>
+  <p>Node &lt;option&gt; gets <code>:node</code> runtime flag set (and corresponding CSS pseudo-class) on it by the runtime. Therefore selectors:</p>
+  <ul>
+    <li><code>option:node</code> - match all node options;</li>
+    <li><code>option:not(:node)</code> - match all leaf nodes.</li></ul>
+  <p>Each leaf can be marked as <code>:checked</code> &nbsp;and each node can have one of following state slags:</p>
+  <ul>
+    <li><code>option:node:incomplete</code> - the node contains mix of <code>:checked</code> and <code>:not(:checked)</code> leafs.</li>
+    <li><code>option:node:checked</code> - the node contains only <code>:checked</code> leafs.</li>
+    <li><code>option:node:not(:checked)</code> - the node contains only <code>:not(:checked</code>) leafs.</li></ul>
+  <p><code>option:node</code> may have either <code>:expanded</code> or <code>:collapsed</code> runtime flag set in response to UI events (mouse and keyboard events).</p>
+  <p>The behavior supports so called &quot;virtual tree&quot; mode. Initially the tree may have all node options collapsed and empty and populate them upon ELEMENT_EXPANDED event receiving. And clear on ELEMENT_COLLAPSED event to minimize memory needed to represent the tree. See <u>sdk/samples/ideas/virtual-tree/</u> sample.</p>
+  <h2>Attributes</h2>
+  <ul>
+    <li><code>expanded</code> on &lt;option&gt; - &lt;option expanded&gt; will get <code>:expanded</code> state by default.</li></ul>
+  <h2>Events</h2>
+  <p>Other than standard set of events (mouse, keyboard, focus) behavior:button generates:</p>
+  <ul>
+    <li>SELECT_SELECTION_CHANGED event, generated when user changes selection of the select (click on one of options). Posted event;</li>
+    <li>SELECT_SELECTION_CHANGING event, selection is about to change. Synchronous event;</li>
+    <li>SELECT_STATE_CHANGED event, :checked state of some option has changed by the user;</li>
+    <li>ELEMENT_EXPANDED event, is sent to node option that gets expanded;</li>
+    <li>ELEMENT_COLLAPSED event, is sent to node option that gets collapsed.</li></ul>
+  <h2>Methods</h2>
+  <p>N/A - behavior:select does not introduce any specific methods.</p>
+  <h2>Value</h2>
+  <p>any, read/write. value of selected option. Value of the option is its value attribute or option's text if there is no value defined.</p>
+  <h2>Tree events handling in script</h2>
+  <h3>raw <code>onControlEvent</code> handler</h3>
+  <pre>var btn = $(select#some);
+btn.onControlEvent = function(evt)
+{
+  switch(evt.type) {
+    case Event.SELECT_SELECTION_CHANGED: /* current option was changed */ break;
+    case Event.ELEMENT_EXPANDED: /* evt.target is expanded */ break;
+    case Event.ELEMENT_COLLAPSED: /* evt.target is collapsed */ break;<br/>  }
+}
+</pre>
+  <h3><code>on()</code> subscription</h3>
+  <pre>var sel = $(select#some);
+sel.on(&quot;change&quot;, function() { ... event handling code ... });
+sel.on(&quot;expand&quot;, &quot;option&quot;, function() { ... event handling code ... });
+sel.on(&quot;collapse&quot;, &quot;option&quot;, function() { ... event handling code ... });
+</pre>
+  <h3>decorators.tis handler</h3>
+  <pre>include &quot;decorators.tis&quot;;
+@when Event.ELEMENT_EXPANDED @on &quot;select#some&quot; :: ... event handling code ...;
+@when Event.ELEMENT_COLLAPSED @on &quot;select#some&quot; :: ... event handling code ...;
+</pre>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<html>
+  <head>
+  <title></title>
+  <style>
+    
+    @import url(vgrid.css);
+    
+    table { style-set: vgrid; // see vgrid.css
+            width:*;
+            height:*; } 
+    
+    table th:nth-child(2) { width:*; }
+
+    table th:last-child { width:8em; }
+      
+  </style>
+  <script type="text/tiscript">
+  
+  function self.ready() {
+  
+    var records = new Array(500);
+    
+    for(var i = 0; i < records.length; ++i)
+      records[i] = {index: i, caption:"Item", status:"" };
+
+    var n = records.length;
+    var p = 0;
+       
+    var vlist = $(table);
+    
+    // feed it by these records
+    vlist.value = records;
+    
+    $(#mutate).onClick = function() {
+    
+      function add() { 
+        var at = rand(records.length + 1);
+        records.splice(at,0, {index: ++n, caption:"Item", status:"Added" });
+      }
+      
+      function del() { 
+        var at = rand(records.length);
+        var r = records[at];
+        records.splice(at,1);
+      }
+      
+      function upd() { 
+        var at = rand(records.length);
+        var r = records[at];
+        var times = r.nupdates || 0;
+        ++times;
+        r.nupdates = times;
+        r.status = String.$(Updated {times});
+      }
+      
+      function noop() {}
+      
+      var ops = [add,del,upd,noop];
+
+      self.timer(60ms, function() {
+        if(!vlist.animating) // prevent updates on animation
+          ops[ rand(ops.length) ]();
+        return true;
+      });
+
+    }
+    
+    $(#populate).onClick = function() {
+    
+      records.splice(0,records.length); // clear the list
+
+      function addChunk() {
+        var n = 1 + rand(5);    
+        for(var i = 0; i < n; ++i)
+          records.push {index: records.length, caption:"New item", status:"" };
+      }
+      
+      this.timer(100ms, function() {
+        if(records.length > 200)
+          return false; // enough is enough
+        if(!vlist.animating) // prevent updates on animation
+          addChunk();
+        return true;
+      });
+    
+    }
+    
+  }
+  
+  </script>
+  </head>
+<body>
+
+  <h2>Dynamic recordset mutation in virtual table list</h2>
+  
+  <p>Records array is created with 500 records initially and gets modified dynamically (added,removed,updated). Each 60ms</p> 
+
+  <button #populate>Simulate gradual population</button>
+  <button #mutate>Start random updates</button>
+
+  <table resizeable>
+    <thead>
+      <tr><th(index)>index</th><th(caption)>caption</th><th(status)>status</th></tr>
+    </thead>
+    <tbody>
+      <tr><td(index)></td><td(caption)></td><td(status)></td></tr>
+    </tbody>
+  </table>
+ 
+  
+</body>
+</html>

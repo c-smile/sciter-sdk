@@ -1,0 +1,75 @@
+﻿<html>
+  <head>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>behavior:dropdown-select</h1>
+  <p>Standard behavior of &lt;select&gt; with dropdown option lists.</p>
+  <h2>Elements</h2>
+  <p>These elements have behavior:select applied by default:</p>
+  <ul>
+    <li><code>&lt;select size=&quot;1&quot;&gt;&lt;/select&gt;</code></li>
+    <li><code>&lt;select|dropdown&gt;&lt;/select&gt;</code></li></ul>
+  <h2>Model</h2>
+  <p>The behavior transforms select declaration:</p>
+  <pre>&lt;select&gt;
+  &lt;option value=&quot;#ff0000&quot; selected&gt;Red&lt;/option&gt;
+  &lt;option value=&quot;#00ff00&quot;&gt;Green&lt;/option&gt;
+  &lt;option value=&quot;#0000ff&quot;&gt;Blue&lt;/option&gt;
+&lt;/select&gt;
+</pre>
+  <p>into this</p>
+  <pre>&lt;select&gt;
+  &lt;caption&gt;Red&lt;/caption&gt;
+  &lt;button /&gt;
+  &lt;popup&gt;
+    &lt;option value=&quot;#ff0000&quot; selected&gt;Red&lt;/option&gt;
+    &lt;option value=&quot;#00ff00&quot;&gt;Green&lt;/option&gt;
+    &lt;option value=&quot;#0000ff&quot;&gt;Blue&lt;/option&gt;
+  &lt;/popup&gt;
+&lt;/select&gt;
+</pre>
+  <p>These parts get default styling from master.css but can be re-styled by host document styles if needed.</p>
+  <h2>Attributes</h2>
+  <p>This behavior knows about:</p>
+  <ul>
+    <li><code>size=integer</code> - number of visible elements in the dropdown list. Note: height of the select element can be overriden by CSS.</li>
+    <li><code>name=&quot;name&quot;</code> - standard attribute <em>name</em> - name of the input element on a form.</li>
+    <li><code>novalue=&quot;text&quot;</code> - if select has no <code>&lt;option selected&gt;</code> initially it will have this text rendered. The novalue attribute makes this select <strong>nullable</strong> - if there is no option are selected then value of the element is <em>undefined</em>.</li>
+    <li><code>editable</code> - this attribute causes <code>behavior:edit</code> to be applied to the <code>&lt;caption&gt;</code> element making it editable.</li></ul>
+  <h2>Events</h2>
+  <p>Other than standard set of events (mouse, keyboard, focus) behavior:button generates:</p>
+  <ul>
+    <li><code>SELECT_SELECTION_CHANGED</code> event, generated when user changes selection of the select (click on one of options). Posted event.</li>
+    <li><code>SELECT_SELECTION_CHANGING</code> event, selection is about to change. Synchronous event.</li></ul>
+  <h2>State flags</h2>
+  <p>Other than standard state flags like :hover, :active, :focus and so on the dropdown also manages:</p>
+  <ul>
+    <li><code>:expanded</code> - this flag is on when popup option list is shown.</li></ul>
+  <h2>Methods</h2>
+  <p>N/A - behavior:select does not introduce any specific methods.</p>
+  <h2>Properties</h2>
+  <p>Other than standard properties of DOM elements the drowpdown also supports:</p>
+  <ul>
+    <li><code>options</code> - reference to DOM element that holds <code>&lt;option&gt;</code> list, <code>&lt;popup&gt;</code> &nbsp;in this case.</li></ul>
+  <h2>Value</h2>
+  <ul>
+    <li>editable select - string, read/write - content of the &lt;caption&gt;</li>
+    <li>nullable select - any | undefined, read/write. value of selected option. Value of the option is its value attribute or option's text if there is no value defined on the &lt;option&gt;. Before user makes any choice value of the select is <em>undefined</em>.</li>
+    <li>normal select - any, read/write. value of selected option. Value of the option is its value attribute or option's text if there is no value defined. <br/>If no &lt;option selected&gt; defined then value of the select is the value of its first &lt;option&gt; element.</li></ul>
+  <h2>Selection change handling in script</h2>
+  <h3>raw <code>onValueChanged</code> handler</h3>
+  <pre>var btn = $(select#some);
+btn.onValueChanged = function() { var v = this.value; ... }
+</pre>
+  <h3><code>on()</code> subscription</h3>
+  <pre>var btn = $(select#some);
+btn.on(&quot;change&quot;, function() { ... event handling code ... });
+self.on(&quot;change&quot;, &quot;select#some&quot;, function() { ... event handling code ... });
+</pre>
+  <h3>decorators.tis handler</h3>
+  <pre>include &quot;decorators.tis&quot;;
+@change @on &quot;select#some&quot; :: ... event handling code ...;
+</pre>
+</body>
+</html>

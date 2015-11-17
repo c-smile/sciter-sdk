@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      toolbar#floating { opacity:0.1; background:#EEE; border:1px solid; flow:horizontal; }
+      toolbar#floating > button { size:18dip; }
+      
+      toolbar#floating:popup { opacity:1; transition: opacity(linear,800ms); }
+    
+    </style>
+   
+    <toolbar#floating>
+        <button>1</button>
+        <button>2</button>
+    </toolbar>
+  </head>
+<body>
+
+  <htmlarea>
+    with <i>floating</i> toolbar 
+  </htmlarea>
+  
+</body>
+
+<script type="text/tiscript">
+
+  $(htmlarea).on("mouseidle",function(evt) 
+  {
+    var tb = $(toolbar#floating); 
+    this.popup( tb, evt.xView, evt.yView + 24);
+    return true;
+  });
+  
+</script>
+</html>

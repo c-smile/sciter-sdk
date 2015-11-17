@@ -1,0 +1,194 @@
+include "decorators.tis";
+
+// ViewDriver represents view/window on debugee side.
+class ViewDriver: Behavior 
+{ 
+  const views = $(#views);
+
+  var   counter = 0;     // ViewDrivers counter for unique vid purposes
+  var   rid = 0;         // requests counter for unique id purposes  
+  var   callbacks = [];  // requests awaiting responses from dee side.
+  
+  var   log   = null;   // DOM element, select.log - all log messages
+  var   currentViewID = null; // current vid
+    
+  this var vid   = null;   // unique id 
+  this var label = null;   // DOM element, <label> of this thing
+  this var active = false;   // it is active
+  this var breakpoints = []; // breakpoints
+
+  // static ctor
+  function create(socket) {
+    var vid = "n" + ++counter;
+    var (panel,label) = views.addTab(vid,"","<include src='view-driver.htm' />");
+    label.html = "<text/><picture/>";
+    panel.label = label;
+    
+    if(!log) log = $(select.log);
+    
+    panel.vid = vid;
+    
+    currentViewID = vid;
+    if(log)
+      log.setCurrentView(vid);    
+    
+    panel.post( ::panel.setup(socket) );
+  }
+  
+  function setup(socket) {
+    this.socket = socket;
+    var me = this;
+    me.active = true;
+    me.breakpoints = [];
+    socket.on("data",function( data ) 
+    {
+      //stdout.printf("from dee: %V\n",data);
+      const method = ViewDriver[data.shift()];
+      assert(typeof method == #function);
+      method.apply(me, data );
+      //socket.send(data);
+    });
+    socket.on("close",function() {
+      me.active = false;
+      me.deeDetach();
+    });
+    me.postEvent("connected");
+  }
+  
+  function attached() 
+  { 
+    this.resources = {}; // resources list
+    var me = this;
+    this.on("element-selected.viewdriver", function(evt) {
+      if( evt.target !== me ) // if the event originated from this UI ask debugee to highlight the element
+        me.socket.send(["highlightElement", evt.data]);
+    });
+    this.on("navigate-to-source.viewdriver", function(evt) {
+      me.$(.driver-views).current = "resources-view"; // navigating to source - need resources-view tab to be present
+    });
+
+    this.on("expanded.viewdriver", function(evt) {
+      currentViewID = this.vid;
+      if(evt.target == this && log)
+        log.setCurrentView(currentViewID);
+    });
+    
+  }
+  function detached() { 
+  }
+ 
+  @sinkingclick @on "[res]" : evt, target { 
+    var data = {};
+    data.url = target.attributes["res"];
+    var ln = target.attributes["line-no"];
+    data.lineNo = ln ? ln.toInteger() : 1;
+    this.postEvent("navigate-to-source", data);
+    return true;
+  }
+  @sinkingclick @on "[href][line]" : evt, target { 
+    var data = {
+      url : target.attributes["href"],
+      lineNo : target.attributes["line"].toInteger()
+    };
+    this.postEvent("navigate-to-source", data);
+    return true;
+  }
+  
+  function rq(what, param, callback ) {
+    assert callback.rid === undefined;
+    callback.rid = ++rid;      // request id, debugee will pass it back with response
+    callbacks.push(callback);
+    //stdout.printf("rq %V %V %V\n",what, param, rid);
+    this.socket.send([what,param,rid]);
+  }
+  
+  function send(what, param ) {
+    this.socket.send([what,param]);
+  }
+  
+  function sendBreakpointHitResponse(res) {
+    this.socket.send(["breakpointHitResponse",res /*one of DEBUG_COMMAND */ ]);
+  }
+  
+  // dee**** methods called from remote debugee side
+  // 'this' is the ViewDriver
+  function deeAttach( title, url = "?", snapshot = null )  { this.deeUrl = url; /*stdout.println("deeAttach",this);*/ this.label.$(text).text = title; }
+  function deeDetach() { views.postEvent("disconnected"); views.removeTab(this.vid);  }
+  function deeReattach( title, url = "?", snapshot = null )  { 
+    this.deeUrl = url;
+    this.label.$(text).text = title;
+    var res = this.resources[url];
+    this.resources = {};
+    this.resources[url] = res;
+    this.postEvent("connected");     
+    this.postEvent("resource-arrived"); 
+  }
+    
+  //function deeActivate() { /*log("activate")*/; }
+  function deeLog(subsystem,severity,msg) { log.addMsg(subsystem,severity,msg, this.vid);  /*this.log.appendMsg(subsystem,severity,msg);*/ }
+  
+  function deeElementHighlighted(stack) { this.postEvent("element-selected", stack); }
+  function deeElementContentChanged(uid) { this.postEvent("element-content-changed", uid); }
+  
+  function deeResourceArrived(resDef) { 
+    this.resources[resDef.url] = resDef;
+    this.postEvent("resource-arrived",resDef.url); 
+    //stdout.printf("deeResourceArrived %V %V %V\n", resDef.url, resDef.type, typeof resDef.data);
+  }
+  
+  function deeSnapshot(bytes) 
+  { 
+    var image = Image.fromBytes(bytes);
+    this.label.$(picture).load(image);
+    ////stdout.println("deeSnapshot\n", bytes, bytes.length);
+  }
+   
+    
+  function deeBreakpointHit(url,lineNo,envData) { 
+    if( this.breakpointHitHandler )
+      this.breakpointHitHandler(url,lineNo,envData);
+    else
+      this.sendBreakpointHitResponse(DEBUG_COMMAND.CONTINUE);
+  }  
+  
+  function deeResponse(data, rid) {
+    //stdout.printf("got deeResponse %V %V\n",data,rid);    
+    for(var (i,cb) in this.callbacks )
+      if( cb.rid == rid ) {
+        cb(data);
+        this.callbacks.remove(i);
+        return;
+      }
+    //assert false: "callback with the rid not found";
+  }
+ 
+  // methods used by other modules:  
+  function addBreakpoint(url,lineNo) {
+    var bp = [url,lineNo]; // [url,lineNo]
+    var me = this;
+    this.rq("addBreakpoint", bp, function(bps) {
+      me.breakpoints = bps;  
+      me.postEvent("breakpoint-list-change");
+    });
+  }
+  
+  function removeBreakpoint(url,lineNo) {
+    var bp = [url,lineNo]; // [url,lineNo]
+    var me = this;
+    this.rq("removeBreakpoint", bp, function(bps) {
+      me.breakpoints = bps;  
+      me.postEvent("breakpoint-list-change");
+    });
+  }
+  
+  function checkBreakpoints() {
+    this.rq("allBreakpoints", bp, function(bps) {
+      if( !me.breakpoints.equals(bps) ) {
+        me.breakpoints = bps;  
+        me.postEvent("breakpoint-list-change");
+      }
+    });
+  }
+  
+  
+}

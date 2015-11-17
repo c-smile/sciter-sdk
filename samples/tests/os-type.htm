@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      div {display:none; font-weight:bold; }
+      
+      @media (os-vendor == "Microsoft") && desktop {
+        div.windows.desktop { display:block; }
+      }
+      @media (os-vendor == "Microsoft") && handheld {
+        div.windows.handheld { display:block; }
+      }
+      @media (os-vendor == "Apple") && desktop {
+        div.apple.desktop { display:block; }
+      }
+      @media (os-vendor == "Apple") && handheld {
+        div.apple.handheld { display:block; }
+      }
+      @media (os-vendor == "GNU") && desktop {
+        div.gnu.desktop { display:block; }
+      }
+      @media (os-vendor == "GNU") && handheld {
+        div.gnu.handheld { display:block; }
+      }
+    
+    </style>
+    <script type="text/tiscript"></script>
+  </head>
+<body>
+  <p>CSS media types, os-vendor and device types</p>
+  So, this is:
+  <div.windows.desktop> Windows, desktop</div>
+  <div.windows.handheld> Windows, mobile</div>
+  <div.apple.desktop> Apple, desktop</div>
+  <div.apple.handheld> Apple, mobile</div>
+  <div.gnu.desktop> Linux, desktop</div>
+  <div.gnu.handheld> Linux, mobile</div>
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <style>
+    
+      img.twinkle { aspect: Twinkle; /* see below */ }
+      
+      img.twinkle:expanded { transform: scale(2); transition: transform(sine-in-out, 600ms); }
+    
+    </style>
+    <script type="text/tiscript">
+    
+    function Twinkle() 
+    {
+      function flipflop() { this.state.expanded = !this.state.expanded; }
+    
+      this.start = function() {
+        this.state.expanded = true; // triggers transition/animation
+        this.on("animationend.twinkle", flipflop );
+      } 
+      
+      this.stop = function() {
+        this.state.expanded = false; 
+        this.off("animationend.twinkle");
+      } 
+     
+    }
+
+    function self.ready() { 
+      $(#heart).start();
+    }
+    
+    $(button#stop).onClick = function() {
+      $(#heart).stop();
+    }
+    
+    </script>
+  </head>
+<body>
+
+  <p>From Sciter with love! <img.twinkle #heart src="sciter:icon-copy-sign.png"></p>   
+
+  <button #stop>Stop twinkling</button>
+
+</body>
+</html>

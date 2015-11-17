@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <title></title>
+    <style></style>
+    <script type="text/tiscript">
+    
+    include "xml-parser.tis";
+   
+    var stream = Stream.openFile( self.url("points.xml"), "ur" );
+    
+    var out = Stream.openString();
+    
+    function printTime(text)  { out.$n(time: { text }); }
+    function printPoint(atts) { out.$n(point: { atts.x },{ atts.y }); }
+    function printName(text)  { out.$n(name: { text }); }
+    
+    const callbacks =
+    {
+      "/geodata/time"         : { text : printTime },
+      "/geodata/name"         : { text : printName },      
+      "/geodata/points/point" : { end : printPoint }
+    };
+    
+    try 
+    {
+      parseXML(stream,callbacks);
+    }
+    catch(er)
+    {
+      stdout.println(er);  
+    }
+    
+    stream.close();
+    
+    self.$(pre#out).value = out.toString();
+    out.close();
+        
+
+    </script>
+  </head>
+<body>
+  Parsed data:
+  <pre #out />
+</body>
+</html>

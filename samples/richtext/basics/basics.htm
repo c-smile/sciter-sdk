@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+    toolbar { padding:3dip;
+              display:block; flow:horizontal; background:#ddd; }
+    toolbar > button { width:16dip; }
+    toolbar > button:checked { color:red; }
+    
+    </style>
+    <script type="text/tiscript">
+    
+      const htmlarea = $(htmlarea);
+      
+      const btn_b = $(#btn-b);
+      const btn_i = $(#btn-i);
+      
+      htmlarea.on("statechange", function() {
+        const ACTIVE = 0x01;
+        const DISABLED = 0x02;
+        btn_b.state.checked = htmlarea.queryCommand("format:toggle-span:b|strong") == ACTIVE;
+        btn_i.state.checked = htmlarea.queryCommand("format:toggle-span:i|em") == ACTIVE;
+      });
+      
+      btn_b.on("click", function(){ htmlarea.execCommand("format:toggle-span:b|strong"); return true; });  
+      btn_i.on("click", function(){ htmlarea.execCommand("format:toggle-span:i|em"); return true; });  
+    
+    </script>
+  </head>
+<body>
+
+<toolbar>
+  <button|checkbox #btn-b>B</button>
+  <button|checkbox #btn-i>I</button>
+</toolbar>
+<htmlarea>
+  <p>Hello world!</p>
+</htmlarea>
+
+</body>
+</html>

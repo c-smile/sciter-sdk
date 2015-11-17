@@ -1,0 +1,142 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      body {
+        flow: "1 1"
+              "2 3";
+        size:*;
+      }
+      
+      video {
+        background: #CCD;
+        border: 2px solid black; 
+        size:*;
+      }
+      dl { 
+        behavior:form;
+        width:320dip; height:*; 
+        padding:6dip; 
+        flow: row(dt,dd);
+        border-spacing: 0.5em;
+      }
+      dl > header {
+        font-weight:bold;
+        border-bottom: 1px solid grey;
+      }
+      dl > dd { white-space:nowrap; }
+
+    </style>
+    <script type="text/tiscript">
+    
+      function self.ready() {
+      
+        var states = $(#states);
+        var video = $(video);
+        
+        var state = {
+          INITIALIZED:"",
+          STARTED:"",
+          STOPPED:"",
+          isPlaying: false,
+          duration: 0,
+          position: 0, 
+          volume: 0, 
+          balance: 0,
+          width:0,
+          height:0
+        };
+        
+        function showState() {
+          state.isPlaying = video.videoIsPlaying();
+          state.duration = video.videoDuration();  
+          state.position = video.videoPosition();  
+          state.volume = video.audioVolume();  
+          state.balance = video.audioBalance();
+          state.width = video.videoWidth();
+          state.height = video.videoHeight();
+          states.value = state;
+          return true;
+        }
+      
+        video.onControlEvent = function(evt) {
+          switch( evt.type ) {
+            case Event.VIDEO_INITIALIZED: state.INITIALIZED += "*"; showState(); return true;
+            case Event.VIDEO_STARTED:     state.STARTED += "*"; showState(); return true;
+            case Event.VIDEO_STOPPED:      state.STOPPED += "*"; showState(); return true;
+          }
+        }
+        
+        video.timer( 1s, showState );
+        
+        $(#run).onClick = function() {
+          video.videoPlay();
+        }
+        $(#rewind).onClick = function() {
+          video.videoPlay(0.0);
+        }
+        $(#stop).onClick = function() {
+          video.videoStop();
+        }
+        
+        $(#unload).onClick = function() {
+          video.videoUnload();
+        }
+        
+        $(#goto50).onClick = function()
+        {
+          video.videoPosition(video.videoDuration() / 2); 
+        }
+        
+        $(#volume1).onClick = function()
+        {
+          video.audioVolume(0.891); 
+        }
+        $(#volume0).onClick = function()
+        {
+          video.audioVolume(1.0); 
+        }
+		
+		$(#open).onClick = function()
+        {
+		  video.videoUnload();
+		  var path = view.selectFile(#load, "Movie Files (*.wmv)|*.WMV|All Files (*.*)|*.*" , "wmv");
+		  if(path && video.videoLoad(path))
+            video.videoPlay(0); 
+        }
+        
+      }
+    
+    
+    </script>
+  </head>
+<body>
+  <p>Video API - properties and events.</p>
+  <video  />
+  <dl #states>
+    <header>Properties</header>
+      <dt>videoIsPlaying():</dt> <dd><output(isPlaying)/></dd>
+      <dt>videoDuration():</dt> <dd><output|decimal(duration)/>s</dd>
+      <dt>videoPosition():</dt> <dd><output|decimal(position)/>s</dd>
+      <dt>videoWidth():</dt> <dd><output|integer(width)/>px</dd>
+      <dt>videoHeight():</dt> <dd><output|integer(height)/>px</dd>
+      <dt>audioVolume():</dt> <dd><output|decimal(volume)/></dd>
+      <dt>audioBalance():</dt> <dd><output|decimal(balance)/></dd>
+    <header>Events</header>
+      <dt>VIDEO_INITIALIZED:</dt><dd><output(INITIALIZED)/></dd>
+      <dt>VIDEO_STARTED:</dt><dd><output(STARTED)/></dd>
+      <dt>VIDEO_STOPPED:</dt><dd><output(STOPPED)/></dd>
+     <div>
+	  <button #open>Open</button>
+      <button #run>Run</button>
+      <button #stop>Stop</button> 
+      <br><button #rewind>Rewind</button>
+          <button #goto50>goto 50%</button>
+      <br><button #unload>Unload</button>
+      <br><button #volume0>Volume 0db</button>
+          <button #volume1>Volume -1db</button>
+     </div>
+  </dl>
+</body>
+</html>

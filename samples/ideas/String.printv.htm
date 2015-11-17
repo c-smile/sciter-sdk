@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <title></title>
+    <style></style>
+    <script type="text/tiscript">
+    
+    String.printv = function(args..) {
+      return this.replace
+      (   /\{([0-9]+)\}/g, 
+          function(match, number) { 
+            number = number.toInteger();
+            return args[number] !== undefined ? args[number]: match; }
+      );
+    }
+        
+   self.$(pre#out).html = "Bye-bye {1}, you was {0}!".printv("great","world");
+    
+    </script>
+  </head>
+<body>
+  Tests of String.printv() function:
+  <pre #out />
+</body>
+</html>

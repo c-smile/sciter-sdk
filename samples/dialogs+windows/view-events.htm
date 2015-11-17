@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <title>view-positioning-modes</title>
+    <style>
+    
+      div#list { white-space: nowrap; overflow:auto; size:*; border:1px solid;}
+    
+    </style>
+    <script type="text/tiscript">
+    
+      var cnt = 0;
+    
+      function showEvent(src) {
+        var list = $(div#list);
+        return function(param = "") {
+          list.$prepend(<text>{++cnt} on {src} {param}</text>);
+          if(list.length > 200)
+            list.last.remove();
+            
+          const states = [ "WINDOW_STATE_NA", "WINDOW_SHOWN", "WINDOW_MINIMIZED", "WINDOW_MAXIMIZED", "WINDOW_HIDDEN", "WINDOW_FULL_SCREEN"];
+          $(#state).value = states[view.state]; 
+  
+        };
+      }
+      
+      $(#full-screen).on("click", function(){
+        view.state = View.WINDOW_FULL_SCREEN;
+      });
+      $(#default).on("click", function(){
+        view.state = View.WINDOW_SHOWN;
+      });
+
+
+      
+      view.on("move.demo",showEvent("move"))
+          .on("size.demo",showEvent("size"))
+          .on("mediachange.demo", showEvent("mediachange"))
+          .on("activate.demo", showEvent("activate"))
+          .on("resolutionchange.demo", showEvent("resolutionchange"))
+          .on("statechange.demo", showEvent("statechange"));
+
+      self.closed = function() {
+        view.off(".demo");
+      } 
+    
+    </script>
+  </head>
+<body>
+  <button #full-screen>Full screen</button> <button #default>Default</button> state: <output #state />
+  <p>View events:</p>
+  <div#list>
+  </div>
+
+</body>
+</html>

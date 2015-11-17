@@ -1,0 +1,68 @@
+
+@set source-code
+{
+  :root 
+  {
+    aspect: colorize url(colorizer.tis);
+    behavior:plaintext;
+    display:block;
+    color: #000;
+    font-size: 12dip;
+    line-height: 16dip;
+    font-family: monaco, consolas, monospace;
+    font-rendering-mode: snap-pixel;
+    overflow:scroll-indicator; /* scroll-manner(wheel-animation:false, page-animation:false, step-animation:false, home-animation:false); */
+    background:#eee;
+    size:*;
+  }
+
+  :root > text {
+    margin-left:3em;
+    hit-margin: 0 0 0 3em;
+    white-space: pre;
+    display: list-item;
+    list-style-type: index;    
+    background:white;
+    border-left:8dip solid transparent;
+  }
+    
+  :root > eof { /* eof mark */
+    display: block;
+    background:#fdfdfd;
+    border-top: 1px dashed gray;
+    padding-bottom:*;
+    text-align:center;
+  }
+ 
+
+  text[type=script] {  background-color: #FFFAF0; }
+  text[type=markup] {  background-color: #FFF;  }
+  text[type=style]  {  background-color: #FAFFF0; }  
+  
+  /*markup*/  
+  text::mark(markup) { color: olive; } /*background-color: #f0f0fa;*/
+  text::mark(markup-id) { color: red; } /*background-color: #f0f0fa;*/
+  text::mark(markup-comment) { color:#ccc; }
+
+  /*source*/  
+  text::mark(source-number) { color: brown; }
+  text::mark(source-number-unit) { color: brown; }
+  text::mark(source-string) { color: teal; }
+  text::mark(source-keyword) { color: blue; }
+  text::mark(source-symbol) { color: brown; }
+  text::mark(source-literal) { color: brown; }
+  text::mark(source-comment) { color: green; }
+  text::mark(source-property) { color: mediumblue; } /*CSS*/
+
+  :root > text:current { background-color:rgb(255,200,126); }
+  :root > text:hover { foreground-color:rgba(126,200,255,0.25); }
+  :root > text[breakpoint] { border-color:red; }
+  :root > text[highlighted] { background:gold; }
+  
+}
+
+plaintext.source-code 
+{
+  display:block;
+  style-set: "source-code";
+}

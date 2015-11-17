@@ -1,0 +1,54 @@
+<html>
+<head>
+  <style>
+    
+    //* { outline:1px red dotted -1px; }
+    
+    ul { flow:horizontal; border:3px solid; min-height:1.2em; width:*; padding:3px }
+    ul:drop-target { border:3px solid blue; }
+    ul:drag-over { border:3px solid red; }
+    
+    ul > li { display:block; width:80dip; text-align:center; }
+    
+    li.placeholder { outline:2px gray dashed -3px; background:none; overflow:hidden; height:1.2em;}
+    li.placeholder.dst { background:lime;  }
+    li.placeholder.src { background:#eee;  }
+    li:moving { background-color:yellow;  }
+    
+    div.container 
+    {
+      flow:vertical;
+      height:*;
+    }
+    
+    ul { width:max-content; margin:10dip *; }
+    ul:drop-target { min-width:40dip; }
+    
+  </style>  
+  <script type="text/tiscript">
+    include "ddm.tis";
+    include "animations.tis";
+    
+    DragDrop
+    {
+      what    : "ul#dst>li,ul#src>li",
+      where   : "ul#dst,ul#src",
+      easeDrop: Animation.Ease.OutQuad
+    };
+    
+  </script>  
+</head>
+<body>
+  <div .container>
+    <ul #src>
+      <li>First</li>
+      <li>Second</li>
+      <li>Third</li>
+      <li>Fourth</li>
+      <li>Fifth</li>
+    </ul>
+    <ul #dst>
+    </ul>
+  </div>
+</body>
+</html>

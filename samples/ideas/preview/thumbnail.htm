@@ -1,0 +1,56 @@
+<html>
+  <head>
+  <title></title>
+<style>
+
+  button#snapshot > popup 
+  {
+    background-color: yellow;
+    background-image:url(in-memory:snapshot);  
+    background-repeat:stretch keep-ratio;
+    width:400px;
+    height:300px;
+    border:1px solid black;
+  }
+
+</style>
+<script type="text/tiscript">
+
+    var content = $(frame#content);
+
+    $(button#load).onClick = function()
+    {
+      var fn = view.selectFile(#open);
+      if( fn ) 
+      {
+        content.load(fn);
+      }
+    }
+    
+    $(button#snapshot).onClick = function()
+    {
+      var (w,h) = content.box(#dimension);
+      //var (w,h) = (100,100);
+      var image = new Image(w,h, content, color(255,255,255,255) ); // make snapshot of the content in the image
+      self.bindImage("in-memory:snapshot",image);
+      this.popup(this.$(popup),2);
+    }
+
+
+
+</script>
+  </head>
+<body>
+  <button #load title="Load page">Load</button>
+  <button #snapshot title="Page snapshot">
+    Snapshot
+    <popup />
+  </button>
+    
+
+  <frame #content>
+    <p>test</p>
+  </frame>
+
+</body>
+</html>

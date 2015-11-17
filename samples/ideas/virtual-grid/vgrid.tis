@@ -1,0 +1,554 @@
+/*
+
+public functions:
+function bindDataSource(ds)
+function dataSourceUpdated()
+
+property - index(v) - set/get current row.
+
+*/
+
+include "../../drag-n-drop-manager/ddm2.tis";
+
+function @DECLARE_EVENT(dummy, eventName)
+{
+  var notify_sym = symbol( "notify_" + eventName.toString());
+  var list_sym = symbol( "_" + eventName.toString());
+  var prop_sym = eventName;
+
+  this[ notify_sym ] = // 'this' here is a class being decorated
+    function(params..)
+    {
+      // 'this' here is an instance of the class
+      var list = this[list_sym];
+      if(typeof list == #array)
+      {
+        for( var f in list )
+          f.apply(this, this, params); // always pass 'this' in the first param - source element 
+      }
+    }
+  
+  this[ prop_sym] = // 'this' here is a class being decorated, generating computable property for it.
+    property(v) 
+  {
+    get { return this[list_sym] || (this[list_sym] = []); }
+    set { throw String.printf("Use element.%s.push(func) to subscribe on this event", list_sym); }
+  }
+}
+
+function delegate( that, thatMethod ) { return function(params..) { return thatMethod.apply(that, params); } }
+
+class VGrid: Behavior 
+{
+  const BUF_ROWS = 64;
+
+  function attached() 
+  {
+    this.sb = Element.create { widget, type:"vscrollbar" };
+    this.ds = null; // data source
+    this.firstRowNo = 0; // num of first visible row in ds.
+    this.visibleRows = 0; // num of rows visible in full.
+    this.selectedRows = {}; // hash map of indexes of selected rows.
+    this.currentRow = null; // index of current row. 
+    
+    // DOM structure initialization:
+    var table = Element.create { table };
+    this.table = table;    
+    
+    this.insert(table);
+    this.insert(this.sb);
+    
+    var dsname = this.@["data-source"];
+    var ds = dsname ? eval(dsname) : null; // getting variable defined by data-source attribute
+    if( ds === null || typeof ds != #object ) 
+    {
+      this.ds = null; // show nothing
+      this.updateScrollbarVisibility();
+    }
+    else
+      this.bindDataSource(ds);
+
+    var me = this;
+    this.sb.onScroll = function(evt) { return me.onScroll(evt); } // delegate scrollbar.onScroll to this.onScroll    
+
+    this.sb.onFocus = : { return true; } // disable scrollbar focus
+    
+    DragDrop2
+    {
+      what      : "tbody>tr",
+      where     : "tbody",
+      container : "tbody",
+      //notBefore : "tbody>tr.fixed",
+      autoScroll: false
+    };
+ 
+    this.on("drag-n-drop-ping",function(evt) {
+      switch(evt.data) {
+        case 8: this.show(this.firstRowNo - 1); return true;
+        case 2: this.show(this.firstRowNo + 1); return true;
+      }
+      return true;
+    });
+  }
+
+  function generateDefaults(datasource)
+  {
+    var columnDefs = datasource.columns;
+    if( this.tbody && this.tbody[0].length == datasource.columns.length && columnDefs)
+    {
+      for( var (i,th) in this.thead[0] )
+        th.text = columnDefs[i].caption;
+    }
+    else
+    {
+      if( this.thead ) this.thead.detach(false);
+      if( this.tbody ) this.tbody.detach(false);      
+
+      this.table.insert( this.thead = Element.create{ thead }, 0);
+      this.table.insert( this.tbody = Element.create{ tbody });
+      
+      // header row generation
+      var hr = Element.create{tr};
+      for( var cd in columnDefs )
+      {
+        hr.insert(Element.create{ th, [cd.caption] });
+        if( cd#sortOrder )
+          hr.last.@#sortType = cd#sortOrder;
+      }
+      this.thead.insert(hr);
+      // generation of data rows
+      for( var r = 0; r < VGrid.BUF_ROWS; ++r)
+      {
+        var dr = Element.create {tr} ; dr.@#hidden = true; // hidden by default
+        for( var cd in columnDefs )
+          dr.insert(new Element(#td));
+        this.tbody.insert(dr);
+      }
+    }        
+  }
+  
+  function dataSourceUpdated()
+  {
+    this.generateDefaults(this.ds);
+    this.onSize(true); // force update because of different data source
+  }
+  
+  function bindDataSource(ds)
+  {
+    this.ds = ds;
+    ds.grid = this; // for sorting
+    this.dataSourceUpdated();
+  }
+
+  function updateScrollbarVisibility()
+  {
+    // adding/removing [visible] attribut on scrollbar:
+    this.sb.@#visible = 
+        ( this.ds === null || 
+          this.ds.rowCount == 0 || 
+          this.ds.rowCount < this.visibleRows ) ? undefined : true;
+  }
+  
+  function onSize(forceUpdate = false)
+  {
+    if(!this.ds) return true;
+    
+    //stdout.printf("onSize\n");
+    
+    var tbody = this.tbody;
+    var height = tbody.box(#height); // height of visible area;    
+    if( height === this.processedHeight && !forceUpdate )
+    {
+      //stdout << "nothing to do\n";
+      return; // do not need to reload rows in this case.
+    }
+    this.processedHeight = height;
+    
+    var rowCount = this.ds.rowCount;
+    this.visibleRows = 0;
+    // calc visible rows
+    var visibleIdx = 1;
+    if( rowCount )    
+      for(var n = 0; n < VGrid.BUF_ROWS; ++n )
+      {
+        var r = tbody[n];
+        var rbottom = r.box(#bottom,#border,#parent);
+        if( rbottom > height  ) break;
+        visibleIdx = n;
+      }
+    this.visibleRows = visibleIdx + 1;
+    
+    if( this.isVisible )
+    {
+      // adjust scrollbar
+      this.sb.setValues(this.firstRowNo, 0, rowCount, this.visibleRows, 1); 
+      this.show( this.firstRowNo );
+      this.updateScrollbarVisibility();
+    }
+  }
+  
+  function onScroll(evt)
+  {
+    if(!this.ds) return true; 
+    switch( evt.type )
+    {
+      case Event.SCROLL_HOME :      this.show(0); return true;
+      case Event.SCROLL_END:        this.show(this.ds.rowCount - this.visibleRows); return true;
+      case Event.SCROLL_STEP_PLUS:  this.show(this.firstRowNo + 1); return true;
+      case Event.SCROLL_STEP_MINUS: this.show(this.firstRowNo - 1); return true;
+      case Event.SCROLL_PAGE_PLUS:  this.show(this.firstRowNo + this.visibleRows); return true;
+      case Event.SCROLL_PAGE_MINUS: this.show(this.firstRowNo - this.visibleRows); return true;
+      case Event.SCROLL_POS:        this.show( evt.scrollPos); return true; 
+    }  
+    return true;
+  }
+
+  function setCurrentRow(recordIdx)
+  {
+    if(recordIdx < 0) recordIdx = 0;
+    if(recordIdx >= this.ds.rowCount) recordIdx = this.ds.rowCount - 1;
+    if( recordIdx == this.currentRow )
+      return;
+    this.currentRow = recordIdx;
+    var index = this.currentRow - this.firstRowNo;
+    if( index >= 0 && index < this.visibleRows )
+    {
+      this.selectRow(index);
+    } 
+    else if( index < 0 )
+    {
+      this.show(this.currentRow,false);
+      //this.selectRow(0);
+    } 
+    else
+    {
+      var first = this.currentRow - this.visibleRows + 1;
+			if (first < 0) first = 0;
+			this.currentRow = first + this.visibleRows - 1;
+			this.show(first,false);
+			
+      //this.selectRow(this.visibleRows - 1);
+    }
+    if( var popup = this.$(:popup) ) 
+      popup.closePopup();
+
+  }
+
+  
+  function onKey(evt)
+  {
+    if(!this.ds) return true; 
+    if( evt.type == Event.KEY_DOWN )
+    { 
+      if( this.ds.rowCount == 0 ) return true;
+      var me = this;      
+      function current_undefined()
+      {
+        if( me.currentRow === null )
+        {
+          me.selectRow(0);
+          return true;
+        }
+        else return false;
+      }
+      switch(evt.keyCode)
+      {
+        case Event.VK_UP:    this.setCurrentRow((this.currentRow || 0) - 1); return true;        
+        case Event.VK_DOWN:  this.setCurrentRow((this.currentRow || 0) + 1); return true; 
+        case Event.VK_HOME:  this.setCurrentRow(0); return true;
+        case Event.VK_END:   this.setCurrentRow(this.ds.rowCount - 1); return true;
+        case Event.VK_PRIOR: this.setCurrentRow((this.currentRow || 0) - this.visibleRows + 1); return true;
+        case Event.VK_NEXT:  this.setCurrentRow((this.currentRow || 0) + this.visibleRows - 1); return true; 
+      }
+    }
+    return false;
+  }
+  
+  // columnIndex 
+  function updateSorting(columnIndex, sortOrder)
+  {
+    this.ds.columns[columnIndex]#allowSorting = true;
+
+    var tr = this.thead.$(tr);
+    for(var i = 0; i < tr.length; i++)
+    {
+      if( i == columnIndex )
+        tr[i].@#sortType = sortOrder.toString();
+      else
+        tr[i].@#sortType = undefined;
+    }
+    
+    this.ds.updateSorting(columnIndex, sortOrder);
+    
+    this.show(this.firstRowNo);
+    
+    if( this.currentRow )
+    {
+      var current = this.tbody.$(:current);
+      this.notify_onCurrentRowChanged( current );
+    }
+  }
+  
+  function onMouse(evt)
+  {
+    var me = this;
+    function onClick(fClickRow, fClickCell, fClickHeader)
+    {
+      var r = evt.target.$p(th);
+      if(r)
+      { 
+        var columns = me.ds.columns;
+
+        if( columns[r.index]#allowSorting )
+        {
+          var colDef = columns[r.index]; 
+          if( !colDef#sortOrder ) colDef#sortOrder = null;
+          
+          switch( colDef#sortOrder )
+          {
+            case null:
+            case #ascending:            
+              colDef#sortOrder = #descending;
+              break;
+            case #descending:
+              colDef#sortOrder = #ascending;
+              break;
+          }
+          stdout.println(colDef#sortOrder);
+          me.updateSorting(r.index, colDef#sortOrder);
+        }
+        fClickHeader.call(me, evt, r.index, r);
+        return;
+      }
+            
+      r = evt.target.$p(tr);
+      if( r )
+      { 
+        me.selectRow(r.index);
+        fClickRow.call(me, evt, r.index + me.firstRowNo, r);
+        var d = evt.target.$p(td);
+        if( d )
+          fClickCell.call(me, evt, d.index, r.index + me.firstRowNo, d);
+        return;
+      }
+    }
+    
+    switch( evt.type )
+    {
+      case Event.MOUSE_WHEEL:
+      {
+        this.show(this.firstRowNo - evt.wheelDelta * this.visibleRows / 4);
+        return true;
+      }
+      case Event.MOUSE_DCLICK:
+      {
+        onClick(this.notify_onRowDblClick, this.notify_onCellDblClick, this.notify_onHeaderDblClick);
+        return true;
+      }
+      case Event.MOUSE_DOWN:
+      {
+        onClick(this.notify_onRowClick, notify_onCellClick, notify_onHeaderClick);        
+        return true;
+      }
+    }
+    return false;
+  }
+
+  
+  // do fill table with new data
+  function fillTable()
+  {
+    var tbody         = this.tbody;
+    var firstRowNo    = this.firstRowNo;    
+    var currentRowNo  = firstRowNo;
+    var rowCount      = this.ds.rowCount;
+    var dataSource    = this.ds;
+    var n = 0;
+    
+    function fillRow(row, rowNo)
+    {
+      var (rowData,rowClass) = dataSource.rowData(rowNo);
+      for( var cell in row )
+      {
+        var cellData = rowData[cell.index];
+        if( cellData !== null )
+          cell.text = rowData[cell.index];
+        else
+          cell.text = "";
+      }        
+      if( typeof rowClass == #string )
+        row.attributes["class"] = rowClass;
+      else 
+        row.attributes["class"] = "";
+    }
+    
+    var currentVisible = null;
+    for(n; n < this.visibleRows; ++n )
+    {
+      var r = tbody[n]; 
+      //r.state.checked = this.selectedRows[currentRowNo] == true;
+      if( currentRowNo < rowCount) 
+      {
+        r.@#hidden = undefined;
+        r.state.checked = this.selectedRows[currentRowNo];
+        if( r.state.current ) currentVisible = r;
+        fillRow( r, currentRowNo );
+        this.notify_onFillRow(r, currentRowNo++);
+      } else
+      {
+        r.@#hidden = true;
+        this.notify_onFillRow(r, null);
+      } 
+    }
+
+    if( this.currentRow !== null )
+    {
+      if( this.currentRow >= this.firstRowNo && this.currentRow < (firstRowNo + this.visibleRows) )
+      {        
+        tbody[this.currentRow - firstRowNo].state.current = true;
+      }
+      else
+        if( currentVisible )
+          currentVisible.state.current = false;      
+    }
+    
+    
+    for(n; n < VGrid.BUF_ROWS; ++n )
+    {
+      var r = tbody[n];
+      r.@#hidden = true;
+      this.notify_onFillRow(r, null);
+    }
+    return false;
+  }
+  
+  // request to show the data, does delayed post to prevent clogging by update requests
+  function show(firstRowNo, delay = true)
+  {
+    var rowCount = this.ds.rowCount;
+    if( (firstRowNo + this.visibleRows) > rowCount )
+      firstRowNo = rowCount - this.visibleRows; 
+    if( firstRowNo < 0 ) firstRowNo = 0;
+    this.firstRowNo = firstRowNo;
+    this.sb.value = firstRowNo; // adjust scrollbar
+    if(delay)
+      //this.post(this.fillTable, true);
+      this.timer( 5, this.fillTable ); // it looks better, fps are smoother
+    else
+      this.fillTable();
+  }
+  
+  // toggle row selection
+  function toggleRow( row )
+  {
+    var recordIdx = this.firstRowNo + row.index;
+    var checked = this.selectedRows[recordIdx];
+    if( checked ) // already checked
+    {
+      // off 
+      row.state.checked = false;
+      this.selectedRows.remove(recordIdx);
+    }
+    else
+    {
+      // on 
+      row.state.checked = true;
+      this.selectedRows[recordIdx] = true;
+    }
+  }
+  
+  function selectRow( rowIndex )
+  {
+    if( rowIndex < 0 || rowIndex >= this.visibleRows )
+      throw "Index is out of bound!";
+    this.currentRow = rowIndex + this.firstRowNo;
+    var row = this.tbody[rowIndex];
+    
+    // sometimes we want a graphical marker, not just highlight, so allow to disable borders in css around it
+    var prev_current = this.tbody.$(:current);
+    var prev_before_current = prev_current ? prev_current.prior : null;
+    if( prev_before_current ) prev_before_current.@#beforecurrent = undefined;
+          
+    if( row.prior )
+      row.prior.@#beforecurrent = true;
+      
+    row.state.current = true;
+    row.update(); // update() is needed to properly update prev_before_current
+    this.notify_onCurrentRowChanged( row );
+  }
+
+  // should be called from datasource!
+  function updateRow(rowIndex)
+  {
+    if( rowIndex >= this.firstRowNo && rowIndex < (this.firstRowNo + this.visibleRows - 1) )
+    {
+      var row = this.tbody[rowIndex - this.firstRowNo];
+      var rowData = this.ds.rowData(rowIndex);
+      for( var cell in row )
+      {
+        var cellData = rowData[cell.index];
+        if( cellData !== null )
+          cell.text = rowData[cell.index];
+      }          
+    }
+  }
+   
+  // currently selected item
+  property index(v)
+  {
+    get return this.currentRow;
+    set {
+      if( !this.ds ) return 0;
+      assert v >= -1 && v < this.ds.rowCount;
+      if( v == -1 ) // deselect
+      {
+        this.currentRow = null;
+        var current = this.tbody.$(:current);
+        if( current ) current.state.current = false;
+        this.notify_onCurrentRowChanged( null );
+        return;
+      }
+      
+      // ensure visible
+      if( v < this.firstRowNo ) this.show(v);
+      else
+        if( v > (this.firstRowNo + this.visibleRows - 1) )
+          this.show(v - this.visibleRows + 1);
+ 
+      this.selectRow(v - this.firstRowNo);
+    }
+  }
+  
+   // tr, td and th parameters are needed when we want to replace a content of a cell,
+   // to place there a combobox for example
+
+   // onCurrentRowChanged( this_grid, row )
+   @DECLARE_EVENT #onCurrentRowChanged;
+   
+   // onHeaderClick( this_grid, evt, colNo, th )
+   @DECLARE_EVENT #onHeaderClick;
+   
+   // onCellClick( this_grid, evt, colNo, rowNo, td)
+   @DECLARE_EVENT #onCellClick;
+   
+   // onRowClick( this_grid, evt, rowNo, tr)   
+   @DECLARE_EVENT #onRowClick;
+   
+   // onRowDblClick( this_grid, evt, rowNo, tr)   
+   @DECLARE_EVENT #onRowDblClick;
+
+   // onHeaderDblClick( this_grid, evt, colNo, th )
+   @DECLARE_EVENT #onHeaderDblClick;
+   
+   // onCellDblClick( this_grid, evt, colNo, rowNo, td)
+   @DECLARE_EVENT #onCellDblClick;
+   
+   // sometime we need to customize rows according with cell data,
+   // for example to mark some rows with colors by setting some DOM attributes
+   // if dataRowIndex === null then it is empty row and we should clear all attributes we have set
+   
+   // to get row data use this_grid.ds.data[dataRowIndex]
+   
+   // onFillRow( this_grid, row, dataRowIndex)
+   @DECLARE_EVENT #onFillRow;
+}

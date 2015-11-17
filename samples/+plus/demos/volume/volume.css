@@ -1,0 +1,24 @@
+@image-map volume-icons 
+{
+  src: url(volume-map.png);
+  cells: 1 5; /* 1 column, 5 rows */
+  /* logical names of the parts*/ 
+  items:  vol4,
+          vol3,
+          vol2,
+          vol1,
+          vol0;
+}
+   
+volume {
+    display:block;
+    width: 41px; height: 8px;
+    foreground-repeat:no-repeat; 
+    prototype: Volume url(volume.tis);
+}
+
+volume[value=4] { foreground-image:image-map(volume-icons,vol4); }
+volume[value=3] { foreground-image:image-map(volume-icons,vol3); }
+volume[value=2] { foreground-image:image-map(volume-icons,vol2); }
+volume[value=1] { foreground-image:image-map(volume-icons,vol1); }
+volume[value=0] { foreground-image:image-map(volume-icons,vol0); }

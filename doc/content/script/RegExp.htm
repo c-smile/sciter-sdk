@@ -1,0 +1,160 @@
+﻿<html>
+  <head>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>RegExp object</h1>
+  <p>Represents compiled regular expresion.</p>
+  <p>RE Syntax supported:</p>
+  <dl>
+    <dt>Character</dt>
+    <dd>Meaning</dd>
+    <dt><code>\</code></dt>
+    <dd>
+      <p>For characters that are usually treated literally, indicates that the next character is special and not to be interpreted literally.</p>
+      <p>For example, <code>/b/</code> matches the character 'b'. By placing a backslash in front of b, that is by using <code>/\b/</code>, the character becomes special to mean match a word boundary.</p>
+      <p><em>or</em></p>
+      <p>For characters that are usually treated specially, indicates that the next character is not special and should be interpreted literally.</p>
+      <p>For example, * is a special character that means 0 or more occurrences of the preceding character should be matched; for example, <code>/a*/</code> means match 0 or more &quot;a&quot;s. To match <code>*</code> literally, precede it with a backslash; for example, <code>/a\*/</code> matches 'a*'.</p></dd>
+    <dt><code>^</code></dt>
+    <dd>
+      <p>Matches beginning of input. If the multiline flag is set to true, also matches immediately after a line break character.</p>
+      <p>For example, <code>/^A/</code> does not match the 'A' in &quot;an A&quot;, but does match the first 'A' in &quot;An A.&quot;</p></dd>
+    <dt><code>$</code></dt>
+    <dd>
+      <p>Matches end of input. If the multiline flag is set to true, also matches immediately before a line break character.</p>
+      <p>For example, <code>/t$/</code> does not match the 't' in &quot;eater&quot;, but does match it in &quot;eat&quot;.</p></dd>
+    <dt><code>*</code></dt>
+    <dd>
+      <p>Matches the preceding item 0 or more times.</p>
+      <p>For example, <code>/bo*/</code> matches 'boooo' in &quot;A ghost booooed&quot; and 'b' in &quot;A bird warbled&quot;, but nothing in &quot;A goat grunted&quot;.</p></dd>
+    <dt><code>+</code></dt>
+    <dd>
+      <p>Matches the preceding item 1 or more times. Equivalent to <code>{1,}</code>.</p>
+      <p>For example, <code>/a+/</code> matches the 'a' in &quot;candy&quot; and all the a's in &quot;caaaaaaandy&quot;.</p></dd>
+    <dt><code>?</code></dt>
+    <dd>
+      <p>Matches the preceding item 0 or 1 time.</p>
+      <p>For example, <code>/e?le?/</code> matches the 'el' in &quot;angel&quot; and the 'le' in &quot;angle.&quot;</p>
+      <p>If used immediately after any of the quantifiers <code>*</code>, <code>+</code>, <code>?</code>, or <code>{}</code>, makes the quantifier non-greedy (matching the minimum number of times), as opposed to the default, which is greedy (matching the maximum number of times).</p>
+      <p>Also used in lookahead assertions, described under <code>(?=)</code>, <code>(?!)</code>, and <code>(?:)</code> in this table.</p></dd>
+    <dt><code>.</code></dt>
+    <dd>
+      <p>(The decimal point) matches any single character except the newline characters: \n \r \u2028 or \u2029. (<code>[\s\S]</code> can be used to match any character including newlines.)</p>
+      <p>For example, <code>/.n/</code> matches 'an' and 'on' in &quot;nay, an apple is on the tree&quot;, but not 'nay'.</p></dd>
+    <dt><code>(x)</code></dt>
+    <dd>
+      <p>Matches <code><em>x</em></code> and remembers the match. These are called capturing parentheses.</p>
+      <p>For example, <code>/(foo)/</code> matches and remembers 'foo' in &quot;foo bar.&quot; The matched substring can be recalled from the resulting array's elements <code>[1], ..., [n]</code> or from the predefined <code>RegExp</code> object's properties <code>$1, ..</code></p></dd>
+    <dt><code>x|y</code></dt>
+    <dd>
+      <p>Matches either <code><em>x</em></code> or <code><em>y</em></code>.</p>
+      <p>For example, <code>/green|red/</code> matches 'green' in &quot;green apple&quot; and 'red' in &quot;red apple.&quot;</p></dd>
+    <dt><code>\b</code></dt>
+    <dd>
+      <p>Matches a word boundary, such as a space. (Not to be confused with <code>[\b]</code>.)</p>
+      <p>For example, <code>/\bn\w/</code> matches the 'no' in &quot;noonday&quot;; <code>/\wy\b/</code> matches the 'ly' in &quot;possibly yesterday.&quot;</p></dd>
+    <dt><code>\B</code></dt>
+    <dd>
+      <p>Matches a non-word boundary.</p>
+      <p>For example, <code>/\w\Bn/</code> matches 'on' in &quot;noonday&quot;, and <code>/y\B\w/</code> matches 'ye' in &quot;possibly yesterday.&quot;</p></dd>
+    <dt><code>\d</code></dt>
+    <dd>
+      <p>Matches a digit character from any alphabet.</p>
+      <p>For example, <code>/\d/</code> or <code>/[0-9]/</code> matches '2' in &quot;B2 is the suite number.&quot;</p></dd>
+    <dt><code>\D</code></dt>
+    <dd>
+      <p>Matches any non-digit character in any alphabet.</p>
+      <p>For example, <code>/\D/</code> or <code>/[^0-9]/</code> matches 'B' in &quot;B2 is the suite number.&quot;</p></dd>
+    <dt><code>\m</code></dt>
+    <dd>
+      <p>Matches any alpha or numeric character from any alphabet.</p></dd>
+    <dt><code>\M</code></dt>
+    <dd>
+      <p>Matches any non-alpha and non-numeric character from any alphabet.</p></dd>
+    <dt><code>\a</code></dt>
+    <dd>
+      <p>Matches any alpha character from any alphabet.</p></dd>
+    <dt><code>\A</code></dt>
+    <dd>
+      <p>Matches any non-alpha character from any alphabet.</p></dd>
+    <dt><code>\c</code></dt>
+    <dd>
+      <p>Matches any control character from any alphabet.</p></dd>
+    <dt><code>\C</code></dt>
+    <dd>
+      <p>Matches any non-control character from any alphabet.</p></dd>
+    <dt><code>\g</code></dt>
+    <dd>
+      <p>Matches any character that has graphic representation from any alphabet.</p></dd>
+    <dt><code>\G</code></dt>
+    <dd>
+      <p>Matches any character that has no graphic representation from any alphabet.</p></dd>
+    <dt><code>\p</code></dt>
+    <dd>
+      <p>Matches any printable or space character from any alphabet.</p></dd>
+    <dt><code>\P</code></dt>
+    <dd>
+      <p>Matches any non-printable and non-space character from any alphabet.</p></dd>
+    <dt><code>\l</code></dt>
+    <dd>
+      <p>Matches any lower case character from any alphabet.</p></dd>
+    <dt><code>\L</code></dt>
+    <dd>
+      <p>Matches any non-lower case character from any alphabet.</p></dd>
+    <dt><code>\u</code></dt>
+    <dd>
+      <p>Matches any upper case character from any alphabet.</p></dd>
+    <dt><code>\U</code></dt>
+    <dd>
+      <p>Matches any non-upper case character from any alphabet.</p></dd>
+    <dt><code>\n</code></dt>
+    <dd>
+      <p>Matches any punctuation character from any alphabet.</p></dd>
+    <dt><code>\N</code></dt>
+    <dd>
+      <p>Matches any non-punctuation character from any alphabet.</p></dd>
+    <dt><code>\s</code></dt>
+    <dd>
+      <p>Matches any space character from any alphabet.</p></dd>
+    <dt><code>\S</code></dt>
+    <dd>
+      <p>Matches any non-space character from any alphabet.</p></dd>
+    <dt><code>\x</code></dt>
+    <dd>
+      <p>Matches any hexadecimal character.</p></dd>
+    <dt><code>\X</code></dt>
+    <dd>
+      <p>Matches any non-hexadecimal character.</p></dd></dl>
+  <dl>
+    <h2>Properties</h2>
+    <dt>length</dt>
+    <dd>- <em>integer</em>, number of matches after last <em>exec</em> or <em>match</em> methods calls.</dd>
+    <dt>input</dt>
+    <dd>- <em>string</em>, last inspected string.</dd>
+    <dt>source</dt>
+    <dd>- <em>string</em>, source code of the regular expression - string this RegExp was build from.</dd>
+    <dt>index</dt>
+    <dd>- <em>integer</em>, character position where the first successful match begins in a searched string, read-only.</dd>
+    <dt>lastIndex</dt>
+    <dd>- <em>integer</em>, character position where the next match begins in a searched string.</dd>
+    <dt>[index]</dt>
+    <dd>- <em>string</em> | <em>undefined</em>, read-only, returns n-th matched fragment. <em>Index</em> is a zero based index, integer.</dd>
+    <h2>Methods</h2>
+    <dt>this</dt>
+    <dd>
+      <p><strong>(regular-expresion [,flags])</strong></p>
+      <p>Used for intitalization of new instance of RegExp object. <em>regular-expresion</em> is a string - source of the regular expression. В <em>flags</em> is an optional string and if provided may contain characters <em>'i' </em>for case insensitive search<em> </em>and/or <em>'g' -</em> for global search - to find all occurences of source in the input string. <br/>Use this constructor as: <font face="monospace">var re = new RegExp(...);</font></p></dd>
+    <dt>test</dt>
+    <dd>
+      <p><strong>(input)</strong> : <em>true</em> | <em>false</em></p>
+      <p>Checks <em>input</em> string to see if a pattern exists within a string and returns <strong>true</strong> if so, and <strong>false</strong> otherwise.</p></dd>
+    <dt>exec</dt>
+    <dd>
+      <p><strong>(input)</strong> : <em>null</em> | <em>RegExp</em> object</p>
+      <p>Returns this RegExp object with length and list of matches set if pattern exists in <em>input</em> string or <em>null</em> otherwise.</p></dd>
+    <dt>positions</dt>
+    <dd>(<strong>matchIdex</strong>:0... length - 1) : (<em>start</em>:integer, <em>end</em>:integer)
+      <p>Valid after the exec() call, returns pair of integers - start and end positions of matched sub-expressions in input string</p></dd></dl>
+</body>
+</html>

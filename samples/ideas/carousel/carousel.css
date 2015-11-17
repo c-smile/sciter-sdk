@@ -1,0 +1,20 @@
+
+div.carousel
+{
+  prototype: Carousel;
+  flow:horizontal;
+}
+
+div.carousel > widget.list
+{
+  flow:horizontal;
+  overflow:hidden-scroll; /* this allows to scroll content without scrollbars */  
+  width:*;
+  height:*;
+}
+
+div.carousel > widget.button
+{
+  behavior:button;
+}
+

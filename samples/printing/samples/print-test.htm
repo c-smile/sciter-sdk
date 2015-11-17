@@ -1,0 +1,98 @@
+﻿<html>
+  <head>
+    <title>Text and table printing demo</title>
+    <style>
+      //p { font-family:serif; }
+    
+      div { background:#444; width:1cm; height:1cm; border:1px solid;}
+      
+      table { border-width:1dip; border-color:black;  }
+      table td { border-width:1dip; border-color:black; }
+      
+      p#test > span { background:yellow; }
+      
+      @media print {
+        /* things to try: */
+        /* p#test { page-break-after: always; } */
+        /* table td { page-break-inside: avoid; } */
+        
+        p#test > span { background:#eee; }
+        
+      }
+    
+    </style>
+  </head>
+<body>
+  <p>One centimeter square:</p>
+  <div></div>
+  
+  <p>Привет, мир!</p>
+  
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+  
+  <TABLE border="1" cellpadding="3" cellspacing="1" width="100%">
+  <TR>
+    <TD width="60" nowrap  align="center">Build#</TD>
+    <TD width="78" nowrap  align="center">Date</TD>
+    <TD align="center">Updates</TD>
+  </TR>
+  <TR>
+    <TD bgcolor=#ffefdf ><STRONG>3.2.0.9</STRONG></TD>
+    <TD nowrap  align="center">23-05-2015</TD>
+    <TD>
+<UL>
+<LI>+ [windows, drag-n-drop] support of IDropSource/IDataObject (dragging text out of / in Sciter window) in behaviors: edit | textarea | htmlarea | richtext;</LI>
+<LI>Fix of popup handling in presence of moved elements: sdk/samples/ideas/tray-notifications.</LI>
+<LI>[doc] Graphics.Text.alignment() documentation fix.</LI>
+<LI>[API] SCN_DATA_LOADED::status field population</LI>
+<LI>Fix of self.url() when URL hash / parameters are used.</LI>
+<LI>[css] support of angle values in back/foreground-image-transformation:hue(300deg);</LI>
+<LI>[css,drawing] Fix of outline displacement on transform'ed elements.</LI>
+<LI>@font-face fix for remote fonts.</LI>
+<LI>[osx] fix of 100% CPU load in view.doEvent();</LI>
+<LI>fix of mouse hit test on position:fixed elements.</LI>
+<LI>self.on(&quot;closerequest&quot;) / DOCUMENT_CLOSE_REQUEST;</LI>
+<UL>
+<LI>self.on(&quot;ready&quot;) / DOCUMENT_READY;</LI>
+<LI>self.on(&quot;complete&quot;) / DOCUMENT_COMPLETE;</LI></UL>
+
+<LI>fix of WebSocket and other async IO ops.</LI>
+<LI>view.on(&quot;replacement-start&quot;, f1).on(&quot;replacement-end&quot;, f2) - UI window replacement life cycle events.</LI>
+<LI>blah</LI>
+<LI>blah</LI>
+<LI>blah!</LI>
+</UL>
+
+<P>Builds: win32, win64, osx64, linux/gtk64</P></TD>
+  </TR>
+  <TR>
+    <TD bgcolor=#ffefdf ><STRONG>3.2.0.8</STRONG></TD>
+    <TD nowrap  align="center">01-04-2015</TD>
+    <TD>
+<UL>
+<LI>[rtl, tables] fix of &lt;td colspan=2&gt; placement in RTL</LI>
+<LI>fix of AV while handling ::before and ::after &nbsp;in CSS</LI>
+<LI>view.dialog/window { x,y, alignment } support</LI>
+<LI>+ behavior:swipe-touch that is behavior:swipe but without mouse handling.</LI>
+<LI>Fix of <FONT face="monospace" size="1">string.replace(regexp); // stdout.println(&quot;(518) 678-7654&quot;.replace(/[\\ \\+\\(\\)\\-]/g, &quot;&quot;));</FONT></LI>
+<LI>fix of text-overflow:ellipsis rendering and tooltip handling.</LI>
+<LI>&quot;GBK&quot; encoding name added (Windows Codepage: 936 (Simplified Chinese GBK)),</LI>
+<LI>Storage.open fix for paths containing national characters.</LI>
+<LI>MENU_ITEM_CLICK event fix for the case when handler is blocked by modal dialog.</LI>
+<LI>...</LI></UL>
+
+<P>Builds: win32, win64, osx64, linux/gtk64</P></TD>
+  </TR>
+</TABLE>
+  <p id=test><span>Test! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Test.</span></p>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  
+</body>
+</html>

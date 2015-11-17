@@ -1,0 +1,403 @@
+﻿<html>
+  <head>
+    <meta name="generator" content="h-smile:richtext"/>
+    <link rel="stylesheet" type="text/css" href="flex-layout.css" media="all"/>
+  </head>
+<body>
+  <h1>CSS Flexible Flow Module</h1>
+  <h2>Abstract</h2>
+  <p>This module defines the <strong>flow attribute</strong> and the <strong>flex unit</strong>. The two allow creating flexible layouts, which can fit in various view and content sizes.</p>
+  <p>The flow property and flex units address following problems that are not achievable in modern CSS:</p>
+  <ul>
+    <li>vertical and horizontal alignment of elements inside containers and viewport;</li>
+    <li>flexible multicolumn layouts (sidebar-content-sidebar) when elements replaced horizontally in a row and have the same height.</li>
+    <li>complex position:static layouts when elements are replaced in visual order that is different from DOM order of elements. &nbsp;</li></ul>
+  <h2 id="overview">1. Overview</h2>
+  <p id="overview">Flexible layouts are defined by using <em>flex length units</em> and the <em>flow</em> attribute. Flex Length Units (flex units) allow to define dimensions, margins, and paddings of elements as portions of free space available inside the containing block. Flex value is a decimal number, appended with '<strong><code>*</code></strong>' (asterisk symbol) as a unit identifier.</p>
+  <p>The <em>flow</em> attribute defines the layout method of contained blocks in normal (position:static) flow. In other words, <em>flow</em> defines the layout manager of the container. This module contains definitions of the following standard layout managers:</p>
+  <ol>
+    <li>vertical</li>
+    <li>horizontal</li>
+    <li>horizontal-flow</li>
+    <li>vertical-flow</li>
+    <li>templated layout</li></ol>
+  <p>Flex unit values can be thought of as tension in spring coils, which shift dimensions or position of elements, according to their &quot;strength&quot;. Flex values per se:</p>
+  <p><img src="images/flex-springs.png" title="flexes presented as spring coils"/></p>
+  <p>Markup of the layout above:</p>
+  <pre>&lt;div class=&quot;container&quot;&gt;
+  &lt;p&gt;... some text ...&lt;/p&gt;
+&lt;/body&gt;
+</pre>
+  <p>where p has the style:</p>
+  <pre>p
+{
+  width: 40%;             /* fixed width - 40% of width of the container */
+  margin-left: 2*;        /* left &quot;spring&quot; of power 2 */
+  margin-right: 1*;       /* right &quot;spring&quot; of power 1 */
+  border:1px solid black; /* border of fixed width */
+}
+</pre>
+  <h2>2. Flex length units</h2>
+  <p>Dimensions of elements, defined in flex units, are computed against free space available inside the c<a name="containing-block">ontaining box.</a></p>
+  <p>Computation of flex unit values is made after all non-flex values - the final step of the layout algorithm. It's possible that some space inside the container will be left undistributed during this step. That space can be alloted among all flex values competing for free space in vertical or horizontal directions in the container.</p>
+  <p>Flex units are only applicable to <em>padding</em>, <em>margin</em>, <em>width</em>, and <em>height</em> CSS attributes of elements. They are also only determined for statically (normal flow), and absolutely positioned elements. Floated elements do not support flex units - attributes given in flex units shall be evaluated to <em>auto</em> value.</p>
+  <p>While computing the final dimensions of elements, a flex unit value is interpreted as a weight. If the sum of flex values competing for free space is less than 1*, a corresponding portion will remain undistributed. If the sum of flexes is greater than or equal to 1*, all free space will be allocated by using flex values as weights of proportional distribution.</p>
+  <p>For example, the following styles:</p>
+  <pre>#container { width:300px; }
+#element { width:1*;
+           margin-left:2*;
+           margin-right:1*;
+           border:2px solid;
+           padding:0; }
+</pre>
+  <p>applied to the #element inside the #container will lead to following dimensions of the #element:</p>
+  <pre>sum-of-flexes = 1* + 2* + 1* = 4*;
+width-to-distribute = 300px - 2px - 2px; // container width minus fixed borders
+width        = 1/4 * width-to-distribute = 74px;
+margin-right = 1/4 * width-to-distribute = 74px;
+margin-left  = 2/4 * width-to-distribute = 148px;
+</pre>
+  <p>Flex unit computations respect all usual constraints. For example, <code>min-width</code> and <code>max-width</code> define boundaries where the width above can &quot;flex&quot;. For flex unit computation purposes, the initial (default) value of &nbsp;<code>min-width</code> attribute is being interpreted as having minimal intrinsic value.</p>
+  <h3>2.1. min-intrinsic, max-intrinsic length values.</h3>
+  <p>CSS properties<em> min-width</em>, <em>max-width</em>, <em>width</em> and <em>min-height</em>, max-height, <em>height</em> additionally may accept special values: <code>'min-intrinsic'</code> and <code>'max-intrinsic'</code>.</p>
+  <ul>
+    <li><code>min-intrinsic</code> value of some container is a minimal length that is needed to render the container without overflow in corresponding direction. E.g. for elements with overflow:auto it is a minimal width of the element to show it without scrollbars.</li>
+    <li><code>max-intrinsic</code> value of some container is a minimal length needed to show the element without wrapping. In other words when width is max-intrinsic the height of the element is minimal in horizontal writing systems like <em>rtl</em>/<em>ltr</em>. In vertical writing systems (like <em>ttb</em>) &nbsp;<code>height:max-intrinsic</code> will get minimal value of the height when width of the element becomes minimal.</li></ul>
+  <p><code>width:min-intrinsic</code> for paragraph <code>&lt;p&gt;first second&lt;/p&gt;</code> will be equal to the width of widest word in the paragraph. <code>width:max-intrinsic</code> for the paragraph will be equal to the sum of all words and spaces in the paragraph - the paragraph will be rendered as single line of text.</p>
+  <h3>2.2. &quot;Relative flexes&quot;, the <code>fx()</code> function.</h3>
+  <p>The <code>fx()</code> function allows to define flexible length with a base value. There are two forms of the fx function:</p>
+  <ol>
+    <li><code>fx( &lt;decimal&gt; | &lt;percent&gt; )</code> &nbsp;- this form defines plain (a.k.a absolute) flex value. <code>fx(1)</code> is an exact equivalent of <code>1*</code> &nbsp;and <code>fx(50%)</code> is just another form of defining <code>0.5*</code>.</li>
+    <li><code>fx( &lt;decimal&gt; | &lt;percent&gt;, &lt;length&gt; | &lt;percent&gt; )</code> - this form defines flexible length that is &quot;flexing around&quot; the base value.</li></ol>
+  <p>Example: these two children that use relative flexes:</p>
+  <pre>&lt;div style=&quot;flow:horizontal; width:440px&quot;&gt;
+  &lt;div style=&quot;width:fx(1,160px)&quot; /&gt;
+  &lt;div style=&quot;width:fx(1,80px)&quot; /&gt;
+&lt;/div&gt;
+</pre>
+  <p>will be rendered using following computed lengths:</p>
+  <p><img src="images/relative-flexes.png"/></p>
+  <p>To compute relative flex values we susbstract all base lengths from free space of the container and distribute only space that is left after that (a.k.a. post-base space). The post-base space can be as positive as negative. If post-base space is negative then final lengths will be less than their base values.</p>
+  <p>The <code>fx()</code> function can be used in the same set of properties where flex units are acceptable.</p>
+  <h2>3. The flow property</h2>
+  <p>The flow property defines how the container lays out its children. In other words, it establishes a layout manager for the container element.</p>
+  <p><a name="propdef-flow" class="propdef-title"><strong>'flow'</strong></a></p>
+  <table class="propinfo" cellpadding="0" cellspacing="0">
+    <tr valign="baseline">
+      <td><em>Value:</em> &nbsp;</td>
+      <td>default | horizontal | vertical | horizontal-flow | vertical-flow | &quot;template&quot; | row(...) | stack |inherit</td></tr>
+    <tr valign="baseline">
+      <td><em>Initial:</em> &nbsp;</td>
+      <td>default</td></tr>
+    <tr valign="baseline">
+      <td><em>Applies to:</em></td>
+      <td>box elements with display model &quot;blocks inside&quot;</td></tr>
+    <tr valign="baseline">
+      <td><em>Inherited:</em> &nbsp;</td>
+      <td>no</td></tr>
+    <tr valign="baseline">
+      <td><em>Percentages:</em> &nbsp;</td>
+      <td>no</td></tr>
+    <tr valign="baseline">
+      <td><em>Media:</em> &nbsp;</td>
+      <td>visual</td></tr>
+    <tr valign="baseline">
+      <td><em>Computed value:</em> &nbsp;</td>
+      <td>specified value</td></tr></table>
+  <p>This attribute defines the layout method of children in normal flow:</p>
+  <table>
+    <tr>
+      <th nowrap>value of the flow</th>
+      <th>Resulting display of children</th></tr>
+    <tr>
+      <td nowrap><code>vertical</code></td>
+      <td>Stacked vertically.</td></tr>
+    <tr>
+      <td nowrap><code>horizontal</code></td>
+      <td>Positioned horizontally in a single row. Direction is governed by the <em>direction</em> attribute, in particular by values <code>ltr</code> and <code>rtl</code>.</td></tr>
+    <tr>
+      <td nowrap><code>horizontal-flow</code></td>
+      <td>Positioned horizontally, wrapping on multiple rows, if needed. Direction is governed by the <em>direction</em> attribute.</td></tr>
+    <tr>
+      <td nowrap><code>vertical-flow</code></td>
+      <td>Positioned vertically, wrapping on multiple <em>columns</em>, if needed.</td></tr>
+    <tr>
+      <td nowrap><code>&quot;template</code>&quot;</td>
+      <td>Replaced according to the template. Binding of child position with the named cell in the template is made by using the <code>float:&quot;name&quot;</code> attribute.</td></tr>
+    <tr>
+      <td nowrap><code>row(tag1,tag2,...)</code></td>
+      <td>Positioned in rows according to the row() template function.</td></tr>
+    <tr>
+      <td nowrap><code>stack</code></td>
+      <td>Elements positioned on top of each other.</td></tr></table>
+  <ul>
+    <p>Terms used in the document:</p>
+    <dl>
+      <dt><em>flow container</em></dt>
+      <dd>The flow container is the block element that has a 'flow' style attribute with a value other than <em>default</em>. Such an element uses the given layout manager to lay out its block children. If the flow container has children with <em>display</em> attribute values other than <code>block</code>, <code>list-item</code> or <code>table</code> they are wrapped into corresponding anonymous block or table containers in order to participate in the flow.</dd>
+      <dt><em>flowed element</em></dt>
+      <dd>The flowed element has the flow container as its immediate parent. Such an element is a subject of replacement by the layout manager of its flow container.</dd></dl></ul>
+  <h3>3.1. flow:vertical</h3>
+  <p>Flow vertical is close to standard top-to-bottom layout of block elements, such as <code>div</code>, <code>ul</code>, and others. The only difference is in the use of flex units by flowed elements.</p>
+  <p>All static child elements of the flow:vertical container are replaced from top to bottom, one by one, forming a single column spanning the width of the container. Horizontal dimensions of the contained elements, defined in flex units, are computed against the width of the container. Similarly, vertical dimensions of contained elements are computed against the height of the container. If the container height is not defined, or defined as height:auto, there is no free space to distribute among flex values. Thus, the flex computation in that direction can be ommited.</p>
+  <p>If the container has its height defined, and that height is greater than min-intrinsic height of the contained elements, then there is a free space. In such a container, this space is distributed among the vertical flex dimensions of the contained elements.</p>
+  <p>For example, the following styles:<img src="images/sample-vertical.png" title="Sample of vertical alignment" align="right"/></p>
+  <pre>  #container { height:100%; border:1px dotted; }
+  #first { margin-bottom:1*; }
+</pre>
+  <p>when defined for the markup:</p>
+  <pre>  &lt;div id=&quot;container&quot;&gt;
+    &lt;h2&gt;Alignment to top/bottom&lt;/h2&gt;
+    &lt;div id=&quot;first&quot; style=&quot;margin-bottom:1*&quot;&gt;
+      &lt;code&gt;margin-bottom:1*;&lt;/code&gt;
+      &lt;p&gt;Shifts rest to the bottom&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div id=&quot;second&quot;&gt;
+      Normal div
+    &lt;/div&gt;
+  &lt;/div&gt;
+</pre>
+  <p>will position the first element at the top of the #container, and the #second element at its bottom.</p>
+  <h4>3.1.1. Margin collapsing in flow:vertical containers</h4>
+  <p>Vertical margins of contained elements collapse as usual in CSS. &nbsp;The only difference appears if one of the collapsing vertical margins has a flex value, and the corresponding margin of the other element has fixed value. In that case, that fixed value establishes a &quot;min-constraint&quot; for the flex computation of the margin between these two elements. Such a margin is flexible, but not less than the fixed value.</p>
+  <h3>3.2. flow:horizontal</h3>
+  <p>This is a single row layout. All static child elements of flow:horizontal container are replaced horizontally one by one, forming a single row. Layout is performed with respect to the <code>direction</code> attribute of the container.</p>
+  <p>In the horizontal direction, width, left and right margins, borders and paddings of contained elements, when given in flex units, participate in free space distribution. All immediate children of the flow:horizontal container are competing for free space available between the left and right sides of the container's content box. Thus, this free space is distributed among them, proportionally to corresponding flex values.</p>
+  <p>In the vertical direction: flex values of height, top and bottom margins, borders and paddings of contained elements are computed against the height of the container. This makes it possible to align elements of the flow:horizontal container not only horizontally, but also vertically.</p>
+  <p>All children have the same height with this style:</p>
+  <pre>#container       { flow:horizontal; border-spacing:4px; padding:4px; }
+#container &gt; div { margin:0; height:1*; }
+</pre>
+  <p>The rendering will look like:</p>
+  <p><img src="images/sample-horizontal-fill.png"/></p>
+  <p>Here, all children have their intrinsic height. However, the top margin is set to <code>1*</code>, shifting boxes to the bottom:</p>
+  <pre>#container       { flow:horizontal; border-spacing:4px; padding:4px; }
+#container &gt; div { margin-top:1*; height:auto; }
+                               /* that is &quot;intrinsic&quot; height */
+</pre>
+  <p><img src="images/sample-horizontal-bottom.png"/></p>
+  <h4>3.2.1. Margin collapsing in flow:horizontal containers</h4>
+  <p>Horizontal margins of contained block elements collapse in the same way vertical margins of flow:vertical containers do. With its in-flow children, margins of flow:horizontal container do not collapse.</p>
+  <h4>3.2.2. Intrinsic dimensions</h4>Intrinsic height of flow:horizontal container is the height of the margin box of the tallest ellement in the row. Intrinsic width of flow:horizontal container is a sum of intrinsic dimensions of the contained elements with respect to the horizontal margins collapsing.
+  <h3>3.3. flow:horizontal-flow</h3>
+  <p><code>flow:horizontal-flow</code> is a variation of <code>flow:horizontal</code> layout. It contains blocks which are allowed to wrap if there is not enough space in the horizontal direction inside the container.</p>
+  <p>The attribute <code>clear:left|right|both</code> allows to break the flow of elements into multiple rows explicitly.</p>
+  <p>The row will wrap if any of the base conditions are met:</p>
+  <ol>
+    <li><code>clear:left|right|both</code> is used on the correspondent element;</li>
+    <li>there is not enough horizontal space in the row to replace the element.</li></ol>
+  <p>In the vertical direction, flex values of height, top and bottom margins, borders and paddings of contained elements, are computed against the height of the current <em>row</em>. The height of the row is equal to the height of the tallest element in the row, calculated without the influence of flex units.</p>
+  <p>In the horizontal direction, flex values of the elements in rows are computed exactly as in flow:horizontal.</p>
+  <p>For example, the following markup:</p>
+  <pre>&lt;div style=&quot;flow:horizontal-flow&quot; &gt;
+  &lt;div style=&quot;width:100px&quot; &gt; width:100px &lt;/div&gt;
+  &lt;div style=&quot;width:1*&quot;    &gt; flexible width:1*
+                             flexible width:1* &lt;/div&gt;
+  &lt;div style=&quot;width:1*&quot;    &gt; flexible width:1*
+   flexible width:1*
+                             flexible width:1* &lt;/div&gt;
+  &lt;div style=&quot;width:150px&quot; &gt; width:150px&lt;/div&gt;
+&lt;/div&gt;
+</pre>
+  <p>will be rendered as:</p>
+  <p><img src="images/sample-horizontal-flow.png"/></p>
+  <h3>3.4. flow:vertical-flow</h3>
+  <p><code>flow:vertical-flow</code> is a multi-column layout that is similar to <code>flow:horizontal-flow</code>, but in the vertical direction. Elements are replaced from top to bottom. If there is not enough vertical space inside the container, the elements will wrap, forming as many columns as needed.</p>
+  <p>The attribute <code>clear:left|right|both</code> allows to break the flow of elements into multiple columns explicitly.</p>
+  <p>The column will wrap if any of the base conditions are met:</p>
+  <ol>
+    <li>the sum of flexes in the column in the vertical direction becomes greater than 1*</li>
+    <li><code>clear:left|right|both</code> is used on the corresponding element</li>
+    <li>not enough vertical space is available in the column to replace next element</li></ol>
+  <p>In the horizontal direction, flex values of width, left and right margins, and paddings of contained elements, are computed against the width of the current <em>column</em>. The width of the row is equal to the width of the widest element in the column, calculated without influence of flex units.</p>
+  <p>In the vertical direction, flex values of the elements in columns are computed exactly as in flow:vertical.</p>
+  <p>For example, in the following markup:</p>
+  <pre>&lt;ul style=&quot;flow:vertical-flow&quot;&gt;
+    &lt;li style=&quot;height:150px&quot; &gt; 1. height:150px &lt;/li&gt;
+    &lt;li style=&quot;height:100px&quot; &gt; 2. height:100px&lt;/li&gt;
+    &lt;li style=&quot;height:0.3*&quot;    &gt; 3. flexible height:0.3*
+                                    flexible height:0.3* &lt;/li&gt;
+    &lt;li style=&quot;height:0.7*&quot;    &gt; 4. flexible height:0.7*
+                                    flexible height:0.7*
+                                    flexible height:0.7* &lt;/li&gt;
+    &lt;li style=&quot;height:150px&quot; &gt; 5. height:150px&lt;/li&gt;
+    &lt;li style=&quot;height:150px&quot; &gt; 6. height:150px&lt;/li&gt;
+    &lt;li style=&quot;height:150px&quot; &gt; 7. height:150px&lt;/li&gt;
+  &lt;/ul&gt;
+</pre>
+  <p>each list item is styled as having <code>width:150px</code>. This will produce the following layout, where these list items are wrapped into three columns:</p>
+  <p><img src="images/sample-vertical-flow.png"/></p>
+  <h3>3.5. flow:&quot;template&quot; / flow: grid(...)</h3>
+  <p>Note that this is simplified version of <a href="http://www.w3.org/TR/css3-layout/.">http://www.w3.org/TR/css3-layout/.</a> All credits for the idea go to authors of that document.</p>
+  <p><code>flow: &lt;template-expression&gt;</code> allows to replace elements according to the template expression.</p>
+  <p>Here, the template expression is a sequence of string literals. Each such string literal is a whitespace-separated list of name tokens, where each name designates a cell in the grid. Multiple cells may have the same name. In this case, the name defines a placeholder that spans multiple cells of the grid.</p>
+  <p>For example, the following template defines a 3x4 grid of cells with 6 placeholders named from &quot;a&quot; to &quot;f&quot;. Some placeholders span multiple cells of the grid:</p>
+  <pre>flow: &quot;a a a&quot;
+      &quot;b c e&quot;
+      &quot;d c e&quot;
+      &quot;d c f&quot;;
+</pre>
+  <p>Each child of the element that has such a template defined can be bound with a particular named placeholder by using <code>float:&quot;placeholder-name&quot;</code> attribute:</p>
+  <pre>li:nth-child(1) { <code>float:&quot;a&quot;</code>; }
+li:nth-child(2) { <code>float:&quot;b&quot;</code>;
+                  width:150px;
+                  height:max-intrinsic; }
+li:nth-child(3) { <code>float:&quot;c&quot;</code>;
+                  width:*; height:*; } /* flexes, a.k.a. shrink-to-fit */
+li:nth-child(4) { <code>float:&quot;d&quot;</code>;
+                  width:150px;
+                  height:*; }
+li:nth-child(5) { <code>float:&quot;e&quot;</code>;
+                  width:150px;
+                  height:*; }
+li:nth-child(6) { <code>float:&quot;f&quot;</code>;
+                  width:150px;
+                  height:150px; }
+</pre>
+  <p>Note about reuse of the <em>float</em> attribute: <code>float:left|right</code> attribute is not supported for immediate children of the <em>flow container</em>. In other words flowed elements can float (be replaced) only to designated cells defined by the <code>flow:&quot;template&quot;</code>.</p>
+  <p>All non-bound children of the templated container are appended to the grid as if they span a single row in it. If there are multiple children with the same placeholder name, only the first element (in DOM order) will be bound with the placeholder. The rest of the elements will be replaced as unbound.</p>
+  <p>A placeholder name can only span rectangular, and unique, areas of cells in the template. Otherwise, the whole template is invalid, and the computed value of the flow shall be interpreted as <code>flow:default</code>.</p>
+  <p>For example, this markup:</p>
+  <pre>&lt;ul&gt;
+    &lt;li&gt; &quot;a&quot;, width:auto (that is 1*), height:auto(that is max-intrinsic) &lt;/li&gt;
+    &lt;li&gt; &quot;b&quot;, width:150px, height:max-intrinsic &lt;/li&gt;
+    &lt;li&gt; &quot;c&quot;, width:*, height:* (a.k.a. shrink-to-fit) &lt;/li&gt;
+    &lt;li&gt; &quot;d&quot;, width:150px, height:* &lt;/li&gt;
+    &lt;li&gt; &quot;e&quot;, width:150px, height:* &lt;/li&gt;
+    &lt;li&gt; &quot;f&quot;, width:150, height:150px&lt;/li&gt;
+ &lt;/ul&gt;
+</pre>
+  <p>with styles defined above will be rendered as:</p>
+  <p><img src="images/sample-template.png" alt="sample:template"/></p>
+  <p>Instead of characters defining &quot;names&quot; of child elements the template may contain ordinal numbers of children of the templated container. So this template</p>
+  <pre>flow: grid(1 1,<br/>           2 3);
+</pre>
+  <p>will cause first three children of the container to be laid out in two rows where first element will span entire first row and second and third will be replaced in second row.</p>
+  <h3 id="flow-row">3.6. flow: row(tag1, tag2, ...)</h3>
+  <p>The flow:row() is used to replace elements in table alike layouts. The row() function contains list of tag names of elements that will be placed in single row and in corresponding columns ot the table.</p>
+  <p>Consider this markup:</p>
+  <pre>&lt;dl&gt;&lt;dt&gt;First&lt;/dt&gt;
+    &lt;dd&gt;Description of the first item&lt;/dd&gt;<br/>    &lt;dt&gt;Second&lt;/dt&gt;
+    &lt;dd&gt;Description of the second item&lt;/dd&gt;&lt;/dl&gt;
+</pre>
+  <p>and this style declaration:</p>
+  <pre>dl { flow: row(dt,dd); }
+</pre>
+  <p>It will be rendered as if items were placed in table like this:</p>
+  <div align="left">
+    <table border="1" cellpadding="1" cellspacing="1">
+      <tr>
+        <td>First</td>
+        <td>Description of first item</td></tr>
+      <tr>
+        <td>Second</td>
+        <td>Description of second item</td></tr></table>
+    <p>If the flow:row(...) element contains elements that do not match the row template then such elements will be placed in separate row spanning all available columns, so this markup:</p>
+    <pre>&lt;dl&gt;
+  &lt;header&gt;Group&lt;/header&gt;
+    &lt;dt&gt;First&lt;/dt&gt;
+    &lt;dd&gt;Description of the first item&lt;/dd&gt;<br/>    &lt;dt&gt;Second&lt;/dt&gt;
+    &lt;dd&gt;Description of the second item&lt;/dd&gt;
+  &lt;header&gt;Another group&lt;/header&gt;
+    &lt;dt&gt;Third&lt;/dt&gt;
+    &lt;dd&gt;Description of the third item&lt;/dd&gt;<br/>&lt;/dl&gt;
+</pre></div>
+  <p>will be rendered as:</p>
+  <table border="1" cellpadding="1" cellspacing="1">
+    <tr>
+      <td colspan="2"><strong>Group</strong></td></tr>
+    <tr>
+      <td>First</td>
+      <td>Description of the first item</td></tr>
+    <tr>
+      <td>Second</td>
+      <td>Description of the second item</td></tr>
+    <tr>
+      <td colspan="2"><strong>Another group</strong></td></tr>
+    <tr>
+      <td>Third</td>
+      <td>Description of the third item</td></tr></table>
+  <p>The flow:row declaration may accept alternative lists of elements in columns. This declaration for example:</p>
+  <pre>flow: row(label, input select textarea);
+</pre>
+  <p>defines two columns layout with <code>&lt;label&gt;</code> elements placed in first column and all <code>&lt;input&gt;,&lt;select&gt;</code> and <code>&lt;textarea&gt;</code> &nbsp;elements will go to second column.</p>
+  <h3>3.7. flow: stack</h3>
+  <p>The flow:stack layout is used to replace elements at arbitrary positions inside container. Rendering order is defined by DOM positions of elements and/or <code>z-index</code> CSS property.</p>
+  <p>In horizontal and vartical directions, flex values of width and height, margins, and paddings of contained elements, are computed against the width and height of the container. In flex calculations each child is treated as if it is the only child of the container - position of the child is not affected by other children positions.</p>
+  <p>Intrinsic dimensions of flow:stack container are equal to the width of widest and height of tallest child margin box in the container.</p>
+  <p>Consider this markup:</p>
+  <pre>&lt;section tab=&quot;first&quot;&gt;
+   &lt;div&gt;First tab&lt;/div&gt;
+   &lt;div&gt;Second tab&lt;/div&gt;
+&lt;/section&gt;
+</pre>and this style declaration:
+  <pre>section { flow: stack; width: max-content; }
+section &gt; div { size:*; /*spans whole container */
+                visibility:hidden; }
+section[tab=first] &gt; div:nth-child(1) { visibility:visible; }<br/>section[tab=second] &gt; div:nth-child(2) { visibility:visible; }
+</pre>
+  <p>By changing &nbsp;<code>tab</code> attribute value on <code>section</code> element we can switch visibility of tabs.</p>
+  <p>In principle flow:stack layout can be approximated to some extent by using position:relative container with position:absolute children. But flow:stack intrinsic dimension calculation rule cannot be emulated by other CSS means.</p>
+  <h2>4. The <em>flow,</em> <em>float</em> and block formatting context</h2>
+  <p>Elements that are immediate children of elements with a non-<code>default</code> <code>flow</code> attribute value, establish new block formatting contexts exactly in the same way as cells in tables do.</p>
+  <h2>5. The <em>flow</em> and <em>position</em></h2>
+  <p>The flowed element is positioned statically in its flow container. This means that the values <code>position: absolute | fixed</code> on such an element must be treated as <code>position:static</code>.</p>
+  <p><code>position:relative</code> is allowed on flowed elemets. Therefore, the element can be offset from its static position by using <code>left</code>, <code>right</code>, <code>bottom</code> and <code>top</code> attributes.</p>
+  <h3>5.1 <em>position: absolute | fixed</em> and the <em>flex</em> units</h3>
+  <p><img src="images/sample-position-fixed.png" align="right" alt="sample:position-fixed"/>Flex units can be used as values of <em>left</em>, <em>top</em>, <em>right</em> and <em>bottom</em> attributes of elements having <em>position:absolute</em> or <em>position:fixed</em> defined. Combined with possible flex values of <em>padding</em>, <em>margin</em>, <em>width</em>, and <em>height</em> on these elements it makes possible to align such elements relative to their containing blocks.</p>
+  <p>Example: following style will place the element #light-box-dialog in the middle of the viewport:</p>
+  <pre>#light-box-dialog
+{
+  position: fixed;
+  left:1*; top:1*; right:1*; bottom:1*;
+  width: 400px;
+  height: auto;
+}
+</pre>
+  <p>The #light-box-dialog element will have width 400px, height: auto (that is height:min-intrinsic) and will be placed in the middle of the viewport.</p>
+  <h2>6. The <em>flow</em> and <em>vertical-align</em></h2>
+  <p>Flowed elements establish block formatting contexts. Thus, their <em>vertical-align</em> attribute defines the vertical alignment inside them, rather than vertical alignment of the block itself. In other words, <em>vertical-align</em> interpretation is the same as for table cells.</p>
+  <h2>7. The <em>flow</em> and <em>border-spacing</em></h2>
+  <p>The<em> border-spacing</em> attribute defines the minimal value of vertical and horizontal margins between flowed elements. If a flowed element has its own defined margins, the used value for the margins is the maximum between the border-spacing, and the defined margin values. If the defined margins use a flex unit value, the flex computation uses fixed value of <em>the border-spacing</em> as a minimal constraint. In this case, the margin is computed using the flex algorithm, but it can't be less than the value of the <em>border-spacing</em> attribute.</p>
+  <h2>8. The <em>flow</em> and margin collapsing</h2>
+  <p>Margin collapsing between flowed elements is defined for each layout manager above. Margins of flow container elements do not collapse with their in-flow children.</p>
+  <h2>9. The <em>flow</em> and <em>inline-block</em> elements</h2>
+  <p>Inline block elements are replaced inside corresponding line boxes. In principle, line boxes establish bounds where elements replaced in them can &quot;flex&quot;.</p>
+  <p>Therefore, <em>inline-block</em> elements such as &lt;img&gt;, &lt;input&gt;, and &lt;span style=&quot;display:inline-block&quot;&gt; can use flex units to define their dimensions, margins, and paddings. Calculations of flex units in the line box context are made against vertical and horizontal dimensions of the line box, and its non-flexible content.</p>
+  <p>In the horizontal direction, it's possible that free horizontal space remains in the line box after replacing all non-flexible content (e.g. word boxes). That space gets distributed among elements having width, left, and right margins (or paddings), given in flex units.</p>
+  <p>In the vertical direction, the flex values of height, top and bottom margins, and paddings of inline-block elements, are computed against the height of the line box. For example this makes it possible to define multiple child elements with the heights equal to that of the line box.</p>
+  <p>If defined, the text-align:justify computation is performed after the flex value computation.</p>
+  <p>For example, the following markup:</p>
+  <pre>&lt;style&gt;
+  p
+  {
+    padding:4px; border:2px solid black; line-height:1.8em;
+  }
+  span
+  {
+    display:inline-block; border: 2px solid salmon;
+    background:seashell;
+  }
+&lt;/style&gt;
+&lt;p&gt;
+   First span:&lt;span style=&quot;width:2*&quot;&gt;width:2*&lt;/span&gt;
+   and second one:&lt;span style=&quot;width:1*&quot;&gt;width:1*&lt;/span&gt;
+&lt;/p&gt;
+</pre>
+  <p>will produce these layouts for various widths of the <code>p</code> element:</p>
+  <p><img src="images/sample-inline-block-1.png" title="Use of flexes with inline-block elements"/></p>
+  <p><img src="images/sample-inline-block-2.png" title="Use of flexes with inline-block elements"/></p>
+  <p>Note that on the last image last span has reached its min-intrinsic width thus its width is excluded from flex units computation.</p>
+  <h2>10. Algorithm of flex units computation.</h2>
+  <p><a href="spring-engine.h">spring-engine.h (C++ source)</a> is an implementation of the algorithm used for computation of system of flex values.</p>
+  <p>The algorithm has clear physical interpretation:<br/>It calculates final lengths of a set of coil springs attached one by one to each other. Each spring in the set has its own strength value (flex unit) and min/max limiters ( min/max constriants ).</p>
+  <p>Non-flexible element can be thought as element with no flexibility and the only min-constraint given. So the implementation can be used to compute distribution of systems of fixed and flexible elements.</p>
+  <hr/>
+  <h2>Authors:</h2>
+  <dl>
+    <dt><em>Andrew Fedoniouk</em></dt>
+    <dd><a href="mailto:andrew@terrainformatica.com,">andrew@terrainformatica.com,</a> <a href="http://terrainformatica.com">Terra Informatica Software, Inc.</a></dd>
+    <p>Date: April, 5, 2009.</p>
+    <p>Updated on: April, 16, 2015.</p></dl>
+</body>
+</html>

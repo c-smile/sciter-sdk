@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      .flipflop { aspect: FlipFlop; }
+      
+      div.flipflop 
+      { 
+        size:100px;
+        background:gold;
+        border:2px solid;
+        margin:*;
+        
+        transform: rotate(-30deg);
+      }
+      
+      div.flipflop.on {
+        transform: rotate(+30deg);
+        transition: transform(cubic-in-out, 600ms);
+      } 
+    
+    </style>
+    <script type="text/tiscript">
+    
+    function FlipFlop() {
+      function toggle() { this.attributes.toggleClass("on"); }
+      this.subscribe("animationend", toggle );
+      toggle.call(this);
+    }
+    
+    </script>
+  </head>
+<body>
+
+  <div.flipflop>
+    Voulez-Vous Danser?
+  </div>
+
+</body>
+</html>

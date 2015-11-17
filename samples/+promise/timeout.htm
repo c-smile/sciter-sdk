@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <title></title>
+    <style></style>
+    <script type="text/tiscript">
+    
+    include "promise.tis";
+   
+    function self.ready() {
+    
+      const testEl = $(#test);
+      
+      timeout(1s)
+        .then( :: testEl.text = "1s passed!" )
+        .then( function(r) { throw "error after " + r ; } ) /* forcing error in handler chain */
+        .catch( :e: stdout.println("fail",e) )
+        .finally( :: stdout.println("after all") );
+    
+    }
+    
+    </script>
+  </head>
+<body>
+  <p> Promiseable <code>timeout(1s).then( function )</code> demo, will change text of the block below in one second:</p>
+  <div#test>Huh?</div>
+
+</body>
+</html>

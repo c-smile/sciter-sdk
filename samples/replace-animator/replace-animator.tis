@@ -1,0 +1,94 @@
+include "../ease-functions.tis";
+
+function AniReplace(container, stateChanger, DURATION = 600)
+{
+  const easef = Ease.InOutCubic;
+  var items = {};
+  // grab children locations and make their snapshots.
+  for(var el in container)
+  {
+    //stdout.println(el);  
+    if( el !instanceof Element)
+      continue;
+
+    var (x,y,w,h) = el.box(#rectw, #border, #parent);
+    var (xorg,yorg) = el.box(#position, #inner, #parent);
+    var snapshot = el.isVisible ? new Image(w,h,el):null;
+    items[el] = 
+      { 
+        ix:x, iy:y, iw:w, ih:h,        // intial position of the element
+        idx: xorg - x, idy: yorg - y,  // delta that includes border and padding widths
+        iimg: snapshot                 // its snapshot
+      };
+  }
+  
+  //stdout.printf("items: %i\n",items.length);
+  
+  // call state changer that should do element rearrangement 
+  stateChanger();
+  // commit layout
+  container.update();
+  // grab new children locations and make their new snapshots.
+  for(var el in container)
+  {
+    if( el !instanceof Element)
+      continue;
+
+    var (x,y,w,h) = el.box(#rectw, #border, #parent);
+    var (xorg,yorg) = el.box(#position, #inner, #parent);
+    var snapshot = el.isVisible ? new Image(w,h,el):null;
+    var def = items[el] || {};
+    def.fx = x;
+    def.fy = y;
+    def.fw = w;
+    def.fh = h;          // final position of the element
+    def.fdx = xorg - x;
+    def.fdy = yorg - y;  // delta that includes border and padding widths
+    def.fimg = snapshot; // its snapshot
+    items[el] = def;
+  }
+  
+  // we have a collection of initial and final snapshots - let's animate them:   
+  var progress = 0.0;
+  var startTime = System.ticks;
+  
+  function paintItems(gfx)
+  {
+    var k = easef(progress);
+    for( var (el,def) in items )
+    {
+      var x = def.ix + k * (def.fx - def.ix);
+      var y = def.iy + k * (def.fy - def.iy);
+      var w = (def.iw + k * (def.fw - def.iw)).toInteger();
+      var h = (def.ih + k * (def.fh - def.ih)).toInteger();
+      if( !def.iimg ) { x = def.fx; y = def.fy; w = def.fw;  h = def.fh;  } 
+      else if( !def.fimg ) { x = def.ix; y = def.iy; w = def.iw; h = def.ih; }
+      if( def.iimg )
+        gfx.blendImage(def.iimg, x, y, 0,0, w,h,1.0-progress);
+      if( def.fimg )
+        gfx.blendImage(def.fimg, x, y, 0,0, w,h,progress);
+    }
+    return true;
+  }
+  
+  // animation step
+  function step()
+  {
+    //stdout.printf("%v %v\n",System.ticks,startTime);
+    var timePassed = System.ticks - startTime;
+    if( timePassed > DURATION ) { 
+      container.paintContent = null;
+      //container.refresh(); 
+      container.update();
+      for( var (el,def) in items ) { if(def.iimg) def.iimg.destroy(); if(def.fimg) def.fimg.destroy(); }
+      return 0; 
+    }
+    progress = timePassed.toFloat() / DURATION; // 0.0 ... 1.0
+    container.refresh();
+    return View.ANIMATION_TIMER_SPAN;
+  }  
+ 
+  // ready to dance, setup custom painter and start animation
+  container.paintContent = paintItems;
+  container.animate(step);
+}

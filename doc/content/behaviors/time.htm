@@ -1,0 +1,43 @@
+﻿<html>
+  <head>
+    <meta name="source" content="http://www.terrainformatica.com/wiki/doku.php?id=h-smile:built-in-behaviors:edit"/>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>behavior: time</h1>
+  <p>time input element.</p>
+  <h2>Elements</h2>
+  <p>that have this behavior applied by default:</p>
+  <ul>
+    <li><code>&lt;input type=&quot;time&quot; /&gt;</code> - inline input input element</li></ul>
+  <h2>Model</h2>
+  <p>Upon initialization the behavior creates following DOM structure:</p>
+  <pre>&lt;input&gt;
+ <code> &lt;caption&gt;
+    &lt;span.hour&gt;
+    &lt;span.minute&gt;
+    &lt;span.second&gt;
+    &lt;span.ampm&gt;
+  &lt;/caption&gt;
+  &lt;button.plus&gt;
+  &lt;button.minus&gt;
+</code>&lt;/input&gt;
+</pre>
+  <p><code>&lt;span.ampm&gt;</code> is optional - it appears only if current locale (lang) requires it.</p>
+  <p><code>&lt;caption&gt;</code> has have <code>behavior:masked</code> applied. <code>&lt;button.plus&gt;</code> and <code>&lt;button.minus&gt;</code> trigger increment/decrement of current sub-field.</p>
+  <h2>Attributes</h2>
+  <p>that this behavior knows about:</p>
+  <ul>
+    <li><code>value=&quot;HH:MM:SS&quot;</code> - time, initial value of the input element. Time portion of ISO 8601 format.</li>
+    <li><code>timezone=&quot;TZ&quot;</code> - timezone to show the time for. TZ can be either <code>&quot;local&quot;</code> or <code>&quot;+HH:MM&quot; / &quot;-HH:MM&quot;</code>.</li></ul>
+  <h2>Events</h2>
+  <p>Aside of standard set of events (mouse, keyboard, focus) <em>behavior: button</em> generates:</p>
+  <ul>
+    <li>EDIT_VALUE_CHANGED event - value of the element (time) was changed due to user actions. Posted (asynchronous) event.</li></ul>
+  <h2>Value</h2>
+  <p>Date value or undefined, reflects current status of internal editing buffer. Only time portion of the date object is relevant. The date value is always UTC.</p>
+  <h2>Methods</h2>
+  <p>N/A - this input element has no specific methods but &lt;caption&gt; sub-element has <code>behavior:masked</code> specific methods.</p>
+  <dl></dl>
+</body>
+</html>

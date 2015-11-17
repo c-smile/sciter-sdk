@@ -1,0 +1,77 @@
+<html>
+<head>
+  <style>
+    html { background-color: white; }
+    ul#items { 
+      flow:vertical; 
+      width: max-intrinsic; 
+      height:*; 
+      overflow:scroll-indicator; 
+      border:1px solid red; 
+      padding:0;
+    }
+    ul#items > li 
+    {
+      display:block;
+      padding: 4px;
+      margin:4px;
+      border: 1px solid #777;
+      //border-radius: 4px;
+      background-color: silver;
+    }
+    
+    ul#items > li.placeholder
+    {
+      visibility:hidden;
+    }
+    
+    tb-button {
+      behavior:clickable;
+      display:block;
+      size:max-content;
+      margin:*;
+      background:gold;
+    }
+    tb-button:hover {
+      background:yellow;
+    }
+    
+  </style>  
+  <script type="text/tiscript">
+    
+    include "ddm.tis";
+    include "animations.tis";
+    
+    DragDrop
+    {
+      what      : "ul#items > li",
+      where     : "ul#items",
+      container : "ul#items",
+      easeDrop  : Animation.Ease.OutQuad
+    };
+  
+    var n = 0; // new button counter
+  
+    $(button#add).onClick = function() {
+      $(ul#items).$append(<li><tb-button>New #{++n}</tb-button></li>);
+    }
+  
+  </script>  
+</head>
+<body>
+  <p>Button list with reordering</p>
+  <button #add>Add new</button>
+  <ul #items>
+    <li><tb-button>First</tb-button></li>
+    <li><tb-button>Second</tb-button></li>
+    <li><tb-button>Third</tb-button></li>
+    <li><tb-button>Fourth</tb-button></li>
+    <li><tb-button>Fifth</tb-button></li>
+    <li><tb-button>Sixth</tb-button></li>
+    <li><tb-button>Seventh</tb-button></li>
+    <li><tb-button>Eighth</tb-button></li>
+    <li><tb-button>Nineth</tb-button></li>
+    <li><tb-button>Tenth</tb-button></li>
+  </ul>
+</body>
+</html>

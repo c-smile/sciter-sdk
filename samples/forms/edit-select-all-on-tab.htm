@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+    input[type="text"] { aspect:selectAllOnTab; }
+    
+    </style>
+    <script type="text/tiscript">
+    
+    function selectAllOnTab() {
+    
+      const BY_TAB_NEXT = 2;
+      const BY_TAB_PREV = 3;
+    
+      function gotfocus(evt) {
+        if(evt.reason == BY_TAB_NEXT || evt.reason == BY_TAB_PREV)
+          this.doSelectAll();
+      }
+      this.on("focusin", gotfocus );
+    }
+    
+    </script>
+  </head>
+<body>
+
+  <p>Switching focus by pressing TAB shall cause whole text to be selected:</p>
+
+  <input|text(n1) value="hello">
+  <input|text(n2) value="world">
+
+</body>
+</html>

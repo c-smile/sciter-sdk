@@ -1,0 +1,131 @@
+<html>
+  <head>
+  <title></title>
+  <style>
+    
+    vlist 
+    { 
+      display:block; 
+      height:*; width:300px; 
+      border:1px solid black; 
+      overflow: scroll-indicator;
+    }
+
+    vlist > li {
+      display:block; 
+      padding:0 6dip;
+      line-height:31dip;
+      background: linear-gradient(top, #fff, #ddd);
+      behavior:form; /* each repeated child is treated as a form so it can accept object values */ 
+    } 
+    
+    vlist > li.highlighted {
+      background: linear-gradient(top, #fff, #da9);
+    }
+
+    vlist > li:hover {
+      background: linear-gradient(top, #fff, #bcd);
+    }
+
+    vlist > li:current {
+      background:gold;
+    }    
+    
+      
+  </style>
+  <script type="text/tiscript">
+  
+  include "../vlist.tis";
+  
+  function self.ready() {
+  
+    var records = new Array(200);
+    
+    for(var i = 0; i < records.length; ++i)
+      records[i] = {index: i, caption:"New Item" }
+
+    var n = records.length;
+    var p = 0;
+    
+   
+    var vlist1 = VirtualList {
+      container     : $(vlist#first),
+      bufferSize    : 40 // records in sliding window
+    };
+    
+    var vlist2 = VirtualList {
+      container     : $(vlist#second),
+      bufferSize    : 40 // records in sliding window
+    };
+    
+    // feed them by these records
+    vlist1.value = records;
+    vlist2.value = records;
+    
+    $(#bound-first).on("change", function(){
+      vlist1.value = this.value ? records : null;
+    });
+    $(#bound-second).on("change", function(){
+      vlist2.value = this.value ? records : null;
+    });
+    
+    
+    $(#mutate).onClick = function() {
+    
+      function add() { 
+        var at = rand(records.length + 1);
+        records.splice(at,0, {index: ++n, caption:"Added item" });
+        //stdout.$n(New item #{n} added at {at});
+      }
+      
+      function del() { 
+        var at = rand(records.length);
+        var r = records[at];
+        records.splice(at,1);
+        //stdout.$n(Item #{r.index} removed at {at});
+      }
+      
+      function upd() { 
+        var at = rand(records.length);
+        var r = records[at];
+        var times = r.nupdates || 0;
+        ++times;
+        r.nupdates = times;
+        r.caption = String.$(Item updated {times} time{times > 1?"s":""});
+        //stdout.$n(Item at {at} was updated);
+      }
+      
+      function noop() {}
+      
+      var ops = [add,del,upd,noop];
+
+      self.timer(40ms, function() {
+        if(!vlist1.state.animating && !vlist2.state.animating) // prevent updates on animation
+          ops[ rand(ops.length) ]();
+        return true;
+      });
+    }
+    
+  }
+  
+  </script>
+  </head>
+<body>
+
+  <h2>Dynamic recordset mutation demo</h2>
+  
+  <p>Records array is created with 500 records initially and gets modified dynamically (added,removed,updated). Each 60ms</p> 
+
+  <button #mutate>Start random updates</button>
+  <br><button|checkbox checked #bound-first>Bound</button>
+  <vlist#first>
+    <li><span(index)/> <span(caption)>???</span></li>
+  </vlist>
+  <button|checkbox checked #bound-second>Bound</button>
+  <vlist#second>
+    <li><span(index)/> <span(caption)>???</span></li>
+  </vlist>
+ 
+  
+</body>
+</html>

@@ -1,0 +1,46 @@
+
+
+
+.editor {
+  overflow:hidden;
+  flow: "1 2"
+        "3 4";
+}
+
+.editor > canvas {
+  aspect: NodeCanvas url(editor.tis);
+  display:block;
+  position:relative;
+  background:rgba(255,255,255,0.4);
+  size:*;
+}
+
+node {
+  font-size:10pt;
+  display:block;
+  background:gold;
+  border-radius:6dip;
+  width:max-content;
+  min-width:48dip;
+  position:absolute;
+  prototype: NodeBlock url(editor.tis);
+  box-shadow: gray 3px 3px 3px;
+}
+
+node > caption {
+  cursor: move;
+  padding:2dip 4dip;
+}
+
+node > ports {
+  display:block;
+  background:white;
+  border-radius:3dip;
+  margin:0 3dip 3dip 3dip;
+  flow:row(in,out);
+  border-spacing: 4dip 1dip;
+  padding:4dip;
+}
+
+node > ports > in { display:block; width:*; }
+node > ports > out { display:block; width:*; text-align:right; }

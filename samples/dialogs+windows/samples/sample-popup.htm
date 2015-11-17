@@ -1,0 +1,31 @@
+<html custom-frame="solid" resizeable >
+  <head>
+    <title>Hello world!</title>
+    <style>
+    
+      html { background: orange; overflow:none;}
+      
+      html > header { width:*; line-height:1.6em; flow:horizontal;  margin:3dip 3dip 0 3dip; }
+      html > header > caption { width:*; height:*; }
+      html > header > button { behavior:clickable; /*non-focusable button*/ }
+    
+      body { margin:0 3dip 3dip 3dip; background:gold; overflow:none; }
+      
+    
+    </style>
+    <script type="text/tiscript">
+    
+    function self.ready() {
+      self.post(::view.state = View.WINDOW_SHOWN);
+    }
+    
+    </script>
+  </head>
+<header>
+  <caption role="window-caption">Caption</caption>
+  <button role="window-close">X</button>
+</header>    
+<body>
+    Popup: Hello world!
+</body>
+</html>

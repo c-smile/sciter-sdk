@@ -1,0 +1,34 @@
+<html custom-frame="solid" resizeable >
+  <head>
+    <title>Hello world!</title>
+    <style>
+    
+      html { background: orange; }
+    
+      body {  flow: "1 2 3 4"
+                    "5 5 5 5"; 
+              size:*; 
+              margin:3px; 
+              background:gold;
+            }
+      body > header { width:*; line-height:1.6em;}
+    
+    </style>
+    <script type="text/tiscript">
+    
+    function self.ready() {
+      view.state = View.WINDOW_SHOWN;
+    }
+    
+    </script>
+  </head>
+<body>
+  <header role="window-caption">Caption</header>
+  <button role="window-minimize">_</button>
+  <button role="window-maximize">o</button>
+  <button role="window-close">X</button>
+  <div>  
+    Hello world!
+  </div>
+</body>
+</html>

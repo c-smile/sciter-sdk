@@ -1,0 +1,60 @@
+<html>
+<head>
+  <style>
+  
+    ul 
+    {
+      border:1px solid black;
+      background:white;
+      padding:0;
+      margin:*;
+      width:4*;
+      height:4*;
+      overflow:auto scroll-manner( page-animation:true, step-animation:true, step:auto, page:auto );
+    
+      flow: "1  4  7  10"
+            "2  5  8  . "
+            "3  6  9  . "
+            "11 14 17 20"
+            "12 15 18 . "
+            "13 16 19 . ";
+    }
+    
+    ul > li { 
+         display:block;
+         width:200px; height:200px; 
+         border:1px solid gray; 
+         background:gold;
+         margin:10px;                     
+         text-align:center; vertical-align:middle; }
+  
+  </style>  
+</head>
+<body>
+  <h1>scroll-manner() demo on flow:grid or flow:"template" </h1>
+  <p>The list here is configured to use animated scroll with integral steps - next step in x and y directions should move scroll position to the origin of column/row</p> 
+  <ul>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+    <li>6</li>
+    <li>7</li>
+    <li>8</li>
+    <li>9</li>
+    <li>10</li>
+    <li>11</li>
+    <li>12</li>
+    <li>13</li>
+    <li>14</li>
+    <li>15</li>
+    <li>16</li>
+    <li>17</li>
+    <li>18</li>
+    <li>19</li>
+    <li>20</li>
+    
+  </ul>
+</body>
+</html>

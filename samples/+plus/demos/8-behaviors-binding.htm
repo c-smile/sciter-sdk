@@ -1,0 +1,47 @@
+﻿<html>
+  <head>
+    <title>Plus: very basic sample</title>
+    <style>
+      @import url(../plus.css); /* the only thing needed to include Plus framework */
+      @import url(../../note.css); 
+      
+      @import url(volume/volume.css);
+      
+      #channels { width: 300px; margin: 20px auto ; border: 1px solid;}
+      #channels > li { flow:horizontal; }
+      #channels > li > output { display:block;  width:*;}
+      #channels > li > volume { display:block;  margin:* 3px; }
+      
+      .comment { font-size:85%; }
+           
+    </style>
+    
+    <script type="text/tiscript">
+    
+      include "../plus.tis"; // we use @observing so need to include plus.tis upfront.
+  
+      namespace Data // our model
+      {  
+        var instruments = [ 
+          { name: "Violin", volume:1; },
+          { name: "Viola", volume:4; },
+          { name: "Double bass", volume:2; }
+        ];
+      }    
+    
+    </script>
+  </head>
+
+<body model="Data"> <!-- define data model we observe -->
+
+  <note>This sample demonstrates data binding with custom widget. <code>class Volume</code> introduces 'value' property that is bound with data in the model as any other input/output element.</note>
+  
+  <!-- the repeateable section -->
+  <ol #channels each="instrument in instruments">
+    <li><output name="instrument.name" /> <volume name="instrument.volume" /></li>
+  </ol>
+  
+  <p .comment>Volume here is "clickable" element.</p>
+
+</body>
+</html>

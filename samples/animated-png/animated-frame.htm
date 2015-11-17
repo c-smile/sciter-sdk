@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <style>
+    
+      img.png { foreground-image-frame: 1; }
+      img.png:hover { foreground-image-frame:8; transition: foreground-image-frame(linear,200ms); }
+
+      img.gif { foreground-image-frame: 1; }
+      img.gif:hover { foreground-image-frame:7; transition: foreground-image-frame(linear,140ms); }
+
+      img.gif.backward { foreground-image-frame: 7; }
+      img.gif.backward:hover { foreground-image-frame:1; transition: foreground-image-frame(linear,140ms); }
+      
+    </style>
+  </head>
+<body>
+  <h2>Animated PNG with "manual" frame-no manipulation</h2>
+  <div>
+    Hover the image <img.png src="bouncing-beach-ball.png"> to see its animation
+  </div>
+  <p>Note that it statically shows first frame. On hover it runs transition from frame 1 to frame 8 in 200ms.</p>
+  
+  
+  <p>And GIF animation, forward: <img.gif src="arrow-block.gif"> backward: <img.gif.backward src="arrow-block.gif"> </p>
+  
+  
+</body>
+</html>

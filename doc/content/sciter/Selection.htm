@@ -1,0 +1,63 @@
+﻿<html>
+  <head>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>Selection object</h1>
+  <p>Represents textual (and block) selection inside <a href="Element.htm">element</a> that has either htmlarea or richtext behaviors attached.</p>
+  <p>To access the selection object of the element use its <em>selection</em> property.</p>
+  <dl>
+    <h2>Properties</h2>
+    <dt>type</dt>
+    <dd><em>null | symbol</em>, read-only property. Reports type of the selection: #text, #cells, #blocks.</dd>
+    <dt>isCollapsed</dt>
+    <dd><em>true</em> | <em>false</em>, read-only property. true if the selection is represented by only caret so selection.start == selection.end.</dd>
+    <dt>anchor</dt>
+    <dd><em>null | bookmark</em>, read-only property. DOM position of selection anchor.</dd>
+    <dt>caret</dt>
+    <dd><em>null | bookmark</em>, read-only property. DOM position of selection caret.</dd>
+    <dt>start</dt>
+    <dd><em>null | bookmark</em>, read-only property. DOM position of either caret or anchor, whichever is lower in DOM order.</dd>
+    <dt>end</dt>
+    <dd><em>null | bookmark</em>, read-only property. DOM position of either caret or anchor, whichever is greater in DOM order.</dd>
+    <dt>text</dt>
+    <dd><em>string</em>, read-only property. text contained in the selection.</dd>
+    <dt>html</dt>
+    <dd><em>string</em>, read-only property. selected html fragment.</dd>
+    <h2>Enumeration</h2>
+    <dt>for ... in</dt>
+    <dd>
+      <div>for(var<strong> <em>(pos,char)</em></strong> in<strong> <em>element</em></strong>.<strong><em>selection</em></strong>)<strong> { </strong>/* loop body */<strong> }</strong></div>
+      <p>TBD. (enumerates caret positions and characters in the selection)</p></dd>
+    <h2>Methods</h2>
+    <dt>collapse</dt>
+    <dd>
+      <div><strong>( towhat</strong>:symbol<strong> )</strong> returns: <em>bookmark</em>.</div>
+      <p>Collapse selection range to single caret position. <em>towhat</em> is one of: <strong>#toCaret</strong>, <strong>#toAnchor</strong>,<strong>#toStart</strong> or <strong>#toEnd</strong></p></dd>
+    <dt>select</dt>
+    <dd>
+      <div><strong>( caret</strong>:<em>bookmark</em> [<strong> , anchor</strong>:bookmark ]<strong> ) </strong>returns: <em>true | false</em></div>
+      <p>Set's selection to the range or single caret position.</p></dd>
+    <dt>advance</dt>
+    <dd>
+      <div><strong>( what</strong>:symbol, <strong>direction</strong>:symbol [, <strong>units</strong>:symbol] <strong>)</strong> returns: <em>true | false</em>.</div>
+      <p>TBD.</p></dd>
+    <dt>applyMark</dt>
+    <dd>(<strong>start</strong>: <em>bookmark</em>, <strong>end</strong>: <em>bookmark</em>, <strong>markName</strong>: string): returns: integer
+		<p>marks region of text from <em>start</em> to <em>end</em> by mark name that can be styled in CSS by <code>::mark(markName) { ... }</code> selector/rule.</p>
+		<p>The function returns number of changes made.</p></dd>
+    <dt>clearMark</dt>
+    <dd>(<strong>start</strong>: <em>bookmark</em>, <strong>end</strong>: <em>bookmark</em>, <strong>markName</strong>: string): returns: integer
+		<p>clears mentioned mark from the region.<br/>The function returns number of changes made.</p></dd></dl>
+  <h3 name="bookmark">Bookmark</h3>
+  <p>Some methods above use so called bookmark object that is a tuple (of length 3) having tag #bookmark. Usually you will get ready to use bookmarks from various properties or &nbsp;methods but if needed bookmarks can be constructed literally as:</p>
+  <pre>var bm = [bookmark: node, index, after];
+</pre>
+  <p>Where:</p>
+  <ul>
+    <li><em>node</em> - Element or Node object.</li>
+    <li><em>index</em> - index of the position inside the <em>node</em>. В for Element it is <em>nodeIndex</em> of its child node and for Nodes it is character index.</li>
+    <li><em>after</em> - true | false, if true then this bookmark marks &quot;past edge&quot; of the entity marked by node/index pair.</li></ul>
+  <p></p>
+</body>
+</html>

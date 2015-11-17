@@ -1,0 +1,39 @@
+﻿<html>
+  <head>
+    <title>Rotated multiline text</title>
+    <style>
+    
+    body { font:10pt verdana,sans-serif; }
+
+    table { border:1px dashed blue; border-spacing:0; padding:0 }
+
+    td { padding:0.5em; }
+    
+    td.rotated { 
+      overflow:visible;
+      width:2.4em;
+      border-right:1px dashed gray;
+      height:12em; /* this should match text width below */
+      horizontal-align:middle;
+      vertical-align:middle;
+    }
+    
+    td.rotated > text { width:12em; height:2.4em; transform:rotate(-90deg); text-align: center;}
+    td.another { border-top:1px dashed gray; }
+    
+</style>
+  </head>
+<body>
+  <p>example of text 90° rotated</p> 
+  <table>
+    <tr>
+      <td rowspan="2" class="rotated"><text>multiline text<br>90° rotated</text></td>
+      <td>ordinary cell</td>
+    </tr>
+    <tr>
+      <td class="another">another ordinary cell</td>
+    </tr>
+  </table>
+
+</body>
+</html>

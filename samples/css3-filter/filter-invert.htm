@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    div 
+    {
+      border:1px solid black;
+      width:max-content;
+    }
+    
+    div > text { color:red; margin-top:*; text-align:center; width:*; }
+    
+    div.filtered {
+      filter: invert();
+    }
+
+    </style>
+  </head>
+<body>
+
+<div>
+  <picture src="images/cvece.png" />
+  <text>original</text>
+</div>  
+<div.filtered>
+  <picture src="images/cvece.png" />
+  <text>invert()</text>
+</div>
+
+</body>
+</html>

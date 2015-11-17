@@ -1,0 +1,87 @@
+<html>
+<head>
+  <style>
+    html { background-color: scrollbar; }
+    div#tabs { flow:horizontal;}
+    div#tabs > legend 
+    {
+      width: max-intrinsic;
+      max-width: 100%;
+      color:black;
+      border: 1px solid #777;
+      border-bottom: none;
+      border-radius: 16px 16px 0 0;
+      padding:4px 12px;
+      margin:0 -8px;
+      background-color: silver;
+      behavior:switch; /* so only one has :checked state */
+    }
+    
+    div#tabs > legend:first-child
+    {
+      margin-left:0;
+    }
+    div#tabs > legend:last-child
+    {
+      margin-right:0;
+    }
+    
+    div#tabs > legend.placeholder
+    {
+      visibility:hidden;
+    }
+    
+    div#tabs > legend.t1 { background-color:#FFE4E1; }
+    div#tabs > legend.t2 { background-color:#FFFACD; }
+    div#tabs > legend.t3 { background-color:#FFEFD5; }    
+    div#tabs > legend.t4 { background-color:#E6E6FA; }    
+    div#tabs > legend.t5 { background-color:#CFFFE1; }    
+    
+    
+    div#tabs > legend:checked 
+    {
+      //background-color-bottom-right:white;
+      //background-color-bottom-left:white;
+      background-color:white;
+      position:relative;
+      margin:-1px 0;
+      padding:4px 12px 6px 12px;
+    }
+    
+    div#panels  
+    {
+      border: 1px solid #777;
+      background-color:white;
+      width:*;
+      height:*;
+    }
+    
+  </style>  
+  <script type="text/tiscript">
+    
+    include "ddm.tis";
+    include "animations.tis";
+    
+    DragDrop
+    {
+      what      : "div#tabs > legend",
+      where     : "div#tabs",
+      container : "div#tabs",
+      easeDrop  : Animation.Ease.OutQuad
+    };
+  
+  </script>  
+</head>
+<body>
+  <p>Tabs with reordering</p>
+  <div #tabs>
+    <legend checked .t1>First</legend>
+    <legend .t2>Second</legend>
+    <legend .t3>Third</legend>
+    <legend .t4>Fourth</legend>
+    <legend .t5>Fifth</legend>
+  </div>
+  <div #panels>
+  </div>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<html>
+<head>
+  <style>
+    body 
+    {
+      flow:horizontal-flow;
+    }
+    form 
+    { 
+      width: max-intrinsic;  
+      border: 1px solid;
+      padding:4px;
+      margin:4px;
+    }
+    form input { margin:4px; font:10pt verdana; vertical-align:middle; }
+    form input[type="phone"] 
+    { 
+      behavior: masked-edit;
+      prototype:Phone; 
+      
+      padding:3px; 
+      background-image:url(theme:edit-normal); 
+      background-repeat:stretch; 
+      font-family: consolas monospace;
+      width: min-intrinsic;
+      height: min-intrinsic;
+      white-space:pre;
+    }
+    input[type="phone"] > span { display:inline-block; }
+    input[type="phone"] > span:current { background:blue; color:white; }
+    
+    form input[type="ip"] 
+    {
+      behavior: masked-edit;
+      prototype:IPAddress;
+      padding:3px; 
+      background-image:url(theme:edit-normal); 
+      background-repeat:stretch; 
+      font-family: consolas monospace;
+      width: min-intrinsic;
+      height: min-intrinsic;
+      white-space:pre;
+    }
+    
+    input[type="ip"] > span { display:inline-block; }
+    input[type="ip"] > span:current { background:blue; color:white; }
+
+    form > caption 
+    {
+      margin:-4px -4px 4px -4px;
+      padding:4px;
+      border-bottom: 1px solid black;
+      background: #DDD;
+    }
+    form button.show { margin-left:*;}
+    h1 { font: 12pt; clear: both; }
+    h2 { font: 10pt; clear: both; }
+    text.comment { font: 8.5pt; clear: both; }
+    pre#out
+    {
+      clear:left;
+      border:1px solid gray;
+      background: #F5F5DC;
+      -spaces-per-tab:2;
+    }
+  </style>  
+  <script type="text/tiscript">
+  
+    function showValues()
+    {
+      var val = this.$p( form ).value;
+      self.$(pre#out).value = String.printf("%V",val);
+    }
+  
+    for( var el in self.$$( form button.show ) )
+      el.onClick = showValues;
+      
+    class Phone: Behavior
+    {
+      function attached()
+      {
+        var area_codes = this.attributes["area-codes"];
+        if( area_codes ) area_codes = area_codes.split(",");
+        else             area_codes = { type:"text", length:3, filter:"0~9" };
+        // setup the mask:
+        var mask = [
+                "(", area_codes, ") ", // area code  
+                { type:"text", width:3, filter:"0~9", min:3 }, " ",
+                { type:"text", width:4, filter:"0~9", min:4 } ];
+        this.mask(mask);
+      }
+      property value(v)
+      {
+        get 
+        { 
+          var v = this.state.value; 
+          return String.printf("(%s)%s-%s",v[0],v[1],v[2]);
+        }
+        set
+        {
+          var varr = v.scanf("(%s)%s-%s");
+          this.state.value = varr;
+        }
+      }
+    }
+    
+    class IPAddress: Behavior
+    {
+      const ipmask = [
+            { type:"integer", width:3, min:0, max:255, #leading-zero:true }, ".",
+            { type:"integer", width:3, min:0, max:255, #leading-zero:true }, ".",
+            { type:"integer", width:3, min:0, max:255, #leading-zero:true }, ".",
+            { type:"integer", width:3, min:0, max:255, #leading-zero:true } ];
+            
+      function attached()
+      {
+        // setup the mask:
+        this.mask(ipmask);
+        var init = this.attributes["value"];
+        if( init ) this.value = init.scanf("%d.%d.%d.%d");
+      }
+    }
+      
+  </script>  
+</head>
+<body>
+<!--  <h1>Masked input modes</h1>
+  <h2>Phone inputs</h2>
+  <form>
+    <caption>Simple</caption>
+    Phone:<input type="masked" name="phone" mask="(###) ### ####" /><br/>
+    <button .show>Show Values</button>
+  </form>
+  <form>
+    <caption>Masked input with enumeration</caption>
+    Phone in British Columbia, Canada.<br/> 
+    Area codes here: 604,778,250:<br/>  
+    <input type="phone" name="bcphone" area-codes="604,778,250" /><br/>
+    <button .show>Show Values</button>  
+  </form>
+  <h2>IP address inputs</h2>  
+  <text.comment>(class IPAddress sets mask groups by code therefore the value of the input is an array of values - components of the mask)</text>
+  <form>
+    <caption>No initial value</caption>
+    IP: <input type="ip" name="ipaddr" /><br/>
+    <button .show>Show Values</button>
+  </form> -->
+  <form>
+    <caption>Initial value: 96.49.23.16</caption>
+    IP: <input type="ip" name="ipaddr" value="96.49.23.16" /><br/>
+    <button .show>Show Values</button>
+  </form>
+  <pre #out />
+</body>
+</html>

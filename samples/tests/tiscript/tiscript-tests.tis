@@ -1,0 +1,1201 @@
+﻿
+//|
+//| String test
+//|
+
+function String_test()
+{
+  var s0 = "hello";
+  var s1 = "world";
+  var s2 = s0.concat(" ",s1);
+  
+  assert s2 == "hello world";
+  
+  assert s0.indexOf("l") == 2;
+  assert s0.indexOf("h") == 0;
+  assert s0.indexOf("h",1) < 0;
+  
+  assert s0.lastIndexOf("l") == 3;
+  assert s0.lastIndexOf("o") == 4;
+  
+  assert s0.charAt(2) == "l";
+  assert s0.charCodeAt(2) == 0x6C;
+  
+  assert String.fromCharCode(112, 108, 97, 105, 110) == "plain";
+  
+  // range test
+  var s3 = "hello world";
+  assert s3[2..5] == "llo";
+  assert s3[..5]  == "hello";
+  assert s3[6..]  == "world";
+  
+  var r, re1;         
+  var s = "The rain in Spain falls mainly in the plain";
+  re1 = /ain/i;      //Create regular expression pattern.
+  r = s.match(re1);  //Attempt match on search string.
+  assert r == "ain";
+  
+  var re = /ain/ig;      
+  r = s.match(re);   
+  assert r.length == 4;
+  
+  var t = s.replace(re,"1");
+ 
+  assert (t == "The r1 in Sp1 falls m1ly in the pl1") : "" + t;
+   
+  assert s.search( "Spain" ) == 12;
+  assert s.search( "Russia" ) == -1;
+  
+  assert s.slice( -5 ) == "plain";
+  assert s.slice( 12, 17 ) == "Spain";
+  assert s.slice( 3 ) == " rain in Spain falls mainly in the plain";
+  
+  assert s.split( " " ).length == 9;
+  assert s.split( re1 ).length == 5;
+    
+  assert s.substr(12, 5) == "Spain";
+  assert s.substring(12, 17) == "Spain";
+
+  assert "This is a STRING object".toLowerCase() == "this is a string object"; 
+  assert "This is a STRING object".toUpperCase() == "THIS IS A STRING OBJECT"; 
+  
+  assert "This is a STRING object".toString() == "This is a STRING object"; 
+  assert "This is a STRING object".valueOf() == "This is a STRING object"; 
+  
+  assert "Это СТРОКА!".toLowerCase() == "это строка!"; 
+  assert "Это СТРОКА!".toUpperCase() == "ЭТО СТРОКА!"; 
+ 
+  
+  assert "Hello" + (1).toString() == "Hello1"; 
+  
+  // string car/cdr operators:
+  r = "one,two,three" ~/ ",";   assert r == "one" : "car";  
+  r = "one,two,three" ~% ",";   assert r == "two,three" : "cdr";  
+  // reversed string car/cdr operators (search from tail):  
+  r = "one,two,three" /~ ",";   assert r == "one,two" : "rcar";  
+  r = "one,two,three" %~ ",";   assert r == "three" : "rcdr";  
+  
+  // delimeter string not found cases:
+  r = "one,two,three" ~/ "A";   assert r == "one,two,three" : "car NF";  
+  r = "one,two,three" ~% "A";   assert r == ""              : "cdr NF";  
+  r = "one,two,three" /~ "A";   assert r == "one,two,three" : "rcar NF";  
+  r = "one,two,three" %~ "A";   assert r == ""              : "rcdr NF";  
+
+  // stringizer function tests:	
+	
+	// stringizer function per se (name starts from $)
+  function $( s.. ) // all string composition components are passed here, e.g. 
+	                  // for the call $(one{1}two) s.. will be an array with the content:
+										// ["one",1,"two"]  
+	{
+	  return s.join("");
+	}
+		
+	assert $({1}one) == "1one";
+	assert $(one{1}two) == "one1two";
+	assert $(one{1}) == "one1";
+	assert $({1}{2}) == "12";
+	assert $({1}one{2}) == "1one2";
+  assert $({"{"}one}) == "{one}";
+	assert $("the string") == "\"the string\"";
+	assert $(x{ 1 + 2 }y) == "x3y";
+	assert $(x({1 + 2})y) == "x(3)y";
+	
+}
+
+function Array_test()
+{
+  var a0 = [1,2,3,4,5,6,7,8,9,10];
+  var a1 = new Array(1,2,3,4,5,6,7,8,9,10);
+  
+  //stdout.printf("%v\n", a1);
+  
+  var x1 = [2,3,4];
+  var x2 = [1,2,3];
+  var x3 = [8,9,10];
+  
+  // range test
+  assert a0[1..4] == x1;
+  assert a0[..3] == x2;
+  assert a0[7..] == x3;
+  
+  assert a0.length == 10 : "ctor1a, length=" + a0.length; 
+  assert a0[9] == 10; 
+  assert a0[0] == 1; 
+  assert a1.length == 10 : "ctor2a, array=" + a1; 
+  assert a1[9] == 10; 
+  assert a1[0] == 1; 
+  
+  assert a0.first == 1; 
+  assert a0.last == 10; 
+  
+  assert a0.pop() == 10;  assert a0.last == 9; 
+  assert a0.shift() == 1; assert a0.first == 2; 
+  
+  a0.push(10);    assert a0.last == 10; 
+  a0.unshift(1);  assert a0.first == 1; 
+  assert a0.length == 10; 
+ 
+  var a2 = [0,1,2];
+  a2 = a2.concat(3,4,5);
+  assert a2.length == 6; 
+  assert a2.first == 0 && a2.last == 5; 
+  
+  assert a2.join("-") == "0-1-2-3-4-5";
+  
+  a2.reverse(); 
+  assert a2.first == 5 && a2.last == 0 : "reverse!"; 
+  
+  var a3 = [2,3,4];
+  assert a0.slice( 1,4 ) == a3;
+  
+  var a4 = a1.splice(1,3); 
+  assert a4 == a3       : "splice1";
+  assert a1.length == 7 : "splice2";
+  assert a1[1] == 5     : "splice3";
+  assert a1.last == 10  : "splice4";
+  
+  var a5 = [10,9,8,7,6,5,4,3,2,1];
+  var a6 = a5.clone();
+  var a7 = a5.clone();
+  a5.sort();
+  assert a5 == a0;
+  
+  function more(v1,v2)
+  {
+    return v2 - v1;
+  } 
+  a5.sort(more);
+  assert a5 == a6;
+
+  a7.sort( :v1,v2: v1-v2 );
+  assert a7 == a0 : String.printf("sort3 with lambda, arrays are %v %v\n", a7, a0);
+
+  assert a0.toLocaleString() == a0.toString() : "toLocaleString | toString";
+  
+  var sum = 0;
+  for( var el in [10,20,30] ) sum += el;
+  assert sum == 60 : "for(var in array)";
+
+  var a10 = [1,2,3,4,5,6,7,8,9,10];
+  delete a10[1];
+  assert a10 == [1,3,4,5,6,7,8,9,10];
+  a10.removeByValue(5);
+  assert a10 == [1,3,4,6,7,8,9,10];
+  
+  var a11 = [1,2,3,4,5,6,7,8,9,10];  
+  a11.push(11,12,13);  assert a11 == [1,2,3,4,5,6,7,8,9,10,11,12,13]; 
+  a11.unshift(-2,-1,0);  assert a11 == [-2,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13]; 
+  
+  // map test
+  var numbers = [1, 2, 3];
+  var squares = numbers.map(:el:el*el); // make new array of squares of numbers in original array.
+  assert squares == [1, 4, 9] && numbers == [1, 2, 3];
+  // reduce test
+  var total1 = [0, 1, 2, 3].reduce( :a, b: a + b ); // sum of all elements of the array
+  var total2 = [0, 1, 2, 3].reduceRight( :a, b: a + b ); // ditto
+  assert total1 == 6 && total2 == 6;
+  
+  // reduce test #2, taken from https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/Reduce
+  var flattened = [[0,1], [2,3], [4,5]].reduce( :a,b:a.concat(b) , [] );  
+  assert flattened == [0, 1, 2, 3, 4, 5];
+  
+  // filter test
+  var filtered = [12, 5, 8, 130, 44].filter(:el: el > 10);  // filter all elements that eare greater than 10
+  assert filtered == [12, 130, 44];
+  
+  // mapping with filtering (non-standard, sic!)
+  var transformed = [12, 5, 8, 130, 44].map(:el{ if(el > 10) return el-10 } ); // only explicitly returned elements will go into final array
+  stdout.printf("transformed %v\n",transformed);
+  assert transformed == [2, 120, 34];
+
+  assert 8 in [8,9,10]; // NOTE: this is different from ES, ES treats arrays as objects!    
+  assert 1 !in [8,9,10]; // NOTE: this is different from ES, ES treats arrays as objects!  
+  
+  // tagged arrays: "typed tuples"
+  /*var t1 = [abc: 0, 1, 2];
+  assert t1.tag == #abc 
+      && t1[0] == 0
+      && t1[1] == 1
+      && t1[2] == 2;
+  assert typeof t1 == #array;
+  assert t1 != [0,1,2];
+  assert t1 == [abc:0,1,2]; */  
+  
+}
+
+function Tuple_test()
+{
+  var a0 = [test:1,2,3];
+  var a1 = [test:1,2,3];
+  assert a0 == a1;
+  assert a0 !== a1;
+  
+  assert a0[0] == 1 && a0[1] == 2 && a0[2] == 3;
+  assert a0.tag == #test;
+  assert a0.length == 3;
+  //stdout.printf("%v\n", a1);
+  //var x1 = [2,3,4];
+  //var x2 = [1,2,3];
+  //var x3 = [8,9,10];
+}
+
+function Integer_test()
+{
+  var imax = Integer.MAX;
+  var imin = Integer.MIN;
+  if(imax != 2147483647) throw "Integer.MAX"; 
+  if(imin != -2147483647-1) throw "Integer.MIN"; 
+  
+  if(0xffffffff != 4294967295) throw "Large integer parsing";
+  if(0xffffffff != -1) throw "int32 convention";
+    
+  if("314".toInteger() != 314 ) throw "toInteger"; 
+  if("ABC".toInteger() != undefined ) throw "toInteger not integer string"; 
+  if("ABC".toInteger(314) != 314 ) throw "toInteger not integer string, default value"; 
+  
+  if(2006 % 100 != 6 ) throw "remainder!"; 
+  
+  if(Integer.max(3,1,4) != 4 ) throw "Integer.max"; 
+  if(Integer.min(3,1,4) != 1 ) throw "Integer.min"; 
+
+  if(Integer.max(3,1,4,[5,6,7]) != 7 ) throw "Integer.max sub array"; 
+  if(Integer.min(3,1,4,[0,-1,-2]) != -2) throw "Integer.min sub array"; 
+}
+
+function Float_test()
+{
+  var fmax = Float.MAX;
+  var fmin = Float.MIN;
+
+  assert fmin.toString() == "-1.#INF" : fmin.toString();  
+  assert fmax.toString() == "1.#INF" : fmax.toString(); 
+
+  assert "3.14".toFloat() == 3.14; 
+  assert "ABC".toFloat() == undefined; 
+  assert "ABC".toFloat(3.14) == 3.14; 
+  
+  assert Float.max(3.0,1.0,4.0) == 4.0; 
+  assert Float.min(3.0,1.0,4.0) == 1.0; 
+
+  assert Float.max(3.0,1.0,4.0,[5.0,6.0,7.0]) == 7.0; 
+  assert Float.min(3.0,1.0,4.0,[5.0,6.0,7.0]) == 1.0; 
+  
+  var largeNum = 21474836470; // this number is larger than int32 can hold so it shall be parsed as float
+  
+  assert typeof largeNum == #float; 
+  
+}
+
+class Foo
+{
+  function this(n = "o1")   { this.one = 1; this._name = n; }
+  function foo()            { return "foo"; }
+  property name(v)                
+          { 
+            get { return "foo:" + this._name; } //get part
+            set { this._name = v; } // set part
+          }
+}
+
+function Equality_test()
+{
+  assert false == 0; 
+  assert true == 1; 
+  assert null == undefined; 
+  assert null == 0; 
+  assert undefined == 0; 
+
+  assert "0" == 0; 
+  assert "1" == 1;
+  assert "true" == true;
+  assert "false" == false;
+  assert "true" !== true;
+  assert "false" !== false;
+  assert "one" == #one;
+  assert "two" == #two;
+  assert "undefined" == undefined;
+  assert "null" == null;
+  
+  var foo1 = new Foo();
+  var foo2 = new Foo();
+  var foo3 = new Foo("o3");
+  
+  // note: in TIS '==' does per-prop object comparison for objects.
+  // JS compares only addresses of objects so '==' and '===' are equivalent (for objects).
+  assert foo1 == foo2; 
+  assert foo1 != foo3;
+  
+  assert foo1 !== foo2;
+  assert foo1 !== foo3;
+}
+
+
+class Bar: Foo // type 'Bar' is derived from 'Foo'
+{
+  function this(n = "o2")   { super(n); this.two = 2; }
+  function bar()            { return "bar"; }
+  function foo()            { return super.foo() + "bar"; }
+  property name(v)          { get return "bar:" + this._name; set this._name = v; }
+}
+
+function shallNotThrow(fn)
+{
+  try { fn(); return true; }
+  catch(e) {}
+  return false;
+}
+
+function shallThrow(fn)
+{
+  try { fn(); return false; }
+  catch(e) {}
+  return true;
+}
+
+
+function Object_test()
+{
+
+// classic class use cases
+
+  var foo = new Foo();  
+  if(foo.one != 1 ) throw "class ctor 1";
+  if(foo.foo() != "foo" ) throw "class method 1";
+  if(foo.prototype !== Foo) throw "prototype/get 1";
+  if(foo.name != "foo:o1") throw "property/get 1";
+  foo.name = "O1";
+  if(foo.name != "foo:O1") throw "property/set 1";
+
+  var bar = new Bar(); // Bar is derived from Foo 
+  
+  if(bar.one != 1 ) throw "class ctor 2.1";
+  if(bar.two != 2 ) throw "class ctor 2.2";
+  if(bar.bar() != "bar" ) throw "class method 2.1";
+  if(bar.foo() != "foobar" ) throw "class method 2.2";  
+  if(bar.prototype !== Bar) throw "prototype/get 2";
+  if(bar.name != "bar:o2") throw "property/get 2";
+  
+  bar.name = "O2";
+  
+  
+  if(bar.name != "bar:O2") throw "property/set 2";
+  
+  if( typeof bar != #object ) throw "typeof";
+  if( !(bar instanceof Bar) ) throw "instanceof 1";
+  if( !(bar instanceof Foo) ) throw "instanceof 2";
+
+
+// class literals and dynamic subclassing
+
+  var o = { one:1, two:2, "three":3 };
+  if(o.toString() != "[object Object]" ) throw "toString";
+  if(o.one != 1 ) throw "literal 1";
+  if(o["three"] != 3 ) throw "literal 2";
+  
+  
+  o.prototype = Foo;  // assign class to existing object instance.
+                        // yep, it works in the script.
+  if(o.foo() != "foo" || o.one != 1 ) throw "dynamic class change";
+  
+  var oc = o.clone(); // does copy!
+  if( oc === o || oc.foo() != "foo" || oc.one != 1 ) throw "clone";
+  
+  if( !("one" in oc) ) throw "in";
+  
+  // non JS feature: literals of user defined classes
+  var o2 = {:Foo one:1 }; // this is actually short form of var o2 = {prototype:Class, one:1 };
+  if(o2.one != 1 ) throw "literal class 1 ";
+  if(o2.foo() != "foo" ) throw "literal class 2";
+  
+  // non JS feature: get element by literal 
+  var o3 = { one:1, two:2, three:3, #thirty-three: 33 };
+  if(o3[#one] != 1 ) throw "attribute by symbol 1 ";
+  // short form of the line above
+  if( o3#one != 1 ) throw "attribute by symbol 2 ";
+  if( o3#thirty-three != 33 ) throw "attribute by symbol 3 ";
+  
+  var o4 = { one:1, two:2, three:3 }
+  delete o4.one; // deletion of the property
+  assert o4.length == 2 : "delete attribute";
+  assert o4.one === undefined && o4.two == 2 && o4.three == 3: "delete attribute";
+  
+  var o5 = { one:1, two:2, three:3, four:4, five:5, six:6, seven:7, eight:8, nine:9, ten:10 };
+  delete o5.one; // deletion of the property
+  assert o5.length == 9 : "delete attribute 2";
+  assert o5.one === undefined && o5.two == 2 && o5.three == 3 && o5.ten == 10 : "delete attribute 2";
+  
+  // sealed tests
+  var ox = { a:1,b:2 };
+  ox.seal();
+  assert shallNotThrow( :: ox.a = 3 ) : "sealed 1";
+  assert ox.a == 3 : "sealed 2";
+  assert shallThrow( :: ox.c = 4 ) : "sealed 3";
+  assert shallThrow( :{ delete ox.a }) : "sealed 4";
+  assert ox.a == 3 : "sealed 5";
+  assert ox.isSealed() : "sealed 6";
+  
+  // frozen tests
+  var oxx = { a:1,b:2 };
+  oxx.freeze();
+  assert shallThrow( :: oxx.a = 3 ) : "freeze 1";
+  assert oxx.a == 1 : "freeze 2";
+  assert shallThrow( :: oxx.c = 4 ) : "freeze 3";
+  assert shallThrow( :{ delete oxx.a }) : "freeze 4";
+  assert oxx.a == 1 : "freeze 5";
+  assert oxx.isSealed() : "freeze 6";
+  assert oxx.isFrozen() : "freeze 7";
+    
+  // strong sealed tests
+  var oxxx = { a:1,b:2 };
+  oxxx.seal(true);
+  assert shallNotThrow( :: oxxx.a = 3 ) : "strong sealed 1";
+  assert oxxx.a == 3 : "strong sealed 2";
+  assert shallThrow( :: oxxx.c = 4 ) : "strong sealed 3";
+  assert shallThrow( :{ delete oxxx.a }) : "strong sealed 4";
+  assert oxxx.a == 3 : "strong sealed 5";
+  assert oxxx.isSealed() : "strong sealed 6";
+  var oxxxt;
+  assert shallThrow( :: oxxxt = oxxx.c) : "strong sealed 7"; // reading of unknown property from strongly sealed object - throws an error
+  
+  var kw = { // use of keywords as property names:
+    for: 1,
+    while: 2,
+    do: 3,
+    delete: 4,
+    return: 5,
+    get: 6,
+    set: 7,
+    throw: 8
+  };
+  assert kw.for == 1 : "keyword as props 1";
+  assert kw.while == 2 : "keyword as props 2";
+  assert kw.do == 3 : "keyword as props 3";
+  assert kw.delete == 4: "keyword as props 4";
+  assert kw.return == 5: "keyword as props 5";
+  assert kw.get == 6: "keyword as props 6";
+  assert kw.set == 7: "keyword as props 7";
+  assert kw.throw == 8: "keyword as props 8";
+  
+  assert "one" in {one:1, two:2 };     
+  assert #one in {one:1, two:2 }; 
+  assert "three" !in {one:1, two:2 };     
+  assert #three !in {one:1, two:2 };
+  
+  
+}
+
+// test of Undefined Property Handler - a.k.a. Virtual Properties
+class TestUPH
+{
+  function this()
+  { 
+    this[#one] = 1; // I am using this[#one] notation to avoid call of property undefined() below.
+  }
+  
+  property undefined(name,val) // handler of undefined properties
+  {
+    get 
+    {
+      switch( name )
+      {  
+        case #one: return 11; // shall never be called because of code in ctor
+        case #two: return 22; 
+        case #three: return 33; 
+        default: 
+          break; // return precisely nothing - so the property will be handled as ususal
+      }
+    }
+    set
+    {
+      return true; //"dev>null":  simply suppress any set opperations on unknown properties.
+    }
+  }
+}
+
+// this class is used for the Literal Constructor use case below
+class TestCtor {
+  function this() {
+    assert this.x == 12;
+    this.y = this.x * 2;
+  }
+} 
+
+class WithMemberVarsA 
+{
+  this var x = 100;
+  this var y = 100;
+  
+  function this() { 
+    assert this.x !== undefined; 
+    assert this.y !== undefined;  
+  }
+  
+  function sum() { return this.x + this.y; }
+}
+
+class WithMemberVarsB : WithMemberVarsA
+{
+  this var z = 200;
+  
+  function this() { 
+    assert this.z !== undefined; // defined above  
+    assert this.x !== undefined; // derived from WithMemberVarsA
+    assert this.y !== undefined; // derived from WithMemberVarsA 
+  }
+  
+  function sum() { return this.z + super.sum(); }
+}
+
+
+
+function Class_test()
+{
+  var tst = new TestUPH();  
+  if(tst.one != 1 ) throw "class:: handler of undefined properties 1";
+  if(tst.two != 22 ) throw "class:: handler of undefined properties 2";
+  if(tst.three != 33 ) throw "class:: handler of undefined properties 3";
+  tst.three = 44; // should be just ingored beacuse of "dev>null"
+  if( tst.three != 33 ) throw "class:: handler of undefined properties 4";
+
+  tst.one = 111;  // this will change prop #one as it was declared for the instance in ctor
+  if(tst.one != 111 ) throw "class:: handler of undefined properties 1";  
+  
+  // object-literal-with-class case, this:
+  var t = TestCtor { x:12 }; 
+  // will do the following:
+  // literal object "{ x:12 }" will passed to TestCtor.this() constructor so this will work:
+  assert t.x == 12;
+  assert t.y == 24;
+  
+  // Roughly the above does the following:
+  // var t = { x:12 }; 
+  // t.prototype = TestCtor;
+  // TestCtor[#this].call(t); - invokes the ctor.
+
+  // test of member variable declarations  
+  var mva = new WithMemberVarsA();
+  assert mva.sum() == 200;
+
+  var mvb = new WithMemberVarsB();
+  assert mvb.sum() == 400;
+  
+  var lt = WithMemberVarsB { x:200, y:300 }; // partial literal 
+  assert lt.sum() == 700; // x:200 + y:300 + z:200 = 700
+  
+}
+
+
+const MY_CONST = 12;
+const (CONST_A,CONST_B) = (function(){return (5,10)})();
+
+function Const_test() 
+{
+  if( MY_CONST != 12 ) throw "const 1";
+  var got_error = false;
+  try { MY_CONST = 13; } catch(e) { got_error = true; }
+  if( !got_error ) throw "const 2";
+  
+  if( CONST_A != 5 || CONST_B != 10) 
+    throw "const 1.a";
+  
+  got_error = false;
+  try { CONST_A = 13; } catch(e) { got_error = true; }
+  if( !got_error ) throw "const 2.a";
+  
+  const MY_LOCAL_CONST = 24;
+  if( MY_LOCAL_CONST != 24 ) throw "const 3";
+  
+  const (LOCAL_CONST_A,LOCAL_CONST_B) = (function(){return (5,10)})();
+  if( LOCAL_CONST_A != 5 || LOCAL_CONST_B != 10) 
+    throw "const 3.a";
+
+  // following (correctly) produces syntax error 
+  //got_error = false;
+  //try { LOCAL_CONST_A = 13; } catch(e) { got_error = true; }
+  //if( !got_error ) throw "const 3.b";
+  
+}
+
+
+function Date_test() 
+{
+  var d = new Date();
+  stdout.printf("today is:%d-%d-%d %d:%d:%d\n", d.day, d.month, d.year,
+      d.hour, d.minute, d.second );
+  
+  d.day = 28;
+  
+  stdout.printf("today is:%d-%d-%d %d:%d:%d\n", d.day, d.month, d.year,
+      d.hour, d.minute, d.second );
+      
+  d = new Date("28 Feb 1980 UTC");
+  
+  if(   d.UTCday != 28 || 
+        d.UTCmonth != 2 || 
+        d.UTCyear != 1980 ) throw "date ctor";
+ 
+  stdout.printf("date is:%d-%d-%d %d:%d:%d\n", 
+      d.day, d.month, d.year,
+      d.hour, d.minute, d.second );
+      
+  stdout.printf("locale format short:%s\nlocale format long:%s\n", d.toLocaleString(), d.toLocaleString(true));
+  
+  var n = d.valueOf();
+  n += 24 * 60 * 60 * 1000.0;
+  d = new Date(n);
+      
+  stdout.printf("date is:%d-%d-%d %d:%d:%d\n", d.day, d.month+1, d.year,
+      d.hour, d.minute, d.second );
+}
+
+function Function_test()
+{
+  // var o = 1;
+  // arg with the default value test
+  
+  function DefParams(test = 314)
+  {
+    return test;
+  }
+ 
+  if(DefParams() != 314) throw "Function, default parameters values"; 
+  
+  // varargs
+  function VarArgs(args..)
+  {
+    //stdout << "args are:" << args;
+    //stdout << " typeof args is:" << typeof args << "\n";
+    return args.length;
+  }
+  if(VarArgs(1,2,3) != 3) throw "Function, varargs!"; 
+
+  // varargs, rest
+  function VarArgs2(first, restOfArgs..)
+  {
+    return restOfArgs;
+  }
+  
+  if(VarArgs2(1,2,3) != [2,3]) throw "Function, varargs 2!"; 
+
+  var obj = { one:1, two:2 };
+  
+  // apply test #1
+  function ExtFunc()
+  {
+    return this.one + this.two;
+  }
+  if( ExtFunc.apply(obj) != 3) throw "Function, apply (0) failed !"; 
+  if( ExtFunc.call(obj) != 3) throw "Function, call (0) failed !"; 
+
+  // apply test #2, additional parameters
+  function ExtFunc1(three,four)
+  {
+    return this.one + this.two + three + four;
+  }
+  if( ExtFunc1.apply(obj,[3,4]) != 10) throw "Function, apply (1) failed !"; 
+  if( ExtFunc1.call(obj,3,4) != 10) throw "Function, call (1) failed !"; 
+  
+  // arg count length
+  if( DefParams.length != 1 ) throw "Function, argc (1) failed!"; 
+  if( DefParams.optionals != 1 ) throw "Function, argc (2) failed !"; 
+  
+  if( VarArgs.length != 0 ) throw "Function, argc (3) failed !"; 
+  if( VarArgs.optionals != 0 ) throw "Function, argc (4) failed !"; 
+
+  if( ExtFunc.length != 0 ) throw "Function, argc (5) failed !"; 
+  if( ExtFunc.optionals != 0 ) throw "Function, argc (6) failed !"; 
+
+  if( ExtFunc1.length != 2 ) throw "Function, argc (7) failed !"; 
+  if( ExtFunc1.optionals != 0 ) throw "Function, argc (8) failed !"; 
+  
+  // lambda tests
+  
+  // simplest form 
+
+  var lambda1 = :a,b: a+b;
+  
+  if( typeof lambda1 != #function) throw "Lambda 1.1 failed !"; 
+  if( lambda1(3,4) != 7) throw "Lambda 1.2 failed !"; 
+  
+  // second form of lambda declaration - block with parameters
+  var lambda2 = :a,b { return a+b; }
+  if( typeof lambda2 != #function) throw "Lambda 2.1 failed !"; 
+  if( lambda2(3,4) != 7) throw "Lambda 2.2 failed !"; 
+  
+  // third, classic lambda declaration
+  var lambda3 = function (a,b) { return a+b; }
+  if( typeof lambda3 != #function) throw "Lambda 3.1 failed !"; 
+  if( lambda3(3,4) != 7) throw "Lambda 3.2 failed !"; 
+  
+  // --- 
+  // Test of "new Function ([arg1[, arg2[, ... argN]],] functionBody)"
+  
+  var func1 = new Function("a","b", "return a + b");
+  if( typeof func1 != #function) throw "new Function(...) 4.1 failed !"; 
+  if( func1(3,4) != 7) throw "new Function(...) 4.2 failed !"; 
+
+  var func2 = new Function("return 2 + 2");
+  if( typeof func2 != #function) throw "new Function(...) 4.3 failed !"; 
+  if( func2() != 4) throw "new Function(...) 4.4 failed !"; 
+  
+}
+
+function TryCatchFinally_test()
+{
+  var n = false;
+  function foo(obj) {
+    var e = obj.prop;
+    try {
+      assert obj.prop === 1;
+      return true;
+    } finally {
+      assert obj.prop === 1;
+      n = true;
+    }
+  }
+  assert foo({prop:1}) && n;
+}
+
+function TryFinally_test()
+{
+  var foo_r = [];
+  function foo (obj) 
+  {
+      const v = obj.prop;
+      try {
+          foo_r.push(obj.prop1);
+          return;
+      } finally {
+          foo_r.push(obj.prop2);
+      }
+  }
+  var foo2_r = [];  
+  function foo2 (obj) 
+  {
+      try {
+          foo2_r.push(obj.prop1);
+          return;
+      } finally {
+          foo2_r.push(obj.prop2);
+      }
+  }
+  var foo3_r = [];  
+  function foo3 (obj) 
+  {
+      const v1 = obj.prop1;
+      const v2 = obj.prop2;
+      try {
+          foo3_r.push(obj.prop1);
+          foo3_r.push(v1);
+  //        return;
+      } finally {
+          foo3_r.push(obj.prop2);
+          foo3_r.push(v2);
+      }
+  }
+
+  const obj = {prop1:1,prop2:2 };
+  foo(obj); assert(foo_r == [1,2]);
+  foo2(obj); assert(foo2_r == [1,2]);
+  foo3(obj); assert(foo3_r == [1,1,2,2]);
+  
+  var foo4_r = [];
+  function foo4(src) 
+  {
+    try {
+        const url = src.getUrl();
+        foo4_r.push(url);
+        return;
+    } finally {
+        src.closeStream();
+    }
+    // should not hit this:
+    foo4_r.length = 0;
+  }
+  foo4 { 
+          getUrl       : function () { return "a:b"; }, 
+          closeStream  : function () { foo4_r.push("closed"); } 
+       };
+  assert(foo4_r == ["a:b","closed"]);
+}
+
+
+function Stream_test()
+{
+  var ss = Stream.openString(); // in memory string stream, a.k.a. stram builder
+  ss << "one"; 
+  ss << "two";
+  ss << "three";
+  ss.printf("%d%d%d", 1, 2, 3);
+  
+  if(ss.toString() != "onetwothree123") throw "String Stream!"; 
+  
+  //too noisy but works
+  //var f = Stream.openFile( "tests.js", "r" );
+  //if(!f) 
+  //{
+  //  stdout.printf("unable to open file tests.js\n");
+  //  return;
+  //}
+  //while( true )
+  //{
+  //  var s = f.readln();
+  //  if(s == undefined) break;
+  //  stdout.println(s);
+  //}
+  //stdout.println("------------");
+ 
+  var t = { one:1, two:2, three:3 };
+  // print t in format suitable for 'eval'!
+  stdout.printf("return %v;\n",t);
+  
+}
+
+function SocketStream_test()
+{
+  // will print content of front page:
+  var sock = Stream.openSocket( "www.terrainformatica.com:80" );
+  sock.encoding = "utf-8";
+  sock.println("GET http://www.terrainformatica.com/tests/test-utf-8.txt HTTP/1.0");
+  sock.println("User-Agent: TiScript [en]");
+  sock.println("");
+  stdout.printf("-------http://www.terrainformatica.com/tests/test-utf-8.txt-----\n");
+  while( true )
+  {
+    var s = sock.readln();
+    if(s === undefined) break;
+    stdout.println(s);
+  }
+  stdout.printf("--------EOF-----------------------------------------------------\n");
+}
+
+namespace NS // namespace
+{
+  const pi = 314;
+  function foo() { assert pi === NS.pi; // function inside namespace see siblings as globals
+                   return NS.pi; }
+  namespace NSS // namespace
+  {
+    function foo()  { return super.foo() + 1; } // members of parent namespace are accessible by 'super' 
+    function bar1() { return NS.foo(); }        // or by fully qualified name. 
+    function bar2() { return foo(); }
+    function toz1() { return NS.NSS.bar1(); }   // either fully qualified name
+    function toz2() { return bar2(); }          // or local (for the namesppace) name.    
+  }
+}
+
+// external sub-namespace (nested namespace) declaration
+namespace NS.SubNS
+{
+  function foo()  { return super.foo() + 1; } // members of parent namespace are accessible by 'super' 
+  function bar1() { return NS.foo(); }        // or by fully qualified name. 
+  function bar2() { return foo(); }
+  function toz1() { return NS.NSS.bar1(); }   // either fully qualified name
+  function toz2() { return bar2(); }          // or local (for the namesppace) name.    
+}
+
+namespace NS // second namespace declaration with the same name is allowed
+{
+  function bar() { return pi; }
+}
+
+function Namespace_test()
+{
+  var t1 = NS.foo();  
+  if( t1 != 314 ) throw "namespace 1";
+  var t2 = NS.NSS.toz1();  
+  if( t2 != 314 ) throw "namespace 2";
+  var t3 = NS.NSS.toz2();  
+  if( t3 != 315 ) throw "namespace 3 ";
+  var t4 = NS.NSS.foo();  
+  if( t4 != 315 ) throw "namespace 4";
+
+  var t5 = NS.SubNS.toz1();  
+  if( t5 != 314 ) throw "namespace 1.2";
+  var t6 = NS.SubNS.toz2();  
+  if( t6 != 315 ) throw "namespace 1.3 ";
+  var t7 = NS.SubNS.foo();  
+  if( t7 != 315 ) throw "namespace 1.4";
+  
+  var t8 = NS.bar();  
+  if( t8 != 314 ) throw "namespace 1.5";
+
+}
+
+
+function ExtLoop_test()
+{
+  var c = 0;
+  while:No1 ( c++ < 100 )
+  {
+    for:No2 (var n = 0; n < 1; ++n) 
+    {
+      if( c >= 5 ) break No1;
+      continue No1;
+    }
+  }
+  if( c != 5 )  throw "named loop #" + c.toString();
+}
+
+
+class superA
+{
+  function this(p) { this.name = p + "a"; } 
+	function foo() { return "A";}
+	function bar() { return "a";}  
+  function baz() { return "1";}  
+}
+
+class superB : superA 
+{
+  function this(p) { super(p + "b"); } 
+  function foo() { return super.foo() + "B";}
+  function bar() { return super.bar() + "b";}  
+}
+
+class superC : superB 
+{
+  function this(p) { super(p + "c"); } 
+  function foo(){ return super.foo() + "C"; }
+  function baz() { return super.baz() + "3";}  
+}
+
+function Super_test()
+{
+  var sc = new superC("d");
+  if( sc.name != "dcba") throw "super.this " + sc.name;  
+  if( sc.foo() != "ABC" ) throw "super.foo";  
+  if( sc.bar() != "ab" ) throw "super.bar";  
+  if( sc.baz() != "13" ) throw "super.baz";    
+}
+
+
+// testing of this super+ operator:
+namespace ThisSuper
+{ 
+  function A()
+  {
+    var this_a = this;
+    function B()  
+    {
+      var this_b = this;    
+      function C()
+      {
+        assert this_b == this super;  
+        assert this_a == this super super;
+        //assert this_a == this super super super; // must produce compile time error: 
+                                                   //  bad syntax : no 'this' at this level
+      }
+      C();
+    }
+    B();
+  }
+}
+
+function ThisSuper_test()
+{
+  ThisSuper.A();    
+}
+
+var globalVarToDelete = 12;
+
+function DeleteVar_test()
+{
+  var localVarToDelete = 13;
+  assert globalVarToDelete == 12;
+  assert localVarToDelete == 13;
+  
+  delete globalVarToDelete;
+  delete localVarToDelete;
+  
+  var v1,v2;
+  
+  try { v1 = localVarToDelete;  } catch(e) {}
+  try { v2 = globalVarToDelete; } catch(e) {}
+  
+  assert v1 === undefined;
+  assert v2 === undefined;
+}
+
+function With_test()
+{
+  //var eee = three333;
+  var obj = { one:1, two:2 };
+  with(obj)
+  {
+    assert one == 1;
+    assert two == 2;
+    assert three == undefined;
+  }
+}
+
+function Units_test()
+{
+  assert 2cm + 1mm == 21mm;
+  assert 2cm + 1mm == 2.1cm;
+  assert 1in + 1dip == 97dip;
+  assert 1in == 96dip;
+  assert 1in == 72pt;
+  assert 1pc == 12pt;
+  assert 2cm / 2 == 10mm;
+  assert 2cm * 2 == 40mm;
+  assert (1in).toFloat(#dip) == 96.0;
+  
+  assert 360deg == Math.PI * 2 * 1rad;
+  assert 360deg == 400grad;
+  assert 360deg == 1turn;
+  assert 1turn / 2 == 180deg;  
+  
+  assert 1s == 1000ms;  
+  assert 1s / 2 == 500ms;  
+  assert 1s * 0.5 == 500ms;  
+  assert 1s + 1s == 2000ms;  
+  
+}
+
+function JSON_test()
+{
+  // emit 
+  assert JSON.stringify( {} ) == "{}";
+  assert JSON.stringify( true ) == "true";
+  assert JSON.stringify( "foo" ) == "\"foo\"";
+  assert JSON.stringify( [1, "false", false] ) == "[1,\"false\",false]";
+  assert JSON.stringify( { x: 5 } ) == "{\"x\":5}" ;
+  var s = JSON.stringify( {x: 5, y: 6} );
+  assert s == "{\"x\":5,\"y\":6}" || s == "{\"y\":6,\"x\":5}";
+
+  // parse  
+  var t;
+  t = JSON.parse("{}"); assert (t instanceof Object) && t.length == 0;
+  t = JSON.parse("true"); assert t === true;
+  t = JSON.parse("\"foo\""); assert t == "foo";
+  t = JSON.parse("[1, 5, \"false\"]"); assert t == [1, 5, "false"]; 
+  t = JSON.parse("null"); assert t === null; 
+  t = JSON.parse("{\"x\":5,\"y\":6}"); 
+  assert t.x == 5 && t.y == 6; 
+  assert t["x"] == 5 && t["y"] == 6;  // forced to add this for JS compatibility
+  
+  // parse with conversion function:
+ 
+  const ISO_DATE = /^(\d\d\d\d)-0?(\d+)-0?(\d+)[T ]0?(\d+):0?(\d+):0?(\d+)$/;
+  
+  function string2date(k,v) {
+    if( typeof v == #string && v like ISO_DATE)
+      v = new Date(v);
+    return v;
+  }
+    
+  t = JSON.parse("{\"x\":1,\"y\":\"2010-06-15T00:00:00\"}",string2date); 
+  assert t.x == 1 && t.y.year == 2010 && t.y.month == 6 && t.y.day == 15; 
+}
+
+function errorThrown(exp) {
+  try {
+    exp();
+    return false;
+  } catch (e) {
+    return true;
+  }
+}
+
+function Undefined_test() {
+  var obj = {};
+  assert obj.unknown === undefined;
+  assert obj.one = 1;
+  assert obj.one === 1;
+  var t;
+  // access of property of unknown shall throw an error
+  assert errorThrown(:: t = obj.unknown.one) : "getting non-existent property of non-objects";
+  assert errorThrown(:: obj.unknown.one = 1) : "setting non-existent property of non-objects";
+  // access of unknown global varuable shall throw an error
+  assert errorThrown(:: t = unknown) : "getting non-existent global variable";
+  assert errorThrown(:: unknown = 1) : "setting non-existent (non declared) global variable";
+}
+
+function ForIn_test() {
+  var arr = [1];
+  for (var e1 in arr) { assert e1 == 1; }
+  var e2;
+  for (e2 in arr) { assert e2 == 1; }
+  
+  for (var (i,v) in arr) { assert i == 0 && v == 1; }
+  
+  var obj = {one:1};
+  for (var e3 in obj) { assert e3 == #one; }
+  var e4;
+  for (var e4 in obj) { assert e4 == #one; }
+  
+  for (var (k,v) in obj) { assert k == #one && v == 1; }
+}
+
+function match_test() {
+
+  function match(val) {
+    switch(val) {
+    
+      like {one: "o*"} : return 1;
+      like {one: String} : return 2;
+      like {one: #any} : return 3;
+      like [1,2] : return 4;
+      like [1,#any] : return 5;
+      like Integer: return 6;
+    }
+    return 0;
+  }
+  
+  assert match({ one: "one" }) == 1;
+  assert match({ one: "two" }) == 2;
+  assert match({ one: 1 }) == 3;
+  assert match({ one: 1.0 }) == 3;
+  
+  assert match( [0,1,2] ) == 0; // does not match
+  assert match( [1,2,3] ) == 4;
+  assert match( [1,"one"] ) == 5;
+  
+  assert match( 12 ) == 6;
+  assert match( 12.0 ) == 0;
+  
+  assert { one: "one" } like {one: "o*"};
+
+}
+
+function showMemStats(msg) {
+  var (total,free, used) = gc();
+  stdout.printf("heap %s total=%d free=%d used=%d bytes\n", msg, total, free, used);
+}
+
+showMemStats("before");
+
+run( String_test );
+run( Array_test );
+run( Tuple_test );
+run( Const_test );
+run( Object_test );
+run( Class_test );
+run( Date_test );
+run( Stream_test );
+run( SocketStream_test );
+run( Integer_test );
+run( Float_test );
+run( Function_test );
+run( Namespace_test );
+run( ExtLoop_test );
+run( Super_test );
+run( ThisSuper_test );
+run( Equality_test );
+run( DeleteVar_test );
+run( TryCatchFinally_test );
+run( TryFinally_test );
+run( With_test );
+run( Units_test );
+run( JSON_test );
+run( Undefined_test );
+run( ForIn_test );
+run( match_test );
+
+showMemStats("after");
+
+
+
+

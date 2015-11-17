@@ -1,0 +1,30 @@
+﻿<html>
+  <head>
+    <title></title>
+    <style></style>
+    <script type="text/tiscript">
+      
+      include "pub-sub.tis";
+      
+      var eventsource = PubSub({});
+      
+      // subscription
+      eventsource.on("name:change", function(text) 
+      { 
+        $(output.name).value = text; 
+      });
+      
+      // publishing (triggering the event)
+      $(input.name).onValueChanged = function() {
+        eventsource.post("name:change", this.value);
+        //eventsource.trigger("name:change", this.value);
+      }
+    
+    </script>
+  </head>
+<body>
+  <h1>PubSub controller demo for plain objects, classes and namespaces</h1>
+  Type: <input .name novalue="here" /> 
+  Observe changes here: <output .name />
+</body>
+</html>

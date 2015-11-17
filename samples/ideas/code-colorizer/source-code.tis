@@ -1,0 +1,90 @@
+include "rainbow.tis";
+include "rainbow-tiscript.js";
+include "rainbow-html.js";
+include "rainbow-css.js";
+
+class SourceCode: Behavior {
+
+  function attached() {
+    var src = this.attributes["src"];
+    if( src ) this.load( src );
+    
+    this.on("dblclick", "text", :: (this super).onLineDblClick(this) );
+    
+  }
+  
+  function load(fileName, syntax = null) { // only "html", "css", "tis" for now
+  
+    if( !syntax ) {
+      var ext = fileName %~ ".";
+      switch( ext ) {
+        case "htm": case "html": syntax = "html"; break;
+        case "tis": case "js": case "json": syntax = "tis"; break;
+        case "css": syntax = "css"; break;
+      }
+    }
+    
+    var strm = Stream.openFile(self.url(fileName),"ru");
+    var text = "";
+    var string;
+    while( typeof (string = strm.readln()) == #string ) {
+      //string strings.push(string);
+      if(text) text += "\n";
+      text += string;
+    }
+    strm.close();
+    var me = this;
+   
+    Rainbow.color(text, syntax || "tis", function( colorized ) {
+      colorized = "<text>" + colorized.replace("\n","</text><text>") + "</text>";
+      me.html = colorized;
+      me.$append(<eof>eof</eof>);
+      
+      var island = null;
+      
+      for( var tl in me ) // mark embedded "islands"
+        switch( island ) {
+          case #tis:  if( tl.$(span.source.tis > span.end ) ) {island = null; tl.attributes.addClass("closes"); } 
+                      else tl.attributes.addClass("tis","embedded"); 
+                      break;
+          case #css:  if( tl.$(span.source.css > span.end ) ) {island = null; tl.attributes.addClass("closes"); } 
+                      else tl.attributes.addClass("css","embedded"); 
+                      break;
+          default:
+            if( tl.$(span.source.tis > span.start ) ) { island = #tis; tl.attributes.addClass("opens"); } 
+            else if( tl.$(span.source.css > span.start ) ) { island = #css; tl.attributes.addClass("opens"); } 
+            break;
+        }
+    });
+  }
+  
+  function setCurrentLine( lineNo = null, marker = null) 
+  {
+    var curr = this.$(:root > text:current);
+    if( curr ) { 
+      curr.state.current = false; 
+      if(marker) curr.attributes[marker] = undefined; 
+    }
+    if( lineNo ) {
+      curr = this[lineNo - 1];
+      curr.state.current = true; 
+      if(marker) curr.attributes[marker] = true; 
+      curr.scrollToView();
+    }
+  }
+  
+  function setBreakpointOn( lineNo = null, marker = "breakpoint")  {
+    if( !lineNo )
+      for( var el in this.$$(:root > text[{marker}]) )
+        el.attributes[marker] = undefined;
+    else 
+      this[lineNo - 1].attributes[marker] = true;
+  }
+  
+  function onLineDblClick(line) {
+    stdout.println(line);
+    line.attributes["breakpoint"] = line.attributes["breakpoint"] ? undefined : true;
+  }
+  
+
+}

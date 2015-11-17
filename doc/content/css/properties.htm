@@ -1,0 +1,85 @@
+﻿<html>
+  <head>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  Supported CSS features<h2>Background images</h2>
+  <dl>
+    <dt><strong>background-image-transformation</strong></dt>
+    <dd><code>none | &lt;filter&gt;+</code>
+      <p><em>none</em> or non-empty whitespace separated list of filters. The &lt;filter&gt; here is one of following functions:</p>
+      <ul>
+        <li><code>colorize(color)</code> - per pixel, transforms the image to grayscale values (luminocity) and use that luminocity as multiplier for the color to determine final pixels colors.</li>
+        <li><code>color-schema(color)</code> - per pixel, selectively. For each gray pixel applies color to it according to its luminocity.</li>
+        <li><code>contrast-brightness-gamma( contrast, brightness, gamma )</code> - per pixel, increase/decrease contrast, brightness and gamma value of each pixel. Contrast and brightness accept values in the range 0.0 ... 0.1, where value 0.5 means &quot;no change&quot;. Gamma (exponent) accepts values 0.0 ... 5.0 where value 1.0 means no change.</li>
+        <li><code>contrast(value)</code> - per pixel, increase/decrease contrast of each pixel. Takes numeric value in the range 0.0 ... 0.1, where 0.5 means &quot;no change&quot;.</li>
+        <li><code>brightness(value)</code> - per pixel, increase/decrease brightness of each pixel. Takes numeric value in the range 0.0 ... 0.1, where 0.5 means &quot;no change&quot;.</li>
+        <li><code>gamma(value)</code> - per pixel, increase/decrease gamma of each pixel. Takes numeric value in the range 0.0 ... 5.0 where value 1.0 means no change.</li>
+        <li><code>hue(color)</code> or <code>hue(number)</code> - per pixel, converts each pixel to HSV representation, changes its hue value and converts the color back to RGB color space. Thus if original color is black, gray or white then it will not change and if it is non-gray color then it will be transformed/changed. The number here is in the range 0 ... 360 - angle of color vector in HSV space.</li>
+        <li><code>flip-x()</code> - mirrors the image in horizontal direction.</li>
+        <li><code>flip-y()</code> - mirrors the image in vertical direction.</li></ul></dd>
+    <dt><strong>background-repeat</strong></dt>
+    <dd><code>no-repeat | repeat | repeat-x | repeat-y &nbsp;| stretch [keep-ratio] | expand [stretch-top] [stretch-bottom] [stretch-left] [stretch-right] [stretch-middle]</code>
+      <p>Defines image fill mode, accepts one of the values:</p>
+      <ul>
+        <li><code>no-repeat</code> - image is rendered once according at position defined by <code>***-image-position</code>.</li>
+        <li><code>repeat</code> - fills image rendering area in full.</li>
+        <li><code>repeat-x</code> - repeates the image in a row at position defined by <code>***-image-position</code>.</li>
+        <li><code>repeat-y</code> - repeates the image in a column at position defined by <code>***-image-position</code>.</li>
+        <li><code>stretch</code> - fills the image rendering area in full stretching/shrinking it if needed in both directions.</li>
+        <li><code>stretch keep-ratio</code> - inscribes ti image inside image rendering area preserving its width/height ratio.</li>
+        <li><code>expand</code> - expands nine sections of the image defined by <code>***-image-position</code> so it will cover the area in full. Corner sections rendered as they are. top/left/bottom/right/middle sections are tiled to fill. If &nbsp;<code>stretch-top</code>, <code>stretch-bottom</code>, <code>stretch-left</code> or <code>stretch-middle</code> are specified then corresponding sections are stretched rather than tiled.</li></ul></dd></dl>
+  <h2>Foreground images</h2>
+  <dl>
+    <dt><strong>foreground-image-transformation</strong></dt>
+    <dd><code>none | &lt;filter&gt;+</code>
+      <p><em>none</em> or non-empty whitespace separated list of filters. The &lt;filter&gt; here is one of following functions:</p>
+      <ul>
+        <li><code>colorize(color)</code> - per pixel, transforms the image to grayscale values (luminocity) and use that luminocity as multiplier for the color to determine final pixels colors.</li>
+        <li><code>color-schema(color)</code> - per pixel, selectively. For each gray pixel applies color to it according to its luminocity.</li>
+        <li><code>contrast-brightness-gamma( contrast, brightness, gamma )</code> - per pixel, increase/decrease contrast, brightness and gamma value of each pixel. Contrast and brightness accept values in the range 0.0 ... 0.1, where value 0.5 means &quot;no change&quot;. Gamma (exponent) accepts values 0.0 ... 5.0 where value 1.0 means no change.</li>
+        <li><code>contrast(value)</code> - per pixel, increase/decrease contrast of each pixel. Takes numeric value in the range 0.0 ... 0.1, where 0.5 means &quot;no change&quot;.</li>
+        <li><code>brightness(value)</code> - per pixel, increase/decrease brightness of each pixel. Takes numeric value in the range 0.0 ... 0.1, where 0.5 means &quot;no change&quot;.</li>
+        <li><code>gamma(value)</code> - per pixel, increase/decrease gamma of each pixel. Takes numeric value in the range 0.0 ... 5.0 where value 1.0 means no change.</li>
+        <li><code>hue(color)</code> or <code>hue(number)</code> - per pixel, converts each pixel to HSV representation, changes its hue value and converts the color back to RGB color space. Thus if original color is black, gray or white then it will not change and if it is non-gray color then it will be transformed/changed. The number here is in the range 0 ... 360 - angle of color vector in HSV space.</li>
+        <li><code>flip-x()</code> - mirrors the image in horizontal direction.</li>
+        <li><code>flip-y()</code> - mirrors the image in vertical direction.</li></ul></dd>
+    <dt><strong>foreground-repeat</strong></dt>
+    <dd><code>no-repeat | repeat | repeat-x | repeat-y &nbsp;| stretch [keep-ratio] | expand [stretch-top] [stretch-bottom] [stretch-left] [stretch-right] [stretch-middle]</code>
+      <p>Defines image fill mode, accepts one of the values:</p>
+      <ul>
+        <li><code>no-repeat</code> - image is rendered once according at position defined by <code>***-image-position</code>.</li>
+        <li><code>repeat</code> - fills image rendering area in full.</li>
+        <li><code>repeat-x</code> - repeates the image in a row at position defined by <code>***-image-position</code>.</li>
+        <li><code>repeat-y</code> - repeates the image in a column at position defined by <code>***-image-position</code>.</li>
+        <li><code>stretch</code> - fills the image rendering area in full stretching/shrinking it if needed in both directions.</li>
+        <li><code>stretch keep-ratio</code> - inscribes ti image inside image rendering area preserving its width/height ratio.</li>
+        <li><code>expand</code> - expands nine sections of the image defined by <code>***-image-position</code> so it will cover the area in full. Corner sections rendered as they are. top/left/bottom/right/middle sections are tiled to fill. If &nbsp;<code>stretch-top</code>, <code>stretch-bottom</code>, <code>stretch-left</code> or <code>stretch-middle</code> are specified then corresponding sections are stretched rather than tiled.</li></ul></dd></dl>
+  <h2>Text</h2>
+  <dl>
+    <dt><strong>text-overflow</strong></dt>
+    <dd><code>clip | ellipsis | path-ellipsis</code>
+      <p>The property defines the way of text drawing when it overflows. The property is in effect only for text container elements that a) are establishing boxes (e.g. are <code>display:block</code> ) and have b) <code>overflow-x:hidden;</code> defined on them.</p>
+      <ul>
+        <li><code>clip</code> - default value, text is clipped by content area;</li>
+        <li><code>ellipsis</code> - truncates the string to fit into content area and adds <code>…</code> (ellipsis character) at the end indicating that there are more characters.</li>
+        <li><code>path-ellipsis</code> - splits the string on last '/' or '\' character and truncates start part and adds <code>…</code> (ellipsis character) in between start and end fragments. H-SMILE specific.</li></ul></dd></dl>
+  <h2>Layout</h2>
+  <dl>
+    <dt><strong>mapping</strong></dt>
+    <dd><code>inherit | none | left-to-right | top-to-right |<br/>inherit( &lt;part-list&gt; ) | none( &lt;part-list&gt; ) | left-to-right( &lt;part-list&gt; ) | top-to-right( &lt;part-list&gt; )</code>
+      <p>Where <code>&lt;part-list&gt;</code> is a comma separated list that contains one or many of following literals: <code>border</code>, <code>padding</code>, <code>margin</code>, <code>background</code>, <code>foreground</code>, <code>layout</code> .</p>
+      <p>Default value: <code>inherit</code>.</p>
+      <p>The property defines mapping of directional related properties. For example this declaration:</p>
+      <p><code>&nbsp;&nbsp;div { mapping: left-to-right(border,margin); } &nbsp;</code></p>
+      <p>will cause left and right borders (colors, widths and styles) and margins to be swapped (mirrored in this case) so for example border defined as border-left will be used as border-right for rendering purposes.</p>
+      <p>Note that is inheritable by default property. So if to define <code>body { mapping: left-to-right;}</code> all directional properties of the element and its descendants will be mirrored horizontally.<br/><br/>Meaning of part names in <code>&lt;part-list&gt;</code>:</p>
+      <ul>
+        <li><code>border</code> - all border related properties : color, style and width.</li>
+        <li><code>padding</code> - all padding properties, padding-left, padding-right, etc.</li>
+        <li><code>margin</code> - all margin properties, margin-left, margin-right, hit-margin, etc.</li>
+        <li><code>background</code> - directional background properties: background-position, background image bits and gradients.</li>
+        <li><code>foreground</code> - directional foreground properties: foreground-position and foreground image bits.</li>
+        <li><code>layout</code> - layout is mirrored. For example <code>flow:horizontal; mapping: left-to-right(layout);</code> &nbsp;will cause blocks to be replaced from right to left.</li></ul></dd></dl>
+</body>
+</html>

@@ -1,0 +1,44 @@
+﻿<html>
+  <head>
+    <meta name="source" content="http://www.terrainformatica.com/wiki/doku.php?id=h-smile:built-in-behaviors:checkbox"/>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>behavior:output</h1>
+  <p>Formatted output behavior. The behavior can be applied to any text container, e.g. &lt;span&gt;, &lt;em&gt;, etc.</p>
+  <h2>Elements</h2>
+  <p>that have this behavior applied by default:</p>
+  <ul>
+    <li><code>&lt;output type=..&gt;</code> - output read-only element ;</li>
+    <li><code>&lt;(name)&gt;</code> - Sciter specific shortcut syntax, equivalent of <code>&lt;output name=&quot;name&quot;&gt;</code>.</li></ul>
+  <p>Note that you can use shortcut notations with the output in Sciter, so these three declarations are equivalent:</p>
+  <pre>&lt;output name=&quot;first&quot; type=&quot;text&quot; /&gt;
+&lt;output|text(first)/&gt;
+&lt;(first)|text&gt;
+</pre>
+  <h2>Attributes</h2>
+  <ul>
+    <li><code>type</code> - formatter type, one of:</li>
+    <ul>
+      <li><code>&quot;text&quot;</code> - plain text output, the value is rendered as it is after toString() conversion;</li>
+      <li><code>&quot;integer&quot;</code> - integer output;</li>
+      <li><code>&quot;decimal&quot;</code> - decimal (float) formatter. Value is formatted and rendered according current locale rules;</li>
+      <li><code>&quot;currency&quot;</code> &nbsp;- currency formatter. Value is formatted and rendered according current locale rules;</li>
+      <li><code>&quot;date&quot;</code> - date formatter. Value is treated as UTC date value and formatted according current locale rules;</li>
+      <li><code>&quot;date-local&quot;</code> - date formatter. Value is treated as current time zone date value and formatted according current locale rules;</li>
+      <li><code>&quot;time&quot;</code> - date formatter. Time portion of the UTC date value is formatted according current locale rules;</li>
+      <li><code>&quot;time-local&quot;</code> - date formatter. Time portion of the local time zone date value is formatted according current locale rules;</li></ul>
+    <li><code>name=&quot;name&quot;</code> - standard attribute <em>name</em> - name of the input element on a form.</li>
+    <li><code>value=&quot;...&quot;</code> - standard value attribute. The value is formatted according to type and rendered.</li>
+    <li><code>novalue=&quot;no value text&quot;</code> - text that should appear if the output has no value set.</li>
+    <li><code>timezone=&quot;TZ&quot;</code> - timezone to convert the date/time to. TZ can be either <code>&quot;local&quot;</code> or <code>&quot;+HH:MM&quot; / &quot;-HH:MM&quot;</code>.</li></ul>
+  <p>If the value cannot be converted to declared type then the element gets <code>:invalid</code> state flag;</p>
+  <p>If numeric value is negative then the element gets <code>negative</code> attribute set so it can be styled differently, e.g. <code>output[negative] { color:red; }</code></p>
+  <h2>Events</h2>
+  <p>N/A - no specific events.</p>
+  <h2>Value</h2>
+  <p><code>any</code> value, presumably matching declared type.</p>
+  <h2>Methods</h2>
+  <p>N/A - behavior:output does not introduce any specific methods.</p>
+</body>
+</html>

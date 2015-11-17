@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <title></title>
+    <style></style>
+    <script type="text/tiscript">
+    
+    var serverSocket = null;
+    
+    // simple echo server
+    function server() {
+    
+      var log = $(pre#out);
+    
+      function acceptConnection(socket) 
+      {
+        log.text = "got connection";
+        socket.on("data",function( data ) 
+        {
+          log.text += JSON.stringify(data,"  ");
+          socket.send(data);
+        });
+        return true; // we accept this connection
+      }
+    
+      serverSocket = DataSocket.listen(acceptConnection,22349);
+      log.text = "Listening on port 22349";
+      
+      $(button#serve).remove();
+    
+    }
+    
+    $(button#serve).onClick = server;
+    
+    
+    </script>
+  </head>
+<body>
+
+  <button #serve>Start server</button>
+  <pre #out>
+  </pre>
+
+</body>
+</html>

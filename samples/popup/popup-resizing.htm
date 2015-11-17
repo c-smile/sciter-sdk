@@ -1,0 +1,59 @@
+<html>
+<head>
+  <style>
+  
+    @import url(../../widgets/resizeable/resizeable.css);
+  
+    popup#test
+    {
+      background-color: gold;
+      border:2px solid red;
+      width:100px;
+      height:100px;
+      cursor:pointer;
+    }
+    
+    popup#test.mouse-on-corner {
+      cursor:se-resize;
+    }
+    
+    div#anchor
+    {
+      border:1px solid blue;
+      width:50px;
+      height:50px;
+      cursor:pointer;
+    }
+  </style>  
+  <style #actions>
+    div#anchor
+    {
+      behavior: button; 
+    }
+  </style>    
+  <script type="text/tiscript">
+    
+      stdout.println("res");
+      $(div#anchor).onClick = function() 
+      {
+        var anchorPoint = 1; // left/bottom
+        var popupPoint = 7;  // left/top
+        this.popup( $(popup#test), (popupPoint << 16) | anchorPoint);
+      } 
+    </script>
+  
+</head>
+<body>
+
+    <p>This sample demonstrates popup interactive sizing.</p>
+
+    <div#anchor> 
+      click me
+    </div>
+    <popup#test resizeable >
+      resize me
+    </popup>
+    
+
+</body>
+</html>

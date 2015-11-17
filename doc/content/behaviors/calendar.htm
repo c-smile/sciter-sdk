@@ -1,0 +1,36 @@
+﻿<html>
+  <head>
+    <meta name="source" content="http://www.terrainformatica.com/wiki/doku.php?id=h-smile:built-in-behaviors:edit"/>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>behavior: calendar</h1>
+  <p>calendar is date input element allowing to select particular date.</p>
+  <h2>Elements</h2>
+  <p>that have this behavior applied by default:</p>
+  <ul>
+    <li><code>&lt;input type=&quot;calendar&quot; /&gt;</code> - inline date input element.</li></ul>
+  <h2>Model</h2>
+  <p>The calendar has four different view modes:</p>
+  <ul>
+    <li>decades view - table of 10-year decades;</li>
+    <li>decade view - table of 10 years in decade;</li>
+    <li>months view - table of 12 months in a year;</li>
+    <li>days view - table of days in a month. </li></ul>
+  <p>Each mode uses &lt;table&gt; to render content of the view. Use DOM inspector to discover DOM structure of each view if you will need to style content of the calandar in some specific manner.</p>
+  <h2>Attributes</h2>
+  <p>that this behavior knows about:</p>
+  <ul>
+    <li><code>value=&quot;YYYY-MM-DD&quot;</code> - initial date, string in ISO 8601 format.</li></ul>
+  <h2>Events</h2>
+  <p>Aside of standard set of events (mouse, keyboard, focus) <em>behavior: calendar</em> generates:</p>
+  <ul>
+    <li>SELECT_STATE_CHANGED event - view has changed, e.g. month changed. Posted (asynchronous) event.</li>
+    <li>SELECT_SELECTION_CHANGED event - date changed. Posted (asynchronous) event.</li></ul>
+  <h2>Value</h2>
+  <p>Date value or undefined, reflects current selection.</p>
+  <h2>Methods</h2>
+  <p>N/A - this input element has no specific methods.</p>
+  <dl></dl>
+</body>
+</html>

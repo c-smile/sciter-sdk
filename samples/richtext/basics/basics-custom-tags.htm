@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <style>
+    
+    toolbar { padding:3dip;
+              display:block; flow:horizontal; background:#ddd; }
+    toolbar > button { width:16dip; }
+    toolbar > button:checked { color:red; }
+    
+    htmlarea s1 { display:inline; font-weight:bold; }
+    htmlarea s2 { display:inline; font-style:italic; }
+    
+    </style>
+    <script type="text/tiscript">
+    
+      const htmlarea = $(htmlarea);
+      
+      const btn_s1 = $(#btn-s1);
+      const btn_s2 = $(#btn-s2);
+      
+      htmlarea.on("statechange", function() {
+        const ACTIVE = 0x01;
+        const DISABLED = 0x02;
+        btn_s1.state.checked = htmlarea.queryCommand("format:toggle-span:s1") == ACTIVE;
+        btn_s2.state.checked = htmlarea.queryCommand("format:toggle-span:s2") == ACTIVE;
+      });
+      
+      btn_s1.on("click", function(){ htmlarea.execCommand("format:toggle-span:s1"); return true; });  
+      btn_s2.on("click", function(){ htmlarea.execCommand("format:toggle-span:s2"); return true; });  
+    
+      $(button#save).on("click", function() { $(pre#out).value = htmlarea.html; })
+    
+    </script>
+  </head>
+<body>
+
+<toolbar>
+  <button|checkbox #btn-s1>S1</button>
+  <button|checkbox #btn-s2>S2</button>
+</toolbar>
+<htmlarea>
+  <p>Hello world!</p>
+</htmlarea>
+<button #save>Save</button>
+<pre #out><pre>
+
+</body>
+</html>

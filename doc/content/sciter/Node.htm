@@ -1,0 +1,64 @@
+﻿<html>
+  <head>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>Node object</h1>
+  <p>Represents non-element DOM nodes: text or comment.</p>
+  <dl>
+    <h2>Properties</h2>
+    <dt>parent</dt>
+    <dd><font color="#999999">r - </font><em>Element</em>, parent element of the node or <em>null</em> if this node is not connected to any element. Read-only.</dd>
+    <dt>nodeIndex</dt>
+    <dd><font color="#999999">r</font> - Integer, index of the node in parent nodes collection.</dd>
+    <dt>nextNode</dt>
+    <dd><font color="#999999">r - </font><em>Element or Node</em>, next sibling node of the node or <em>null</em> if this is the last element in parent collection.</dd>
+    <dt>priorNode</dt>
+    <dd><font color="#999999">r</font> - <em>Element or Node</em>, previous sibling node of the node or <em>null</em> if this is the first node in parent collection.</dd>
+    <dt>text</dt>
+    <dd><font color="#999999">rw</font> - <em>String</em>, text of the node. Read-write property.</dd>
+    <dt>isElement</dt>
+    <dd><font color="#999999">r</font> - <em>true </em>if this node is an element, false - otherwise.</dd>
+    <dt>isText</dt>
+    <dd><font color="#999999">r</font> - <em>true </em>if the node is a text node.</dd>
+    <dt>isComment</dt>
+    <dd><font color="#999999">r</font> - <em>true </em>if the node is a comment node.</dd>
+    <h2>Methods</h2>
+    <dt>createText</dt>
+    <dd>
+      <div><strong>(text: string)</strong> : <em>Node</em></div>
+      <p>Static constructor of text DOM nodes.</p></dd>
+    <dt>createComment</dt>
+    <dd>
+      <div><strong>(text: string)</strong> : <em>Node</em></div>
+      <p>Static constructor of comment DOM nodes.</p></dd>
+    <dt>createElement</dt>
+    <dd>
+      <div><strong>(tagname:symbol | string [, attributes: object] [, text:string])</strong> : <em>Elemen</em>t</div>
+      <p>Static constructor of Element [node]. Equivalent of <code>new Element(...)</code>.</p></dd>
+    <dt>toString</dt>
+    <dd>
+      <div><strong>()</strong> : <em>string</em></div>
+      <p>Returns string - text representation of the node.</p></dd>
+    <dt>clone</dt>
+    <dd>
+      <div><strong>() </strong>:<em>Node</em></div>
+      <p>Returns new copy of the node. New node is disconnected from the DOM.</p></dd>
+    <dt>insertNodeBefore</dt>
+    <dd>
+      <div><strong>( node: Node)</strong></div>
+      <p>Inserts the node in the DOM tree before this element.</p></dd>
+    <dt>insertNodeAfter</dt>
+    <dd>
+      <div><strong>( node: Node)</strong></div>
+      <p>Inserts the node in the DOM tree after this element.</p></dd>
+    <dt>detach</dt>
+    <dd>
+      <div><strong>( ) </strong>: Node</div>
+      <p>Removes this node from its parent's nodes collection. After the call of this method this.<em>parent</em> will become <em>null</em>.</p></dd>
+    <dt>remove</dt>
+    <dd>
+      <div><strong>( ) </strong>: Element</div>
+      <p>Removes this node from its parent's nodes collection. After the call of this method this.<em>parent</em> will become <em>null</em>.</p></dd></dl>
+</body>
+</html>

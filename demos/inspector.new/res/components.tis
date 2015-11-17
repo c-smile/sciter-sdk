@@ -1,0 +1,136 @@
+include "decorators.tis";
+  
+class CollapsibleSection: Behavior 
+{ 
+ function attached()
+  {
+    if(this.id)
+      Settings.add(this); // register this element as persistable.
+  }
+
+  @click @on "header": evt {
+    this.state.expanded = !this.state.expanded;
+    saveState();
+  }
+  
+  // persistable interface:
+  function store(data) {  
+    if(!data.collapsibles)
+      data.collapsibles = {};
+    data.collapsibles[this.id] = this.state.expanded;
+  }
+  function restore(data) { 
+    try {
+      var expanded = data.collapsibles[this.id];
+      this.state.expanded = expanded;
+    } catch(e) { }
+  }
+}
+
+// stacked container
+class Stacked: Behavior 
+{ 
+  function attached()
+  {
+    var idx = 0;
+    for(var child in this) {
+      if( ++idx == 1 ) child.state.expanded = true; 
+      else child.state.collapsed = true;
+    }
+  }
+  
+  property current(v) {
+    var cur = this.$(>:expanded);
+    if( cur ) cur = cur.id;
+    get { return cur; }
+    set { 
+      if( cur != v )
+        for(var child in this) {
+          if( child.id == v )
+            child.state.expanded = true; 
+          else
+            child.state.collapsed = true; 
+        }
+    }
+  } 
+}
+
+class FrameSet: Behavior
+{
+  function attached()
+  {
+    if(this.id)
+      Settings.add(this); // register this element as persistable.
+  }
+  // persistable interface:
+  function store(data) {  
+    var st = this.uiState(); // behavior:framest method
+    if(!data.framesets)
+      data.framesets = {};
+    data.framesets[this.id] = st;
+  }
+  function restore(data) { 
+    try {
+      var st = data.framesets[this.id];
+      this.uiState(st); // behavior:framest method
+    } catch(e) { }
+  }
+  
+  function onControlEvent(evt)
+  {
+    if( evt.type == Event.UI_STATE_CHANGED && evt.target == this)
+    {
+      saveState();
+    }
+  }
+  
+} 
+
+namespace Message
+{
+  var melem = $(div#message);
+  function show( text )
+  {
+    melem.text = (text || "?").toHtmlString();
+    melem.attributes["state"] = "shown";
+    melem.post(:: melem.attributes["state"] = "dissolving" );
+    melem.onAnimationEnd = ::melem.attributes["state"] = undefined;
+  }
+}
+
+// array and object deep equality
+
+Object.equals = function(x)
+{
+  if( typeof x != #object ) return false;
+  if( this.length != x.length ) return false;
+  for(var (k,v) in this) 
+  {
+    var xv = x[k];
+    switch(typeof v)
+    {
+      case #object: 
+      case #array: if(!v.equals(xv) ) return false; break;
+      default: if(v != xv) return false;
+    }
+  }
+  return true;
+}
+
+Array.equals = function(x)
+{
+  if( typeof x != #array ) return false;
+  if( this.length != x.length ) return false;
+  for(var (k,v) in this) 
+  {
+    var xv = x[k];
+    switch(typeof v)
+    {
+      case #object: 
+      case #array: if(!v.equals(xv) ) return false; break;
+      default: if(v != xv) return false;
+    }
+  }
+  return true;
+}
+

@@ -1,0 +1,56 @@
+<html>
+  <head>
+  <title>The Repeatable demo</title>
+<style>
+  /* the repeatable rules: */
+  [repeatable] { aspect: Repeatable url(repeatable.tis);  }
+  [repeatable] > * { behavior:form; } /* each repeated child is treated as a form so it can accept object values */ 
+  
+  
+  body { flow: "1 1"
+               "2 3"
+               "4 4";
+         border-spacing: 1em; }
+         
+  div, ul { size:*; }
+  textarea { display:block; size:*; }
+  ul { border:1px solid; }
+  ul > li { flow:horizontal; width:70%; border-bottom:1px solid #aaa; }
+  ul > li > [name=price] { margin-left:*; }
+  
+</style>
+<script type="text/tiscript">
+
+
+  $(button#set).onClick = function() {
+
+    var json = parseData( $(textarea#json).value );
+    
+    $(#products).value = json;
+    
+  };
+</script>
+  </head>
+<body>
+
+  <h1>The Repeatable demo</h1>
+
+  <!-- the repeatable \ -->
+  <ul #products repeatable>
+    <li><output|text(product) /> <output|currency(price) /></li>
+    <div>no records!</div>
+  </ul>
+  <!-- the repeatable / -->  
+  
+  <div>
+    <button #set>Set value of the Repeatable on the left</button>
+    <textarea #json>[
+  { product:"Apple", price: 0.95 },
+  { product:"Orange", price: 0.75 },
+  { product:"Pear", price: 1.25 },
+];</textarea>
+  </div>
+  
+  <p>This sample demonstrates very simple implementation of element with repeatable content. Note it does not require any template engine and the like.</p>
+</body>
+</html>

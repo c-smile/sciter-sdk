@@ -1,0 +1,38 @@
+<html page-no page-parity>
+<!-- html element for the page template has two attributes:
+     page-no=N - number of the page rendered in pageframe.
+     page-parity="odd" | "even" - page parity flag. -->
+  <head>
+    <style>
+      body { padding:0.2in; /* to account dead zones on the page */ }
+      pageframe  { size:*; }
+      header { border-bottom: 1dip solid gray; }
+      footer { border-top: 1dip solid gray; }
+      
+      html[page-parity=odd] footer  { text-align:left; }
+      html[page-parity=even] footer { text-align:right; }
+      html[page-parity=odd] pageframe 
+      { 
+        margin-left:10pt;
+        margin-right:20pt;
+      }
+      html[page-parity=even] pageframe
+      {
+        margin-left:20pt;
+        margin-right:10pt;
+      }
+      /* html[page-no=1] footer  { text-align:center; } */
+    </style>
+  </head>
+<body>
+<!-- page template may contian following elements that will be filled automaticaly for each page:
+   id="document-url" - url of the document being printed
+   id="document-title" - content of the <title> of the document
+   id="page-no" - current page number
+   id="total-pages" - total pages-->
+
+  <header #document-title>Header....</header>
+  <pageframe />
+  <footer>Page <span #page-no /> of <span #total-pages /></footer>
+</body>
+</html>

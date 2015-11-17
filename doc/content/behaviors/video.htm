@@ -1,0 +1,65 @@
+﻿<html>
+  <head>
+    <meta name="source"/>
+    <meta name="source"/>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1><a name="behaviorradio" id="behaviorradio">behavior:video</a></h1>
+  <p>This behavior provides video playback..</p>
+  <h2><a name="elements" id="elements">Elements</a></h2>
+  <p>that have this behavior applied by default to:</p>
+  <ul>
+    <li><code>&lt;video&gt;</code> - the video element;</li></ul>
+  <h2><a name="attributes" id="attributes">Attributes</a></h2>
+  <p>this behavior knows about:</p>
+  <dl>
+    <dt>src</dt>
+    <dd>- string, url of the movie. If provided the behavior will start playing the movie immedieately after loading.</dd>
+    <dt>sizing</dt>
+    <dd>- string, either &quot;<em>cover</em>&quot; or &quot;<em>contain</em>&quot; (default). Frame box sizing modes: <em>contain</em> - video frame always seen in full, <em>cover</em> - frame always covers content box in full, some parts of the frame can be clipped out.</dd>
+    <h2>Methods</h2>
+    <dt>videoIsPlaying</dt>
+    <dd>() : <em>true</em> | <em>false</em><br/>reports playback status. If <em>true</em> then video is playing at the moment.</dd>
+    <dt>videoIsEnded</dt>
+    <dd>() : <em>true</em> | <em>false</em><br/><em>true</em> if video playback has reached the end of the movie.</dd>
+    <dt>videoDuration</dt>
+    <dd>() : <em>duration</em> (float)<br/>reports duration in seconds of the movie. If duration is not available it returns 0.</dd>
+    <dt>videoPosition</dt>
+    <dd>() : duration (float)<br/>reports current playback position, in seconds.</dd>
+    <dt>videoPosition</dt>
+    <dd>( <strong>time</strong> : duration | float ) : duration<br/>sets current playback position, in seconds.</dd>
+    <dt>videoHeight</dt>
+    <dd>() : integer (pixels) <br/>returns natural height of video frame of the movie.</dd>
+    <dt>videoWidth</dt>
+    <dd>() : integer (pixels)<br/>returns natural width of video frame of the movie.</dd>
+    <dt>videoBox</dt>
+    <dd>() : [x,y,width,height]<br/>returns video box rectangle in pixels relative to the &nbsp;content box of the element. Note if <em>sizing</em> attribute is &quot;cover&quot; then either <em>x</em> or <em>y</em> can be negative.</dd>
+    <dt>videoLoad</dt>
+    <dd>(<strong>movieUrl</strong> : string) : <em>true</em> | <em>false</em><br/>loads video file into the player. It does not start playback automatically.</dd>
+    <dt>videoUnload</dt>
+    <dd>()<br/>stops video playback and unloads the movie.</dd>
+    <dt>videoPlay</dt>
+    <dd>( [<strong>position</strong>:duration] ) : <em>true</em> | <em>false</em><br/>starts playback at given <em>position</em> or at current position if the <em>position</em> omitted.</dd>
+    <dt>videoStop</dt>
+    <dd>()<br/>stops playback.</dd>
+    <dt>audioVolume</dt>
+    <dd>() : float (0.0...1.0)<br/>reports current volume level of audio track. 1.0 correspond to 0db, 0.0 (mute) -100db.</dd>
+    <dt>audioVolume</dt>
+    <dd>( <strong>vol</strong> : float )<br/>sets current volume level, float between 0.0 (mute) and 1.0 ( 0db ).</dd>
+    <dt>audioBalance</dt>
+    <dd>() : float ( -1.0 ... +1.0 &nbsp;)<br/>reports current stereo balance.</dd>
+    <dt>audioBalance</dt>
+    <dd>( <strong>balance</strong>: float )<br/>sets new value of stereo balance.</dd>
+    <h2><a name="events" id="events">Events</a></h2>
+    <p>Besides of the standard set of events (mouse, keyboard, focus) <em>behavior:video</em> generates following behavior events (delivered to onControlEvent callback):</p>
+    <dt>VIDEO_INITIALIZED</dt>
+    <dd>- the video has been loaded successfully and videoWidth/Height and videoDuration are available.</dd>
+    <dt>VIDEO_STARTED</dt>
+    <dd>- the video just startes, first frame rendered.</dd>
+    <dt>VIDEO_STOPED</dt>
+    <dd>- the video has stoped.</dd></dl>
+  <h2><a name="value" id="value">Value</a></h2>
+  <p>N/A, the behaivor does not implement value concept.</p>
+</body>
+</html>

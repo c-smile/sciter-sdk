@@ -1,0 +1,23 @@
+<html>
+<head>
+  <style>
+    input { font-family: monospace; } 
+  </style>  
+  <script type="text/tiscript">
+  
+    function self#scan.onClick()
+    {
+      var fmt = self#format.value;  
+      var txt = self#text.value;
+      
+      self#out.value = txt.scanf(fmt).toString();
+      
+    } 
+  </script>  
+</head>
+<body>
+  Format: <input #format size=40 value="%d %f %c %s"/><br/>
+  Text: <input #text size=40 value="71 98.6 h z characters"/> <button #scan>ScanF</button><br/> 
+  Output: <span #out />
+</body>
+</html>

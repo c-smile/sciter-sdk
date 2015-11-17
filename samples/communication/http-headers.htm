@@ -1,0 +1,70 @@
+<html>
+<head>
+	<title>sciter3 Element.request fail</title>
+	<style>
+		html 
+		{ 
+			background-color: threedface; 
+		}
+		#sandbox 
+		{ 
+			margin:20px; 
+			padding:20px; 
+			overflow:auto;
+			background-color:window; 
+			border:1px solid threedface; 
+			width:*; height:*;
+		}
+		#sandbox:busy // that small spinning thing...
+		{
+			visibility:visible;
+			foreground-image:url(res:busy.png); 
+			foreground-repeat:no-repeat; 
+			foreground-position:2px 2px; 
+		}
+
+		code { background:white; }
+
+	</style>
+	<script type="text/tiscript"> // comment to fix line at exception
+	
+	var sandbox = $(#sandbox), indicator = $(#indicator);
+		
+	sandbox.value = "ready!";
+
+	// show delivered data
+	function show(data,status = 200)
+	{
+		try {
+			indicator.value = String.$(Status: {status}, data: {typeof(data)});
+			sandbox.html = data.toString();
+		} catch (e) {
+			sandbox.value = e.toString();
+		}
+	}
+
+	$(#clear).onClick = function() {
+		sandbox.value = indicator.value = "";
+	}
+	
+	$(#get).onClick = function() {
+    var params = { q:1 }; // passing custom parameters
+    var headers = { "user-token": "for the demo purposes!" }; // passing custom headers
+		var re = sandbox.request(show, #get, "http://www.terrainformatica.com/tools/http-headers.php", params,headers);
+	}
+
+	</script>
+</head>
+<body>
+
+	<div id="controls">
+		<button id="clear">clear</button>
+		<button id="get">get</button>
+	</div>
+	<div id="sandbox">
+	  sandbox
+	</div>
+	<div id="indicator">Talking...</div>
+
+</body>
+</html>

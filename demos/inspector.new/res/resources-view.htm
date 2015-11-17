@@ -1,0 +1,51 @@
+<frameset(resources-view) cols="1*,3*" .resources-view >
+  <div .resource-list .panel>
+    <section .collapsible .resurces-markup restype=0 >
+      <header.treed>markup</header>
+      <text .no-items>no items</text>
+      <ul></ul> 
+    </section>
+    <section .collapsible .resurces-styles restype=2 >
+      <header.treed>styles</header>
+      <text .no-items>no items</text> 
+      <ul></ul> 
+    </section>
+    <section .collapsible .resurces-scripts restype=4 >
+      <header.treed>scripts</header>
+      <text .no-items>no items</text>
+      <ul></ul> 
+    </section>
+    <section .collapsible .resurces-images restype=1 >
+      <header.treed>images</header>
+      <text .no-items>no items</text> 
+      <ul></ul> 
+    </section>
+    <section .collapsible .resurces-others >
+      <header.treed>other</header>
+      <text .no-items>no items</text> 
+      <ul></ul> 
+    </section>
+    
+  </div>
+  <splitter/>
+  <div .viewers>
+    <div .source-view>
+      <div .source-code-toolbar hidden>
+        <!--<button|checkbox #do-syntax-highlighting>highlight syntax</button>-->
+        <label>#</label><input|integer #do-goto-line novalue="{go to line}"/>
+        <label>?</label><input|text #do-search-text novalue="{search}" />
+      </div>
+      <plaintext.source-code readonly type="text/html"/>
+    </div>
+    <div .image-view >
+      <picture />
+      <dl>
+        <header(fileName) />
+        <dt>dimensions:</dt><dd><output(width) /> x <output(height) /></dd>
+        <dt>file size:</dt><dd><output|decimal(fileSize) format="precision:0"/> bytes</dd>
+        <dt>file type:</dt><dd(fileType)></dd>
+        <dt>url:</dt><dd(url)></dd>
+      </dl>
+    </div>
+  </div>
+</frameset>

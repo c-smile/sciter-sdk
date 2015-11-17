@@ -1,0 +1,139 @@
+@const BASE-COLOR: #5C4C4C;
+@const INFO-COLOR: #FFF7E8;
+
+html { background-color:@BASE-COLOR; } 
+
+body
+{
+  font:10pt verdana;
+  font-rendering-mode:classic;  
+  margin:0;
+  padding:0;
+}
+
+frameset#body 
+{
+  flow:horizontal;
+  width:*;
+  height:*; 
+  background-color:@BASE-COLOR;
+}
+
+frameset#body > splitter { width:4dip; }
+
+#toolbar 
+{
+  flow:horizontal;
+}
+#toolbar > button
+{
+  behavior:clickable;
+  width: 34px;
+  height: 34px;
+  padding:2px;
+  foreground-position:center center;
+  foreground-repeat:no-repeat;
+  background-image:none;  
+}
+
+#toolbar > button:hover
+{
+  foreground-image-transformation: contrast-brightness-gamma(0.5,0.7, 1.3);
+}
+
+#toolbar > button:disabled 
+{ 
+  opacity:0.35;
+}
+#toolbar > button.back    { foreground-image:url(back.png); }
+#toolbar > button.forward { foreground-image:url(forward.png); }
+
+#index
+{
+  behavior:expandable-list;
+  /*background: linear-gradient(top, #FFFFE9, #fff/40%, #FFFFE9);*/
+  /*background-color:@INFO-COLOR; */
+  width:max-content;
+  height:*;
+  margin:0;
+  overflow:hidden;
+}
+
+#index > section { height:1*; }   
+#index > section > ul { visibility:collapse; background:@INFO-COLOR; }
+#index > section:expanded { height:100*; transition: height(sine-in-out,400ms); }
+#index > section:animating > ul { visibility:visible; overflow:hidden; }
+#index > section:expanded > ul { visibility:visible; }
+
+#index > section > caption { 
+  background:@BASE-COLOR;
+  color:@INFO-COLOR;
+  display:block; 
+  padding:0.25em 1em;
+  cursor:pointer;
+  border:1dip solid;
+  border-color: #7C6C6C #4C3C3C #4C3C3C #7C6C6C;
+}
+#index li { display:block; }
+#index li li { margin:0; }
+
+#index > section > ul { height:*; overflow: scroll-indicator;}
+#index ul { margin:0; padding:0.5em 0 0.5em 1em; }
+#index ul ul { padding-top:0; }
+
+#index a { text-decoration:none; }
+#index a:hover { text-decoration:underline; }
+
+#index ul.elements li { font-family: monospace; color:@BASE-COLOR; white-space:nowrap; }
+
+#content    
+{ 
+  width:*; height:*; 
+}
+
+#toc
+{
+  font:system;
+  background-color: @INFO-COLOR;
+  width:200px;
+  height:*;
+  overflow:scroll-indicator;
+  margin:0;
+}
+
+#toc > ul
+{
+  margin:4px;
+  padding:0;
+  flow:horizontal-flow;
+}
+#toc > ul > caption
+{
+  behavior:clickable;
+  font-weight:bold;
+  width:*;
+  clear:right;
+  //white-space:nowrap;
+  overflow-x: hidden;
+  cursor:pointer;
+}
+#toc > ul > li
+{
+  behavior:clickable;
+  display:block;
+  width:*;
+  //white-space:nowrap;
+  min-width:auto; /* all items have the same width equal to widest item */
+  margin:4px;
+  cursor:pointer;
+}
+
+#toc > ul > caption:hover,
+#toc > ul > li:hover
+{
+  text-decoration:underline;
+  color:red;
+}
+
+
+

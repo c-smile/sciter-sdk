@@ -1,0 +1,163 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      table { 
+        border:1px solid red;  
+        width:25%;
+        height:0.5*;
+        background:white;
+        border-spacing: 0;
+      }
+      table > tbody
+      {
+        overflow:scroll;
+      }
+      th { border:1px solid blue; padding:2px; width:*;}
+      td { padding:2px; width:*; }
+      //caption { border:1px solid blue; }
+      td:hover { outline:1px solid red -2px; }
+      
+      table > tbody > tr:hover { background: url(theme:list-view-item-hover) stretch; }
+      table > tbody > tr:active { background: url(theme:list-view-item-selected) stretch; }
+      //tr:hover { background-color: blue; }
+    
+    </style>
+    <script type="text/tiscript">
+    
+      $(#append-100).onClick = function()
+      {
+        var tb = $(table>tbody);
+        var n = tb.length;
+        for(var i = 0; i < 100; ++i )
+        {
+          var tr = new Element(#tr);
+          tr.append(new Element(#td, "" + n++));
+          tr.append(new Element(#td, "2"));
+          tr.append(new Element(#td, "3"));
+          tb.append(tr);
+        }
+      }
+
+      $(#append-1000).onClick = function()
+      {
+        var tb = $(table>tbody);
+        var n = tb.length;
+        
+        var st = (new Date()).valueOf();
+        
+        for(var i = 0; i < 1000; ++i )
+        {
+          var tr = new Element(#tr);
+          tr.append(new Element(#td, "" + n++));
+          tr.append(new Element(#td, "2"));
+          tr.append(new Element(#td, "3"));
+          tb.append(tr);
+        }
+        
+        var et = (new Date()).valueOf();
+        $(#out).$content(1000  rows added in {et - st} ms);
+      }
+
+      // slow
+      $(#append-10000).onClick = function()
+      {
+        var tb = $(table>tbody);
+        tb.clear();
+        
+        var st = (new Date()).valueOf();
+        
+        for(var i in 10000)
+        {
+          var tr = new Element(#tr);
+          tr.append(new Element(#td, i.toString()));
+          tr.append(new Element(#td, "2"));
+          tr.append(new Element(#td, "3"));
+          tb.append(tr);
+        }
+        
+        var et = (new Date()).valueOf();
+        
+        $(#out).$content(10000 rows added in {et - st} ms);
+        
+      }
+      
+      // fast
+      $(#append-10000-html).onClick = function()
+      {
+        var tb = $(table>tbody);
+        
+        var out = Stream.openString();
+                
+        var st = (new Date()).valueOf();
+        
+        for(var i in 10000)
+          out.$(<tr><td>{i}</td><td>2</td><td>3</td></tr>);
+          
+        tb.html = out.toString();
+        
+        var et = (new Date()).valueOf();
+        
+        $(#out).$content(10000 rows added in {et - st} ms);
+        
+      }
+      
+      // fast
+      
+      $(#append-10000-vec).onClick = function()
+      {
+        var tb = $(table>tbody);
+        
+        var st = (new Date()).valueOf();
+      
+        var arr = new Array(10000);  
+  
+        for(var i in 10000)
+        {
+          var tr = new Element(#tr);
+          tr.append(new Element(#td, i.toString()));
+          tr.append(new Element(#td, "2"));
+          tr.append(new Element(#td, "3"));
+          arr[i] = tr;
+        }
+        
+        tb.content(arr);
+        
+        var et = (new Date()).valueOf();
+        
+        $(#out).$content(10000 rows added in {et - st} ms);
+        
+      }      
+      
+    
+    </script>
+  </head>
+<body>
+  <button #append-100>Append 100</button>
+  <button #append-1000>Append 1,000</button>
+  <button #append-10000>Set 10,000 one by one</button>
+  <button #append-10000-html>Set 10,000 by HTML</button>
+  <button #append-10000-vec>Set 10,000 from array</button>
+  <table fixedlayout>
+    <thead>
+      <tr><th>1</th><th>2</th><th>3</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>2</td><td>3</td></tr>
+      <tr><td>2</td><td>2</td><td>3</td></tr>
+      <tr><td>3</td><td>2</td><td>3</td></tr>
+      <tr><td>4</td><td>2</td><td>3</td></tr>
+      <tr><td>5</td><td>2</td><td>3</td></tr>
+      <tr><td>6</td><td>2</td><td>3</td></tr>
+      <tr><td>7</td><td>2</td><td>3</td></tr>
+      <tr><td>8</td><td>2</td><td>3</td></tr>
+      <tr><td>9</td><td>2</td><td>3</td></tr>
+      <tr><td>10</td><td>2</td><td>3</td></tr>
+      <tr><td>11</td><td>2</td><td>3</td></tr>
+      <tr><td>12</td><td>2</td><td>3</td></tr>
+    </tbody>
+  </table>
+  <pre #out>&nbsp;</pre>
+</body>
+</html>

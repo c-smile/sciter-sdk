@@ -1,0 +1,72 @@
+<html>
+  <head>
+    <title>Plus: very basic sample</title>
+    <style>
+      @import url(../plus.css); 
+      @import url(../../note.css); 
+      
+      #container {
+        flow: row(label,input);
+      }
+      
+      output { display: inline-block; border: 1px gray dotted; }
+    </style>
+    
+    <script type="text/tiscript">
+    
+      include "../plus.tis"; // model below uses @observing decorator defined in plus.tis
+  
+      namespace Data // our model
+      {  
+        var obj = {
+          foo:1,
+          bar:2,
+          baz: { abc:3, def:4 }
+        };
+        
+        var numChanges = 0;
+        
+        // this function is observing any change inside 
+        @observing #changes "obj.*"
+          function anyChange() {
+            ++numChanges;
+          }
+        
+        function changeSubtree() {
+          // Note: that you cannot do something like this:
+          //    obj.baz = { abc:"changed", def:"changed" };
+          // on bound tree as 'obj.baz' will be replaced by unbound objects.
+          //
+          // In order to update deep hierarchies and keeping them bound use 
+          // Object.extend method (defined in +plus.tis):
+          obj.baz.extend { abc:"changed", def:"changed" };        
+        }
+        
+      }    
+    
+    </script>
+  </head>
+
+<body model="Data"> <!-- define data model we observe -->
+
+  <note>
+    Note: you cannot do something like this on bound trees:
+    <pre>Data.obj.baz = { abc:"changed", def:"changed" };</pre>
+    as 'obj.baz' will be replaced by unbound object(s).
+    <p>In order to update deep hierarchies and keep them bound use 
+    <code>Object.extend</code> method (defined in +plus.tis)</p>
+  </note>
+  
+  <button click="changeSubtree()">Change subtree</button>
+
+  <div #container>
+    <label for="obj.foo">obj.foo</label> <input|text(obj.foo)>
+    <label for="obj.bar">obj.bar</label> <input|text(obj.bar)>
+    <label for="obj.baz.abc">obj.baz.abc</label> <input|text(obj.baz.abc)> 
+    <label for="obj.baz.def">obj.baz.def</label> <input|text(obj.baz.def)>
+  </div>
+  number of changes in 'obj' tree: <output|number(numChanges) /><br>
+  obj.baz.abc value <output|text(obj.baz.abc)>
+  
+</body>
+</html>

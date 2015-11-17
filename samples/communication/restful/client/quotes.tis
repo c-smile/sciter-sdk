@@ -1,0 +1,12 @@
+include "../../../+promise/promise.tis";
+
+namespace quotes {
+  const url = "http://localhost:3412/";
+  var cnt = 0;
+  
+  function getAll()      { return self.request(#get,url + "?q=" + ++cnt); } // '+ cnt' to avoid cached results 
+  function getOne(id)    { return self.request(#get,url + "quote/" + id.toString()); }  
+  function addOne(quote) { return self.request(#post-json,url + "quote/", quote); } 
+  function deleteOne(id) { return self.request(#delete-json,url + "quote/" + id.toString()); } 
+  
+}

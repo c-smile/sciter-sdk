@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      select > popup { 
+        width:max-content;
+        popup-position: top-right bottom-right; /*point-on-popup at point-on-anchor */
+        margin-top:4px;
+      }
+      
+      select > popup > option {
+        padding: 2px 4px;
+      }
+    
+    </style>
+  </head>
+<body>
+  <p>The popup on the select is positioned in the way that its top-right corner is placed at bottom-right corner
+  of the anchor element (the select itself here)</p>
+  <p>As margin-top:4px is applied to the popup then it is offset from the anchor by that value.</p>  
+  <select>
+    <option>First</option>
+    <option>Second</option>
+    <option>Third</option>
+  </select>
+
+</body>
+</html>

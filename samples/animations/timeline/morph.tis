@@ -1,0 +1,242 @@
+namespace Ease // collection of easing functions of Robert Penner
+{      
+  // See: http://www.robertpenner.com/easing/
+  
+  // signature of methods: (current_time,	start_value, end_value-start_value,	total_time)
+
+  function linear( t, b = 0.0, c = 1.0, d = 1.0)      { return (t/d)*c + b; }
+
+  function quadIn( t, b = 0.0, c = 1.0, d = 1.0)      { return c*(t/=d)*t + b; }
+  function quadOut( t, b = 0.0, c = 1.0, d = 1.0)     { return -c *(t/=d)*(t-2) + b; }
+  function quadInOut( t, b = 0.0, c = 1.0, d = 1.0)   { if ((t/=d/2) < 1) return c/2*t*t + b; return -c/2 * ((--t)*(t-2) - 1) + b; }
+
+  function cubicIn( t, b = 0.0, c = 1.0, d = 1.0)     { return c*(t/=d)*t*t + b; }
+  function cubicOut( t, b = 0.0, c = 1.0, d = 1.0)    { return c*((t=t/d-1)*t*t + 1) + b; }
+  function cubicInOut( t, b = 0.0, c = 1.0, d = 1.0)  { if ((t/=d/2) < 1) return c/2*t*t*t + b; return c/2*((t-=2)*t*t + 2) + b; }
+
+  function quartIn( t, b = 0.0, c = 1.0, d = 1.0)     { return c*(t/=d)*t*t*t + b; }
+  function quartOut ( t, b = 0.0, c = 1.0, d = 1.0)   { return -c * ((t=t/d-1)*t*t*t - 1) + b; }
+  function quartInOut ( t, b = 0.0, c = 1.0, d = 1.0) { if ((t/=d/2) < 1) return c/2*t*t*t*t + b; return -c/2 * ((t-=2)*t*t*t - 2) + b; }
+  
+  function quintIn ( t, b = 0.0, c = 1.0, d = 1.0)    { return c*(t/=d)*t*t*t*t + b; }
+  function quintOut ( t, b = 0.0, c = 1.0, d = 1.0)   { return c*((t=t/d-1)*t*t*t*t + 1) + b; }
+  function quintInOut( t, b = 0.0, c = 1.0, d = 1.0)  { if ((t/=d/2) < 1) return c/2*t*t*t*t*t + b; return c/2*((t-=2)*t*t*t*t + 2) + b; }
+  
+  function sineIn( t, b = 0.0, c = 1.0, d = 1.0)      { return -c * Math.cos(t/d * (Math.PI/2)) + c + b; }
+  function sineOut( t, b = 0.0, c = 1.0, d = 1.0)     { return c * Math.sin(t/d * (Math.PI/2)) + b; }
+  function sineInOut( t, b = 0.0, c = 1.0, d = 1.0)   { return -c/2 * (Math.cos(Math.PI*t/d) - 1) + b; }
+
+  function expoIn( t, b = 0.0, c = 1.0, d = 1.0)      { return (t==0) ? b : c * Math.pow(2, 10 * (t/d - 1)) + b; }
+  function expoOut( t, b = 0.0, c = 1.0, d = 1.0)     { return (t==d) ? b+c : c * (-Math.pow(2, -10 * t/d) + 1) + b; }
+  function expoInOut( t, b = 0.0, c = 1.0, d = 1.0)   { if (t==0) return b; if (t==d) return b+c; if ((t/=d/2) < 1) return c/2 * Math.pow(2, 10 * (t - 1)) + b; return c/2 * (-Math.pow(2, -10 * --t) + 2) + b; }
+
+  function circIn( t, b = 0.0, c = 1.0, d = 1.0)      { return -c * (Math.sqrt(1 - (t/=d)*t) - 1) + b; }
+  function circOut( t, b = 0.0, c = 1.0, d = 1.0)     { return c * Math.sqrt(1 - (t=t/d-1)*t) + b; }
+  function circInOut( t, b = 0.0, c = 1.0, d = 1.0)   { if ((t/=d/2) < 1) return -c/2 * (Math.sqrt(1 - t*t) - 1) + b; return c/2 * (Math.sqrt(1 - (t-=2)*t) + 1) + b; }
+
+  function elasticIn( t, b = 0.0, c = 1.0, d = 1.0)   {
+                      var s=1.70158;var p=0;var a=c;
+                      if (t==0) return b;  if ((t/=d)==1) return b+c;  if (!p) p=d*.3;
+                      if (a < Math.abs(c)) { a=c; s=p/4; }
+                      else s = p/(2*Math.PI) * Math.asin (c/a);
+                      return -(a*Math.pow(2,10*(t-=1)) * Math.sin( (t*d-s)*(2*Math.PI)/p )) + b;
+                    }
+  function elasticOut( t, b = 0.0, c = 1.0, d = 1.0) {
+                      var s=1.70158;var p=0;var a=c;
+                      if (t==0) return b;  if ((t/=d)==1) return b+c;  if (!p) p=d*.3;
+                      if (a < Math.abs(c)) { a=c; s=p/4; }
+                      else s = p/(2*Math.PI) * Math.asin (c/a);
+                      return a*Math.pow(2,-10*t) * Math.sin( (t*d-s)*(2*Math.PI)/p ) + c + b;
+                    }
+  function elasticInOut( t, b = 0.0, c = 1.0, d = 1.0) {
+                      var s=1.70158;var p=0;var a=c;
+                      if (t==0) return b;  if ((t/=d/2)==2) return b+c;  if (!p) p=d*(.3*1.5);
+                      if (a < Math.abs(c)) { a=c; s=p/4; }
+                      else s = p/(2*Math.PI) * Math.asin (c/a);
+                      if (t < 1) return -.5*(a*Math.pow(2,10*(t-=1)) * Math.sin( (t*d-s)*(2*Math.PI)/p )) + b;
+                      return a*Math.pow(2,-10*(t-=1)) * Math.sin( (t*d-s)*(2*Math.PI)/p )*.5 + c + b;
+                    }
+  function backIn( t, b = 0.0, c = 1.0, d = 1.0, s = 1.70158)    { return c*(t/=d)*t*((s+1)*t - s) + b; }
+  function backOut( t, b = 0.0, c = 1.0, d = 1.0, s = 1.70158)   { return c*((t=t/d-1)*t*((s+1)*t + s) + 1) + b; }
+  function backInOut( t, b = 0.0, c = 1.0, d = 1.0, s = 1.70158) { if ((t/=d/2) < 1) return c/2*(t*t*(((s*=(1.525))+1)*t - s)) + b; return c/2*((t-=2)*t*(((s*=(1.525))+1)*t + s) + 2) + b; }
+
+  function bounceOut( t, b = 0.0, c = 1.0, d = 1.0) 
+                    {
+                      if ((t/=d) < (1/2.75)) 
+                        return c*(7.5625*t*t) + b;
+                      else if (t < (2/2.75))
+                        return c*(7.5625*(t-=(1.5/2.75))*t + .75) + b;
+                      else if (t < (2.5/2.75)) 
+                        return c*(7.5625*(t-=(2.25/2.75))*t + .9375) + b;
+                      else 
+                        return c*(7.5625*(t-=(2.625/2.75))*t + .984375) + b;
+                    }
+  function bounceIn( t, b = 0.0, c = 1.0, d = 1.0)              { return c - bounceOut ( d-t, 0, c, d) + b; }
+  function bounceInOut( t, b = 0.0, c = 1.0, d = 1.0)           { if (t < d/2) return bounceIn ( t*2, 0, c, d ) * .5 + b; return bounceOut ( t*2-d, 0, c, d ) * .5 + c*.5 + b; }
+
+} //namespace ease 
+
+// morph state 'from' 'to' object variables
+function Object.morph( from/*Object?*/, to/*Object?*/, ratio = 0.0, clone = true ) {
+
+  if( to && from ) { // 'to' and 'from' objects provided, morph this like: this.v = to.v + (to.v - from.v) * ratio
+    var target = clone? this.clone() : this;
+    for(var (k,fv) in from)
+      this[k] = fv.morph(fv,to[k], ratio);
+    return target;
+  }
+  else if( to && !from ) { // 'to' provided but 'from' - not, generate 'from' variables using current object state 
+    from = {};
+    for(var (k,v) in to) {
+      var tv = this[k];
+      from[k] = tv;
+      to[k] = typeof v == #function ? v(tv) : v;
+    }
+    return from;
+  } 
+  else if( from && !to ) { // 'from' provided but 'to' - not, generate 'to' variables using current object state 
+    to = {};
+    for(var (k,v) in from) {
+      var tv = this[k];
+      if( typeof v == #function ) from[k] = v(tv);
+      to[k] = tv;
+    }
+    return to;
+  }
+  else 
+    assert false: "no from and no to variables";
+}
+
+function Array.morph(from/*Array*/, to/*Array*/, ratio = 0.0 )
+{
+  if( to && from ) { // 'to' and 'from' objects provided, morph this like: this.v = to.v + (to.v - from.v) * ratio
+    assert to.length == from.length: String.$(to.length:{to.length == from.length} from.length:{from.length});
+    var r = to.clone();
+    for(var (i,fv) in from)
+      r[i] = fv.morph(fv,to[i], ratio);
+    return r;
+  }
+  else if( to && !from ) { // 'to' provided but 'from' - not, generate 'from' variables using current array state 
+    from = to.clone();
+    for(var (i,v) in to) {
+      var tv = this[k];
+      from[i] = tv;
+      to[i] = typeof v == #function ? v(tv) : v;
+    }
+    stdout.printf("%V->%V\n",from,to);
+    return from;
+  } 
+  else if( from && !to ) { // 'from' provided but 'to' - not, generate 'to' variables using current array state 
+    to = from.clone();
+    for(var (i,v) in from) {
+      var tv = this[i];
+      if( typeof v == #function ) from[i] = v(tv);
+      to[i] = tv;
+    }
+    return to;
+  }
+  else 
+    assert false: "no from and to variables";
+}
+
+function Tuple.morph(from/*Tuple*/, to/*Tuple*/, ratio = 0.0 )
+{
+  if( to && from ) { // 'to' and 'from' objects provided, morph this like: this.v = to.v + (to.v - from.v) * ratio
+    assert to.tag == from.tag : String.printf("%V:%V", to, from);
+  }
+  return Array.morph(from,to,ratio);
+}
+
+
+function Element.morph( from/*Object?*/, to/*Object?*/, ratio = 0.0 ) {
+
+  function compatibleTransform(sval /*from style*/, dval /* desired/declared */)
+  {
+    // note: for the brevity I skip here the step of generic matrix de/re-compposition.
+    // I expect transform's to be compatible: same functions in the same order (if any)
+    if( dval !instanceof Array ) 
+      dval = [dval];
+      
+    function compatible(sval, dval) {
+      if(sval.length != dval.length) return false;
+      for(var (n,v) in sval)
+        if( v.tag != dval[n].tag ) return false;
+      return true;
+    }
+       
+    if( sval && compatible(sval, dval))
+      return (sval,dval); // they are compatible, return them
+   
+    // not, compatible or null - generate no-transform value - identity list of functions
+    var rval = [];    
+    for( var el in dval ) 
+      switch(el.tag) {
+        case #translate:  rval.push([translate:0px,0px]); break;
+        case #scale:      rval.push([scale:1.0,1.0]); break;
+        case #rotate:     rval.push([rotate:0deg]); break;
+        case #skew:       rval.push([skew:0deg,0deg]); break;
+      }
+   
+    return (rval,dval);
+  }
+  
+  function compatibleValue(name, sval /*from style*/, dval /* desired/declared */)
+  {
+    if(sval !== undefined) 
+      return sval;
+
+    // it is undefined!
+    switch( name ) {
+      case #opacity: return sval === undefined? 1.0 : sval.toFloat();
+      case #border-color:
+      case #background-color:
+      case #color:  if(sval instanceof Color) return sval; 
+                    return sval === undefined 
+                         ? color(128,128,128,0) 
+                         : color(sval); 
+      case #height: 
+      case #width: 
+      case #border-width: return 0px;
+    }
+    assert false: "'" + name + "' property is undefined in CSS"; 
+  }
+   
+
+  if( to && from ) { // 'to' and 'from' objects provided, morph this like: this.v = to.v + (to.v - from.v) * ratio
+    var style = {};
+    for(var (k,fv) in from) {
+      style[k] = fv.morph(fv,to[k],ratio); 
+    }
+    this.style.set(style);
+  }
+  else if( to && !from ) { // 'to' provided but 'from' - not, generate 'from' variables using current object state 
+    from = {};
+    for(var (k,v) in to) {
+      var tv = this.style[k]; // current style val
+      if( k == #transform) 
+        (tv,v) = compatibleTransform(tv,v,to);
+      else 
+        tv = compatibleValue(k,tv,v);
+      from[k] = tv;
+      to[k] = typeof v == #function ? v(tv) : v; // v can be inc() or dec() function
+    }
+    return from;
+  } 
+  else if( from && !to ) { // 'from' provided but 'to' - not, generate 'to' variables using current object state 
+    to = {};
+    for(var (k,v) in from) {
+      var tv = this.style[k];
+      if( k == #transform)
+        (tv,v) = compatibleTransform(tv,v,from);
+      else 
+        tv = compatibleValue(k,tv,v);
+      from[k] = typeof v == #function? v(tv) : v; // handling inc() or dec() functions
+      to[k] = tv;
+    }
+    return to;
+  }
+  else 
+    assert false: "no from and to variables";
+}
+
+

@@ -1,0 +1,208 @@
+<html>
+  <head>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>H-SMILE core. CSSS! (css-script) language.</h1>
+  <h2>Intorduction</h2>
+  <p>CSSS! is an extension of classic CSS (Cascading Style Sheets) by the scripting to give it the ability to define some basic behavioral styles of elements.</p>
+  <p>CSSS! script can appear in a) attributes with names ending with '!' (exclamation) mark and b) inside the <a href="csss!-calc-function.htm"><code>calc()</code></a> function.</p>
+  <p>Here is <a href="csss!-events.htm">list of <em>active</em> CSS attributes</a> supported by h-smile core engine intrinsically.</p>
+  <p>Example, implementation of <code>&lt;label for=&quot;id&quot;&gt;</code> functionality but for any element that has attribute <code>for=&quot;id&quot;</code> defined:</p>
+  <pre>   [for]
+   {
+     hover-on!  : $1(#&lt; self.for &gt;):hover = true;
+     hover-off! : $1(#&lt; self.for &gt;):hover = false;
+     active-on! : $1(#&lt; self.for &gt;):focus = true;
+     cursor:pointer;
+   }
+   input:hover
+   {
+     outline: 4px glow blue 1px;
+   }
+</pre>
+  <p>Rules <code>hover-on</code> and &nbsp;<code>hover-off</code> are causing bound element of this label to get <em>:hover</em> state. Therefore mouse hover on the label is the same as hovering &nbsp;bound element itself. The rule <code>active-on!:</code> does the magic - it sets focus on the bound element.</p>
+  <p>For the meaning of <code>$1(...)</code> see chapter <em>Selector pseudo-functions</em> below.</p>
+  <h2>CSSS! syntax</h2>
+  <p>CSSS! is used as embedded in host CSS syntax and grammar. This limits list of symbols/construction that can by used by the CSSS!. CSSS! is not using symbols: <code>';'</code>, <code>'{'</code> and <code>'}'</code> in its notation. To be precise symbol ';' is used as an end of script statement ending script text.</p>
+  <h3>Identifiers</h3>
+  <p>Identifiers (nmtokens) start with a <em>alphabetic character</em>, '-', &nbsp;'_' or '$' followed by any number of alphabetic characters, '-', '_', '$' or digits ([0-9]). Note the symbol '-' here, as in CSS syntax it is allowed to be a part of the name. To solve conflicts with sign '-' as an <em>operator minus</em> always enclose it by spaces.</p>
+  <pre class="code">nmtoken -&gt; [a-zA-Z_\-$]+[a-zA-Z_\-$0-9]*
+</pre>
+  <h3>Keywords</h3>
+  <p>CSSS! has following keywords:</p>
+  <pre>true   false   null   self
+</pre>
+  <h3><a name="operators" id="operators">Operators</a></h3>
+  <pre class="code">&lt;     &gt;     &lt;=    ==    !=    &gt;=    &amp;&amp;    ||
++     -     *     /     %     ^     |     &amp;
+</pre>
+  <p>[tbd]</p>
+  <p>Operators that will be supported in next versions:</p>
+  <pre>~=    ~/    ~%    %~    /~
+</pre>
+  <p>Ternary operator: &nbsp;</p>
+  <pre>&lt;condition&gt; <strong>?</strong> &lt;true-part&gt; [ <strong>#</strong> &lt;false-part&gt; ]
+</pre>
+  <p>Note that ternary operators can be used as conditional statements (if ... then ... else ...):</p><code>self:value &gt; 12 ?( self:current = true, self.scroll-to-view())</code>; - if value of <em>self</em> element is larger than 12 make self current and scroll it to the view.
+  <h3>Data types</h3>
+  <p>CSSS! is a typeless language. All variables can hold following values:</p>
+  <ul>
+    <li>null - no value;</li>
+    <li><em>boolean</em> that has two values: <em>true</em> and <em>false</em>;</li>
+    <li><em>integer</em> - 32bit signed integer;</li>
+    <li><em>float</em> - 64bit float number;</li>
+    <li><em>string</em> - string of UNICODE characters;</li>
+    <li><em>object</em> - reference to the DOM element;</li>
+    <li><em>object-set</em> - special object that represent set of DOM elements. Function $() returns such values.</li>
+    <li><em>function-reference</em> - references to functions declared in CSSS!</li></ul>
+  <p>No aggregate types (like array) are supported. Intentionally.</p>
+  <h3>Literals</h3>
+  <p>accepts integer numbers, floating point numbers, stings literals, <strong>length units</strong> and regexp literals:</p>
+  <pre class="code">integer-literal -&gt; [0-9]+ | '0x' [0-9A-Fa-f]+ | ''' character ''' | key-code-literal
+  float-literal -&gt; [0-9]+ '.' [0-9]+
+  float-literal -&gt; [0-9]+ '.' 'e'|'E' '+'|'-' [0-9]+
+ string-literal -&gt; '&quot;' [.]* '&quot;'
+ regexp-literal -&gt; '/' &lt;single line regular expression&gt; ['/ig'] ';'
+ length-literal -&gt; &lt;integer-literal&gt; | &lt;float-literal&gt; immediately
+                   followed by one of:
+                   'pt' | 'px' | 'pc' | '%' | 'em' | 'ex' | 'in' | 'cm' | 'mm'
+</pre>
+  <p><em>Key-code-literal</em> is a single character enclosed by single quote or one of the following:</p><code>'RETURN' | 'LEFT' | 'RIGHT' | 'UP' | 'DOWN' | 'PRIOR' | 'NEXT' | 'TAB' | 'HOME' | 'END' | 'DELETE' | 'INSERT' | 'BACK'</code>
+  <p>To define key combinations Ctrl+X like prepend name of the key with symbol <code>'^'</code>.</p>
+  <p> Examples:</p>
+  <pre class="code">            34 - Integer
+    0xAFED1234 - Integer
+          1.52 - Float
+          1.e2 - Float
+         1.e-2 - Float
+&quot;Hello world!&quot; - String
+          12pt - Length value that is getting resolved to
+                 number of pixels in arithmetic expressions.
+           'A' - Code of character 'A', Integer
+</pre>Example of <em>key-code-literal</em>s:
+  <pre>key-on!:
+  key-code() == '^A'? ... # // Ctrl+A pressed
+  key-code() == '^NEXT'? ... ; // Ctrl+PgDown pressed
+</pre>
+  <h3><a name="comments" id="comments">Comments</a></h3>
+  <p> Comment is a sequence of characters ignored by compiler. There are two types of comments:</p>
+  <ul>Single line comment:</ul>
+  <pre class="code">'//' &lt;text-no-crlf&gt; end-of-line
+</pre>
+  <ul>Multi line comment:</ul>
+  <pre class="code">'/*' &lt;text&gt; '*/'
+</pre>
+  <h2><a name="statements" id="statements">Statements</a></h2>
+  <p>CSSS! program is a sequence of statements separated by <code>','</code> (comma) symbols. And ends by symbol <code>';'</code>. Following statements are supported by the CSSS! script:</p>
+  <h4>Assignment:</h4>
+  <pre>&lt;left-side-expression&gt; '=' &lt;expression&gt;.
+</pre>
+  <h4>Variable declaration:</h4>
+  <pre>&lt;name&gt; <strong>'='</strong> &lt;expression&gt;
+</pre>
+  <h4>Block</h4>
+  <p>Block is a list of comma separated expressions:</p>
+  <pre><strong>'('</strong> &lt;expression&gt; [, &lt;expression&gt;]* <strong>')'
+</pre></strong>
+  <p>Value of the block equals to the value of last expression executed in the list.</p>
+  <h4>Conditional</h4>
+  <pre>&lt;logical-expresion&gt; <strong>'?'</strong> &lt;when-true-expression&gt; [ <strong>'#'</strong> &lt;when-false-expression&gt; ]
+</pre>
+  <p>Logical expression is getting evaluated and if it is <code>true</code> then expression on the right side of '?' is getting evaluated. In case of <code>false</code> expresion on the right side of '#' (a.k.a. not equal) is geting evaluated. '#' part can be ommited.</p>
+  <h4>Loops</h4>
+  <p>No loops in CSSS!. Intentionally. (But there is a tail recursion in functions for that purposes)</p>
+  <h4>Return</h4>
+  <p><code>return</code> statement is used for returning values from functions:</p>
+  <pre>return &lt;expression-or-value-to-return&gt;
+</pre>
+  <h4>For each, enumeration</h4>
+  <pre>&lt;object-set&gt; <strong>'-&gt;'</strong> &lt;reference-to-function-with-single-parameter&gt;
+</pre>
+  <p>Enumeration is used for invocation of function on the right for each element of object-set-expression on the left. Such pseudo functions as <code>$()</code>, <code>$p()</code> and <code>$c()</code> produce sets - collection of DOM elements satisfying their selectors.</p>
+  <p>Example:</p>
+  <pre>     input.number
+     {
+       value-changed! :
+         total = 0,
+         $(input.number) -&gt; @(el) total = total + el:value,
+         $1(td#total):value = total;
+     }
+</pre>
+  <p>Code above means following:</p>
+  <p>When value of some <code>&lt;input class=&quot;number&quot;&gt;</code> is getting changed do the following:</p>
+  <ul>
+    <li>declare variable <em>total</em> with initial value 0,</li>
+    <li>declare function <code>@(el) total = total + el:value</code>,</li>
+    <li>call this function for any DOM element satisfying <code>input.number</code> selector,</li>
+    <li>assign that total to the first element satisfying selector <code>td#total</code>.</li></ul>
+  <h4>DOM attributes and states access</h4>
+  <p>Attributes of DOM elements can be accessed by using dot notation:</p>
+  <pre>&lt;object-or-object-set&gt; '.' &lt;attribute-name&gt;
+</pre>
+  <p>Example, for the element <code>&lt;input type=&quot;text&quot;&gt;</code> following:</p>
+  <pre>t = self.type
+</pre>
+  <p>will retrieve value of DOM attribute named &quot;type&quot; (that has &quot;text&quot; here) and assign it to the variable <code>t</code>. &nbsp;</p>
+  <p>State fields (runtime values) of DOM elements can be accessed by using following notation:</p>
+  <pre>&lt;object-or-object-set&gt; ':' &lt;state-name&gt;
+</pre>
+  <p>Where <em>state-name</em> is a name of one of state flags recognized by CSS: &nbsp;<code>:hover</code>, <code>:active</code>, <code>:link</code>, &nbsp;<code>:checked</code>, <code>:current</code>, etc.</p>
+  <h4>CSS attributes access</h4>
+  <p>CSS attributes of DOM elements can be accessed by using '::' accessor:</p>
+  <pre>&lt;object&gt; '::' &lt;css-attribute-name&gt;
+</pre>
+  <p>Example, following timer even handler will gradually make element transparent:</p>
+  <pre>     timer!: self::opacity &lt; 1.0?
+               self::opacity = self::opacity + 0.1 #
+               return cancel;
+</pre>
+  <h2>Self</h2>
+  <p>Keyword <code>self</code> designates <a href="csss!-dom-object.htm">object - DOM element</a> that has this rule applied to.</p>
+  <h2>Cancel</h2>
+  <p>Keyword <code>cancel</code> designates special value that is used with <code>return</code> statement to instruct runtime to stop event propagation further.</p>
+  <h2>Functions</h2>
+  <p>CSSS! intentionally supports only anonymous custom defined functions.</p>
+  <h4>Declaration</h4>
+  <p>Functions are declared as:</p>
+  <pre>'@(' &lt;parameter-list&gt; ')' &lt;statement&gt; | &lt;block&gt;
+</pre>
+  <p>Where <code>&lt;parameter-list&gt;</code> is a comma separated list of names.</p>
+  <p>Function can be assigned to variable:</p>
+  <pre>foo = @(p1, p2) p1 + p2, ...
+</pre>
+  <p>That will declare function with two parameters <code>p1</code> and <code>p2</code> and body <code>p1 + p2</code> and assign reference of the function to the <code>foo</code> variable.</p>
+  <h4>Invocation</h4>
+  <p>Invocation of functions is as usual</p>
+  <pre>&lt;variable&gt; <strong>'('</strong> &lt;expression-1&gt; , ... &lt;expression-n&gt; <strong>')'
+</pre></strong>
+  <p>Example, following will invoke function <em>foo</em> above and assign its return value to variable <em>bar</em>:</p>
+  <pre>bar = foo(1,2)
+</pre>
+  <h2>Global functions</h2>
+  <h3>Selector functions</h3>
+  <p>There are two global selector functions:</p>
+  <ol>
+    <li><code><strong>$</strong>(selector)</code><strong> - </strong>select elements globally with the <code>:root</code> set to the root node of the document.</li>
+    <li><code><strong>$1</strong>(selector)</code> - returns <a href="csss!-dom-object.htm">object</a> - first element matching the selector with the :root set to the root node of the document.</li></ol>
+  <p>Function $() return set (possible empty) of DOM element selected. $1() function returns single DOM element - first element that matches the selector.</p>
+  <p>Selector functions support value concatenation in the form <code>$( ... &lt;value&gt; ... )</code> where '&lt;' and '&gt;' parameter inclusion brackets. <br/>Example, followng statemets:</p>
+  <pre>ncol = 2, $( table td:nth-child(&lt; ncol &gt;)).some-attr = &quot;hi!&quot;;
+</pre>
+  <p>will set &quot;hi!&quot; to attribute <em>some-attr</em> for all elements satisfying the selector: <code>table td:nth-child(2)</code></p>
+  <h3>Other functions</h3>
+  <ul>
+    <li><code><strong>int</strong>(val)</code>- converts value val into integer;</li>
+    <li><code><strong>float</strong>(val)</code>- converts value val into float number;</li>
+    <li><code><strong>length</strong>(val)</code> - converts value val into length unit number;</li>
+    <li><code><strong>min</strong>(val1, val2 ... valN)</code>- returns minimal value of parameters passed;</li>
+    <li><code><strong>max</strong>(val1, val2 ... valN)</code>- returns maximum value of parameters passed;</li>
+    <li><code><strong>limit</strong>(val, minval, maxval)</code> - returns val if it is inside [minval...maxval] range, minval if val is less than minval or maxval otherwise.</li></ul>
+  <h3>String object properties and methods</h3>
+  <ul>
+    <li><code><em>string</em><strong>.length</strong></code> - property, &nbsp;length of the <em>string</em> object;</li>
+    <li><code><em>string</em><strong>.toUpper()</strong></code> - &nbsp;method, returns upper case version of the string;</li>
+    <li><code><em>string</em><strong>.toLower()</strong></code> - &nbsp;method, returns lover case version of the string;</li>
+    <li><code><em>string</em><strong>.substr(</strong>start[, length = -1]<strong>)</strong></code> - &nbsp;method, returns fragment of the string, if length is less than zero returns rest of the string.</li></ul>
+</body>
+</html>

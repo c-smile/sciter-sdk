@@ -1,0 +1,55 @@
+include "localized.tis";
+
+class DataProvider : CommonDataProvider
+{
+  function this()
+  {
+    
+    this.columns = 
+    [
+      { caption: localized.col1,   name:"first", allowSorting:true, format:"%X", sortOrder:#ascending },
+      { caption: localized.col2,   name:"second", allowSorting:true },
+      { caption:"Third",    name:"third", allowSorting:true },
+      { caption:"Fourth",   name:"fourth", allowSorting:true },
+      { caption:"Fifth",    name:"fifth", allowSorting:true },
+      { caption:"Sixth",    name:"sixth", allowSorting:true },
+      { caption:"Seventh",  name:"seventh", allowSorting:true },
+      { caption:"Eighth",   name:"eighth", allowSorting:true },
+      { caption:"Nineth",   name:"nineth", allowSorting:true },
+      { caption:"Tenth",    name:"tenth", allowSorting:true},      
+    ]; 
+
+    this.createDefaultSortMapping(); // optional
+        
+    this[ #rowCount] = 
+      property(v) {  get { return 10000; } }
+  }
+  
+  function rowData(rowNo)
+  {
+    for(var (i, v) in this.columns)
+      if( v.sortOrder === #descending )
+        rowNo = 9999 - rowNo;
+    
+    const rowClass = rowNo % 2 ? "odd" : "even"; // each row will have this class
+    
+    return ([ rowNo, 
+             "c2." + rowNo,
+             "c3." + rowNo, 
+             "c4." + rowNo, 
+             "c5." + rowNo, 
+             "c6." + rowNo, 
+             "c7." + rowNo, 
+             "c8." + rowNo, 
+             "c9." + rowNo, 
+             "c10." + rowNo], rowClass); // (rowData,rowClass)
+  }
+    
+  function updateSorting0(columnIndex, sortOrder) 
+  {
+    // do nothing because we does not keep our data in array
+    // note: SQLite Data source already adapted to use sorting
+    this.grid.show(this.grid.firstRowNo, false);
+  }
+}
+var DataSource = new DataProvider();

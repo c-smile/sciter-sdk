@@ -1,0 +1,13 @@
+
+type bhvA : Behavior 
+{
+	function attached(){ this.text = "A";}
+}
+type bhvB : bhvA 
+{
+	function attached(){ super.attached(); this.text += "B";}
+}
+function Super_Behavior_test()
+{
+  if( $(#behavior-test).text != "AB" ) throw "Behavior super.foo";  
+}

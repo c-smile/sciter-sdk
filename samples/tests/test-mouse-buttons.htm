@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      div#sensor { flow:horizontal; }
+      div#sensor > .mbutton { size:40px; border:1px solid; }
+      div#sensor > .mbutton:checked { background:gold; }
+    
+    </style>
+    <script type="text/tiscript">
+    
+      function self.onMouse(evt)
+      {
+        var pressed;
+        if( evt.type == Event.MOUSE_DOWN)
+          pressed = true;
+        else if( evt.type == Event.MOUSE_UP)
+          pressed = false;
+        else return ;
+        
+        var sensor = $(#sensor);
+
+        var mask = 1;
+        for(var n = 0; n < 5; ++n, mask <<= 1)
+          if( mask & evt.buttons )
+            sensor[n].state.checked = pressed;
+          
+      }
+        
+    </script>
+  </head>
+<body>
+  <p>Mouse buttons states:</p>
+  <div #sensor>
+    <div .mbutton>0x01</div>
+    <div .mbutton>0x02</div>
+    <div .mbutton>0x04</div>
+    <div .mbutton>0x08</div>
+    <div .mbutton>0x10</div>
+  <div>
+
+</body>
+</html>

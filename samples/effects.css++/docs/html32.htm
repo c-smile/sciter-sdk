@@ -1,0 +1,2706 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD><TITLE>HTML 3.2 Reference Specification</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+<META content="MSHTML 6.00.2722.900" name=GENERATOR>
+<STYLE>
+  /* it is here for the update demo test in browser.exe 
+     all elements with attribute 'updated' equals 'true' will have this: */
+  [updated="true"] { background-color:yellow; border:1px solid red; } 
+  [hide="1"] { display:none; } 
+  
+  HTML { behavior:font-size; }
+  HTML[zoom="1"] { font-size:xx-small; }
+  HTML[zoom="2"] { font-size:x-small; }
+  HTML[zoom="3"] { font-size:small; }
+  HTML[zoom="4"] { font-size:medium;}
+  HTML[zoom="5"] { font-size:large; }
+  HTML[zoom="6"] { font-size:x-large; }
+  HTML[zoom="7"] { font-size:xx-large; }
+  BODY{ behavior:htmlarea; }
+    
+</STYLE>
+</HEAD>
+<BODY text=#000000 vLink=#800000 aLink=#ff00ff link=#c00000 bgColor=#fff6f0 
+background=""><!--basefont size=3-->
+<H2 align=right><A href="http://www.w3.org/"><IMG height=48 alt=W3C: 
+src="HTML 3_2 Reference Specification_files/w3c_home" width=72 align=left 
+border=0></A> REC-html32</H2>
+<H1 align=center>HTML 3.2 Reference Specification</H1>
+<H3 align=center>W3C Recommendation <I>14-Jan-1997</I></H3>
+<P>Author: <I><A href="http://www.w3.org/People/Raggett">Dave Raggett</A></I> 
+<TT>&lt;<A href="mailto:dsr@w3.org">dsr@w3.org</A>&gt;</TT></P>
+<HR>
+
+<H3>Status of this document</H3>
+<P>This document has been reviewed by W3C members and other interested parties 
+and has been endorsed by the Director as a W3C Recommendation. It is a stable 
+document and may be used as reference material or cited as a normative reference 
+from another document. W3C's role in making the Recommendation is to draw 
+attention to the specification and to promote its widespread deployment. This 
+enhances the functionality and interoperability of the Web. 
+<P>A list of current W3C Recommendations and other technical documents can be 
+found at <A 
+href="http://www.w3.org/pub/WWW/TR/">http://www.w3.org/pub/WWW/TR/</A>. 
+<HR>
+
+<H2>Abstract</H2>
+<HR>
+<P>The HyperText Markup Language (HTML) is a simple markup language used to 
+create hypertext documents that are portable from one platform to another. HTML 
+documents are SGML documents with generic semantics that are appropriate for 
+representing information from a wide range of applications. This specification 
+defines HTML version 3.2. HTML 3.2 aims to capture recommended practice as of 
+early '96 and as such to be used as a replacement for HTML 2.0 (<A 
+href="#refs">RFC 
+1866</A>). 
+<HR>
+
+<H2>Contents</H2>
+<UL>
+  <LI><A 
+  href="#intro">Introduction 
+  to HTML 3.2</A> 
+  <LI><A 
+  href="#sgml">HTML 
+  as an SGML application</A> 
+  <LI><A 
+  href="#html">The 
+  Structure of HTML documents</A> 
+  <LI><A 
+  href="#head">The 
+  HEAD element and its children</A> 
+  <LI><A 
+  href="#body">The 
+  BODY element and its children</A> 
+  <LI><A 
+  href="#catalog">Sample 
+  SGML Open Catalog for HTML 3.2</A> 
+  <LI><A 
+  href="#sgmldecl">SGML 
+  Declaration for HTML 3.2</A> 
+  <LI><A 
+  href="#dtd">HTML 
+  3.2 Document Type Definition</A> 
+  <LI><A 
+  href="#latin1">Character 
+  Entities for ISO Latin-1</A> 
+  <LI><A 
+  href="#charset">Table 
+  of printable Latin-1 Character codes</A> 
+  <LI><A 
+  href="#acks">Acknowledgements</A> 
+
+  <LI><A 
+  href="#refs">Further 
+  Reading ...</A> </LI></UL>
+<HR>
+
+<H2><A name=intro>Introduction to HTML 3.2</A></H2>
+<P>HTML 3.2 is W3C's specification for HTML, developed in early `96 together 
+with vendors including IBM, Microsoft, Netscape Communications Corporation, 
+Novell, SoftQuad, Spyglass, and Sun Microsystems. HTML 3.2 adds widely deployed 
+features such as tables, applets and text flow around images, while providing 
+full backwards compatibility with the existing standard HTML 2.0. 
+<P>W3C is continuing to work with vendors on extensions for accessibility 
+features, multimedia objects, scripting, style sheets, layout, forms, math and 
+internationalization. W3C plans on incorporating this work in further versions 
+of HTML. 
+<H3><A name=sgml>HTML as an SGML Application</A></H3>
+<P>HTML 3.2 is an SGML application conforming to International Standard ISO 8879 
+-- Standard Generalized Markup Language. As an SGML application, the syntax of 
+conforming HTML 3.2 documents is defined by the combination of the <A 
+href="#sgmldecl">SGML 
+declaration</A> and the <A 
+href="#dtd">document 
+type definition</A> (DTD). This specification defines the intended 
+interpretation of HTML 3.2 elements, and places further constraints on the 
+permitted syntax which are otherwise inexpressible in the DTD. 
+<P>The SGML rules for record boundaries are tricky. In particular, a record end 
+immediately following a start tag should be discarded. For example: <PRE>&lt;P&gt;
+Text</PRE>
+<P>is equivalent to:</P><PRE>&lt;P&gt;Text</PRE>
+<P>Similarly, a record end immediately preceding an end tag should be discarded. 
+For example: <PRE>Text
+&lt;/P&gt;</PRE>
+<P>is equivalent to: </P><PRE>Text&lt;/P&gt;</PRE>
+<P>Except within literal text (e.g. the <SAMP>PRE</SAMP> element), HTML treats 
+contiguous sequences of white space characters as being equivalent to a single 
+space character (ASCII decimal 32). These rules allow authors considerable 
+flexibility when editing the marked-up text directly. Note that future revisions 
+to HTML may allow for the interpretation of the horizontal tab character (ASCII 
+decimal 9) with respect to a tab rule defined by an associated style sheet. 
+<P>SGML entities in PCDATA content or in CDATA attributes are expanded by the 
+parser, e.g. <SAMP>&amp;#233;</SAMP> is expanded to the ISO Latin-1 character 
+decimal 233 (a lower case letter e with an acute accent). This could also have 
+been written as a named character entity, e.g. <SAMP>&amp;eacute;</SAMP>. The 
+&amp; character can be included in its own right using the named character 
+entity <SAMP>&amp;amp;</SAMP>. 
+<P>HTML allows CDATA attributes to be unquoted provided the attribute value 
+contains only letters (a to z and A to Z), digits (0 to 9), hyphens (ASCII 
+decimal 45) or, periods (ASCII decimal 46). Attribute values can be quoted using 
+double or single quote marks (ASCII decimal 34 and 39 respectively). Single 
+quote marks can be included within the attribute value when the value is 
+delimited by double quote marks, and vice versa. 
+<P>Note that some user agents require attribute minimisation for the following 
+attributes: <SAMP>COMPACT</SAMP>, <SAMP>ISMAP</SAMP>, <SAMP>CHECKED</SAMP>, 
+<SAMP>NOWRAP</SAMP>, <SAMP>NOSHADE</SAMP> and <SAMP>NOHREF</SAMP>. These user 
+agents don't accept syntax such as <SAMP>COMPACT=COMPACT</SAMP> or 
+<SAMP>ISMAP=ISMAP</SAMP> although this is legitimate according to the HTML 3.2 
+DTD. 
+<P>The SGML declaration and the DTD for use with HTML 3.2 are given in 
+appendices. Further guidelines for parsing HTML are given in <A 
+href="#refs">WD-html-lex</A>. 
+
+<HR>
+
+<H3><A name=html>The Structure of HTML documents</A></H3>
+<P>HTML 3.2 Documents start with a &lt;!DOCTYPE&gt; declaration followed by an 
+HTML element containing a <A 
+href="#head"><SAMP>HEAD</SAMP></A> 
+and then a <A 
+href="#body"><SAMP>BODY</SAMP></A> 
+element: <PRE>  &lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN"&gt;
+  &lt;HTML&gt;
+  &lt;HEAD&gt;
+  &lt;TITLE&gt;A study of population dynamics&lt;/TITLE&gt;
+  <I>... other head elements</I>
+  &lt;/HEAD&gt;
+  &lt;BODY&gt;
+  <I>... document body</I>
+  &lt;/BODY&gt;
+  &lt;/HTML&gt;</PRE>
+<P>In practice, the <SAMP>HTML</SAMP>, <A 
+href="#head"><SAMP>HEAD</SAMP></A> 
+and <A 
+href="#body"><SAMP>BODY</SAMP></A> 
+start and end tags can be omitted from the markup as these can be inferred in 
+all cases by parsers conforming to the <A 
+href="#dtd">HTML 
+3.2 DTD</A>. 
+<P>Every conforming HTML 3.2 document <B>must</B> start with the 
+<SAMP>&lt;!DOCTYPE&gt;</SAMP> declaration that is needed to distinguish HTML 3.2 
+documents from other versions of HTML. The HTML specification is not concerned 
+with storage entities. As a result, it is not required that the document type 
+declaration reside in the same storage entity (i.e. file). A Web site may choose 
+to dynamically prepend HTML files with the document type declaration if it is 
+known that all such HTML files conform to the HTML 3.2 specification. 
+<P>Every HTML 3.2 document must also include the descriptive title element. A 
+minimal HTML 3.2 document thus looks like: <PRE>  &lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN"&gt;
+  &lt;TITLE&gt;A study of population dynamics&lt;/TITLE&gt;</PRE>
+<P><I>Note: the word "Final" replaces "Draft" now that the HTML 3.2 
+specification has been ratified by the W3C member organizations.</I> 
+<HR>
+
+<H2><A name=head>The HEAD element</A></H2>
+<P>This contains the document head, but you can always omit both the start and 
+end tags for <SAMP>HEAD</SAMP>. The contents of the document head is an 
+unordered collection of the following elements: 
+<UL>
+  <LI><A 
+  href="#title">The 
+  TITLE element</A> 
+  <LI><A 
+  href="#script">The 
+  STYLE element</A> 
+  <LI><A 
+  href="#script">The 
+  SCRIPT element</A> 
+  <LI><A 
+  href="#isindex">The 
+  ISINDEX element</A> 
+  <LI><A 
+  href="#base">The 
+  BASE element</A> 
+  <LI><A 
+  href="#meta">The 
+  META element</A> 
+  <LI><A 
+  href="#link">The 
+  LINK element</A> </LI></UL><PRE>&lt;!ENTITY % head.content "TITLE &amp; ISINDEX? &amp; BASE?"&gt;
+&lt;!ENTITY % head.misc "SCRIPT|STYLE|META|LINK"&gt;
+
+&lt;!ELEMENT HEAD O O  (%head.content) +(%head.misc)&gt;</PRE>
+<P>The %head.misc entity is used to allow the associated elements to occur 
+multiple times at arbitrary positions within the HEAD. The following elements 
+can be part of the document head: 
+<DL>
+  <DT><B><A 
+  href="#title">TITLE</A></B> 
+  defines the document title, and is always needed. 
+  <DT><B><A 
+  href="#isindex">ISINDEX</A></B> 
+  for simple keyword searches, see <SAMP>PROMPT</SAMP> attribute. 
+  <DT><B><A 
+  href="#base">BASE</A></B> 
+  defines base URL for resolving relative URLs. 
+  <DT><B><A 
+  href="#script">SCRIPT</A></B> 
+  reserved for future use with scripting languages. 
+  <DT><B><A 
+  href="#style">STYLE</A></B> 
+  reserved for future use with style sheets. 
+  <DT><B><A 
+  href="#meta">META</A></B> 
+  used to supply meta info as name/value pairs. 
+  <DT><B><A 
+  href="#link">LINK</A></B> 
+  used to define relationships with other documents. </DT></DL>
+<P><SAMP>TITLE</SAMP>, <SAMP>SCRIPT</SAMP> and <SAMP>STYLE</SAMP> are containers 
+and require both start and end tags. The other elements are not containers so 
+that end tags are forbidden. Note that conforming browsers won't render the 
+contents of <SAMP>SCRIPT</SAMP> and <SAMP>STYLE</SAMP> elements. 
+<H3><A name=title>TITLE</A></H3><PRE>&lt;!ELEMENT TITLE - -  (#PCDATA)* -(%head.misc)&gt;</PRE>
+<P>Every HTML 3.2 document <B>must</B> have exactly one <SAMP>TITLE</SAMP> 
+element in the document's <SAMP>HEAD</SAMP>. It provides an advisory title which 
+can be displayed in a user agent's window caption etc. The content model is 
+PCDATA. As a result, character entities can be used for accented characters and 
+to escape special characters such as &amp; and &lt;. Markup is not permitted in 
+the content of a <SAMP>TITLE</SAMP> element. 
+<P>Example TITLE element: <PRE>    &lt;TITLE&gt;A study of population dynamics&lt;/TITLE&gt;</PRE>
+<H3><A name=style>STYLE</A> and <A name=script>SCRIPT</A></H3><PRE>&lt;!ELEMENT STYLE  - - CDATA -- placeholder for style info --&gt;
+&lt;!ELEMENT SCRIPT - - CDATA -- placeholder for script statements --&gt;
+</PRE>
+<P>These are place holders for the introduction of style sheets and client-side 
+scripts in future versions of HTML. User agents should hide the contents of 
+these elements. 
+<P>These elements are defined with CDATA as the content type. As a result they 
+may contain only SGML characters. All markup characters or delimiters are 
+ignored and passed as data to the application, except for ETAGO ("&lt;/") 
+delimiters followed immediately by a name character [a-zA-Z]. This means that 
+the element's end-tag (or that of an element in which it is nested) is 
+recognized, while an error occurs if the ETAGO is invalid. 
+<H3><A name=isindex>ISINDEX</A></H3><PRE>    &lt;!ELEMENT ISINDEX - O EMPTY&gt;
+    &lt;!ATTLIST ISINDEX
+        prompt CDATA #IMPLIED -- prompt message --&gt;</PRE>
+<P>The <SAMP>ISINDEX</SAMP> element indicates that the user agent should provide 
+a single line text input field for entering a query string. There are no 
+restrictions on the number of characters that can be entered. The 
+<SAMP>PROMPT</SAMP> attribute can be used to specify a prompt string for the 
+input field, e.g. <PRE>    &lt;ISINDEX PROMPT="Search Phrase"&gt;</PRE>
+<P>The semantics for <SAMP>ISINDEX</SAMP> are currently well defined only when 
+the base URL for the enclosing document is an HTTP URL. Typically, when the user 
+presses the enter (return) key, the query string is sent to the server 
+identified by the base URL for this document. For example, if the query string 
+entered is "ten green apples" and the base URL is: <PRE>    http://www.acme.com/</PRE>
+<P>then the query generated is: <PRE>    http://www.acme.com/?ten+green+apples"</PRE>
+<P>Note that space characters are mapped to "+" characters and that normal URL 
+character escaping mechanisms apply. For further details see the <A 
+href="#refs">HTTP</A> 
+specification. 
+<P><I><B>Note</B> in practice, the query string is resticted to Latin-1 as there 
+is no current mechanism for the URL to specify a character set for the 
+query.</I> 
+<H3><A name=base>BASE</A></H3><PRE>    &lt;!ELEMENT BASE - O EMPTY&gt;
+    &lt;!ATTLIST BASE
+        href %URL  #REQUIRED
+        &gt;</PRE>
+<P>The <SAMP>BASE</SAMP> element gives the base URL for dereferencing relative 
+URLs, using the rules given by the URL specification, e.g. <PRE>    &lt;BASE href="http://www.acme.com/intro.html"&gt;
+     ...
+    &lt;IMG SRC="icons/logo.gif"&gt;</PRE>
+<P>The image is deferenced to <PRE>    http://www.acme.com/icons/logo.gif</PRE>
+<P>In the absence of a <SAMP>BASE</SAMP> element the document URL should be 
+used. Note that this is not necessarily the same as the URL used to request the 
+document, as the base URL may be overridden by an HTTP header accompanying the 
+document. 
+<H3><A name=meta>META</A></H3><PRE>&lt;!ELEMENT META - O EMPTY    -- Generic Metainformation --&gt;
+&lt;!ATTLIST META
+        http-equiv  NAME    #IMPLIED  -- HTTP response header name  --
+        name        NAME    #IMPLIED  -- metainformation name       --
+        content     CDATA   #REQUIRED -- associated information     --
+        &gt;
+</PRE>
+<P>The <SAMP>META</SAMP> element can be used to include name/value pairs 
+describing properties of the document, such as author, expiry date, a list of 
+key words etc. The <SAMP>NAME</SAMP> attribute specifies the property name while 
+the <SAMP>CONTENT</SAMP> attribute specifies the property value, e.g. <PRE>    &lt;META NAME="Author" CONTENT="Dave Raggett"&gt;</PRE>
+<P>The <SAMP>HTTP-EQUIV</SAMP> attribute can be used in place of the 
+<SAMP>NAME</SAMP> attribute and has a special significance when documents are 
+retrieved via the Hypertext Transfer Protocol (HTTP). HTTP servers may use the 
+property name specified by the HTTP-EQUIV attribute to create an RFC 822 style 
+header in the HTTP response. This can't be used to set certain HTTP headers 
+though, see the HTTP specification for details. <PRE>    &lt;META HTTP-EQUIV="Expires" CONTENT="Tue, 20 Aug 1996 14:25:27 GMT"&gt;</PRE>
+<P>will result in the HTTP header: <PRE>    Expires: Tue, 20 Aug 1996 14:25:27 GMT</PRE>
+<P>This can be used by caches to determine when to fetch a fresh copy of the 
+associated document. 
+<H3><A name=link>LINK</A></H3>
+<P><SAMP>LINK</SAMP> provides a media independent method for defining 
+relationships with other documents and resources. <SAMP>LINK</SAMP> has been 
+part of HTML since the very early days, although few browsers as yet take 
+advantage of it (most still ignore <SAMP>LINK</SAMP> elements). 
+<P>LINK elements can be used <EM>in principle</EM>: 
+<OL type=a>
+  <LI>for document specific navigation toolbars or menus 
+  <LI>to control how collections of HTML files are rendered into printed 
+  documents 
+  <LI>for linking associated resources such as style sheets and scripts 
+  <LI>to provide alternative forms of the current document </LI></OL><PRE>    &lt;!ELEMENT LINK - O EMPTY&gt;
+    &lt;!ATTLIST LINK
+        href    %URL    #IMPLIED    -- URL for linked resource --
+        rel     CDATA   #IMPLIED    -- forward link types --
+        rev     CDATA   #IMPLIED    -- reverse link types --
+        title   CDATA   #IMPLIED    -- advisory title string --
+        &gt;
+</PRE>
+<DL>
+  <DT><B>href</B> 
+  <DD>Specifies a URL designating the linked resource. 
+  <DT><B>rel</B> 
+  <DD>The forward relationship also known as the "link type". It specifies a 
+  named relationship from the enclosing document to the resource specified by 
+  the <SAMP>HREF</SAMP> attribute. HTML link relationships are as yet 
+  unstandardized, although some conventions have been established. 
+  <DT><B>rev</B> 
+  <DD>This defines a reverse relationship. A link from document A to document B 
+  with <SAMP>REV=<EM>relation</EM></SAMP> expresses the same relationship as a 
+  link from B to A with <SAMP>REL=<EM>relation</EM></SAMP>. 
+  <SAMP>REV=made</SAMP> is sometimes used to identify the document author, 
+  either the author's email address with a mailto URL, or a link to the author's 
+  home page. 
+  <DT><B>title</B> 
+  <DD>An advisory title for the linked resource. </DD></DL>
+<P>Here are some proposed relationship values: 
+<DL>
+  <DT><SAMP>rel=top</SAMP> 
+  <DD>The link references the top of a hierarchy, e.g. the first or cover page 
+  in a collection. 
+  <DT><SAMP>rel=contents</SAMP> 
+  <DD>The link references a document serving as a table of contents. 
+  <DT><SAMP>rel=index</SAMP> 
+  <DD>The link references a document providing an index for the current 
+  document. 
+  <DT><SAMP>rel=glossary</SAMP> 
+  <DD>The link references a document providing a glossary of terms that are 
+  relevant to the current document. 
+  <DT><SAMP>rel=copyright</SAMP> 
+  <DD>The link references a copyright statement for the current document. 
+  <DT><SAMP>rel=next</SAMP> 
+  <DD>The link references the next document to visit in a guided tour. It can be 
+  used, for example, to preload the next page. 
+  <DT><SAMP>rel=previous</SAMP> 
+  <DD>The link references the previous document in a guided tour. 
+  <DT><SAMP>rel=help</SAMP> 
+  <DD>The link references a document offering help, e.g. describing the wider 
+  context and offering further links to relevant documents. This is aimed at 
+  reorienting users who have lost their way. 
+  <DT><SAMP>rel=search</SAMP> 
+  <DD>The link references a page for searching material related to a collection 
+  of pages </DD></DL>
+<P>Example <SAMP>LINK</SAMP> elements: <PRE>    &lt;LINK REL=Contents HREF=toc.html&gt;
+    &lt;LINK REL=Previous HREF=doc31.html&gt;
+    &lt;LINK REL=Next HREF=doc33.html&gt;
+
+    &lt;LINK REL=Chapter REV=Contents HREF=chapter2.html&gt;</PRE>
+<HR>
+
+<H2><A name=body>The BODY element</A></H2>
+<P>This contains the document body. Both start and end tags for 
+<SAMP>BODY</SAMP> may be omitted. The body can contain a wide range of elements: 
+
+<UL>
+  <LI><A 
+  href="#headings">Headings 
+  (H1 - H6)</A> 
+  <LI><A 
+  href="#address">The 
+  ADDRESS element</A> 
+  <LI><A 
+  href="#block">Block 
+  level Elements</A> 
+  <LI><A 
+  href="#textlevel">Text 
+  level elements</A> </LI></UL>
+<P>The key attributes are: <SAMP>BACKGROUND</SAMP>, <SAMP>BGCOLOR</SAMP>, 
+<SAMP>TEXT</SAMP>, <SAMP>LINK</SAMP>, <SAMP>VLINK</SAMP> and <SAMP>ALINK</SAMP>. 
+These can be used to set a repeating background image, plus background and 
+foreground colors for normal text and hypertext links. <PRE>&lt;!ENTITY % body.content "(%heading | %text | %block | ADDRESS)*"&gt;
+
+&lt;!ENTITY % color "CDATA" -- a color specification: #HHHHHH @@ details? --&gt;
+
+&lt;!ENTITY % body-color-attrs "
+        bgcolor %color #IMPLIED
+        text %color #IMPLIED
+        link %color #IMPLIED
+        vlink %color #IMPLIED
+        alink %color #IMPLIED
+        "&gt;
+
+&lt;!ELEMENT BODY O O  %body.content&gt;
+&lt;!ATTLIST BODY
+        background %URL #IMPLIED  -- texture tile for document background --
+        %body-color-attrs;  -- bgcolor, text, link, vlink, alink --
+        &gt;</PRE>
+<P>Example: <PRE> &lt;body bgcolor=white text=black link=red vlink=maroon alink=fuchsia&gt;</PRE>
+<DL>
+  <DT><B>bgcolor</B> 
+  <DD>Specifies the background color for the document body. See below for the 
+  syntax of color values. 
+  <DT><B>text</B> 
+  <DD>Specifies the color used to stroke the document's text. This is generally 
+  used when you have changed the background color with the <SAMP>BGCOLOR</SAMP> 
+  or <SAMP>BACKGROUND</SAMP> attributes. 
+  <DT><B>link</B> 
+  <DD>Specifies the color used to stroke the text for unvisited hypertext links. 
+
+  <DT><B>vlink</B> 
+  <DD>Specifies the color used to stroke the text for visited hypertext links. 
+  <DT><B>alink</B> 
+  <DD>Specifies the highlight color used to stroke the text for hypertext links 
+  at the moment the user clicks on the link. 
+  <DT><B>background</B> 
+  <DD>Specifies a URL for an image that will be used to tile the document 
+  background. </DD></DL>
+<P><A name=colors>Colors</A> are given in the <A 
+href="#refs">sRGB</A> 
+color space as hexadecimal numbers (e.g. <SAMP>COLOR="#C0FFC0"</SAMP>), or as 
+one of 16 widely understood color names. These colors were originally picked as 
+being the standard 16 colors supported with the Windows VGA palette.</P>
+<TABLE cellSpacing=10 cellPadding=0 width="80%" align=center border=0>
+  <CAPTION><B>Color names and sRGB values</B><BR></CAPTION>
+  <TBODY>
+  <TR>
+    <TD width=16><IMG src="">
+    <TD>Black = "#000000" 
+    <TD width=16><IMG src="">
+    <TD>Green = "#008000"<BR></TD>
+  <TR>
+    <TD width=16><IMG src="">
+    <TD>Silver = "#C0C0C0" 
+    <TD width=16><IMG src="">
+    <TD>Lime = "#00FF00"<BR></TD>
+  <TR>
+    <TD width=16><IMG src="">
+    <TD>Gray = "#808080" 
+    <TD width=16><IMG src="">
+    <TD>Olive = "#808000"<BR></TD>
+  <TR>
+    <TD width=16><IMG src="">
+    <TD>White = "#FFFFFF" 
+    <TD width=16><IMG src="">
+    <TD>Yellow = "#FFFF00"<BR></TD>
+  <TR>
+    <TD width=16><IMG src="">
+    <TD>Maroon = "#800000" 
+    <TD width=16><IMG src="">
+    <TD>Navy = "#000080"<BR></TD>
+  <TR>
+    <TD width=16><IMG src="">
+    <TD>Red = "#FF0000" 
+    <TD width=16><IMG src="">
+    <TD>Blue = "#0000FF"<BR></TD>
+  <TR>
+    <TD width=16><IMG src="">
+    <TD>Purple = "#800080" 
+    <TD width=16><IMG src="">
+    <TD>Teal = "#008080"<BR></TD>
+  <TR>
+    <TD width=16><IMG src="">
+    <TD>Fuchsia = "#FF00FF" 
+    <TD width=16><IMG src="">
+    <TD>Aqua = "#00FFFF"<BR></TD></TR></TBODY></TABLE>
+<H3><A name=level>Block and Text level elements</A></H3>
+<P>Most elements that can appear in the document body fall into one of two 
+groups: block level elements which cause paragraph breaks, and text level 
+elements which don't. Common block level elements include <SAMP>H1</SAMP> to 
+<SAMP>H6</SAMP> (headers), <SAMP>P</SAMP> (paragraphs) <SAMP>LI</SAMP> (list 
+items), and <SAMP>HR</SAMP> (horizontal rules). Common text level elements 
+include <SAMP>EM</SAMP>, <SAMP>I</SAMP>, <SAMP>B</SAMP> and <SAMP>FONT</SAMP> 
+(character emphasis), <SAMP>A</SAMP> (hypertext links), <SAMP>IMG</SAMP> and 
+<SAMP>APPLET</SAMP> (embedded objects) and <SAMP>BR</SAMP> (line breaks). Note 
+that block elements generally act as containers for text level and other block 
+level elements (excluding headings and address elements), while text level 
+elements can only contain other text level elements. The exact model depends on 
+the element. 
+<H3><A name=headings>Headings</A></H3><PRE>&lt;!--
+  There are six levels of headers from H1 (the most important)
+  to H6 (the least important).
+--&gt;
+
+&lt;!ELEMENT ( %heading )  - -  (%text;)*&gt;
+&lt;!ATTLIST ( %heading )
+        align  (left|center|right) #IMPLIED
+        &gt;
+</PRE>
+<P><SAMP>H1</SAMP>, <SAMP>H2</SAMP>, <SAMP>H3</SAMP>, <SAMP>H4</SAMP>, 
+<SAMP>H5</SAMP> and <SAMP>H6</SAMP> are used for document headings. You always 
+need the start and end tags. <SAMP>H1</SAMP> elements are more important than 
+<SAMP>H2</SAMP> elements and so on, so that <SAMP>H6</SAMP> elements define the 
+least important level of headings. More important headings are generally 
+rendered in a larger font than less important ones. Use the optional 
+<SAMP>ALIGN</SAMP> attribute to set the text alignment within a heading, e.g. <PRE>  &lt;H1 ALIGN=CENTER&gt; <I>... centered heading ...</I> &lt;/H1&gt;</PRE>
+<P>The default is left alignment, but this can be overridden by an enclosing <A 
+href="#div"><SAMP>DIV</SAMP></A> 
+or <A 
+href="#center"><SAMP>CENTER</SAMP></A> 
+element. 
+<H3><A name=address>ADDRESS</A></H3><PRE>    &lt;!ENTITY % address.content "((%text;) | P)*"&gt;
+
+    &lt;!ELEMENT ADDRESS - - %address.content&gt;</PRE>
+<P>The <SAMP>ADDRESS</SAMP> element requires start and end tags, and specifies 
+information such as authorship and contact details for the current document. 
+User agents should render the content with paragraph-breaks before and after. 
+Note that the content is restricted to paragraphs, plain text and text-like 
+elements as defined by the %text entity. 
+<P>Example: <PRE>&lt;ADDRESS&gt;
+Newsletter editor&lt;BR&gt;
+J.R. Brown&lt;BR&gt;
+8723 Buena Vista, Smallville, CT 01234&lt;BR&gt;
+Tel: +1 (123) 456 7890
+&lt;/ADDRESS&gt;</PRE>
+<H3><A name=block>Block elements</A></H3>
+<DL>
+  <DT><B><A 
+  href="#para">P</A></B> 
+  <I>paragraphs</I> 
+  <DD>The paragraph element requires a start tag, but the end tag can always be 
+  omitted. Use the <SAMP>ALIGN</SAMP> attribute to set the text alignment within 
+  a paragraph, e.g. <SAMP>&lt;P ALIGN=RIGHT&gt;</SAMP> 
+  <DT><B><A 
+  href="#ul">UL</A></B> 
+  <I>unordered lists</I> 
+  <DD>These require start and end tags, and contain one or more <SAMP>LI</SAMP> 
+  elements representing individual list items. 
+  <DT><B><A 
+  href="#ol">OL</A></B> 
+  <I>ordered (i.e. numbered) lists</I> 
+  <DD>These require start and end tags, and contain one or more <SAMP>LI</SAMP> 
+  elements representing individual list items. 
+  <DT><B><A 
+  href="#dl">DL</A></B> 
+  <I>definition lists</I> 
+  <DD>These require start and end tags and contain <SAMP>DT</SAMP> elements that 
+  give the terms, and <SAMP>DD</SAMP> elements that give corresponding 
+  definitions. 
+  <DT><B><A 
+  href="#pre">PRE</A></B> 
+  <I>preformatted text</I> 
+  <DD>Requires start and end tags. These elements are rendered with a monospaced 
+  font and preserve layout defined by whitespace and line break characters. 
+  <DT><B><A 
+  href="#div">DIV</A></B> 
+  <I>document divisions</I> 
+  <DD>Requires start and end tags. It is used with the <SAMP>ALIGN</SAMP> 
+  attribute to set the text alignment of the block elements it contains. 
+  <SAMP>ALIGN</SAMP> can be one of <SAMP>LEFT</SAMP>, <SAMP>CENTER</SAMP> or 
+  <SAMP>RIGHT</SAMP>. 
+  <DT><B><A 
+  href="#center">CENTER</A></B> 
+  <I>text alignment</I> 
+  <DD>Requires start and end tags. It is used to center text lines enclosed by 
+  the <SAMP>CENTER</SAMP> element. See <SAMP>DIV</SAMP> for a more general 
+  solution. 
+  <DT><B><A 
+  href="#bq">BLOCKQUOTE</A></B> 
+  <I>quoted passage</I> 
+  <DD>Requires start and end tags. It is used to enclose extended quotations and 
+  is typically rendered with indented margins. 
+  <DT><B><A 
+  href="#form">FORM</A></B> 
+  <I>fill-out forms</I> 
+  <DD>Requires start and end tags. This element is used to define a fill-out 
+  form for processing by HTTP servers. The attributes are <SAMP>ACTION</SAMP>, 
+  <SAMP>METHOD</SAMP> and <SAMP>ENCTYPE</SAMP>. Form elements can't be nested. 
+  <DT><B><A 
+  href="#isindex">ISINDEX</A></B> 
+  <I>primitive HTML forms</I> 
+  <DD>Not a container, so the end tag is forbidden. This predates 
+  <SAMP>FORM</SAMP> and is used for simple kinds of forms which have a single 
+  text input field, implied by this element. A single <SAMP>ISINDEX</SAMP> can 
+  appear in the document head or body. 
+  <DT><B><A 
+  href="#hr">HR</A></B> 
+  <I>horizontal rules</I> 
+  <DD>Not a container, so the end tag is forbidden. attributes are 
+  <SAMP>ALIGN</SAMP>, <SAMP>NOSHADE</SAMP>, <SAMP>SIZE</SAMP> and 
+  <SAMP>WIDTH</SAMP>. 
+  <DT><B><A 
+  href="#table">TABLE</A></B> 
+  <I>can be nested</I> 
+  <DD>Requires start and end tags. Each table starts with an optional 
+  <SAMP>CAPTION</SAMP> followed by one or more <SAMP>TR</SAMP> elements defining 
+  table rows. Each row has one or more cells defined by <SAMP>TH</SAMP> or 
+  <SAMP>TD</SAMP> elements. attributes for <SAMP>TABLE</SAMP> elements are 
+  <SAMP>WIDTH</SAMP>, <SAMP>BORDER</SAMP>, <SAMP>CELLSPACING</SAMP> and 
+  <SAMP>CELLPADDING</SAMP>. </DD></DL>
+<HR>
+
+<H3><A name=para>Paragraphs</A></H3><PRE>    &lt;!ELEMENT P     - O (%text)*&gt;
+    &lt;!ATTLIST P
+        align  (left|center|right) #IMPLIED
+        &gt;</PRE>
+<P>The <SAMP>P</SAMP> element is used to markup paragraphs. It is a container 
+and requires a start tag. The end tag is optional as it can always be inferred 
+by the parser. User agents should place paragraph breaks before and after 
+<SAMP>P</SAMP> elements. The rendering is user agent dependent, but text is 
+generally wrapped to fit the space available. 
+<P>Example: <PRE>    &lt;P&gt;This is the first paragraph.
+    &lt;P&gt;This is the second paragraph.</PRE>
+<P>Paragraphs are usually rendered flush left with a ragged right margin. The 
+<SAMP>ALIGN</SAMP> attribute can be used to explicitly specify the horizontal 
+alignment: 
+<DL>
+  <DT><SAMP>align=left</SAMP>
+  <DD>The paragraph is rendered flush left. 
+  <DT><SAMP>align=center</SAMP>
+  <DD>The paragraph is centered. 
+  <DT><SAMP>align=right</SAMP>
+  <DD>The paragraph is rendered flush right. </DD></DL>
+<P>For example: <PRE>&lt;p align=center&gt;This is a centered paragraph.
+&lt;p align=right&gt;and this is a flush right paragraph.</PRE>
+<P>The default is left alignment, but this can be overridden by an enclosing <A 
+href="#div"><SAMP>DIV</SAMP></A> 
+or <A 
+href="#center"><SAMP>CENTER</SAMP></A> 
+element. 
+<H3><A name=lists>Lists</A></H3>
+<P>List items can contain block and text level items, including nested lists, 
+although headings and address elements are excluded. This limitation is defined 
+via the %flow entity. 
+<H4><A name=ul>Unordered Lists</A></H4><PRE>    &lt;!ELEMENT UL - -  (LI)+&gt;
+    &lt;!ENTITY % ULStyle "disc|square|circle"&gt;
+
+    &lt;!ATTLIST UL -- unordered lists --
+        type    (%ULStyle)   #IMPLIED   -- bullet style --
+        compact (compact)    #IMPLIED   -- reduced interitem spacing --
+        &gt;
+
+    &lt;!ELEMENT LI - O %flow -- list item --&gt;
+    &lt;!ATTLIST LI
+        type   (%LIStyle)    #IMPLIED   -- list item style --
+        &gt;
+</PRE>
+<P>Unordered lists take the form: <PRE>    &lt;UL&gt;
+      &lt;LI&gt; <I>... first list item</I>
+      &lt;LI&gt; <I>... second list item</I>
+      ...
+    &lt;/UL&gt;</PRE>
+<P>The <SAMP>UL</SAMP> element is used for unordered lists. Both start and end 
+tags are always needed. The <SAMP>LI</SAMP> element is used for individual list 
+items. The end tag for <SAMP>LI</SAMP> elements can always be omitted. Note that 
+<SAMP>LI</SAMP> elements can contain nested lists. The <SAMP>COMPACT</SAMP> 
+attribute can be used as a hint to the user agent to render lists in a more 
+compact style. 
+<P>The <SAMP>TYPE</SAMP> attribute can be used to set the bullet style on 
+<SAMP>UL</SAMP> and <SAMP>LI</SAMP> elements. The permitted values are "disc", 
+"square" or "circle". The default generally depends on the level of nesting for 
+lists. 
+<UL>
+  <LI type=disc>with <SAMP>&lt;li type=disc&gt;</SAMP> 
+  <LI type=square>with <SAMP>&lt;li type=square&gt;</SAMP> 
+  <LI type=circle>with <SAMP>&lt;li type=circle&gt;</SAMP> </LI></UL>
+<P><I>This list was chosen to cater for the original bullet shapes used by 
+Mosaic in 1993.</I> 
+<H4><A name=ol>Ordered (i.e. numbered) Lists</A></H4><PRE>    &lt;!ELEMENT OL - -  (LI)+&gt;
+    &lt;!ATTLIST OL -- ordered lists --
+        type      CDATA      #IMPLIED   -- numbering style --
+        start     NUMBER     #IMPLIED   -- starting sequence number --
+        compact  (compact)   #IMPLIED   -- reduced interitem spacing --
+        &gt;
+
+    &lt;!ELEMENT LI - O %flow -- list item --&gt;
+    &lt;!ATTLIST LI
+        type      CDATA      #IMPLIED   -- list item style --
+        value     NUMBER     #IMPLIED   -- set sequence number --
+        &gt;
+</PRE>
+<P>Ordered (i.e. numbered) lists take the form:</P><PRE>    &lt;OL&gt;
+      &lt;LI&gt; <I>... first list item</I>
+      &lt;LI&gt; <I>... second list item</I>
+      ...
+    &lt;/OL&gt;</PRE>
+<P>The <SAMP>OL</SAMP> <SAMP>START</SAMP> attribute can be used to initialize 
+the sequence number (by default it is initialized to 1). You can set it later on 
+with the <SAMP>VALUE</SAMP> attribute on <SAMP>LI</SAMP> elements. Both of these 
+attributes expect integer values. You can't indicate that numbering should be 
+continued from a previous list, or to skip missing values without giving an 
+explicit number. 
+<P>The <SAMP>COMPACT</SAMP> attribute can be used as a hint to the user agent to 
+render lists in a more compact style. The <SAMP>OL</SAMP> <SAMP>TYPE</SAMP> 
+attribute allows you to set the numbering style for list items:</P>
+<TABLE width="80%" align=center border=1>
+  <TBODY>
+  <TR>
+    <TH>Type 
+    <TH colSpan=2>Numbering style<BR></TR>
+  <TR>
+    <TD align=middle>1 
+    <TD align=middle>Arabic numbers
+    <TD align=middle>1, 2, 3, ...<BR></TD>
+  <TR>
+    <TD align=middle>a 
+    <TD align=middle>lower alpha
+    <TD align=middle>a, b, c, ...<BR></TD>
+  <TR>
+    <TD align=middle>A 
+    <TD align=middle>upper alpha
+    <TD align=middle>A, B, C, ...<BR></TD>
+  <TR>
+    <TD align=middle>i 
+    <TD align=middle>lower roman
+    <TD align=middle>i, ii, iii, ...<BR></TD>
+  <TR>
+    <TD align=middle>I 
+    <TD align=middle>upper roman
+    <TD align=middle>I, II, III, ...<BR></TD></TR></TBODY></TABLE>
+<H4><A name=dl>Definition Lists</A></H4><PRE>&lt;!-- definition lists - DT for term, DD for its definition --&gt;
+
+&lt;!ELEMENT DL    - -  (DT|DD)+&gt;
+&lt;!ATTLIST DL
+        compact (compact) #IMPLIED -- more compact style --
+        &gt;
+
+&lt;!ELEMENT DT - O  (%text)*&gt;
+&lt;!ELEMENT DD - O  %flow;&gt;
+</PRE>
+<P>Definition lists take the form: <PRE>  &lt;DL&gt;
+    &lt;DT&gt; <I>term name</I>
+    &lt;DD&gt; <I>term definition</I>
+    ...
+  &lt;/DL&gt;</PRE>
+<P><SAMP>DT</SAMP> elements can only act as containers for text level elements, 
+while <SAMP>DD</SAMP> elements can hold block level elements as well, excluding 
+headings and address elements. 
+<P>For example: <PRE>&lt;DL&gt;
+&lt;DT&gt;Term 1&lt;dd&gt;This is the definition of the first term.
+&lt;DT&gt;Term 2&lt;dd&gt;This is the definition of the second term.
+&lt;/DL&gt;</PRE>
+<P>which could be rendered as: 
+<DL>
+  <DT>Term 1
+  <DD>This is the definition of the first term. 
+  <DT>Term 2
+  <DD>This is the definition of the second term. </DD></DL>
+<P>The <SAMP>COMPACT</SAMP> attribute can be used with the <SAMP>DL</SAMP> 
+element as a hint to the user agent to render lists in a more compact style. 
+<H4><A name=dir>DIR</A> and <A name=menu>MENU</A></H4><PRE>&lt;!ELEMENT (DIR|MENU) - -  (LI)+ -(%block)&gt;
+&lt;!ATTLIST (DIR|MENU)
+        compact (compact) #IMPLIED
+        &gt;</PRE>
+<P>These elements have been part of HTML from the early days. They are intended 
+for unordered lists similar to <SAMP>UL</SAMP> elements. User agents are 
+recommended to render <SAMP>DIR</SAMP> elements as multicolumn directory lists, 
+and <SAMP>MENU</SAMP> elements as single column menu lists. In practice, Mosaic 
+and most other user agents have ignored this advice and instead render 
+<SAMP>DIR</SAMP> and <SAMP>MENU</SAMP> in an identical way to <SAMP>UL</SAMP> 
+elements. 
+<H3><A name=pre>Preformatted Text</A></H3><PRE>&lt;!ELEMENT PRE - - (%text)* -(%pre.exclusion)&gt;
+&lt;!ATTLIST PRE
+        width NUMBER #implied
+        &gt;</PRE>
+<P>The <SAMP>PRE</SAMP> element can be used to include preformatted text. User 
+agents render this in a fixed pitch font, preserving spacing associated with 
+white space characters such as space and newline characters. Automatic word-wrap 
+should be disabled within <SAMP>PRE</SAMP> elements. 
+<P>Note that the SGML standard requires that the parser remove a newline 
+immediately following the start tag or immediately preceding the end tag. 
+<P><SAMP>PRE</SAMP> has the same content model as paragraphs, excluding images 
+and elements that produce changes in font size, e.g. <SAMP>IMG</SAMP>, 
+<SAMP>BIG</SAMP>, <SAMP>SMALL</SAMP>, <SAMP>SUB</SAMP>, <SAMP>SUP</SAMP> and 
+<SAMP>FONT</SAMP>. 
+<P>A few user agents support the <SAMP>WIDTH</SAMP> attribute. It provides a 
+hint to the user agent of the required width in characters. The user agent can 
+use this to select an appropriate font size or to indent the content 
+appropriately. 
+<P>Here is an example of a <SAMP>PRE</SAMP> element; a verse from Shelley (To a 
+Skylark): <PRE>&lt;PRE&gt;
+       Higher still and higher
+         From the earth thou springest
+       Like a cloud of fire;
+         The blue deep thou wingest,
+And singing still dost soar, and soaring ever singest.
+&lt;/PRE&gt;</PRE>which is rendered as: <PRE>       Higher still and higher
+         From the earth thou springest
+       Like a cloud of fire;
+         The blue deep thou wingest,
+And singing still dost soar, and soaring ever singest.</PRE>
+<P>The horizontal tab character (encoded in Unicode, US ASCII and ISO 8859-1 as 
+decimal 9) should be interpreted as the smallest non-zero number of spaces which 
+will leave the number of characters so far on the line as a multiple of 8. Its 
+use is strongly discouraged since it is common practice when editing to set the 
+tab-spacing to other values, leading to misaligned documents. 
+<H4><A name=xmp>XMP</A>, <A name=listing>LISTING</A> and <A 
+name=plaintext>PLAINTEXT</A></H4><PRE>&lt;![ %HTML.Deprecated [
+
+&lt;!ENTITY % literal "CDATA"
+        -- historical, non-conforming parsing mode where
+           the only markup signal is the end tag
+           in full
+        --&gt;
+
+&lt;!ELEMENT (XMP|LISTING) - -  %literal&gt;
+&lt;!ELEMENT PLAINTEXT - O %literal&gt;
+
+]]&gt;</PRE>
+<P>These are obsolete tags for preformatted text that predate the introduction 
+of <A 
+href="#pre">PRE</A>. 
+User agents may support these for backwards compatibility. Authors should avoid 
+using them in new documents! 
+<H3><A name=div>DIV</A> and <A name=center>CENTER</A></H3><PRE>&lt;!ELEMENT DIV - - %body.content&gt;
+&lt;!ATTLIST DIV
+        align   (left|center|right) #IMPLIED -- alignment of following text --
+        &gt;
+
+&lt;!-- CENTER is a shorthand for DIV with ALIGN=CENTER --&gt;
+&lt;!ELEMENT center - - %body.content&gt;</PRE>
+<P><SAMP>DIV</SAMP> elements can be used to structure HTML documents as a 
+hierarchy of divisions. The <SAMP>ALIGN</SAMP> attribute can be used to set the 
+default horizontal alignment for elements within the content of the 
+<SAMP>DIV</SAMP> element. Its value is restricted to <SAMP>LEFT</SAMP>, 
+<SAMP>CENTER</SAMP> or <SAMP>RIGHT</SAMP>, and is defined in the same way as for 
+the paragraph element <SAMP>&lt;P&gt;</SAMP>. 
+<P>Note that because <SAMP>DIV</SAMP> is a block-like element it will terminate 
+an open <SAMP>P</SAMP> element. Other than this, user agents are <B>not</B> 
+expected to render paragraph breaks before and after <SAMP>DIV</SAMP> elements. 
+<SAMP>CENTER</SAMP> is directly equivalent to <SAMP>DIV</SAMP> with 
+<SAMP>ALIGN=CENTER</SAMP>. Both <SAMP>DIV</SAMP> and <SAMP>CENTER</SAMP> require 
+start and end tags. 
+<P><I><SAMP>CENTER</SAMP> was introduced by Netscape before they added support 
+for the HTML 3.0 <SAMP>DIV</SAMP> element. It is retained in HTML 3.2 on account 
+of its widespread deployment.</I> 
+<H3><B><A name=bq>BLOCKQUOTE</A></B></H3><PRE>&lt;!ELEMENT BLOCKQUOTE - - %body.content&gt;</PRE>
+<P>This is used to enclose block quotations from other works. Both the start and 
+end tags are required. It is often rendered indented, e.g. 
+<BLOCKQUOTE>They went in single file, running like hounds on a strong scent, 
+  and an eager light was in their eyes. Nearly due west the broad swath of the 
+  marching Orcs tramped its ugly slot; the sweet grass of Rohan had been bruised 
+  and blackened as they passed. </BLOCKQUOTE>
+<P align=right><EM>from "The Two Towers" by J.R.R. Tolkien.</EM> 
+<H3><B><A name=form>FORM</A></B></H3><PRE>&lt;!ENTITY % HTTP-Method "GET | POST"
+        -- as per HTTP specification
+        --&gt;
+
+&lt;!ELEMENT FORM - - %body.content -(FORM)&gt;
+&lt;!ATTLIST FORM
+        action %URL #IMPLIED  -- server-side form handler --
+        method (%HTTP-Method) GET -- see HTTP specification --
+        enctype %Content-Type; "application/x-www-form-urlencoded"
+        &gt;</PRE>
+<P>This is used to define an HTML form, and you can have more than one form in 
+the same document. Both the start and end tags are required. For very simple 
+forms, you can also use the <A 
+href="#isindex"><SAMP>ISINDEX</SAMP></A> 
+element. Forms can contain a wide range of HTML markup including several kinds 
+of <A 
+href="#fields">form 
+fields</A> such as single and multi-line text fields, radio button groups, 
+checkboxes, and menus. 
+<DL>
+  <DT><B>action</B> 
+  <DD>This specifies a URL which is either used to post forms via email, e.g. 
+  <SAMP>action="mailto:foo@bar.com"</SAMP>, or used to invoke a server-side 
+  forms handler via HTTP, e.g. 
+  <SAMP>action="http://www.acme.com/cgi-bin/register.pl"</SAMP> 
+  <DT><B>method</B> 
+  <DD>When the action attribute specifies an HTTP server, the method attribute 
+  determines which HTTP method will be used to send the form's contents to the 
+  server. It can be either <SAMP>GET</SAMP> or <SAMP>POST</SAMP>, and defaults 
+  to <SAMP>GET</SAMP>. 
+  <DT><B>enctype</B> 
+  <DD>This determines the mechanism used to encode the form's contents. It 
+  defaults to <EM>application/x-www-form-urlencoded</EM>. </DD></DL>
+<P>Further details on handling forms are given in RFC 1867. 
+<H3><B><A name=hr>HR</A></B> <I>- horizontal rules</I></H3>
+<P>Horizontal rules may be used to indicate a change in topic. In a speech based 
+user agent, the rule could be rendered as a pause. <PRE>&lt;!ELEMENT HR    - O EMPTY&gt;
+&lt;!ATTLIST HR
+        align (left|right|center) #IMPLIED
+        noshade (noshade) #IMPLIED
+        size  %Pixels #IMPLIED
+        width %Length #IMPLIED
+        &gt;</PRE>
+<P><SAMP>HR</SAMP> elements are not containers so the end tag is forbidden. The 
+attributes are: <SAMP>ALIGN</SAMP>, <SAMP>NOSHADE</SAMP>, <SAMP>SIZE</SAMP> and 
+<SAMP>WIDTH</SAMP>. 
+<DL>
+  <DT><B>align</B> 
+  <DD>This determines whether the rule is placed at the left, center or right of 
+  the space between the current left and right margins for 
+  <SAMP>align=left</SAMP>, <SAMP>align=center</SAMP> or <SAMP>align=right</SAMP> 
+  respectively. By default, the rule is centered. 
+  <DT><B>noshade</B> 
+  <DD>This attribute requests the user agent to render the rule in a solid color 
+  rather than as the traditional two colour "groove". 
+  <DT><B>size</B> 
+  <DD>This can be used to set the height of the rule in pixels. 
+  <DT><B>width</B> 
+  <DD>This can be used to set the width of the rule in pixels (e.g. 
+  <SAMP>width=100</SAMP>) or as the percentage between the current left and 
+  right margins (e.g. <SAMP>width="50%"</SAMP>). The default is 100%. </DD></DL>
+<H3><A name=table>Tables</A></H3>
+<P>HTML 3.2 includes a widely deployed subset of the specification given in <A 
+href="#refs">RFC 
+1942</A> and can be used to markup tabular material or for layout purposes. Note 
+that the latter role typically causes problems when rending to speech or to text 
+only user agents. <PRE>&lt;!-- horizontal placement of table relative to window --&gt;
+&lt;!ENTITY % Where "(left|center|right)"&gt;
+
+&lt;!-- horizontal alignment attributes for cell contents --&gt;
+&lt;!ENTITY % cell.halign
+        "align  (left|center|right) #IMPLIED"
+        &gt;
+
+&lt;!-- vertical alignment attributes for cell contents --&gt;
+&lt;!ENTITY % cell.valign
+        "valign  (top|middle|bottom)  #IMPLIED"
+        &gt;
+
+&lt;!ELEMENT table - - (caption?, tr+)&gt;
+&lt;!ELEMENT tr - O (th|td)*&gt;
+&lt;!ELEMENT (th|td) - O %body.content&gt;
+
+&lt;!ATTLIST table                       -- table element --
+        align     %Where;   #IMPLIED  -- table position relative to window --
+        width     %Length   #IMPLIED  -- table width relative to window --
+        border    %Pixels   #IMPLIED  -- controls frame width around table --
+        cellspacing %Pixels #IMPLIED  -- spacing between cells --
+        cellpadding %Pixels #IMPLIED  -- spacing within cells --
+        &gt;
+
+&lt;!ELEMENT CAPTION - - (%text;)* -- table or figure caption --&gt;
+&lt;!ATTLIST CAPTION
+        align (top|bottom) #IMPLIED
+        &gt;
+
+&lt;!ATTLIST tr                       -- table row --
+        %cell.halign;              -- horizontal alignment in cells --
+        %cell.valign;              -- vertical alignment in cells --
+        &gt;
+
+&lt;!ATTLIST (th|td)                  -- header or data cell --
+        nowrap (nowrap)  #IMPLIED  -- suppress word wrap --
+        rowspan NUMBER   1         -- number of rows spanned by cell --
+        colspan NUMBER   1         -- number of cols spanned by cell --
+        %cell.halign;              -- horizontal alignment in cells --
+        %cell.valign;              -- vertical alignment in cells --
+        width   %Pixels  #IMPLIED  -- suggested width for cell --
+        height  %Pixels  #IMPLIED  -- suggested height for cell --
+        &gt;
+</PRE>
+<P>Tables take the general form: <PRE>  &lt;TABLE BORDER=3 CELLSPACING=2 CELLPADDING=2 WIDTH="80%"&gt;
+  &lt;CAPTION&gt;<I> ... table caption ...</I> &lt;/CAPTION&gt;
+  &lt;TR&gt;&lt;TD&gt; <I>first cell</I> &lt;TD&gt; <I>second cell</I>
+  &lt;TR&gt; ...
+  ...
+  &lt;/TABLE&gt;</PRE>
+<P>The attributes on <SAMP>TABLE</SAMP> are all optional. By default, the table 
+is rendered without a surrounding border. The table is generally sized 
+automatically to fit the contents, but you can also set the table width using 
+the <SAMP>WIDTH</SAMP> attribute. <SAMP>BORDER</SAMP>, <SAMP>CELLSPACING</SAMP> 
+and <SAMP>CELLPADDING</SAMP> provide further control over the table's 
+appearence. Captions are rendered at the top or bottom of the table depending on 
+the <SAMP>ALIGN</SAMP> attribute. 
+<P>Each table row is contained in a <SAMP>TR</SAMP> element, although the end 
+tag can always be omitted. Table cells are defined by <SAMP>TD</SAMP> elements 
+for data and <SAMP>TH</SAMP> elements for headers. Like <SAMP>TR</SAMP>, these 
+are containers and can be given without trailing end tags. <SAMP>TH</SAMP> and 
+<SAMP>TD</SAMP> support several attributes: <SAMP>ALIGN</SAMP> and 
+<SAMP>VALIGN</SAMP> for aligning cell content, <SAMP>ROWSPAN</SAMP> and 
+<SAMP>COLSPAN</SAMP> for cells which span more than one row or column. A cell 
+can contain a wide variety of other block and text level elements including form 
+fields and other tables. 
+<P>The <SAMP>TABLE</SAMP> element always requires both start and end tags. It 
+supports the following attributes: 
+<DL>
+  <DT><B>align</B> 
+  <DD>This takes one of the case insensitive values: <SAMP>LEFT</SAMP>, 
+  <SAMP>CENTER</SAMP> or <SAMP>RIGHT</SAMP>. It specifies the horizontal 
+  placement of the table relative to the current left and right margins. It 
+  defaults to left alignment, but this can be overridden by an enclosing <A 
+  href="#div"><SAMP>DIV</SAMP></A> 
+  or <A 
+  href="#center"><SAMP>CENTER</SAMP></A> 
+  element. 
+  <DT><B>width</B> 
+  <DD>In the absence of this attribute the table width is automatically 
+  determined from the table contents. You can use the <SAMP>WIDTH</SAMP> 
+  attribute to set the table width to a fixed value in pixels (e.g. 
+  <SAMP>WIDTH=212</SAMP>) or as a percentage of the space between the current 
+  left and right margins (e.g. <SAMP>WIDTH="80%"</SAMP>). 
+  <DT><B>border</B> 
+  <DD>This attribute can be used to specify the width of the outer border around 
+  the table to a given number of pixels (e.g. <SAMP>BORDER=4</SAMP>). The value 
+  can be set to zero to suppress the border altogether. In the absence of this 
+  attribute the border should be suppressed. Note that some browsers also accept 
+  <SAMP>&lt;TABLE BORDER&gt;</SAMP> with the same semantics as 
+  <SAMP>BORDER=1</SAMP>. 
+  <DT><B>cellspacing</B> 
+  <DD>In traditional desktop publishing software, adjacent table cells share a 
+  common border. This is not the case in HTML. Each cell is given its own border 
+  which is separated from the borders around neighboring cells. This separation 
+  can be set in pixels using the <SAMP>CELLSPACING</SAMP> attribute, (e.g. 
+  <SAMP>CELLSPACING=10</SAMP>). The same value also determines the separation 
+  between the table border and the borders of the outermost cells. 
+  <DT><B>cellpadding</B> 
+  <DD>This sets the padding in pixels between the border around each cell and 
+  the cell's contents. </DD></DL>
+<P>The <SAMP>CAPTION</SAMP> element has one attribute <SAMP>ALIGN</SAMP> which 
+can be either <SAMP>ALIGN=TOP</SAMP> or <SAMP>ALIGN=BOTTOM</SAMP>. This can be 
+used to force the caption to be placed above the top or below the bottom of the 
+table respectively. Most user agents default to placing the caption above the 
+table. <SAMP>CAPTION</SAMP> always requires both start and end tags. Captions 
+are limited to plain text and text-level elements as defined by the %text 
+entity. Block level elements are not permitted. 
+<P>The <SAMP>TR</SAMP> or table row element requires a start tag, but the end 
+tag can always be left out. <SAMP>TR</SAMP> acts as a container for table cells. 
+It has two attributes: 
+<DL>
+  <DT><B>align</B> 
+  <DD>Sets the default horizontal alignment of cell contents. It takes one of 
+  the case insensitive values: <SAMP>LEFT</SAMP>, <SAMP>CENTER</SAMP> or 
+  <SAMP>RIGHT</SAMP> and plays the same role as the <SAMP>ALIGN</SAMP> attribute 
+  on paragraph elements. 
+  <DT><B>valign</B> 
+  <DD>This can be used to set the default vertical alignment of cell contents 
+  within each cell. It takes one of the case insensitive values: 
+  <SAMP>TOP</SAMP>, <SAMP>MIDDLE</SAMP> or <SAMP>BOTTOM</SAMP> to position the 
+  cell contents at the top, middle or bottom of the cell respectively. </DD></DL>
+<P>There are two elements for defining table cells. <SAMP>TH</SAMP> is used for 
+header cells and <SAMP>TD</SAMP> for data cells. This distinction allows user 
+agents to render header and data cells in different fonts, and enables speech 
+based browsers to do a better job. The start tags for <SAMP>TH</SAMP> and 
+<SAMP>TD</SAMP> are always needed but the end tags can be left out. Table cells 
+can have the following attributes: 
+<DL>
+  <DT><B>nowrap</B> 
+  <DD>The presence of this attribute disables automatic word wrap within the 
+  contents of this cell (e.g. <SAMP>&lt;TD NOWRAP&gt;</SAMP>). This is 
+  equivalent to using the <SAMP>&amp;nbsp;</SAMP> entity for non-breaking spaces 
+  within the content of the cell. 
+  <DT><B>rowspan</B> 
+  <DD>This takes a positive integer value specifying the number of rows spanned 
+  by this cell. It defaults to one. 
+  <DT><B>colspan</B> 
+  <DD>This takes a positive integer value specifying the number of columns 
+  spanned by this cell. It defaults to one. 
+  <DT><B>align</B> 
+  <DD>Specifies the default horizontal alignment of cell contents, and overrides 
+  the <SAMP>ALIGN</SAMP> attribute on the table row. It takes the same values: 
+  <SAMP>LEFT</SAMP>, <SAMP>CENTER</SAMP> and <SAMP>RIGHT</SAMP>. If you don't 
+  specify an <SAMP>ALIGN</SAMP> attribute value on the cell, the default is left 
+  alignment for <SAMP>&lt;td&gt;</SAMP> and center alignment for 
+  <SAMP>&lt;th&gt;</SAMP> although you can override this with an 
+  <SAMP>ALIGN</SAMP> attribute on the <SAMP>TR</SAMP> element. 
+  <DT><B>valign</B> 
+  <DD>Specifies the default vertical alignment of cell contents, overriding the 
+  <SAMP>VALIGN</SAMP> attribute on the table row. It takes the same values: 
+  <SAMP>TOP</SAMP>, <SAMP>MIDDLE</SAMP> and <SAMP>BOTTOM</SAMP>. If you don't 
+  specify a VALIGN attribute value on the cell, the default is middle although 
+  you can override this with a <SAMP>VALIGN</SAMP> attribute on the 
+  <SAMP>TR</SAMP> element. 
+  <DT><B>width</B> 
+  <DD>Specifies the suggested width for a cell content in pixels excluding the 
+  cell padding. This value will normally be used except when it conflicts with 
+  the width requirements for other cells in the same column. 
+  <DT><B>height</B> 
+  <DD>Specifies the suggested height for a cell content in pixels excluding the 
+  cell padding. This value will normally be used except when it conflicts with 
+  the height requirements for other cells in the same row. </DD></DL>
+<P>Tables are commonly rendered in bas-relief, raised up with the outer border 
+as a bevel, and individual cells inset into this raised surface. Borders around 
+individual cells are only drawn if the cell has explicit content. White space 
+doesn't count for this purpose with the exception of &amp;nbsp;. 
+<P>The algorithms used to automatically size tables should take into account the 
+minimum and maximum width requirements for each cell. This is used to determine 
+the minimum and maximum width requirements for each column and hence for the 
+table itself. 
+<P>Cells spanning more than one column contribute to the widths of each of the 
+columns spanned. One approach is to evenly apportion the cell's minimum and 
+maximum width between these columns, another is to weight the apportioning 
+according to the contributions from cells that don't span multiple columns. 
+<P>For some user agents it may be necessary or desirable to break text lines 
+within words. In such cases a visual indication that this has occurred is 
+advised. 
+<P>The minimum and maximum width of nested tables contribute to the minimum and 
+maximum width of the cell in which they occur. Once the width requirements are 
+known for the top level table, the column widths for that table can be assigned. 
+This allows the widths of nested tables to be assigned and hence in turn the 
+column widths of such tables. If practical, all columns should be assigned at 
+least their minimum widths. It is suggested that any surplus space is then 
+shared out proportional to the difference between the minimum and maximum width 
+requirements of each column. 
+<P>Note that pixel values for width and height refer to screen pixels, and 
+should be multiplied by an appropriate factor when rendering to very high 
+resolution devices such as laser printers. For instance if a user agent has a 
+display with 75 pixels per inch and is rendering to a laser printer with 600 
+dots per inch, then the pixel values given in HTML attributes should be 
+multiplied by a factor of 8. 
+<HR>
+
+<H2><A name=textlevel>Text level elements</A></H2>
+<P>These don't cause paragraph breaks. Text level elements that define character 
+styles can generally be nested. They can contain other text level elements but 
+not block level elements. 
+<UL>
+  <LI><A 
+  href="#font-style">Font 
+  style elements</A> 
+  <LI><A 
+  href="#phrase">Phrase 
+  elements</A> 
+  <LI><A 
+  href="#fields">Form 
+  Fields</A> 
+  <LI><A 
+  href="#anchor">The 
+  A (anchor) element</A> 
+  <LI><A 
+  href="#img">IMG 
+  - inline images</A> 
+  <LI><A 
+  href="#applet">APPLET 
+  <EM>(Java Applets)</EM></A> 
+  <LI><A 
+  href="#font">FONT 
+  elements</A> 
+  <LI><A 
+  href="#basefont">BASEFONT 
+  elements</A> 
+  <LI><A 
+  href="#br">BR 
+  - line breaks</A> 
+  <LI><A 
+  href="#map">MAP 
+  - client-side image maps</A> </LI></UL>
+<H3><A name=font-style>Font style elements</A></H3>
+<P>These all require start and end tags, e.g. <PRE>  This has some &lt;B&gt;bold text&lt;/B&gt;.</PRE>
+<P>Text level elements must be properly nested - the following is in error: <PRE>  This has some &lt;B&gt;bold and &lt;I&gt;&lt;/B&gt;italic text&lt;/I&gt;.</PRE>User 
+agents should do their best to respect nested emphasis, e.g. <PRE>  This has some &lt;B&gt;bold and &lt;I&gt;italic text&lt;/I&gt;&lt;/B&gt;.</PRE>
+<P>Where the available fonts are restricted or for speech output, alternative 
+means should be used for rendering differences in emphasis. 
+<DL>
+  <DT><B>TT</B> teletype or monospaced text 
+  <DT><B>I</B> italic text style 
+  <DT><B>B</B> bold text style 
+  <DT><B>U</B> underlined text style 
+  <DT><B>STRIKE</B> strike-through text style 
+  <DT><B>BIG</B> places text in a large font 
+  <DT><B>SMALL</B> places text in a small font 
+  <DT><B>SUB</B> places text in subscript style 
+  <DT><B>SUP</B> places text in superscript style </DT></DL>
+<P><I>Note: future revisions to HTML may be phase out STRIKE in favor of the 
+more concise "S" tag from HTML 3.0.</I> 
+<H3><A name=phrase>Phrase Elements</A></H3>
+<P>These all require start and end tags, e.g. <PRE>  This has some &lt;EM&gt;emphasized text&lt;/EM&gt;.</PRE>
+<DL>
+  <DT><B>EM</B> basic emphasis typically rendered in an italic font 
+  <DT><B>STRONG</B> strong emphasis typically rendered in a bold font 
+  <DT><B>DFN</B> defining instance of the enclosed term 
+  <DT><B>CODE</B> used for extracts from program code 
+  <DT><B>SAMP</B> used for sample output from programs, and scripts etc. 
+  <DT><B>KBD</B> used for text to be typed by the user 
+  <DT><B>VAR</B> used for variables or arguments to commands 
+  <DT><B>CITE</B> used for citations or references to other sources </DT></DL>
+<H3><A name=fields>Form fields</A></H3>
+<P><A 
+href="#input"><SAMP>INPUT</SAMP></A>, 
+<A 
+href="#select"><SAMP>SELECT</SAMP></A> 
+and <A 
+href="#textarea"><SAMP>TEXTAREA</SAMP></A> 
+are only allowed within <SAMP>FORM</SAMP> elements. <A 
+href="#input"><SAMP>INPUT</SAMP></A> 
+can be used for a variety of form fields including single line text fields, 
+password fields, checkboxes, radio buttons, submit and reset buttons, hidden 
+fields, file upload, and image buttons. <A 
+href="#select"><SAMP>SELECT</SAMP></A> 
+elements are used for single or multiple choice menus. <A 
+href="#textarea"><SAMP>TEXTAREA</SAMP></A> 
+elements are used to define multi-line text fields. The content of the element 
+is used to initialize the field. 
+<H3><A name=input>INPUT <EM>text fields, radio buttons, check boxes, 
+...</EM></A></H3>
+<P><SAMP>INPUT</SAMP> elements are not containers and so the end tag is 
+forbidden. <PRE>&lt;!ENTITY % IAlign "(top|middle|bottom|left|right)"&gt;
+
+&lt;!ENTITY % InputType
+        "(TEXT | PASSWORD | CHECKBOX | RADIO | SUBMIT
+            | RESET | FILE | HIDDEN | IMAGE)"&gt;
+
+&lt;!ELEMENT INPUT - O EMPTY&gt;
+&lt;!ATTLIST INPUT
+        type %InputType TEXT     -- what kind of widget is needed --
+        name  CDATA #IMPLIED     -- required for all but submit and reset --
+        value CDATA #IMPLIED     -- required for radio and checkboxes --
+        checked (checked) #IMPLIED -- for radio buttons and check boxes --
+        size CDATA  #IMPLIED     -- specific to each type of field --
+        maxlength NUMBER #IMPLIED
+        src   %URL  #IMPLIED     -- for fields with background images --
+        align %IAlign #IMPLIED   -- vertical or horizontal alignment --
+        &gt;</PRE>
+<DL>
+  <DT><B>type</B> 
+  <DD>Used to set the type of input field:
+  <P></P>
+  <DL>
+    <DT><SAMP>type=text</SAMP> <EM>(the default)</EM> 
+    <DD>A single line text field whose visible size can be set using the <A 
+    href="#isize"><SAMP>size</SAMP></A> 
+    attribute, e.g. <SAMP>size=40</SAMP> for a 40 character wide field. Users 
+    should be able to type more than this limit though with the text scrolling 
+    through the field to keep the input cursor in view. You can enforce an upper 
+    limit on the number of characters that can be entered with the <A 
+    href="#maxlen"><SAMP>maxlength</SAMP></A> 
+    attribute. The <A 
+    href="#name"><SAMP>name</SAMP></A> 
+    attribute is used to name the field, while the <A 
+    href="#value"><SAMP>value</SAMP></A> 
+    attribute can be used to initialize the text string shown in the field when 
+    the document is first loaded. <PRE>    &lt;input type=text size=40 name=user value="your name"&gt;</PRE>
+    <DT><SAMP>type=password</SAMP> 
+    <DD>This is like type=text, but echoes characters using a character like * 
+    to hide the text from prying eyes when entering passwords. You can use <A 
+    href="#isize"><SAMP>size</SAMP></A> 
+    and <A 
+    href="#maxlen"><SAMP>maxlength</SAMP></A> 
+    attributes to control the visible and maximum length exactly as per regular 
+    text fields. <PRE>    &lt;input type=password size=12 name=pw&gt;</PRE>
+    <DT><SAMP>type=checkbox</SAMP> 
+    <DD>Used for simple Boolean attributes, or for attributes that can take 
+    multiple values at the same time. The latter is represented by several 
+    checkbox fields with the same <A 
+    href="#name"><SAMP>name</SAMP></A> 
+    and a different <A 
+    href="#value"><SAMP>value</SAMP></A> 
+    attribute. Each checked checkbox generates a separate name/value pair in the 
+    submitted data, even if this results in duplicate names. Use the <A 
+    href="#checked"><SAMP>checked</SAMP></A> 
+    attribute to initialize the checkbox to its checked state. <PRE>    &lt;input type=checkbox checked name=uscitizen value=yes&gt;</PRE>
+    <DT><SAMP>type=radio</SAMP> 
+    <DD>Used for attributes which can take a single value from a set of 
+    alternatives. Each radio button field in the group should be given the same 
+    <A 
+    href="#name"><SAMP>name</SAMP></A>. 
+    Radio buttons require an explicit <A 
+    href="#value"><SAMP>value</SAMP></A> 
+    attribute. Only the checked radio button in the group generates a name/value 
+    pair in the submitted data. One radio button in each group should be 
+    initially checked using the <A 
+    href="#checked"><SAMP>checked</SAMP></A> 
+    attribute. <PRE>    &lt;input type=radio name=age value="0-12"&gt;
+    &lt;input type=radio name=age value="13-17"&gt;
+    &lt;input type=radio name=age value="18-25"&gt;
+    &lt;input type=radio name=age value="26-35" checked&gt;
+    &lt;input type=radio name=age value="36-"&gt;
+</PRE>
+    <DT><SAMP>type=submit</SAMP> 
+    <DD>This defines a button that users can click to submit the form's contents 
+    to the server. The button's label is set from the <A 
+    href="#value"><SAMP>value</SAMP></A> 
+    attribute. If the <A 
+    href="#name"><SAMP>name</SAMP></A> 
+    attribute is given then the submit button's name/value pair will be included 
+    in the submitted data. You can include several submit buttons in the form. 
+    See <SAMP>type=image</SAMP> for graphical submit buttons. <PRE>    &lt;input type=submit value="Party on ..."&gt;</PRE>
+    <DT><SAMP>type=image</SAMP> 
+    <DD>This is used for graphical submit buttons rendered by an image rather 
+    than a text string. The URL for the image is specified with the <A 
+    href="#isrc"><SAMP>src</SAMP></A> 
+    attribute. The image alignment can be specified with the <A 
+    href="#ialign"><SAMP>align</SAMP></A> 
+    attribute. In this respect, graphical submit buttons are treated identically 
+    to <A 
+    href="#img"><SAMP>IMG</SAMP></A> 
+    elements, so you can set align to left, right, top, middle or bottom. The x 
+    and y values of the location clicked are passed to the server: In the 
+    submitted data, image fields are included as two name/value pairs. The names 
+    are derived by taking the name of the field and appending ".x" for the x 
+    value, and ".y" for the y value. <PRE>&lt;p&gt;Now choose a point on the map:
+
+    &lt;input type=image name=point src="map.gif"&gt;</PRE>
+    <P><EM><B>Note</B>: image fields typically cause problems for text-only and 
+    speech-based user agents!</EM></P>
+    <DT><SAMP>type=reset</SAMP> 
+    <DD>This defines a button that users can click to reset form fields to their 
+    initial state when the document was first loaded. You can set the label by 
+    providing a <A 
+    href="#value"><SAMP>value</SAMP></A> 
+    attribute. Reset buttons are never sent as part of the form's contents. <PRE>    &lt;input type=reset value="Start over ..."&gt;</PRE>
+    <DT><SAMP>type=file</SAMP> 
+    <DD>This provides a means for users to attach a file to the form's contents. 
+    It is generally rendered by text field and an associated button which when 
+    clicked invokes a file browser to select a file name. The file name can also 
+    be entered directly in the text field. Just like type=text you can use the 
+    <A 
+    href="#isize"><SAMP>size</SAMP></A> 
+    attribute to set the visible width of this field in average character 
+    widths. You can set an upper limit to the length of file names using the <A 
+    href="#maxlen"><SAMP>maxlength</SAMP></A> 
+    attribute. Some user agents support the ability to restrict the kinds of 
+    files to those matching a comma separated list of MIME content types given 
+    with the <SAMP>ACCEPT</SAMP> attribute e.g. <SAMP>accept="image/*"</SAMP> 
+    restricts files to images. Further information can be found in <A 
+    href="#rfc1867">RFC 
+    1867</A>. <PRE>    &lt;input type=file name=photo size=20 accept="image/*"&gt;</PRE>
+    <DT><SAMP>type=hidden</SAMP> 
+    <DD>These fields should not be rendered and provide a means for servers to 
+    store state information with a form. This will be passed back to the server 
+    when the form is submitted, using the name/value pair defined by the 
+    corresponding attributes. This is a work around for the statelessness of 
+    HTTP. Another approach is to use HTTP "<A 
+    href="#refs">Cookies</A>". 
+<PRE>    &lt;input type=hidden name=customerid value="c2415-345-8563"&gt;</PRE></DD></DL>
+  <DT><A name=name><B>name</B></A> 
+  <DD>Used to define the property name that will be used to identify this 
+  field's content when it is submitted to the server. 
+  <DT><A name=value><B>value</B></A> 
+  <DD>Used to initialize the field, or to provide a textual label for submit and 
+  reset buttons. 
+  <DT><A name=checked><B>checked</B></A> 
+  <DD>The presence of this attribute is used to initialize checkboxes and radio 
+  buttons to their checked state. 
+  <DT><A name=isize><B>size</B></A> 
+  <DD>Used to set the visible size of text fields to a given number of average 
+  character widths, e.g. <SAMP>size=20</SAMP> 
+  <DT><A name=maxlen><B>maxlength</B></A> 
+  <DD>Sets the maximum number of characters permitted in a text field. 
+  <DT><A name=isrc><B>src</B></A> 
+  <DD>Specifies a URL for the image to use with a graphical submit button. 
+  <DT><A name=ialign><B>align</B></A> 
+  <DD>Used to specify image alignment for graphical submit buttons. It is 
+  defined just like the <A 
+  href="#img"><SAMP>IMG</SAMP></A> 
+  align attribute and takes one of the values: <SAMP>top</SAMP>, 
+  <SAMP>middle</SAMP>, <SAMP>bottom</SAMP>, <SAMP>left</SAMP> or 
+  <SAMP>right</SAMP>, defaulting to <SAMP>bottom</SAMP>. </DD></DL>
+<H3><A name=select>SELECT <EM>menus</EM></A></H3><PRE>&lt;!ELEMENT SELECT - - (OPTION+)&gt;
+&lt;!ATTLIST SELECT
+        name CDATA #REQUIRED
+        size NUMBER #IMPLIED
+        multiple (multiple) #IMPLIED
+        &gt;
+
+&lt;!ELEMENT OPTION - O (#PCDATA)*&gt;
+&lt;!ATTLIST OPTION
+        selected (selected) #IMPLIED
+        value  CDATA  #IMPLIED -- defaults to element content --
+        &gt;
+</PRE>
+<P><SAMP>SELECT</SAMP> is used to define select one from many or many from many 
+menus. <SAMP>SELECT</SAMP> elements require start and end tags and contain one 
+or more <SAMP>OPTION</SAMP> elements that define menu items. One from many menus 
+are generally rendered as drop-down menus while many from many menus are 
+generally shown as list boxes. 
+<P>Example: <PRE>    &lt;SELECT NAME="flavor"&gt;
+    &lt;OPTION VALUE=a&gt;Vanilla
+    &lt;OPTION VALUE=b&gt;Strawberry
+    &lt;OPTION VALUE=c&gt;Rum and Raisin
+    &lt;OPTION VALUE=d&gt;Peach and Orange
+    &lt;/SELECT&gt;
+</PRE>
+<P><SAMP>SELECT</SAMP> attributes: 
+<DL>
+  <DT><B>name</B> 
+  <DD>This specifies a property name that is used to identify the menu choice 
+  when the form is submitted to the server. Each selected option results in a 
+  property name/value pair being included as part of the form's contents. 
+  <DT><B>size</B> 
+  <DD>This sets the number of visible choices for many from many menus. 
+  <DT><B>multiple</B> 
+  <DD>The presence of this attribute signifies that the users can make multiple 
+  selections. By default only one selection is allowed. </DD></DL>
+<P><SAMP>OPTION</SAMP> attributes: 
+<DL>
+  <DT><B>selected</B> 
+  <DD>When this attribute is present, the option is selected when the document 
+  is initially loaded. It is an error for more than one option to be so selected 
+  for one from many menus. 
+  <DT><B>value</B> 
+  <DD>Specifies the property value to be used when submitting the form's 
+  content. This is combined with the property name as given by the name 
+  attribute of the parent <SAMP>SELECT</SAMP> element. </DD></DL>
+<H3><A name=textarea>TEXTAREA <EM>multi-line text fields</EM></A></H3><PRE>&lt;!-- Multi-line text input field. --&gt;
+
+&lt;!ELEMENT TEXTAREA - - (#PCDATA)*&gt;
+&lt;!ATTLIST TEXTAREA
+        name CDATA #REQUIRED
+        rows NUMBER #REQUIRED
+        cols NUMBER #REQUIRED
+        &gt;
+</PRE>
+<P><SAMP>TEXTAREA</SAMP> elements require start and end tags. The content of the 
+element is restricted to text and character entities. It is used to initialize 
+the text that is shown when the document is first loaded. 
+<P>Example: <PRE>    &lt;TEXTAREA NAME=address ROWS=4 COLS=40&gt;
+    Your address here ...
+    &lt;/TEXTAREA&gt;
+</PRE>
+<P>It is recommended that user agents canonicalize line endings to CR, LF (ASCII 
+decimal 13, 10) when submitting the field's contents. The character set for 
+submitted data should be ISO Latin-1, unless the server has previously indicated 
+that it can support alternative character sets. 
+<DL>
+  <DT><B>name</B> 
+  <DD>This specifies a property name that is used to identify the textarea field 
+  when the form is submitted to the server. 
+  <DT><B>rows</B> 
+  <DD>Specifies the number of visible text lines. Users should be able to enter 
+  more lines that this, so user agents should provide some means to scroll 
+  through the contents of the textarea field when the contents extend beyond the 
+  visible area. 
+  <DT><B>cols</B> 
+  <DD>Specifies the visible width in average character widths. Users should be 
+  able to enter longer lines that this, so user agents should provide some means 
+  to scroll through the contents of the textarea field when the contents extend 
+  beyond the visible area. User agents may wrap visible text lines to keep long 
+  lines visible without the need for scrolling. </DD></DL>
+<H3><A name=specials>Special Text level Elements</A></H3>
+<P><A 
+href="#anchor">A</A> 
+(Anchor), <A 
+href="#img">IMG</A>, 
+<A 
+href="#applet">APPLET</A>, 
+<A 
+href="#font">FONT</A>, 
+<A 
+href="#basefont">BASEFONT</A>, 
+<A 
+href="#br">BR</A> 
+and <A 
+href="#map">MAP</A>. 
+
+<H4><A name=anchor>The A (anchor) element</A></H4><PRE>&lt;!ELEMENT A - - (%text)* -(A)&gt;
+&lt;!ATTLIST A
+        name    CDATA   #IMPLIED    -- named link end --
+        href    %URL    #IMPLIED    -- URL for linked resource --
+        rel     CDATA   #IMPLIED    -- forward link types --
+        rev     CDATA   #IMPLIED    -- reverse link types --
+        title   CDATA   #IMPLIED    -- advisory title string --
+        &gt;
+</PRE>
+<P>Anchors can't be nested and always require start and end tags. They are used 
+to define hypertext links and also to define named locations for use as targets 
+for hypertext links, e.g. <PRE>   The way to &lt;a href="hands-on.html"&gt;happiness&lt;/a&gt;.</PRE>
+<P>and also to define named locations for use as targets for hypertext links, 
+e.g. <PRE>   &lt;h2&gt;&lt;a name=mit&gt;545 Tech Square - Hacker's Paradise&lt;/a&gt;&lt;/h2&gt;</PRE>
+<DL>
+  <DT><B>name</B> 
+  <DD>This should be a string defining unique name for the scope of the current 
+  HTML document. <SAMP>NAME</SAMP> is used to associate a name with this part of 
+  a document for use with URLs that target a named section of a document. 
+  <DT><B>href</B> 
+  <DD>Specifies a URL acting as a network address for the linked resource. This 
+  could be another HTML document, a PDF file or an image etc. 
+  <DT><B>rel</B> 
+  <DD>The forward relationship also known as the "link type". It can be used to 
+  determine to how to deal with the linked resource when printing out a 
+  collection of linked resources. 
+  <DT><B>rev</B> 
+  <DD>This defines a reverse relationship. A link from document A to document B 
+  with <SAMP>REV=relation</SAMP> expresses the same relationship as a link from 
+  B to A with <SAMP>REL=relation</SAMP>. <SAMP>REV=made</SAMP> is sometimes used 
+  to identify the document author, either the author's email address with a 
+  mailto URL, or a link to the author's home page. 
+  <DT><B>title</B> 
+  <DD>An advisory title for the linked resource. </DD></DL>
+<H4><A name=img><B>IMG</B> <I>- inline images</I></A></H4><PRE>&lt;!ENTITY % IAlign "(top|middle|bottom|left|right)"&gt;
+
+&lt;!ELEMENT IMG    - O EMPTY --  Embedded image --&gt;
+&lt;!ATTLIST IMG
+        src     %URL     #REQUIRED  -- URL of image to embed --
+        alt     CDATA    #IMPLIED   -- for display in place of image --
+        align   %IAlign  #IMPLIED   -- vertical or horizontal alignment --
+        height  %Pixels  #IMPLIED   -- suggested height in pixels --
+        width   %Pixels  #IMPLIED   -- suggested width in pixels --
+        border  %Pixels  #IMPLIED   -- suggested link border width --
+        hspace  %Pixels  #IMPLIED   -- suggested horizontal gutter --
+        vspace  %Pixels  #IMPLIED   -- suggested vertical gutter --
+        usemap  %URL     #IMPLIED   -- use client-side image map --
+        ismap   (ismap)  #IMPLIED   -- use server image map --
+        &gt;</PRE>
+<P>Used to insert images. <SAMP>IMG</SAMP> is an empty element and so the end 
+tag is forbidden. Images can be positioned vertically relative to the current 
+textline or floated to the left or right. See <SAMP>BR</SAMP> with the 
+<SAMP>CLEAR</SAMP> attribute for control over textflow. <PRE><I>e.g.</I>  &lt;IMG SRC="canyon.gif" ALT="Grand Canyon"&gt;</PRE>
+<P><SAMP>IMG</SAMP> elements support the following attributes: 
+<DL>
+  <DT><B>src</B> 
+  <DD>This attribute is required for every <SAMP>IMG</SAMP> element. It 
+  specifies a URL for the image resource, for instance a GIF, JPEG or PNG image 
+  file. 
+  <DT><B>alt</B> 
+  <DD>This is used to provide a text description of the image and is vital for 
+  interoperability with speech-based and text only user agents. 
+  <DT><B>align</B> 
+  <DD>This specifies how the image is positioned relative to the current 
+  textline in which it occurs: 
+  <P><!-- fix for Netscape spacing bug with DD --></P>
+  <DL>
+    <DT><SAMP>align=top</SAMP> 
+    <DD>positions the top of the image with the top of the current text line. 
+    User agents vary in how they interpret this. Some only take into account 
+    what has occurred on the text line prior to the IMG element and ignore what 
+    happens after it. 
+    <DT><SAMP>align=middle</SAMP> 
+    <DD>aligns the middle of the image with the baseline for the current 
+    textline. 
+    <DT><SAMP>align=bottom</SAMP> 
+    <DD>is the default and aligns the bottom of the image with the baseline. 
+    <DT><SAMP>align=left</SAMP> 
+    <DD>floats the image to the current left margin, temporarily changing this 
+    margin, so that subsequent text is flowed along the image's righthand side. 
+    The rendering depends on whether there is any left aligned text or images 
+    that appear earlier than the current image in the markup. Such text (but not 
+    images) generally forces left aligned images to wrap to a new line, with the 
+    subsequent text continuing on the former line. 
+    <DT><SAMP>align=right</SAMP> 
+    <DD>floats the image to the current right margin, temporarily changing this 
+    margin, so that subsequent text is flowed along the image's lefthand side. 
+    The rendering depends on whether there is any right aligned text or images 
+    that appear earlier than the current image in the markup. Such text (but not 
+    images) generally forces right aligned images to wrap to a new line, with 
+    the subsequent text continuing on the former line. </DD></DL>
+  <P>Note that some browsers introduce spurious spacing with multiple left or 
+  right aligned images. As a result authors can't depend on this being the same 
+  for browsers from different vendors. See <A 
+  href="#br"><SAMP>BR</SAMP></A> 
+  for ways to control text flow. </P>
+  <DT><B>width</B> 
+  <DD>Specifies the intended width of the image in pixels. When given together 
+  with the height, this allows user agents to reserve screen space for the image 
+  before the image data has arrived over the network. 
+  <DT><B>height</B> 
+  <DD>Specifies the intended height of the image in pixels. When given together 
+  with the width, this allows user agents to reserve screen space for the image 
+  before the image data has arrived over the network. 
+  <DT><B>border</B> 
+  <DD>When the <SAMP>IMG</SAMP> element appears as part of a hypertext link, the 
+  user agent will generally indicate this by drawing a colored border (typically 
+  blue) around the image. This attribute can be used to set the width of this 
+  border in pixels. Use <SAMP>border=0</SAMP> to suppress the border altogether. 
+  User agents are recommended to provide additional cues that the image is 
+  clickable, e.g. by changing the mouse pointer. 
+  <DT><B>hspace</B> 
+  <DD>This can be used to provide white space to the immediate left and right of 
+  the image. The <SAMP>HSPACE</SAMP> attribute sets the width of this white 
+  space in pixels. By default <SAMP>HSPACE</SAMP> is a small non-zero number. 
+  <DT><B>vspace</B> 
+  <DD>This can be used to provide white space above and below the image The 
+  <SAMP>VSPACE</SAMP> attribute sets the height of this white space in pixels. 
+  By default <SAMP>VSPACE</SAMP> is a small non-zero number. 
+  <DT><B>usemap</B> 
+  <DD>This can be used to give a URL fragment identifier for a client-side image 
+  map defined with the <A 
+  href="#map">MAP</A> 
+  element. 
+  <DT><B>ismap</B> 
+  <DD>When the <SAMP>IMG</SAMP> element is part of a hypertext link, and the 
+  user clicks on the image, the <SAMP>ISMAP</SAMP> attribute causes the location 
+  to be passed to the server. This mechanism causes problems for text-only and 
+  speech-based user agents. Whenever its possible to do so use the 
+  <SAMP>MAP</SAMP> element instead. </DD></DL>
+<P>Here is an example of how you use <SAMP>ISMAP</SAMP>: <PRE>&lt;a href="/cgibin/navbar.map"&gt;&lt;img src=navbar.gif ismap border=0&gt;&lt;/a&gt;</PRE>
+<P>The location clicked is passed to the server as follows. The user agent 
+derives a new URL from the URL specified by the <SAMP>HREF</SAMP> attribute by 
+appending `?' the x coordinate `,' and the y coordinate of the location in 
+pixels. The link is then followed using the new URL. For instance, if the user 
+clicked at at the location x=10, y=27 then the derived URL will be: 
+<I>"<SAMP>/cgibin/navbar.map?10,27</SAMP>"</I>. It is generally a good idea to 
+suppress the border and use graphical idioms to indicate that the image is 
+clickable. 
+<P>Note that pixel values refer to screen pixels, and should be multiplied by an 
+appropriate factor when rendering to very high resolution devices such as laser 
+printers. For instance if a user agent has a display with 75 pixels per inch and 
+is rendering to a laser printer with 600 dots per inch, then the pixel values 
+given in HTML attributes should be multiplied by a factor of 8. 
+<H4><A name=applet>APPLET <EM>(Java Applets)</EM></A></H4><PRE>&lt;!ELEMENT APPLET - - (PARAM | %text)*&gt;
+&lt;!ATTLIST APPLET
+        codebase %URL     #IMPLIED   -- code base --
+        code     CDATA    #REQUIRED  -- class file --
+        alt      CDATA    #IMPLIED   -- for display in place of applet --
+        name     CDATA    #IMPLIED   -- applet name --
+        width    %Pixels  #REQUIRED  -- suggested width in pixels --
+        height   %Pixels  #REQUIRED  -- suggested height in pixels --
+        align    %IAlign  #IMPLIED   -- vertical or horizontal alignment --
+        hspace   %Pixels  #IMPLIED   -- suggested horizontal gutter --
+        vspace   %Pixels  #IMPLIED   -- suggested vertical gutter --
+        &gt;
+
+&lt;!ELEMENT PARAM - O EMPTY&gt;
+&lt;!ATTLIST PARAM
+    name    NMTOKEN   #REQUIRED  -- The name of the parameter --
+    value   CDATA     #IMPLIED   -- The value of the parameter --
+    &gt;
+</PRE>
+<P>Requires start and end tags. This element is supported by all Java enabled 
+browsers. It allows you to embed a Java applet into HTML documents. 
+<SAMP>APPLET</SAMP> uses associated <A 
+href="#param"><SAMP>PARAM</SAMP></A> 
+elements to pass parameters to the applet. Following the <SAMP>PARAM</SAMP> 
+elements, the content of <SAMP>APPLET</SAMP> elements should be used to provide 
+an alternative to the applet for user agents that don't support Java. It is 
+restricted to text-level markup as defined by the <I><SAMP>%text</SAMP></I> 
+entity in the DTD. Java-compatible browsers ignore this extra HTML code. You can 
+use it to show a snapshot of the applet running, with text explaining what the 
+applet does. Other possibilities for this area are a link to a page that is more 
+useful for the Java-ignorant browser, or text that taunts the user for not 
+having a Java-compatible browser. 
+<P>Here is a simple example of a Java applet: <PRE>    &lt;applet code="Bubbles.class" width=500 height=500&gt;
+    Java applet that draws animated bubbles.
+    &lt;/applet&gt;
+</PRE>
+<P>Here is another one using a <SAMP>PARAM</SAMP> element: <PRE>    &lt;applet code="AudioItem" width=15 height=15&gt;
+    &lt;param name=snd value="Hello.au|Welcome.au"&gt;
+    Java applet that plays a welcoming sound.
+    &lt;/applet&gt;
+</PRE>
+<DL>
+  <DT><B>codebase =</B> <EM>codebaseURL</EM> 
+  <DD>This optional attribute specifies the base URL of the applet -- the 
+  directory or folder that contains the applet's code. If this attribute is not 
+  specified, then the document's URL is used. 
+  <P></P>
+  <DT><B>code =</B> <EM>appletFile</EM> 
+  <DD>This required attribute gives the name of the file that contains the 
+  applet's compiled Applet subclass. This file is relative to the base URL of 
+  the applet. It cannot be absolute. 
+  <P></P>
+  <DT><B>alt =</B> <EM>alternateText</EM> 
+  <DD>This optional attribute specifies any text that should be displayed if the 
+  browser understands the APPLET tag but can't run Java applets. 
+  <P></P>
+  <DT><B>name =</B> <EM>appletInstanceName</EM> 
+  <DD>This optional attribute specifies a name for the applet instance, which 
+  makes it possible for applets on the same page to find (and communicate with) 
+  each other. 
+  <P></P>
+  <DT><B>width =</B> <EM>pixels</EM> <BR><B>height =</B> <EM>pixels</EM> 
+  <DD>These required attributes give the initial width and height (in pixels) of 
+  the applet display area, not counting any windows or dialogs that the applet 
+  brings up. 
+  <P></P>
+  <DT><B>align =</B> <EM>alignment</EM> 
+  <DD>This attribute specifies the alignment of the applet. This attribute is 
+  defined in exactly the same way as the <A 
+  href="#img"><SAMP>IMG</SAMP></A> 
+  element. The permitted values are: <SAMP>top</SAMP>, <SAMP>middle</SAMP>, 
+  <SAMP>bottom</SAMP>, <SAMP>left</SAMP> and <SAMP>right</SAMP>. The default is 
+  <SAMP>bottom</SAMP>. 
+  <P></P>
+  <DT><B>vspace =</B> <EM>pixels</EM> <BR><B>hspace =</B> <EM>pixels</EM> 
+  <DD>These optional attributes specify the number of pixels above and below the 
+  applet (<SAMP>VSPACE</SAMP>) and on each side of the applet 
+  (<SAMP>HSPACE</SAMP>). They're treated the same way as the <SAMP>IMG</SAMP> 
+  element's <SAMP>VSPACE</SAMP> and <SAMP>HSPACE</SAMP> attributes. </DD></DL>
+<P><A name=param>The <SAMP>PARAM</SAMP> element is used to pass named parameters 
+to applet:</A> <PRE>   <B>&lt;PARAM NAME =</B> <EM>appletParameter</EM> <B>VALUE =</B> <EM>value</EM><B>&gt;</B></PRE>
+<P><SAMP>PARAM</SAMP> elements are the only way to specify applet-specific 
+parameters. Applets read user-specified values for parameters with the 
+<CODE>getParameter()</CODE> method. 
+<DL>
+  <DT><B>name =</B> <EM>applet parameter name</EM> 
+  <DT><B>value =</B> <EM>parameter value</EM> </DT></DL>
+<P>SGML character entities such as <EM><SAMP>&amp;eacute;</SAMP></EM> and 
+<EM><SAMP>&amp;#185;</SAMP></EM> are expanded before the parameter value is 
+passed to the applet. To include an &amp; character use <SAMP>&amp;amp;</SAMP>. 
+<P><EM>Note: PARAM elements should be placed at the start of the content for the 
+APPLET element. This is not specified as part of the DTD due to technicalities 
+with SGML mixed content models.</EM> 
+<H4><A name=font>FONT</A></H4><PRE>&lt;!ELEMENT FONT - - (%text)*     -- local change to font --&gt;
+&lt;!ATTLIST FONT
+    size    CDATA   #IMPLIED    -- [+]nn e.g. size="+1", size=4 --
+    color   CDATA   #IMPLIED    -- #RRGGBB in hex, e.g. red: color="#FF0000" --
+    &gt;</PRE>
+<P>Requires start and end tags. This allows you to change the font size and/or 
+color for the enclosed text. The attributes are: <SAMP>SIZE</SAMP> and 
+<SAMP>COLOR</SAMP>. Font sizes are given in terms of a scalar range defined by 
+the user agent with no direct mapping to point sizes etc. The <SAMP>FONT</SAMP> 
+element may be phased out in future revisions to HTML. 
+<DL>
+  <DT><B>size</B> 
+  <DD>This sets the font size for the contents of the font element. You can set 
+  size to an integer ranging from 1 to 7 for an absolute font size, or specify a 
+  relative font size with a signed integer value, e.g. <SAMP>size="+1"</SAMP> or 
+  <SAMP>size="-2"</SAMP>. This is mapped to an absolute font size by adding the 
+  current base font size as set by the <SAMP>BASEFONT</SAMP> element (see 
+  below). 
+  <DT><B>color</B> 
+  <DD>Used to set the color to stroke the text. Colors are given as RGB in 
+  hexadecimal notation or as one of 16 widely understood <A 
+  href="#colors">color 
+  names</A> defined as per the BGCOLOR attribute on the <A 
+  href="#body"><SAMP>BODY</SAMP></A> 
+  element. </DD></DL>
+<P><EM>Some user agents also support a <SAMP>FACE</SAMP> attribute which accepts 
+a comma separated list of font names in order of preference. This is used to 
+search for an installed font with the corresponding name. <SAMP>FACE</SAMP> is 
+not part of HTML 3.2.</EM> 
+<P>The following shows the effects of setting font to absolute sizes: 
+<P><FONT size=1>size=1</FONT> <FONT size=2>size=2</FONT> <FONT 
+size=3>size=3</FONT> <FONT size=4>size=4</FONT> <FONT size=5>size=5</FONT> <FONT 
+size=6>size=6</FONT> <FONT size=7>size=7</FONT> 
+<P>The following shows the effect of relative font sizes using a base font size 
+of 3: 
+<P><BASEFONT><FONT size=-4>size=-4</FONT> <FONT size=-3>size=-3</FONT> <FONT 
+size=-2>size=-2</FONT> <FONT size=-1>size=-1</FONT> <FONT size=+1>size=+1</FONT> 
+<FONT size=+2>size=+2</FONT> <FONT size=+3>size=+3</FONT> <FONT 
+size=+4>size=+4</FONT> 
+<P>The same thing with a base font size of 6: 
+<P><BASEFONT size=6><FONT size=-4>size=-4</FONT> <FONT size=-3>size=-3</FONT> 
+<FONT size=-2>size=-2</FONT> <FONT size=-1>size=-1</FONT> <FONT 
+size=+1>size=+1</FONT> <FONT size=+2>size=+2</FONT> <FONT size=+3>size=+3</FONT> 
+<FONT size=+4>size=+4</FONT> <BASEFONT>
+<H4><A name=basefont>BASEFONT</A></H4><PRE>&lt;!ELEMENT BASEFONT - O EMPTY    -- base font size (1 to 7) --&gt;
+&lt;!ATTLIST BASEFONT
+    size    CDATA   #IMPLIED    -- e.g. size=4, defaults to 3 --
+    &gt;</PRE>
+<P>Used to set the base font size. <SAMP>BASEFONT</SAMP> is an empty element so 
+the end tag is forbidden. The <SAMP>SIZE</SAMP> attribute is an integer value 
+ranging from 1 to 7. The base font size applies to the normal and preformatted 
+text but not to headings, except where these are modified using the 
+<SAMP>FONT</SAMP> element with a relative font size. 
+<H4><A name=br>BR</A></H4>
+<P>Used to force a line break. This is an empty element so the end tag is 
+forbidden. The <SAMP>CLEAR</SAMP> attribute can be used to move down past 
+floating images on either margin. <SAMP>&lt;BR CLEAR=LEFT&gt;</SAMP> moves down 
+past floating images on the left margin, <SAMP>&lt;BR CLEAR=RIGHT&gt;</SAMP> 
+does the same for floating images on the right margin, while <SAMP>&lt;BR 
+CLEAR=ALL&gt;</SAMP> does the same for such images on both left and right 
+margins. 
+<H4><A name=map>MAP</A></H4>
+<P>The <SAMP>MAP</SAMP> element provides a mechanism for client-side image maps. 
+These can be placed in the same document or grouped in a separate document 
+although this isn't yet widely supported. The <SAMP>MAP</SAMP> element requires 
+start and end tags. It contains one or more <SAMP>AREA</SAMP> elements that 
+specify hotzones on the associated image and bind these hotzones to URLs. <PRE>&lt;!ENTITY % SHAPE "(rect|circle|poly)"&gt;
+&lt;!ENTITY % COORDS "CDATA" -- comma separated list of numbers --&gt;
+
+&lt;!ELEMENT MAP - - (AREA)+&gt;
+&lt;!ATTLIST MAP
+    name    CDATA   #REQUIRED
+    &gt;
+
+&lt;!ELEMENT AREA - O EMPTY&gt;
+&lt;!ATTLIST AREA
+    shape   %SHAPE  rect
+    coords  %COORDS #IMPLIED  -- defines coordinates for shape --
+    href    %URL    #IMPLIED  -- this region acts as hypertext link --
+    nohref (nohref) #IMPLIED  -- this region has no action --
+    alt     CDATA   #REQUIRED -- needed for non-graphical user agents --
+    &gt;</PRE>
+<P>Here is a simple example for a graphical navigational toolbar: <PRE>&lt;img src="navbar.gif" border=0 usemap="#map1"&gt;
+
+&lt;map name="map1"&gt;
+ &lt;area href=guide.html alt="Access Guide" shape=rect coords="0,0,118,28"&gt;
+ &lt;area href=search.html alt="Search" shape=rect coords="184,0,276,28"&gt;
+ &lt;area href=shortcut.html alt="Go" shape=rect coords="118,0,184,28"&gt;
+ &lt;area href=top10.html alt="Top Ten" shape=rect coords="276,0,373,28"&gt;
+&lt;/map&gt;</PRE>
+<P>The <SAMP>MAP</SAMP> element has one attribute <SAMP>NAME</SAMP> which is 
+used to associate a name with a map. This is then used by the 
+<SAMP>USEMAP</SAMP> attribute on the <SAMP>IMG</SAMP> element to reference the 
+map via a URL fragment identifier. Note that the value of the <SAMP>NAME</SAMP> 
+attribute is case sensitive. 
+<P>The <SAMP>AREA</SAMP> element is an empty element and so the end tag is 
+forbidden. It takes the following attributes: <SAMP>SHAPE</SAMP>, 
+<SAMP>COORDS</SAMP>, <SAMP>HREF</SAMP>, <SAMP>NOHREF</SAMP> and 
+<SAMP>ALT</SAMP>. The <SAMP>SHAPE</SAMP> and <SAMP>COORDS</SAMP> attributes 
+define a region on the image. If the <SAMP>SHAPE</SAMP> attribute is omitted, 
+<SAMP>SHAPE="RECT"</SAMP> is assumed. 
+<DL>
+  <DD><B>shape=rect coords="</B><I>left-x<B>,</B> top-y<B>,</B> right-x<B>,</B> 
+  bottom-y</I><B>"</B>
+  <P></P>
+  <DD><B>shape=circle coords="</B><I>center-x<B>,</B> center-y<B>,</B> 
+  radius</I><B>"</B> 
+  <P></P>
+  <DD><B>shape=poly coords="</B><I>x<SUB>1</SUB><B>,</B>y<SUB>1</SUB><B>,</B> 
+  x<SUB>2</SUB><B>,</B>y<SUB>2</SUB><B>,</B> 
+  x<SUB>3</SUB><B>,</B>y<SUB>3</SUB><B>,</B> ...</I><B>"</B> </DD></DL>
+<P>Where <B>x</B> and <B>y</B> are measured in pixels from the left/top of the 
+associated image. If <B>x</B> and <B>y</B> values are given with a percent sign 
+as a suffix, the values should be interpreted as percentages of the image's 
+width and height, respectively. For example: <PRE>   SHAPE=RECT COORDS="0, 0, 50%, 100%"</PRE>
+<P>The <SAMP>HREF</SAMP> attribute gives a URL for the target of the hypertext 
+link. The <SAMP>NOHREF</SAMP> attribute is used when you want to define a region 
+that doesn't act as a hotzone. This is useful when you want to cut a hole in an 
+underlying region acting as a hotzone. 
+<P>If two or more regions overlap, the region defined first in the map 
+definition takes precedence over subsequent regions. This means that 
+<SAMP>AREA</SAMP> elements with <SAMP>NOHREF</SAMP> should generally be placed 
+before ones with the <SAMP>HREF</SAMP> attribute. 
+<P>The <SAMP>ALT</SAMP> attribute is used to provide text labels which can be 
+displayed in the status line as the mouse or other pointing device is moved over 
+hotzones, or for constructing a textual menu for non-graphical user agents. 
+Authors are <B>strongly recommended</B> to provide meaningful <SAMP>ALT</SAMP> 
+attributes to support interoperability with speech-based or text-only user 
+agents. 
+<HR>
+
+<H2><A name=catalog>Sample SGML Open Catalog for HTML 3.2</A></H2>
+<P>This can be used with an SGML parser like nsgmls to verify that files conform 
+to the HTML 3.2 DTD. It assumes that the DTD has been saved as the file 
+"HTML32.dtd" and that the Latin-1 entities are in the file "ISOlat1.ent". <PRE>-- html32.soc: catalog for parsing HTML 3.2 documents --
+SGMLDECL "HTML32.dcl"
+PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" HTML32.dtd
+PUBLIC "-//W3C//DTD HTML 3.2 Draft//EN" HTML32.dtd
+PUBLIC "-//W3C//DTD HTML 3.2//EN" HTML32.dtd
+PUBLIC "ISO 8879-1986//ENTITIES Added Latin 1//EN//HTML" ISOlat1.ent
+</PRE>
+<HR>
+
+<H2><A name=sgmldecl>SGML Declaration for HTML 3.2</A></H2>
+<P>This uses the 8 bit ISO Latin-1 character set. The size limits on properties 
+like literals and tag names have been considerably increased from their HTML 2.0 
+values, but it is recommended that user agents avoid imposing arbitrary length 
+limits. <PRE>&lt;!SGML  "ISO 8879:1986"
+   --
+        SGML Declaration for HyperText Markup Language version 3.2
+
+        With support for ISO Latin-1 and increased limits
+        for tag and literal lengths etc.
+   --
+
+   CHARSET
+         BASESET  "ISO 646:1983//CHARSET
+                   International Reference Version
+                   (IRV)//ESC 2/5 4/0"
+         DESCSET  0   9   UNUSED
+                  9   2   9
+                  11  2   UNUSED
+                  13  1   13
+                  14  18  UNUSED
+                  32  95  32
+                  127 1   UNUSED
+         BASESET  "ISO Registration Number 100//CHARSET
+                   ECMA-94 Right Part of
+                   Latin Alphabet Nr. 1//ESC 2/13 4/1"
+         DESCSET  128  32   UNUSED
+                  160  96    32
+
+   CAPACITY   SGMLREF
+              TOTALCAP        200000
+              GRPCAP          150000
+              ENTCAP          150000
+
+   SCOPE    DOCUMENT
+   SYNTAX
+      SHUNCHAR CONTROLS 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+              17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 127
+      BASESET  "ISO 646:1983//CHARSET
+                International Reference Version
+                (IRV)//ESC 2/5 4/0"
+      DESCSET  0 128 0
+
+      FUNCTION
+              RE            13
+              RS            10
+              SPACE         32
+              TAB SEPCHAR    9
+
+      NAMING   LCNMSTRT ""
+               UCNMSTRT ""
+               LCNMCHAR ".-"
+               UCNMCHAR ".-"
+               NAMECASE GENERAL YES
+                        ENTITY  NO
+      DELIM    GENERAL  SGMLREF
+               SHORTREF SGMLREF
+      NAMES    SGMLREF
+      QUANTITY SGMLREF
+               ATTSPLEN 65536
+               LITLEN   65536
+               NAMELEN  65536
+               PILEN    65536
+               TAGLVL   100
+               TAGLEN   65536
+               GRPGTCNT 150
+               GRPCNT   64
+
+   FEATURES
+     MINIMIZE
+       DATATAG  NO
+       OMITTAG  YES
+       RANK     NO
+       SHORTTAG YES
+     LINK
+       SIMPLE   NO
+       IMPLICIT NO
+       EXPLICIT NO
+     OTHER
+       CONCUR   NO
+       SUBDOC   NO
+       FORMAL   YES
+   APPINFO      NONE
+&gt;
+</PRE>
+<HR>
+
+<H2><A name=dtd>HTML 3.2 Document Type Definition</A></H2><PRE>&lt;!--
+        W3C Document Type Definition for the HyperText Markup Language
+        version 3.2 as ratified by a vote of W3C member companies.
+        For more information on W3C look at  URL http://www.w3.org/
+
+        Date: Tuesday January 14th 1997
+
+        Author: Dave Raggett &lt;dsr@w3.org&gt;
+
+        HTML 3.2 aims to capture recommended practice as of early '96
+        and as such to be used as a replacement for HTML 2.0 (RFC 1866).
+        Widely deployed rendering attributes are included where they
+        have been shown to be interoperable. SCRIPT and STYLE are
+        included to smooth the introduction of client-side scripts
+        and style sheets. Browsers must avoid showing the contents
+        of these element Otherwise support for them is not required.
+        ID, CLASS and STYLE attributes are not included in this version
+        of HTML.
+--&gt;
+
+&lt;!ENTITY % HTML.Version
+        "-//W3C//DTD HTML 3.2 Final//EN"
+
+        -- Typical usage:
+
+            &lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN"&gt;
+            &lt;html&gt;
+            ...
+            &lt;/html&gt;
+        --
+        &gt;
+
+&lt;!--================== Deprecated Features Switch =========================--&gt;
+
+&lt;!ENTITY % HTML.Deprecated "INCLUDE"&gt;
+
+&lt;!--================== Imported Names =====================================--&gt;
+
+&lt;!ENTITY % Content-Type "CDATA"
+        -- meaning a MIME content type, as per RFC1521
+        --&gt;
+
+&lt;!ENTITY % HTTP-Method "GET | POST"
+        -- as per HTTP specification
+        --&gt;
+
+&lt;!ENTITY % URL "CDATA"
+        -- The term URL means a CDATA attribute
+           whose value is a Uniform Resource Locator,
+           See RFC1808 (June 95) and RFC1738 (Dec 94).
+        --&gt;
+
+&lt;!-- Parameter Entities --&gt;
+
+&lt;!ENTITY % head.misc "SCRIPT|STYLE|META|LINK" -- repeatable head elements --&gt;
+
+&lt;!ENTITY % heading "H1|H2|H3|H4|H5|H6"&gt;
+
+&lt;!ENTITY % list "UL | OL |  DIR | MENU"&gt;
+
+&lt;![ %HTML.Deprecated [
+    &lt;!ENTITY % preformatted "PRE | XMP | LISTING"&gt;
+]]&gt;
+
+&lt;!ENTITY % preformatted "PRE"&gt;
+
+&lt;!--================ Character mnemonic entities ==========================--&gt;
+
+&lt;!ENTITY % ISOlat1 PUBLIC
+       "ISO 8879-1986//ENTITIES Added Latin 1//EN//HTML"&gt;
+%ISOlat1;
+
+&lt;!--================ Entities for special symbols =========================--&gt;
+&lt;!-- &amp;trade and &amp;cbsp are not widely deployed and so not included here --&gt;
+
+&lt;!ENTITY amp    CDATA "&amp;#38;"   -- ampersand          --&gt;
+&lt;!ENTITY gt     CDATA "&amp;#62;"   -- greater than       --&gt;
+&lt;!ENTITY lt     CDATA "&amp;#60;"   -- less than          --&gt;
+
+&lt;!--=================== Text Markup =======================================--&gt;
+
+&lt;!ENTITY % font "TT | I | B  | U | STRIKE | BIG | SMALL | SUB | SUP"&gt;
+
+&lt;!ENTITY % phrase "EM | STRONG | DFN | CODE | SAMP | KBD | VAR | CITE"&gt;
+
+&lt;!ENTITY % special "A | IMG | APPLET | FONT | BASEFONT | BR | SCRIPT | MAP"&gt;
+
+&lt;!ENTITY % form "INPUT | SELECT | TEXTAREA"&gt;
+
+&lt;!ENTITY % text "#PCDATA | %font | %phrase | %special | %form"&gt;
+
+&lt;!ELEMENT (%font|%phrase) - - (%text)*&gt;
+
+&lt;!-- there are also 16 widely known color names although
+  the resulting colors are implementation dependent:
+
+   aqua, black, blue, fuchsia, gray, green, lime, maroon,
+   navy, olive, purple, red, silver, teal, white, and yellow
+
+ These colors were originally picked as being the standard
+ 16 colors supported with the Windows VGA palette.
+ --&gt;
+
+&lt;!ELEMENT FONT - - (%text)*     -- local change to font --&gt;
+&lt;!ATTLIST FONT
+    size    CDATA   #IMPLIED    -- [+]nn e.g. size="+1", size=4 --
+    color   CDATA   #IMPLIED    -- #RRGGBB in hex, e.g. red: color="#FF0000" --
+    &gt;
+
+&lt;!ELEMENT BASEFONT - O EMPTY    -- base font size (1 to 7)--&gt;
+&lt;!ATTLIST BASEFONT
+    size    CDATA   #IMPLIED    -- e.g. size=3 --
+    &gt;
+
+&lt;!ELEMENT BR    - O EMPTY    -- forced line break --&gt;
+&lt;!ATTLIST BR
+        clear (left|all|right|none) none -- control of text flow --
+        &gt;
+
+&lt;!--================== HTML content models ================================--&gt;
+&lt;!--
+    HTML has three basic content models:
+
+        %text       character level elements and text strings
+        %flow       block-like elements e.g. paragraphs and lists
+        %bodytext   as %flow plus headers H1-H6 and ADDRESS
+--&gt;
+
+&lt;!ENTITY % block
+     "P | %list | %preformatted | DL | DIV | CENTER |
+      BLOCKQUOTE | FORM | ISINDEX | HR | TABLE"&gt;
+
+&lt;!-- %flow is used for DD and LI --&gt;
+
+&lt;!ENTITY % flow "(%text | %block)*"&gt;
+
+&lt;!--=================== Document Body =====================================--&gt;
+
+&lt;!ENTITY % body.content "(%heading | %text | %block | ADDRESS)*"&gt;
+
+&lt;!ENTITY % color "CDATA" -- a color specification: #HHHHHH @@ details? --&gt;
+
+&lt;!ENTITY % body-color-attrs "
+        bgcolor %color #IMPLIED
+        text %color #IMPLIED
+        link %color #IMPLIED
+        vlink %color #IMPLIED
+        alink %color #IMPLIED
+        "&gt;
+
+&lt;!ELEMENT BODY O O  %body.content&gt;
+&lt;!ATTLIST BODY
+        background %URL #IMPLIED  -- texture tile for document background --
+        %body-color-attrs;  -- bgcolor, text, link, vlink, alink --
+        &gt;
+
+&lt;!ENTITY % address.content "((%text;) | P)*"&gt;
+
+&lt;!ELEMENT ADDRESS - - %address.content&gt;
+
+&lt;!ELEMENT DIV - - %body.content&gt;
+&lt;!ATTLIST DIV
+        align   (left|center|right) #IMPLIED -- alignment of following text --
+        &gt;
+
+&lt;!-- CENTER is a shorthand for DIV with ALIGN=CENTER --&gt;
+&lt;!ELEMENT center - - %body.content&gt;
+
+&lt;!--================== The Anchor Element =================================--&gt;
+
+&lt;!ELEMENT A - - (%text)* -(A)&gt;
+&lt;!ATTLIST A
+        name    CDATA   #IMPLIED    -- named link end --
+        href    %URL    #IMPLIED    -- URL for linked resource --
+        rel     CDATA   #IMPLIED    -- forward link types --
+        rev     CDATA   #IMPLIED    -- reverse link types --
+        title   CDATA   #IMPLIED    -- advisory title string --
+        &gt;
+
+&lt;!--================== Client-side image maps ============================--&gt;
+
+&lt;!-- These can be placed in the same document or grouped in a
+     separate document although this isn't yet widely supported --&gt;
+
+&lt;!ENTITY % SHAPE "(rect|circle|poly)"&gt;
+&lt;!ENTITY % COORDS "CDATA" -- comma separated list of numbers --&gt;
+
+&lt;!ELEMENT MAP - - (AREA)*&gt;
+&lt;!ATTLIST MAP
+    name    CDATA   #IMPLIED
+    &gt;
+
+&lt;!ELEMENT AREA - O EMPTY&gt;
+&lt;!ATTLIST AREA
+    shape   %SHAPE  rect
+    coords  %COORDS #IMPLIED  -- defines coordinates for shape --
+    href    %URL    #IMPLIED  -- this region acts as hypertext link --
+    nohref (nohref) #IMPLIED  -- this region has no action --
+    alt     CDATA   #REQUIRED -- needed for non-graphical user agents --
+    &gt;
+
+&lt;!--================== The LINK Element ==================================--&gt;
+
+&lt;!ENTITY % Types "CDATA"
+        -- See Internet Draft: draft-ietf-html-relrev-00.txt
+           LINK has been part of HTML since the early days
+           although few browsers as yet take advantage of it.
+
+           Relationship values can be used in principle:
+
+                a) for document specific toolbars/menus when used
+                   with the LINK element in the document head:
+                b) to link to a separate style sheet
+                c) to make a link to a script
+                d) by stylesheets to control how collections of
+                   html nodes are rendered into printed documents
+                e) to make a link to a printable version of this document
+                   e.g. a postscript or pdf version
+--&gt;
+
+&lt;!ELEMENT LINK - O EMPTY&gt;
+&lt;!ATTLIST LINK
+        href    %URL    #IMPLIED    -- URL for linked resource --
+        rel     %Types  #IMPLIED    -- forward link types --
+        rev     %Types  #IMPLIED    -- reverse link types --
+        title   CDATA   #IMPLIED    -- advisory title string --
+        &gt;
+
+&lt;!--=================== Images ============================================--&gt;
+
+&lt;!ENTITY % Length "CDATA"   -- nn for pixels or nn% for percentage length --&gt;
+&lt;!ENTITY % Pixels "NUMBER"  -- integer representing length in pixels --&gt;
+
+&lt;!-- Suggested widths are used for negotiating image size
+     with the module responsible for painting the image.
+     align=left or right cause image to float to margin
+     and for subsequent text to wrap around image --&gt;
+
+&lt;!ENTITY % IAlign "(top|middle|bottom|left|right)"&gt;
+
+&lt;!ELEMENT IMG    - O EMPTY --  Embedded image --&gt;
+&lt;!ATTLIST IMG
+        src     %URL     #REQUIRED  -- URL of image to embed --
+        alt     CDATA    #IMPLIED   -- for display in place of image --
+        align   %IAlign  #IMPLIED   -- vertical or horizontal alignment --
+        height  %Pixels  #IMPLIED   -- suggested height in pixels --
+        width   %Pixels  #IMPLIED   -- suggested width in pixels --
+        border  %Pixels  #IMPLIED   -- suggested link border width --
+        hspace  %Pixels  #IMPLIED   -- suggested horizontal gutter --
+        vspace  %Pixels  #IMPLIED   -- suggested vertical gutter --
+        usemap  %URL     #IMPLIED   -- use client-side image map --
+        ismap   (ismap)  #IMPLIED   -- use server image map --
+        &gt;
+
+&lt;!-- USEMAP points to a MAP element which may be in this document
+  or an external document, although the latter is not widely supported --&gt;
+
+&lt;!--=================== Java APPLET tag ===================================--&gt;
+&lt;!--
+  This tag is supported by all Java enabled browsers. Applet resources
+  (including their classes) are normally loaded relative to the document
+  URL (or &lt;BASE&gt; element if it is defined). The CODEBASE attribute is used
+  to change this default behavior. If the CODEBASE attribute is defined then
+  it specifies a different location to find applet resources. The value
+  can be an absolute URL or a relative URL. The absolute URL is used as is
+  without modification and is not effected by the documents &lt;BASE&gt; element.
+  When the codebase attribute is relative, then it is relative to the
+  document URL (or &lt;BASE&gt; tag if defined).
+--&gt;
+&lt;!ELEMENT APPLET - - (PARAM | %text)*&gt;
+&lt;!ATTLIST APPLET
+        codebase %URL     #IMPLIED   -- code base --
+        code     CDATA    #REQUIRED  -- class file --
+        alt      CDATA    #IMPLIED   -- for display in place of applet --
+        name     CDATA    #IMPLIED   -- applet name --
+        width    %Pixels  #REQUIRED  -- suggested width in pixels --
+        height   %Pixels  #REQUIRED  -- suggested height in pixels --
+        align    %IAlign  #IMPLIED   -- vertical or horizontal alignment --
+        hspace   %Pixels  #IMPLIED   -- suggested horizontal gutter --
+        vspace   %Pixels  #IMPLIED   -- suggested vertical gutter --
+        &gt;
+
+&lt;!ELEMENT PARAM - O EMPTY&gt;
+&lt;!ATTLIST PARAM
+        name    NMTOKEN   #REQUIRED  -- The name of the parameter --
+        value   CDATA     #IMPLIED   -- The value of the parameter --
+        &gt;
+
+&lt;!--
+Here is an example:
+
+    &lt;applet codebase="applets/NervousText"
+        code=NervousText.class
+        width=300
+        height=50&gt;
+    &lt;param name=text value="Java is Cool!"&gt;
+    &lt;img src=sorry.gif alt="This looks better with Java support"&gt;
+    &lt;/applet&gt;
+--&gt;
+
+&lt;!--=================== Horizontal Rule ===================================--&gt;
+
+&lt;!ELEMENT HR    - O EMPTY&gt;
+&lt;!ATTLIST HR
+        align (left|right|center) #IMPLIED
+        noshade (noshade) #IMPLIED
+        size  %Pixels #IMPLIED
+        width %Length #IMPLIED
+        &gt;
+&lt;!--=================== Paragraphs=========================================--&gt;
+
+&lt;!ELEMENT P     - O (%text)*&gt;
+&lt;!ATTLIST P
+        align  (left|center|right) #IMPLIED
+        &gt;
+
+&lt;!--=================== Headings ==========================================--&gt;
+
+&lt;!--
+  There are six levels of headers from H1 (the most important)
+  to H6 (the least important).
+--&gt;
+
+&lt;!ELEMENT ( %heading )  - -  (%text;)*&gt;
+&lt;!ATTLIST ( %heading )
+        align  (left|center|right) #IMPLIED
+        &gt;
+
+&lt;!--=================== Preformatted Text =================================--&gt;
+
+&lt;!-- excludes images and changes in font size --&gt;
+
+&lt;!ENTITY % pre.exclusion "IMG|BIG|SMALL|SUB|SUP|FONT"&gt;
+
+&lt;!ELEMENT PRE - - (%text)* -(%pre.exclusion)&gt;
+&lt;!ATTLIST PRE
+        width NUMBER #implied -- is this widely supported? --
+        &gt;
+
+&lt;![ %HTML.Deprecated [
+
+&lt;!ENTITY % literal "CDATA"
+        -- historical, non-conforming parsing mode where
+           the only markup signal is the end tag
+           in full
+        --&gt;
+
+&lt;!ELEMENT (XMP|LISTING) - -  %literal&gt;
+&lt;!ELEMENT PLAINTEXT - O %literal&gt;
+
+]]&gt;
+
+&lt;!--=================== Block-like Quotes =================================--&gt;
+
+&lt;!ELEMENT BLOCKQUOTE - - %body.content&gt;
+
+&lt;!--=================== Lists =============================================--&gt;
+
+&lt;!--
+    HTML 3.2 allows you to control the sequence number for ordered lists.
+    You can set the sequence number with the START and VALUE attributes.
+    The TYPE attribute may be used to specify the rendering of ordered
+    and unordered lists.
+--&gt;
+
+&lt;!-- definition lists - DT for term, DD for its definition --&gt;
+
+&lt;!ELEMENT DL    - -  (DT|DD)+&gt;
+&lt;!ATTLIST DL
+        compact (compact) #IMPLIED -- more compact style --
+        &gt;
+
+&lt;!ELEMENT DT - O  (%text)*&gt;
+&lt;!ELEMENT DD - O  %flow;&gt;
+
+&lt;!-- Ordered lists OL, and unordered lists UL --&gt;
+&lt;!ELEMENT (OL|UL) - -  (LI)+&gt;
+
+&lt;!--
+       Numbering style
+    1   Arabic numbers      1, 2, 3, ...
+    a   lower alpha         a, b, c, ...
+    A   upper alpha         A, B, C, ...
+    i   lower Roman         i, ii, iii, ...
+    I   upper Roman         I, II, III, ...
+
+    The style is applied to the sequence number which by default
+    is reset to 1 for the first list item in an ordered list.
+
+    This can't be expressed directly in SGML due to case folding.
+--&gt;
+
+&lt;!ENTITY % OLStyle "CDATA" -- constrained to: [1|a|A|i|I] --&gt;
+
+&lt;!ATTLIST OL -- ordered lists --
+        type      %OLStyle   #IMPLIED   -- numbering style --
+        start     NUMBER     #IMPLIED   -- starting sequence number --
+        compact  (compact)   #IMPLIED   -- reduced interitem spacing --
+        &gt;
+
+&lt;!-- bullet styles --&gt;
+
+&lt;!ENTITY % ULStyle "disc|square|circle"&gt;
+
+&lt;!ATTLIST UL -- unordered lists --
+        type    (%ULStyle)   #IMPLIED   -- bullet style --
+        compact (compact)    #IMPLIED   -- reduced interitem spacing --
+        &gt;
+
+&lt;!ELEMENT (DIR|MENU) - -  (LI)+ -(%block)&gt;
+&lt;!ATTLIST DIR
+        compact (compact) #IMPLIED
+        &gt;
+&lt;!ATTLIST MENU
+        compact (compact) #IMPLIED
+        &gt;
+
+&lt;!-- &lt;DIR&gt;              Directory list                  --&gt;
+&lt;!-- &lt;DIR COMPACT&gt;      Compact list style              --&gt;
+&lt;!-- &lt;MENU&gt;             Menu list                       --&gt;
+&lt;!-- &lt;MENU COMPACT&gt;     Compact list style              --&gt;
+
+&lt;!-- The type attribute can be used to change the bullet style
+     in unordered lists and the numbering style in ordered lists --&gt;
+
+&lt;!ENTITY % LIStyle "CDATA" -- constrained to: "(%ULStyle|%OLStyle)" --&gt;
+
+&lt;!ELEMENT LI - O %flow -- list item --&gt;
+&lt;!ATTLIST LI
+        type    %LIStyle     #IMPLIED   -- list item style --
+        value    NUMBER      #IMPLIED   -- reset sequence number --
+        &gt;
+
+&lt;!--================ Forms ===============================================--&gt;
+
+&lt;!ELEMENT FORM - - %body.content -(FORM)&gt;
+&lt;!ATTLIST FORM
+        action %URL #IMPLIED  -- server-side form handler --
+        method (%HTTP-Method) GET -- see HTTP specification --
+        enctype %Content-Type; "application/x-www-form-urlencoded"
+        &gt;
+
+&lt;!ENTITY % InputType
+        "(TEXT | PASSWORD | CHECKBOX | RADIO | SUBMIT
+            | RESET | FILE | HIDDEN | IMAGE)"&gt;
+
+&lt;!ELEMENT INPUT - O EMPTY&gt;
+&lt;!ATTLIST INPUT
+        type %InputType TEXT     -- what kind of widget is needed --
+        name  CDATA   #IMPLIED   -- required for all but submit and reset --
+        value CDATA   #IMPLIED   -- required for radio and checkboxes --
+        checked (checked) #IMPLIED -- for radio buttons and check boxes --
+        size CDATA    #IMPLIED   -- specific to each type of field --
+        maxlength NUMBER #IMPLIED -- max chars allowed in text fields --
+        src   %URL    #IMPLIED   -- for fields with background images --
+        align %IAlign #IMPLIED   -- vertical or horizontal alignment --
+        &gt;
+
+&lt;!ELEMENT SELECT - - (OPTION+)&gt;
+&lt;!ATTLIST SELECT
+        name CDATA #REQUIRED
+        size NUMBER #IMPLIED
+        multiple (multiple) #IMPLIED
+        &gt;
+
+&lt;!ELEMENT OPTION - O (#PCDATA)*&gt;
+&lt;!ATTLIST OPTION
+        selected (selected) #IMPLIED
+        value  CDATA  #IMPLIED -- defaults to element content --
+        &gt;
+
+&lt;!-- Multi-line text input field. --&gt;
+
+&lt;!ELEMENT TEXTAREA - - (#PCDATA)*&gt;
+&lt;!ATTLIST TEXTAREA
+        name CDATA #REQUIRED
+        rows NUMBER #REQUIRED
+        cols NUMBER #REQUIRED
+        &gt;
+
+&lt;!--======================= Tables ========================================--&gt;
+
+&lt;!-- Widely deployed subset of the full table standard, see RFC 1942
+     e.g. at http://www.ics.uci.edu/pub/ietf/html/rfc1942.txt --&gt;
+
+&lt;!-- horizontal placement of table relative to window --&gt;
+&lt;!ENTITY % Where "(left|center|right)"&gt;
+
+&lt;!-- horizontal alignment attributes for cell contents --&gt;
+&lt;!ENTITY % cell.halign
+        "align  (left|center|right) #IMPLIED"
+        &gt;
+
+&lt;!-- vertical alignment attributes for cell contents --&gt;
+&lt;!ENTITY % cell.valign
+        "valign  (top|middle|bottom)  #IMPLIED"
+        &gt;
+
+&lt;!ELEMENT table - - (caption?, tr+)&gt;
+&lt;!ELEMENT tr - O (th|td)*&gt;
+&lt;!ELEMENT (th|td) - O %body.content&gt;
+
+&lt;!ATTLIST table                       -- table element --
+        align     %Where;   #IMPLIED  -- table position relative to window --
+        width     %Length   #IMPLIED  -- table width relative to window --
+        border    %Pixels   #IMPLIED  -- controls frame width around table --
+        cellspacing %Pixels #IMPLIED  -- spacing between cells --
+        cellpadding %Pixels #IMPLIED  -- spacing within cells --
+        &gt;
+
+&lt;!ELEMENT CAPTION - - (%text;)* -- table or figure caption --&gt;
+&lt;!ATTLIST CAPTION
+        align (top|bottom) #IMPLIED
+        &gt;
+
+&lt;!ATTLIST tr                       -- table row --
+        %cell.halign;              -- horizontal alignment in cells --
+        %cell.valign;              -- vertical alignment in cells --
+        &gt;
+
+&lt;!ATTLIST (th|td)                  -- header or data cell --
+        nowrap (nowrap)  #IMPLIED  -- suppress word wrap --
+        rowspan NUMBER   1         -- number of rows spanned by cell --
+        colspan NUMBER   1         -- number of cols spanned by cell --
+        %cell.halign;              -- horizontal alignment in cell --
+        %cell.valign;              -- vertical alignment in cell --
+        width   %Pixels  #IMPLIED  -- suggested width for cell --
+        height  %Pixels  #IMPLIED  -- suggested height for cell --
+        &gt;
+
+&lt;!--================ Document Head ========================================--&gt;
+
+&lt;!-- %head.misc defined earlier on as "SCRIPT|STYLE|META|LINK" --&gt;
+
+&lt;!ENTITY % head.content "TITLE &amp; ISINDEX? &amp; BASE?"&gt;
+
+&lt;!ELEMENT HEAD O O  (%head.content) +(%head.misc)&gt;
+
+&lt;!ELEMENT TITLE - -  (#PCDATA)* -(%head.misc)
+          -- The TITLE element is not considered part of the flow of text.
+             It should be displayed, for example as the page header or
+             window title.
+          --&gt;
+
+&lt;!ELEMENT ISINDEX - O EMPTY&gt;
+&lt;!ATTLIST ISINDEX
+        prompt CDATA #IMPLIED -- prompt message --&gt;
+
+&lt;!--
+    The BASE element gives an absolute URL for dereferencing relative
+    URLs, e.g.
+
+         &lt;BASE href="http://foo.com/index.html"&gt;
+         ...
+         &lt;IMG SRC="images/bar.gif"&gt;
+
+    The image is deferenced to
+
+         http://foo.com/images/bar.gif
+
+   In the absence of a BASE element the document URL should be used.
+   Note that this is not necessarily the same as the URL used to
+   request the document, as the base URL may be overridden by an HTTP
+   header accompanying the document.
+--&gt;
+
+&lt;!ELEMENT BASE - O EMPTY&gt;
+&lt;!ATTLIST BASE
+        href %URL  #REQUIRED
+        &gt;
+
+&lt;!ELEMENT META - O EMPTY -- Generic Metainformation --&gt;
+&lt;!ATTLIST META
+        http-equiv  NAME    #IMPLIED  -- HTTP response header name  --
+        name        NAME    #IMPLIED  -- metainformation name       --
+        content     CDATA   #REQUIRED -- associated information     --
+        &gt;
+
+&lt;!-- SCRIPT/STYLE are place holders for transition to next version of HTML --&gt;
+
+&lt;!ELEMENT STYLE  - - CDATA -- placeholder for style info --&gt;
+&lt;!ELEMENT SCRIPT - - CDATA -- placeholder for script statements --&gt;
+
+&lt;!--================ Document Structure ===================================--&gt;
+
+&lt;!ENTITY % version.attr "VERSION CDATA #FIXED '%HTML.Version;'"&gt;
+
+&lt;![ %HTML.Deprecated [
+    &lt;!ENTITY % html.content "HEAD, BODY, PLAINTEXT?"&gt;
+]]&gt;
+
+&lt;!ENTITY % html.content "HEAD, BODY"&gt;
+
+&lt;!ELEMENT HTML O O  (%html.content)&gt;
+&lt;!ATTLIST HTML
+        %version.attr;
+        &gt;
+</PRE>
+<HR>
+
+<H2><A name=latin1>Character Entities for ISO Latin-1</A></H2><PRE>
+&lt;!-- (C) International Organization for Standardization 1986
+     Permission to copy in any form is granted for use with
+     conforming SGML systems and applications as defined in
+     ISO 8879, provided this notice is included in all copies.
+     This has been extended for use with HTML to cover the full
+     set of codes in the range 160-255 decimal.
+--&gt;
+&lt;!-- Character entity set. Typical invocation:
+     &lt;!ENTITY % ISOlat1 PUBLIC
+       "ISO 8879-1986//ENTITIES Added Latin 1//EN//HTML"&gt;
+     %ISOlat1;
+--&gt;
+    &lt;!ENTITY nbsp   CDATA "&amp;#160;" -- no-break space --&gt;
+    &lt;!ENTITY iexcl  CDATA "&amp;#161;" -- inverted exclamation mark --&gt;
+    &lt;!ENTITY cent   CDATA "&amp;#162;" -- cent sign --&gt;
+    &lt;!ENTITY pound  CDATA "&amp;#163;" -- pound sterling sign --&gt;
+    &lt;!ENTITY curren CDATA "&amp;#164;" -- general currency sign --&gt;
+    &lt;!ENTITY yen    CDATA "&amp;#165;" -- yen sign --&gt;
+    &lt;!ENTITY brvbar CDATA "&amp;#166;" -- broken (vertical) bar --&gt;
+    &lt;!ENTITY sect   CDATA "&amp;#167;" -- section sign --&gt;
+    &lt;!ENTITY uml    CDATA "&amp;#168;" -- umlaut (dieresis) --&gt;
+    &lt;!ENTITY copy   CDATA "&amp;#169;" -- copyright sign --&gt;
+    &lt;!ENTITY ordf   CDATA "&amp;#170;" -- ordinal indicator, feminine --&gt;
+    &lt;!ENTITY laquo  CDATA "&amp;#171;" -- angle quotation mark, left --&gt;
+    &lt;!ENTITY not    CDATA "&amp;#172;" -- not sign --&gt;
+    &lt;!ENTITY shy    CDATA "&amp;#173;" -- soft hyphen --&gt;
+    &lt;!ENTITY reg    CDATA "&amp;#174;" -- registered sign --&gt;
+    &lt;!ENTITY macr   CDATA "&amp;#175;" -- macron --&gt;
+    &lt;!ENTITY deg    CDATA "&amp;#176;" -- degree sign --&gt;
+    &lt;!ENTITY plusmn CDATA "&amp;#177;" -- plus-or-minus sign --&gt;
+    &lt;!ENTITY sup2   CDATA "&amp;#178;" -- superscript two --&gt;
+    &lt;!ENTITY sup3   CDATA "&amp;#179;" -- superscript three --&gt;
+    &lt;!ENTITY acute  CDATA "&amp;#180;" -- acute accent --&gt;
+    &lt;!ENTITY micro  CDATA "&amp;#181;" -- micro sign --&gt;
+    &lt;!ENTITY para   CDATA "&amp;#182;" -- pilcrow (paragraph sign) --&gt;
+    &lt;!ENTITY middot CDATA "&amp;#183;" -- middle dot --&gt;
+    &lt;!ENTITY cedil  CDATA "&amp;#184;" -- cedilla --&gt;
+    &lt;!ENTITY sup1   CDATA "&amp;#185;" -- superscript one --&gt;
+    &lt;!ENTITY ordm   CDATA "&amp;#186;" -- ordinal indicator, masculine --&gt;
+    &lt;!ENTITY raquo  CDATA "&amp;#187;" -- angle quotation mark, right --&gt;
+    &lt;!ENTITY frac14 CDATA "&amp;#188;" -- fraction one-quarter --&gt;
+    &lt;!ENTITY frac12 CDATA "&amp;#189;" -- fraction one-half --&gt;
+    &lt;!ENTITY frac34 CDATA "&amp;#190;" -- fraction three-quarters --&gt;
+    &lt;!ENTITY iquest CDATA "&amp;#191;" -- inverted question mark --&gt;
+    &lt;!ENTITY Agrave CDATA "&amp;#192;" -- capital A, grave accent --&gt;
+    &lt;!ENTITY Aacute CDATA "&amp;#193;" -- capital A, acute accent --&gt;
+    &lt;!ENTITY Acirc  CDATA "&amp;#194;" -- capital A, circumflex accent --&gt;
+    &lt;!ENTITY Atilde CDATA "&amp;#195;" -- capital A, tilde --&gt;
+    &lt;!ENTITY Auml   CDATA "&amp;#196;" -- capital A, dieresis or umlaut mark --&gt;
+    &lt;!ENTITY Aring  CDATA "&amp;#197;" -- capital A, ring --&gt;
+    &lt;!ENTITY AElig  CDATA "&amp;#198;" -- capital AE diphthong (ligature) --&gt;
+    &lt;!ENTITY Ccedil CDATA "&amp;#199;" -- capital C, cedilla --&gt;
+    &lt;!ENTITY Egrave CDATA "&amp;#200;" -- capital E, grave accent --&gt;
+    &lt;!ENTITY Eacute CDATA "&amp;#201;" -- capital E, acute accent --&gt;
+    &lt;!ENTITY Ecirc  CDATA "&amp;#202;" -- capital E, circumflex accent --&gt;
+    &lt;!ENTITY Euml   CDATA "&amp;#203;" -- capital E, dieresis or umlaut mark --&gt;
+    &lt;!ENTITY Igrave CDATA "&amp;#204;" -- capital I, grave accent --&gt;
+    &lt;!ENTITY Iacute CDATA "&amp;#205;" -- capital I, acute accent --&gt;
+    &lt;!ENTITY Icirc  CDATA "&amp;#206;" -- capital I, circumflex accent --&gt;
+    &lt;!ENTITY Iuml   CDATA "&amp;#207;" -- capital I, dieresis or umlaut mark --&gt;
+    &lt;!ENTITY ETH    CDATA "&amp;#208;" -- capital Eth, Icelandic --&gt;
+    &lt;!ENTITY Ntilde CDATA "&amp;#209;" -- capital N, tilde --&gt;
+    &lt;!ENTITY Ograve CDATA "&amp;#210;" -- capital O, grave accent --&gt;
+    &lt;!ENTITY Oacute CDATA "&amp;#211;" -- capital O, acute accent --&gt;
+    &lt;!ENTITY Ocirc  CDATA "&amp;#212;" -- capital O, circumflex accent --&gt;
+    &lt;!ENTITY Otilde CDATA "&amp;#213;" -- capital O, tilde --&gt;
+    &lt;!ENTITY Ouml   CDATA "&amp;#214;" -- capital O, dieresis or umlaut mark --&gt;
+    &lt;!ENTITY times  CDATA "&amp;#215;" -- multiply sign --&gt;
+    &lt;!ENTITY Oslash CDATA "&amp;#216;" -- capital O, slash --&gt;
+    &lt;!ENTITY Ugrave CDATA "&amp;#217;" -- capital U, grave accent --&gt;
+    &lt;!ENTITY Uacute CDATA "&amp;#218;" -- capital U, acute accent --&gt;
+    &lt;!ENTITY Ucirc  CDATA "&amp;#219;" -- capital U, circumflex accent --&gt;
+    &lt;!ENTITY Uuml   CDATA "&amp;#220;" -- capital U, dieresis or umlaut mark --&gt;
+    &lt;!ENTITY Yacute CDATA "&amp;#221;" -- capital Y, acute accent --&gt;
+    &lt;!ENTITY THORN  CDATA "&amp;#222;" -- capital THORN, Icelandic --&gt;
+    &lt;!ENTITY szlig  CDATA "&amp;#223;" -- small sharp s, German (sz ligature) --&gt;
+    &lt;!ENTITY agrave CDATA "&amp;#224;" -- small a, grave accent --&gt;
+    &lt;!ENTITY aacute CDATA "&amp;#225;" -- small a, acute accent --&gt;
+    &lt;!ENTITY acirc  CDATA "&amp;#226;" -- small a, circumflex accent --&gt;
+    &lt;!ENTITY atilde CDATA "&amp;#227;" -- small a, tilde --&gt;
+    &lt;!ENTITY auml   CDATA "&amp;#228;" -- small a, dieresis or umlaut mark --&gt;
+    &lt;!ENTITY aring  CDATA "&amp;#229;" -- small a, ring --&gt;
+    &lt;!ENTITY aelig  CDATA "&amp;#230;" -- small ae diphthong (ligature) --&gt;
+    &lt;!ENTITY ccedil CDATA "&amp;#231;" -- small c, cedilla --&gt;
+    &lt;!ENTITY egrave CDATA "&amp;#232;" -- small e, grave accent --&gt;
+    &lt;!ENTITY eacute CDATA "&amp;#233;" -- small e, acute accent --&gt;
+    &lt;!ENTITY ecirc  CDATA "&amp;#234;" -- small e, circumflex accent --&gt;
+    &lt;!ENTITY euml   CDATA "&amp;#235;" -- small e, dieresis or umlaut mark --&gt;
+    &lt;!ENTITY igrave CDATA "&amp;#236;" -- small i, grave accent --&gt;
+    &lt;!ENTITY iacute CDATA "&amp;#237;" -- small i, acute accent --&gt;
+    &lt;!ENTITY icirc  CDATA "&amp;#238;" -- small i, circumflex accent --&gt;
+    &lt;!ENTITY iuml   CDATA "&amp;#239;" -- small i, dieresis or umlaut mark --&gt;
+    &lt;!ENTITY eth    CDATA "&amp;#240;" -- small eth, Icelandic --&gt;
+    &lt;!ENTITY ntilde CDATA "&amp;#241;" -- small n, tilde --&gt;
+    &lt;!ENTITY ograve CDATA "&amp;#242;" -- small o, grave accent --&gt;
+    &lt;!ENTITY oacute CDATA "&amp;#243;" -- small o, acute accent --&gt;
+    &lt;!ENTITY ocirc  CDATA "&amp;#244;" -- small o, circumflex accent --&gt;
+    &lt;!ENTITY otilde CDATA "&amp;#245;" -- small o, tilde --&gt;
+    &lt;!ENTITY ouml   CDATA "&amp;#246;" -- small o, dieresis or umlaut mark --&gt;
+    &lt;!ENTITY divide CDATA "&amp;#247;" -- divide sign --&gt;
+    &lt;!ENTITY oslash CDATA "&amp;#248;" -- small o, slash --&gt;
+    &lt;!ENTITY ugrave CDATA "&amp;#249;" -- small u, grave accent --&gt;
+    &lt;!ENTITY uacute CDATA "&amp;#250;" -- small u, acute accent --&gt;
+    &lt;!ENTITY ucirc  CDATA "&amp;#251;" -- small u, circumflex accent --&gt;
+    &lt;!ENTITY uuml   CDATA "&amp;#252;" -- small u, dieresis or umlaut mark --&gt;
+    &lt;!ENTITY yacute CDATA "&amp;#253;" -- small y, acute accent --&gt;
+    &lt;!ENTITY thorn  CDATA "&amp;#254;" -- small thorn, Icelandic --&gt;
+    &lt;!ENTITY yuml   CDATA "&amp;#255;" -- small y, dieresis or umlaut mark --&gt;
+</PRE>
+<HR>
+
+<H2><A name=charset>Table of printable Latin-1 Character codes</A></H2>
+<P><IMG src=""> 
+<HR>
+
+<H2><A name=acks>Acknowledgements</A></H2>
+<P>The author would like to thank the members of the W3C HTML Editorial Review 
+Board, members of the W3C staff, and the many other people who have contributed 
+to this specification. 
+<HR>
+
+<H2><A name=refs>Further Reading</A></H2>
+<DL>
+  <DT><B>The World Wide Web Consortium</B> 
+  <DD>Further information on W3C activities and pointers to the status of work 
+  on HTML and HTTP etc. can be found at <A 
+  href="http://www.w3.org/">http://www.w3.org/</A>. Further information on HTML 
+  in particular can be found at <A 
+  href="http://www.w3.org/pub/WWW/MarkUp/">http://www.w3.org/pub/WWW/MarkUp/</A>. 
+
+  <DT><B>HTML 2.0 (RFC1866)</B>
+  <DD>By Tim Berners-Lee and Dan Connolly, November 1995. Defines the Hypertext 
+  Markup Language Specification Version 2.0. Available from <A 
+  href="ftp://ds.internic.net/rfc/rfc1866.txt">ftp://ds.internic.net/rfc/rfc1866.txt</A>. 
+
+  <DT><B>Form-based File Upload in HTML (RFC1867)</B>
+  <DD>By E. Nebel and L. Masinter, November 1995. Describes extensions to HTML 
+  2.0 (RFC1866) to support file upload from HTML forms. Available from <A 
+  href="ftp://ds.internic.net/rfc/rfc1867.txt">ftp://ds.internic.net/rfc/rfc1867.txt</A>. 
+
+  <DT><B>HTML Tables (RFC1942)</B>
+  <DD>By Dave Raggett, May 1996. This defines the HTML table model. It is a 
+  superset of the table model defined by HTML 3.2. Available from <A 
+  href="ftp://ds.internic.net/rfc/rfc1942.txt">ftp://ds.internic.net/rfc/rfc1942.txt</A>, 
+  or as a W3C working draft at <A 
+  href="http://www.w3.org/pub/WWW/TR/WD-tables">http://www.w3.org/pub/WWW/TR/WD-tables</A>. 
+
+  <DT><B>A Lexical Analyzer for HTML and Basic SGML</B>
+  <DD>By Dan Connolly, June 1996. Describes lexical considerations for parsing 
+  HTML documents. Available from <A 
+  href="http://www.w3.org/pub/WWW/TR/WD-html-lex">http://www.w3.org/pub/WWW/TR/WD-html-lex</A> 
+
+  <DT><B>The Hypertext Transfer Protocol (HTTP)</B> 
+  <DD>Further information of HTTP can be found at: <A 
+  href="http://www.w3.org/pub/WWW/Protocols">http://www.w3.org/pub/WWW/Protocols</A>. 
+
+  <DT><B>A Standard Default Color Space for the Internet - sRGB</B>
+  <DD>By Michael Stokes, Mathew Anderson, Srinivasan Chandrasekar and Ricardo 
+  Motta, November 1996. Available from: <A 
+  href="http://www.w3.org/pub/WWW/Graphics/Color/sRGB.html">http://www.w3.org/pub/WWW/Graphics/Color/sRGB.html</A> 
+  This provides a precise definition for RGB that allows sRGB images to be 
+  reproduced accurately on different platforms and media under varying ambient 
+  lighting conditions. </DD></DL>
+<P><A 
+href="http://www.w3.org/Consortium/Legal/ipr-notice.html#Copyright">Copyright</A> 
+&nbsp;©&nbsp; 1997 <A href="http://www.w3.org/">W3C</A> (<A 
+href="http://www.lcs.mit.edu/">MIT</A>, <A 
+href="http://www.inria.fr/">INRIA</A>, <A href="http://www.keio.ac.jp/">Keio</A> 
+), All Rights Reserved. W3C <A 
+href="http://www.w3.org/Consortium/Legal/ipr-notice.html#Legal Disclaimer">liability,</A> 
+<A 
+href="http://www.w3.org/Consortium/Legal/ipr-notice.html#W3C Trademarks">trademark</A>, 
+<A href="http://www.w3.org/Consortium/Legal/copyright-documents.html">document 
+use </A>and <A 
+href="http://www.w3.org/Consortium/Legal/copyright-software.html">software 
+licensing </A>rules apply. </P></BASEFONT></BODY></HTML>

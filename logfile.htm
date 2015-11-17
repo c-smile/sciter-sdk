@@ -1,0 +1,1083 @@
+﻿<html>
+  <head>
+    <title>Sciter 3.* logfile</title>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h3>Sciter 3.* logfile:</h3>
+  <table border="1" cellpadding="3" cellspacing="1" width="100%">
+    <tr>
+      <td width="60" nowrap valign="top" align="center">Build#</td>
+      <td width="78" nowrap valign="top" align="center">Date</td>
+      <td align="center">Updates</td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFFADA">3.3.0.7</td>
+      <td nowrap valign="top" align="center">15-11-2015</td>
+      <td>
+        <p>new features:</p>
+        <ul>
+          <li>Support of <code>Element.on(&quot;mouseidle&quot;, ...)</code> and <code>Element.on(&quot;mousetick&quot;, ...)</code> events;</li>
+          <li>[inspector] code snippets, support of recent code entries;</li>
+          <li>[script] <code>object1 == object2</code> in script uses deep, per property comparison now;<br/>So <code>{a:1} == {a:1}</code> is <code>true</code> in TIScript but <br/>in JS <code>{a:1} == {a:1}</code> is <code>false</code>.<br/>NOTE: this can be a breaking change if your scripts use <code>==</code> operator for object comparision.</li>
+          <li>[packfolder] support of -csharp mode - generates C# class with a byte[] field literal. </li>
+          <li>[windows, Middle East] Support of WS_EX_LAYOUTRTL windows - Middle East, RTL. Window created with WS_EX_LAYOUTRTL gets direction:rtl intrinsic styling (as if &lt;html dir=rtl&gt; is defined);</li>
+          <li>[DOM] <code>element.state.expanded = undefined;</code> - clears <code>state.expanded</code> and <code>state.collapsed</code></li>
+          <li>[xdom] <code>Element.style.cursor(img, hotspotX, hotspotY )</code> - set/reset custom cursor created from bitmap.</li>
+          <li>[CSS] <strong>vw</strong>/<strong>vh</strong>/<strong>vmin</strong>/<strong>vmax</strong> length units, <code>1vw = 1% * view.width</code>, <code>1vh = 1% * view.height</code></li>
+          <li>[CSS,layout] <code>height:width(50%)</code> feature is back - allows to define elements with fixed width/height ratio.</li>
+          <li>[OSX] custom cursor support;</li>
+          <li>[new sample] samples/ideas/ide/ - IDE mockup inspired by Brackets;</li>
+          <li>[new sample] sdk/samples/graphics/frosted-glass-effect.htm</li></ul>
+        <p>fixes:</p>
+        <ul>
+          <li>[osx] uminimal demo fix</li>
+          <li>[layout, table] fix of &lt;table&gt; with flow:table-fixed; layout calculation, see: <a href="http://sciter.com/forums/topic/behaviorcolumn-resizer-bug">http://sciter.com/forums/topic/behaviorcolumn-resizer-bug/</a></li>
+          <li>[critical,view.eventsRoot] Fix of AV while view.eventsRoot is set. See: <a href="http://sciter.com/forums/topic/lightbox-dialog-tis-throws-c-exception">http://sciter.com/forums/topic/lightbox-dialog-tis-throws-c-exception/</a></li>
+          <li>[win] fix of view.dialog{ x,y } handling.</li>
+          <li>[inspector] handling recursive data structures. See: http://rsdn.ru/forum/htmlayout/6240245.1</li>
+          <li>[script] String.urlEscape() fix;</li>
+          <li>[svg] fix of small SVG image handling (less than 256 bytes)</li>
+          <li>[http client] view.request(), fix of username/password inline handling in URLs like https://un:pwd@example.com/</li>
+          <li>[inspector] fix of element details refresh issue.</li>
+          <li>[osx] more reliable mouse click out of popup handling.</li>
+          <li>[osx] modal windows fixes.</li>
+          <li>[critical] fix of overflow:auto handling on root element. Note native scroll bar on root document has been disabled by default;</li>
+          <li>[tiscript] fix of object literal parsing when they contain virtual properties like:
+            <pre>var ee = {
+ &quot;length&quot;; : 12 // used to be &quot;read-only property length&quot; error here
+};
+</pre></li>
+          <li>Selection.clearMark(,,&quot;mark-name&quot;) fix.</li>
+          <li>[osx] proper text caret positions and more precise glyph positioning in texts</li>
+          <li>[rendering] fix of text run background rendering.</li>
+          <li>fix of &quot;Element.move() is closing sibling popups&quot; issue.</li>
+          <li>[Windows] better handling of characters with code &gt; 0xFFFF; on Windows XP;</li>
+          <li>[css] fix of filter: drop-shadow(radius);</li>
+          <li>[fix] of animation and window refresh handling on hidden/collapsed window.</li>
+          <li>[script] fix of erroneous assert handling. See: http://sciter.com/forums/topic/lexer-bug/</li>
+          <li>fix of AV related to handling popups in containers controlled by behavior:sticky-scroll.</li>
+          <li>view.dialog { client: ... } fix.</li>
+          <li>ValueSetValueToKey - relaxed key type requirement. Key were limited by only strings. Now it could be any type.</li></ul>Builds: win32, win64, osx64, linux/gtk64
+        <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFFADA">3.3.0.6</td>
+      <td nowrap valign="top" align="center">09-10-2015</td>
+      <td>
+        <p>new features:</p>
+        <ul>
+          <li>[win] view.window { client:true | false; } - parameter describes how position/dimension is treated;</li>
+          <li>Graphics.Text.width() -&gt; (widthMax,widthMin,boxWidth)</li>
+          <li>view.request {} - it can be used now to get non-http resources too.</li>
+          <li>[script] fix of multi-return value list when function calls used in lists: <code>return ( a(), b(), c() );</code></li>
+          <li>+ [http, view.request] new parameter output that defines interpretation and data format of received data. If provided forces data to be reported as instance of String, Stream, Bytes or any value of parsed JSON:</li>
+          <pre>view.request {<br/>  ...<br/>  output : symbol, one of #string | #stream | #bytes | #json. <br/>}
+</pre>
+          <li>+ support of loading content of .zip files. application or its part can be packaged into zip file with index/main.htm file sitting in archive root. Such zip file may contain arbitrary content: other htmls, scripts, css, images</li>
+          <li>Enabling Element.move() on table rows;</li>
+          <li>+ [css] <strong>tab-size</strong> property support in &lt;pre&gt;, &lt;plaintext&gt; and other elements with white-space:pre;</li>
+          <li>implementation of sciter::fragmented_video_destination - used by custom &lt;video&gt; output for scenarios like remote desktop partial updates; &nbsp;</li>
+          <li>+ view.isMinimizable, view.isMaximizable flags and switches.</li>
+          <li>+ carousel sample, see: /samples/carousel/</li>
+          <li>Drag-n-drop update (ddm.tis);</li>
+          <li>USE_DX_ON_LAYERED flag is disabled by default. Engine will not try to use DirectX on layered windows. Too many broken drivers in the wild :(</li></ul>
+        <li>fixes:</li>
+        <ul>
+          <li>[pager] fix of relayout issue with document loaded in the same template.</li>
+          <li>CRITICAL: fix of &lt;table&gt; &lt;tbody&gt; layout handling when &lt;tbody&gt; uses flex dimensions.</li>
+          <li>Fix of &lt;a&gt;&lt;img&gt;&lt;/a&gt; handling.</li>
+          <li>Fix of 1px off in initial window size calculations by view.window {...} function</li>
+          <li>[win] better, less expensive WM_SIZE handling;</li>
+          <li>[inspector] fix of source hyperlink handling in script log;</li>
+          <li>fix view.request{} error callback generation for unknown URLs;</li>
+          <li>fix of sdk/widgets/tabs/tabs.tis behavior, compatibility with behavior:label;</li>
+          <li>behavior:label adjustments, better mouse handling.</li>
+          <li>[layout] flow:grid|row, fix of display:inline-block max-width handling;</li>
+          <li>[richtext] behavior:htmlarea, better handling of empty element state;</li>
+          <li>[richtext] behavior:htmlarea fixes;</li>
+          <li>Selection.clearMark() fix.</li>
+          <li>[osx] view.selectFile() fix for OS X 10.7 and 10.8</li>
+          <li>[CSS,layout/text] fix of one px off when line-height is used.</li>
+          <li>fix of mouse hover handling while closing popup windows.</li>
+          <li>[apng] fix of dispose_mode == restore handling.</li>
+          <li>[communication, http] fix of AV in progress callbacks processing;</li>
+          <li>[layout] fix of table row box calculation for visibility:hidden rows;</li>
+          <li>fix, drawing optimization of large documents;</li>
+          <li>[usciter] project update;</li>
+          <li>[GC, BrokenHeart] fix of the issue related to handling element.value = ... assignment.</li>
+          <li>[behavior:clickable] fix of right mouse click handling;</li>
+          <li>[layout] fix of positioning of popup originated from flow:vertical-wrap containers;</li>
+          <li>[VM] Fix of &quot;Broken heart&quot; issue in presence of inspector;</li>
+          <li>[clipboard, copy] fix of &quot;last character missed from selection&quot; ;</li>
+          <li>[behavior:richtext] fix of html copy/paste, yet some insert HTML operations;</li>
+          <li>Fix of potential AV on MOUSE_HOVER;</li>
+          <li>[win] view.window { type: FRAME_WINDOW } , fix of taskbar appearance;</li>
+          <li>[win] fix of mouse capturing by scrollbar.</li>
+          <li>[osx] fix of &quot;replacement-start/end&quot; event generation, patch from StartMeeting team.</li>
+          <li>[DataSocket] fix of packet length transmission, see: <a href="http://www.terrainformatica.com/forum/read.php?4,2488,2811">http://www.terrainformatica.com/forum/read.php?4,2488,2811</a> discussion;</li>
+          <li>[layout] fix of document position calculation (documents in frames);</li>
+          <li>[osx] AV in http client when server does not provide content-type;</li>
+          <li>[osx] fix of potential AV;</li>
+          <li>[css,layout] fix of anonymous text block floating;</li></ul>
+        <p>Builds: win32, win64, osx64, linux/gtk64</p>
+        <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFFADA"><strong>3.3.0.5</strong></td>
+      <td nowrap valign="top" align="center">08-09-2015</td>
+      <td>
+        <ul>
+          <li>new features:</li>
+          <ul>
+            <li>[css] new properties:<strong>background-image-frame:N</strong> and <strong>foreground-image-frame</strong>:<strong>N</strong><br/>if defined shows frame #N (freezes animation at frame N) on APNG or GIF images. That is animateable property, check : sdk/samples/animated-png/animated-frame.htm sample. Primary use cases:</li>
+            <ul>
+              <li>APNG image as a collection of sprites - alternative to image map.</li>
+              <li>:hover or other state transition animations.</li></ul></ul>
+          <li>fixes:</li>
+          <ul>
+            <li>fix of scrollbar positioning in overflow-y:auto on &lt;tbody&gt; - scrollable tables case.</li>
+            <li>fix of view.isTopmost = true; handling on Windows.</li>
+            <li>[inspector] fixes of evaluation environment ( enabling correct self and $ references ).</li>
+            <li>[inspector] fixes of build settings.</li></ul></ul>
+        <p>Builds: win32, win64, osx64, linux/gtk64</p>
+        <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFFADA"><strong>3.3.0.4</strong></td>
+      <td nowrap valign="top" align="center">30-08-2015</td>
+      <td>
+        <ul>
+          <li>inspector evolution:</li>
+          <ul>
+            <li>more reliable log messages delivery: log panel is made global so messages from closed views are not lost.</li>
+            <li>sciter.exe - on &quot;DOM inspector&quot; button click it starts inspector.exe automatically if it is not running already.</li></ul>
+          <li>new features:</li>
+          <ul>
+            <li>CSS: ::mark(...) pseudo-element - styling of text runs without changin DOM structure.</li>
+            <li>Tokenizer object, lightweight markup and source code parser that accepts text loaded into &lt;pre&gt;,&lt;plaintext&gt;, &lt;textarea&gt; as input sources. <br/>See: <a href="http://www.terrainformatica.com/2015/08/mark-feature-is-comming">http://www.terrainformatica.com/2015/08/mark-feature-is-comming</a> and <a href="http://www.terrainformatica.com/2015/08/tokenizer-mark-syntax-colorizer">http://www.terrainformatica.com/2015/08/tokenizer-mark-syntax-colorizer</a> and Tokenizer class documentation.</li>
+            <li>/sdk/samples/+colorizer/ micro library. Does syntax highlighting in &lt;pre&gt; and &lt;plaintext&gt; according to <em>type</em> attribute. Samples there demonstrate as static as dynamic colorization.</li></ul>
+          <li>fixes:</li>
+          <ul>
+            <li>fix of possible AV in elements having ::before defined in CSS.</li>
+            <li>debug-peer.tis troubles with msgbox pileup.</li>
+            <li>[DOM/script] fix of self#some-id element accessor for the cases when the page contains frames.</li>
+            <li>fix of AV in new Image(...) when incorrect parameters provided.</li>
+            <li>&lt;img&gt; and &lt;picture&gt; elements, image rendering obey border-radius.</li>
+            <li>fix of caret rendering when background:none.</li>
+            <li>[apng] fix of AV on erroneous aPNG structure (frames with zero dim).</li>
+            <li>fix of references in public headers (C) etc.</li>
+            <li>[apng] fix of first animation round.</li>
+            <li>view.request() responses served with text/javascript mime type are treated as text.</li>
+            <li>support of 'maxlength' and 'filter' attributes in:</li>
+            <ul>
+              <li>&lt;input|integer&gt;</li>
+              <li>&lt;input|decimal&gt;</li>
+              <li>&lt;input|number&gt;</li></ul>
+            <li>GDI+ fix of custom markers handling.</li>
+            <li>fix of value returned by &lt;input|time&gt;. It returns now current date with time portion set from the input.</li>
+            <li>[osx,linux] fix of local time offset calculation in Date.</li>
+            <li>[tiscript] fix of multi-return statements evaluations.</li>
+            <li>[win, layered] enabling ID2D1DeviceContext operations on layered windows.</li>
+            <li>fix of transparent popup elements rendering.</li>
+            <li>MOUSE_ENTER/LEAVE for popup elements. Uses logical (visual) UI parent/child chain rather than parent/child chain.</li>
+            <li>fix of AV on attempt to fetch data from empty clipboard</li></ul></ul>Builds: win32, win64, osx64, linux/gtk64
+        <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFFADA"><strong>3.3.0.3</strong></td>
+      <td nowrap valign="top" align="center">14-08-2015</td>
+      <td>
+        <ul>
+          <li>inspector evolution:</li>
+          <ul>
+            <li>Element metrics (dimensions) panel;</li>
+            <li>Script eval input in log area - evaluation of scripts in context of current selected element;</li>
+            <li>Fix of connection error message box pileup.</li></ul>
+          <li>fixes:</li>
+          <ul>
+            <li>[css,layout] fix of AV in dynamic <code>::after </code>style change update, bug report: <a href="http://www.terrainformatica.com/forum/read.php?4,2467,2467">http://www.terrainformatica.com/forum/read.php?4,2467,2467</a></li>
+            <li><code>&lt;input|time&gt;</code> and <code>Date.toIsoString()</code> fix of dates that contains only times.</li>
+            <li>menu and popup elements. fix of window activation issue, see: <a href="http://www.terrainformatica.com/forum/read.php?4,2486,2486">http://www.terrainformatica.com/forum/read.php?4,2486,2486</a></li>
+            <li>[script] fix of String.urlEscape();</li>
+            <li>[OSX] fixes in HTTP client implementation.</li>
+            <li>fix of display:table-body handling on not-yet-constructed DOMs.</li>
+            <li>[css] fix of rgba() parsing.</li>
+            <li>[GDI+/XP] shutdown cleaning fix when non-trivial list markers are used.</li>
+            <li>[windows, printing] fix of <code>@media print {}</code> setup. Fix of <code>page-break-before/after/avoid</code> handling.</li>
+            <li>behavior:file-icon update for non-existent entries.</li>
+            <li>Fix of AV in SciterLoadHtml().</li>
+            <li>Fix of SC_LOAD_DATA generation for &quot;sciter:debug-peer.tis&quot; resource.</li></ul>
+          <li>new features:</li>
+          <ul>
+            <li>[css] <code>list-style-type: tree-line;</code> is back and so <code>&lt;select|tree treelines&gt;</code>, see sdk/samples/forms/select-tree-treelines.htm and inspector's DOM tree view.</li>
+            <li>[windows] Direct2D v 1.1 support. If &nbsp;Direct2D v 1.1 is available it is used:</li>
+            <li>[css] <code>image-rendering: default | optimize-speed | optimize-quality;</code> &nbsp;- this CSS property allows to configure scaling algorithms used by the engine on particular elements.</li>
+            <li>[win][css] <code>filter</code> property support, see <a href="https://developer.mozilla.org/en/docs/Web/CSS/filter">https://developer.mozilla.org/en/docs/Web/CSS/filter</a> doc and sdk/samples/css3-filter samples.</li></ul></ul>Builds: win32, win64, osx64, linux/gtk64
+        <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFFADA"><strong>3.3.0.2</strong></td>
+      <td nowrap valign="top" align="center">03-08-2015</td>
+      <td>
+        <ul>
+          <ol></ol></ul>
+        <p>New <strong>inspector.exe</strong> - works on all supported platforms in localhost and remote mode. Supports multiplatform operation, for example inspector on Mac OSX and debugee on Linux. Check <a href="http://www.terrainformatica.com/index.php/2015/08/new-domscript-inspector-is-coming" rel="bookmark" style="color: rgb(61, 96, 114); text-decoration: none;">New DOM/script inspector is coming</a> article.</p>
+        <ul>
+          <li>[win] element.state.focus = true; calls ::SetForegroundWindow( sciterhwnd ); if it was not foreground.</li>
+          <li>DataSocket async connection fix.</li>
+          <li>[tiscript] better byte vectors handling.</li>
+          <li>[CSS] support of content:attr(name); construct in CSS 2.1 connotation: http://www.w3.org/TR/CSS21/generate.html#propdef-content</li>
+          <li>fix of DataSocket functionality.</li>
+          <li>sciter::element::call_function(&quot;ns.name&quot;), final fix.</li>
+          <li>[windows] better animation FPS.</li>
+          <li>[script] view.logHandler = function(subsystem,severity,msg) {...} - allows to catch all stdout/err messages in script. The same feature as SciterSetupDebugOutput but in script.</li>
+          <li>+ VM.unhandledExceptionHandler = function(err) {...}</li>
+          <li>fix of unicode string reading from compiled sources, see: <a href="http://www.terrainformatica.com/forum/read.php?4,2369,2369">http://www.terrainformatica.com/forum/read.php?4,2369,2369</a></li>
+          <li>[osx, lin] Integer.toString(-100) fix</li>
+          <li>+ &quot;hole dialog&quot; sample, see /samples/dialogs+windows/test-dialog.htm</li></ul>
+        <p>Builds: win32, win64, osx64, linux/gtk64</p>
+        <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFFADA"><strong>3.3.0.1</strong></td>
+      <td nowrap valign="top" align="center">18-07-2015</td>
+      <td>
+        <ul>
+          <li>accesskey DOM attribute documentation and demo in sdk/samples/accesskey</li>
+          <li>decorators.tis update to support generic CLICK and CHANGE events.</li>
+          <li>[API] generic CLICK and CHANGE events declared in API.</li>
+          <li>Additional avoidSameOriginCheck parameter in Element.timer(duration,callback[,avoidSameOriginCheck]), see <a href="http://www.terrainformatica.com/forum/read.php?4,2152,2152">http://www.terrainformatica.com/forum/read.php?4,2152,2152</a> discussion.</li>
+          <li>[tiscript] support of <code>throw new Error(&quot;msg&quot;);</code> construct to throw error with context information.</li>
+          <li>[d2d] fix of graphics layer indication.</li>
+          <li>[doc] + CSS section added (far from being complete)</li>
+          <li>[API] missed SciterFireEvent() declaration + various minor header fixes.</li>
+          <li>[API] value::call() -&gt; value::call() const</li>
+          <li>[API] sciter::element::call_function(name, ) name can be a function path.</li>
+          <li>[win, osx] Better view.state = View.WINDOW_FULL_SCREEN handling.</li>
+          <li>[richtext] selection fixes.</li>
+          <li>[API] + bubbling FOCUS_IN and FOCUS_OUT events.<br/>And so full list of focus event names that can be used in element.on(&quot;event&quot;, ...):<br/>&quot;focus&quot;, &quot;blur&quot;, &quot;focusin&quot;, &quot;focusout&quot;. See: <a href="https://developer.mozilla.org/en-US/docs/Web/Events/focusin">https://developer.mozilla.org/en-US/docs/Web/Events/focusin</a> for the semantic of these events.</li>
+          <li>[+formation] &lt;fieldset&gt;,&lt;table&gt; and &lt;tbody&gt; as a container.</li>
+          <li>Fix of @value interpretation in &lt;output type=&quot;date&quot; value=&quot;1900-03-12&quot;&gt;</li>
+          <li>[API] ValueNativeFunctorSet redesign, it is plain-C compatible now.</li>
+          <li>[+query] Fix of q(anElement) call handling.</li>
+          <li>[tiscript] 'include' statement update: it supports variable names containing file name to load, streams or Bytes: <br/><code>var fn = &quot;foo.tis&quot;;<br/>include fn;</code></li>
+          <li>Support of cancel by VK_ESCAPE in view.doEvent(#untilMouseUp) -&gt; true | false</li>
+          <li>sciter::value::length() for script function objects returns number of mandatory + optional parameters.</li>
+          <li>[osx] request() use system defined proxies</li>
+          <li>[tiscript] support of milliseconds in Date.parse(&quot;2015-07-21T11:00:00.001Z&quot;)</li>
+          <li>Fix of plaintext.state.focus = true; for the case when it has no caret position set.</li>
+          <li>[Win XP compatibility] Fix of &quot;SHCreateItemFromParsingName function is not present in Windows XP SP3&quot;</li>
+          <li>[gdi,pager] Fix of non-roman language handling.</li>
+          <li>[pager] fix of relayout after printer selection.</li>
+          <li>[osx] WebSocket, fix of AV on lost connection.</li>
+          <li>[gtk] debug_console_output CR/LF handling.</li></ul>
+        <p>Builds: win32, win64, osx64, linux/gtk64</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFFADA"><strong>3.3.0.0</strong></td>
+      <td nowrap valign="top" align="center">04-07-2015</td>
+      <td>
+        <ul>
+          <li>+ <strong>Print and Print Preview</strong> support (on Windows only for a while) - behavior:pager:</li>
+          <ul>
+            <li>/samples/printing/pager-demo.htm - demo of text, tables, SVG and script-render print and print preview</li>
+            <li>documentation is at:</li>
+            <ul>
+              <li>+ samples/printing/doc/pager-template-format.htm - page template document;</li>
+              <li>+ samples/printing/doc/pager-behavior.htm - behavior:pager methods;</li></ul></ul>
+          <li>+ [css] support of <code>forlang</code> attribute on &lt;link&gt; and &lt;style&gt; element - language conditional CSS inclusion.</li>
+          <ul>
+            <li>+ /samples/css++/lang-conditional-css.htm</li></ul>
+          <li>fix of behavior:column-resizer for &lt;th&gt; with paddings and borders.</li>
+          <li>&lt;img&gt; and &lt;picture&gt; (no width/height defined) - auto dimensions are mapped to dip units but not to pixels as it used to be. <strong>Note:</strong> that may break some underspecified layouts.</li>
+          <li>behavior:video, when COLORSPACE_RGB32 it assumes that data contains rgba with premultiplied alpha - rendering of video frames that contain transparent areas</li>
+          <li>/samples/communication/http.tis update</li>
+          <li>fix of caret state rendering after el.state.focus = true; on behavior:htmlarea | plaintext | richtext</li>
+          <li>[osx] View.request/onprogress , totalLength value</li>
+          <li>fix of wrong <code>this</code> value in handler set by element.on(&quot;focusin&quot;,&quot;selector&quot;, handler)</li>
+          <li>[win] <code>WM_MOUSEHWHEEL</code> support (horizontal wheel)</li>
+          <li>[osx] directional mouse wheel and touch scroll support;</li>
+          <li><code>view.request()</code>, better HTTP error handling</li>
+          <li>[svg] updates:</li>
+          <ul>
+            <li>css fill property is defaulted to css color property in inline SVGs;</li>
+            <li>SVG images used in CSS like background-image:url(samples/arrow.svg); have their default fill and stroke colors derived from style of element where they are used;</li>
+            <li>+ samples/svg/svg-image-dynamic-fill-color.htm</li></ul>
+          <li><code>self.closing(reason)</code> notification gets new parameter: reason. The reason parameter is one of following symbols:</li>
+          <ul>
+            <li><code>#by-chrome</code> - user clicked close button on window;</li>
+            <li><code>#by-code</code> - view.close() issued;</li>
+            <li><code>#by-load</code> - document gets unloaded by loading new document</li></ul>
+          <li>lib jpeg 8a updated to 9a, libpng upgrade to latest v.1.6.17</li>
+          <li>fix of <code>&lt;select|dropdown multiple&gt;</code>, get value functionality</li>
+          <li>[tooltip] disabling tooltips on elements that already have :owns-popup</li>
+          <li>fix of SO on html {position:relative; }</li>
+          <li>[osx] view.selectFolder() support</li>
+          <li>Fix of background-image-transformation: opacity(0.1); for images with alpha channel.</li>
+          <li>[osx] view.move(,, byClient) fix</li>
+          <li>[win] on Windows, prior version 7 SP 1 Direct2D is forced to use WARP layer by default.</li>
+          <li>[win] the engine is not using deprecated ::GetVersionEx() anymore.</li>
+          <li>+ [CSSOM] Element.style.documentRules() - document CSS rule set accessor and mutator.</li>
+          <ul>
+            <li>+ /samples/cssom/get-css-stats.htm</li>
+            <li>+ /samples/cssom/css-stats-to-csv.htm</li>
+            <li>+ /samples/cssom/update-css-rule.htm</li></ul>
+          <li>[doc] View documentation update</li>
+          <li>fix of Element.state.ownspopup state flag resetting. It gets posted now to make sdk\samples\popup\popup-trigger.htm cases to work. This also fixes &quot;second click in select shall close popup&quot; issue.</li>
+          <li>fix of outline rendering on elements having vertical/horizontal alignment</li>
+          <li>+ sample sdk/samples/svg/inline-svg-flex-size.htm</li>
+          <li>+ <code>return sciter::value::make_error(&quot;...&quot;);</code> allows to throw error from native functors and functions attached to the view.</li>
+          <li><strong>Note: </strong><code>SciterSetOption(hwnd,SCITER_ALPHA_WINDOW)</code> is required now for layered windows with per pixel alpha.</li>
+          <li>[svg] fix of dynamic change of <em>transform</em> DOM attribute</li>
+          <li>[osx,linux] System.scanFiles() support added.</li>
+          <li>+ new property: Event.scrollAxis -&gt; #vertical | #horizontal</li>
+          <li>[inspector] fix of content view update when new document is loaded</li>
+          <li>[css,margin collapsing] fix of margin collapsing on &lt;body&gt; element with overlfow:auto|scroll</li>
+          <li>fix of potential AVs in behavior: htmlarea | richtext</li>
+          <li>fix of custom scrollbars rendering</li>
+          <li>fix in behavior::video / multithreading issue</li>
+          <li>fix of outlines drawing under transformations, see: &nbsp;<a href="http://www.terrainformatica.com/forum/read.php?4,2067,2067">http://www.terrainformatica.com/forum/read.php?4,2067,2067</a></li>
+          <li>fix of table rendering/clipping under transformations.</li></ul>
+        <p>Builds: win32, win64, osx64, linux/gtk64</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFEFDF"><strong>3.2.0.9</strong></td>
+      <td nowrap valign="top" align="center">23-05-2015</td>
+      <td>
+        <ul>
+          <li>+ [windows, drag-n-drop] support of IDropSource/IDataObject (dragging text out of / in Sciter window) in behaviors: edit | textarea | htmlarea | richtext;</li>
+          <li>Fix of popup handling in presence of moved elements: sdk/samples/ideas/tray-notifications.</li>
+          <li>[doc] Graphics.Text.alignment() documentation fix.</li>
+          <li>[API] SCN_DATA_LOADED::status field population</li>
+          <li>Fix of self.url() when URL hash / parameters are used.</li>
+          <li>[css] support of angle values in back/foreground-image-transformation:hue(300deg);</li>
+          <li>[css,drawing] Fix of outline displacement on transform'ed elements.</li>
+          <li>@font-face fix for remote fonts.</li>
+          <li>[osx] fix of 100% CPU load in view.doEvent();</li>
+          <li>fix of mouse hit test on position:fixed elements.</li>
+          <li>[css,drawing] fix of outline rendering under transform'ations.</li>
+          <li>samples/virtual-grid/ sample update, DataSource.rowData returns (rowData.rowClass)</li>
+          <li>flow:table-fixed fix the case when cells have different borders/paddings</li>
+          <li>[doc, cssmap.htm] visibility:none documented.</li>
+          <li>[tiscript] explicit tuple construction by new Tuple(&quot;name&quot;,[elements]);</li>
+          <li>[css] + <code>flow: grid( 1 2 3, 4 5 6, &nbsp;4 7 7 );</code> is an equivalent of obsolete now flow:&quot;template&quot; format <code>flow: &quot;1 2 3&quot; &quot;4 5 6&quot; &quot;4 7 7&quot;;</code> <br/>Yet it better maps to TIS types. See: sdk/samples/css++/flow-grid.htm</li>
+          <li>[css] text-overflow:ellipsis can be used with text-wrap: none | suppress ( used to be only with white-space:nowrap; )</li>
+          <li>[http] fix of View.request{ headers:{...} } handling.</li>
+          <li>[packfolder] -x &quot;path/path2/*&quot; - folder exclusions handling</li>
+          <li>[API] sciter-x-window.hpp update, NOTE: on_message callback signature change.</li>
+          <li>[tiscript] fix of wrong line numbering when script is included by &lt;script src=...&gt; construct.</li>
+          <li>[css] fix of calc(@MENU_HEIGHT + @CLIENT_HEIGHT); issue, see : <a href="http://www.terrainformatica.com/forum/read.php?4,1979,1979">http://www.terrainformatica.com/forum/read.php?4,1979,1979</a></li>
+          <li>[custom scrollbar] Fix of AV while drawing gradient parts.</li>
+          <li>Element.request / #post and #post-json fixes.</li>
+          <li>[tiscript] support of &quot;object call notation&quot; in new:<br/><code>class A { &nbsp;function this(params) {} }</code><br/><code>var a = new A{param:1};</code></li>
+          <li>[doc] fix of view.dialog() alignment documentation.</li>
+          <li>image.toBytes() fix (demultiply of premultiplied image)</li>
+          <li>[svg,css] fix, emulation of initial fill:black value.</li>
+          <li>+ Document lifecycle events, native and scriptable</li>
+          <ul>
+            <li>self.on(&quot;close&quot;) / DOCUMENT_CLOSE;</li>
+            <li>self.on(&quot;closerequest&quot;) / DOCUMENT_CLOSE_REQUEST;</li>
+            <li>self.on(&quot;ready&quot;) / DOCUMENT_READY;</li>
+            <li>self.on(&quot;complete&quot;) / DOCUMENT_COMPLETE;</li></ul>
+          <li>fix of WebSocket and other async IO ops.</li>
+          <li>view.on(&quot;replacement-start&quot;, f1).on(&quot;replacement-end&quot;, f2) - UI window replacement life cycle events.</li>
+          <li>[layout] fix of dynamic flow (layout manager) switch.</li>
+          <li><em>+ Event.shortcutKey</em> - alias of ctrlKey or commandKey states. It is true on Windows when ctrlKey is true. On Mac it is true when commandKey is true.</li>
+          <li><em>+ Event.commandKey</em> - is true on Mac when COMMAND key is pressed. On Windows it is true when &quot;Win&quot; key pressed.</li>
+          <li>fix of plain text emission - plain text DOM serialization ( clipboard copy, element.text and the like ) .</li>
+          <ul>
+            <li>invisible elements does not produce text output.</li></ul>
+          <li>[tiscript] Array.splice() fix when items to insert contain arrays.</li>
+          <li>[doc] expandable images doc, backported from wiki</li>
+          <li>[tiscript] bytes.toString(&quot;base64&quot;) and Bytes.fromString(str,&quot;base64&quot;) support.</li>
+          <li><em>+ view.minSize</em> and <em>view.maxSize</em></li>
+          <li><em>+ view.isTopmost</em> = true/false, move the window to the topmost layer.</li>
+          <li><em>+ view.isResizeable = true/false</em>, configures resizeability of the window. See: sdk/samples/dialogs+windows/test-view-sizing.htm</li>
+          <li>Element.move( ... , <em>#detached-topmost-window</em> ), see: sdk/samples/ideas/tray-notifications/</li>
+          <li>[http,networking] proxy parameters in view.request { proxyHost:string, proxyPort:integer, ... &nbsp;};</li>
+          <li>fix of Node.remove() &amp; Element.remove() when they are called on already removed element.</li>
+          <li>[tiscript] fix of for(;;) statement parsing.</li>
+          <li>[doc] flex layout specification update.</li>
+          <li>[tiscript] fix of GC issue in image generator.</li>
+          <li>[Windows 10] compatibility fix of WM_MOUSEWHEEL handling on popups.</li>
+          <li>[osx] fixes:</li>
+          <ul>
+            <li>view.close() fix for layered windows.</li>
+            <li>support of SciterSetupDebugOutput</li>
+            <li>window level fix for dialog windows.</li>
+            <li>view.close() -&gt; view.closing() generation.</li>
+            <li>view.doEvent() more compatible with Windows version.</li></ul>
+          <li><em>view.aspectRatio</em> property - window aspect constraint.</li>
+          <li>[sciter::css] support of hit-margin with negative values</li>
+          <li>[scrollbar] .corner drawing fix.</li>
+          <li>[win, http] + Accept-Encoding: gzip, deflate</li>
+          <li>[osx] view.close() is asynchronous now to match [win] behaviour.</li>
+          <li>[+vlist]</li>
+          <ul>
+            <li>fix of scenario when multiple lists are looking on the same set of records or sets sharing common objects.</li>
+            <li>support of sets with null records ( records will be fetched on demand ).</li></ul>
+          <li>[win, graphics] fix of gfx.strokeDash(#dotted) without gfx.strokeCap(#round/#square)</li>
+          <li>[osx] fix of &quot;click through&quot; issue on layered windows.</li>
+          <li>[windows, layered window] fix of semitransparent background on first draw.</li>
+          <li>[windows, a11y]</li>
+          <ul>
+            <li>Element._notifyWinEvent(eventCode) -&gt; generates call of NotifyWinEvent(eventCode,...) for the element. See: https://msdn.microsoft.com/en-us/library/windows/desktop/dd373603(v=vs.85).aspx</li>
+            <li>adjustments for child windows,</li>
+            <li>get_accFocus() implementation.</li></ul>
+          <li>border-radius rendering fix, second case here: <a href="http://www.terrainformatica.com/forum/read.php?4,1721,1721">http://www.terrainformatica.com/forum/read.php?4,1721,1721</a></li>
+          <li>aria-describedby and aria-labelledby lookup fix.</li></ul>
+        <p>Builds: win32, win64, osx64, linux/gtk64</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFEFDF"><strong>3.2.0.8</strong></td>
+      <td nowrap valign="top" align="center">01-04-2015</td>
+      <td>
+        <ul>
+          <li>[rtl, tables] fix of &lt;td colspan=2&gt; placement in RTL</li>
+          <li>fix of AV while handling ::before and ::after &nbsp;in CSS</li>
+          <li>view.dialog/window { x,y, alignment } support</li>
+          <li>+ behavior:swipe-touch that is behavior:swipe but without mouse handling.</li>
+          <li>Fix of <code>string.replace(regexp); // stdout.println(&quot;(518) 678-7654&quot;.replace(/[\\ \\+\\(\\)\\-]/g, &quot;&quot;));</code></li>
+          <li>fix of text-overflow:ellipsis rendering and tooltip handling.</li>
+          <li>&quot;GBK&quot; encoding name added (Windows Codepage: 936 (Simplified Chinese GBK)),</li>
+          <li>Storage.open fix for paths containing national characters.</li>
+          <li>MENU_ITEM_CLICK event fix for the case when handler is blocked by modal dialog.</li>
+          <li>behavior: column-resizer is made more compatible with Windows ListView header behavior.</li>
+          <li>fix in flow:table-fixed;</li>
+          <li>fix of AV in Element.owner getter</li>
+          <li>behavior:htmlarea, behavior:richtext - support of triple clicks to select current paragraph.</li>
+          <li>new media variables: &nbsp;has-touch-screen, has-touch-external, has-pen-screen, has-pen-external, has-multi-touch</li>
+          <li>[+plus] fix for names containing index [] accessors, see: <a href="http://rsdn.ru/forum/htmlayout/5995840.1">http://rsdn.ru/forum/htmlayout/5995840.1</a></li></ul>
+        <p>Builds: win32, win64, osx64, linux/gtk64</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFEFDF"><strong>3.2.0.7</strong></td>
+      <td nowrap valign="top" align="center">25-03-2015</td>
+      <td>
+        <ul>
+          <li><code>flow:stack</code> rendering order fix, see: <a href="http://www.terrainformatica.com/forum/read.php?4,1693,1693">http://www.terrainformatica.com/forum/read.php?4,1693,1693</a></li>
+          <li>scroll / animated scroll handling fix</li>
+          <li>[tiscript, Date class]</li>
+          <ul>
+            <li>+ <code>Date.utc(y,m,d,hh,mm,ss)</code> -&gt; UTC date constructor.</li>
+            <li>+ <code>Date.local(y,m,d,hh,mm,ss)</code> -&gt; local date constructor.</li>
+            <li>Fix of <code>new Date(y,m,d,hh,mm,ss)</code> case, it constructs date from UTC values now.</li></ul>
+          <li>behavior:date, behavior:time, behavior:calendar get/set value handling fixes (timezone).</li>
+          <li>Fix of margin collapsing in flex containers.</li>
+          <li>String.match(RE-non-global) fix.</li>
+          <li>behavior:date , behavior:time, behavior:output support of <em>timezone</em> attribute.</li>
+          <li>fix of AV on erroneous rowspan, see: <a href="http://www.terrainformatica.com/forum/read.php?4,1690,1690">http://www.terrainformatica.com/forum/read.php?4,1690,1690</a></li>
+          <li>[tiscript] <code>case #undefined</code> bug fix: &nbsp;<a href="http://www.terrainformatica.com/forum/read.php?5,1684,1684">http://www.terrainformatica.com/forum/read.php?5,1684,1684</a></li>
+          <li>Fix of view.state = View.WINDOW_SHOWN after view.state = View.WINDOW_FULL_SCREEN</li>
+          <li>Element.request(), support of unofficial &quot;text/json&quot;</li>
+          <li>Fix of double Event.SELECT_SELECTION_CHANGED event generation in behavior:select and derivatives.</li>
+          <li>[windows] modal dialogs adjustment, one more attempt to make Delphi compatible modals.</li>
+          <li>[tiscript] support of conditional include, so this is supported now: <br/><code>if(...) &nbsp;<br/>include &quot;sm.tis&quot;;</code></li>
+          <li>[API] SciterFireEvent, post mode fix.</li>
+          <li>[tiscript] split namespaces and bytecode loading compatibility.</li>
+          <li>:owns-popup fix for the case when element owns two popups - e.g. &lt;select|dropdown&gt; has list and tooltip shown at the same time.</li>
+          <li>&lt;select|dropdown&gt; manages :expanded state flag. When :expanded is on it indicates that popup list is present.</li>
+          <li>view.caption documented.</li>
+          <li>behavior:video , fix of animation restart after window show/hide</li>
+          <li>[behavior:form] Fix of checkbox undefined value handling &nbsp;<a href="http://www.terrainformatica.com/forum/read.php?4,1627,1627">http://www.terrainformatica.com/forum/read.php?4,1627,1627</a></li>
+          <li>Fix of min-content issue, see: <a href="http://www.terrainformatica.com/forum/read.php?4,1625,1625">http://www.terrainformatica.com/forum/read.php?4,1625,1625</a></li>
+          <li>GET_VALUE/SET_VALUE struct alignment fix</li>
+          <li>[tiscript] gc() function returns triplet (totalHeapSize, freeHeap, usedHeap) now. For the cases when you need mem-stats.</li></ul>
+        <p>Builds: win32, win64, osx64, linux/gtk64</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFEFDF"><strong>3.2.0.6</strong></td>
+      <td nowrap valign="top" align="center">08-03-2015</td>
+      <td>
+        <ul>
+          <li>behavior:frameset, less controversial on-size handling.</li>
+          <li>behavior:column-resizer adjustment.</li>
+          <li>[tiscript] fix of Length.toFloat(units).</li>
+          <li>[animation] fix of script/scroll animation collision.</li>
+          <li>[tiscript] multiple namespace declarations with the same name are allowed from now and beyond.<br/>So these are OK now (in either order):<br/><code>namespace Noo { function foo() {} }<br/>namespace Noo { function bar() {} }</code><br/>Note: second namespace declaration can only extend (so add things) former one.</li>
+          <li>[sdk, behavior:tabs] fix of hidden/disabled tabs handling.</li>
+          <li>[SDK headers] removing obsolete declarations not used in S3.</li>
+          <li>[api] VALUE_PARAMS fix.</li>
+          <li>Fix of engine hanging in animation on slow hardware.</li>
+          <li>CRITICAL: [tiscript] AV in GC while heap expansion. Rare but still.</li>
+          <li>fix of input[type=decimal] value and &lt;option value=&quot;12.1&quot;&gt; handling (decimal numbers parsing in values)</li>
+          <li>behavior:video -&gt; videoBox() method - returns target rect of video output.</li></ul>
+        <p>Builds: win32, win64, osx64, linux/gtk64</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFEFDF"><strong>3.2.0.5</strong></td>
+      <td nowrap valign="top" align="center">28-02-2015</td>
+      <td>
+        <ul>
+          <li>[osx] final @font-face fix.</li>
+          <li>scroll-manner:inherit ( default value ). This allows to define scroll manner for all scrollables in the document in single place. To disable animated scroll in all scrollables inside the document use this: <br/><code>html { scroll-manner: scroll-manner(animation:false); }</code></li>
+          <li>[html/xml parser] fix of &lt;![CDATA[...]]&gt; parsing.</li>
+          <li>fix of parameters escapement in Element.request(#get).</li>
+          <li>fix of select[editable], its value is always value of its &lt;caption&gt;. &nbsp;</li>
+          <li>behavior:video, fix of switch of frame sources on the fly.</li>
+          <li>stock:cross-x; image + sdk/samples/css++/stock-images.htm - list of all stock images available at the moment.</li>
+          <li>fix of Element.postEvent() for some types of events.</li>
+          <li>[tiscript] System.exec() method.</li></ul>
+        <p>Builds: win32, win64, osx64, linux/gtk64</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFEFDF"><strong>3.2.0.4</strong></td>
+      <td nowrap valign="top" align="center">22-02-2015</td>
+      <td>
+        <ul>
+          <li>[windows, http client] Content-Length handling.</li>
+          <li>[tiscript] fix of Stream.openFile() -&gt; null for non-existent files.</li>
+          <li>fix of Element.onSize() callback generation in &lt;frameset&gt;'s panels.</li>
+          <li>fix of margin collapsing in &quot;plain HTML&quot; markups, see: <a href="http://www.sitepoint.com/web-foundations/collapsing-margins">http://www.sitepoint.com/web-foundations/collapsing-margins/</a></li>
+          <li>Default size of script heap is changed from 32mb to just 4mb.</li>
+          <li>[doc] + select-dropdown.htm</li>
+          <li>[select|dropdown] fix of get_value() for the case when select does not contain &lt;option selected&gt; by default.</li>
+          <li>[core] fix of error in handling URL that use non default port numbers.</li>
+          <li>[CSS] fix of &nbsp;sel { aspect: A; aspect:B } handling (multiple declaration of the same property aspect).</li>
+          <li>include/sciter-x-window.hpp + sciter::application::argv() - getting command line.</li>
+          <li>[tiscript.exe] fix of angle literals compilation.</li>
+          <li>[doc,tiscript] + Angle.htm.</li>
+          <li>[osx] view.dialog {} + Element.request compatibility.</li>
+          <li>[osx] @font-face handling fix.</li>
+          <li>packfolder.exe, -dlang compatibility.</li>
+          <li>fix of column calculation issue in table[fixed].</li></ul>
+        <p>Builds: win32, win64, osx64, linux/gtk64</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFEFDF"><strong>3.2.0.3</strong></td>
+      <td nowrap valign="top" align="center">13-02-2015</td>
+      <td>
+        <ul>
+          <li>view.dialog { screen: N } and view.window { screen: N } - monitor selection for window to appear.</li>
+          <li>[value.hpp] + sciter::vfunc( std::function&lt;...&gt; ) support - use of C++ lambdas as native functions.</li>
+          <li>DOCUMENT_COMPLETE, event.data -&gt; string, URL of the document being complete.</li>
+          <li>[osx] View/Element.request(#get,params) fix.</li>
+          <li>[ddm] &quot;blackhole&quot; fix.</li>
+          <li>+promise/animate compatibility fix.</li>
+          <li>flow: &quot;template&quot;, fix of display:inline-block calculations.</li>
+          <li>+ samples/css++/flow-***.</li>
+          <li>[html/css] fix of <code>url()</code> parsing in style attribute.</li>
+          <li>[tiscript] functional (object/array) pattern matching by using <code>like</code> operator and <code>switch</code> statement: <br/><code>switch(obj) {<br/>like {one:Integer} : ....; break;<br/>like {one:Integer, two:#any} : ....; break;<br/>}</code><br/>and<br/><code>{ one:1 } like {one:Integer} -&gt; true;</code></li>
+          <li>[XP/GDI+] fix of HFONT leak in DestroyWindow(hwndSciter).</li>
+          <li>[Graphics] Graphics.strokeDash(#solid | #dotted | #dashed ) method.</li>
+          <li>[behavior:form] form.value = undefined; is an equivalent of form.reset() now.</li>
+          <li>[plus.tis] fix of class=&quot;name: expr&quot; handling (space before/after <code>:</code>)</li>
+          <li>fix of initial caret appearance in dialog/inputs.</li>
+          <li>fix of scroll bar handling (native scrollbar) on root document of the window.</li>
+          <li>fix of VM ownership handling when multiple windows used.</li>
+          <li>view.dialog{...} creation fix</li>
+          <li>[CSS, box-shadow] fix of box-shadow inset handling.</li>
+          <li>fix of &lt;select type=&quot;tree&quot;&gt; DOM handling.</li>
+          <li>fix of max-width: max-content; calculation for empty elements.</li>
+          <li>fix of &quot;list-item-style:disk affects Graphics rendering&quot; issue.</li>
+          <li>[tiscript] <code>debug break;</code> support - explicit break point in source code.</li>
+          <li>[CSS] overflow: auto scroll-manner(animate:false) to disable animated scroll in all modes.</li>
+          <li>Fix in [img/picture] handling @src in invisible state.</li>
+          <li>behavior:plaintext -&gt; &lt;plaintext&gt; - initial implementation of plain text editor that handles better large documents. Work in progress. See: <u>/samples/plaintext-editor/</u> demo.</li>
+          <li>[packfolder utility] updates:</li>
+          <ul>
+            <li><code>-dlang</code> switch support - produces D <code>ubyte[] resource = {...}</code> literal.</li>
+            <li>is not touching output file if resources were not changed. This speed ups compilation of projects that use it.</li></ul>
+          <li>SciterProcND returns LRESULT(-1) from WM_CREATE if runtime fails to create instance of the engine (not enough memory).</li>
+          <li>plain C compatibility of SDK headers.</li></ul>
+        <p>Builds: win32, win64, osx64, linux/gtk64</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFEFDF"><strong>3.2.0.2</strong></td>
+      <td nowrap valign="top" align="center">18-01-2015</td>
+      <td>
+        <ul>
+          <li>Documentation: started documenting built-in behaviors. See <em>Sciter behaviors</em> section in sdk/doc viewer.</li>
+          <li>+ simple markdown to HTML converter, see samples/markdown</li>
+          <li>[Graphics] fix of element.paintXXXXXX = function(gfx) {} under transition:blend, see: <a href="http://www.terrainformatica.com/forum/read.php?4,1366,1366">http://www.terrainformatica.com/forum/read.php?4,1366,1366</a></li>
+          <li>Fix of stack overflow on ::after/::before parsing, see: <a href="http://www.terrainformatica.com/forum/read.php?4,1362,1362">http://www.terrainformatica.com/forum/read.php?4,1362,1362</a></li>
+          <li>[osx] Fix of shortcut labels in built-in menus;</li>
+          <li>Fix of attribute expanded interpretation in &lt;select|tree&gt;, see <a href="http://www.terrainformatica.com/forum/read.php?4,1351,1351">http://www.terrainformatica.com/forum/read.php?4,1351,1351</a></li>
+          <li>[win] Proper WM_PRINTCLIENT handling on Sciter windows.</li>
+          <li>[osx] fix of Sciter.launch(url) when URL contains '&amp;' inside.</li>
+          <li>context menus: text in items in built-in menus is wrapped into &lt;label&gt;...&lt;/label&gt;, see next.</li>
+          <li>+ sample sdk/samples/i18n/context-menu-translation.htm</li>
+          <li>Fix of dynamic change of <em>lang</em> attribute handling. Rarely used but still.</li>
+          <li>behavior:form, all elements with @name defined are getting into value map of behavior:form.</li>
+          <li>Fix of view.window() styles.</li></ul>
+        <p>Builds: win32, win64, osx64, linux/gtk64</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFEFDF"><strong>3.2.0.1</strong></td>
+      <td nowrap valign="top" align="center">02-01-2015</td>
+      <td>
+        <ul>
+          <li>[inspector] fix of master CSS retrieval.</li>
+          <li>fix of view.dialog { params } call.</li>
+          <li>[osx] View.screenBox() fixes.</li>
+          <li>+ sdk/demos/ulayered demo - layered (transparent) window that runs on all supported platforms.</li></ul>
+        <p>Builds: win32, win64, osx64, gtk64</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFEFDF"><strong>3.2.0.0</strong></td>
+      <td nowrap valign="top" align="center">26-12-2014</td>
+      <td>
+        <p>3.2.X.X series adds Linux/GTK port of the Sciter. Note that while Windows and OS X ports are production ready and stable Linux port is in beta phase. On Linux Sciter uses GTK for windowing and Cairo as graphics backend.</p>
+        <ul>
+          <li>+ ulayered demo, universal (multi-platform) layered (transparent) windows.</li>
+          <li>fix of popup positioning on multihead systems, + sdk/samples/tooltips++/calltip-positioning.htm</li>
+          <li>+ behavior:sticky-scroll; set it on scrollable elements containing text elements inside. It tries to keep currently seen text element inside scrollable view. Useful when scrollable container changes width and so relayout occurs. Another use case: text contains some remote images that arrive asynchronously.</li>
+          <li>+ DataSocket implementation - duplex communication between two sciter engine instances. prerequisite to new inspector. &nbsp;See: sdk/samples/communication/data-sockets/</li>
+          <li>WebSocket redesign using async IO controller ( no need for explicit socket.poll() call &nbsp;), see sdk/samples/comminication/web-sockets/</li>
+          <li>+ sdk/demos/usciter - that's paraphrase of sciter.exe but in common for all platforms fashion.</li>
+          <li>textarea / input|text -&gt; caret color fix on transparent backgrounds.</li>
+          <li>[win] view.dialog() and view.msgbox() are app modal by default (used to be parent modal)</li>
+          <li>view.dialog { &nbsp;... params... }; - yet another form of calling dialogs.</li>
+          <li>[tiscript] promise + promise.catch() and promise.finally() methods. See: sdk/samples/+promise/promise.tis.</li>
+          <li>[win] support view.window { type: View.POPUP_WINDOW } - creates window with WS_EX_TOPMOST</li>
+          <li>[tiscript runtime] + Bytes.fromString(), + bytes.md5() and bytes.crc32() methods.</li>
+          <li>+ @font-face demo, FontAwesome, see: sdk/samples/font-@-awesome.</li>
+          <li>[win] support of UX (a.k.a. &quot;unisex&quot;) master.css theme flavor. UX theme is a generic theme that is meant to look the same on different platforms (modulo fonts). UX theme is inspired by standard W7, XP and OSX themes with some Bootstrap influence. &nbsp;To select the UX theme call SciterSetOption(NULL, SCITER_SET_UX_THEMING, TRUE) at startup. Or run sciter.exe with &quot;ux-theming&quot; parameter.</li>
+          <li>Ability to style tooltips in context of their owners:</li>
+          <ul>
+            <li>button#some &gt; popup[role=&quot;tooltip&quot;] &nbsp;{ background:red; }. See: sdk/samples/tooltips++/tooltip-styling.htm</li>
+            <li>+ Element.layoutParent and Element.owner properties. E.g. tooltip.owner allows to get access to the element that owns the tooltip.</li></ul>
+          <li>View.request() is documented and demoed in sdk/samples/communication/file-download.htm and sdk/samples/communication/http.tis</li>
+          <li>Fix of VK_LEFT handling in menus.</li>
+          <li>fix of icon rendering in menu.context</li></ul>
+        <p>Builds: win32, win64, osx64, gtk64</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFEFDF"><strong>3.1.0.18</strong></td>
+      <td nowrap valign="top" align="center">22-11-2014</td>
+      <td>
+        <ul>
+          <li>support of &quot;nullable&quot; selects: &lt;select|dropdown <u>novalue=&quot;...text...&quot;</u>&gt;</li>
+          <li>[osx] behaviour:file-icon is operational on OS X too.</li>
+          <li>html::emit_text_range() update when markup contains &lt;img&gt; elements - their @alt attribute gets emitted instead of the image. &nbsp;This affects: behavior:htmlarea::copy functionality and Element.text functionality.</li>
+          <li>[win] fix of Direct2D font handling on Korean, Arabic and Hebrew locales.</li>
+          <li>fix of AV that may happen on GDI+ shutdown (used on XP)</li>
+          <li>fix of content clipping by round corners when overflow:hidden</li>
+          <li>fix of view.msgbox() dialog appearance.</li>
+          <li>fix of marquee (horizontal)</li>
+          <li><code>sciter::vfunc( native function )</code> is a wrapper that produces sciter::value from native function. See uminimal sample of how to return native API (collection of functions) to be called from script.</li>
+          <li>+ sample, sdk/samples/xml/ - use of built-in XML parser.</li>
+          <li>[win] View.screenBox(#device), better display name</li>
+          <li>fix of stack overflow in flow:vertical-wrap containers having max-height: max-content;</li>
+          <li>url(sciter:...) schema. get resources used by sciter.dll, e.g. sciter:master.css, url(home://...) schema is used to get relative paths from folder where sciter.dll is located.</li>
+          <li>overflow:scroll-indicator rendering fix.</li>
+          <li>[win/osx] mouse hover handling on inactive sciter windows.</li>
+          <li>[win/osx] CTRL+SHIFT+I combination invokes inspector. Window shall be configured for debugging by calling SciterSetOption(hwnd,SCITER_SET_DEBUG_MODE, TRUE) and inspector32/64.dll shall exist in the same folder with executable.</li>
+          <li>&lt;select|list&gt;, &nbsp;fix of mouse moves with main button pressed handling. Note: behavior is using FireFox flavor rather than Windows one.</li>
+          <li>Event.CONTENT_CHANGED fix, NOTE it is being sent to container rather than to the added / removed element.</li>
+          <li>[layout, css] better handling of <u>word-wrap:break-word</u>;</li>
+          <li>[osx] fix of &quot;layered dialog is not receiving keyboard events&quot;</li>
+          <li>+ sample: sdk/samples/ideas/color-chooser (ported from S1), see: <a href="http://www.terrainformatica.com/2006/11/color-chooser-part-iii-prototype-of-what">http://www.terrainformatica.com/2006/11/color-chooser-part-iii-prototype-of-what/</a></li>
+          <li>[API] + SciterPostCallback API</li>
+          <li>[OSX] inspector64,dylib is operational on OS X.</li>
+          <li>[API] new element::fire_event(), generalization of &nbsp;element::send/post_event()</li>
+          <li>fix of Element.scrollToView() for the case when element width exceeds view width.</li>
+          <li>[inspector] scintilla is replaced by the rainbow.</li>
+          <li>[Windows XP, uiautomation] uiautomationcore.dll existence is optional as WinXP does not have uiautomationcore.dll by default.</li>
+          <li>this://app/ URL schema support in sdk/include/sciter-x-host-callback.h &nbsp;( handled by sciter::archive associated with the app ), see uminimal sample.</li></ul>
+        <p>Builds: win32, win64, osx64</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFEFDF"><strong>3.1.0.17</strong></td>
+      <td nowrap valign="top" align="center">06-11-2014</td>
+      <td>
+        <ul>
+          <li>static sciter lib support, available as sciter-win-32/64.lib and sciter-osx-32/64.a. Allows to link Sciter statically with the rest of the application.</li>
+          <li>support of sciter::archive's. sciter::archive is produced by sdk/bin/packfolder.exe that creates C/C++ literal (blob with compressed items) that can be used by archive::open() and archive::get(name) functions to extract items from it. sciter::archive allows to use the same resource pack uniformly across different platforms.</li>
+          <li>uminimal sample finalization. uminimal is an application that use the same native sources on multiple platforms.</li>
+          <li>+vlist, better current record handling. + documentation (in vlist.tis)</li>
+          <li>critical: fix of AV in clipboard-put-text implementation.</li>
+          <li>[win] by default layered windows use warp graphics layer.</li>
+          <li>Fix of Element.state.clear() method</li></ul>
+        <p>Builds: win32, win64, osx64</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFEFDF"><strong>3.1.0.16</strong></td>
+      <td nowrap valign="top" align="center">02-11-2014</td>
+      <td>
+        <ul>
+          <li>New and better way of doing virtual grids, see: sdk/samples/+vlist/vgrid.htm</li>
+          <li>support of vlist operation on fixed tables (enabling margins on rows in fixed tables)</li>
+          <li>+ view.on(&quot;eventname&quot;, handler) and view.off(&quot;eventname&quot;) methods - added for symmetry with Element.on/off methods. They allow multiple handlers to be set on view related events. See: sdk/samples/dialogs+windows/view-events.htm and View documentation.</li>
+          <li>+ samples/dialogs+windows/view-positioning-modes.htm sample</li>
+          <li>enabling tooltips on inactive windows. If needed tooltips can be disabled on inactive (not in focus) windows by script (handling and consuming Event.MOUSE_IDLE).</li>
+          <li>fix of Element.on(&quot;event&quot;,&quot;selector&quot;, func) matching in some cases.</li>
+          <li>[css] expandable, tiled sections rendering adjustment, see: sdk/samples/css++/expandable-tiling.htm</li>
+          <li>[css] new feature: <strong>foreground-color</strong> and <strong>foreground-gradient</strong>. foreground-color is a color of foreground layer. It is drawn on top of other element layers so the only reasonable color values are the ones defined by rgba() - semi-transparent colors. ATTN: &quot;solid&quot; rgb() foreground-colors will overdraw everything on the element making it non readable.</li></ul>
+        <p>Builds: win32, win64, osx64</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFEFDF"><strong>3.1.0.15</strong></td>
+      <td nowrap valign="top" align="center">25-10-2014</td>
+      <td>
+        <ul>
+          <li>[CSS] New '<strong>visibility:none</strong>' feature (new value of existing visibility property). Conceptually visibility:none and display:none both have exactly the same effect. The only difference is that you can safely switch 'visibility:none' &lt;-&gt; 'visibility:visible' in runtime. And this will not affect display model of the element (not all elements are display:block's normally!). See: samples/css++/visibility-none.htm sample.</li>
+          <li>[DDM] various fixes and additional sample.</li>
+          <li>New Event.MEDIA_CHANGED and self.on(&quot;mediachanged&quot;, function() {...}) - generated when media changes (N of screens, colors, etc.)</li>
+          <li>new property Element.state.screen - returns № of screen (monitor) where the element is rendered.</li>
+          <li>fix of mem leak when assigned! is used in CSS (legacy HTMLayout CSSS! feature)</li>
+          <li>New sample: Code Colorizer + Rainbow JavaScript colorizing engine written by Craig Campbell, ported to Sciter. &nbsp;See: samples/code-colorizer/demo.htm</li>
+          <li>[tiscript] new String.splice() method, mimics Array.splice().</li>
+          <li>new sample: sdk/samples/tooltips++/dynamic-tooltip.htm</li>
+          <li>fix of Element.coulmnX(col) method against flow:vertical-wrap;, see : sdk/samples/ideas/column-dividers.htm</li>
+          <li>[html parser] HTML5 in HTML4 compatibility mode: spans overlapping like &lt;em&gt;one &lt;b&gt;two&lt;/em&gt; three&lt;/b&gt;</li>
+          <li>[tiscript] new RegExp.positions(index):(start,end) method.</li>
+          <li>[osx] better system font weight handling on OSX Yousemite.</li>
+          <li>fix of textarea { display:block; height:min-content; } handling (auto expanding multiline input)</li>
+          <li>samples/+vlist optimizations and new sample - support of live updates, see: sdk/samples/+vlist/demos/test-recordset-live-update.htm</li>
+          <li>view.doEvent() works now even when ::IsWindowVisible(_hwnd) -&gt; true. Use view.state != view.WINDOW_HIDDEN in script if that condition is required.</li>
+          <li>New tray-notifications sample : sdk/samples/ideas/tray-notifications/demo.htm .</li>
+          <li>Element.animate() supports now endFun: Element.animate(stepFun[, endFun][, duration]).</li>
+          <li>Element.on() and Element.off() are documented. These are aliases of Elment.[un]subcribe() functions.</li>
+          <li>Element.move() fixes/changes:</li>
+          <ul>
+            <li>auto inscribe to screen box is disabled for #detached-window elements.</li>
+            <li>Element.popup() &amp; tooltips &amp; popups - &nbsp;auto inscribe works as before.</li></ul>
+          <li>dialogs+windows/screen.htm sample fix.</li>
+          <li>[html parser] support of custom HTML entities like &amp;COMPANY-NAME; and the way of defining it using &lt;!ENTITY name &quot;value&quot;&gt; constructs. See entity samples in test-cases/parser/: e.g. test-cases/parser/good-entity-decl.htm. Together with &lt;include&gt; it allows to inject custom text at parse/load time.</li></ul>
+        <p>Builds: win32, win64, osx64</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFEFDF"><strong>3.1.0.14</strong></td>
+      <td nowrap valign="top" align="center">12-10-2014</td>
+      <td>
+        <ul>
+          <li>new behavior sample : native external <strong>behavior:camera</strong> - capturing camera video stream. Demo of VIDEO_BIND_RQ, see: sdk/include/behaviors/behavior_camera_capture.cpp and sdk/samples/video/video-camera-behavior.htm</li>
+          <li>[CSS] fix of width:max-content interpretation in popups with flow:horizontal.</li>
+          <li>fix of Element.box() calculation of inline elements.</li>
+          <li>[DDM] fixes and update: sdk\samples\drag-n-drop-manager\ddm.tis , before/after and ddm.remove()/ddm.cancel() methods.</li>
+          <li>view.doEvent(#untilMouseUp) , exits now from the loop when capture element changes.</li>
+          <li>fix of uxthemes double cleaning.</li>
+          <li>speed up of layered window updates.</li>
+          <li>making aniimations more smooth.</li></ul>
+        <p>Builds: win32, win64, osx64</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFEFDF"><strong>3.1.0.13</strong></td>
+      <td nowrap valign="top" align="center">05-10-2014</td>
+      <td>
+        <ul>
+          <li>[win] fix of animation restart on layered windows.</li>
+          <li>[win,high-dpi]</li>
+          <ul>
+            <li>font:system proper sizing</li>
+            <li>line-height handling fix</li>
+            <li>layered demo, high-dpi aware. &nbsp;&nbsp;</li></ul>
+          <li>View.box() additionally handles #position &amp; #dimension now.</li>
+          <li>[CSS] line height calculation fix</li>
+          <li>[focus,scrolling] fix of click handling on display:inline elements. See: test-cases/scrolling/scroll-to-inline.htm</li>
+          <li>[drawing] fix of outlines drawing with opacity set.</li>
+          <li><code>background-size:cover | contain</code> adjustment</li>
+          <li>[layout] flow:horizontal with position:absolute children/ fix of intrinsic calculation.</li>
+          <li>[layout] fix of flow:vertical-wrap | vertical-flow; intrinsic size calculations.</li>
+          <li>[osx] font sizing fixes.</li>
+          <li>[+vlist] fix of vlist.value = {new record source}; case.</li>
+          <li>[CSS fix] width:max-content handling with max-width: XXpx; children; &nbsp;</li></ul>
+        <p>Builds: win32, win64, osx64</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFEFDF"><strong>3.1.0.12</strong></td>
+      <td nowrap valign="top" align="center">28-09-2014</td>
+      <td>
+        <ul>
+          <li>behavior:menu fixes.</li>
+          <li>[osx] better font-size handling.</li>
+          <li>[tooltips] are enabled now on disabled elements. &nbsp;</li>
+          <li>[windows] potential memory leak in IAccessible implementation</li>
+          <li>[osx] on DPI change event handling.</li>
+          <li>[layout] AV related to empty &lt;span&gt;s with text-wrap: none;</li>
+          <li>[osx] custom frame windows, &lt;caption&gt; support</li>
+          <li>Additional parameter in Element.belongsTo(,,includingThis: true | false)</li>
+          <li>[windows] Fix of &quot;WM_TIMERs suppressed by WM_ANIMATEs&quot;, test-case: test-cases/animations/animation+timer.htm, see <a href="http://www.terrainformatica.com/forum/read.php?4,1204,1208">http://www.terrainformatica.com/forum/read.php?4,1204,1208</a></li>
+          <li>[layout] fix of position:relative under vertical-align.</li>
+          <li>fix of behaviors loading on dialogs created from other dialogs.</li>
+          <li>[osx] view.doEvent(#untilMouseUp) fix;</li>
+          <li>[SVG] &lt;SVG&gt; may contain arbitrary HTML elements inside. See: <u>sdk/samples/svg/svg-embedded-html.htm</u>. NOTE: this is non standard SVG behavior.</li>
+          <li>[CSS, transform] fix of transform rules ordering. <strong>NOTE</strong>: can be a <strong>breaking change</strong> if you use 'rotate' together with 'translate' in the same definition.</li>
+          <li>[windows] +WS_CLIPCHILDREN on dialogs and windows.</li>
+          <li>[windows] layered windows &amp; popups - drawing optimization.</li>
+          <li>Fix of Graphics.pushLayer( Graphics.Path ) case. Thanks to Lucas</li></ul>
+        <p>Builds: win32, win64, osx64</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFEFDF"><strong>3.1.0.11</strong></td>
+      <td nowrap valign="top" align="center">15-09-2014</td>
+      <td>
+        <ul>
+          <li>[windows, themes] Fix of color:scrollbar color handling.</li>
+          <li>[inspector] fix of hang up on UI being permanently updated.</li>
+          <li>+ sample: sdk/samples/animations-transitions-css/infinite.htm - infinite animation demo.</li>
+          <li>fix of &quot;scroll speed degradation&quot; introduced in 3.1.0.10</li>
+          <li>[+vlist] update: vlist.value = null; handling</li>
+          <li>Fix of possible AV related to Element.unsubscribe().</li>
+          <li>rect-tracker demo refactoring. It uses paintForeground handler to draw selection rect. See: samples/ideas/rect-tracker/</li>
+          <li>[osx] fix of MOUSE_DOWN handling on popups;</li></ul>
+        <p>Builds: win32, win64, osx64</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFEFDF"><strong>3.1.0.10</strong></td>
+      <td nowrap valign="top" align="center">06-09-2014</td>
+      <td>
+        <ul>
+          <li>+ new sample: sdk/samples/ideas/graph-ed - sketch of graphics editor.</li>
+          <li>+vlist sample - VirtualList - list bound with recordset array using observers. See: samples/+vlist and samples/+vlist/demos</li>
+          <li>[tiscript] Object/observer feature optimization.</li>
+          <li>[Windows] fix of Event.MOUSE_DCLICK event generation on popup windows.</li>
+          <li>[layout, position:relative] fix of possible AV.</li>
+          <li>[css] fix of background gradient inheritance and declaration handling.</li>
+          <li>[api] Sciter_v2V and Sciter_V2v are back.</li>
+          <li>bin/tiscript.exe -c ( compilation ) fix, writing duration and angle literals.</li>
+          <li>[tscript/sciter] GC related fixes.</li>
+          <li>[masked-edit] Fix of &lt;input|date&gt; key handling</li>
+          <li>[websockets] fix of websockets implementation to conform autobahn tests, see samples/websockets/autobahn-test.htm</li>
+          <li>[Win 8.1] Fix of initial DPI settings for a window.</li>
+          <li>Fix of external resource reloading by using <code>::SciterLoadFile(&quot;http://....&quot;)</code>;</li>
+          <li>+ [CSS] <code>text-overflow:path-ellipsis;</code> - path ellipsis implementation is back.</li>
+          <li>[moved element] zindex correction</li>
+          <li>&lt;select|list&gt; VK_LEFT/VK_RIGHT/VK_DOWN/VK_UP handling in flow: horizontal-wrap | vertical-wrap layouts.</li>
+          <li>fix of @readonly interpretation in compound inputs (input|number, date, time, etc.)</li></ul>
+        <p>Builds: win32, win64, osx64</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFEFDF">3.1.0.9</td>
+      <td nowrap valign="top" align="center">10-08-2014</td>
+      <td>
+        <ul>
+          <li>+ view.clipboard(#put, image), see sdk/samples/graphics/test-dynamic-background.htm</li>
+          <li>+ sample: /samples/ideas/browse-folder/, custom file open dialog, check sdk/samples/ideas/browse-folder/test.htm</li>
+          <li>New parameter 'unrestricted' in Element.scrollTo( &nbsp;... , unrestricted: true | false).</li>
+          <li>[Win] better (smoother) animations.</li>
+          <li>[tiscript] tiscript.exe -c (compilation) fix (angle and duration literals)</li>
+          <li>[sciter,tiscript] CRITICAL: GC, fix of &quot;BrokenHeart&quot; issue on posted callbacks</li>
+          <li>[IME] fix in behaviors:expandable-list and collapsible-list</li>
+          <li>[osx] FRAME_TYPE fixes ( View.window(), view.dialog() )</li>
+          <li>[osx] fix of AV while tooltip handling.</li>
+          <li>[RTL + text-overflow:ellipsis] fix of LTR runs rendering.</li>
+          <li>Fix @resizeable interpretation in custom frame windows.</li>
+          <li>[scrollbars], overflow: ... scroll-manner() and better custom styling + examples, see: sdk/samples/scrollbars-n-scrolling</li>
+          <li>[osx] View.doEvent(#wait), fix</li>
+          <li>[tiscript] Fix of &quot;duplicate declaration error&quot; issue.</li>
+          <li>[CSS,layout] fix of position:relative inside table cells.</li>
+          <li>[CSS,transform] incorrect &quot;clipping&quot; <a href="http://www.terrainformatica.com/forum/read.php?4,1106,1114">http://www.terrainformatica.com/forum/read.php?4,1106,1114</a></li>
+          <li>Fix of &quot;0px shadow&quot; issue : <a href="http://www.terrainformatica.com/forum/read.php?4,1109,1109">http://www.terrainformatica.com/forum/read.php?4,1109,1109</a></li>
+          <li>[rtl] @novalue fix</li>
+          <li>[rtl] caret positioning in inputs.</li>
+          <li>CRITICAL: Fix, on some systems (GDI+ and on some W8) test-cases/flow/long-string.htm test case may produce wrong rendering.</li>
+          <li>fix of focus handling in &lt;select|list&gt;, see <a href="http://www.terrainformatica.com/forum/read.php?4,1095,1095">http://www.terrainformatica.com/forum/read.php?4,1095,1095</a></li>
+          <li>fix of &quot;svg image loosing bits when glass applied&quot;</li>
+          <li>input|text , drawing selection when the input is not in focus.</li>
+          <li>posted set_focus() fix. It might lead to AV if it was invoked on deleted element.</li>
+          <li>fix of secondary window + external resource loading.</li>
+          <li>&quot;1px off width problem&quot; in background no-repeat images.</li>
+          <li>+lib fix of Function.once().</li>
+          <li>[CSS] fix of erroneous flow:grid handling ( no left/top defined on children )</li>
+          <li>fix of possible AV on degenerate (having no children) flow:grid or &quot;template&quot; element</li>
+          <li>fix of Element.subscribe(&quot;change&quot;) handling, see: <a href="http://www.terrainformatica.com/forum/read.php?4,1085,1085">http://www.terrainformatica.com/forum/read.php?4,1085,1085</a></li></ul>
+        <p>Builds: win32, win64, osx64</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFEFDF"><strong>3.1.0.8</strong></td>
+      <td nowrap valign="top" align="center">19-07-2014</td>
+      <td>
+        <ul>
+          <li>[API, sdk headers] aux-slice.h, fix of aux::const_wchars(&quot;literal&quot;) construct. &nbsp;</li>
+          <li>fix Element.postEvent(&quot;click&quot;) and Element.postEvent(&quot;change&quot;) implementations.</li>
+          <li>GTK/Linux/GCC compatibility of H-SMILE core.</li>
+          <li>fix of &quot;sciter hangs when it tries to get non-existent &quot;res:menu-edit.html&quot;</li>
+          <li>[API] fix of handle_timer/on_timer generation in external behaviors.</li>
+          <li>Rollback of &quot;degenerate negative margins&quot; handling.</li>
+          <li>Multi-head systems support: View.screen, View.screens, View.screenBox methods - screen size and multihead support from script. See: sdk/samples/dialogs+windows/screens.htm and documentation.</li>
+          <li>[video] fix of VIDEO_BIND_RQ event/request generation.</li>
+          <li>[PNG with alpha] fix of pre-multiplication formula - better color space matching. See: http://www.terrainformatica.com/forum/read.php?4,1081,1081</li>
+          <li>[OSX] fix, changing window size by view.move(x,y,w,h), Test case: sdk/samples/dialogs+windows/test-view-sizing.htm</li></ul>
+        <p>Builds: win32, win64, osx64</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFEFDF"><strong>3.1.0.7</strong></td>
+      <td nowrap valign="top" align="center">13-07-2014</td>
+      <td>
+        <ul>
+          <li>[video] new sample: sdk/samples/video/video-controls.htm - small scripting behavior that provides video playback controls.</li>
+          <li>[video] &lt;video&gt; - support of arbitrary video frame sources. Host application can render custom video streams using &lt;video&gt; infrastructure. See sciter-x-video-api.h, note: experimental !</li>
+          <li>[CSS] negative margins support is back (supported by S1 and HL), see /sdk/samples/animations-transitions-css/margin-animation.htm</li>
+          <li>[CSS] sounds while animation support is back (supported by S1 and HL), see /sdk/samples/animations-transitions-css/margin-animation.htm</li>
+          <li>Fix of text-align:right rendering (1px shift issue).</li>
+          <li>[CSS transition] support of non-numeric properties animation, like: display, visibility, etc. <br/>Such properties use step morpher: <br/>morphed( progress, initialVal, finalVal ) { return progress &gt; 0.0 ? finalVal : initialVal; }<br/>where progress is number in range 0.0 ... 1.0.</li>
+          <li>[OSX] support of Far East languages.</li>
+          <li>[textarea] fix of the empty line issue: <a href="http://www.terrainformatica.com/forum/read.php?4,1063,1066">http://www.terrainformatica.com/forum/read.php?4,1063,1066</a></li>
+          <li>[OSX] fix of window screen position calculation on multi head systems.</li>
+          <li>Element.animation(func, duration) fix for the case when duration is a <em>duration</em> data type.</li>
+          <li>[DDM] drag-n-drop manager fixes, DDM has been moved to /sdk/samples/drag-n-drop-manager.</li>
+          <li>Element.request(), fix of timeout in Element.request(,#get,&quot;res:***&quot;) &nbsp;(local res: resource).</li>
+          <li>Element.bindImage(url [,img]) implemented and documented.</li>
+          <li>animated GIF/animated PNG, fix for some images.</li>
+          <li>[Windows] fix of window state handling (SHOWN/HIDDEN), restart animations when SHOWN.</li>
+          <li>[behavior:slider] API tune up, see &lt;input|vslider&gt;, &lt;input|hslider&gt; in documentation.</li>
+          <li>[svg] fix of visibility:hidden elements rendering.</li>
+          <li>[API] adjustment: &nbsp;BEHAVIOR_EVENT_PARAMS::reason is declared as UINT_PTR to be able to pass pointer on it in x64 version. ATTENTION: requires rebuild of sciter host application.</li></ul>
+        <p>Builds: win32, win64, osx64</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFEFDF"><strong>3.1.0.6</strong></td>
+      <td nowrap valign="top" align="center">06-07-2014</td>
+      <td>
+        <ul>
+          <li>&lt;video&gt; - basic video playback support. Documntation is in help browser, samples are in sdk/samples/video/ folder. On Windows Sciter uses DirectShow infrastructure to play videos windowlessly.</li>
+          <li>one more sample in /tooltips++/ folder. Tooltip Behavior, tooltips management.</li></ul>
+        <p>Builds: win32, win64</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFEFDF">3.1.0.5</td>
+      <td nowrap valign="top" align="center">01-07-2014</td>
+      <td>
+        <ul>
+          <li>Emergency fix of issue with Element.loadImage(): <a href="http://www.terrainformatica.com/forum/read.php?4,1052,1052#msg">http://www.terrainformatica.com/forum/read.php?4,1052,1052</a></li></ul>
+        <p>Builds: win32, win64, osx64</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFEFDF"><strong>3.1.0.4</strong></td>
+      <td nowrap valign="top" align="center">30-06-2014</td>
+      <td>
+        <ul>
+          <li>[CSS3] support of <strong>background-size: cover | contain</strong>. See: <u>sdk/samples/css3/background-size.htm</u> sample</li>
+          <li>[animation] fix of cpu high load in some circumstances.</li>
+          <li>[Windows, IME] fix of IME input issue: <a href="http://www.terrainformatica.com/forum/read.php?4,1037,1037">http://www.terrainformatica.com/forum/read.php?4,1037,1037</a></li>
+          <li>[http/networking] fix of remote rsource download handling.</li>
+          <li>[layout] fix of &lt;select|dropdown&gt; and &lt;select|list&gt; computations when first &lt;option&gt;&lt;/option&gt; is empty.</li>
+          <li>[plus] [plus] fix of bound repeatable, item deletion sample from <br/>&lt;b click=&quot;items.remove(i)&quot;&gt;&amp;times;&lt;/b&gt; to<br/>&lt;b click=&quot;items.removeByValue(item)&quot;&gt;&amp;times;&lt;/b&gt;</li>
+          <li>[OSX] + some missed standard cursors.</li>
+          <li>[script/dom] fix, prevention of calling Behavior.attached() on unload.</li>
+          <li>[script/dom] Element.loadImage(url, callback) is back.</li>
+          <li>[CSS] fix of background-position: 50% 50% inheritance interpretation.</li>
+          <li>[api] SciterGetVM() API is back.</li>
+          <li>[richtext] psupport of plain text pasting.</li>
+          <li>[richtext] fix of AV when ENTER is pressed and selection spans multiple DOM elements.</li>
+          <li>[richtext] support images pasted from clipboard.</li></ul>
+        <p>Builds: win32, win64, osx64</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFEFDF"><strong>3.1.0.3</strong></td>
+      <td nowrap valign="top" align="center">21-06-2014</td>
+      <td>
+        <ul>
+          <li>[SVG] mouse hit testing and behaviors, see; <u>sdk/samples/svg/inline-svg-hit-testing.htm</u></li>
+          <li>[Graphics.Text] new <code>chars</code> property to change text layout text after creation, see <u>sdk/samples/graphics/digital-clock.htm</u></li>
+          <li>[Win,D2D] Fix of memory leak in Graphics.Text() constructor.</li>
+          <li><code>view.dialog()</code> and &lt;html custom-frame=&quot;layered | solid | solid-with-shadow&quot;&gt; variations. See: <u>sdk/samples/dialogs+windows/test-dialog.htm</u></li>
+          <li>[SDK] making headers C++98 (VS2005/2008) friendly.</li>
+          <li>[OSX] fix of AV when app starts not from main screen;</li>
+          <li><code>view.doEvent()</code>, new mode - <code>#untilMouseUp</code>. Spins event dispatching loop until MOUSE_UP event. Used in various mouse drag scenarios. See: <u>sdk/samples/ideas/moveable-windows</u>;</li>
+          <li>[osx] compatibility of source code with 32-bit targets;</li>
+          <li>[layout] <code>flow:stack</code>, fix of children layout calculation: <a href="http://www.terrainformatica.com/forum/read.php?4,1032,1032">http://www.terrainformatica.com/forum/read.php?4,1032,1032</a></li></ul>
+        <p>Builds: win32, win64, osx64</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFEFDF"><strong>3.1.0.2</strong></td>
+      <td nowrap valign="top" align="center">16-06-2014</td>
+      <td>
+        <ul>
+          <h3>basic <strong>SVG support</strong> in Sciter:</h3>
+          <ul>
+            <li>the engine supports loading as HTML documents as SVG documents using SciterLoadFile.</li>
+            <li>SVG documents can be loaded in &lt;frame&gt;s.</li>
+            <li>Embedded &lt;svg&gt; &quot;islands&quot; are supported, access to their content by using standard Element interface.</li>
+            <li>SVG can be used in &lt;img&gt; and fore/background-image in CSS.</li>
+            <li>SVG fragments are supported by using named &lt;view&gt;s.</li>
+            <li>See samples in sdk/samples/svg</li></ul>
+          <li>Fix of VK_SPACE and VK_RETURN handling in buttons and hyperlinks.</li>
+          <li>[OSX] fixes of issues with popups on multihead systems.</li>
+          <li>Element.move(), fix of the case when the element has paddings/borders.</li>
+          <li>JSONT is backported from S1. See : sdk/samples/ideas/jsont</li></ul>
+        <p>Builds: win32, win64, osx64</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFEFDF"><strong>3.1.0.1</strong></td>
+      <td nowrap valign="top" align="center">05-06-2014</td>
+      <td>
+        <ul>
+          <li>fix of custom CSS attributes side effect against CSS aspects.</li>
+          <li>[win,osx] platform media vars, see samples/tests/os-type.htm</li>
+          <li>[win,GDI+] fix of gradient background rendering with border-radius set.</li>
+          <li>View.msgbox - requests &quot;res:msgbox.htm&quot; through SC_LOAD_DATA mechanism, so message box template can be customized by the host app.</li>
+          <li>[DDM] fix for the case when draggables are being added dynamically. See: /samples/ideas/drag-n-drop-manager/button-list.htm</li>
+          <li>scroll-indicator is styleable now, see: sdk/samples/css++/scroll-indicator.htm</li>
+          <li>Element.move(), new modes: Element.move(..., #auto | #attached-window | #detached-window ), see documentation and /samples/moveable-windows sample.</li>
+          <li>[osx] Fix of setting Elment.value;</li></ul>
+        <p>Builds: win32, win64, osx64</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFEFDF"><strong>3.1.0.0</strong></td>
+      <td nowrap valign="top" align="center">19-05-2014</td>
+      <td>Sciter 3.1 supports now as <strong>Windows</strong> as <strong>Mac OS X</strong>.
+        <p>Status:</p>
+        <ul>
+          <li>Windows version is in stable phase (I didn't change core implementation too much).</li>
+          <li>Mac OS X is in beta phase with following known issues so far:</li>
+          <ul>
+            <li>Work on master.css (default OS theme styling) is not complete yet. Expect some abnormalities in standard input renderings.</li>
+            <li>HTTP/HTTPS client is not complete yet so Element.request() calls (a.k.a. AJAX) will fail on http:// urls.</li></ul></ul>
+        <p>Note, API changes:</p>
+        <ul>
+          <li>sciter.dll and sciter-osx.dylib expose single function SciterAPI() that returns pointer to &quot;API interface table&quot; - structure that contains all functions that used to be exposed directly in Sciter 3.0. Among other things this allows to use inspector.dll from statically linked Sciter code and to load Sciter DLL with greater flexibility. See SAPI() loader function.</li>
+          <li>All old API functions are implemented as inlines, like: <br/><code>inline LPCWSTR SCAPI SciterClassName () { return SAPI()-&gt;SciterClassName(); }</code><br/>so it is enough to recompile existing applications in order to use new API.</li>
+          <li>Mac OSX version does not have SciterProcND() for obvious reasosns, use SciterCreateWindow() instead, it willl create Sciter's NSView instance inside its own NSWindow.</li>
+          <li>SciterCreateWindow() works on Windows too. You can use it to create standalone Sciter windows.</li></ul>
+        <p>Fixes from latest (3.0.2.6) version:</p>
+        <ul>
+          <li>Fix of Event.x/yRoot computation</li>
+          <li>CSS++, mapping: left-to-right( alignment ), switches text-align:left to text-align:right and also does this for horizontal-align. It does NOT switch text-align:start | end; values.</li>
+          <li>Fix of text-overflow: ellipsis in GDI+ mode.</li>
+          <li>view.dialog() fix of custom frame, &quot;resizeable&quot; interpretation.</li>
+          <li>GDI+, rounded border rendering fix.</li>
+          <li>[tiscript, regexp] infinite loop on some types of REs in string.split(re).</li>
+          <li>[+plus] glibc++ compatibility fixes.</li>
+          <li>&lt;img&gt; fix of border rendering (default styling issue)</li>
+          <li>better shutdown handling (fonts)</li></ul>
+        <p>Builds: win32, win64, osx64</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFFFDF">3.0.2.7</td>
+      <td nowrap valign="top" align="center">25-04-2014</td>
+      <td>
+        <ul>
+          <li>[sample,fix] sdk\samples\ideas\drag-n-drop-manager fixes and new sample;</li>
+          <li>Element.capture() supports &quot;soft&quot; and &quot;strict&quot; mouse even capturing, see documentation;</li>
+          <li>Fix of rendering speed degradation in layered windows.</li>
+          <li>Fix of IAccessible support in sciter64.dll</li>
+          <li>&lt;select|tree&gt; fix of horizontal bar appearance on long items;</li>
+          <li>[new sample] json-viewer in /samples/custom-inputs/json-viewer;</li>
+          <li>Preventing AV in Element.contentPaint in some circumstances.</li>
+          <li>GDI+ Graphics.Text rendering</li>
+          <li>Fix of layered window root scrollbar issue.</li>
+          <li>animation, fix of WM_ANIMATE event generation image animator when image gets removed by CSS.</li>
+          <li>[GDI] Graphics.line() implementation.</li>
+          <li>[tiscript fix] <code>const (A,B) = ...;</code> support, in the same way as <code>var (A,B) = ...;</code></li>
+          <li>[new sample] sdk/samples/popup/callout-bubble.htm sample</li>
+          <li>[S1 compatibility] view.activated event generation.</li>
+          <li>&lt;img&gt; fix of border rendering (default styling issue)</li>
+          <li>better shutdown handling (fonts)</li>
+          <li>[tiscript, regexp] fix of infinite loop on some types of REs in string.split(re).</li>
+          <li>[GDI] rounded border rendering fix.</li>
+          <li>view.dialog() fix of custom frame, &quot;resizeable&quot; interpretation.</li>
+          <li>[GDI] Fix of text-overflow: ellipsis in GDI+ mode.</li>
+          <li>CSS++, mapping: left-to-right( alignment ), switches text-align:left to text-align:right and also does this for horizontal-align property. It does NOT switch text-align:start | end; values.</li>
+          <li>Fix of Event.x/yRoot computation</li></ul>
+        <p>Builds: win32, win64</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFFFDF"><strong>3.0.2.6</strong></td>
+      <td nowrap valign="top" align="center">12-04-2014</td>
+      <td>
+        <ul>
+          <li>[API] Fix of : SciterGetExpando returns &quot;undefined&quot;.</li>
+          <li>Fix: behavior::attached() being called for DOM element being remove()'ed.</li>
+          <li>Fix, &lt;select|dropdpwn&gt; copying attributes to &lt;caption&gt; from selected &lt;option&gt;( That feature was working in HTMLayout )</li>
+          <li>[tiscript] fix of AV when class name is used as a function call.</li>
+          <li>[tiscript] Object.className, Class.className and Namespace.className properties support.</li>
+          <li>Fix of view.msgbox() for sdk/samples/dialogs+windows/test-msgbox.htm , dialog #4.</li>
+          <li>[WinXP,GDI+] Fix of non-desired border effects in GDI+ image stretching.</li>
+          <li>[WinXP] fix of &lt;select type=&quot;dropdown&quot;&gt; rendering.</li>
+          <li>Fix of thread handle leak in: &nbsp;sdk/include/sciter-x-threads.h -&gt; ::CloseHandle(hThread);</li>
+          <li>Fix of AV that may happen on text-overflow:ellipsis in some cases.</li>
+          <li>[formation] fix in formation.tis implementation.</li>
+          <li>Fix of AV on WS_CHILD sciter window when no document is loaded.</li>
+          <li>Fix of text-overflow:ellipsis rendering with non-default line-height.</li>
+          <li>[API, new] json::value/native_functor &nbsp;is callable by json::value.call();</li>
+          <li>[tiscript] fix of test-cases/tiscript/hashmap.htm case (symbol table overflow).</li>
+          <li>Fix of arithmetic overflow in scrollbars (large ranges), see: <a href="http://rsdn.ru/forum/htmlayout/5516290.1">http://rsdn.ru/forum/htmlayout/5516290.1</a></li>
+          <li>Fix of AV in Sciter DLL shutdown when preccess exits with no windows created.</li>
+          <li>Handling rules in @media sections when DPI changes. Sections like @media ( resolution &lt;= 96 ) {... }, @media ( resolution &gt; 96 &amp;&amp; resolution &lt;= 200 ) {... } &nbsp;are triggered dynamically when the window receives WM_DPICHANGED message.</li></ul>
+        <p>Builds: win32, win64</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFFFDF">3.1.0.0</td>
+      <td nowrap valign="top" align="center">19-05-2014</td>
+      <td>Sciter 3.1 supports now as Windows as Mac OS X.
+        <p>Status:</p>
+        <ul>
+          <li>Windows version is in stable phase (I didn't change core implementation too much).</li>
+          <li>Mac OS X is in beta phase with following known issues so far:</li>
+          <ul>
+            <li>Work on master.css (default OS theme styling) is not complete yet. Expect some abnormalities in standard input renderings.</li>
+            <li>HTTP/HTTPS client is not complete yet so Element.request() calls (a.k.a. AJAX) will fail on http:// urls.</li></ul></ul>
+        <p>Note, API changes:</p>
+        <ul>
+          <li>sciter.dll and sciter-osx.dylib expose single function SciterAPI() that returns pointer to &quot;API interface table&quot; - structure that contains all functions that used to be exposed directly in Sciter 3.0. Among other things this allows to use inspector.dll from statically linked Sciter code and to load Sciter DLL with greater flexibility. See SAPI() loader function.</li>
+          <li>All old API functions are implemented as inlines, like: <br/><code>inline LPCWSTR SCAPI SciterClassName () { return SAPI()-&gt;SciterClassName(); }</code><br/>so it is enough to recompile existing applications in order to use new API.</li>
+          <li>Mac OSX version does not have SciterProcND() for obvious reasosns, use SciterCreateWindow() instead, it willl create Sciter's NSView instance inside its own NSWindow.</li>
+          <li>SciterCreateWindow() works on Windows too. You can use it to create standalone Sciter windows.</li></ul>
+        <p>Fixes from latest (3.0.2.6) version:</p>
+        <ul>
+          <li>Fix of Event.x/yRoot computation</li>
+          <li>CSS++, mapping: left-to-right( alignment ), switches text-align:left to text-align:right and also does this for horizontal-align. It does NOT switch text-align:start | end; values.</li>
+          <li>Fix of text-overflow: ellipsis in GDI+ mode.</li>
+          <li>view.dialog() fix of custom frame, &quot;resizeable&quot; interpretation.</li>
+          <li>GDI+, rounded border rendering fix.</li>
+          <li>[tiscript, regexp] infinite loop on some types of REs in string.split(re).</li>
+          <li>[+plus] glibc++ compatibility fixes.</li>
+          <li>&lt;img&gt; fix of border rendering (default styling issue)</li>
+          <li>better shutdown handling (fonts)</li></ul>
+        <p>Builds: win32, win64, osx64</p></td></tr></table>
+</body>
+</html>

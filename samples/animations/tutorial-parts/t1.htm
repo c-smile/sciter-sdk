@@ -1,0 +1,30 @@
+<html>
+  <head>
+  <title></title>
+<style src="style.css"></style>
+<script type="text/tiscript" src="script.tis"></script>
+  </head>
+<body>
+  <h2>Simple <code>timeline.to(element,params,tostyles)</code> animation</h2>
+  <div #box>
+    <picture src="heart.png" />
+  </div>
+  <form>
+    <button #run>Run</button>
+    <button #clear>Clear</button>
+  </form>
+  
+  <div .explanation>
+    <p>FROM state - current state of the DOM element.</p>
+    <p>TO state - defined in code:</p>
+  </div>
+  
+  <textarea #src>Timeline.on(this)
+  
+    .to( $(picture), { duration:1s, ease: #quadInOut },
+                     { transform:translate(500px,0px) } )
+    .play();
+  </textarea>
+  
+</body>
+</html>

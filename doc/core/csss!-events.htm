@@ -1,0 +1,58 @@
+<html>
+  <head>
+    <meta name="source"/>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>H-SMILE core. CSSS! (css-script) language.</h1>
+  <h1>DOM element events</h1>
+  <p>CSSS! extends classic CSS by the following activation attributes that define event handlers:</p>
+  <dl>
+    <dt><code>hover-on!</code></dt>
+    <dd>code contained in this attribute is invoked when element is getting <em>:hover</em> state. In other words on MOUSE_ENTER event;</dd>
+    <dt><code>hover-off!</code></dt>
+    <dd>is fired MOUSE_LEAVE event;</dd>
+    <dt><code>active-on!</code></dt>
+    <dd>is fired when the element gets <em>:active</em> state (e.g. on MOUSE_DOWN).<br/><code>is-on-icon()</code> indicator function can be used in this event handler.</dd>
+    <dt><code>active-off!</code></dt>
+    <dd>is fired when the element looses <em>:active</em> state (e.g. on MOUSE_UP).<br/><code>is-on-icon()</code> indicator function can be used in this event handler.</dd>
+    <dt><code>focus-on!</code></dt>
+    <dd>is fired when the element gains input focus.</dd>
+    <dt><code>focus-off!</code></dt>
+    <dd>is fired when the element looses input focus.</dd>
+    <dt><code>key-on!</code></dt>
+    <dd>is fired when the element receives key-down event, key-code() function returns code of the key.<br/><code>key-code()</code> indicator function can be used to get value of key pressed. Use key code constants to define code of the key if needed.<br/>Example: <code>key-code() == 'RETURN' ? self.ok = true;</code></dd>
+    <dt><code>key-off!</code></dt>
+    <dd>is fired when the element receives key-up event. Use key-code() function to get code of the key pressed;</dd>
+    <dt><code>click!</code></dt>
+    <dd>is fired as a result of click events: BUTTON_CLICK, HYPERLINK_CLICK, etc. Note: that to be able to receive this event element shall have behavior: <em>button</em> , <em>hyperlink</em> or <em>clickable</em> assigned.</dd>
+    <dt><code>assigned!</code></dt>
+    <dd>this event is fired when the element gets this style. In other word when value of the <code>assigned!</code> attribute changes.</dd>
+    <dt><code>value-changed!</code></dt>
+    <dd>is fired when value of the [input] element is getting changed. E.g. EDIT_VALUE_CHANGED, BUTTON_STATE_CHANGED and SELECT_SELECTION_CHANGED are causing this event.</dd>
+    <dt><code>validate!</code></dt>
+    <dd>is not an event in common sense but rather a helper method for the <em>behavior:form</em> to do validations of input elements before submission.</dd>
+    <dt><code>timer!</code></dt>
+    <dd>is used for defining code that will run on timer event. Timers are created and destroyed by start-timer(ms) and stop-timer() methods.</dd>
+    <dt><code>animation-start!</code></dt>
+    <dd>is fired after <code>element.start-animation()</code> method is called. &nbsp;</dd>
+    <dt><code>animation-end!</code></dt>
+    <dd>is fired when animation finished. &nbsp;</dd>
+    <dt><code>animation-step!</code></dt>
+    <dd>fired on each animation step. This handler shall return integer - number of milliseconds - delay of the next step if element.start-animation() was called without duration parameter. Global function <code>morph()</code> is available in context of the <code>animation-step!</code> event handler.<br/>This function takes three parameters: <code>res = <strong>morph</strong>(&quot;ease-function-name&quot;, start-value, end-value )</code> and produces value according to the ease function and internal animation progress state variable. Here is a list of names of ease functions supported by the morph(): </dd>
+    <ul>
+      <ul>
+        <li>&quot;quad-in&quot;, &quot;quad-out&quot;, &quot;quad-in-out&quot;, </li>
+        <li>&quot;cubic-in&quot;, &quot;cubic-out&quot;, &quot;cubic-in-out&quot;, </li>
+        <li>&quot;quart-in&quot;, &quot;quart-out&quot;, &quot;quart-in-out&quot;,</li>
+        <li>&quot;quint-in&quot;, &quot;quint-out&quot;, &quot;quint-in-out&quot;, </li>
+        <li>&quot;sine-in&quot;, &quot;sine-out&quot;, &quot;sine-in-out&quot;, </li>
+        <li>&quot;expo-in&quot;, &quot;expo-out&quot;, &quot;expo-in-out&quot;, </li>
+        <li>&quot;circ-in&quot;, &quot;circ-out&quot;, &quot;circ-in-out&quot;, </li>
+        <li>&quot;elastic-in&quot;, &quot;elastic-out&quot;, &quot;elastic-in-out&quot;,</li>
+        <li>&quot;back-in&quot;, &quot;back-out&quot;, &quot;back-in-out&quot;,</li>
+        <li>&quot;bounce-in&quot;, &quot;bounce-out&quot;, &quot;bounce-in-out&quot;, </li></ul></ul>
+    <dt><code>size-changed!</code></dt>
+    <dd>fired after the element gets new size.</dd></dl>
+</body>
+</html>

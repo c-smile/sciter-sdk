@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <title>file name input</title>
+    <style>
+    
+    widget[type=file-name] {
+      prototype: FileName;
+      flow:horizontal;
+      width:20em;
+    }
+    widget[type=file-name] > input { width:*; }
+    
+    </style>
+    <script type="text/tiscript">
+    
+    class FileName : Behavior {
+      function attached() {
+        this.$append( <input|text.path><button.selector>&#x2026;</button>);
+        
+        var path = this.path = this.$(.path);
+        
+        this.$(button.selector).onClick = function () {
+          var fn = view.selectFile(#open);
+          if( fn ) path.value = fn;
+          (this super).postEvent(Event.EDIT_VALUE_CHANGED);
+        };
+      }
+      
+      property value(v) {
+        get { return this.path.value; }
+        set { this.path.value = v; }
+      }
+    }
+    
+    $(widget).onValueChanged = function() {
+      stdout.println(this.value);
+    };
+
+    </script>
+  </head>
+<body>
+  File name:
+  
+  <widget|file-name name=test />
+
+</body>
+</html>

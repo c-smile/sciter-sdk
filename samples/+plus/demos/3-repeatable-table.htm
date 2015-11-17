@@ -1,0 +1,99 @@
+<html>
+  <head>
+    <title>Plus: very basic sample</title>
+    <style>
+      @import url(../plus.css); 
+      @import url(../../note.css); 
+      
+      html { font:system; }
+      
+      table { border-spacing:1px;}
+      table th,
+      table td { border:1px solid #BBB; padding:3px 6px; }
+      
+      table tbody input[type=decimal] { text-align:right; }
+      table tbody td:last-child { background:white; padding-left:4px; padding-right:4px; text-align:right;}
+      
+      table > tbody td { padding:0; }
+      table > tbody.new td,
+      table > tbody.new td > input { background:#f0f0f0; }
+      table > tbody.new td > input:focus { background:white; }
+      
+      table td > input { display:block; width:*; background:white; padding:2px;}
+      table td > input[name="item.name"] { width: 120px; }
+      
+            
+    </style>
+    
+    <script type="text/tiscript">
+      
+      include "../plus.tis"; // we use @observing so need to include plus.tis upfront.
+  
+      namespace Basket // our model
+      {  
+        var items = [{name:"apple", price:1.2, quantity:2},
+                     {name:"orange", price:1.0, quantity:4}];
+      
+        var total = 0;
+        
+        
+        @observing "items[]",         // add/delete changes in items array
+                   "items[].price",   // change in .price field in any item
+                   "items[].quantity" // change in .quantity field in any item
+          function calcTotal()        // will cause total to be recalculated
+          {
+            try {
+              total = items.reduce( :sum, item: sum + item.price * item.quantity , 0.0);
+            } catch(e) {}
+              
+          }
+        
+        var newName = undefined;
+        var newPrice = undefined;
+        var newQuantity = undefined;
+
+        function addNewBy(el) { // invoked by <tbody enter="addNew()">
+          if(newName && newPrice && newQuantity) { // add the item to the array, note: list DOM will be updated accordingly.
+            items.unshift {name:newName,price:newPrice,quantity:newQuantity };
+            self.state.focus = true;
+            newPrice = "";
+            newName = "";
+            newQuantity = "";
+            return true;
+          }
+        }
+      }    
+    
+    </script>
+  </head>
+
+<body model="Basket"> <!-- define data model we observe -->
+
+  <note>Table below is bound with <code>Basket.items</code> array. Inputs below allow to add new items. Table is editable.</note>
+
+  Shopping basket:
+  <!-- the repeateable section -->
+  <table>
+    <thead><tr><th>Name</th><th>Amount</th><th>Price</th><th>Total</th></tr></thead>
+    <tbody.new>
+      <tr>
+        <td><input(newName) novalue="new item"></td>
+        <td><input|integer(newQuantity)></td>
+        <td><input|decimal(newPrice) enter="addNewBy(this)" /></td>
+      </tr>
+    </tbody>
+    <tbody each="item in items">
+      <tr>
+        <td><input(item.name)></td>
+        <td><input|integer(item.quantity)></td>
+        <td><input|decimal(item.price) /></td>
+        <td><output|currency(item.price * item.quantity) /></td>
+      </tr>
+    </tbody>
+    <tfoot><tr><td colspan=3>Grand total:</td>
+               <td><output|currency(total)></td></tr></tfoot>
+  </table>
+
+  
+</body>
+</html>

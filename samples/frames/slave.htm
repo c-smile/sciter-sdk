@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <title></title>
+    <style></style>
+    <script type="text/tiscript">
+    
+      $(button#call-bar).onClick = function() { bar(); }
+      
+      $(button#post-call-bar).onClick = function() { this.post(function() { bar(); }); }
+      
+      function globalNs() { return this; }
+     
+      $(button#show-namespaces).onClick = function() {
+        var list = $(#this-ns);
+        list.clear();
+        for(var (k,v) in globalNs())
+          list.$append(<li>{k} - {typeof v}</li>);
+          
+        list = $(#parent-ns);
+        list.clear();
+        for(var (k,v) in globalNs().prototype)
+          list.$append(<li>{k} - {typeof v}</li>);          
+      }
+    
+    </script>
+  </head>
+<body>
+  <button #call-bar>Call bar() in master frame</button>
+  <button #post-call-bar>Post call bar() in master frame</button>
+  
+  <button #test>Test (will be handled in host document)</button>
+  
+  <button #show-namespaces>Show namespaces:</button>
+  <div>
+    This frame default namespace contains:
+    <ul #this-ns></ul>
+    namespace of parent document contains:
+    <ul #parent-ns></ul>
+</body>
+</html>

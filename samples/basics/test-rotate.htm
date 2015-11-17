@@ -1,0 +1,136 @@
+<html>
+  <head>
+    <title>Manipulating/Animating CSS tranforms from script</title>
+    <style>
+    
+      div#stack
+      {
+        prototype: Rotator url(rotator.tis);
+        overflow:hidden;
+        flow:stack;
+        size:*;
+      }
+      
+      div#stack > div
+      {
+        margin:0;
+        size:*;
+        padding: 8px;
+      }
+      
+      div#stack > div:nth-child(1) 
+      {
+        background-color: rgb(255,127,127);
+        border:2px solid rgb(127,0,0);
+      }
+      div#stack > div:nth-child(2) 
+      {
+        padding:25px;
+        background-image:url(images/stretchable.png); 
+        background-position:16px 16px 16px 16px; /*top right bottom left offsets*/
+        background-repeat:expand stretch-top stretch-bottom stretch-middle; /* h-smile specific */
+      }    
+      div#stack > div:nth-child(3) 
+      {
+        background-color: rgb(127,255,127);
+        border:2px solid rgb(0,127,0);
+        border-radius: 8px;
+      }
+      
+      div.blocks > *
+      {
+        display:block;
+      }
+      
+    
+    </style>
+    <script type="text/tiscript">
+    
+      //include "rotator.tis";
+
+      $(#rotate).onClick = function()
+      {     
+        var container = $(div#stack);
+        var next = container.shown.next || container.first;
+        this.state.disabled = true;
+        container.rotateTo(next, :: (this super).state.disabled = false);
+      }
+                 
+        
+      
+      /*var a2 = [40,50];
+      stdout << a2 << "\n";
+
+      var a1 = [:translate 40,50];
+      stdout << a1 << "\n";
+      stdout.printf("%d %s %v %v\n", a1.length, a1.tag, a1[0], a1[1]);
+      
+      $(button#test-transform-set).onClick = function()
+      {
+        $(div#stack)[1].style#transform = [[:scale 0.25], [:translate pr(25),0]];
+      }
+      */ 
+    
+    </script>
+  </head>
+<body>
+  <button #rotate>rotate</button>
+  <div #stack>
+    <div> 
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+         Nulla dapibus varius justo. Nam faucibus commodo faucibus. 
+         In hac habitasse platea dictumst. Maecenas blandit hendrerit leo,
+         sed dapibus orci sollicitudin id. Ut eu libero metus, at cursus 
+         elit. Aliquam aliquam turpis eget turpis faucibus quis 
+         molestie nulla adipiscing. Aliquam velit lacus, tempor id 
+         hendrerit ac, bibendum vel purus. Sed vehicula nunc vitae lacus 
+         eleifend id gravida nisl dignissim. Vivamus non metus nisl, vitae 
+         lacinia felis.</p>
+      <p>Nam lacinia molestie massa, ornare fringilla nibh 
+         molestie in. Suspendisse varius lacinia ornare. Suspendisse potenti.
+         Curabitur faucibus eros ut elit dapibus eget malesuada ante imperdiet. 
+         Praesent sed dui eget est pharetra feugiat. Vivamus cursus massa 
+         id dui a dipiscing et sodales tortor congue. Maecenas accumsan semper mattis.</p>
+    </div>
+    <div>
+      <p>Praesent nec metus et neque molestie suscipit. 
+      Vestibulum quis ante feugiat lorem commodo egestas. Fusce velit leo, 
+      cursus vitae vestibulum at, commodo et augue. Vestibulum ullamcorper 
+      pellentesque orci sit amet faucibus. Nam commodo pretium ante, 
+      et mattis sem dictum non. Integer molestie vulputate sodales. 
+      Etiam id vestibulum magna. Aliquam erat volutpat. Curabitur in 
+      tellus quam, eu dictum mi. Mauris in sapien tellus. Aliquam erat 
+      volutpat. Integer nec dictum velit. Pellentesque vel imperdiet odio. 
+      In sapien sapien, sagittis ut feugiat tristique, fringilla ac velit. 
+      Phasellus ac nunc quis urna suscipit venenatis vitae eget tellus. 
+      Nam lacinia erat nec neque fermentum convallis.</p>
+    </div>
+    <div .blocks>
+      Select:
+      <select size=4 .block>
+        <optgroup label="First quarter">
+          <option>One</option>
+          <option>Two</option>
+          <option>Three</option>
+          <option>Four</option>
+        </optgroup>
+        <optgroup label="Second quarter">
+          <option>Five</option>
+          <option>Six</option>
+          <option>Seven</option>
+          <option>Eight</option>
+        </optgroup>
+        <optgroup label="Third quarter">
+          <option>Nine</option>
+          <option>Ten</option>
+          <option>Eleven</option>
+          <option>Twelve</option>
+        </optgroup>
+      </select>
+      Textarea:
+      <textarea cols=40 rows=4>Sample</textarea>
+    </div>
+  </div>
+
+</body>
+</html>

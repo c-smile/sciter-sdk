@@ -1,0 +1,131 @@
+<html>
+	<head>
+		<title>bacgkround tests</title>
+		<style media="all">
+/* general stuff */
+body 
+{ 
+	font-family:verdana,arial,sans-serif;
+	font-size:10pt;
+  background: url(images/smile.png) no-repeat;
+  background-position: bottom right;
+  background-attachment: fixed; 
+}
+h1  { text-align:center; }
+div
+{ 
+	margin: 10px 20%; 
+	text-align:center; 
+	vertical-align:middle; 
+	padding: 20px 10px;
+	border: 1px goldenrod solid;
+}
+
+em { font-weight:bold; color:red; }
+
+/* specific */
+#mono-color 
+{ 
+	background-color:gold; 
+}
+#gradient-color 
+{ 
+	background: radial-gradient(25% 25%, ellipse farthest-side, navajowhite, gold, khaki, lemonchiffon );
+}
+#repeat-image
+{
+  background-position:4px 4px;
+	background-image:url(images/smile.png); 
+}
+#repeat-x-image
+{
+	background-image:url(images/smile.png); 
+	background-repeat:repeat-x; 
+	background-position:0 160%;
+}
+#repeat-y-image
+{
+	background-image:url(images/smile.png); 
+	background-repeat:repeat-y; 
+	background-position:70% 50%;
+}
+#no-repeat-image
+{
+	background-image:url(images/smile.png); 
+	background-repeat:no-repeat; 
+	background-position:100% 100%;
+}
+#repeat-noscroll-image
+{
+	background-image:url(images/smile.png); 
+	background-attachment:fixed;
+}
+#expandable-image
+{
+	background-image:url(images/expandable.png); 
+	background-position:12 12 12 12; /*top right bottom left offsets*/
+	background-repeat:expand; /* h-smile specific */
+	border: none;
+	padding: 20px 10px 32px 10px;
+}
+#expandable-stretch-image
+{
+	background-image:url(images/stretchable.png); 
+	background-position:15 15 15 15; /*top right bottom left offsets*/
+	background-repeat:expand stretch-top stretch-bottom stretch-middle; /* h-smile specific */
+	border: none;
+	padding: 21px 15px;
+}
+
+#table-image
+{
+	margin: 10px 20%; 
+	padding:7px;
+	background-image:url(images/tableback.png); 
+	background-position:16px 16px 16px 16px; /*top right bottom left offsets*/
+	background-repeat:expand; /* h-smile specific */
+	border: none;
+}
+#table-image td
+{
+	text-align:center; 
+	vertical-align:middle; 
+	background-image:url(images/cellback.png); 
+	background-position:8px 8px 8px 8px; /*top right bottom left offsets*/
+	background-repeat:expand; /* h-smile specific */
+	padding:8px;
+	border: none;
+}
+
+#stretchable-image
+{
+	background-image:url(images/stretchable.png); 
+	background-repeat:stretch; /* h-smile specific */
+	border: none;
+	padding: 21px 15px;
+}
+
+
+		</style>
+	</head>
+	<body>
+		<h1>H-SMILE backgrounds</h1>
+		<div id="mono-color">mono color background</div>
+		<div id="gradient-color">gradient color background <em>*</em></div>
+		<div id="repeat-image">repeat image</div>
+		<div id="repeat-noscroll-image">repeat fixed image</div>
+		<div id="repeat-x-image">x repeat image</div>
+		<div id="repeat-y-image">y repeat image</div>
+		<div id="no-repeat-image">no repeat image</div>
+		<div id="expandable-image">expandable background image <em>*</em></div>
+		<div id="expandable-stretch-image">expandable background image with stretchable sections <em>*</em></div>
+		<div id="stretchable-image">stretchable background image <em>*</em></div>
+		<table id="table-image" width="100%" style="border-spacing:0">
+			<tr><td>cell #1</td><td rowspan=2>expandable table backgrounds <em>*</em></td></tr>
+			<tr><td>cell #3</td></tr>
+		</table>
+		<hr>
+		<p><em>*</em> - cases marked by this symbol can be viewed properly only in 
+			engines based on H-SMILE core.</p>
+	</body>
+</html>

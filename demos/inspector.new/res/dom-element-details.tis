@@ -1,0 +1,172 @@
+
+class ElementDetails : Behavior 
+{
+  this var shownUID = null;
+
+  function attached() 
+  {
+    this.usedStylesList = this.$(.used-styles > dl);
+    this.styleRulesList = this.$(.styles > dl);
+    this.statesList     = this.$(.states > dl);
+    this.attributesList = this.$(.attributes > dl);
+    this.metricsForm    = this.$(.metrics);
+    assert this.usedStylesList;
+    assert this.styleRulesList;
+    assert this.statesList;
+    assert this.attributesList;
+    assert this.metricsForm;
+    
+    this.driver = this.$p(.view-driver);
+    var me = this;
+    this.driver.on("element-selected.element-details", function( evt ) {
+      var uid = typeof evt.data == #array ? evt.data.last.uid : evt.data;
+      me.show( uid );
+      me.postEvent("ensure-visible");
+    });
+    this.driver.on("element-content-changed.element-details", function( evt ) {
+      if(evt.data == shownUID)
+        me.show( evt.data );
+    });
+  }
+  
+  function detached() { this.driver.off(".element-details"); }
+  
+  function renderStyleRules(rules)
+  {
+    const styleRulesList = this.styleRulesList; 
+  
+    styleRulesList.clear();
+    var cnt = 0;
+    if(rules)
+      for(var rule in rules)
+      {
+        if(rule.type == "style-rule")
+        {
+          var fn = (rule.file %~ "/") || rule.file;
+          styleRulesList.$append(<header><span.selector>{rule.selector}</span><a href='{rule.file}' line={rule.lineNo} >{fn}({rule.lineNo})</a></header>); 
+        }
+        else if(rule.type == "inline-style")
+          styleRulesList.$append(<header>@style:</header>); 
+        else if(rule.type == "runtime-style")
+          styleRulesList.$append(<header>runtime style:</header>); 
+          
+        var props = rule.properties;  
+        var props_names = [];  
+        for(var name in props) props_names.push(name);
+        props_names.sort();
+        for(var name in props_names) {
+          var prop_val = props[name];
+          if( prop_val !== undefined )
+            styleRulesList.$append(<dt>{name}:</dt><dd>{ prop_val.toCssString() }</dd>);
+        }
+        ++cnt;
+      }  
+    styleRulesList.parent.attributes.toggleClass("no-items", cnt == 0);
+  }
+  
+  function renderProps(props)
+  {
+    const usedStylesList = this.usedStylesList; 
+    
+    usedStylesList.clear();
+    var props_names = [];  
+    if(props)
+      for(var name in props) props_names.push(name);
+    props_names.sort();
+    for(var name in props_names) {
+      var prop_val = props[name];
+      if( prop_val !== undefined )
+        usedStylesList.$append(<dt>{name}:</dt><dd>{ prop_val.toCssString() }</dd>);
+    }
+    usedStylesList.parent.attributes.toggleClass("no-items", props_names.length == 0);
+  }
+  
+  function renderStates(states)
+  {
+    const statesList = this.statesList; 
+    statesList.clear();
+    var cnt = 0;
+    for(var name in states) {
+      statesList.$append(<dt></dt><dd>:{name}</dd>);  
+      ++cnt;
+    }
+    statesList.parent.attributes.toggleClass("no-items", cnt == 0);
+  }
+  
+  function renderAttributes(atts)
+  {
+    const attributesList = this.attributesList;   
+    attributesList.clear();
+    var cnt = 0;
+    if(atts)
+      for(var (name,val) in atts)
+      {
+        attributesList.$append(<dt>{name}:</dt><dd>{val}</dd>);  
+        ++cnt;
+      }
+    attributesList.parent.attributes.toggleClass("no-items", cnt == 0);
+  }
+  
+  function renderMetrics(metrics)
+  {
+    this.metricsForm.value = {
+      ml: metrics.margin[0] || "-",
+      mt: metrics.margin[1] || "-",
+      mr: metrics.margin[2] || "-",
+      mb: metrics.margin[3] || "-",
+      bl: metrics.border[0] || "-",
+      bt: metrics.border[1] || "-",
+      br: metrics.border[2] || "-",
+      bb: metrics.border[3] || "-",
+      pl: metrics.padding[0] || "-",
+      pt: metrics.padding[1] || "-",
+      pr: metrics.padding[2] || "-",
+      pb: metrics.padding[3] || "-",
+      x : metrics.inner[0] || "-",
+      y : metrics.inner[1] || "-",
+      w : metrics.inner[2] || "-",
+      h : metrics.inner[3] || "-"
+    };
+  }
+  
+
+  function showDetails(dt,uid)
+  { 
+    //stdout.printf("dt:\r%V\n",dt);
+    this.renderStyleRules(dt.appliedStyleRules);
+    this.renderProps(dt.usedStyleProperties);
+    this.renderStates(dt.states);
+    this.renderAttributes(dt.attributes);
+    this.renderMetrics(dt.metrics);
+  }
+
+  function show(uid = null)
+  { 
+    this.shownUID = uid = uid || this.shownUID;
+      
+    const me = this;
+    function receiver(details) {
+      me.showDetails(details,uid);
+    }
+    this.driver.rq("getElementDetails", uid, receiver ); 
+    //this.timer(1s, this.show );
+    
+    return true;
+  
+    /*var dt = view.getElementDetails(uid);
+    shownUID = uid;
+    if(dt) { 
+      showDetails(dt,uid);
+      function check() {
+        if( shownUID != uid ) return false;
+        var dtn = view.getElementDetails(uid);
+        if( dtn && !dtn.equals(dt) )
+          showDetails(dt = dtn,uid);
+        return true;
+      }
+      detailsList.timer(1000, check);
+    }
+    */
+  }
+  
+}

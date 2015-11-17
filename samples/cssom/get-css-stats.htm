@@ -1,0 +1,68 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      #stats > tbody { aspect: Repeatable url(../repeatable/simple/repeatable.tis);  }
+      #stats > tbody > tr { behavior:form; }
+    
+      /* demo rules */
+      #one { color:red; }
+      #two { color:blue; }
+      .three { color:green; }
+      #three { color:orange; }
+      
+   
+    </style>
+    <script type="text/tiscript">
+    
+      function self.ready() {
+        var stats = [];
+        
+        self.style.documentRules( function( selector, file, lineNo, usageCounter ) {
+          stats.push {
+            selector: selector, 
+            file: file, 
+            lineNo: lineNo, 
+            usageCounter: usageCounter
+          };
+        });
+        
+        
+        stdout.printf("%V\n",stats);
+        
+        $(#stats > tbody).value = stats;
+        
+       }  
+    
+    
+    </script>
+  </head>
+<body>
+  <div id="one">#one</div>
+  <div id="two" class="three">#two.three</div>
+  <div class="three">.three</div>
+
+  <p>CSS usage stats (in selector specificity order):</p>
+
+  <table #stats border>
+    <thead>
+      <tr>
+        <th>selector</th>
+        <th>file</th>
+        <th>lineNo</th>
+        <th>used by N elements</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td(selector) /> 
+        <td(file) />
+        <td(lineNo) />
+        <td(usageCounter) />
+      </tr>
+    </tbody>
+  </table>  
+
+</body>
+</html>

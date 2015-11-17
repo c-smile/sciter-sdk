@@ -1,0 +1,146 @@
+<html>
+  <head>
+    <title>Sciter Graphics.Path</title>
+    <style>
+      html { background: transparent; }
+      widget.label
+      {
+        prototype:TabLabel;
+        size:*;
+        font-size:64pt;
+        text-align:center;
+        vertical-align:middle;
+      }
+      widget:hover /* just for fun */
+      {
+        transform: rotate(35deg) scale(.5);
+        transition: transform(quart-out,0.5s,quart-in);
+      }
+            
+    </style>
+    <script type="text/tiscript">
+      class TabLabel : Behavior
+      {
+        const COLOR_BACK = color(0xFF,0x7F,0x7F,0.5);
+        const COLOR_BACK_HOVER = color(0xFF,0x7F,0x7F);
+        const COLOR_BACK_ACTIVE = color(0xFF,0,0);
+      
+        function attached() 
+        { // attaching the paint() to paintContent layer handler
+          this.paintBackground = this.paint; 
+          this.mouseInside = false;
+        }
+                
+        function getShape()
+        {
+          var shape = this.shape;
+          if(!shape) 
+          {
+            shape = this.shape = new Graphics.Path();
+            this.shapeWidth = null;
+            this.shapeHeight = null;
+          }
+         
+          var (w,h) = this.box(#dimension);
+         
+          if( this.shapeWidth == w && this.shapeHeight == h)
+            return shape; // nothing to do already calculated
+          
+          shape.reset();
+          var cw = Integer.min(h,w/2);
+          
+          var x1 = cw, x2 = w - cw;
+          var xc1 = cw/2, xc2 = w - cw/2;
+          
+          shape.moveTo(0,h)
+               .bezierCurveTo(xc1,h,xc1,0,x1,0)
+               .lineTo(x2,0)
+               .bezierCurveTo(xc2,0,xc2,h,w,h)
+               .close();
+
+          return shape; 
+        }
+        
+        // function is called while handling WM_PAINT 
+        function paint(gfx)
+        {
+          if(var shape = this.getShape())
+          {
+            var backColor = this.pressed
+                    ?COLOR_BACK_ACTIVE
+                    :(this.mouseInside
+                       ? COLOR_BACK_HOVER
+                       : COLOR_BACK);
+
+            gfx.lineWidth(2)
+               .lineColor(color(0xFF,0,0))
+               .fillColor(backColor)
+               .drawPath( shape );
+          }
+          return false;
+        }
+        
+        function setSursor(evt)
+        {
+          if(this.mouseInside)
+            evt.cursor = "pointer";
+        }
+        
+        function onMouse(evt)
+        {
+          switch( evt.type )
+          {
+            case Event.MOUSE_LEAVE:
+              if(this.mouseInside)
+              {
+                this.mouseInside = false;
+                this.refresh();
+              }
+              break;
+            case Event.MOUSE_MOVE: 
+            {
+              var isInside = this.hitTest(evt);
+              if( isInside != this.mouseInside )
+              {
+                this.mouseInside = isInside;
+                this.refresh();
+              }
+            } break;
+            case Event.MOUSE_DOWN: 
+            case Event.MOUSE_DCLICK: 
+            {
+              if( this.hitTest(evt) )
+              {
+                this.pressed = true;
+                this.refresh();
+              }
+            } break;
+            case Event.MOUSE_UP: 
+            {
+              if(this.pressed)
+              {
+                this.pressed = false;
+                this.refresh();
+              }
+            } break;
+          }
+          this.setSursor(evt);
+        }
+        // test is event point is inside the shape
+        function hitTest(evt)
+        {
+          // following is not needed as evt.x/y are already translated into element's local coordinates 
+          //var (x,y) = this.inverseTranslate(evt.x,evt.y); 
+                                                          
+          return this.getShape().isPointInside(evt.x,evt.y);
+        }
+        
+      }
+      
+    </script>
+  </head>
+<body>
+  <widget .label>Label &#8470;1</widget>
+
+</body>
+</html>

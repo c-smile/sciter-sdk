@@ -1,0 +1,117 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+    widget[type="auto-complete"] {
+      prototype:AutoComplete;
+      flow:stack;
+      border:1px solid red;
+      padding:2px;
+      width:8em;
+      font:system;
+    }
+    widget[type="auto-complete"] > input,
+    widget[type="auto-complete"] > span { 
+      background: none;
+      border:none;
+      padding:0;
+      margin:0;
+      display:block;
+      size:*
+    }
+    
+    widget[type="auto-complete"] > input {
+      width: max-content;
+      min-width:1px;
+      background:white;
+    }
+    
+    widget[type="auto-complete"] > span {
+      color:#ccc;
+      cursor:text;
+    }
+    widget[type="auto-complete"] > popup {
+      width:*;
+      height:min-content;
+      display:none;
+      background:infobackground;
+      border:1px solid black;
+    }
+
+    widget[type="auto-complete"] > popup > text:hover {
+      background:highlight;
+      color:highlighttext;
+    }
+
+    
+    </style>
+    <script type="text/tiscript">
+
+      class AutoComplete : Behavior {
+      
+        function attached() {
+          this.candidate = this.$(span);
+          var input = this.input = this.$(input);
+          this.candidates = this.$(popup);
+          this.subscribe("change","input", :: (this super).onTextChange() );
+          this.subscribe("mouseup","span", :: input.state.focus = true );
+          this.subscribe("click","popup>text", :: (this super).setText(this.text) );
+        }
+        
+        function onTextChange()
+        {
+          var text = this.input.value;
+          if( text )
+          {
+            this.input.value = text = text.toUpperCase();
+            var list = this.getCandidates(text);
+            this.candidates.clear();
+            for(var li in list) 
+              this.candidates.$append(<text>{li}</text>);
+            this.candidate.value = list.length ? list[0] : "";
+            this.popup( this.candidates , (8 << 16) | 2);
+            this.input.state.focus = true;
+          }
+          else {
+            this.candidates.state.popup = false;
+            this.candidate.value = "";
+          }
+            
+        }
+        
+        function getCandidates(forText) {
+        
+          var pattern = forText + "*";
+        
+          return [
+            "ABCDEF",
+            "ABCDEFG",
+            "BCDEFG",
+            "BCDEFGH",
+            "CDEFGH",
+            "DEFGHI",
+          ].filter(:item: item like pattern) ;
+        }
+        
+        function setText(txt) {
+          this.candidates.state.popup = false;
+          this.input.value = txt;
+          this.input.state.focus = true;
+        }
+        
+      }
+    
+    
+    </script>
+  </head>
+<body>
+  Type "AB" or "CD" or "D":
+  <widget|auto-complete>
+    <span></span>
+    <input|text></text>
+    <popup />
+  </widget>
+
+</body>
+</html>

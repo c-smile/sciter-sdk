@@ -1,0 +1,51 @@
+@set swipeable-list
+{
+  :root 
+  {
+    prototype: SwipeableList url(swipe-list.tis);
+    behavior: swipe;
+    overflow-x: hidden;
+    overflow-y: scroll-indicator;
+    padding:0;
+  }
+  
+  :root > li 
+  {
+    display:block; 
+    opacity:1.0;
+    transform: translate(0,0); 
+  }
+  
+  :root > menu
+  {
+    position:absolute;
+    display:block;
+    top:0; height:0;
+    transform: translate(-100%,0px);
+    background: linear-gradient(top,rgba(12,12,12,0.0), rgba(64,64,96,0.0) 90%, rgba(168,168,200,0.0));
+    transition: none;
+  }
+  
+  :root > menu button { behavior:clickable; }
+  
+  :root > menu.show
+  {
+    left:0; right:0;  
+    transform: translate(0,0);
+    background: linear-gradient(top,rgba(12,12,12,0.7), rgba(64,64,96,0.6) 90%, rgb(168,168,200));
+    transition: transform(quad-out,0.4s,none)
+                background(quad-in,0.4s,none);
+  }
+    
+  :root > li.deletion 
+  {
+    transform: translate(-100%,0); 
+    transition: transform(linear,0.4s);
+  }
+  :root > li.shifting 
+  {
+    transform: translate(0,-100%); 
+    transition: transform(quad-out,0.4s,0.3s,none);
+  }
+  
+}

@@ -1,0 +1,115 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      div { size:200px; border:1px solid; margin:*; }
+    
+    </style>
+    <script type="text/tiscript">
+    
+    function roundedRect(x,y,width,height,radius)
+    {
+        var path = new Graphics.Path();
+    
+        // draw top and top right corner
+        path.moveTo(x+radius,y);
+        path.arcTo(x+width,y,x+width,y+radius,radius);
+
+        // draw right side and bottom right corner
+        path.arcTo(x+width,y+height,x+width-radius,y+height,radius); 
+
+        // draw bottom and bottom left corner
+        path.arcTo(x,y+height,x,y+height-radius,radius);
+
+        // draw left and top left corner
+        path.arcTo(x,y,x+radius,y,radius);
+        path.close();
+        
+        return path;
+    }
+    
+    
+    $(div#arcTo1).paintContent = function( gfx ) {
+    
+      var (w,h) = this.box(#dimension);
+      
+      var path = new Graphics.Path();
+      path.moveTo(200,0)
+          .arcTo(0,0,0,200,100);
+          
+      //var path = roundedRect(10,10,w-20,h-20,30);
+          
+      gfx.lineWidth(4)
+         .lineColor(color(0xFF,0,0))
+         .drawPath( path);
+    }; 
+    
+    $(div#arcTo2).paintContent = function( gfx ) {
+    
+      var (w,h) = this.box(#dimension);
+      
+      var path = new Graphics.Path();
+      //path.moveTo(200,0)
+      //    .arcTo(0,0,0,200,100);
+          
+      path.moveTo(200,200)
+          .arcTo(200,0,0,0,100);
+      
+      
+      //var path = roundedRect(10,10,w-20,h-20,30);
+          
+      gfx.lineWidth(4)
+         .lineColor(color(0xFF,0,0))
+         .drawPath( path);
+    };
+
+    $(div#arcTo3).paintContent = function( gfx ) {
+    
+      var (w,h) = this.box(#dimension);
+      
+      var path = new Graphics.Path();
+      //path.moveTo(200,0)
+      //    .arcTo(0,0,0,200,100);
+          
+      path.moveTo(0,0)
+          .arcTo(0,200,200,200,100);
+      
+      
+      //var path = roundedRect(10,10,w-20,h-20,30);
+          
+      gfx.lineWidth(4)
+         .lineColor(color(0xFF,0,0))
+         .drawPath( path);
+    };
+    
+    $(div#arcTo4).paintContent = function( gfx ) {
+    
+      var (w,h) = this.box(#dimension);
+      
+      var path = new Graphics.Path();
+          
+      path.moveTo(0,200)
+          .arcTo(200,200,200,0,100);
+      
+      
+      //var path = roundedRect(10,10,w-20,h-20,30);
+          
+      gfx.lineWidth(4)
+         .lineColor(color(0xFF,0,0))
+         .drawPath( path);
+    };
+
+    </script>
+  </head>
+<body>
+
+  <div #arcTo1 />
+  <div #arcTo2 />
+  
+  <div #arcTo3 />
+  <div #arcTo4 />
+
+
+</body>
+</html>

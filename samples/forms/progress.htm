@@ -1,0 +1,136 @@
+<HTML>
+	<HEAD>
+		<TITLE></TITLE>
+		<STYLE>
+      html { background-color:threedlight; }
+      
+      progress { vertical-align:middle; }
+      
+      progress:hover /* just for fun */
+      {
+        transform:rotate(15deg) scale(.5);
+        transition: transform(quart-out,0.5s,quart-in);
+      }
+      
+      progress#dyn1 { height:18dip; width:200dip; }
+      progress#dyn2 { width:200dip;  list-style-image: url(images/progress-overlay.png); }
+      
+      p#small > progress { height:0.8em; width:8em; }
+      
+      
+      progress.custom
+      {
+        border:none; border-radius:none;
+        background:url(images/progress-back.png) expand;
+        background-position:8px 8px 8px 8px; /*left top right bottom offsets*/
+      
+        height: 13px;
+        width: 64px;
+        padding: 4px;
+        
+        foreground:url(images/progress-body.png) expand;  
+        foreground-position:5px 5px 5px 5px; /*left top right bottom offsets*/
+        
+      }
+
+      progress.custom-clip
+      {
+        -bar:"clip";
+        border:none; border-radius:none;
+        background:url(images/progress-body-dark.png) expand;
+        background-position:5 5 5 5; 
+      
+        height: 13px;
+        width: 64px;
+        padding:0;
+        
+        foreground:url(images/progress-body.png) expand;  
+        foreground-position:5 5 5 5; 
+        
+      }
+      
+      div { flow:horizontal; border-spacing:10px; }
+      //div > * { height:*; }
+      
+	</STYLE>
+  <script type="text/tiscript">
+    $(#dyn1-start).onClick = function()
+    {
+      //stdout.$n(started);
+      var progress = $(#dyn1);
+      progress.value = 0;
+      function inc()
+      {
+        if( progress.value >= 200 ) return;
+        progress.value += 1; 
+        //stdout.$n(inc {progress.value});
+        return true;
+      }
+      progress.timer(50,inc);
+    }
+    $(#dyn2-start).onClick = function()
+    {
+      var progress = $(#dyn2);
+      progress.value = 0;
+      function inc()
+      {
+        if( progress.value >= 200 ) return;
+        progress.value += 1; 
+        return true;
+      }
+      progress.timer(50,inc);
+    }
+
+    $(#dyn3-start).onClick = function()
+    {
+      var progress = $(#dyn3);
+      var check = $(#dyn3-start);
+      progress.state.busy = check.value;
+    }
+
+  </script>
+	</HEAD>
+	<BODY>
+      <h1>progress bar test</h1>
+      
+      <h2>dynamic, with animation</h2>
+      <div><progress #dyn1 max="200" value="0"/><button #dyn1-start>Start</button></div>
+
+      <h2>indefinite, with animation</h2>
+      <div><progress #dyn3 /> <button type=checkbox #dyn3-start>Run</button></div>
+            
+      <h2>normal</h2>
+      <p>0%:<progress name="p1" max="100" value="0"/>
+         25%:<progress name="p2" max="100" value="25"/>
+         50%:<progress name="p3" max="100" value="50"/>
+         75%:<progress name="p4" max="100" value="75"/>
+         100%:<progress name="p5" max="100" value="100"/></p>
+      <h2>small</h2>
+      <p id="small">0%:<progress name="p1" max="100" value="0"/>
+         25%:<progress name="p2" max="100" value="25"/>
+         50%:<progress name="p3" max="100" value="50"/>
+         75%:<progress name="p4" max="100" value="75"/>
+         100%:<progress name="p5" max="100" value="100"/></p>
+      <h2>custom</h2>
+      
+      Resizing foreground image:
+      
+      <div><progress .custom #dyn2 max="200" value="0"/><button #dyn2-start>Start</button></div>
+      
+      <p>0%:<progress .custom name="p1" max="100" value="0"/>
+         25%:<progress .custom name="p2" max="100" value="25"/>
+         50%:<progress .custom name="p3" max="100" value="50"/>
+         75%:<progress .custom name="p4" max="100" value="75" />
+         100%:<progress .custom name="p5" max="100" value="100"/></p>
+      <h2>custom</h2>         
+      Clipping foreground image:
+      <p>0%:<progress .custom-clip name="p1" max="100" value="0" />
+         25%:<progress .custom-clip name="p2" max="100" value="25" />
+         50%:<progress .custom-clip name="p3" max="100" value="50" />
+         75%:<progress .custom-clip name="p4" max="100" value="75" />
+         100%:<progress .custom-clip name="p5" max="100" value="100" /></p>
+
+         
+	</BODY>
+	</BASEFONT>
+</HTML>

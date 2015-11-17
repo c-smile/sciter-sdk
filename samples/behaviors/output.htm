@@ -1,0 +1,94 @@
+<html>
+  <head>
+  <title></title>
+<style>
+  html { background:#EDEDED; }
+  div#forms { flow:"1 3"
+                   "2 4"; }
+  
+  form { flow:row(label,output); width:20em; border-spacing:4dip; }
+  form > label { horizontal-align: right; }
+  form > output { background:#fff; min-width:3em; }
+  form > output[negative] { color:red; }
+
+</style>
+<script type="text/tiscript">
+
+  var vals1 = {
+      text:"Hello world!",
+      integer:12345,
+      decimal:12345.67,
+      currency:12345.67,
+      date: new Date(1914,7,28),
+      dateLocal: new Date(1914,7,28),
+      time: Date.now(),
+      timeLocal: Date.now()
+    };
+  var vals2 = {
+      text:"Hello universe!",
+      integer:-12345,
+      decimal:-12345.67,
+      currency:-12345.67,
+      date: new Date(1939,9,1),
+      dateLocal: new Date(1939,9,1),
+      time: Date.now(),
+      timeLocal: Date.now()
+    };    
+
+  $(button#set).onClick = function() { $(form#data).value = vals1; };
+  $(button#set-ru).onClick = function() { $(form#data-ru).value = vals1; };
+
+  $(button#set2).onClick = function() { $(form#data).value = vals2; };
+  $(button#set2-ru).onClick = function() { $(form#data-ru).value = vals2; };
+
+</script>
+  </head>
+<body>
+  <button#set>Set values</button> 
+  <button#set-ru>Set values (lang=ru)</button> 
+  <button#set2>Set another values</button> 
+  <button#set2-ru>Set another values (lang=ru)</button> 
+  <div #forms>
+    <h3>form, default lang </h3>
+    <form#data>
+      <label>Text</label>
+        <output!text name="text" />
+      <label>Integer</label>
+        <output!integer name="integer" />
+      <label>Decimal</label>
+        <output!decimal name="decimal" />
+      <label>Currency</label>
+        <output!currency name="currency" />
+      <label>Date</label>
+        <output!date name="date" />
+      <label>Date(local)</label>
+        <output!date-local name="dateLocal" />
+      <label>Time</label>
+        <output!time name="time" />
+      <label>Time(local)</label>
+        <output!time-local name="timeLocal" />
+    </form>
+    <h3>form, lang="ru"</h3>
+    <form#data-ru lang=ru>
+      <label>Text</label>
+        <output!text name="text" />
+      <label>Integer</label>
+        <output!integer name="integer" />
+      <label>Decimal</label>
+        <output!decimal name="decimal" />
+      <label>Currency</label>
+        <output!currency name="currency" />
+      <label>Date</label>
+        <output!date name="date" />
+      <label>Date(local)</label>
+        <output!date-local name="dateLocal" />
+      <label>Time</label>
+        <output!time name="time" />
+      <label>Time(local)</label>
+        <output!time-local name="timeLocal" />
+    </form>
+  </div>
+
+
+</body>
+</html>

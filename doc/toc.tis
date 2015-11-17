@@ -1,0 +1,46 @@
+
+function makeToc( content, list )
+{
+  //stdout.$n(toc!);
+  function makeTree()
+  {
+    var tree = [];
+    var sect = null;
+    function sc(el)
+    {
+      //stdout.$n(tag {el.tag});
+      if(el.tag == "h2") { if(sect) tree.push(sect); sect = {caption: el.text, target: el, items:[] }; }
+      else if(sect)      { sect.items.push({ caption: el.text, target: el }); }
+    }
+    //stdout.$n(content.select);
+    content.select(sc, "h2, td:first-child em, dt");
+    if(sect) tree.push(sect);
+    return tree;
+  }
+  
+  function onItemClick()
+  {
+    this.target.attributes#highlighted = true;
+    this.target.scrollToView(true);
+  }
+  
+  function showTree(tree)
+  {
+    list.clear();
+    for(var sect in tree)
+    {
+      if( !sect.items ) continue;
+      var s = new Element("ul"); list.insert(s);
+      var cap = new Element("caption", sect.caption); s.insert(cap); cap.target = sect.target; cap.onClick = onItemClick;
+      sect.items.sort( :i1,i2: i1.caption < i2.caption? -1:1 );
+      for(var item in sect.items)
+      {
+        var li = new Element("li", item.caption );
+        s.insert(li);
+        li.target = item.target;
+        li.onClick = onItemClick;
+      }
+    }
+  }
+  showTree(makeTree());
+}

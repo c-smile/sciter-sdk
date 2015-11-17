@@ -1,0 +1,81 @@
+﻿<html>
+  <head>
+    <style></style>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  Expandable background images is a simple and powerful way of defining flexible borders and backgrounds of DOM elements.<p>Example of expandable image, this image:</p>
+  <p><img src="images/back.png" alt="source"/></p>
+  <p>is getting expanded as a background of the div element:</p>
+  <p><img src="images/final.png" alt="destination"/></p>
+  <p>Expandable image is a single bitmap image like png, jpeg or gif. New value expand of standard background-repeat attribute is used to declare expandability of the image. Together with background-position it defines how sections of the source image are rendered on the destination.</p>
+  <p>Formal definition:</p>
+  <pre>background-repeat: expand [stretch-top] [stretch-bottom] [stretch-middle] [stretch-left] [stretch-right];
+background-position: top right bottom left;
+</pre>
+  <p>Where:</p>
+  <ul>
+    <li><code>top</code>, <code>right</code>, <code>bottom</code> and <code>left</code> are numbers (number of image pixels) that define widths and heights of margins on image that split the image into 9 areas. These areas will be copied, tiled or stretched on destination area (see illustration below);</li>
+    <li><code>stretch-top</code>, <code>stretch-bottom</code>, <code>stretch-middle</code>, <code>stretch-left</code> and <code>stretch-right</code> are modifiers that define how correspondent section is copied to the destination section. Without stretch-top, for example, top section of source is tiled on top section of the destination. And with stretch-top defined top section is stretched to fill destination's top section in full.</li></ul>
+  <p>Note: background-repeat:expand image is rendered to fill padding box of the element in full thus we can reuse background-position attribute for the purpose of defining sections of the image.</p>
+  <h2>Tiled expand sample</h2>
+  <p>Here is an illustration of how image (above) is getting expanded to the destination &lt;div&gt; element that is defined in CSS as:</p>
+  <pre> div
+ {
+   background-image:url(back.png);
+   background-repeat:expand; /* simple expanding by tiling */
+   background-position:14 14 14 14; /* &quot;border&quot; sections are all 14px width on this image */
+   padding:14px;
+   height:100px;
+ }
+</pre>
+  <div><img src="images/schema.png" alt="Illustration of expandable image"/></div>
+  <p>Full HTML source of the document used in this sample is:</p>
+  <pre>&lt;html&gt;
+  &lt;head&gt;
+    &lt;style&gt;
+      body { background-color: white white bisque bisque; margin:0; padding:20px; }
+      div
+      {
+        background-image:url(back.png);
+        background-repeat:expand;
+        background-position:14 14 14 14;
+        padding:14px;
+        height:100px;
+      }
+    &lt;/style&gt;
+  &lt;/head&gt;
+&lt;body&gt;
+  &lt;div&gt;Hello world!&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+  <h2>Expand with stretchable sections</h2>
+  <p>Another image that we want to expand by tiling in horizontal direction and stretching in vertical direction. Source:</p>
+  <p><img src="images/back-stretch.png" alt="Source"/></p>
+  <p>and examples of its rendering on three buttons:</p>
+  <p><img src="images/final-stretch.png" alt="Final rendering"/></p>
+  <p>And HTML source of the document rendered above:</p>
+  <pre>&lt;html&gt;
+  &lt;head&gt;
+    &lt;style&gt;
+      body { background-color: white white bisque bisque; margin:0; padding:20px; }
+      button
+      {
+        background-image:url(back-stretch.png);
+        background-repeat:expand stretch-left stretch-middle stretch-right;
+        background-position:8 8 8 8;
+        padding:10px;
+      }
+    &lt;/style&gt;
+  &lt;/head&gt;
+&lt;body&gt;
+ Buttons with custom shapes:
+ &lt;button&gt;Small&lt;/button&gt;,
+ &lt;button&gt;Fairly big with&lt;br/&gt;multiline text&lt;/button&gt; and
+ &lt;button&gt;Even bigger&lt;br/&gt;because it has three&lt;br/&gt;lines of text&lt;/button&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</body>
+</html>

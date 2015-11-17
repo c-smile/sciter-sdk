@@ -1,0 +1,125 @@
+<html>
+<head>
+  <title></title>
+  <style>
+
+
+      html { background:url(images/starfield.jpg); }
+    
+      body { font:system; margin:0; padding:8px;
+             background: radial-gradient(90% 90%, circle farthest-side, white, orange/45%, rgb(128,64,0)/60%, rgba(128,64,0,0)); }
+      /*a { color:blue; behavior:clickable; } 
+        a:hover { color:red; } */
+
+      /*code { font-family:"American Typewriter"; font-size: 18pt; }*/
+
+      button { 
+        //background-repeat:stretch;
+        padding:10px;
+        width: 100px; 
+      }
+
+      div.panel { background:window; padding:20px; border-radius: 10px; }
+    
+      div#intro
+      { 
+        background: rgba(213,132,0,0.5);
+        padding:10px; 
+        margin: 30px * * *;
+        width: 70%;
+        behavior:htmlarea;
+      }
+      div#intro > img#arrow { vertical-align:middle; size:0.8em; color:brown; }  
+      div#intro p { margin:10px 0; }
+      
+      dl#info { flow:row(dt,dd); horizontal-align:right; }
+      dl#info > dt { width:max-intrinsic; text-align:right; }
+      dl#info > dd { width:max-intrinsic; margin:0; padding-left:0.6em; font-weight:bold; color:#444; }
+      dl#info > header  
+      {
+        font-weight:bold; 
+        color:orange; 
+        //border-bottom: 1px solid orange; 
+        text-align:center;
+        margin-top:0.5em; 
+        text-shadow: 1px 1px 2px rgb(32,16,0) ;
+      }
+      
+      footer { font-size:85%; text-align:center; }
+      
+  </style>
+
+  <script type="text/tiscript">
+
+    $(#version).text = String.printf("%d.%d.%d.%d", 
+		  (Sciter.VERSION >> 16) & 0xffff, Sciter.VERSION & 0xffff,
+		  (Sciter.REVISION >> 16) & 0xffff, Sciter.REVISION & 0xffff);
+	  $(#user).text = Sciter.userName();
+	  $(#machine).text = Sciter.machineName();
+	  $(#domain).text = Sciter.machineName(true);
+	  //$(#home).text = System.home();
+	  $(#language).text = System.language;
+	  $(#country).text = System.country;
+	  $(#os-type).text = System.HANDHELD_OS? "handheld":"desktop";
+	  $(#os-version).text = System.OS;
+    
+    stdout.println(System.PLATFORM);
+
+    var gfxids = System.PLATFORM == "Windows" ? ["?","GDI+","WARP","D2D"] 
+               : System.PLATFORM == "OSX" ? ["?","CoreGraphics","OpenGL" ]
+               : [ "?" ];
+    //stdout.printf("%V\n", gfxids);
+    
+    $(#gfx-backend).text = gfxids[view.backend];
+
+    $(button#open-in-view).onClick = function()
+      {
+        stdout.println("button#open-in-view");
+        var fn = view.selectFile(#open);
+        if( fn ) 
+        {
+          //stdout.println(fn);
+          view.load(fn);
+        }
+      }
+
+  
+  </script>
+</head>
+<body>
+  <div #intro>
+  
+    <b>Sciter</b> is an <em>embeddable</em> HTML/CSS/script engine that brings Web stack technologies to Desktop UI development:
+    <p>Suppports most of HTML5 constructs, except of &lt;video> and &lt;audio> for now;</p>
+    <p>CSS 2.1 in full with some elements of CSS3 (e.g. transitions);</p>
+    <p><a href="http://www.codeproject.com/Articles/33662/TIScript-language-a-gentle-extension-of-JavaScript">TIScript</a> engine (a.k.a. JavaScript++), feature set is close to ES6;</p>
+    <p>CSS extended to better support Desktop UI development, e.g. flow and flex units, vertical and horizontal alignment, OS theming;</p>
+    <p>Rich and extended set of input elements including <code>&lt;richtext></code> - WYSYWYG HTML editor;</p>
+    <p>SDK contains examples and libraries/ports of many popular frameworks like +plus is a non-intrusive data binding mechanism similar to AngularJS.</p>
+   </div>
+
+  <div.panel>
+
+   <button #open-in-view>Open file </button>
+
+   <input type=text value="test" />
+
+  </div> 
+
+  <dl #info>
+	  <header>Sciter</header>
+	  <dt>version:</dt>	   <dd #version></dd>
+    <header>System</header>
+	  <dt>OS type:</dt>	   <dd #os-type></dd>
+	  <dt>OS version:</dt> <dd #os-version></dd>
+    <dt>GFX backend:</dt><dd #gfx-backend></dd>
+	  <dt>user:</dt>		   <dd #user></dd>
+	  <dt>machine:</dt>	   <dd #machine></dd>
+	  <dt>domain:</dt>	   <dd #domain></dd>
+    <!--<dt>home:</dt>	     <dd #home></dd>-->
+	  <dt>country:</dt>	   <dd #country></dd>
+	  <dt>language:</dt>	 <dd #language></dd>
+  </dl>
+  <footer>Sciter contains H-SMILE (HTML/CSS) and TIScript engines of Terra Informatica Software, Inc.</footer>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+      div { behavior:htmlarea; }
+    </style>
+    <script type="text/tiscript">
+      $(button#sel-vidi).onClick = function() {
+        var div = $(div);
+        var p = div.first;
+        var textNode = p.firstNode;
+        
+        var pos = textNode.text.indexOf("vidi");
+        assert pos >= 0 : "vidi shall be there";
+                
+        var start = [bookmark: textNode, pos, false];
+        var end = [bookmark: textNode, pos+3, true];
+        
+        div.selection.select(end,start);
+      }
+      
+      $(button#sel-span).onClick = function() {
+        var div = $(div);
+        div.selection.select(div.$(span));
+      }
+      
+    </script>
+  </head>
+<body>
+  <button #sel-vidi>Select "vidi"</button>
+  <button #sel-span>Select span</button>
+  <div>
+    <p>Veni, vidi, vici.</p> 
+    <p>Some <span>span</span> in the text.</p> 
+  </div>
+</body>
+</html>

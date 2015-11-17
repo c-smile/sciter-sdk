@@ -1,0 +1,57 @@
+<html>
+  <head>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1 #test>Sciter Architecture</h1>
+  <p>Sciter is not using DOM model like <a href="http://www.w3.org/DOM">W3C DOM</a> as we have found it too complicated (<a href="http://www.w3.org/TR/1998/REC-DOM-Level-1-19981001/ecma-script-language-binding.html">76 different classes</a>, sic!).</p>
+  <h2>DOM and Window classes</h2>
+  <p>Sciter provides following 8 DOM and Window specific classes accessible in script:</p>
+  <ul>
+    <li><em>Element</em> - DOM element. All HTML elements including document(root), frame, inputs, etc. are Element's in the Sciter.</li>
+    <ul>
+      <li><em>Attributes</em> - collection of named attributes of the html element.</li>
+      <li><em>Style</em> - collection of style attributes applied to the element.</li></ul>
+    <li><em>Image</em> - image object. Represents bitmap image. You can draw on the image using Graphics methods.</li>
+    <li><em>Graphics</em> - object wrapping drawing primitives. You can draw on surface of any Element and Image in the Sciter.</li>
+    <li><em>View</em> - represents Sciter window. Main Sciter window and Dialog are views.</li>
+    <li><em>Event</em> - represents current UI event.</li>
+    <li><em>Sciter</em> - is a global object holding Sciter application specific methods.</li></ul>
+  <h2>View, document, frame and the root element.</h2>
+  <p><img src="sciter/images/main-view.png" align="right"/>Top level windows represented by the View objects in the Sciter. Main windows of Sciter.exe application or client area of X-Sciter.dll sandbox window are views. Dialog windows also have views assosiated with them.</p>
+  <p>Each view has <em>root </em>property - this is a root element of the loaded document. Root element in the Sciter is &lt;html&gt; element of the loaded document and there is no dedicated Document class. Document is really an element three - &lt;html&gt; element and its children.</p>
+  <h3>Frames and framesets.</h3>
+  <p>Frames and framesets are also ordinary DOM elements. &lt;frame&gt; element has single child element - &lt;html&gt; element of the document loaded into it. <em>parent </em>property of the root element of the document loaded in the frame refer to the &lt;frame&gt; element this document loaded into. Simple as it is.</p>
+  <p>Frames (&lt;frame&gt; elements) in the Sciter can appear in any part of the HTML (not only in &lt;frameset&gt;) so there is no difference between &lt;frame&gt; and &lt;iframe&gt; in the Sciter. Moreover any block element like &lt;div&gt; can be declared as a &lt;frame&gt; by declaring style=&quot;behavior:frame&quot; for it.</p>
+  <p>Element object has method <em>load</em> that allows to (re)load content of any element and &lt;frame&gt; from external source - url or stream (including in-memory dynamic stream). So there is not too much difference between block element like &lt;div&gt; and frames in the Sciter. Use frames when you need to isolate different style systems or scripts on the same screen.</p>
+  <p>The same approach is used with &lt;frameset&gt;s - they are plain DOM elements and may appear at any place where block elements are acceptable. &lt;frameset&gt; can contain not only &lt;frame&gt; elements but any block elements thus &lt;frameset&gt; in the Sciter is a convenient way to define container with splitters. Morever any block element can be transformed into the frameset by declaring behavior:frameset in its style declaration.</p>
+  <h2>Script evaluation.</h2>
+  <p>Sciter knows and interprets only tiscript fragments and files. To include script block in the document use following elements:</p>
+  <pre>&lt;script <em>type=&quot;text/tiscript&quot;</em> src=&quot;url-to-script-file&quot; /&gt;</pre>
+  <p>or for inline script inclusion:</p>
+  <pre>&lt;script <em>type=&quot;text/tiscript&quot;</em>&gt;
+<font color="#339900">  // script statements..
+</font>&lt;/script&gt;
+</pre>
+  <h3>Global namespace, <em>view</em> and <em>self</em> objects.</h3>
+  <p>Document establishes namespace for script execution. All classes and functions defined like this:</p>
+  <pre>&lt;script <em>type=&quot;text/tiscript&quot;</em>&gt;
+  function</font> foo() { ... }
+&lt;/script&gt;
+</pre>
+  <p>go to that global document namespace. <em>self</em> and <em>view</em> global variables are members of this namespace.</p>
+  <dl>
+    <dt><em>self</em></dt>
+    <dd>is a reference to the document (&lt;html&gt; node)</dd>
+    <dt><em>view</em></dt>
+    <dd>is a reference to the view object (usually it is a Sciter window)</dd></dl>
+  <h3>Script execution</h3>
+  <p>Sciter executes scripts as a last step of document loading - after &lt;/html&gt; tag is being parsed. So at the moment of any script execution DOM is established and scripts can refer to it.</p>
+  <p>There are three major steps of script execution in the engine:</p>
+  <ol>
+    <li>execution of the scripts per se including declaration of classes and behaviors;</li>
+    <li>assignment of behaviors to the elements that have <em>prototype:somebehavior</em>; declared in CSS and</li>
+    <li>invocation of <strong>self.ready()</strong> method (if it was declared in the script).</li></ol>
+  <p>When document needs to be unloaded from the view (e.g. sciter window have got request to close from the user) engine is calling <strong>self.closing()</strong> method (if it was declared). If that method returns exactly <code>false</code> value then unloading stops. This way document can cancel its own unloading.</p>
+</body>
+</html>

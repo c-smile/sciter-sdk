@@ -1,0 +1,37 @@
+include "../../+promise/promise.tis";
+
+class JsonRPC // JSON RPC class using POST (application/json) requests
+{
+  function this( url , indicatorElement = self )
+     //indicatorElement - DOM element to send requests through
+  {
+    this.indicator = indicatorElement;
+    this.url = url;
+  }
+  
+  //remote async call
+  function post( methodName, argv.. )
+  {
+    var envelope = 
+    {
+      "version" :"1.1",
+      "method"  :methodName.toString(), 
+      "params"  :argv
+    }
+    return this.indicator.request(#post-json, this.url , envelope); // returns promise
+  }
+  
+  //remote sync call
+  function send( methodName, argv.. )
+  {
+    var envelope = 
+    {
+      "version" :"1.1",
+      "method"  :methodName.toString(), 
+      "params"  :argv
+    }
+    
+    var (status, result) = this.indicator.request(20000 /*timeout:20sec*/, #post-json, this.url , envelope); 
+    return (status, result);
+  }
+}

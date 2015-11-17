@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+    @image-map dpi-aware {
+      src: url(star-1x.png) 100dpi,
+           url(star-2x.png) ;
+    }
+    
+    #star {
+      size:180dip;
+      background: no-repeat 50% 50%;      
+      background-image: image-map(dpi-aware); /* either star-1x.png or star-2x.png */   
+      border:1px solid;  
+    }
+    #star-no {
+      size:180dip;
+      background: no-repeat 50% 50%;      
+      background-image: url(star-1x.png);    
+      border:1px solid;  
+    }
+    
+    </style>
+  </head>
+<body>
+  <p>Demo of @image-map usage. Single logical image name <code>image-map(dpi-aware)</code> is used to define multiple source images selected according to screen DPI.</p>
+  <div #star />
+  <div #star-no />
+</body>
+</html>

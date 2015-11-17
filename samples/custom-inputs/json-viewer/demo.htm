@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+    @import url(json-view.css);
+    
+    section { 
+      flow: "1 3"
+            "2 4";
+      size:*;
+      border-spacing: 4dip;
+    }
+    section > textarea,
+    section > json-view {
+      size:*;
+      display:block;
+    }
+    </style>
+    <script type="text/tiscript">
+    
+    
+    function show() {
+      var v = JSON.parse( $(textarea).value );
+      $(json-view).value = v;
+    }
+    
+    function self.ready() { show(); }
+    
+    </script>
+  </head>
+<body>
+
+  <section>
+    <caption>JSON structure</caption>
+    <json-view />
+    <caption>JSON source</caption>
+    <textarea>{
+  first: 1,
+  second: {
+    aaa: 1,
+    bbb: [1,2,3,4] 
+  }
+}</textarea>
+  </section>
+
+</body>
+</html>

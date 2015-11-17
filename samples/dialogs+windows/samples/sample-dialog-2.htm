@@ -1,0 +1,41 @@
+<html>
+<head>
+  <title>Parametrized dialog</title>
+  <style>
+    html 
+    { 
+      font:system;
+      width:max-intrinsic; 
+      height:max-intrinsic; 
+      overflow:hidden; 
+    }
+    
+    form { flow: row(label,input); border-spacing: 4dip; }
+    form > label { white-space:nowrap; text-align:right; vertical-align:baseline; }
+    
+  </style>
+  <script type="text/tiscript">
+  
+    include "../../decorators.tis";
+    
+    @click @on "#close-dialog" :: view.close( $(form).value );
+    @change @on "form" :: stdout.printf("value=%V\n",$(form).value);
+    
+    // fill data fields from passed parameters.
+    // 'parameters' variable passed by dialog function.
+    $(form).value = view.parameters;
+
+    </script>
+</head>
+<body>
+<h1>Sample dialog</h1>
+<p>Field values below were passed to the dialog<br>through <var>view.parameters</var> object(map).</p>
+<form>
+  <label>One (Ctrl+1):</label><input type="text" name="one" accesskey="^1" />
+  <label>Two (Ctrl+2):</label><input type="text" name="two" accesskey="^2" />
+</form>
+<p style="text-align:center">
+<button id="close-dialog" role="default-button">Close Dialog and return value</button>
+</p>
+</body>
+</html>

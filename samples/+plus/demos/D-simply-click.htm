@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      @import url(../plus.css); /* the only thing needed to include Plus framework */
+    
+    </style>
+    <script type="text/tiscript">
+    
+      namespace MyModel {
+        var msg = "let's do something";
+        function doSomething() { msg = "doSomething() called"; }    
+      }
+    
+    </script>
+  </head>
+<body model="MyModel">
+  <p name=msg></p>
+  <button click="doSomething()">doSomething</button>
+</body>
+</html>
+
+

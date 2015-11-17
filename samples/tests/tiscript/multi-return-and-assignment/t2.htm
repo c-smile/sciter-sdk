@@ -1,0 +1,48 @@
+<html>
+<head>
+  <style></style>  
+  <script type="text/tiscript">
+    var (x, y, z) = (1, 2, 3); // the same thing as:
+    //var x = 1, y = 2, z = 3;
+    stdout.printf("%v,%v,%v\n", x, y, z);
+    (x, y, z) = (4,5,6);
+    stdout.printf("%v,%v,%v\n", x, y, z);
+    function v3()
+    {
+      return (7,8,9);
+    }
+    (x, y, z) = v3();
+    stdout.printf("x=%v,y=%v,z=%v\n", x, y, z);
+    (x, y) = (y, x);
+    stdout.printf("swap: x=%v,y=%v\n", x, y);
+    
+    x = v3();
+    stdout.printf("return: x=%v\n", x);
+    
+    function locals() // the same as above but with locals
+    {
+      stdout.printf("LOCALS:\n");
+      var (x, y, z) = (1, 2, 3); // the same thing as:
+      //var x = 1, y = 2, z = 3;
+      //(x, y, z) = (1, 2, 3)
+      stdout.printf("%v,%v,%v\n", x, y, z);
+      (x, y, z) = (4,5,6);
+      stdout.printf("%v,%v,%v\n", x, y, z);
+      function v3()
+      {
+        return (7,8,9);
+      }
+      (x, y, z) = v3();
+      stdout.printf("x=%v,y=%v,z=%v\n", x, y, z);
+      (x, y) = (y, x);
+      stdout.printf("swap: x=%v,y=%v\n", x, y);
+      x = v3();
+      stdout.printf("return: x=%v\n", x);
+    }
+    locals();
+  </script>  
+</head>
+<body>
+  <H1>Multy-value declaration and assignment.</H1>
+</body>
+</html>

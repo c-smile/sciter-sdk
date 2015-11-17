@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+    body { flow:horizontal; border-spacing:8px; }
+    section {
+      size:*;
+      background: white;
+      overflow: scroll-indicator;
+      border:1px solid;
+    }
+    
+    section > div {
+      background: white white gold gold;
+      width:*;
+      height:800px;
+    }    
+    
+    @set v-scroll-indicator {
+    
+      .slider 
+      {
+        background:red;
+        margin:0; 
+      }
+    
+    }
+    
+    section.custom {
+      vertical-scrollbar: "v-scroll-indicator";
+    }
+    
+    </style>
+    <script type="text/tiscript"></script>
+  </head>
+<body>
+
+<section .default>
+  <div>Default scroll indicator</div> 
+</section>
+
+<section .custom>
+  <div>Custom scroll indicator</div> 
+</section>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <title>Richtext sample</title>
+    <style>
+      @import url(richtext.css);
+      body { margin:0;}
+      plaintext { font-family:monospace; overflow:scroll-indicator; white-space:pre-wrap; }
+      
+    </style>
+    <script type="text/tiscript">
+    
+    !function() {
+    
+      var richtext = $(richtext);
+      var plaintext = $(plaintext);
+            
+      richtext.on("change", function() {
+        plaintext.text = this.source;
+      });
+      
+    
+    }();
+    
+    
+    </script>
+  </head>
+<body>
+  <frameset cols="*,*">
+  <richtext>
+    <h1>behavior:richtext</h1>
+    <p>Image editing is driven by <code>class EditableImage</code> from richtext-utils.tis</p>
+    <p><img src="../graphics/last-diligence-from-gabriola.jpg" width="200" >image test</p>
+    <p>Table in editing mode contains additional caret positions at start and end of each row to insert new rows while typing.</p>
+    <table>
+      <tr><td>First cell</td><td rowspan=2>Second cell</td></tr>
+      <tr><td>Third cell</td></tr>
+      <tr><td>Fourth cell</td><td>Fifth cell</td></tr>
+    </table>
+    
+    <p>Test of input handling inside editing environment <input type="text" value="non editable"></p>
+    <p>Note: <em style="color:red">Not finished, work in progress!</em></p>
+  </richtext>
+  <splitter/>
+  <plaintext></plaintext>
+  </frameset>
+</body>
+</html>

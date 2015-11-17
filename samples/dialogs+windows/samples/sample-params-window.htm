@@ -1,0 +1,22 @@
+<html resizeable >
+  <head>
+    <title>Hello world!</title>
+    <style></style>
+    <script type="text/tiscript">
+    
+    function self.ready() {
+      view.state = View.WINDOW_SHOWN;
+    }
+    
+    function self.closed() {
+      if( view.parameters && view.parameters.onClose) {
+        view.parameters.onClose();
+      }
+    }
+    
+    </script>
+  </head>
+<body>
+  Close me!
+</body>
+</html>

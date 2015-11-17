@@ -1,0 +1,406 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		49034787192980A200DD5CC2 /* app.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49034786192980A200DD5CC2 /* app.cpp */; };
+		49034789192981CB00DD5CC2 /* resources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49034788192981CB00DD5CC2 /* resources.cpp */; };
+		4903478B1929845E00DD5CC2 /* default.htm in Resources */ = {isa = PBXBuildFile; fileRef = 4903478A1929845E00DD5CC2 /* default.htm */; };
+		490CFE7A1900BF4B0051710C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 490CFE791900BF4B0051710C /* Cocoa.framework */; };
+		490CFE841900BF4B0051710C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 490CFE821900BF4B0051710C /* InfoPlist.strings */; };
+		490CFE861900BF4B0051710C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 490CFE851900BF4B0051710C /* main.m */; };
+		490CFE8A1900BF4B0051710C /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 490CFE881900BF4B0051710C /* Credits.rtf */; };
+		490CFE8D1900BF4B0051710C /* SciterAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 490CFE8C1900BF4B0051710C /* SciterAppDelegate.m */; };
+		490CFE901900BF4B0051710C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 490CFE8E1900BF4B0051710C /* MainMenu.xib */; };
+		490CFE921900BF4B0051710C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 490CFE911900BF4B0051710C /* Images.xcassets */; };
+		493B9B471940ED140014846B /* compile-res.sh in Resources */ = {isa = PBXBuildFile; fileRef = 493B9B461940ED140014846B /* compile-res.sh */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		49034786192980A200DD5CC2 /* app.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = app.cpp; sourceTree = SOURCE_ROOT; };
+		49034788192981CB00DD5CC2 /* resources.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = resources.cpp; sourceTree = "<group>"; };
+		4903478A1929845E00DD5CC2 /* default.htm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = default.htm; path = res/default.htm; sourceTree = "<group>"; };
+		490CFE761900BF4B0051710C /* layered.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = layered.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		490CFE791900BF4B0051710C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		490CFE7C1900BF4B0051710C /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		490CFE7D1900BF4B0051710C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		490CFE7E1900BF4B0051710C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		490CFE811900BF4B0051710C /* layered-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "layered-Info.plist"; sourceTree = "<group>"; };
+		490CFE831900BF4B0051710C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		490CFE851900BF4B0051710C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		490CFE871900BF4B0051710C /* layered-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "layered-Prefix.pch"; sourceTree = "<group>"; };
+		490CFE891900BF4B0051710C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		490CFE8B1900BF4B0051710C /* SciterAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SciterAppDelegate.h; sourceTree = "<group>"; };
+		490CFE8C1900BF4B0051710C /* SciterAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SciterAppDelegate.m; sourceTree = "<group>"; };
+		490CFE8F1900BF4B0051710C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		490CFE911900BF4B0051710C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		490CFE9F1900BF4B0051710C /* layeredTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "layeredTests-Info.plist"; sourceTree = "<group>"; };
+		490CFEA11900BF4B0051710C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		490CFEA31900BF4B0051710C /* layeredTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = layeredTests.m; sourceTree = "<group>"; };
+		493B9B461940ED140014846B /* compile-res.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "compile-res.sh"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		490CFE731900BF4B0051710C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				490CFE7A1900BF4B0051710C /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		490CFE6D1900BF4B0051710C = {
+			isa = PBXGroup;
+			children = (
+				493B9B461940ED140014846B /* compile-res.sh */,
+				4903478A1929845E00DD5CC2 /* default.htm */,
+				49034786192980A200DD5CC2 /* app.cpp */,
+				49034788192981CB00DD5CC2 /* resources.cpp */,
+				490CFE7F1900BF4B0051710C /* layered */,
+				490CFE9D1900BF4B0051710C /* layeredTests */,
+				490CFE781900BF4B0051710C /* Frameworks */,
+				490CFE771900BF4B0051710C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		490CFE771900BF4B0051710C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				490CFE761900BF4B0051710C /* layered.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		490CFE781900BF4B0051710C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				490CFE791900BF4B0051710C /* Cocoa.framework */,
+				490CFE7B1900BF4B0051710C /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		490CFE7B1900BF4B0051710C /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				490CFE7C1900BF4B0051710C /* AppKit.framework */,
+				490CFE7D1900BF4B0051710C /* CoreData.framework */,
+				490CFE7E1900BF4B0051710C /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		490CFE7F1900BF4B0051710C /* layered */ = {
+			isa = PBXGroup;
+			children = (
+				490CFE8B1900BF4B0051710C /* SciterAppDelegate.h */,
+				490CFE8C1900BF4B0051710C /* SciterAppDelegate.m */,
+				490CFE8E1900BF4B0051710C /* MainMenu.xib */,
+				490CFE911900BF4B0051710C /* Images.xcassets */,
+				490CFE801900BF4B0051710C /* Supporting Files */,
+			);
+			path = layered;
+			sourceTree = "<group>";
+		};
+		490CFE801900BF4B0051710C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				490CFE811900BF4B0051710C /* layered-Info.plist */,
+				490CFE821900BF4B0051710C /* InfoPlist.strings */,
+				490CFE851900BF4B0051710C /* main.m */,
+				490CFE871900BF4B0051710C /* layered-Prefix.pch */,
+				490CFE881900BF4B0051710C /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		490CFE9D1900BF4B0051710C /* layeredTests */ = {
+			isa = PBXGroup;
+			children = (
+				490CFEA31900BF4B0051710C /* layeredTests.m */,
+				490CFE9E1900BF4B0051710C /* Supporting Files */,
+			);
+			path = layeredTests;
+			sourceTree = "<group>";
+		};
+		490CFE9E1900BF4B0051710C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				490CFE9F1900BF4B0051710C /* layeredTests-Info.plist */,
+				490CFEA01900BF4B0051710C /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		490CFE751900BF4B0051710C /* layered */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 490CFEA71900BF4B0051710C /* Build configuration list for PBXNativeTarget "layered" */;
+			buildPhases = (
+				490CFE721900BF4B0051710C /* Sources */,
+				490CFE731900BF4B0051710C /* Frameworks */,
+				490CFE741900BF4B0051710C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = layered;
+			productName = layered;
+			productReference = 490CFE761900BF4B0051710C /* layered.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		490CFE6E1900BF4B0051710C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = Sciter;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "andrew fedoniouk";
+			};
+			buildConfigurationList = 490CFE711900BF4B0051710C /* Build configuration list for PBXProject "layered" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 490CFE6D1900BF4B0051710C;
+			productRefGroup = 490CFE771900BF4B0051710C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				490CFE751900BF4B0051710C /* layered */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		490CFE741900BF4B0051710C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				490CFE841900BF4B0051710C /* InfoPlist.strings in Resources */,
+				490CFE921900BF4B0051710C /* Images.xcassets in Resources */,
+				490CFE8A1900BF4B0051710C /* Credits.rtf in Resources */,
+				493B9B471940ED140014846B /* compile-res.sh in Resources */,
+				4903478B1929845E00DD5CC2 /* default.htm in Resources */,
+				490CFE901900BF4B0051710C /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		490CFE721900BF4B0051710C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				490CFE8D1900BF4B0051710C /* SciterAppDelegate.m in Sources */,
+				49034787192980A200DD5CC2 /* app.cpp in Sources */,
+				490CFE861900BF4B0051710C /* main.m in Sources */,
+				49034789192981CB00DD5CC2 /* resources.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		490CFE821900BF4B0051710C /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				490CFE831900BF4B0051710C /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		490CFE881900BF4B0051710C /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				490CFE891900BF4B0051710C /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		490CFE8E1900BF4B0051710C /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				490CFE8F1900BF4B0051710C /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		490CFEA01900BF4B0051710C /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				490CFEA11900BF4B0051710C /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		490CFEA51900BF4B0051710C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		490CFEA61900BF4B0051710C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		490CFEA81900BF4B0051710C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/../../bin.osx";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "layered/layered-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					../..,
+					../../include,
+				);
+				INFOPLIST_FILE = "layered/layered-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/hsmile-axtwzvesxuhmvhalgjokdndftooh/Build/Products/Debug",
+					"/Users/andrew/Desktop/Sciter.3.1/osx/sciter-osx/build/Debug/../../../../sdk/bin.osx",
+					"/Users/andrew/Desktop/Sciter.3.1/osx/sciter-osx/build/Release/../../../../sdk/bin.osx",
+					/Users/andrew/Desktop/sdk/bin.osx,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		490CFEA91900BF4B0051710C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/../../bin.osx";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "layered/layered-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					../..,
+					../../include,
+				);
+				INFOPLIST_FILE = "layered/layered-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/hsmile-axtwzvesxuhmvhalgjokdndftooh/Build/Products/Debug",
+					"/Users/andrew/Desktop/Sciter.3.1/osx/sciter-osx/build/Debug/../../../../sdk/bin.osx",
+					"/Users/andrew/Desktop/Sciter.3.1/osx/sciter-osx/build/Release/../../../../sdk/bin.osx",
+					/Users/andrew/Desktop/sdk/bin.osx,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		490CFE711900BF4B0051710C /* Build configuration list for PBXProject "layered" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				490CFEA51900BF4B0051710C /* Debug */,
+				490CFEA61900BF4B0051710C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		490CFEA71900BF4B0051710C /* Build configuration list for PBXNativeTarget "layered" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				490CFEA81900BF4B0051710C /* Debug */,
+				490CFEA91900BF4B0051710C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 490CFE6E1900BF4B0051710C /* Project object */;
+}

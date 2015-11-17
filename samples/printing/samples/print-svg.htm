@@ -1,0 +1,79 @@
+<html>
+  <head>
+    <title>SVG printing demo</title>
+    <style>
+    
+      svg { border:3px solid; }
+    
+    </style>
+    <script type="text/tiscript"></script>
+  </head>
+<body>
+
+  <p>SVG rect</p>
+
+  <svg width="150dip" height="100dip" viewBox="0 0 3 2">
+    <rect width="1" height="2" x="0" fill="#008d46" />
+    <rect width="1" height="2" x="1" fill="#ffffff" />
+    <rect width="1" height="2" x="2" fill="#d2232c" />
+  </svg> 
+  
+  <p>SVG path #1 (M,Q)</p>
+  <svg width="190dip" height="160dip" viewBox="0 0 190 160">
+    <path d="M10 80 Q 95 10 180 80" stroke="black" fill="transparent" />
+  </svg>
+  <p>SVG path #2 (M,C,S)</p>
+  <svg width="190dip" height="160dip" viewBox="0 0 190 160">
+    <path d="M10 80 C 40 10, 65 10, 95 80 S 150 150, 180 80" stroke="black" fill="transparent"/>
+  </svg>
+  <p>SVG path #3 (M,Q,T)</p>
+  <svg width="190dip" height="160dip" viewBox="0 0 190 160">
+    <path d="M10 80 Q 52.5 10, 95 80 T 180 80" stroke="black" fill="transparent"/>
+  </svg>
+  <p>SVG path #4 (M,L,A,L,A,L)</p>
+  <svg width="320dip" height="320dip" viewBox="0 0 320 320">
+  <path d="M10 315
+           L 110 215
+           A 30 50 0 0 1 162.55 162.45
+           L 172.55 152.45
+           A 30 50 -45 0 1 215.1 109.9
+           L 315 10" stroke="black" fill="green" stroke-width="2" fill-opacity="0.5"/>
+  </svg>
+
+  <svg width="325dip" height="325dip" viewBox="0 0 325 325">
+      <path d="M80 80
+               A 45 45, 0, 0, 0, 125 125
+               L 125 80 Z" fill="green"/>
+      <path d="M230 80
+               A 45 45, 0, 1, 0, 275 125
+               L 275 80 Z" fill="red"/>
+      <path d="M80 230
+               A 45 45, 0, 0, 1, 125 275
+               L 125 230 Z" fill="purple"/>
+      <path d="M230 230
+               A 45 45, 0, 1, 1, 275 275
+               L 275 230 Z" fill="blue"/>
+  </svg>  
+  
+  <svg width="450dip" height="200dip" viewBox="0 0 1200 400" >
+    <title>Example arcs01 - arc commands in path data</title>
+    <desc>Picture of a pie chart with two pie wedges and
+          a picture of a line with arc blips</desc>
+    <rect x="1" y="1" width="1198" height="398"
+          fill="none" stroke="blue" stroke-width="1" />
+
+    <path d="M300,200 h-150 a150,150 0 1,0 150,-150 z"
+          fill="red" stroke="blue" stroke-width="5" />
+    <path d="M275,175 v-150 a150,150 0 0,0 -150,150 z"
+          fill="yellow" stroke="blue" stroke-width="5" />
+
+    <path d="M600,350 l 50,-25 
+             a25,25 -30 0,1 50,-25 l 50,-25 
+             a25,50 -30 0,1 50,-25 l 50,-25 
+             a25,75 -30 0,1 50,-25 l 50,-25 
+             a25,100 -30 0,1 50,-25 l 50,-25"
+          fill="none" stroke="red" stroke-width="5"  />
+   </svg>
+
+</body>
+</html>

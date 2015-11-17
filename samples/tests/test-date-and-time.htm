@@ -1,0 +1,67 @@
+<html>
+<head>
+  <style>
+    body 
+    {
+      flow:horizontal-flow;
+    }
+    form 
+    { 
+      width: max-intrinsic;  
+      border: 1px solid;
+      padding:4px;
+      margin:4px;
+    }
+    form input { margin:4px; font:10pt verdana;}
+    form > caption 
+    {
+      margin:-4px -4px 4px -4px;
+      padding:4px;
+      border-bottom: 1px solid black;
+      background: #DDD;
+    }
+    form button.show { margin-left:*;}
+    h1 { font: 10pt; clear: both; }
+    pre#out
+    {
+      clear:left;
+      border:1px solid gray;
+      background: #F5F5DC;
+    }
+  </style>  
+  <script type="text/tiscript">
+  
+    function showValues()
+    {
+      var val = this.$p( form ).value;
+      self.$(pre#out).value = String.printf("%V",val);
+    }
+  
+    for( var el in self.$$( form button.show ) )
+      el.onClick = showValues;
+      
+  </script>  
+</head>
+<body>
+  <h1>Date and time inputs</h1>
+<form>
+    <caption>No initial values</caption>
+    Date: <input type="date" name="date" /><br/>
+    Time: <input type="time" name="time" /><br/>
+    <button .show>Show Values</button>
+  </form>
+<form>
+    <caption>Initial value: "now"</caption>
+    Date: <input type="date" value="now" name="date" /><br/>
+    Time: <input type="time" value="now" name="time" /><br/>
+    <button .show>Show Values</button>  
+  </form>
+  <form>
+    <caption>Initial value: inline</caption>
+    Date: <input type="date" value="2009-11-02" name="date" /><br/>
+    Time: <input type="time" value="14:05:34" name="time" /><br/>
+    <button .show>Show Values</button>
+  </form>
+  <pre #out spaces-per-tab=2 />
+</body>
+</html>

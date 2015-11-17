@@ -1,0 +1,19 @@
+<html>
+<head>
+  <style>
+    input#date-test { outline:1px solid black; }
+    input#date-test:focus { outline:1px solid red; }
+    input#date-test > caption { outline:1px solid blue; }
+    input#date-test > caption > span.day { background:#ffa; }
+    input#date-test > caption > span.month { background:#faf; }
+    input#date-test > caption > span.year { background:#aff; }
+    input#date-test:focus > caption > span:current { background:navy; }
+  </style>  
+  <script type="text/tiscript"></script>  
+</head>
+<body>
+  <h1>Date input</h1>
+  Date: <input type="date" id="date" />
+  Date, components styling: <input type="date" id="date-test" />
+</body>
+</html>

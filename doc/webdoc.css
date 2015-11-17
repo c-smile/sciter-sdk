@@ -1,0 +1,39 @@
+
+/*dl { position: relative; }
+
+dl > dt {
+  text-align:right;
+  font-weight:bold;
+  position:absolute;
+  left:0;
+  width:11.5em;
+  overflow-x:hidden;
+}
+dl > dd {
+  margin-left: 12em;
+  margin-bottom: 0.5em;
+}*/
+
+dl { font-size:10pt;
+     font-family:Verdana,Helvetica,sans-serif; }
+
+dl:before,
+dl:after {
+    display: table;
+    content: "";
+    line-height: 0;
+}
+dl > dt {
+  float: left;
+  width: 11.5em;
+  clear: left;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight:bold;
+}
+dl > dd {
+  margin-left: 12em;
+  margin-bottom: 1em;
+}

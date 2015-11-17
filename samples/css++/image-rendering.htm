@@ -1,0 +1,39 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+    body { background:black;
+           color:white; }
+    
+    picture { size:*; white-space:nowrap; foreground-repeat:no-repeat; foreground-size: contain; overflow:hidden; foreground-position: 50% 50%; }
+    
+    div { 
+     flow:grid(1 2 3,
+               4 5 6,
+               7 8 9); 
+     size:*; 
+    }
+    
+    p {text-align:center;}
+    
+    </style>
+    <script type="text/tiscript"></script>
+  </head>
+<body>
+
+  <p>CSS image-rendering property values</p>
+  <div>
+    <p>image-rendering:optimize-speed</p>  
+    <p>image-rendering:default</p>
+    <p>image-rendering:optimize-quality</p>
+    <picture src="images/101-original.jpg" style="image-rendering:optimize-speed" />    
+    <picture src="images/101-original.jpg" style="image-rendering:default" />
+    <picture src="images/101-original.jpg" style="image-rendering:optimize-quality" />
+    <picture src="images/cvece.png" style="image-rendering:optimize-speed" />
+    <picture src="images/cvece.png" style="image-rendering:default" />
+    <picture src="images/cvece.png" style="image-rendering:optimize-quality" />
+  </div>
+
+</body>
+</html>

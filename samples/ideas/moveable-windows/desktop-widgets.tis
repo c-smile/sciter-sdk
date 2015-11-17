@@ -1,0 +1,227 @@
+
+class Widget: Behavior
+{
+  function attached()
+  {
+    this.xoff = 0;
+    this.yoff = 0;
+    this.dragging = false;
+		
+		this.homeX = null;
+		this.homeY = null;
+		
+		var me = this;
+		this.select("button.go-home").onClick = ::me.goHome();
+  }
+  
+  property airborne(v) { get return this.state.popup; }
+  
+  property placement(v) 
+  { 
+    const THRESHOLD = 64;
+    get 
+    {
+      var vx1  = view.box(#left,#border);
+      var vy1  = view.box(#top,#border);
+      var vx2  = view.box(#right,#border);
+      var vy2  = view.box(#bottom,#border);
+      var y1   = this.box(#top,#border,#view);
+      var x1   = this.box(#left,#border,#view);
+      var y2   = this.box(#bottom,#border,#view);
+      var x2   = this.box(#right,#border,#view);
+      
+      //stdout.printf("%d %d\n", vHeight, y1); 
+      
+      if( y1 > vy2 + THRESHOLD) 
+        return #far-bottom;
+      if( y1 > vy2) 
+        return #bottom;
+      if( y2 < vy1-THRESHOLD) 
+        return #far-top;
+      if( y2 < vy1) 
+        return #top;
+      if( x1 > vx2 + THRESHOLD) 
+        return #far-right;
+      if( x1 > vx2) 
+        return #right;
+      if( x2 < vx1-THRESHOLD) 
+        return #far-left;
+      if( x2 < vx1) 
+        return #left;
+      return #over;  
+    }    
+  }
+
+  function dismissed()
+  {
+    //stdout << "dismissed\n";
+  }
+  
+	function goHome()
+	{
+		this.@#placement = undefined;
+		function whenDone()
+		{
+			this.select("text.status").text = "At home";
+			//this.style.clear();
+      this.move(); // discard moving state
+	  }
+	  this.animoveTo(this.homeX,this.homeY, whenDone);
+	}
+	
+  function shapeOffsets()
+  {
+    return ( this.box(#left,#inner) - this.box(#left,#border),
+             this.box(#top,#inner) - this.box(#top,#border),
+             this.box(#right,#border) - this.box(#right,#inner),
+             this.box(#bottom,#border) - this.box(#bottom,#inner));
+  }
+	  
+  function dragEnded()
+  {
+    var vx1  = view.box(#left,#border);
+    var vy1  = view.box(#top,#border);
+    var vx2  = view.box(#right,#border);
+    var vy2  = view.box(#bottom,#border);
+    var y    = this.box(#top,#inner,#view);
+    var x    = this.box(#left,#inner,#view);
+    var h    = this.box(#height,#inner,#view);
+    var w    = this.box(#width,#inner,#view);
+    
+    var (bx1,by1,bx2,by2) = this.shapeOffsets();
+    
+    switch( this.placement )
+    {
+      case #far-bottom:
+      case #far-top:
+      case #far-left:
+      case #far-right: 
+        {
+          //var (sx,sy) = this.box(#position, #inner, #screen);
+          //this.move(sx,sy,#screen,#detached-window); // it is to far - make it detached
+        } break;
+      case #over: 
+        this.goHome();
+        return;
+      case #bottom:
+        this.animoveTo(x, vy2 + by1); break;
+      case #top:
+        this.animoveTo(x, vy1 - h - by2); break;
+      case #left:
+        this.animoveTo(vx1 - w - bx2,y); break;
+      case #right:
+        this.animoveTo(vx2 + bx1,y); break;
+    }
+  }
+  
+  // animated move
+  function animoveTo(posX,posY, onEnd = null)
+  {
+    const MAX_STEP = 20;
+    var x = this.box(#left, #inner, #view);
+    var y = this.box(#top, #inner, #view);
+    function anim() 
+    {
+      var delta_x = (x - posX) / 2;
+      var delta_y = (y - posY) / 2;
+      if( delta_x < -MAX_STEP ) delta_x = -MAX_STEP;
+      else if( delta_x > MAX_STEP ) delta_x = MAX_STEP;
+      if( delta_y < -MAX_STEP ) delta_y = -MAX_STEP;
+      else if( delta_y > MAX_STEP ) delta_y = MAX_STEP;
+      x -= delta_x;
+      y -= delta_y;
+      this.move(x,y);
+      view.update();
+      if(!delta_x && !delta_y)
+      {
+        this.move(posX,posY,#view,#attached-window);
+				if( onEnd )
+				  onEnd.call(this);
+        return false;
+      }
+      return true;
+    }
+    this.timer(10,anim);
+  }
+  
+  function onMouse(evt)
+  {
+    var cap = this.select("caption");
+    switch(evt.type) 
+    {
+      case Event.MOUSE_DOWN:
+        if( evt.target === cap)
+        {
+				  if(typeof this.homeX != #integer)
+					{
+						this.homeX = this.box(#left, #inner, #view);
+						this.homeY = this.box(#top, #inner, #view);
+				  }
+          this.xoff = evt.x; 
+          this.yoff = evt.y;
+          //stdout.println(evt.x,evt.y);          
+          this.dragging = true;
+          cap.capture(true);
+          this.doDrag();
+          return true;
+        }
+        break;
+      case Event.MOUSE_UP:
+        if(this.dragging)
+        {
+          this.dragging = false;
+          cap.capture(false);
+          return true;
+        }
+        break;
+      case Event.MOUSE_MOVE:
+        if( this.dragging )
+        {
+          this.move( evt.xView - this.xoff, evt.yView - this.yoff, #view, #detached-window);
+          var aPlacement = this.placement.toString();
+          if( this.@#placement != aPlacement )
+          {
+            this.@#placement = aPlacement;
+            this.select("text.status").text = aPlacement;
+          }
+          return true;
+        }
+        break;
+    }
+  }
+  
+  function doDrag()
+  {
+    /*while( true )
+    {
+      view.doEvent();
+      
+      if(!this.dragging)
+      {
+        this.dragEnded();
+        break;
+      }
+    }*/
+
+    view.doEvent(#untilMouseUp);
+    this.dragEnded(); 
+  }
+  
+  function onControlEvent(evt)
+  {
+    if(evt.type == Event.POPUP_DISMISSED && evt.target === this)
+    {
+      if( this.dragging )
+        this.select("caption").capture(true);
+      const DOCKED_BACK = 1;
+      const CLICK_OUTSIDE = 0;
+      if(evt.reason == DOCKED_BACK)
+        this.dockedBack();
+      else if(evt.reason == CLICK_OUTSIDE)  
+        this.dismissed();
+      else
+        return false;
+      return true;
+    }
+  }
+}

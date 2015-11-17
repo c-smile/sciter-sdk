@@ -1,0 +1,48 @@
+﻿<html>
+  <head>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>Image object</h1>
+  <p>image (picture).</p>
+  <dl>
+    <h2>Constants</h2>
+    <dd>N/A</dd>
+    <h2>Properties</h2>
+    <dt>url</dt>
+    <dd><strong>- </strong><em>string</em>, url where this image came from.</dd>
+    <dt>width</dt>
+    <dd>- <em>integer</em>, pixels, width of the image. read-only property.</dd>
+    <dt>height</dt>
+    <dd>- <em>integer</em>, pixels, height of the image. read-only property.</dd>
+    <h2>Methods</h2>
+    <dt>this</dt>
+    <dd>
+      <div><strong>( elementWidth</strong>:<em>integer</em>, <strong>elementHeight</strong>:<em>integer,</em><strong> [imageWidth</strong>:<em>integer</em>, <strong>imageHeight</strong>:<em>integer</em>] [, <strong>clearBy</strong>: color], <strong>elem</strong>: Element<strong> &nbsp;)</strong> &nbsp;or</div>
+      <div><strong>( imageWidth</strong>:<em>integer</em>, <strong>imageHeight</strong>:<em>integer</em> [, <strong>clearBy</strong>: color], <strong>renderer</strong>: function<strong> &nbsp;)</strong></div>
+      <p>First form constructs new Image object and renders element on it as if element is given elementWidth/Height. If imageWidth/Height is provided then the function will try to scale/inscribe the element into that box. </p>
+      <p>Second form constructs new Image object and calls <code>function renderer(gfx:</code><a href="Graphics.htm"><code>Graphics</code></a><code>)</code> passing image bound graphics object as a parameter.</p>
+      <p>Optional <strong>clearBy</strong> defines color the bitmap will be initialized with. By default image is initilized by argb(0,0,0,0) color.</p></dd>
+    <dt>destroy</dt>
+    <dd>
+      <div>()</div>
+      <p>Destroys underlying native bitmap. Use this method to force the image to release its bitmap (that can be pretty big) when it is not needed.</p></dd>
+    <dt>toBytes</dt>
+    <dd>
+      <div>( [<strong>compressionLevel</strong>:integer] &nbsp;) : <a href="../script/Bytes.htm">Bytes</a></div>
+      <p>Saves content of the image as a byte vector that can be used e.g. for uploading on the server.</p>
+      <p><em>compressionLevel</em> is a number in the range 10..100 - JPEG compression level. If it is omitted or zero then the image is saved using PNG encoding.</p></dd>
+    <dt>size</dt>
+    <dd>
+      <div>( )</div>
+      <p>The method returns width,height pair in one call, use it like this:<br/><code>var (w,h) = img.size();</code></p></dd>
+    <dt>colorAt</dt>
+    <dd>
+      <div>( <strong>x</strong>: integer, <strong>y</strong>: integer [, <strong>c</strong>: color] ) : color</div>
+      <p>The method returns pixel color at x,y of the image. If new color <em>c</em> is provided then the method sets image pixel to that color.</p></dd>
+    <dt>alphaMask</dt>
+    <dd>
+      <div>( <strong>mask</strong>: Image [, <strong>#luminance</strong> | <strong>#r</strong> | <strong>#g</strong> | <strong>#b</strong> | <strong>#a</strong> ] )</div>
+      <p>This method allows to set alpha channel of the image from other image. By default, if second parameter is not provided, the method uses luminance of pixel in mask image as alpha value of corresponding pixel of this image. #r, #g, #b or #a - &nbsp;use mask's red, green, blue or alpha channels as alpha values.</p></dd></dl>
+</body>
+</html>

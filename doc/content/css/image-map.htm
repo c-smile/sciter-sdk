@@ -1,0 +1,73 @@
+﻿<html>
+  <head>
+    <title>@image-map</title>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  The image-map feature provides following abilities to CSS:<ol>
+    <li>To support so called image sprites when portion/fragment of base image (sprite catalogue) is used as if it was standalone image.</li>
+    <li>And/or to support multiple images of different sizes for different screen DPI using single logical name.</li></ol>
+  <p>The image-map feature uses @image-map at-rule to define the map itself and the image-map() function that is used in place of url(...) in places where image url is accepted.</p>
+  <h2>The @image-map at-rule</h2>
+  <p>The @image-map rule consists of of the keyword &quot;@image-map&quot;, followed by an identifier giving a name for the image map (which will be referenced in image-map(name, ...) function):</p>
+  <pre>@image-map &lt;<em>name&gt; </em>{
+   src: <em>&lt;sources-list&gt;</em>;
+   cells: <em>&lt;columns&gt;</em> <em>&lt;rows&gt;</em>;
+   items: <em>&lt;items-list&gt;</em>;
+}
+</pre>
+  <p>Where:</p>
+  <ul>
+    <li><strong>&lt;name&gt;</strong> is a valid <a href="http://www.w3.org/TR/CSS21/syndata.html#value-def-identifier">CSS identifier</a> - name of the map.</li>
+    <li><strong>src</strong> is<strong> </strong>either single url(...) or list of comma separated <code>url() NNdpi</code> pairs like: <code>url(x1.png) 100dpi, url(x2.png) 200dpi, url(jumbo.png)</code>. <br/>If screen resoultion is less or equal to DPI value of the URL in a pair then image with that URL is used to render the image map. Last element in the list may not contain DPI value - it will be used if screen DPI is greater than any value in the list.</li>
+    <li><strong>cells</strong> is a pair of positive integers - first is number of columns and second is number of rows. The used image is split on that number of cells and each cell or group of cells may have name assigned to them using items property:</li>
+    <li><strong>items</strong> is a comma separated list of item definitions, each such definition can be one of these:</li>
+    <ul>
+      <li><code>&lt;name&gt;</code> &nbsp;- just a section name, this name will be assigned to the next cell in sequence. Cells are columns-then-rows ordered, first cell (leftmost in first row) has number 1.</li>
+      <li><code>&lt;name&gt; &lt;number&gt;</code> - section name and cell number (positive integer from 1 to total number of cells). Next number in sequece will be set to next cell.</li>
+      <li><code>&lt;name&gt; &lt;column:number&gt; &lt;row:number&gt;</code> - section name assigned to cell at column/row location. Next number in sequece will be set to next cell.</li>
+      <li><code>&lt;name&gt; &lt;column:number&gt; &lt;row:number&gt; &lt;columns:number&gt; &lt;rows:number&gt;</code> - section name assigned to rectangular range of cells starting at column/row location and spanning that number of columns and rows. Next number in sequece will not change.</li></ul></ul>
+  <p><em>Cells</em> and <em>items</em> properties are optional in @image-map declaration, if they omitted then such image map can be used only as a whole.</p>
+  <h2>The image-map() function</h2>
+  <p>The image-map() function defines image section &quot;point of use&quot; and can be used in all places in CSS where image is expected. </p>
+  <p>There are two forms of image-map function usage:</p>
+  <ol>
+    <li><code>image-map(&lt;image-map:name&gt;)</code> - use one of images declared in @image-map <em>src</em> property according to current screen DPI settings.</li>
+    <li><code>image-map(&lt;image-map:name&gt;, &lt;item:name&gt;)</code> - use named item from the image map as an image.</li></ol>
+  <p>If there is no such image-map or it does not contain such item name nothing is rendered.</p>
+  <h2>Examples:</h2>
+  <h3>1. Toolbar alike use case</h3>
+  <p>The image-map declaration:</p>
+  <pre>@image-map toolbar-icons 
+{
+  src:url(rttb.png);
+  cells:15 2; /* 15 columns, 2 rows */
+  /* logical names of the parts, see toolbar-icons.png */ 
+  items: ulist, olist, unindent, indent, picture, table, link;
+}
+</pre>
+  <p>And its use:</p>
+  <pre>.toolbar &gt; button.ulist    { background-image:image-map(toolbar-icons,ulist); } 
+.toolbar &gt; button.olist    { background-image:image-map(toolbar-icons,olist); } 
+.toolbar &gt; button.unindent { background-image:image-map(toolbar-icons,unindent); } 
+.toolbar &gt; button.indent   { background-image:image-map(toolbar-icons,indent); } 
+.toolbar &gt; button.picture  { background-image:image-map(toolbar-icons,picture); } 
+.toolbar &gt; button.table    { background-image:image-map(toolbar-icons,table); } 
+</pre>
+  <h3>2. DPI-aware image map</h3>
+  <p>Image map that uses star-1x.png for DPIs less or equal 100 </p>
+  <pre>    @image-map dpi-aware {
+      src: url(star-1x.png) 100dpi,
+           url(star-2x.png) ;
+    }
+</pre>
+  <p>And its use: &nbsp;&nbsp;&nbsp;</p>
+  <pre>    #star {
+      size:180px;
+      background: no-repeat 50% 50% image-map(dpi-aware); /* either star-1x.png or star-2x.png */   
+      border:1px solid;  
+    }
+</pre>
+  <p></p>
+</body>
+</html>

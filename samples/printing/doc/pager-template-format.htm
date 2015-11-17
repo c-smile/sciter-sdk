@@ -1,0 +1,24 @@
+﻿<html>
+  <head>
+    <title>Pager template format</title>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  Pager template is an ordinary HTML document that should have one mandatory element - &lt;pageframe&gt;. All other elements are optional.<p>Below is the list of all elements that behavior:pager knows about:</p>
+  <ul>
+    <li><code>&lt;pageframe&gt;</code> - &nbsp;container of document to be printed. Content box of the <code>&lt;pageframe&gt;</code> is used to render portion (a.k.a. page) of document to be printed.</li>
+    <li>element with <code>id=&quot;document-url&quot;</code> &nbsp;- optional, will conatin URL of the document to be printed;</li>
+    <li>element with <code>id=&quot;document-title&quot;</code> &nbsp;- optional, will conatin &lt;title&gt; text of the document;</li>
+    <li>element with <code>id=&quot;page-no&quot;</code> &nbsp;- optional, will conatin page number;</li>
+    <li>element with <code>id=&quot;total-pages&quot;</code> &nbsp;- optional, will conatin total number of pages in the document.</li></ul>
+  <p>Attributes of the template's &lt;html&gt; element:</p>
+  <ul>
+    <li><code>page-no=N</code> - number of the page rendered in the pageframe;</li>
+    <li><code>page-parity=&quot;odd&quot; | &quot;even&quot;</code> - page parity flag.</li></ul>
+  <p>These attributes can be used in CSS of the template document for styling, for example these rules:</p>
+  <pre>html[page-parity=odd] footer  { text-align:left; }
+html[page-parity=even] footer { text-align:right; }
+</pre>
+  <p>will change alignment of template's <code>&lt;footer&gt;</code> element differently for odd and even pages.</p>
+</body>
+</html>

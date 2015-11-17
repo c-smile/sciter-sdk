@@ -1,0 +1,122 @@
+﻿<html>
+  <head>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>H-SMILE core. CSSS! (css-script) language.</h1>
+  <h1>DOM element object</h1>
+  <p>$1() function returns object that represents DOM element. &nbsp;DOM element as an object supports three types of accessors:</p>
+  <ul>
+    <li><code>element.attribute</code> - access to DOM attributes of the element.</li>
+    <li><code>element:state-flag</code> - access to runtime flags of the DOM element: hover, active, focus, etc.</li>
+    <li><code>element::style-attribute</code> - access to style attributes of the DOM element.</li></ul>
+  <p>DOM element<code> </code>has also various methods that are accessible through the dot notation: <code>domobj.function-name()</code>.</p>
+  <h2>DOM element attributes</h2>
+  <p>Any attribute of DOM element can be set or removed from the element.</p>
+  <p>To remove attribute from element's attribute collection assign <code>null</code> to it:</p>
+  <pre>self.show = true; // will assign value &quot;true&quot; to the show attribute;
+self.show = null; // will remove show attribute from
+                  // the collection of DOM element attributes.
+</pre>
+  <h2>DOM element state values</h2>
+  <p>Element has synthetic and plain state fields. Following code will set :visited state field for the link element when that link will be clicked.</p>
+  <pre>a:link
+{
+  click!: self:visited = true;
+}
+</pre>
+  <p>Synthetic state fields:</p>
+  <ul>
+    <li><code>:value</code> - represents value of the DOM element. For input elements that is value of the input element (handled by correspondent behavior attached to the element). For plain DOM elements that is text portion of the element.</li>
+    <li><code>:index</code> - &nbsp;is the index of the element in its parent collection. Index is an integer in the range: <code>1 .. parent().children()</code> .</li></ul>
+  <p>Plain state fields are all of type boolean. Names of these state flags are exactly the same as correspondent CSS pseudo-classes:</p>
+  <ul>
+    <li><code>:link</code> - any element having href attribute</li>
+    <li><code>:hover</code> - element is under the cursor, mouse hover</li>
+    <li><code>:active</code> - element is activated, e.g. pressed</li>
+    <li><code>:focus</code> - element is in focus</li>
+    <li><code>:visited</code> - aux flag - not used internally now.</li>
+    <li><code>:current</code> - current item in collection, e.g. current &lt;option&gt; in &lt;select&gt;</li>
+    <li><code>:checked</code> - element is checked (or selected), e.g. check box or itme in multiselect</li>
+    <li><code>:disabled</code> - element is disabled, behavior related flag.</li>
+    <li><code>:readonly</code> - element is read-only, behavior related flag.</li>
+    <li><code>:expanded</code> - element is in expanded state - nodes in tree view e.g. &lt;options&gt; in &lt;select&gt;</li>
+    <li><code>:collapsed</code> - mutually exclusive with EXPANDED</li>
+    <li><code>:incomplete</code> - element has images (back/fore/bullet) requested but not delivered.</li>
+    <li><code>:animating</code> - is currently animating</li>
+    <li><code>:focusable </code>- shall accept focus</li>
+    <li><code>:anchor</code> - first element in selection (&lt;select miltiple&gt;), :CURRENT is the current.</li>
+    <li><code>:synthetic</code> - synthesized DOM elements - e.g. all missed cells in tables (&lt;td&gt;) are getting this flag</li>
+    <li><code>:owns-popup</code> - anchor(owner) element of visible popup.</li>
+    <li><code>:tab-focus</code> - element got focus by tab traversal. engine set it together with :focus.</li>
+    <li><code>:empty</code> - element is empty.</li>
+    <li><code>:busy</code> - element is busy. HTMLayoutRequestElementData will set this flag if external data was requested for the element. When data will be delivered engine will reset this flag on the element.</li>
+    <li><code>:drag_over</code> - drag over the block that can accept it (so is current drop target). Flag is set for the drop target block. At any given moment of time it can be only one such block.</li>
+    <li><code>:drop-target</code> - active drop target. Multiple elements can have this flag when D&amp;D is active.</li>
+    <li><code>:moving</code> - dragging/moving - the flag is set for the moving element (copy of the drag-source).</li>
+    <li><code>:copying</code> - dragging/copying - the flag is set for the copying element (copy of the drag-source).</li>
+    <li><code>:drag-source</code> - is set in element that is being dragged.</li>
+    <li><code>:popup</code> - this element is in popup state and presented to the user - out of flow now</li>
+    <li><code>:pressed</code> - pressed - close to active but has wider life span - e.g. in MOUSE_UP it is still on, so behavior can check it in MOUSE_UP to discover CLICK condition.</li>
+    <li><code>:has-children</code>- has more than one child.</li>
+    <li><code>:has-child</code> - has exactly single child.</li>
+    <li><code>:ltr</code> - &nbsp;the element or one of its nearest container has @dir and that dir has &quot;ltr&quot; value.</li>
+    <li><code>:rtl</code> - &nbsp;the element or one of its nearest container has @dir and that dir has &quot;rtl&quot; value.</li></ul>
+  <h2>Style attributes of the DOM element</h2>
+  <p>CSSS! allows to set value of all supported CSS attributes. Full list of supported attributes can be found at: <a href="http://www.terrainformatica.com/htmlayout/cssmap.whtm">http://www.terrainformatica.com/htmlayout/cssmap.whtm</a></p>
+  <p>Following style rule will show fade-out effect when some div will get <em>fade-out</em> DOM attribute:</p>
+  <pre>div[fade-out]
+{
+  assigned!: self::opacity = 1.0, self.start-timer(50);
+  timer!: self::opacity &lt; 1.0?
+          self::opacity = self::opacity + 0.1 # return cancel /* to stop the timer */;
+}
+</pre>
+  <h2>Functions (methods) supported by the DOM element</h2>
+  <p>There is a set of methods that are defined for the DOM element in CSSS! :</p>
+  <ul>
+    <li><code>element.parent()</code> - DOM element, returns parent of the DOM element.</li>
+    <li><code>element.children()</code> - integer, returns number of children of the element.</li>
+    <li><code>element.child(n:integer)</code> - DOM element, returns child element at index <em>n. n</em> is a positive number in the range <code>1..children()</code>.</li>
+    <li><code>element.next()</code> - DOM element, returns next sibling DOM element of this one.</li>
+    <li><code>element.previous()</code> - DOM element, returns previous sibling DOM element of this one.</li>
+    <li>selectors methods:</li>
+    <ul>
+      <li><code>element.$( selector )</code> - returns set of elements matching the selector. The method does lookup only among children of the element. <code>:root</code> pseudo class matches the element iself in this metod. &nbsp;Example: <code>self.$(:root &gt; li):expanded = true</code> will set expanded state for only <em>li</em> elements that are immediate children of the self.</li>
+      <li><code>element.$1( selector )</code> - the same as above but will return single element matching the selector.</li>
+      <li><code>element.$p( selector )</code> - returns set of parent elements of the element. :root is global DOM root element here.</li>
+      <li><code>element.$1p( selector )</code> - returns nearest parent element matching the selector. :root is global DOM root element here.</li></ul>
+    <li><code>element.start-timer(period:integer)</code> - starts timer on the element with the period (milliseconds). The timer will periodically rise <em>timer!</em> event on the element. To stop timer use either <em>stop-timer()</em> call or <code>return cancel</code> from the <code>timer!</code> event handler.</li>
+    <li><code>element.stop-timer()</code> - stops timer previously set by the <code>start-timer()</code> method.</li>
+    <li><code>element.scroll-to-view()</code> - ensures that element is viewable.</li>
+    <li><code>element.box</code>-<em>type</em>-<em>what</em>() - is a set of methods allowing to retrieve measured metrics of the element. Example:<br/><code>self.box-border-width()</code> call will return width (number of pixels) of the border box of the element. <em>type</em> part in the function name is one of:</li>
+    <ul>
+      <li><code>margin</code> - margin box of the element;</li>
+      <li><code>border</code> - border box of the element;</li>
+      <li><code>padding</code> - padding box of the element;</li>
+      <li><code>content</code> - content box of the element (content outline box).</li>
+      <li><code>inner</code> - inner box of the element;</li>
+      <li><code>client</code> - client box of the element - inner box of the element minus scrollabar areas. If there are no scrollbars then it returns <code>inner</code> box.</li></ul>
+    <p><em>what</em> part of the name is one of:</p>
+    <ul>
+      <li><code>left</code> - left side of the box;</li>
+      <li><code>right</code> - right side of the box;</li>
+      <li><code>top</code> - top of the box;</li>
+      <li><code>bottom</code> - bottom side of the box;</li>
+      <li><code>width</code> - width of the box;</li>
+      <li><code>height</code> - height of the box;</li></ul>
+    <p>Combinations of these names gives in total 30 functions of the <code>element.box-...-...()</code> family.</p>
+    <li><code>element.x-</code><em>what</em>() is a set of functions that retrieve relative x position of the element.<br/><em>what</em> part in the name can be one of the following:</li>
+    <ul>
+      <li><code>parent</code> - return value of the function is horizontal position of the element relative to its parent;</li>
+      <li><code>root</code> - position of the element relative to the root element (&lt;html&gt;);</li>
+      <li><code>view</code> - position of the element relative to the view (window);</li>
+      <li><code>screen</code> - absolute position of the element on the screen.</li></ul>
+    <li><code>element.y-</code><em>what</em>() is a set of functions that retrieve relative y position of the element. <em>what</em> part in the name is the same as above.</li>
+    <li><code>element.start-animation([duration])</code> - starts animation that results in calling animation-start!, animation-tick! and animation-end! events. The duration parameter accepts value in seconds: <code>self.start-animation(0.4s)</code> - will start animation that will last 400ms.</li>
+    <li><code>element.text-width(&quot;string&quot;)</code> - returns width of the string in pixels measured using current style of the element.</li>
+    <li><code>element.min-intrinsic-width()</code>, <code>element.max-intrinsic-width()</code> - intrinsic widths of the element.</li>
+    <li><code>element.min-intrinsic-height()</code>, <code>element.max-intrinsic-height()</code> - intrinsic heights of the element.</li>
+    <li><code>element.refresh()</code> - will cause dimensions of the element to be recalculated. That is needed if e.g. <code>width</code> or <code>height</code> use <code>calc()</code> based values.</li></ul>
+</body>
+</html>

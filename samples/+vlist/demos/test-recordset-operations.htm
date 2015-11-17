@@ -1,0 +1,159 @@
+<html>
+  <head>
+  <title></title>
+  <style>
+    
+    vlist 
+    { 
+      display:block; 
+      height:*; width:300px; 
+      border:1px solid black; 
+      overflow: scroll-indicator;
+    }
+
+    vlist > li {
+      prototype: Row;
+      display:block; 
+      padding:0 6dip;
+      line-height:31dip;
+      background: linear-gradient(top, #fff, #ddd);
+      behavior:form; /* each repeated child is treated as a form so it can accept object values */ 
+    } 
+    
+    vlist > li.highlighted {
+      background: linear-gradient(top, #fff, #da9);
+    }
+
+    vlist > li:hover {
+      background: linear-gradient(top, #fff, #bcd);
+    }
+
+    vlist > li:current {
+      background:gold;
+    }    
+    
+      
+  </style>
+  <script type="text/tiscript">
+  
+  include "../vlist.tis";
+  
+  class Row : Behavior {
+    function attached() { stdout.println("+++ row", this.index); }
+    function detached() { stdout.println("--- row", this.index); }
+  }
+  
+  
+  function self.ready() {
+    var records = [];
+    var n;
+    var p = 0;
+    
+    function setupRecordView(recordNo,record,viewEl) {
+      viewEl.attributes.toggleClass( "highlighted", record.highlighted || false );
+    }
+    
+    for(var i in 100)
+      records.push { index: n = i, caption:"Item", highlighted: false };
+      
+    var vlist = VirtualList {
+      container     : $(vlist),
+      bufferSize    : 30, // records in sliding window
+      setupItemView : setupRecordView
+    };
+    
+    // feed it by these records
+    vlist.value = records;
+    
+    $(#add).onClick = function() {
+      for(var i in 10)
+        records.push { index: ++n, caption:"New Item" };
+    }
+    $(#insert).onClick = function() {
+      for(var i in 10)
+        records.unshift{ index: --p, caption:"New Item" };
+    };
+    
+    $(#delf).onClick = function() {
+      for(var i in 10)
+        records.shift();
+    };
+    
+    $(#dell).onClick = function() {
+      for(var i in 10)
+        records.pop();
+    };
+    
+    $(#del5).onClick = function() {
+      delete records[5];
+    };
+
+    $(#del45).onClick = function() {
+      delete records[45];
+    };
+
+    $(#ins5).onClick = function() {
+      records.splice(5,0,{ index: ++n , caption:"Inserted Item" });
+    };
+    
+    $(#update).onClick = function() {
+      for(var i in 10)
+        records[i] = { index: ++n, caption:"Updated Item" };
+    };
+    
+    $(#reorder).onClick = function() {
+    
+      function cmp(a,b) {
+        if( a.index > b.index ) return -1;
+        else if (a.index < b.index) return 1;
+        return 0;
+      }
+    
+      records.sort(cmp);
+    };
+    
+
+    $(#updateIndex).onClick = function() {
+      for(var record in records)
+        record.index += 1;
+    }
+
+    $(#removeHighlighted).onClick = function() {
+      for(var record in records)
+        record.highlighted = false;
+    }
+    
+    $(#updateHighlighted).onClick = function() {
+      for(var (n,record) in records)
+        record.highlighted = (n & 1) != 0;
+    }
+    
+  }
+  
+  </script>
+  </head>
+<body>
+
+  <h2>VirtualList binding demo.</h2>
+  <p>VirtualList setups an obesrver on records array thus updates of the array are reflected in the view.</p>
+  <button #add>Add 10</button>
+  <button #insert>Prepend 10</button> 
+  <button #delf>Delete first 10</button> 
+  <button #dell>Delete last 10</button> 
+  <button #ins5>Insert 5th record</button>
+  <button #del5>Delete 5th record</button>
+  <button #del45>Delete 45th record</button>
+  <button #update>Update first 10</button> 
+  <button #reorder>Reorder all</button> 
+  <button #updateIndex>Increment index</button> 
+  <p>test custom setupItemView() function</p>
+  <button #updateHighlighted>Highlight (set 'record.highlighted = true') to odd items</button> 
+  <button #removeHighlighted>Remove highlightion</button> 
+
+  <vlist>
+    <li><span(index)/> <span(caption)>???</span></li>
+  </vlist>
+  
+  
+</body>
+</html>

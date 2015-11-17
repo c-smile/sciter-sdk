@@ -1,0 +1,37 @@
+<HTML>
+  <HEAD>
+    <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <META name="GENERATOR" content="BLOCKNOTE.NET">
+    <META name="source" content="http://www.w3.org/TR/CSS21/cascade.html">
+    <BASEFONT face="Verdana" size="2">
+    <TITLE>Extensions of standard CSS introduced in h-smile core.</TITLE><STYLE>BODY { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+P { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+DIV { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+TD { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+</STYLE>
+  </HEAD>
+<BODY>
+<H2><A name="at-const">The @const rule</A></H2>
+<P><EM>@const</EM> rule allows to define some named and constant value and use that value in forecoming style declarations as a value of style attribute. <BR>Sample of such const declaration (CSS+):</P>
+<BLOCKQUOTE>
+<DIV><FONT color=#339900>/* declaration of the constant: */</FONT><EM><BR>@const BASE_COLOR</EM>: #00FF00;<BR><FONT color=#339900>/* style declaration using such constant: */</FONT><BR>#myelement { border: 1px solid <EM>@BASE_COLOR</EM>; }</DIV></BLOCKQUOTE>
+
+<P>First line here defines BASE_COLOR constant and in last line it is used as a value of attribute.</P>
+<P>@const rule is using following notation:</P>
+<BLOCKQUOTE>
+<P><FONT face="Courier New" color=#ff0000>@const</FONT><FONT face="Courier New"> name [</FONT><STRONG><FONT face="Courier New" color=#ff0000>,</FONT></STRONG><FONT face="Courier New"> name1 [</FONT><STRONG><FONT face="Courier New" color=#ff0000>,</FONT></STRONG><FONT face="Courier New"> name2 ... ]] </FONT><STRONG><FONT face="Courier New" color=#ff0000>:</FONT></STRONG><FONT face="Courier New"> values </FONT><STRONG><FONT face="Courier New" color=#ff0000>;</FONT></STRONG></P></BLOCKQUOTE>
+
+<P>collection of values (after ':' ) &nbsp;will be assigned to constant(s) on the left side. <EM>values</EM> here is a sequence of attribute values alllowed by CSS. It can be single value (as #00FF00 above) or set of values defining compound (shortcut) attribute. For example here is definition of constant that define set of background attributes as a single entity.</P>
+<BLOCKQUOTE>
+<P><EM>@const MY_BACKGROUND</EM>: yelllow repeat url(hatch.png);<BR> <BR>#myelement { background: <EM>@MY_BACKGROUND</EM>; }</P></BLOCKQUOTE>
+
+<P>Insertion point of the constant is marked by symbol '@' immediately followed by name of the constant used in correspondent @const declaration.</P>
+<P>scope rules of the @const are simple:</P>
+<OL>
+<LI>@const declaration is global. Constant declared in one file is seen and can be used in all consequent css files and declarations used in the document. </LI>
+<LI>@const declaration is using first-come-first-serve rule. Once defined constant cannot be overriden.</LI>
+<LI>It is not an error to define constant multiple times. But only very first declaration will be used.</LI></OL>
+
+<DIV>Samples of @const definitions can be found in .../css-plus/constants.htm files of htmlayout and Sciter SDK distributions.</DIV>
+</BODY>
+</HTML>

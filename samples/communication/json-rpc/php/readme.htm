@@ -1,0 +1,26 @@
+<HTML>
+  <HEAD>
+    <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <META name="GENERATOR" content="BLOCKNOTE.NET">
+    <BASEFONT face="Verdana" size="2">
+    <TITLE></TITLE><STYLE>BODY { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+P { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+DIV { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+TD { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+</STYLE>
+  </HEAD>
+<BODY>
+<DIV>Files in this folder:</DIV>
+<UL>
+<LI>json.php - decode/encode PHP variable from/to JSON</LI>
+<LI>json-start.php - PHP header file to be included in web service.</LI>
+<LI>json-end.php - PHP footer file to be included in web service.</LI>
+<LI>calc-web-service.php - sample web service implementing two web methods : <EM>add</EM> and <EM>sub.</EM></LI></UL>
+
+<P><EM>Call them from Sciter as: </EM></P>
+<DIV><EM><FONT face="Courier New">load(&quot;jsonrpc.tis&quot;);</FONT></EM></DIV>
+<DIV><EM><FONT face="Courier New">var rpc = new </FONT><FONT face="Courier New" color=#cc0000>JsonRPC</FONT><FONT face="Courier New">( &quot;http://www.terrainformatica.com/tests/calc-web-service.php&quot;, indicator );</FONT></EM></DIV>
+<DIV><EM><FONT face="Courier New">var v = rpc.send(&quot;</FONT><FONT face="Courier New" color=#cc0000>add</FONT><FONT face="Courier New">&quot;, p0, p1);</FONT></EM></DIV>
+<DIV><EM><FONT face="Courier New">var v = rpc.send(&quot;</FONT><FONT face="Courier New" color=#cc0000>sub</FONT><FONT face="Courier New">&quot;, p0, p1);</FONT></EM></DIV>
+</BODY>
+</HTML>

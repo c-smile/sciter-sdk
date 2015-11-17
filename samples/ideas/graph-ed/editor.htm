@@ -1,0 +1,59 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      @import url(editor.css);
+    
+      widget#stage {
+        size:*;
+        border:1px solid;
+        background: linear-gradient(top,#efa,#aef)
+      }
+    
+    </style>
+    <script type="text/tiscript">
+    
+    
+      $(#zoom).subscribe("change", function() {
+        $(#stage > canvas).zoom = this.value;
+      });
+    
+    
+    </script>
+  </head>
+<body>
+
+  Zoom : <input|hslider #zoom min=25 max=100 value=100 />
+  
+  <widget#stage .editor> 
+    <canvas>
+      <node x=10 y=10 #test>
+        <caption>Node 1</caption>
+        <ports>
+          <in>Input1</in><out>Output1</out>
+          <in>Input2</in><out>Output2</out>
+          <in>Input3</in><out>Output3</out>
+        </ports>
+      </node>
+      <node x=150 y=10>
+        <caption>Node 2</caption>
+        <ports>
+          <in>Input1</in><out>Output1</out>
+          <in>Input2</in><out>Output2</out>
+        </ports>
+      </node>
+      <node x=140 y=150 >
+        <caption>Node 3</caption>
+        <ports>
+          <in>Input1</in><out>Output1</out>
+        </ports>
+      </node>
+    </canvas>
+    <widget|vscrollbar />
+    <widget|hscrollbar />
+    <widget />
+  </widget>
+
+</body>
+</html>

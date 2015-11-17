@@ -1,0 +1,109 @@
+<html>
+  <head>
+    <title>Functions</title>
+    <link rel="stylesheet" href="for-screen.css"/>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>Functions</h1>
+  <p>TIScript supports named and anonymous (lambda) first class functions. Functions are objects of the Function class.</p>
+  <h2><a name="named-functions" id="named-functions">Named functions</a></h2>
+  <p>Named functions are declared using the following syntax:</p>
+  <pre class="code tiscript">function &lt;function-name&gt; ( &lt;parameters&gt; )
+{
+  //...function body
+}
+</pre>
+  <dl>
+    <dt>Where:</dt>
+    <dd><em>&lt;function-name&gt;</em> is a function name, either: <br/>simple <em>&lt;nmtoken&gt;</em> , or<br/>compound name: <em>&lt;nmtoken1&gt;</em> [ <code>.</code> <em>&lt;nmtoken2&gt;</em> [ <code>.</code> <em>&lt;nmtoken3&gt;</em> [ <code>.</code> <em>&lt;nmtokenN&gt;</em> ]]] <sup><a href="#fn__1" name="fnt__1" id="fnt__1" class="fn_top">1)</a></sup><br/><em>&lt;parameters&gt;</em> is a list of formal function parameters:<br/>[<code> </code><em>&lt;parameter-name1&gt;</em> [ <code>,</code> <em>&lt;parameter-name2&gt;</em> [ <code>,</code> ... <em>&lt;parameter-nameN&gt;</em> ]]]</dd></dl>
+  <h2><a name="anonymous-functions" id="anonymous-functions">Anonymous functions</a></h2>
+  <p>Anonymous functions can be declared in-place by using the following forms:</p>
+  <p>Classic JavaScript form:</p>
+  <pre class="code tiscript"><code>function</code> <code>(</code> &lt;parameters&gt; <code>)</code> <code>{</code> &lt;statements&gt; <code>}</code>
+</pre>
+  <p>Single expression lambda function form:</p>
+  <pre><code>:</code> &lt;parameters&gt; <code>:</code> &lt;statement&gt;
+</pre>
+  <p>Block lambda function form:</p>
+  <pre><code>:</code> &lt;parameters&gt; <code>{</code> &lt;statements&gt; <code>}</code>
+</pre>
+  <p>Nested functions (functions inside of other functions) are allowed.</p>
+  <h2><a name="optional-parameters" id="optional-parameters">Optional parameters</a></h2>
+  <p>TIScript supports optional parameters in function declarations:</p>
+  <h3><a name="parameters-with-default-values" id="parameters-with-default-values">Parameters with default values</a></h3>
+  <p>Some parameters in the function declaration may have the default value defined, for example:</p>
+  <pre class="code tiscript">function Foo(a, b, c = 12)
+{
+  return a + b + c;
+}
+</pre>
+  <p>Such a function can be called with either two:</p>
+  <pre class="code tiscript">var r1 = Foo(1, 2);    // r1 = 15
+</pre>
+  <p>or three actual parameters:</p>
+  <pre class="code tiscript">var r2 = Foo(1, 2, 3); // r2 = 6
+</pre>
+  <p>The parameter with the predefined value must not have non-optional parameters to its right in the parameter list. In other words, only the last (or all) parameters can have default values.</p>
+  <h3><a name="varargs" id="varargs">Varargs</a></h3>
+  <p>a.k.a. Parameter vectors</p>
+  <p>There are situations when you need to define functions with the number of parameters unknown upfront. Such functions can be declared as:</p>
+  <pre class="code tiscript"><code>function</code> Bar(a, b, rest..)
+{
+  <code>var</code> total = a + b;
+  <code>f</code>or (<code>var</code> n <code>in</code> rest) total += n;
+  <code>return</code> total;
+}
+</pre>
+  <p>At runtime, the variable <code>rest</code> will contain an array with actual parameters passed into the function. So, after</p>
+  <pre class="code tiscript"><code>var</code> r1 = Bar(1, 2, 3, 4);
+</pre>
+  <p><code>r1</code> will contain value <code>10</code>, and after</p>
+  <pre class="code tiscript"><code>var</code> r2 = Bar(1, 2);
+</pre>
+  <p><code>r2</code> will contain value <code>3</code></p>
+  <h2>Stringizer functions</h2>
+  <p>Stringizer function is a normal function or method with the name starting from '<code>$</code>' (dollar) sign.</p>
+  <p>While parsing call of such a function tiscript treats everything inside '<code>(</code>' and '<code>)</code>' as a literal string. Example:</p>
+  <pre><code>var</code> bodyDiv = self.$( div#body );
+</pre>
+  <p>Such a call is a direct equivalent of the following:</p>
+  <pre><code>var</code> bodyDiv = self.$( &quot;div#body&quot; );
+</pre>
+  <p>If text inside '<code>(</code>' and '<code>)</code>' &nbsp;contains unpaired bracket symbols like &nbsp;&nbsp;'<code>)</code>' and '<code>}</code>' &nbsp;such symbols have to be escaped as <code>\)</code> &nbsp;and <code>\}</code>.</p>
+  <h3>Stringizer parameters</h3>
+  <p>The text text inside '<code>(</code>' and '<code>)</code>' can contain so called tiscript code injections - sequences of tiscript code that needs to be exexucted and its string result to be inserted inline. To include such a code inside the string it has to be enclosed into '<code>{</code>' and '<code>}</code>' brackets. Example:</p>
+  <pre>var n = 3;
+<code>var</code> nthDiv = self.$( div:nth-child(<code>{ n }</code>) );
+</pre>
+  <p>The $() call above will be translated by the parser into the following:</p>
+  <pre><code>var</code> nthDiv = self.$( <code>&quot;div:nth-child(&quot; </code>, n , <code>&quot;)&quot;</code> );
+</pre>
+  <h3>Defining custom stringizer functions</h3>
+  <p>Here is real life example of the stringizer function that can be used in Sciter for inserting HTML fragments:</p>
+  <pre>function Element.$append( params.. ) // accepts html fragments with inclusions as params vector
+{
+  for( var i = 1; i &lt; params.length; i += 2 ) // each odd parameter is an inclusion - result of the correspondent { ... } expression.
+    params[i] = params[i].toHtmlString();     // convert our inclusion into escaped HTML string for safety.
+  this.insert( params.join(&quot;&quot;) );             // combine all params into single string and call Element.insert(html)
+                                              // method of the DOM element in Sciter.
+}
+</pre>
+  <p>Having such function in place we can use it now as:</p>
+  <pre>var arr = [1,2,3];
+var table = self.$( table#some );
+for( var n in arr ) 
+  table.$append ( &lt;tr&gt;&lt;td&gt;Cell #{n}&lt;/td&gt;&lt;/td&gt; );
+</pre>
+  <p>Code above will insert three rows/cells with texts: &quot;Cell #1&quot;, &quot;Cell #2&quot; and &quot;Cell #3&quot; into the table. Pretty convenient, isn't it?</p>
+  <h2>Function call with literal object</h2>
+  <p>If some function accepts single parameter-object then it can be called omitting '(' and ')' brackets like this:</p>
+  <pre>  foo { one:1, two:2 } 
+</pre>
+  <p>that is an exact equivalent of this standard JavaScript call:</p>
+  <pre>  foo ({ one:1, two:2 })
+</pre>
+  <hr/>
+  <p><sup><a href="#fnt__1" id="fn__1" name="fn__1">1)</a></sup> Declaration of functions with compound names is a short form for the expression:<br/><code>name1.name2.name3. ... .nameN = function( &lt;parameters&gt; ) { &lt;statements&gt; }</code></p>
+</body>
+</html>

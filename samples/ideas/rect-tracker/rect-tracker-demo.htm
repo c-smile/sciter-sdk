@@ -1,0 +1,53 @@
+<html>
+<head>
+<style>
+
+	.stuff
+	{
+		background:red;
+		width:70px;
+		height:70px;
+	}
+	.stuff > * {margin:5px; background:blue; height:*; color:white;}
+  .stuff[selected] { background:gold; } // it is covered by the box
+	
+  div#sandbox
+  {
+    border:1px dashed silver;
+    padding:4px;
+    border-spacing:4px;
+    flow:h-flow;
+    height:*;
+    
+    aspect:RectTracker; 
+  }
+</style>
+
+<script type="text/tiscript">
+
+  include "rect-tracker.tis";
+	function createSomeStuff()
+	{
+		self.$(div#sandbox).insert
+      { div, class:"stuff",
+        [
+          { div, "1" },
+          { div, "2" },
+          { div, "3" }
+        ]
+      };
+	}
+
+  self.ready = function()
+    {
+			for(var n = 0; n < 20; n++)
+			  createSomeStuff();
+    }
+
+</script>
+</head>
+<body>
+  <p>Demonstrates rect tracking. Press and drag mouse inside the area:</p>
+  <div #sandbox />
+</body>
+</html>

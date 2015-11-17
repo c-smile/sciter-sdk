@@ -1,0 +1,10 @@
+﻿
+({
+  //"Matches":"Matches", //- deliberetly not defined
+  "There are # matches in the box" : function(n) {
+      return  n == 0 ? "The matchbox is empty" 
+            : n == 1 ? "There is just one match in the box" 
+            :          "There are " + n + " matches in the box";
+  },
+  "UNUSED": "Simply unused"
+})

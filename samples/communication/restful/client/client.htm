@@ -1,0 +1,40 @@
+﻿<html>
+  <head>
+    <title></title>
+    <style>
+    
+      q::before { content: "«" }
+      q::after { content: "»" }
+    
+    </style>
+    <script type="text/tiscript">
+    
+      include "../../../+formation/formation.tis";
+      include "quotes.tis";
+      
+      var root = formation( self );
+      
+      root.getAll.onClick = function() 
+      {
+        quotes.getAll().then( :data: root.quotes.value = data ); 
+      };
+
+      root.delFirst.onClick = function() 
+      {
+        quotes.deleteOne(0).then( :: view.msgbox(#information,"Deleted!") ); 
+      };
+
+    
+    </script>
+  </head>
+<body>
+
+  <button(getAll)>get all quotes</button>
+  <button(delFirst)>del first quote</button>
+  
+  <ol(quotes)>
+    <li><strong(author) /> - <q(text) /></li>
+  </ol>
+
+</body>
+</html>

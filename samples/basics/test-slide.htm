@@ -1,0 +1,125 @@
+<html>
+  <head>
+    <title>Script interaction with CSS transforms</title>
+    <style>
+      html { overflow:auto; /*vertical-scrollbar:"std-v-scrollbar";*/ background:white; }
+      body { flow:vertical; } // overflow:auto; vertical-align:middle; horizontal-align:right;
+     
+      widget#stack
+      {
+        flow:stack;
+        overflow:hidden;
+        background-image:url(images/stretchable.png); 
+        background-position:15px 15px 15px 15px; /*top right bottom left offsets*/
+        background-repeat:expand stretch-top stretch-bottom stretch-middle; /* h-smile specific */
+        border: none;
+        padding: 14px;
+        height:*;    
+      }
+      widget#stack > section 
+      {
+        border:2px solid brown;
+        border-radius:10px;
+        margin:10px;
+        padding:10px;
+        size:*;
+        visibility:hidden;
+      }
+      
+      widget#stack > section:current
+      {
+        z-index:1; 
+        visibility:visible;
+        foreground-image:url(images/close.png);
+        foreground-position:100% 0;
+        foreground-repeat:no-repeat;
+        foreground-clip: margin-box;
+      }
+      
+      widget#stack > section[sliding=left] /* from left to right */ 
+      {
+        opacity:0;
+        transform:translate(-100%,0);
+      }
+      widget#stack > section[sliding=right] /* from right to left*/ 
+      {
+        opacity:0;
+        transform:translate(100%,0);
+      }
+      widget#stack > section[sliding=run]
+      {
+        opacity:1.0;
+        transform:translate(0%,0);
+        transition: transform(cubic-out,0.5s,none) 
+                    opacity(linear,0.5s,none);
+      }
+      widget#stack > section:animating
+      {
+        z-index:2; // it is always on top of current
+        visibility:visible;
+      }
+        
+
+    </style>
+
+    <script type="text/tiscript">
+    
+    function wizard(stack, prevBtn, nextBtn)
+    {
+      function animationDone(evt)
+      {
+        if(evt.reason == 0 && evt.data == #style)
+        {
+          var idx = this.index;
+          this.attributes["sliding"] = undefined;
+          this.state.current = true;
+          prevBtn.state.disabled = idx == 0; 
+          nextBtn.state.disabled = idx == stack.length-1; 
+          this.unsubscribe(animationDone);
+          return true;
+        }
+      }
+      function animationStart(el,direction)
+      {
+        self.state.focus = true;
+        prevBtn.state.disabled = true; 
+        nextBtn.state.disabled = true; 
+        el.attributes["sliding"] = direction; // reset to initial animation state.
+        el.post(:: this.attributes["sliding"] = "run" );    // set to final animation state - triggers animation.
+        el.subscribe(animationDone,Event.BEHAVIOR_EVENT,Event.ANIMATION);
+      }
+      
+      prevBtn.onClick = function()
+      {
+        var current = stack.$(:root>:current);
+        var new_current = stack[current.index-1];
+        animationStart(new_current,"left");
+      }
+      nextBtn.onClick = function()
+      {
+        var current = stack.$(:root>:current);
+        var new_current = stack[current.index+1];
+        animationStart(new_current,"right");
+      }
+      if(stack.length)
+        stack[0].state.current = true;
+      prevBtn.state.disabled = true; 
+      nextBtn.state.disabled = stack.length == 0; 
+    }  
+    
+    wizard($(widget#stack),$(button#prev),$(button#next));
+    
+    </script>
+</head>
+
+<body>
+  <p>Demo of <b>HTML</b> rendering in H-SMILE v.5 core using <i>Direct2D/DirectWrite</i>.</p> 
+  <div><button #prev>&lt;</button> <button #next>&gt;</button></div>
+  <widget #stack >
+    <section style="background:DarkSalmon">First <a>Stack</a> element</section>
+    <section style="background:GoldenRod">Second <a>Stack</a> element</section>
+    <section style="background:MediumPurple">Third <a>Stack</a> element</section>
+    <section style="background:PaleVioletRed">Fourth <a>Stack</a> element</section>
+  </widget>
+</body>
+</html>

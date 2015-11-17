@@ -1,0 +1,78 @@
+﻿<html>
+  <head>
+    <title>Object</title>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>Object object</h1>
+  <p>Despite of its name Object is a class that contains methods of objects in tiscript. Last line here will be evaluated to <em>true</em>:</p>
+  <pre>var obj = { one:1, two:2 }; // creating object from literal
+if( obj instanceof Object )
+      stdout.printf( &quot;I am an instance of Object&quot; ); // will output this
+</pre>
+  <dl>
+    <h2>Properties</h2>
+    <dt>className</dt>
+    <dd>readonly, string. Name of the class if object was created as instance of user defined <code>class</code>.</dd>
+    <dt>length</dt>
+    <dd>readonly, integer. Returns total number of members this instance contains.</dd>
+    <h2>Methods</h2>
+    <dt>this</dt>
+    <dd>( )
+      <p>constructor, creates instance of Object class - object per se.</p></dd>
+    <dt>toString<br/> toLocaleString</dt>
+    <dd>( ) : string
+      <p>Returns string <code>&quot;[object Object]&quot;</code>.</p></dd>
+    <dt>valueOf</dt>
+    <dd>( ) : value
+      <p>Returns object itself.</p></dd>
+    <dt>clone</dt>
+    <dd>( ) : value
+      <p>Makes copy of the object and returns it.</p></dd>
+    <dt>exists</dt>
+    <dd>( <strong>tag</strong>: value, [<strong>deep</strong> = false] ) : true | false
+      <p>Checks property by its tag for existence. If deep == true then does deep lookup - in objects itself and its chain of classes.</p></dd>
+    <dt>remove</dt>
+    <dd>( <strong>tag</strong>: value ) : void
+      <p>Removes property of the object by its tag (a.k.a. name).</p></dd>
+    <dt>call</dt>
+    <dd>( <strong>func</strong>: function, [<strong>p1</strong>:value, <strong>p2</strong>:value, ... <strong>pN</strong>:value [, <strong>argv</strong>: array] ] ) : value
+      <p>Calls the <em>func</em> with context of <em>this</em> equal to the object. Parameters if given passed to the function. If <em>argv</em> is provided then its memebers will be added to the list of parameters of the call.</p></dd>
+    <dt>show</dt>
+    <dd>( [<strong>out</strong>: Stream] ) : void
+      <p>Reports class name and list of property name/values of the object. Intended to use for debugging purposes.</p></dd>
+    <dt>eval</dt>
+    <dd>( <strong>what</strong>: string | Stream [, <strong>namespace</strong>: object] ): value
+      <p>Evaluates (interprets) <em>what</em> with context of <em>this</em> equal to the object. If <em>namespace</em> object is given then it is used as global namespace for evaluated code.</p></dd>
+    <dt>propertyAt</dt>
+    <dd>( <strong>tag</strong>: value ) : value
+      <p>Does lookup in the object for member/property by its tag. This is a direct equivalent of <em>obj.tag</em> construction.</p></dd>
+    <dt>seal</dt>
+    <dd><strong>( </strong>[<strong>strict</strong>:true|false] <strong>)</strong> : object
+      <p>Locks structure of the object - after the call any attempt to add or remove object's property will throw an error. Values of existing properties can be changed though. Returns the object iself. If <em>strict</em> parameter is provided and it is exactly <em>true</em> then any attempt to get unknown property will throw an error.</p></dd>
+    <dt>isSealed</dt>
+    <dd><strong>( </strong>[<strong>strict</strong>:true|false]<strong> )</strong> : true | false | undefined
+      <p>Returns <em>true</em> if the object is sealed. If <em>strict</em> parameter is provided and is exactly <em>true</em> then the method returns <em>true</em> only if <em>seal(true)</em> was called for it.</p></dd>
+    <dt>freeze</dt>
+    <dd><strong>( </strong>[<strong>strict</strong>:true|false] <strong>)</strong> : object
+      <p>Locks the object - makes it immutable - any attempt to add, remove and modify value of any object's property will throw an error. Returns the object itself. If there is a <em>strict</em> parameter and it is exactly <em>true</em> then any attempt to get unknown property will throw an error.</p></dd>
+    <dt>isFrozen</dt>
+    <dd><strong>( </strong>[<strong>strict</strong>:true|false]<strong> )</strong> : true | false | undefined
+      <p>Returns <em>true</em> if the object is frozen. If <em>strict</em> parameter is provided and is exactly <em>true</em> then the method returns <em>true</em> only if <em>freeze(true)</em> was called for it.</p></dd>
+    <dt>addObserver</dt>
+    <dd><strong>( observer</strong>:function<strong> )</strong> : undefined
+      <p>Attaches observer to the object - function that is called when the object changes. The observer here is a function that has following signature:</p>
+      <p><code>function observer(changeDefinition) {}</code> where changeDefinition is tuple having following fields:</p>
+      <ul>
+        <li><code>[0]</code> - symbol, one of <code>#add</code> - property added, <code>#update</code> - property changed or <code>#delete</code> - property deleted;</li>
+        <li><code>[1]</code> - object, the object that property was changed;</li>
+        <li><code>[2]</code> - symbol or string, property name;</li>
+        <li><code>[3]</code> - any, new value;</li>
+        <li><code>[4]</code> - any, old value.</li></ul></dd>
+    <dt>removeObserver</dt>
+    <dd><strong>( observer</strong>:function<strong> | functionName</strong>:symbol<strong> )</strong> : undefined
+      <p>Detaches given observer function from the object by function reference or by its name. &nbsp;</p></dd>
+    <dt>referenceOf</dt>
+    <dd><strong>( namespace</strong>:object, <strong>path</strong>:string<strong> )</strong> : (collection:object, key:symbol|string)<br/>When given dot separated path like &quot;one.two.three&quot; the function returns obj/key pair - object in which &quot;three&quot; key is defined and that key.</dd></dl>
+</body>
+</html>

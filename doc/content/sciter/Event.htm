@@ -1,0 +1,280 @@
+﻿<html>
+  <head>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>Event object</h1>
+  <p>Represents user interface event. Events and correspndent event handlers are defined in <a href="Events.htm">Events</a>.</p>
+  <dl>
+    <h2>Constants</h2>
+    <h3>Event Group codes (used with Element.subscribe() method)</h3>
+    <dt>MOUSE</dt>
+    <dd>mouse events group</dd>
+    <dt>KEY</dt>
+    <dd>key events group</dd>
+    <dt>FOCUS</dt>
+    <dd>focus events group</dd>
+    <dt>BEHAVIOR_EVENT</dt>
+    <dd>group of events generated (synthesized) by particular behaviors (like BUTTON_CLICK, EDIT_VALUE_CHANGING, etc.)</dd>
+    <dt>SCROLL</dt>
+    <dd>scroll events group</dd>
+    <dt>SIZE</dt>
+    <dd>size events group (that is just single event, onSize)</dd>
+    <h3>Mouse event codes</h3>
+    <dt>MOUSE_ENTER</dt>
+    <dd>type of event, mouse enters the element.</dd>
+    <dt>MOUSE_LEAVE</dt>
+    <dd>type of event, mouse leaves the element.</dd>
+    <dt>MOUSE_MOVE</dt>
+    <dd>type of event, mouse moves over the element.</dd>
+    <dt>MOUSE_DOWN</dt>
+    <dd>type of event, mouse button pressed in the element.</dd>
+    <dt>MOUSE_UP</dt>
+    <dd>type of event, mouse button released in the element.</dd>
+    <dt>MOUSE_DCLICK</dt>
+    <dd>type of event, mouse clicked twice in the element.</dd>
+    <dt>MOUSE_WHEEL</dt>
+    <dd>type of event, mouse wheel rotated.</dd>
+    <dt>MOUSE_TICK</dt>
+    <dd>type of event, mouse timer event. Runtime sends this event regularly when mouse button is pressed on the element.</dd>
+    <dt>MOUSE_IDLE</dt>
+    <dd>type of event, mouse timer event. Runtime sends this event when mouse is over the element, not pressed and not moving for some time. By default this event triggers popup of tooltip.</dd>
+    <h3>Keyboard event codes</h3>
+    <dt>KEY_DOWN</dt>
+    <dd>type of event, key pressed when element or one of its children is in focus.</dd>
+    <dt>KEY_UP</dt>
+    <dd>type of event, key released when element or one of its children is in focus.</dd>
+    <dt>KEY_CHAR</dt>
+    <dd>type of event, character key pressed when element or one of its children is in focus.</dd>
+    <h3>Scroll event codes</h3>
+    <dt>SCROLL_HOME</dt>
+    <dd></dd>
+    <dt>SCROLL_END</dt>
+    <dd></dd>
+    <dt>SCROLL_STEP_PLUS</dt>
+    <dd></dd>
+    <dt>SCROLL_STEP_MINUS</dt>
+    <dd></dd>
+    <dt>SCROLL_PAGE_PLUS</dt>
+    <dd></dd>
+    <dt>SCROLL_PAGE_MINUS</dt>
+    <dd></dd>
+    <dt>SCROLL_POS</dt>
+    <dd></dd>
+    <h3>Gesture (touch screen) event codes</h3>
+    <dt>GESTURE_REQUEST</dt>
+    <dd>The engine sends this event to request list of gestures that the element supports. Set &quot;ORed&quot; flags in Event.flags field. List of supported flags/gesture types:
+      <ul>
+        <li><code>Event.GESTURE_FLAG_ZOOM</code> &nbsp;- two fingers zoom;</li>
+        <li><code>Event.GESTURE_FLAG_ROTATE</code> &nbsp;- two fingers rotate;</li>
+        <li><code>Event.GESTURE_FLAG_PAN_VERTICAL</code> - vertical swipe or panning;</li>
+        <li><code>Event.GESTURE_FLAG_PAN_HORIZONTAL</code>- horizontal swipe or panning;</li>
+        <li><code>Event.GESTURE_FLAG_TAP1</code> - press-and-tap gesture;</li>
+        <li><code>Event.GESTURE_FLAG_TAP2</code> - tap by two fingers;</li>
+        <li><code>Event.GESTURE_FLAG_PAN_WITH_GUTTER</code> &nbsp;- &nbsp;PAN_VERTICAL and PAN_HORIZONTAL modifier - gutter.</li>
+        <li><code>Event.GESTURE_FLAG_PAN_WITH_INERTIA</code> &nbsp;- &nbsp;PAN_VERTICAL and PAN_HORIZONTAL modifier - generate inertia events.</li>
+        <li><code>Event.GESTURE_FLAGS_ALL</code> &nbsp;- all flags/events</li></ul></dd>
+    <dt>GESTURE_ZOOM</dt>
+    <dd>The zoom gesture. <code>Event.deltaV</code> &nbsp;field contains float &gt; 1.0 in case of zoom-out and float &lt; 1.0 for zoom-in.</dd>
+    <dt>GESTURE_PAN</dt>
+    <dd>The pan/swipe gesture. <code>Event.deltaX</code> and <code>Event.deltaY</code> fields contain integers - number of pixels in X and Y directions.</dd>
+    <dt>GESTURE_ROTATE</dt>
+    <dd>The rotation gesture. <code>Event.deltaV</code> &nbsp;field contains delta angle (in radians).</dd>
+    <dt>GESTURE_TAP1</dt>
+    <dd>The press and tap gesture.</dd>
+    <dt>GESTURE_TAP2</dt>
+    <dd>Tap by two fingers gesture.
+      <p>Event.flags in all events (but not in GESTURE_REQUEST) is ORed combination of the following states:</p>
+      <ul>
+        <li><code>Event.GESTURE_STATE_BEGIN</code> - is &quot;on&quot; for first event in the gesture sequence.</li>
+        <li><code>Event.GESTURE_STATE_INERTIA</code> - is &quot;on&quot; for events synthesized by the inertia processor.</li>
+        <li><code>Event.GESTURE_STATE_END</code> - is &quot;on&quot; for last event in the gesture sequence.</li></ul></dd>
+    <h3>Focus event codes</h3>
+    <dt>LOST_FOCUS</dt>
+    <dd></dd>
+    <dt>GOT_FOCUS</dt>
+    <dd></dd>
+    <h3>Logical event codes from builtin behaviors</h3>
+    <dt>BUTTON_CLICK</dt>
+    <dd></dd>
+    <dt>BUTTON_PRESS</dt>
+    <dd></dd>
+    <dt>BUTTON_STATE_CHANGED</dt>
+    <dd>Checkbox/radio state was changed. ( Not all <em>BUTTON_CLICK</em>s are changing state of those. )</dd>
+    <dt>EDIT_VALUE_CHANGING</dt>
+    <dd></dd>
+    <dt>EDIT_VALUE_CHANGED</dt>
+    <dd></dd>
+    <dt>SELECT_SELECTION_CHANGED</dt>
+    <dd></dd>
+    <dt>SELECT_STATE_CHANGED</dt>
+    <dd></dd>
+    <dt>HYPERLINK_CLICK</dt>
+    <dd></dd>
+    <dt>ACTIVATE_CHILD</dt>
+    <dd></dd>
+    <dt>POPUP_REQUEST</dt>
+    <dd></dd>
+    <dt>POPUP_READY</dt>
+    <dd></dd>
+    <dt>POPUP_DISMISSED</dt>
+    <dd></dd>
+    <dt>POPUP_DISMISSING</dt>
+    <dd></dd>
+    <dt>MENU_ITEM_ACTIVE</dt>
+    <dd>Mouse over the menu item, Event.target is a menu item, Event.owner - initiator of the menu &nbsp;</dd>
+    <dt>MENU_ITEM_CLICK</dt>
+    <dd>Click on the menu item, Event.target is a menu item, Event.owner - initiator of the menu</dd>
+    <dt>CONTEXT_MENU_REQUEST</dt>
+    <dd>Is sent by the engine when context menu needs to be shown. <code>evt.target</code> is a top element that have got e.g. right mous click. <code>evt.source</code> [read/write] is a menu element that is about to popup. You can set your own menu element to the evt.source field while handling this event.</dd>
+    <dt>CONTEXT_MENU_SETUP</dt>
+    <dd>Is sent by the engine when context menu is found. <code>evt.source</code> is the menu element that you can modify at this point.</dd>
+    <dt>VISUAL_STATUS_CHANGED</dt>
+    <dd>Notification that the element changed its visibility either by changing <code>display</code> or <code>visibility</code> CSS attributes. The event is sent only to the element itself (so not a bubbling event).</dd>
+    <dt>DISABLED_STATUS_CHANGED</dt>
+    <dd>Notification that the element or one of its containers have changed its disabled status.</dd>
+    <dt>REQUEST_TOOLTIP</dt>
+    <dd>Request for tooltip, the event is sent in respnse of MOUSE_IDLE. Element on <em>evt.source</em> is a proposed tooltip element. You can assign your own DOM element to the <em>evt.source</em> field. To cancel tooltip generation set <em>evt.source</em> to <em>null</em> and return <em>true</em> (event handled) from the event handler.</dd>
+    <dt>DOCUMENT_COMPLETE</dt>
+    <dd>Notification that document finishes its loading - all requests for external resources are finished. <em>evt.target</em> is the root node ( <code>&lt;html&gt;</code> ) of the document that is complete. Note that the event is being generated even some of resources were not available. DOM elements that contain non-available resources will get <code>:incomplete</code> state flag.</dd>
+    <dt>FORM_SUBMIT</dt>
+    <dd>behavior:form detected submission event from button type=reset. <code>evt.data</code> field contains data to be sent to the server as a map (object). You can modify the data or discard submission by returning <code>true</code> (&quot;event consumed&quot;) from the event handler.</dd>
+    <dt>FORM_RESET</dt>
+    <dd>behavior:form detected reset event (from button type=reset). <code>evt.data</code> field contains data to be set to input fields.</dd>
+    <h3>Event flags</h3>
+    <dt>SINKING</dt>
+    <dd>
+      <div>Event dispatching direction. If this flag set then event is being dispatched in the direction from parent to child. Example:</div>
+      <pre>switch(evt.type)
+{
+   case Event.MOUSE_DOWN | Event.SINKING:
+        // handle thr event before any child
+   case Event.MOUSE_DOWN:
+        // it is here as no one child processed it.
+}
+</pre></dd>
+    <dt>HANDLED</dt>
+    <dd>
+      <div>Event was handled (event handler function returned <em>true</em>) by some child of the element or behavior. Example:</div>
+      <pre>switch(evt.type)
+{
+   case Event.MOUSE_DOWN:
+       // after all children and no one has handled it.
+   case Event.MOUSE_DOWN | Event.HANDLED:
+       // after all children, and some child has handled it.
+}
+</pre></dd>
+    <h3>Dragging modes</h3>
+    <dt>DRAGGING_MOVE<br/> DRAGGING_COPY</dt>
+    <dd>Values of the <em>draggingMode</em> attribute below.</dd>
+    <h3>Virtual key codes - values of keyCode filed in KEY_DOWN and KEY_UP events</h3>
+    <dd>
+      <pre>VK_CANCEL   VK_BACK     VK_TAB      VK_CLEAR    VK_RETURN   VK_SHIFT    VK_CONTROL
+VK_MENU     VK_PAUSE    VK_CAPITAL  VK_KANA     VK_HANGUL   VK_JUNJA    VK_FINAL
+VK_HANJA    VK_KANJI    VK_ESCAPE   VK_CONVERT  VK_SPACE    VK_PRIOR    VK_NEXT
+VK_END      VK_HOME     VK_LEFT     VK_UP       VK_RIGHT    VK_DOWN     VK_SELECT
+VK_PRINT    VK_EXECUTE  VK_SNAPSHOT VK_INSERT   VK_DELETE   VK_HELP     VK_SLEEP
+VK_NUMPAD0  VK_NUMPAD1  VK_NUMPAD2  VK_NUMPAD3  VK_NUMPAD4  VK_NUMPAD5  VK_NUMPAD6
+VK_NUMPAD7  VK_NUMPAD8  VK_NUMPAD9  VK_MULTIPLY VK_ADD      VK_SEPARATOR VK_SUBTRACT
+VK_DECIMAL  VK_DIVIDE   VK_F1       VK_F2       VK_F3       VK_F4       VK_F5
+VK_F6       VK_F7       VK_F8       VK_F9       VK_F10      VK_F11      VK_F12
+VK_F13      VK_F14      VK_F15      VK_F16      VK_F17      VK_F18      VK_F19
+VK_F20      VK_F21      VK_F22      VK_F23      VK_F24
+</pre>
+      <p>Example:</p>
+      <pre>switch(event.keyCode)
+{
+  case Event.VK_HOME: index = 0; break;
+  case Event.VK_END: index = this.length - 1; break;
+}
+</pre></dd>
+    <h2>Properties</h2>
+    <dt>type</dt>
+    <dd><font color="#999999">r - </font><em>Integer</em>, type of the event, value equal to one of the constant above.</dd>
+    <dt>altKey</dt>
+    <dd><font color="#999999">r - </font><em>true/false</em>, true if ALT key is pressed. Valid for Mouse, Key events.</dd>
+    <dt>ctrlKey</dt>
+    <dd>r - <em>true/false</em>, true if CTRL key is pressed. Valid for Mouse, Key events.</dd>
+    <dt>shiftKey</dt>
+    <dd>r - <em>true/false</em>, true if SHIFT key is pressed. Valid for Mouse, Key events.</dd>
+    <dt>shortcutKey</dt>
+    <dd>r - <em>true/false</em>, true if either CTRL (on Windows) or COMMAND (on OSX) keys are pressed. Valid for Mouse and Key events. Use it if you want to handle keyboard shortcut commands in cross-platform manner. CTRL+C on Windows is an equivalent of COMMAND+C on OSX. Bastards, aren't they?</dd>
+    <dt>commandKey</dt>
+    <dd>r - <em>true/false</em>, true if either &quot;Win&quot; (on Windows keyboard) or COMMAND (on Mac keyboard) keys are pressed. Valid for Mouse and Key events.</dd>
+    <dt>mainButton</dt>
+    <dd>r - <em>true/false</em>, true if main mouse button pressed (usually left mouse button). Valid for Mouse events.</dd>
+    <dt>propButton</dt>
+    <dd>r - <em>true/false</em>, true if property mouse button pressed (usually right mouse button). Valid for Mouse events.</dd>
+    <dt>buttons</dt>
+    <dd>r - <em>integer</em>, bit flags representing pressed mouse buttons, 0x01 - main (usually left) mouse button, 0x02 - right mouse button, 0x04 - middle mouse button.</dd>
+    <dt>target</dt>
+    <dd>r - <em>Element</em>, &nbsp;element this event tageted to.</dd>
+    <dt>reason</dt>
+    <dd>r/w - <em>integer</em>, reason field of control event code.</dd>
+    <dt>keyCode</dt>
+    <dd>r - integer, key scan code for KEY_DOWN/KEY_UP events and unicode codepoint of the character pressed for the KEY_CHAR event.</dd>
+    <dt>group</dt>
+    <dd>r - <em>symbol</em>, event group symbol, here it is a symbol of event handler function: #onMouse, #onKey, #onFocus, etc.</dd>
+    <dt>wheelDelta</dt>
+    <dd>r - integer, mouse wheel &quot;tick&quot; - valid in onMouse/MOUSE_WHEEL event. Either -1 or +1 depending on direction.</dd>
+    <dt>scrollPos</dt>
+    <dd>r - <em>integer</em>, scroll position in <em>SCROLL_POS</em> event.</dd>
+    <dt>scrollAxis</dt>
+    <dd>r - #vertical | #horizontal, scrollbar axis in scroll events.</dd>
+    <dt>x</dt>
+    <dd>r - <em>integer</em>, x coordinate of the mouse event relative to the element itself (origin of its content box)</dd>
+    <dt>y</dt>
+    <dd>r - <em>integer</em>, y coordinate of the mouse event relative to the element itself (origin of its content box)</dd>
+    <dt>xRoot</dt>
+    <dd>r - <em>integer</em>, x coordinate of the mouse event relative to the element's root element (&lt;html&gt;).</dd>
+    <dt>yRoot</dt>
+    <dd>r -<em>integer</em>, y coordinate of the mouse event relative to the element's root element (&lt;html&gt;).</dd>
+    <dt>xView</dt>
+    <dd>r - <em>integer</em>, x coordinate of the mouse event relative to the element's view (window).</dd>
+    <dt>yView</dt>
+    <dd>r - <em>integer</em>, y coordinate of the mouse event relative to the element's view (window).</dd>
+    <dt>xScreen</dt>
+    <dd>r - <em>integer</em>, x coordinate of the mouse event relative to the screen.</dd>
+    <dt>yScreen</dt>
+    <dd>r -<em>integer</em>, y coordinate of the mouse event relative to the screen.</dd>
+    <dt>owner</dt>
+    <dd>rw - Element, owner (initiator) of the menu in MENU_ITEM_CLICK, also this is value of last parameter in Element.sendEvent method.</dd>
+    <dt>isOnIcon</dt>
+    <dd>r - true | false, onMouse(evt) only. true if mouse is on icon area. Element icon is foreground, no-repeat image.</dd>
+    <dt>dragging</dt>
+    <dd>r/w - <em>Element</em>, <em>onMouse(evt)</em> and <em>onExchange(evt)</em> only. Reference of element being dragged when onMouse and data being dragged when onExchange().</dd>
+    <dt>draggingMode</dt>
+    <dd>r/w - <em>integer</em>, onMouse(evt) only. Dragging mode - either Event.DRAGGING_MOVE or Event.DRAGGING_COPY - current dragging mode.</dd>
+    <dt>draggingDataType</dt>
+    <dd>r - symbol, &nbsp;<em>onExchange(evt)</em> only. One of the following values:
+      <ul>
+        <li><code>#text</code> -</li>
+        <li><code>#html</code></li>
+        <li><code>#url</code></li>
+        <li><code>#file</code></li>
+        <li><code>#json</code></li></ul></dd>
+    <dt>deltaV, deltaX, deltaY, flags</dt>
+    <dd>- onGesture() event specific fields. See prose above about GESTURE_**** values.</dd></dl>
+  <h2>Methods</h2>
+  <dl>
+    <dt>match</dt>
+    <dd>(<strong>eventName</strong>:string [,<strong>selector</strong>:string]) : true | false
+      <p>Returns <em>true</em> if the event has symbolic name of <em>eventName</em> and its target matches the <em>selector</em>. The <em>eventName</em> can accept following values:</p>
+      <ul>
+        <li>&quot;<strong>click</strong>&quot; - button and hyperlink clicks;</li>
+        <li>&quot;<strong>dblclick</strong>&quot; - mouse double clicks;</li>
+        <li>&quot;<strong>change</strong>&quot; - value has been changed by the user;</li>
+        <li>&quot;<strong>submit</strong>&quot; - form submit event fired before data of the form is submited;</li>
+        <li>&quot;<strong>reset</strong>&quot; - form reset event fired before data of the form gets reset;</li>
+        <li>&quot;<strong>expand</strong>&quot;, &quot;<strong>collapse</strong>&quot; - events generated by various behaviors to collapse/expand items (e.g. in tree view widget);</li>
+        <li>&quot;<strong>statechange</strong>&quot; - UI state change, for example behavior:textarea sends this event when caret or selection position changes;</li>
+        <li>&quot;<strong>contextmenu</strong>&quot; - context menu request (right button or property key click);</li>
+        <li>&quot;<strong>animationstart</strong>&quot;, &quot;<strong>animationend</strong>&quot; - animation life cycle events;</li>
+        <li>&quot;<strong>mousedown</strong>&quot;, &quot;<strong>mouseup</strong>&quot;, &quot;<strong>mousemove</strong>&quot;, &quot;<strong>mouseenter</strong>&quot;, &quot;<strong>mouseleave</strong>&quot; - &nbsp;mouse events;</li>
+        <li>&quot;<strong>focusin</strong>&quot;, &quot;<strong>focusout</strong>&quot; - focus events;</li>
+        <li>&quot;<strong>keydown</strong>&quot;, &quot;<strong>keyup</strong>&quot;, &quot;<strong>keypress</strong>&quot; - keyboard events;</li>
+        <li>&quot;<strong>scroll</strong>&quot; - scroll event;</li>
+        <li>any other string is considered as custom event, to post/send such events use <code>Element.postEvent</code>/<code>sendEvent(name,...)</code> &nbsp;methods.</li></ul>
+      <p>Event names may contain dot separated namespace specifier like: &quot;click.mywidget&quot;</p></dd></dl>
+</body>
+</html>

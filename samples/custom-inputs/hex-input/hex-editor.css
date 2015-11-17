@@ -1,0 +1,118 @@
+
+input[type="hex-number"]
+{
+	style-set: "hex-edit";
+}
+
+@set hex-edit
+  {
+    :root
+    {
+      prototype:HexEditor url(hex-editor.tis); 
+      font-rendering-mode:snap-pixel;
+      font-family:monospace;
+      color:windowtext;
+      background-image:url(theme:edit-normal); 
+      background-repeat:stretch; 
+      padding:system-border-width; 
+      width: 6em;
+      height: min-intrinsic;
+      cursor:default;
+      white-space: nowrap;
+      text-align:right;
+	    flow:"1 2" 
+	         "1 3" ;
+	    //context-menu:url(res:menu-edit.htm);
+    }
+    :root:rtl
+    {
+	    flow:"2 1" 
+	         "3 1";
+    }
+    
+    :root > caption 
+    { 
+      display:block;
+	    flow:text;
+      behavior: edit;      
+      height:*; width:*;
+      padding:2px; 
+	    cursor:text;
+      white-space:pre;
+      overflow-x:hidden-scroll;
+      -filter:"0~9A~Fa~f";
+      text-selection: windowtext threedface;
+    }
+    
+    :root > caption:focus { 
+      text-selection: highlighttext highlight; 
+    }
+        
+    :root:disabled
+    { 
+      background-image:url(theme:edit-disabled); 
+	    color:graytext;
+    }
+  
+    :root:invalid
+    {
+      color:red;
+    }
+  
+    :root > button
+    {
+      display:block;
+      behavior:clickable;
+      cursor:default;
+      height:0.5*;
+      min-height:10dip;
+    }
+  
+    :root > button.minus
+    {
+      padding:0;
+      margin: 0 -2px -2px 0;
+      background-image:url(theme:v-spin-minus-normal); 
+      background-repeat:stretch; 
+      width:system-scrollbar-width;
+      height:50%%;
+    }
+   
+    :root > button.minus:hover
+    {
+	    transition:none;
+      background-image:url(theme:v-spin-minus-hover); 
+    }
+    :root > button.minus:active
+    {
+      background-image:url(theme:v-spin-minus-pressed); 
+    }
+    :root > button.minus:disabled
+    {
+      background-image:url(theme:v-spin-minus-disabled); 
+    }
+    :root > button.plus
+    {
+      padding:0;
+	    margin: -2px -2px -1 0;
+      background-image:url(theme:v-spin-plus-normal); 
+      background-repeat:stretch; 
+	    width:system-scrollbar-width;
+	    height:50%%;
+    }
+    
+    :root > button.plus:hover
+    {
+	    transition:none;
+      background-image:url(theme:v-spin-plus-hover); 
+    }
+    :root > button.plus:active
+    {
+      background-image:url(theme:v-spin-plus-pressed); 
+    }
+    :root > button.plus:disabled
+    {
+      background-image:url(theme:v-spin-plus-disabled); 
+    }
+    
+  }

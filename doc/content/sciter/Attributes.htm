@@ -1,0 +1,71 @@
+<html>
+  <head>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>Attributes object</h1>
+  <p>Represents attributes of DOM <a href="Element.htm">element</a>.</p>
+  <p>To access attributes collection of the element use its <em>attributes</em> property: element.attributes</p>
+  <dl>
+    
+      
+        <h2>Properties</h2>
+    
+      <dt>length</dt>
+      <dd><em>integer</em>, number of attributes of the element. Read-only property.</dd>
+    
+      <dt>[index]</dt>
+      <dd><em>string</em>, value of attribute at the <em>index</em> position.  <em>Index</em> here is either <em>string</em> (name of attribute) or integer (zero-based index of the attribute). Read-write index accessor.</dd>
+    
+      
+        <h2>Enumeration</h2>
+    
+      <dt>for ... in</dt>
+      <dd>
+        <div>for(var<strong> name</strong> in<strong> <em>element</em></strong>.<strong>attributes</strong>)<strong> { </strong>/* loop body */<strong> }</strong></div>
+        <p>Executes body of the loop for attributes of the element. Value of <em>name</em> variable is text - name of the attribute.</p></dd>
+    
+      
+        <h2>Methods</h2>
+    
+      <dt>name</dt>
+      <dd>
+        <div><strong>(index)</strong> returns: <em>string</em></div>
+        <p>Returns string - name of the attribute at index position. Index is zero-based integer value here.</p></dd>
+    
+      <dt>clear</dt>
+      <dd>
+        <div><strong>() </strong>returns: <em>N/A</em></div>
+        <p>Clears collection of attributes of the element.</p></dd>
+    
+      <dt>remove</dt>
+      <dd>
+        <div><strong>(attr)</strong> returns: <em>N/A</em></div>
+        <p>Removes attribute from the collection of attributes. <em>Attr</em> here is either <em>string</em> (name of attribute) or integer (zero-based index of the attribute).</p></dd>
+    
+      <dt>exists</dt>
+      <dd>
+        <div><strong>(attr) </strong>returns: <em>true|false</em></div>
+        <p>Returns true if <em>attr</em> exists in the collection of attributes. <em>Attr</em> here is either <em>string</em> (name of attribute) or integer (zero-based index of the attribute).</p></dd>
+    
+      <dt>addClass</dt>
+      <dd>
+        <div>(className1: string [, ... classNameN: string ] )</div>
+        <p>Adds class name[s] to the <em>class</em> attribute of the element.</p></dd>
+    
+      <dt>removeClass</dt>
+      <dd>
+        <div>(className1: string [, ... classNameN: string ] )</div>
+        <p>Removes class name[s] from the <em>class</em> attribute of the element.</p></dd>
+    
+      <dt>toggleClass</dt>
+      <dd>
+        <div>(className: string [, on: boolean ] )</div>
+        <p>Adds or removes class. If <em>on</em> is provided then adds the class if it is <em>true</em> and removes it if <em>on</em> is <em>false</em>. If no <em>on</em> provided removes class if it is not there, or adds it otherwise.</p></dd>
+    
+      <dt>hasClass</dt>
+      <dd>
+        <div>(className: string ) : boolean</div>
+        <p>Returns <em>true</em> if the element has <em>className</em> defined.</p></dd></dl>
+</body>
+</html>

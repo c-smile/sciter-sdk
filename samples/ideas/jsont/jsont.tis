@@ -1,0 +1,72 @@
+namespace JSONT
+{
+  class DataProxy // data proxy is used as a representation of current data node in rules
+  {
+    property undefined( name, v ) // 'undefined' property handler, just return the name as it is
+      { get return name; }
+  }
+  
+  function transform(data, frules, stream = null)
+  {
+    if( typeof frules == #string && frules[0] == '#') { // that's id of <script type="text/jsont"> element>
+      var rel = self.$(script{frules});
+      assert rel instanceof Element;
+      frules = rel.compiled;
+      if( typeof frules != #function) {
+        frules = eval("(" + rel.text + ")"); // compile rules
+        rel.compiled = frules; // cache compiled value
+        assert typeof frules == #function;
+      }
+    } else if( typeof frules == #string ) // frules is a JsonT text, compile it
+      frules = eval("(" + frules + ")"); // compile rules
+    else 
+      assert typeof frules == #function;
+  
+    function params2array( params.. ) { return params; }  // simply returns paramters as an array, passed to frules generator of rules
+    var proxy = new DataProxy();                          // data proxy object, represents current data node in rules.
+    var rules = frules(params2array,proxy);               // generate rules
+    
+    var apply; // forward declaration of the function below
+    var out = stream || Stream.openString();              // creating output stream as a StringBuilder or using existing
+    
+    function processData(data,path)                             // 
+    {
+      if( typeof data == #array )
+      {
+        path += "[]";
+        if( var r = rules[path] ) 
+        {
+          for( var ael in data ) apply(ael,r,path);       // for each element in the array apply the rule to it.
+          return;
+        }
+      }
+      out << data.toHtmlString();                         // the terminal data, just output it.
+    }
+    
+    apply = function(data,rule,path)                      // applies the rule to the data node (that is on the path) 
+    {
+      for( var rel in rule )
+      {
+        if( typeof rel == #string ) out << rel;           // string - output it
+        else if( rel === proxy ) processData(data,path);  // the proxy - process data node it is representing
+        else if(typeof rel == #symbol)                    // symbol marks property invocation, produced by <DataProxy.property undefined()>
+        {
+          var member = data[rel];
+          if( member !== undefined )
+          {
+            var p = path + "." + rel; var r = rules[p];
+            if( r ) apply( member, r, p );                // if member rule found, apply it to the member data
+            else out << member.toHtmlString();            // otherwise output it.
+          }
+        }
+      }
+    }
+    // and finally apply root rule to the root data node
+    apply(data,rules[""] || [proxy],"");
+    
+    if( stream ) return stream;  // if stream was provided - return it.
+    var rv = out.toString();     // otherwise return string from string builder (our in-memory stream).
+    out.close();
+    return rv;
+  }  
+}

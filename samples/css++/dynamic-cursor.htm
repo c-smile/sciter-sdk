@@ -1,0 +1,36 @@
+<html>
+	<head>
+		<title>Animated cursor</title>
+	    <style type="text/css"> 
+
+    div
+    {
+      border: 1px solid;
+      width:50%;
+      height:50px;
+      padding:10px;
+      text-align:center;
+      vertical-align:middle;
+    }
+ 
+	</style>
+  
+  <script type="text/tiscript"> 
+    $(button#set).on("click", function(){
+      var img = this.loadImage("images/cursor.png");
+      $(div).style.cursor(img,24,24);
+    });
+    $(button#reset).on("click", function(){
+      $(div).style.cursor(null);
+    });
+  </script>
+  
+	</head>
+<body>
+  <button#set>set cursor</button>
+  <button#reset>reset cursor</button>
+  <div id="pngcur">
+    <p>Move mouse here, you should see cursor created from PNG image.</p>
+  </div>
+</body>
+</html>

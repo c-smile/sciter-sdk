@@ -1,0 +1,45 @@
+﻿<html>
+  <head>
+    <title>Plus: very basic sample</title>
+    <style>
+      @import url(../plus.css); 
+      @import url(../../note.css); 
+      
+      output { display: inline-block; border: 1px gray dotted; }
+    </style>
+    
+    <script type="text/tiscript">
+    
+      include "../plus.tis"; // model below uses @observing decorator defined in plus.tis
+  
+      namespace Data // our model
+      {  
+        var celsius = 0; 
+        var fahrenheit = 32;
+        
+        // this function is observing 'celsius' and calculates 'fahrenheit'
+        @observing "celsius"
+          function toFahrenheit() {
+            fahrenheit = celsius.toFloat() * 9 / 5 + 32;
+          }
+        // this function is observing 'fahrenheit' and calculates 'celsius'
+        @observing "fahrenheit"
+          function toCelcius() {
+            celsius = (fahrenheit.toFloat() - 32) * 5 / 9;
+          }
+        
+      }    
+    
+    </script>
+  </head>
+
+<body model="Data"> <!-- define data model we observe -->
+
+  <note>Two inputs below are bound with <code>celsius</code> and <code>fahrenheit</code> variables.
+  There are also two observing functions that calculate conversions.
+  <br>Type in either one of them to get result in other field.</note>
+
+  <p><input|number(celsius) >°C and <input|number(fahrenheit)>°F</p>
+
+</body>
+</html>

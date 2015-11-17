@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      table { size:300dip; flow:table-fixed; padding:0; border-spacing:0; border:1px solid; }
+      
+      table > tbody { overflow:scroll-indicator; }
+    
+      tr.placeholder { background:#ddd; }
+      tr.placeholder > td { visibility:hidden; }
+      
+      tr:moving { background-color:yellow;  }
+      
+      td { padding:4px; width:*; border-bottom:1px solid #ccc; }
+    
+    
+    </style>
+    <script type="text/tiscript">
+    
+    include "ddm.tis";
+    
+    function self.ready() {
+      DragDrop
+      {
+        what      : "tbody>tr:not(.fixed)",
+        where     : "tbody",
+        container : "tbody",
+        notBefore : "tbody>tr.fixed",
+        //autoScroll: false
+      };
+    }
+    
+    </script>
+  </head>
+<body>
+
+<table>
+  <tbody>
+    <tr><td>1.aaa</td><td>bbb</td></tr>
+    <tr><td>1.ccc</td><td>ddd</td></tr>
+    <tr><td>1.eee</td><td>fff</td></tr>
+    <tr.fixed><td>2.fixed.aaa</td><td>bbb</td></tr>
+    <tr.fixed><td>2.fixed.ccc</td><td>ddd</td></tr>
+    <tr.fixed><td>2.fixed.eee</td><td>fff</td></tr>
+    <tr><td>3.aaa</td><td>bbb</td></tr>
+    <tr><td>3.ccc</td><td>ddd</td></tr>
+    <tr><td>3.eee</td><td>fff</td></tr>
+  </tbody>
+</table>
+
+
+</body>
+</html>

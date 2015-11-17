@@ -1,0 +1,137 @@
+@set virtual-grid 
+{
+  :root 
+  {
+    prototype: VGrid;
+    
+    //background-color:window;
+    //border:1px solid threedshadow;
+    flow: horizontal;
+  }
+  :root > table 
+  { 
+    width:*;
+    height:*;
+    background-color:window;
+    flow:table-fixed; /* enforce fixed layout on the table 
+		                     to avoid column width changes 
+												 when new rows are pumping up */
+    overflow-x:auto; /* but x is scrollable */
+    overflow-y:hidden; /* but x is scrollable */
+    border-spacing:0;
+  }
+  
+  :root > table > tbody
+  { 
+    width:*;
+    height:*;
+    overflow:hidden;
+    border-spacing:0px;
+  }
+  
+  :root > table > thead
+  {
+    border-spacing:0;
+    behavior:column-resizer;    
+  }
+  
+  :root > table > thead > tr > th
+  {
+    width:*;
+    min-width:1em;
+    font:system;
+    line-height: 1.6em;
+    white-space:nowrap; overflow-x:hidden; text-overflow:ellipsis; /* ellipsis */
+    background: url(theme:column-header-normal) stretch;
+  }
+  
+  :root > table > thead > tr > th[sortType='ascending']
+  {
+    foreground-image:url("stock:arrow-down"); 
+    foreground-position-top: 50%;
+    foreground-position-right: 5px;
+    foreground-repeat: no-repeat;
+  }
+  
+  :root > table > thead > tr > th[sortType='descending']
+  {
+    foreground-image:url("stock:arrow-up"); 
+    foreground-position-top: 50%;
+    foreground-position-right: 5px;
+    foreground-repeat: no-repeat;  
+  }
+    
+  :root > table > thead > tr > th:hover
+  {
+    background-image: url(theme:column-header-hover);
+  }
+  :root > table > thead > tr > th:active
+  {
+    background-image: url(theme:column-header-pressed);
+  }
+    
+  :root > table > tbody > tr > td
+  {
+    height: 1.4em; 
+    white-space:nowrap; overflow-x:hidden; text-overflow:ellipsis; /* ellipsis */
+    border-right: 1px solid threedlight;
+    padding-left:3px;
+    font-size: 10pt;
+  }
+    
+  :root > table > tbody > tr
+  {
+    border-bottom:1px solid threedface;
+    background-repeat: stretch;
+  }
+
+  :root > table > tbody > tr[hidden]
+  {
+    visibility:hidden;
+    /*border-bottom:transparent;*/
+  }
+    
+  :root > table > tbody > tr[beforecurrent]
+  {
+    border-bottom:transparent;
+  }
+
+  :root > table > tbody > tr:hover  
+  {
+    background-image: url(theme:list-view-item-hover);  
+  }
+    
+  :root > table > tbody > tr:current
+  {
+    //border-style:none;
+    //border-radius:4px;    
+    //background-color: highlight;
+    //color:highlighttext;
+    background-image: url(theme:list-view-item-selected);
+    
+    
+    /*border-bottom:transparent;*/
+  }
+ 
+  :root > table > tbody > tr:current > td
+  {
+    border-right: 1px solid transparent;
+  }
+    
+  :root > [type="vscrollbar"]
+  {
+    visibility:collapse; /* initially invisible */
+  }
+  
+  :root > [type="vscrollbar"][visible]
+  {
+    visibility:visible;
+  }
+  
+  :root > table > tbody > tr:moving { background-image: url(theme:list-view-item-selected); }
+      
+  :root > table > tbody > tr:drag-source { background:#eee;  }
+  :root > table > tbody > tr:drag-source > td { visibility:hidden;  }
+
+  
+}

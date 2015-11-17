@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <title>Index object</title>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>Index object</h1>
+  <p>Index object in persistent storage.</p>
+  
+    <dl>
+      
+        
+        <h2>Properties</h2>
+      
+        <dt>length</dt>
+        <dd>- <em>integer</em>, length of an index, number of objects associated represented by the index. Read-only property.</dd>
+      
+        <dt>asc</dt>
+        <dd>- <em>boolean</em>, direction of access of objects from the index. Write-only property.</dd>
+      
+        <dt>[key]</dt>
+        <dd><strong>- </strong><em>value</em>, element of the DbIndex at the <em>key</em> position. Read/Write accessor by <em>key</em>. <em>key</em> has to be of the same type as the type of <em>DbIndex</em> object</dd>
+      
+        <dt>[begin..end]</dt>
+        <dd><strong>- </strong><em>keys</em>, keys of first and last element of the range. Returns slice of DbIndex which contains elements from <em>start</em> key and up to <em>end</em> key. <br/><em>begin is a </em>low<em> boundary of key value (if null then there is no low boundary)</em>.<br/><em>end</em> is a high boundary of key value (if <em>null</em> then there is no high boundary).</dd>
+      
+        
+          <h2>Methods</h2>
+      
+        <dt>add</dt>
+        <dd>
+          <p>( key, val [, replace: true|false ] ) : true|false</p>
+          <p>Inserts <em>val</em> object into <em>Index</em> and associates it with <em>key</em> value. Optionally replaces it with existing object if it exists.</p></dd>
+      
+        <dt>remove</dt>
+        <dd>
+          <div>( key [,obj] ) returns: true | false</div>
+          <p>Method removes object <em>obj</em> by <em>key</em> from the index. Method returns <em>true</em> on success, otherwise <em>false</em>.<br/>If <em>Index</em> is unique, <em>obj</em> is optional.</p></dd>
+      
+        <dt>select</dt>
+        <dd>
+          <p>( min-key, max-key [, ascent [, start-inclusive [, end-inclusive]]] ) returns: selection object.</p>
+          <p>Returns selection in the <em>Index</em> based on criteria <em>min-key, max-key, ascent </em>or<em> descent </em>order<em>, start-inclusive, end-inclusive</em>. Default values:</p>
+          <ul>
+            <li><em>ascent = true</em></li>
+            <li><em>start-inclusive = true</em></li>
+            <li><em>end-inclusive = true</em></li></ul>
+          <p>Example:<br/>var sel = index.select(minVal, maxVal, true);<br/>for( var obj in sel ) { ... }</p></dd></dl>
+</body>
+</html>

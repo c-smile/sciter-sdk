@@ -1,0 +1,32 @@
+<html>
+    <head>
+       <style type="text/css">
+          div#container {
+                 position: absolute; 
+                 top: 100px;
+                 size : 200px;
+                 background-color: green;
+                 border-radius:10px;
+             }
+          </style>
+           <script type="text/tiscript">
+                  self.ready = function() {
+                  
+                    function paint(gfx) {
+                       gfx.pushLayer(#background-area);
+                       gfx.fillColor(color(255,255,0));
+                       gfx.star(100, 100, 150, 70, 0.0, 5);
+                       gfx.popLayer();
+                    }
+
+                    $(#container).paintContent = paint;
+                    $(#container).refresh();
+                }
+          </script>
+        </head>
+        <body>
+          <p><code>gfx.pushLayer(#background-area);</code> demo.</p>
+          <p>The star should be contained in the rounded square.</p>
+        <div id="container"></div>
+     </body>
+</html>

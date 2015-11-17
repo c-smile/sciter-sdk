@@ -1,0 +1,127 @@
+
+// parseXML parses input string or stream and invokes callbacks methods.
+// callbacks here is a map of "element/path":callbackObject pairs where
+// callbackObject is a:
+//   {
+//      start: function(attributes) - called when head processed 
+//      end: function(attributes) - called when tail processed  
+//      text: function(text) - called when text chunk inside the element encounterd  
+//      data: function(text) - called when CDATA chunk inside the element encounterd  
+//      html: function(html) - designates that this element contains html inside and so everything until its closed tag has to be treated as html text 
+//                             This member is mutually exclusive with all otheres. 
+//   }
+// See: xml-parser.htm sample. 
+
+function parseXML( streamOrString, callbacks )
+{
+  assert streamOrString;
+
+  var stream = null;
+  
+  if( streamOrString instanceof String)
+    stream = Stream.openString(streamOrString);
+  else if( streamOrString instanceof Stream)
+    stream = streamOrString;
+  else 
+    throw String.$(Unexpected type of input {typeof streamOrString});
+  
+  var scanner = new XMLScanner( stream );
+  var path = "";
+  
+  function scanNode()
+  {
+    // caller consumed <tag
+    var saved_path = path; 
+    path = String.$({path}/{scanner.tag}); // make a path
+    var cb = callbacks[path];
+    var atts = {};
+    var tag = scanner.tag;
+    
+    stdout.println("scanning node", tag, path);
+    
+    if(!cb || !cb.html)
+      while:loop (var token = scanner.token())
+        switch( token )
+        {
+          case XMLScanner.EOF:            return;
+          case XMLScanner.ERROR:          throw String.$(XML error at line {scanner.lineNo});
+          case XMLScanner.TEXT:           if(cb && cb.text) cb.text(scanner.value); continue; 
+          case XMLScanner.CDATA:          if(cb && cb.data) cb.data(scanner.value); 
+                                          else if(cb && cb.text) cb.text(scanner.value); 
+                                          continue; 
+          case XMLScanner.HEAD_END:       if(cb && cb.start) cb.start(atts); continue; 
+          case XMLScanner.EMPTY_HEAD_END: if(cb) { if(cb.start) cb.start(atts); if(cb.end) cb.end(atts); }
+                                          break loop; 
+          case XMLScanner.ATTR:           atts[symbol(scanner.attribute)] = scanner.value; continue;
+          case XMLScanner.TAIL:           if( scanner.tag == tag ) 
+                                          {
+                                            if(cb && cb.end) cb.end(atts);
+                                            break loop;
+                                          }
+                                          else
+                                            throw String.$(Unexpected tail of {scanner.tag} at line {scanner.lineNo});
+          case XMLScanner.HEAD:           scanNode(); continue; // note: recursive call
+        }
+      else //cb.html inside 
+      {
+        // cb.html means that any markup inside has to be treated as text
+        // 1) collect attributes until head end
+        while:head_loop (var token = scanner.token())
+          switch( token )
+          {
+            case XMLScanner.EOF:            throw String.$(XML error at line {scanner.lineNo}, <{tag} tag is not closed );
+            case XMLScanner.ERROR:          throw String.$(XML error at line {scanner.lineNo});
+            case XMLScanner.HEAD_END:       break head_loop; 
+            case XMLScanner.EMPTY_HEAD_END: cb.html(atts,""); return;
+            case XMLScanner.ATTR:           atts[symbol(scanner.attribute)] = scanner.value; continue;
+            case XMLScanner.HEAD:           
+            case XMLScanner.TEXT:           
+            case XMLScanner.CDATA:          
+            case XMLScanner.TAIL:           assert false;
+
+            
+          }
+        var content = [];
+        // 2) collect body until end tag is seen
+        while:loop (var token = scanner.token())
+          switch( token )
+          {
+            case XMLScanner.EOF:            throw String.$(XML error at line {scanner.lineNo}, <{tag} tag is not closed );
+            case XMLScanner.ERROR:          throw String.$(XML error at line {scanner.lineNo});
+            case XMLScanner.TEXT:           content.push(scanner.value.toHtmlString()); continue; 
+            case XMLScanner.CDATA:          content.push(scanner.value.toHtmlString()); continue; 
+            case XMLScanner.HEAD_END:       content.push(" >"); continue; 
+            case XMLScanner.EMPTY_HEAD_END: content.push(" />"); continue; 
+            case XMLScanner.ATTR:           content.push(String.printf(" %s=\"%s\"", scanner.attribute, scanner.value.toHtmlString())); continue;
+            case XMLScanner.TAIL:           if( scanner.tag == tag ) { cb.html( atts, content.join("") ); break loop; }
+                                            else
+                                              content.push(String.printf("</%s>", scanner.tag)); 
+                                            continue;
+            case XMLScanner.HEAD:           content.push(String.printf("<%s", scanner.tag)); continue; 
+          }
+      }
+      
+        
+    path = saved_path;
+  }
+  
+  try 
+  {
+    while:loop (var token = scanner.token())
+    {
+      switch( token )
+      {
+        case XMLScanner.EOF:            break loop;
+        case XMLScanner.ERROR:          throw String.$(XML error at line {scanner.lineNo});
+        case XMLScanner.HEAD:           scanNode(); break; // processing root node
+        default:                        continue;
+      }
+    }
+  }
+  finally
+  {
+    if( streamOrString !== stream )
+      stream.close(); // as it is our temporary stream.
+    
+  }
+}

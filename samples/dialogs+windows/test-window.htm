@@ -1,0 +1,147 @@
+<html>
+  <head>
+    <title></title>
+    <style></style>
+    <script type="text/tiscript">
+    
+    !function() 
+    {
+      var other;
+    
+      $(#simple).onClick = function() {
+        other = view.window{
+				  type:View.TOOL_WINDOW,
+          url: self.url("samples/sample-tool-window.htm"),
+          //x:100,
+          //y:100,
+          width : 640,
+          height : 480,
+					alignment: 5
+        };
+      }  
+      
+      $(#frame).onClick = function() {
+        other = view.window{
+          type:View.FRAME_WINDOW,
+          url: self.url("samples/sample-frame-window.htm"),
+          x:100,
+          y:100,
+          width : 480,
+          height : 320,
+          state: View.WINDOW_SHOWN,
+          alignment:3,
+        };
+      }  
+      
+    
+     $(#custom-tool).onClick = function() {
+        other = view.window{
+          type:View.TOOL_WINDOW,
+          url: self.url("samples/sample-window-custom.htm"),
+          alignment: 5,
+          screen:1,
+          //x:200,
+          //y:100,
+          //width : 200,
+          //height : 200
+        };
+      }      
+     $(#custom-frame).onClick = function() {
+        other = view.window{
+          type:View.FRAME_WINDOW,
+          url: self.url("samples/sample-window-custom.htm"),
+          alignment: 5,
+          screen:1,
+          //x:200,
+          //y:100,
+          //width : 200,
+          //height : 200
+        };
+      }      
+      
+     $(#popup).onClick = function() {
+        other = view.window{
+          url: self.url("samples/sample-popup.htm"),
+          type: View.POPUP_WINDOW,
+          state: View.WINDOW_HIDDEN, // initially hidden (for testing)
+          alignment: 5,
+          //x:200,
+          //y:100,
+          width : 200,
+          height : 200
+        };
+      }      
+      
+
+     $(#with-params).onClick = function() {
+     
+        function onClose() {
+          stdout.println("other window closed");
+        }
+     
+        // opening window with passing additional onClose callback parameter
+        other = view.window{
+          url: self.url("samples/sample-params-window.htm"),
+          x:200,
+          y:100,
+          width : 200,
+          height : 200,
+          parameters: { // view.parameters inside new window
+            onClose: onClose 
+          }
+        };
+      }      
+      
+      
+    $(#tool-full-screen).onClick = function() {
+     
+        other = view.window{
+          url: self.url("samples/sample-tool-window-full-screen.htm"),
+          x:200,
+          y:100,
+          width : 200,
+          height : 200,
+        };
+      }      
+      
+    $(#tool-layered).onClick = function() {
+     
+        other = view.window{
+          url: self.url("samples/sample-layered-tool.htm"),
+          alignment:5,
+         };
+      }      
+
+
+      
+    $(#hide).onClick = function() {
+      if(other)
+        other.state = View.WINDOW_HIDDEN;
+    }
+    $(#show).onClick = function() {
+      if(other)
+        other.state = View.WINDOW_SHOWN;
+    }
+      
+  }();
+    
+    
+    </script>
+  </head>
+<body>
+  <button #simple>Tool window</button>
+  <button #frame>Frame window</button>
+  <button #custom-tool>Custom tool window</button>
+  <button #custom-frame>Custom frame window</button>
+  <button #popup>Popup window</button>
+  <button #with-params>window with parameters</button>
+  
+  <button #tool-full-screen>tool + full screen</button>
+  <button #tool-layered>tool + layered</button>
+  
+  <hr>
+  <button #hide>hide last window</button>
+  <button #show>show last window</button>
+  
+</body>
+</html>

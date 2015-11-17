@@ -1,0 +1,63 @@
+﻿<html>
+  <head>
+    <title>Pager template format</title>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>behavior:pager</h1>
+  <p>This element handles functionality of &lt;frame|pager&gt; and &lt;frame type=pager&gt; elements.</p>
+  <p>The pager implements print preview and printing functionality.</p>
+  <p>The behavior can be applied to any block element.</p>
+  <h2>Elements</h2>
+  <p>These elements have <em>behavior:frame</em> applied by default:</p>
+  <ul>
+    <li><code>&lt;frame|pager&gt;</code> - paged print preview container;</li></ul>
+  <h2>Model</h2>
+  <p>After loading document in it the &lt;frame|pager&gt; the element will have as number of child &lt;pagebox&gt;es as defined by <code>cols</code> and <code>rows</code> attributes:</p>
+  <pre>&lt;frame|pager cols=2&gt;
+   &lt;pagebox/&gt;
+   &lt;pagebox/&gt;
+&lt;/frame&gt;
+</pre>
+  <p>Each &lt;pagebox/&gt; renders its own instance of the template inside representing page to be printed.</p>
+  <h2>Attributes</h2>
+  <p>&lt;frame&gt; attributes that have special meaning:</p>
+  <ul>
+    <li><code>src=&quot;url&quot;</code> - optional, URL of document to load in the frame;</li>
+    <li><code>page-template=&quot;url&quot;</code> - optional, URL of page template document;</li>
+    <li><code>cols=&quot;number&quot;</code> and <code>rows=&quot;number&quot;</code> - these attributes define number of &lt;pagebox&gt;'es in print preview.</li></ul>
+  <h2>State flags</h2>
+  <ul>
+    <li>N/A</li></ul>
+  <h2>Events</h2>
+  <ul>
+    <li><code>&quot;paginationstart&quot;</code> event - generated as a first step of document pagination. At this moment printing document is loaded;</li>
+    <li><code>&quot;paginationpage&quot;</code> event - generated for each page, event.reason is a page number - 1...N;</li>
+    <li><code>&quot;paginationend&quot;</code> event - generated as a last step of document pagination. At this moment number of pages is known and reported by event.reason field.</li></ul>
+  <h2>Methods</h2>
+  <dl>
+    <dt>loadDocument</dt>
+    <dd>([templateUrl:string], documentUrl:string) - initiates loading of the document and template from given URLs;</dd>
+    <dt>pagesTotal</dt>
+    <dd>() : integer, returns number of pages found;</dd>
+    <dt>pageNo</dt>
+    <dd>() : integer, returns first page number rendered in the view;</dd>
+    <dt>pageNo</dt>
+    <dd>(number: integer), navigates view to page number;</dd>
+    <dt>selectPrinter</dt>
+    <dd>() : opens system select printer dialog to select target printer, configures page size accordingly, may start pagination process.</dd>
+    <dt>selectDefaultPrinter()</dt>
+    <dd>() : selects default printer as a print target, may start pagination process.</dd>
+    <dt>print</dt>
+    <dd>() - prints current document on target printer.</dd></dl>
+  <h2>Value</h2>
+  <p>N/A</p>
+  <h2>Frame events handling in script</h2>
+  <pre>var pager = $(frame#pager);
+
+pager.on(&quot;paginationstart&quot;, function() {...});
+pager.on(&quot;paginationend&quot;, function(evt) { var npages = evt.reason; ...});
+
+</pre>
+</body>
+</html>

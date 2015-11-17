@@ -1,0 +1,147 @@
+<html>
+  <head>
+    <title>Sciter ImGraphics</title>
+    <style>
+      html { background: transparent; }
+      widget.drawing
+      {
+        prototype:Drawable;
+        size: *;
+      }
+      
+      div#content { 
+        background-color:red;
+        visibility:collapse; 
+      }
+
+      //widget:hover /* just for fun */
+      //{
+      //  transform: rotate(35deg) scale(.5);
+      //  transition: transform(quart-out,0.5s,quart-in);
+      //}
+      
+    </style>
+    <script type="text/tiscript">
+      class Drawable : Behavior
+      {
+        const SCALE_STEP = 0.005;
+        function attached() 
+        { // attaching the paint() to paintContent layer handler
+          this.paintContent = this.paint;
+          this.image = null;
+          this.post(::this.animate(this.animationStep));
+          this.scale = 1.0;
+          this.scaleStep = -SCALE_STEP;
+        }
+        
+        // function is called while handling WM_PAINT 
+        function paint(gfx)
+        {
+          var (w,h) = this.box(#dimension);
+          if( !this.image ) 
+            this.image = new Image(w,h, $(div#content) ); // make snapshot of the element in the image
+          
+          var (iw,ih) = this.image.size();
+          iw *= this.scale;
+          ih *= this.scale;
+          
+          var x = (w-iw)/2.0, y = (h-ih)/2.0;
+          
+          gfx.blendImage(this.image,x, y,iw,ih,this.scale);
+          //gfx.blendImage(this.image,x, y,iw,ih);
+        }
+        
+        function animationStep()
+        {
+          if(this.scaleStep < 0.0) 
+          {
+            if( this.scale < 0.5 ) { this.scale = 0.5; this.scaleStep = SCALE_STEP; }
+            else this.scale += this.scaleStep;
+          } else {
+            if( this.scale >= 1.0 ) { this.scale = 1.0; this.scaleStep = -SCALE_STEP; }
+            else this.scale += this.scaleStep;
+          }
+          this.refresh();
+          return View.ANIMATION_TIMER_SPAN;
+        }
+      }
+    </script>
+  </head>
+<body>
+  <h1>Demo of element-to-image rendering and Graphics.blendImage</h1>
+  <widget .drawing></widget>
+  <div #content>
+      <h2>Standard HTML4 inputs</h2>
+  
+      <h3>Inline-block versions</h3>
+      select:
+      <select size=4>
+        <optgroup label="First quater">
+          <option>One</option>
+          <option selected>Two</option>
+          <option>Three</option>
+          <option>Four</option>
+        </optgroup>
+        <option>Five</option>
+        <option>Six</option>
+        <option>Seven</option>
+        <option>Eight</option>
+        <option>Nine</option>
+        <option>Ten</option>
+        <option>Eleven</option>
+        <option>Twelve</option>
+      </select>
+      combobox <select>
+        <option>One</option>
+        <option>Two</option>
+        <option>Three</option>
+        <option selected>Four</option>
+        <option>Five</option>
+        <option>Six</option>
+        <option>Seven</option>
+        <option>Eight</option>
+        <option>Nine</option>
+        <option>Ten</option>
+        <option>Eleven</option>
+        <option>Twelve</option>
+      </select>
+
+      textarea <textarea cols=40 rows=4>Sample</textarea>
+      edit <input type="text" value="sample" />
+      <button type="checkbox">Checkbox</button>
+      <button type="radio" name="rg1" checked>radio 1</button>
+             <button type="radio" name="rg1">radio 2</button>
+             <button type="radio" name="rg1">radio 3</button>
+      
+      <h2>HTML5 + HSMILE inputs</h2>  
+      
+      <p>Date: <input type="date" value="today" /> Time: <input type="time" value="now" /></p>
+      <p>Calendar: <input type="calendar" value="today" /></p>
+      
+      <h2>Block versions</h2>
+      <div .h-flow>
+        <select size=4 .block>
+          <optgroup label="First quarter">
+            <option>One</option>
+            <option>Two</option>
+            <option>Three</option>
+            <option>Four</option>
+          </optgroup>
+          <optgroup label="Second quarter">
+            <option>Five</option>
+            <option>Six</option>
+            <option>Seven</option>
+            <option>Eight</option>
+          </optgroup>
+          <optgroup label="Third quarter">
+            <option>Nine</option>
+            <option>Ten</option>
+            <option>Eleven</option>
+            <option>Twelve</option>
+          </optgroup>
+        </select>
+        <textarea cols=40 rows=4>Sample</textarea>
+      </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<html>
+  <head>
+    <title></title>
+    <style></style>
+    <script type="text/tiscript">
+    
+    function self.ready() {
+      view.aspectRatio = 4.0/3.0;
+      var (x,y,w,h) = view.box(#rectw,#client,#screen);
+      view.move(x,y,(h * view.aspectRatio).toInteger(), h , true);
+    }
+    
+    </script>
+  </head>
+<body>
+
+  aspectRatio of client area is 4/3
+
+</body>
+</html>

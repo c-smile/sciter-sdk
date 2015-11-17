@@ -1,0 +1,76 @@
+<html>
+  <head>
+    <title>Integer object</title>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>Integer object</h1>
+  <p>Integer values are &quot;objects&quot; of this class.</p>
+  
+    <dl>
+      
+        
+          <h2>Constants</h2>
+      
+        <dt>MIN</dt>
+        <dd>- <em>integer</em>, minimal value of integer type.</dd>
+      
+        <dt>MAX</dt>
+        <dd>- <em>integer</em>, maximal value of integer type.</dd>
+      
+        
+          <h2>Methods</h2>
+      
+        <dt>toFloat</dt>
+        <dd>
+          <p>( ) : float</p>
+          <p>Converts this integer value to float.</p></dd>
+      
+        <dt>toInteger</dt>
+        <dd>
+          <p>( ) : int</p>
+          <p>Simply returns value of the integer.</p></dd>
+      
+        <dt>toString</dt>
+        <dd>
+          <div>( [<strong>radix</strong>: int] ) : string</div>
+          <p>Returns string representation of the integer using one of radix value: 10(default), 8 or 16.</p></dd>
+      
+        <dt>toHtmlString</dt>
+        <dd>
+          <p><strong>( </strong>[<strong>radix</strong>: int]<strong> )</strong> : string</p>
+          <p>Returns string escaped by html rules. Is an alias of the toString() method here.</p></dd>
+      
+        <dt>toUrlString</dt>
+        <dd>
+          <p><strong>( </strong>[<strong>radix</strong>: int]<strong> )</strong> : string</p>
+          <p>Returns string escaped by url rules. Is an alias of the toString() method here.</p></dd>
+      
+        <dt>valueOf</dt>
+        <dd>
+          <div><strong>()</strong> : int</div>
+          <p>Simply returns value of the integer itself.</p></dd>
+      
+        <dt>min</dt>
+        <dd>
+          <p><strong>( ... )</strong> : int</p>
+          <p>Static method - returns minimum value of arguments. E.g. Integer.min(1, 2, 3) will return 1.</p></dd>
+      
+        <dt>max</dt>
+        <dd>
+          <p><strong>( ... )</strong> : int</p>
+          <p>Static method - returns maximum value of arguments. E.g. Integer.min(1, 2, 3) will return 1.</p></dd>
+      
+        <dt>limit</dt>
+        <dd>
+          <p>( min:int, max:int ) : int</p>
+          <p>This is exactly the following:</p>
+          <pre>function Integer.limit(min, max) 
+{
+   if( this &lt; min ) return min;
+   if( this &gt; max ) return max;
+   return this;
+}
+</pre></dd></dl>
+</body>
+</html>

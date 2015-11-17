@@ -1,0 +1,175 @@
+
+
+class Tabs : Behavior 
+{
+    function attached() 
+    { 
+      //if( ! this.length )
+      //  return;
+      var labels = this.$(:root>labels);
+      if( !labels )
+      {
+        labels = this.attributes["labels"];
+        if( labels ) 
+          labels = self.select(labels);
+        if( labels )
+          labels.on("mousedown", this.onMouse)
+                .on("dblclick", this.onMouse);
+        else
+          this.append( labels = new Element("labels") );
+      }
+      
+      this.labels = labels;
+        //this.init();
+        
+      this.state.focusable = true;
+        
+      var label = labels.$(:root>label[selected]) || labels.$(:root>label:first-child); // initialy selected tab or the first one
+
+      if(label) 
+      { 
+        var name = label.attributes["for"];
+        // find panel we need to show by default 
+        var panel = this.$(:root>[name='{name}'],:root>#{name});
+        assert panel : "Tab panel with the name " + name + " not found";
+        this.activate(label, false);
+      }
+      this.on("ensure-visible", function(evt) { this.ensureVisible(evt.target); });
+    }
+     
+    // get/set current tab by name
+    property current(v) {
+      get {
+        var label = this.labels.$(:root>label:current);
+        return label ? label.attributes["for"] : undefined;
+      } 
+      set {
+        if( v instanceof Element ) v = v.attributes["name"];
+        var label = this.labels.$(:root>label[for='{v}']);
+        this.activate(label,false);
+      }
+    }
+    
+    property hasTabs(v) {
+      get { return this.labels.length != 0; } 
+    }
+
+    function onMouse(event)
+    {
+      if( event.type != (Event.MOUSE_DOWN | Event.SINKING) && event.type != (Event.MOUSE_DCLICK | Event.SINKING))
+        return false;
+        
+      var label = event.target.$p(label);
+      
+      if( label && label.parent === this.$(:root>labels) )
+        return this.activate( label );
+        
+      return false;        
+    }
+    
+    function onFocus(event) {
+      switch( event.type )
+      {
+        case Event.GOT_FOCUS: /*stdout.println("focus");*/ break;
+      }
+    
+    } // it is here to indicate that it needs focus.
+
+    function onKey(event) 
+    { 
+      if(event.type != Event.KEY_DOWN)
+        return false; // we are handling only KEY_DOWN here
+        
+      if(!this.state.focus)
+        return false;
+
+      var currentLabel = this.$(:root>labels>label:current);
+
+      switch( event.keyCode )
+      {
+        case Event.VK_TAB: 
+          if( event.ctrlKey ) 
+            return this.activate( event.shiftKey? currentLabel.prior : currentLabel.next );
+          break;
+        case Event.VK_LEFT: return this.activate( currentLabel.prior );
+        case Event.VK_RIGHT: return this.activate( currentLabel.next );
+        case Event.VK_HOME: return this.activate( currentLabel.parent.first );
+        case Event.VK_END: return this.activate( currentLabel.parent.last );
+      }
+      return false; 
+    }
+    
+    function ensureVisible(element) {
+      if( !element )
+        return;
+      if( element.parent !== this )
+        this.ensureVisible(element.parent);
+      else {
+        // element is the tab: element.parent === this;
+        var name = element.attributes["name"]; assert name;
+        var label = this.$(:root>labels>label[for={name}]); assert label;
+        this.activate(label);
+      }
+    }
+
+    // a.k.a. select tab, label here is a <label> inside <labels> 
+    function activate( label, notify = true )
+    {
+      if( !label )
+        return false;
+      if(label.state.current)
+        // already selected, nothing to do...
+        return true; // but we've handled it.
+     
+      var labels = this.labels;
+     
+      //find currently selected element (tab and panel) and remove "selected" from them
+      var currentPanel = this.$(:root>[name]:expanded,:root>[id]:expanded);
+      var currentLabel = labels.$(label:current);
+
+      // find new tab and panel       
+      var name = label.attributes["for"];
+      var panel = this.$(:root>[name='{name}'],:root>#{name});
+      
+      assert panel : "panel " + name + " not found";
+
+      if( currentPanel ) {
+        currentPanel.state.collapsed = true; // set collapsed in case of someone use it for styling
+        currentPanel.postEvent("collapsed");
+      }
+      if( currentLabel )
+        currentLabel.state.current = false; 
+
+      panel.sendEvent("expanded");
+      labels.state.current = true; 
+      panel.state.expanded = true; // expand it
+      label.state.current = true;
+      
+      this.attributes["state"] = name;
+      
+      if(notify)
+        this.postEvent("statechange");
+      
+      return true;
+    }
+    
+    function addTab(name, caption = undefined, content = undefined) {
+      var labels = this.labels;
+      labels.append( "<label for='" + name + "'>" + (caption || name) + "</label>" );
+      var label = labels.last;
+      this.append(content || "<div/>");
+      var panel = this.last;
+      panel.attributes["name"] = name;
+      this.activate(label);
+      return (panel,label);
+    }
+    function removeTab(name) {
+      var labels = this.labels;
+      var label = labels.$(:root>[for={name}]);
+      var panel = this.$(:root>[name={name}]);
+      var isCurrent = label.state.current;
+      if( label && panel ) { label.remove(); panel.remove(); }
+      if( isCurrent && labels.first)
+         this.activate(labels.first);
+    }
+}

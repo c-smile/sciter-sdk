@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      body { width:max-content; height:max-content; margin:0; padding:10dip; }
+      p { width:max-content; }
+    
+    </style>
+    <script type="text/tiscript">
+    
+    function self.ready() {
+    
+      var (x,y,w,h) = view.box(#rectw,#border,#screen);
+      var (bodyw,bodyh) = $(body).box(#dimension,#margin);
+      view.move(x,y,bodyw,bodyh,true);      
+    }
+    
+    
+    </script>
+  </head>
+<body>
+
+  <p>Open this doc using "load html in view" button</p>
+  <p>Very very very very very very very looooooong string</p>
+
+</body>
+</html>

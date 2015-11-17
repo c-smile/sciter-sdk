@@ -1,0 +1,118 @@
+﻿<html>
+  <head>
+    <title>TIScript - Date object</title>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>Date object</h1>
+  <p>Represents date and time. Local and UTC timezones supported.</p>
+  <dl>
+    <h2>Properties</h2>
+    <h4>local time</h4>
+    <dt>day</dt>
+    <dd bgcolor="#fffff0" valign="middle">- <em>integer</em>, number of the day, from 1 up to number of days in current month. Read/write property.</dd>
+    <dt>month</dt>
+    <dd>- <em>integer</em>, number of the month, from 1 to 12. Read/write property.</dd>
+    <dt>year</dt>
+    <dd>- <em>integer</em>, full number of the year, e.g. 2005. Read/write property.</dd>
+    <dt>hour</dt>
+    <dd>- <em>integer</em>, hour, from 0 to 23. Read/write property.</dd>
+    <dt>minute</dt>
+    <dd>- <em>integer</em>, minute, from 0 to 59. Read/write property.</dd>
+    <dt>second</dt>
+    <dd>- <em>integer</em>, second, from 0 to 59. Read/write property.</dd>
+    <dt>millisecond</dt>
+    <dd>- <em>integer</em>, millisecond, from 0 to 999. Read/write property.</dd>
+    <dt>dayOfWeek</dt>
+    <dd>- <em>integer</em>, number of day of the week, from 0 to 6 where 0 is Monday. Read-only property.</dd>
+    <dt>firstDayOfWeek</dt>
+    <dd>- <em>integer</em>, from 0 to 6 where 0 is Monday - first day of the week in current locale. Read-only class property that can be used as Date.firstDayOfWeek.</dd>
+    <h4>UTC time</h4>
+    <dt>UTCday</dt>
+    <dd>- <em>integer</em>, number of the day, from 1 up to number of days in current month. Read/write property.</dd>
+    <dt>UTCmonth</dt>
+    <dd>- <em>integer</em>, number of the month, from 1 to 12. Read/write property.</dd>
+    <dt>UTCyear</dt>
+    <dd>- <em>integer</em>, full number of the year, e.g. 2005. Read/write property.</dd>
+    <dt>UTChour</dt>
+    <dd>- <em>integer</em>, hour, from 0 to 23. Read/write property.</dd>
+    <dt>UTCminute</dt>
+    <dd>- <em>integer</em>, minute, from 0 to 59. Read/write property.</dd>
+    <dt>UTCsecond</dt>
+    <dd>- <em>integer</em>, second, from 0 to 59. Read/write property.</dd>
+    <dt>UTCmillisecond</dt>
+    <dd>- <em>integer</em>, millisecond, from 0 to 999. Read/write property.</dd>
+    <dt>UTCdayOfWeek</dt>
+    <dd>- <em>integer</em>, number of day of the week, from 0 to 6 where 0 is Monday. Read-only property.</dd>
+    <h2>Methods</h2>
+    <dt>[new Date]</dt>
+    <dd>
+      <p><strong>( </strong>[<em>string</em><strong> </strong>|<strong> </strong>&nbsp;[ year, month, day [, hour [, minute [, second [, millisecond ]]]]]] )</p>
+      <p>Creates new date object. If no parameters were given then initializes date fields to the current time(UTC).<br/>If single <em>string</em> parameter provided then parses date contained in the string.<br/>And if year, month, day, etc. provided uses these numeric values to initialize new Date instance. Note: values are in <strong>UTC</strong> timezone.</p>
+      <p><code>new Date(string)</code> form recognizes date in RFC-822 date format ( <a href="http://www.w3.org/Protocols/rfc822/#z28">http://www.w3.org/Protocols/rfc822/#z28</a> ) and ISO 8601 ( <a href="http://www.w3.org/TR/NOTE-datetime">http://www.w3.org/TR/NOTE-datetime</a> ).</p></dd>
+    <dt>utc</dt>
+    <dd>
+      <p><strong>( </strong>year, month, day [, hour [, minute [, second [, millisecond ]]]]] )</p>
+      <p>Sattic method, constructs new date object from year, month, day, etc. </p>
+      <p>Note: values are in <strong>UTC timezone</strong>.</p>
+      <p>Use it as <code>var date = Date.utc(1999,1,1);</code></p></dd>
+    <dt>local</dt>
+    <dd>
+      <p><strong>( </strong>year, month, day [, hour [, minute [, second [, millisecond ]]]]] )</p>
+      <p>Sattic method, constructs new date object from year, month, day, etc. &nbsp;</p>
+      <p>Note: values are in <strong>local timezone</strong> .</p>
+      <p>Use it as <code>var date = Date.local(1999,1,1);</code></p></dd>
+    <dt>toString</dt>
+    <dd>
+      <div><strong>()</strong> : string</div>
+      <p>Returns RFC-822 string representation of this date object.</p></dd>
+    <dt>toUTCString</dt>
+    <dd>
+      <div><strong>()</strong> : string</div>
+      <p>Returns RFC-822 string representation of this date object as UTC date/time.</p></dd>
+    <dt>toISOString</dt>
+    <dd>
+      <div><strong>(</strong> [<em>asUTC</em>: <em>false|true </em>] <strong>)</strong></div>
+      <p>Returns ISO 8601 string representation of this date object as either local or UTC date/time.</p></dd>
+    <dt>toLocaleString</dt>
+    <dd>
+      <p><strong>( </strong>[<em>longFormat</em>]<strong> )</strong> returns: string</p>
+      <p>Returns string representation of the date using current system settings. Local time.<br/>If <em>longFormat</em> is equal exactly <em>true</em> then formats date using system long date format.</p></dd>
+    <dt>valueOf</dt>
+    <dd>
+      <div><strong>()</strong> returns: <em>float</em></div>
+      <p>Returns stored time value in milliseconds since midnight, January 1, 1970 UTC.</p></dd>
+    <dt>parse</dt>
+    <dd>
+      <p><strong>( </strong><em>string</em><strong> )</strong> returns: <em>float</em> | <em>undefined</em></p>
+      <p>Static method. Tries to parse date in <em>string. </em>If result of parsing is successfull then returns date as <em>number of milliseconds</em> since midnight, January 1, 1970 UTC. <br/>On error returns <em>undefiend</em> value.</p></dd>
+    <dt>UTC</dt>
+    <dd>
+      <p><strong>( </strong>year, month, day [, hour [, minute [, second [, millisecond ]]]]]<strong> )</strong> returns: <em>float</em> | <em>undefined</em></p>
+      <p>Static method. Returns number of milliseconds since midnight, January 1, 1970 UTC up to date defined by parameters</p></dd>
+    <dt>setTime</dt>
+    <dd>
+      <p><strong>( </strong><em>milliseconds</em><strong> )</strong> returns: <em>float</em></p>
+      <p>Sets this date object fields equal to date defined by <em>milliseconds</em> parameter. <em>milliseconds</em> is a number (<strong>float</strong>) of milliseconds since midnight, January 1, 1970 UTC.</p></dd>
+    <dt>monthName</dt>
+    <dd>
+      <div><strong>( </strong><em>longFormat</em><strong> )</strong> returns: <em>string</em></div>
+      <p>Returns name of the month in current user's locale. If <em>longFormat</em> is equal <em>true </em>returns full month name, otherwise - it's abbreviation.</p></dd>
+    <dt>dayOfWeekName</dt>
+    <dd>
+      <div><strong>( </strong><em>longFormat</em><strong> )</strong> returns: <em>string</em></div>
+      <p>Returns name of the day in current user's locale. If <em>longFormat</em> is equal <em>true </em>returns full week day name, otherwise - it's abbreviation.</p></dd>
+    <dt>isDaylight</dt>
+    <dd>
+      <div><strong>(</strong> <strong>)</strong> : <em>true</em> | <em>false</em></div>
+      <p>Returns <em>true</em> if current clock is using daylight saving time.</p></dd>
+    <dt>timeZoneOffset</dt>
+    <dd>
+      <div><strong>(</strong> <strong>)</strong> : <em>integer</em></div>
+      <p>Returns shift in milliseconds of current timezone from GMT.</p></dd>
+    <dt>timeZoneName</dt>
+    <dd>
+      <div><strong>(</strong> <strong>)</strong> : <em>string</em></div>
+      <p>Returns name of current timezone.</p></dd></dl>
+</body>
+</html>

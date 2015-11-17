@@ -1,0 +1,73 @@
+<html>
+  <head>
+    <title>view-positioning-modes</title>
+    <style>
+    
+      label { white-space: nowrap; }
+      form { font: system; flow:row(label,input output); border-spacing:2dip; }
+      form > * { vertical-align:baseline; }
+      form > button { display:block; }
+    
+    </style>
+    <script type="text/tiscript">
+    
+    
+      function updateView(src) {
+
+        return function() {
+          var (bx,by,bwidth,bheight) = view.box( #rectw, #border, #screen );
+          var (cx,cy,cwidth,cheight) = view.box( #rectw, #client, #screen );
+          
+          $(form).value = {
+            src:src,
+            bx:bx,
+            by:by,
+            bwidth:bwidth,
+            bheight:bheight,
+            cx:cx,
+            cy:cy,
+            cwidth:cwidth,
+            cheight:cheight
+          };
+        };
+      }
+      
+      view.on("move",updateView("on move"))
+          .on("size",updateView("on size"))
+          .on("mediachange", updateView("on mediachange"));
+      
+      updateView("initial")();
+      
+      $(button#by-border).on("click",function()
+      {
+        var data = $(form).value;
+        view.move( data.bx, data.by, data.bwidth, data.bheight, false);
+      });
+      
+      $(button#by-client).on("click",function()
+      {
+        var data = $(form).value;
+        view.move( data.cx, data.cy, data.cwidth, data.cheight, true);
+      });
+      
+    
+    </script>
+  </head>
+<body>
+
+  <form>
+    <label>got them by</label><output(src) />
+    <label>border x</label><input|integer(bx) />
+    <label>border y</label><input|integer(by) />
+    <label>border width</label><input|integer(bwidth) />
+    <label>border height</label><input|integer(bheight) />
+    <button #by-border>Set by border</button>
+    <label>client x</label><input|integer(cx) />
+    <label>client y</label><input|integer(cy) />
+    <label>client width</label><input|integer(cwidth) />
+    <label>client height</label><input|integer(cheight) />
+    <button #by-client>Set by client</button>
+  </form>
+
+</body>
+</html>

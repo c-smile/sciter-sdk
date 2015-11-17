@@ -1,0 +1,84 @@
+<html>
+  <head>
+    <title>Repeatable demo: hierarchical structures</title>
+    <style>
+    
+      /* the repeatable rules: */
+      
+      [repeatable] { aspect: Repeatable url(repeatable.tis);  }
+      [repeatable] > * { behavior:form; } /* each repeated child is treated as a form so it can accept object values */     
+           
+
+      body { font: system; } 
+      #tree { line-height: 2em; }
+      #tree li.terminal { flow:horizontal; border-bottom: 1px solid #ccc; }
+      #tree li.terminal > [name=price] { margin-left:*; }      
+      
+      #tree li.group > text { background:#DADADA; }
+     
+    </style>
+    <script type="text/tiscript">
+    
+      var treeData = [
+        { 
+          group: "Fruits", 
+          items: [
+            { product:"Apple", price: 0.95 },
+            { product:"Orange", price: 0.75 },
+            { product:"Pear", price: 1.25 }, 
+            { group: "Exotic Fruits", 
+              items: [
+                { product:"Rambutan", price: 1.95 },
+                { product:"Jackfruit", price: 4.75 },
+                { product:"Passion Fruit", price: 2.45 },
+                { product:"Lychee", price: 1.2 },
+              ]
+            }, 
+          ]
+        },
+        { 
+          group: "Goods", 
+          items: [
+            { product:"Toothbrush", price: 1.75 },
+            { product:"Soap", price: 2.75 },
+          ]
+        },
+        { product:"Gift Card", price: 20.00 },
+      ];
+      
+    </script>
+    
+    <script type="text/tiscript" >
+    
+      function self.ready() {
+      
+        var list = $(ul#tree);
+        
+        list.value = treeData; // render that tree
+      }
+    
+    </script>
+    
+  </head>
+<body>
+
+  Items here reflect hierachical structure of the data:
+ 
+  <ul #tree repeatable>
+  
+    <!-- group of items -->
+    <li if="{items:Array}" class="group">
+      <text name="group" /> 
+      <ul name="items" repeatable></ol> <!-- Note: also repeatable group of items -->
+    </li>
+    
+    <!-- terminal item -->
+    <li class="terminal" >
+      <span name="product" />
+      <output type="currency" name="price" />
+    </li>
+  </ul>
+
+
+</body>
+</html>

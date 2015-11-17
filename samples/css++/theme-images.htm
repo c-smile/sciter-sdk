@@ -1,0 +1,247 @@
+<html>
+<head><style>
+
+/*listitemicon*/
+option img
+{
+  margin:2px;
+	min-width:20px;
+	min-height:20px;
+	//foreground-position:50%50%;
+	foreground-repeat:no-repeat;
+	vertical-align:middle;
+}
+option img[stretch]
+{
+  foreground-repeat:stretch;
+  width:20px;
+	height:20px;  
+}
+
+widget
+{
+	width:max-intrinsic;
+	height:100%%;
+}
+
+div
+{
+	padding:10px;
+	width:100%%;
+	height:100%%;
+}
+
+.header { background-color:threedface; padding:4px; margin:0; }
+
+@media screen && composition-supported
+{
+  /* these work only if Aero DWM is in effect */
+  option { background-color:transparent; background-repeat:stretch; color:windowtext; }
+  widget:focus option:checked { background-image:url(theme:list-view-item-selected); }
+  option:hover { background-image:url(theme:list-view-item-hover); }
+  option:checked { background-image:url(theme:list-view-item-selected-not-focus); }
+  option:checked:hover { background-image:url(theme:list-view-item-selected-hover); }
+  em#is-aero { assigned!: self:value = "Yep!"; }
+}
+
+
+</style></head>
+
+<body style="flow:horizontal">
+
+
+<widget type="select">
+<option><img src="theme:button-normal">button-normal</option>
+<option><img src="theme:button-hover">button-hover</option>
+<option><img src="theme:button-pressed">button-pressed</option>
+<option><img src="theme:button-disabled">button-disabled</option>
+<option><img src="theme:button-defaulted">button-defaulted</option>
+<option><img src="theme:radio-normal">radio-normal</option>
+<option><img src="theme:radio-hover">radio-hover</option>
+<option><img src="theme:radio-pressed">radio-pressed</option>
+<option><img src="theme:radio-disabled">radio-disabled</option>
+<option><img src="theme:radio-checked-normal">radio-checked-normal</option>
+<option><img src="theme:radio-checked-hover">radio-checked-hover</option>
+<option><img src="theme:radio-checked-pressed">radio-checked-pressed</option>
+<option><img src="theme:radio-checked-disabled">radio-checked-disabled</option>
+<option><img src="theme:check-normal">check-normal</option>
+<option><img src="theme:check-hover">check-hover</option>
+<option><img src="theme:check-pressed">check-pressed</option>
+<option><img src="theme:check-disabled">check-disabled</option>
+<option><img src="theme:check-checked-normal">check-checked-normal</option>
+<option><img src="theme:check-checked-hover">check-checked-hover</option>
+<option><img src="theme:check-checked-pressed">check-checked-pressed</option>
+<option><img src="theme:check-checked-disabled">check-checked-disabled</option>
+<option><img src="theme:check-mixed-normal">check-mixed-normal</option>
+<option><img src="theme:check-mixed-hover">check-mixed-hover</option>
+<option><img src="theme:check-mixed-pressed">check-mixed-pressed</option>
+<option><img src="theme:check-mixed-disabled">check-mixed-disabled</option>
+<option><img src="theme:groupbox-normal">groupbox-normal</option>
+<option><img src="theme:groupbox-disabled">groupbox-disabled</option>
+<option><img src="theme:edit-normal">edit-normal</option>
+<option><img src="theme:edit-hot">edit-hot</option>
+<option><img src="theme:edit-selected">edit-selected</option>
+<option><img src="theme:edit-disabled">edit-disabled</option>
+<option><img src="theme:edit-focused">edit-focused</option>
+<option><img src="theme:edit-read-only">edit-read-only</option>
+<option><img src="theme:edit-assist">edit-assist</option>
+<option><img src="theme:v-scrollbar-minus-normal">v-scrollbar-minus-normal</option>
+<option><img src="theme:v-scrollbar-minus-hover">v-scrollbar-minus-hover</option>
+<option><img src="theme:v-scrollbar-minus-pressed">v-scrollbar-minus-pressed</option>
+<option><img src="theme:v-scrollbar-minus-disabled">v-scrollbar-minus-disabled</option>
+<option><img src="theme:v-scrollbar-plus-normal">v-scrollbar-plus-normal</option>
+<option><img src="theme:v-scrollbar-plus-hover">v-scrollbar-plus-hover</option>
+<option><img src="theme:v-scrollbar-plus-pressed">v-scrollbar-plus-pressed</option>
+<option><img src="theme:v-scrollbar-plus-disabled">v-scrollbar-plus-disabled</option>
+<option><img src="theme:v-scrollbar-base">v-scrollbar-base</option>
+<option><img src="theme:v-scrollbar-page-minus-normal">v-scrollbar-page-minus-normal</option>
+<option><img src="theme:v-scrollbar-page-minus-hover">v-scrollbar-page-minus-hover</option>
+<option><img src="theme:v-scrollbar-page-minus-pressed">v-scrollbar-page-minus-pressed</option>
+<option><img src="theme:v-scrollbar-page-minus-disabled">v-scrollbar-page-minus-disabled</option>
+<option><img src="theme:v-scrollbar-page-plus-normal">v-scrollbar-page-plus-normal</option>
+<option><img src="theme:v-scrollbar-page-plus-hover">v-scrollbar-page-plus-hover</option>
+<option><img src="theme:v-scrollbar-page-plus-pressed">v-scrollbar-page-plus-pressed</option>
+<option><img src="theme:v-scrollbar-page-plus-disabled">v-scrollbar-page-plus-disabled</option>
+<option><img src="theme:h-scrollbar-minus-normal">h-scrollbar-minus-normal</option>
+<option><img src="theme:h-scrollbar-minus-hover">h-scrollbar-minus-hover</option>
+<option><img src="theme:h-scrollbar-minus-pressed">h-scrollbar-minus-pressed</option>
+<option><img src="theme:h-scrollbar-minus-disabled">h-scrollbar-minus-disabled</option>
+<option><img src="theme:h-scrollbar-plus-normal">h-scrollbar-plus-normal</option>
+<option><img src="theme:h-scrollbar-plus-hover">h-scrollbar-plus-hover</option>
+<option><img src="theme:h-scrollbar-plus-pressed">h-scrollbar-plus-pressed</option>
+<option><img src="theme:h-scrollbar-plus-disabled">h-scrollbar-plus-disabled</option>
+<option><img src="theme:h-scrollbar-base">h-scrollbar-base</option>
+<option><img src="theme:h-scrollbar-page-minus-normal">h-scrollbar-page-minus-normal</option>
+<option><img src="theme:h-scrollbar-page-minus-hover">h-scrollbar-page-minus-hover</option>
+<option><img src="theme:h-scrollbar-page-minus-pressed">h-scrollbar-page-minus-pressed</option>
+<option><img src="theme:h-scrollbar-page-minus-disabled">h-scrollbar-page-minus-disabled</option>
+<option><img src="theme:h-scrollbar-page-plus-normal">h-scrollbar-page-plus-normal</option>
+<option><img src="theme:h-scrollbar-page-plus-hover">h-scrollbar-page-plus-hover</option>
+<option><img src="theme:h-scrollbar-page-plus-pressed">h-scrollbar-page-plus-pressed</option>
+<option><img src="theme:h-scrollbar-page-plus-disabled">h-scrollbar-page-plus-disabled</option>
+
+<option><img src="theme:tree-view-glyph-closed">tree-view-glyph-closed</option>
+<option><img src="theme:tree-view-glyph-open">tree-view-glyph-open</option>
+
+<option><img src="theme:list-view-item-normal" stretch>list-view-item-normal</option>
+<option><img src="theme:list-view-item-hover"  stretch>list-view-item-hover</option>
+<option><img src="theme:list-view-item-selected"  stretch>list-view-item-selected</option>
+<option><img src="theme:list-view-item-selected-not-focus" stretch>list-view-item-selected-not-focus</option>
+<option><img src="theme:list-view-item-disabled" stretch>list-view-item-disabled</option>
+<option><img src="theme:list-view-item-selected-hover" stretch>list-view-item-selected-hover</option>
+
+<option><img src="theme:combobox-button-normal">combobox-button-normal</option>
+<option><img src="theme:combobox-button-hover">combobox-button-hover</option>
+<option><img src="theme:combobox-button-pressed">combobox-button-pressed</option>
+<option><img src="theme:combobox-button-disabled">combobox-button-disabled</option>
+
+<option><img src="theme:tab-item-normal">tab-item-normal</option>
+<option><img src="theme:tab-item-hover">tab-item-hover</option>
+<option><img src="theme:tab-item-selected">tab-item-selected</option>
+<option><img src="theme:tab-item-disabled">tab-item-disabled</option>
+<option><img src="theme:tab-item-focused">tab-item-focused</option>
+
+<option><img src="theme:tab-item-leftmost-normal">tab-item-leftmost-normal</option>
+<option><img src="theme:tab-item-leftmost-hover">tab-item-leftmost-hover</option>
+<option><img src="theme:tab-item-leftmost-selected">tab-item-leftmost-selected</option>
+<option><img src="theme:tab-item-leftmost-disabled">tab-item-leftmost-disabled</option>
+<option><img src="theme:tab-item-leftmost-focused">tab-item-leftmost-focused</option>
+
+<option><img src="theme:tab-item-rightmost-normal">tab-item-rightmost-normal</option>
+<option><img src="theme:tab-item-rightmost-hover">tab-item-rightmost-hover</option>
+<option><img src="theme:tab-item-rightmost-selected">tab-item-rightmost-selected</option>
+<option><img src="theme:tab-item-rightmost-disabled">tab-item-rightmost-disabled</option>
+<option><img src="theme:tab-item-rightmost-focused">tab-item-rightmost-focused</option>
+
+<option><img src="theme:tab-panel">tab-panel</option>
+<option><img src="theme:h-spin-plus-normal">h-spin-plus-normal</option>
+<option><img src="theme:h-spin-plus-hover">h-spin-plus-hover</option>
+<option><img src="theme:h-spin-plus-pressed">h-spin-plus-pressed</option>
+<option><img src="theme:h-spin-plus-disabled">h-spin-plus-disabled</option>
+<option><img src="theme:h-spin-minus-normal">h-spin-minus-normal</option>
+<option><img src="theme:h-spin-minus-hover">h-spin-minus-hover</option>
+<option><img src="theme:h-spin-minus-pressed">h-spin-minus-pressed</option>
+<option><img src="theme:h-spin-minus-disabled">h-spin-minus-disabled</option>
+<option><img src="theme:v-spin-plus-normal">v-spin-plus-normal</option>
+<option><img src="theme:v-spin-plus-hover">v-spin-plus-hover</option>
+<option><img src="theme:v-spin-plus-pressed">v-spin-plus-pressed</option>
+<option><img src="theme:v-spin-plus-disabled">v-spin-plus-disabled</option>
+<option><img src="theme:v-spin-minus-normal">v-spin-minus-normal</option>
+<option><img src="theme:v-spin-minus-hover">v-spin-minus-hover</option>
+<option><img src="theme:v-spin-minus-pressed">v-spin-minus-pressed</option>
+<option><img src="theme:v-spin-minus-disabled">v-spin-minus-disabled</option>
+<option><img src="theme:v-progress-back">v-progress-back</option>
+<option><img src="theme:v-progress-chunk">v-progress-chunk</option>
+<option><img src="theme:h-progress-back">h-progress-back</option>
+<option><img src="theme:h-progress-chunk">h-progress-chunk</option>
+<option><img src="theme:h-trackbar-back">h-trackbar-back</option>
+<option><img src="theme:v-trackbar-back">v-trackbar-back</option>
+<option><img src="theme:h-trackbar-thumb-normal">h-trackbar-thumb-normal</option>
+<option><img src="theme:h-trackbar-thumb-hover">h-trackbar-thumb-hover</option>
+<option><img src="theme:h-trackbar-thumb-pressed">h-trackbar-thumb-pressed</option>
+<option><img src="theme:h-trackbar-thumb-focus">h-trackbar-thumb-focus</option>
+<option><img src="theme:h-trackbar-thumb-disabled">h-trackbar-thumb-disabled</option>
+<option><img src="theme:v-trackbar-thumb-normal">v-trackbar-thumb-normal</option>
+<option><img src="theme:v-trackbar-thumb-hover">v-trackbar-thumb-hover</option>
+<option><img src="theme:v-trackbar-thumb-pressed">v-trackbar-thumb-pressed</option>
+<option><img src="theme:v-trackbar-thumb-focus">v-trackbar-thumb-focus</option>
+<option><img src="theme:v-trackbar-thumb-disabled">v-trackbar-thumb-disabled</option>
+<option><img src="theme:h-trackbar-thumb-down-normal">h-trackbar-thumb-down-normal</option>
+<option><img src="theme:h-trackbar-thumb-down-hover">h-trackbar-thumb-down-hover</option>
+<option><img src="theme:h-trackbar-thumb-down-pressed">h-trackbar-thumb-down-pressed</option>
+<option><img src="theme:h-trackbar-thumb-down-disabled">h-trackbar-thumb-down-disabled</option>
+<option><img src="theme:h-trackbar-thumb-up-normal">h-trackbar-thumb-up-normal</option>
+<option><img src="theme:h-trackbar-thumb-up-hover">h-trackbar-thumb-up-hover</option>
+<option><img src="theme:h-trackbar-thumb-up-pressed">h-trackbar-thumb-up-pressed</option>
+<option><img src="theme:h-trackbar-thumb-up-disabled">h-trackbar-thumb-up-disabled</option>
+<option><img src="theme:v-trackbar-thumb-left-normal">v-trackbar-thumb-left-normal</option>
+<option><img src="theme:v-trackbar-thumb-left-hover">v-trackbar-thumb-left-hover</option>
+<option><img src="theme:v-trackbar-thumb-left-pressed">v-trackbar-thumb-left-pressed</option>
+<option><img src="theme:v-trackbar-thumb-left-disabled">v-trackbar-thumb-left-disabled</option>
+<option><img src="theme:v-trackbar-thumb-right-normal">v-trackbar-thumb-right-normal</option>
+<option><img src="theme:v-trackbar-thumb-right-hover">v-trackbar-thumb-right-hover</option>
+<option><img src="theme:v-trackbar-thumb-right-pressed">v-trackbar-thumb-right-pressed</option>
+<option><img src="theme:v-trackbar-thumb-right-disabled">v-trackbar-thumb-right-disabled</option>
+<p class="header">rebar images:</p>
+<option><img src="theme:rebar-band">rebar-band</option>
+<option><img src="theme:rebar-h-gripper">rebar-h-gripper</option>
+<option><img src="theme:rebar-v-gripper">rebar-v-gripper</option>
+<option><img src="theme:rebar-h-shevron-normal">rebar-h-shevron-normal</option>
+<option><img src="theme:rebar-h-shevron-hover">rebar-h-shevron-hover</option>
+<option><img src="theme:rebar-h-shevron-pressed">rebar-h-shevron-pressed</option>
+<option><img src="theme:rebar-v-shevron-normal">rebar-v-shevron-normal</option>
+<option><img src="theme:rebar-v-shevron-hover">rebar-v-shevron-hover</option>
+<option><img src="theme:rebar-v-shevron-pressed">rebar-v-shevron-pressed</option>
+<p class="header">toolbar images:</p>
+<option><img src="theme:toolbar-button-normal">toolbar-button-normal</option>
+<option><img src="theme:toolbar-button-hover">toolbar-button-hover</option>
+<option><img src="theme:toolbar-button-disabled">toolbar-button-disabled</option>
+<option><img src="theme:toolbar-button-checked">toolbar-button-checked</option>
+<option><img src="theme:toolbar-button-pressed">toolbar-button-pressed</option>
+<option><img src="theme:toolbar-button-checked-hover">toolbar-button-checked-hover</option>
+<option><img src="theme:toolbar-split-button-normal">toolbar-split-button-normal</option>
+<option><img src="theme:toolbar-split-button-hover">toolbar-split-button-hover</option>
+<option><img src="theme:toolbar-split-button-disabled">toolbar-split-button-disabled</option>
+<option><img src="theme:toolbar-split-button-checked">toolbar-split-button-checked</option>
+<option><img src="theme:toolbar-split-button-checked-hover">toolbar-split-button-checked-hover</option>
+<option><img src="theme:toolbar-split-dd-button-normal">toolbar-split-dd-button-normal</option>
+<option><img src="theme:toolbar-split-dd-button-hover">toolbar-split-dd-button-hover</option>
+<option><img src="theme:toolbar-split-dd-button-disabled">toolbar-split-dd-button-disabled</option>
+<option><img src="theme:toolbar-split-dd-button-checked">toolbar-split-dd-button-checked</option>
+<option><img src="theme:toolbar-split-dd-button-checked-hover">toolbar-split-dd-button-checked-hover</option>
+<option><img src="theme:toolbar-h-splitter" style="width:16px; ">toolbar-h-splitter</option>
+<option><img src="theme:toolbar-v-splitter" style="height:16px">toolbar-v-splitter</option>
+
+<option><img src="theme:column-header-normal" style="width:16px; ">column-header-normal</option>
+<option><img src="theme:column-header-hover" style="width:16px; ">column-header-hover</option>
+<option><img src="theme:column-header-pressed" style="width:16px; ">column-header-pressed</option>
+
+</widget>
+<div>
+<h1>Theme images available in Sciter and HTMLayout</h1>
+<p>Use with "theme" URL schema for example see source of this document</p>
+<p>Windows Aero detected:<em #is-aero>sorry but no</em>, if Aero is here then list view uses Windows Explorer list styling.</p>
+</div>
+</body>
+</html>
+

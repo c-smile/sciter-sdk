@@ -1,0 +1,1 @@
+This is a scetch of UI translation framework.

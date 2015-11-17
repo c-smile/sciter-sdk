@@ -1,0 +1,151 @@
+<html>
+<head>
+  <style>
+     
+    //* { vertical-align:top; } 
+     
+    ul { padding:0; margin:0; }
+    li { display:block; margin:4px; border:1px solid gray; min-height:3em; vertical-align:middle; text-align:center; }
+        
+    //li.placeholder { visibility:hidden; } 
+    li.placeholder { overflow:hidden; background:url(hatch-b.png); border-color:transparent; }
+    
+    li:copying,
+    li:moving { background-color:yellow; opacity:0.7; text-align:center; }
+
+    html { background:#CCC; }    
+    div#main
+    {
+      flow: "header header"
+            "page   tools";
+      height:*;
+      width:*;
+      border-spacing: 10px;
+    }
+    
+    h1 { font-size: 12pt; float: "header"; vertical-align:top; }
+
+    div#page 
+    {
+      float: "page";
+      flow:"a b c"
+           "a d c"
+           "a e c";
+      height:*;
+      width:6*;
+      border-spacing: 10px;
+      margin:0 *;
+    }
+    .zone
+    {
+      background: #F8F8F0;
+      border: 2px #333 solid;
+      //outline: 4px glow #444;
+      //outline-shift:2px;
+      margin:0;
+    }
+    .zone:drop-target { border-color:#008; }
+    .zone:drag-over { border-color:#00E; }
+    
+    .zone > caption { font-weight: bold; background:#FFF; border-bottom:1px solid black; min-width: max-intrinsic; padding:2px 4px; width:*; clear:after;}
+    .zone#a { float: "a"; flow: vertical; height:*; }
+    .zone#b { float: "b"; flow: horizontal-flow; height:min-intrinsic; width:*; } .zone#b > caption { clear:right; }
+    .zone#c { float: "c"; flow: vertical; height:*;  }
+    .zone#d { float: "d"; flow: vertical; height:*; width:*; }
+    .zone#e { float: "e"; flow: horizontal-flow; height:min-intrinsic; width:*; } .zone#e > caption { clear:right; }
+    .zone > li { background-color: #FFF; width:*; }
+    .zone > li.placeholder { background-color:transparent; }
+
+    ul#tools 
+    {
+      float: "tools";
+      width:min-content;
+      height:*;
+      background: #F8F8F0 #F8F8F0 gold gold;
+      border: 1px black solid;
+      //outline: 4px glow #444;
+      //outline-shift:1px;
+      //overflow-y:hidden;
+      
+      margin:0;
+    }
+    ul#tools > li { text-align:center; }
+    
+    div#blackhole 
+    {
+      display:none;
+      position:fixed;
+      background:url(black-hole.png) no-repeat 0 0;
+      color:gray;
+      width:96px;
+      height:136px;
+      left:0px;
+      top:*;
+      bottom:*;
+      border-radius:0 10px 10px 0;
+      vertical-align:middle;
+      font-size:8.5pt;
+    }
+    div#blackhole:expanded
+    {
+      display:block;    
+    }
+    
+  </style>  
+  <script type="text/tiscript">
+  
+    //test compatibility include "../+promise/promise.tis";
+  
+    include "ddm.tis";
+    //include "animations.tis";
+    
+    function self.ready() {
+      
+      function startDrag( el )
+      {
+        if( el.$is(ul#tools > li) ) return #copying;
+        self.$(div#blackhole).state.expanded = true;
+        return #moving;
+      }
+      function whenDropped( what, from )
+      {
+        var where = what.parent;
+        var blackhole = null;
+        if( where.$is(div#blackhole) )
+        {
+          what.remove(); // undo/redo anyone?
+          blackhole = where;
+        }
+        (blackhole || self.$(div#blackhole)).state.collapsed = true;
+      }
+      
+      DragDrop
+      {
+        what      : "ul#tools > li, ul.zone > li",
+        where     : "ul#tools, ul.zone, div#blackhole",
+        notBefore : "ul.zone > caption",
+        acceptDrag: startDrag,
+        dropped   : whenDropped
+        //easeDrop  : Animation.Ease.OutQuad - uses default
+      };
+    }
+    
+  </script>  
+</head>
+<body>
+  <div#main>
+    <h1>WordPress Template Editor (how it might look like)</h1>
+    <ul #tools>
+      <include src="page-layout-objects.htm" />
+    </ul>
+    <div #page>
+      <ul #a .zone ><caption>Zone A</caption></ul>
+      <ul #b .zone ><caption>Zone B</caption></ul>
+      <ul #c .zone ><caption>Zone C</caption></ul>
+      <ul #d .zone ><caption>Zone D</caption></ul>
+      <ul #e .zone ><caption>Zone E</caption></ul>
+    </div>
+  </div>
+  <div #blackhole>Hole.<br>The<br>black<br>one.</div>
+</body>
+</html>

@@ -1,0 +1,176 @@
+include "decorators.tis";
+
+class ResourcesView : Behavior 
+{
+
+  function attached() {
+    this.driver = this.$p(.view-driver);
+    this.viewers = this.$(.viewers);
+    this.sourceView = this.$(.source-view);
+    this.imageView = this.$(.image-view);
+    this.binaryView = this.$(.binary-view);
+    this.caption = this.parent.$(text.resource-url);
+    var me = this;
+    this.driver.on("navigate-to-source", function(evt) {
+      var bp = evt.data;
+      me.show(bp.url, bp.lineNo, bp.setCurrent);
+    }); 
+  }
+
+  function show(url, lineNo = null, setCurrent = false) 
+  {
+    var rd = this.driver.resources[url];
+    var tp;
+    if(!rd && (url like "sciter:*")) 
+    {
+      //stdout.printf("%s all %V\n", url, this.driver.resources);
+      var (status, data) = self.request(1000,#get, url);
+      if( data instanceof Stream) {
+        rd = data.toString();
+        data.close();
+        tp = RESOURCE_TYPE.SCRIPT;
+      }
+      else if( data instanceof Bytes) {
+        rd = data;
+        tp = RESOURCE_TYPE.IMAGE;
+      }
+    }
+    
+    var requiredView = null;
+    switch( tp || rd.type ) {
+      case RESOURCE_TYPE.HTML:
+      case RESOURCE_TYPE.STYLE:
+      case RESOURCE_TYPE.SCRIPT:
+        requiredView = this.sourceView; 
+        break;
+      
+      case RESOURCE_TYPE.IMAGE:  
+      case RESOURCE_TYPE.CURSOR:  
+        requiredView = this.imageView; 
+        break;
+        
+      case RESOURCE_TYPE.RAW_DATA:          
+      case RESOURCE_TYPE.FONT:  
+      case RESOURCE_TYPE.SOUND:    
+        requiredView = this.binaryView; break;
+    }        
+    
+    var previous = this.viewers.$(:root>:expanded);
+    if( previous && previous.state.expanded) 
+      previous.state.collapsed = true;
+    
+    if( requiredView ) {
+      requiredView.show(rd,lineNo,setCurrent);
+      requiredView.state.expanded = true;
+    }
+    this.caption.text = url;
+  }
+ 
+  
+}
+
+// wraps source view with plaintext and its toolbar
+class SourceViewer : Behavior 
+{
+  function attached() {
+    this.driver = this.$p(.view-driver);
+    this.plaintext = this.$(plaintext);
+    
+    var me = this;
+    
+    this.on("~dblclick", "plaintext > text", function(evt) {
+      me.toggleBreakpoint(this);
+      return true;
+    })
+    
+    this.driver.on("debugger-leave", function() {
+      me.setCurrentLine();
+    });
+    
+  }
+  function show(resDef, lineNo = null, setStopMarker = false) {
+  
+    if(this.currentUrl != resDef.url)
+    {
+      var url = this.currentUrl = resDef.url; 
+      var text;
+      if(typeof resDef == #string)
+        text = resDef;
+      else 
+        text = resDef.data.toString( resDef.encoding || "utf-8" );
+      var sourceType = resDef.mimeType || (resDef.url %~ ".");
+      
+      this.plaintext.load(text,sourceType);
+    }
+    
+    for( var (n,bp) in this.driver.breakpoints )
+      if((url == bp.url))
+        this.setBreakpointOn(bp.lineNo);
+    if( lineNo && setStopMarker)
+      this.setCurrentLine(lineNo);    
+    else if(lineNo) {
+      var curr = this.plaintext[lineNo - 1];;
+      curr.attributes["highlighted"] = true;
+      curr.timer(1s, function() { this.attributes["highlighted"] = undefined; });
+      curr.scrollToView(true,true);
+    }
+  }
+
+  function setCurrentLine( lineNo = null, marker = null) 
+  {
+    var curr = this.plaintext.$(:root > text:current);
+    if( curr ) { 
+      curr.state.current = false; 
+      if(marker) curr.attributes[marker] = undefined; 
+    }
+    if( lineNo ) {
+      curr = this.plaintext[lineNo - 1];
+      curr.state.current = true; 
+      if(marker) 
+        curr.attributes[marker] = true; 
+      curr.scrollToView(true,true);
+    }
+  }
+  
+  function setBreakpointOn( lineNo = null, marker = "breakpoint")  {
+    if( !lineNo )
+      for( var el in this.plaintext.$$(:root > text[{marker}]) )
+        el.attributes[marker] = undefined;
+    else 
+      this.plaintext[lineNo - 1].attributes[marker] = true;
+  }
+
+  function toggleBreakpoint(line)
+  {
+    // toggle breakpoint
+    var wasBreakpoint = line.attributes["breakpoint"];
+    if( wasBreakpoint ) {
+      line.attributes["breakpoint"] = undefined;
+      this.driver.removeBreakpoint(this.currentUrl, line.index + 1);
+    } else {
+      line.attributes["breakpoint"] = true;
+      this.driver.addBreakpoint(this.currentUrl, line.index + 1);
+    }
+  } 
+  
+  
+}
+
+// image details viewer
+class ImageViewer : Behavior 
+{
+  function show(resDef,lineNo = null, setCurrent = false) {
+    var img = Image.fromBytes( resDef instanceof Bytes ? resDef : resDef.data );
+    assert img;
+    this.bindImage("in-memory:current-image", img);
+    this.refresh();
+    this.$(dl).value = {
+      width: img.width,
+      height: img.height,
+      url: resDef.url,
+      fileSize: resDef.data.length,
+      fileType: resDef.mimeType || (resDef.url %~ "."),
+    };
+  }
+}
+

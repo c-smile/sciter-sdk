@@ -1,0 +1,94 @@
+<html>
+  <head>
+    <title>Sciter ImGraphics</title>
+    <style>
+      html { background: transparent; }
+      widget.drawing
+      {
+        prototype:Drawable;
+        size: *;
+      }
+
+      widget:hover /* just for a fun */
+      {
+        transform: rotate(35deg) scale(.5);
+        transition: transform(quart-out,0.5s,quart-in);
+      }
+      
+    </style>
+    <script type="text/tiscript">
+      class Drawable : Behavior
+      {
+        const SCALE_STEP = 0.005;
+        function attached() 
+        { // attaching the paint() to paintContent layer handler
+          this.paintContent = this.paint;
+          
+          function painter(gfx) // generates 1000 random lines on graphics
+          {            
+            for(var n = 0; n < 1000; ++n) 
+            {
+              var x1 = rand(500);
+              var x2 = rand(500);
+              var y1 = rand(500);
+              var y2 = rand(500);
+              gfx.lineWidth(1 + rand(6)); // 1..7
+              gfx.lineColor(color(rand(256),rand(256),rand(256)));
+              gfx.line(x1,y1,x2,y2);
+            }
+          }
+          
+          this.image = new Image(500,500,painter);
+          
+          this.post(::this.animate(this.animationStep));
+          this.scale = 1.0;
+          this.scaleStep = -SCALE_STEP;
+          this.corner = 0;
+        }
+        
+        
+        
+        // function is called while handling WM_PAINT 
+        function paint(gfx)
+        {
+          if( !this.image ) return;
+          var (w,h) = this.box(#dimension);
+          var (iw,ih) = this.image.size();
+          iw *= this.scale;
+          ih *= this.scale;
+          
+          var x = (w-iw)/2.0, y = (h-ih)/2.0;
+          var dx = (1.0-this.scale)*(w-iw);
+          var dy = (1.0-this.scale)*(h-ih);
+          switch(this.corner)
+          {
+            case 0: x -= dx; y -= dy; break;
+            case 1: x += dx; y -= dy; break;
+            case 2: x += dx; y += dy; break;
+            case 3: x -= dx; y += dy; break;
+          }
+          
+          gfx.drawImage(this.image,x, y,iw,ih);
+        }
+        
+        function animationStep()
+        {
+          if(this.scaleStep < 0.0) 
+          {
+            if( this.scale < 0.5 ) { this.scale = 0.5; this.scaleStep = SCALE_STEP; }
+            else this.scale += this.scaleStep;
+          } else {
+            if( this.scale >= 1.0 ) { this.scale = 1.0; this.scaleStep = -SCALE_STEP; this.corner = (this.corner + 1) % 4;}
+            else this.scale += this.scaleStep;
+          }
+          this.refresh();
+          return View.ANIMATION_TIMER_SPAN;
+        }
+      }
+      
+    </script>
+  </head>
+<body>
+  <widget .drawing></widget>
+</body>
+</html>

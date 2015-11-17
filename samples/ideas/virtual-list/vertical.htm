@@ -1,0 +1,56 @@
+<html>
+<head>
+  <style>
+    @import url(tapev.css);
+    
+    #tapes {  flow:"1 3"
+                   "2 4";
+              border-spacing:10px; height:*; }
+              
+    div.tapev > div.item
+    {
+      border:1px solid #aaa;
+      flow: "1 1"
+            "2 3"; 
+    }
+    div.tapev > div.item > .content { width:*; }
+              
+  </style>  
+  <script type="text/tiscript">
+    include "items-source.tis";
+    include "tapev.tis";
+    
+    self.$(div#tape).onBufferChanged = function(firstIdx, lastIdx)
+    {
+      self.$(pre#status).text = String.printf("Buffer: first record %d, last record %d", firstIdx, lastIdx);
+    }
+        
+  </script>  
+</head>
+<body>
+  <h1>Virtual list sample</h1>
+  <p>This sample demonstrates so called virtual list. Virtual list is using items source that contains potentially unknown list of items. 
+     As number of items is unknown then we cannot show standard scrollbar in general. 
+     This list is using fixed buffer of DOM elements (TapeV.BUFFER_SIZE = 20) so rendering speed is independent of number of items in the item-source list.</p>
+  <p>Use mouse wheel to scroll the list.</p>
+  <div #tapes>
+    <caption>Normal scroll</caption>
+    <div #tape .tapev items-source="LoremIpsum" >
+      <div .item .template>
+        <caption merge-code="caption" />
+        <img src="images/user-icon.png" />
+        <div .content merge-code="content" />
+      </div>
+    </div>
+    <caption>List with kinetic scroll</caption>
+    <div #kinetic-tape .tapev items-source="LoremIpsum" kinetic >
+      <div .item .template>
+        <caption merge-code="caption" />
+        <img src="images/user-icon.png" />
+        <div .content merge-code="content" />
+      </div>
+    </div>  
+  </div>
+  <pre #status>.</pre>
+</body>
+</html>

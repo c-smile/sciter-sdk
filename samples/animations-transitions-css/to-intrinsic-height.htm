@@ -1,0 +1,64 @@
+<html>
+<head>
+  <style>
+  
+    caption
+    {
+      background:#444;
+      color:white;
+      behavior:check;
+    }
+    
+    caption + div
+    {
+      visibility:collapse;
+      height:0px;
+      background-color:white;
+      color:white;
+      padding:4px;
+      vertical-align:bottom;
+    }
+    
+    caption:checked
+    {
+      color:red;
+    }
+    
+    caption:checked + div
+    {
+      visibility:visible;    
+      height:min-content;
+      background-color:#EEE;
+      color:#000;
+      
+      transition: height(quad-out,0.4s)
+                  background-color(linear,0.4s)
+                  color(linear,0.4s);
+    }
+        
+    div:animating
+    {
+      visibility:visible; // while animating it still should be visible
+      overflow-y:hidden;  // and clip content
+    }
+  </style>  
+  <script type="text/tiscript"></script>  
+</head>
+<body>
+  <h1>Extended transition property demo</h1>
+  <p>Animation from height:0 to height:min-content</p>
+  
+  <div style="width:50%;margin:4px *;" >
+    <caption>Click me!</caption>
+    <div>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod 
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat 
+      nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui 
+      officia deserunt mollit anim id est laborum.
+    </div>
+  </div>
+  <hr>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+      div#content { flow:horizontal; size:*; }
+      div#tasks { width:300px; height:*; }
+      div#tasks > select { size:*; display:block; }
+      div#explanation { size:*; padding:20px; overflow:auto; }
+      div#explanation > pre { padding:10px; border:1px dotted #999; background:#ffffef; }
+    </style>
+    <script type="text/tiscript">
+    
+      var taskNo = 0;
+
+      $(#start-task).onClick = function()
+      {
+        ++taskNo;
+        var taskElem = $(div#tasks > select).$append(<option>Task { taskNo }<progress max=100 /> <span.result /></option>);
+        function onProgress(p100) { taskElem.$(progress).value = p100; }
+        function onDone(taskId) { taskElem.$(span.result).text = "Done!"; taskElem.$(progress).remove(); }
+
+        view.execTask(taskNo,onProgress,onDone);
+      }
+    
+    </script>
+  </head>
+<body>
+  <h2>Sciter UI, basic principles demo</h2>
+  <div #content>
+    <div #tasks>
+       <button #start-task>Start Task</button>
+       <select type=select></select>
+    </div>
+    <div #explanation>
+       <include src="res:explanation.htm" />
+    </div>
+  </div>
+</body>
+</html>

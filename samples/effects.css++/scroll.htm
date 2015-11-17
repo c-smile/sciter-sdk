@@ -1,0 +1,58 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      html { }
+      div.area {
+        flow: "1 3"
+              "2 4"
+              "5 7"
+              "6 8";
+        border-spacing:6px;
+      }
+
+      div.container.scroll-top:hover    { transition: scroll-top(quad-in-out,800ms); }
+      div.container.scroll-bottom:hover { transition: scroll-bottom(quad-in-out,800ms); }
+      div.container.scroll-left:hover   { transition: scroll-left(quad-in-out,800ms); }
+      div.container.scroll-right:hover  { transition: scroll-right(quad-in-out,800ms); }
+      
+      div.container
+      {
+        size:432dip 324dip;
+        background:#777;
+        assigned!: self.$1(picture).src = "images/photo1.jpg";
+      }
+      
+      div.container:hover
+      {
+        assigned!: self.$1(picture).src = "images/photo2.jpg"; // bacause of scroll-*** transition
+                                                               // all content changes have to be made in transactional manner:
+                                                               // using CSSS! assigned! that triggers all new changes from old
+                                                               // state of the element to its new state. 
+      }
+      
+      div.container > picture
+      {
+        size:*;
+      }
+      
+
+    
+    </style>
+    <script type="text/tiscript"></script>
+  </head>
+<body>
+  Hover the image:
+  <div .area>
+    <caption>transition: scroll-top(quad-in-out,800ms):</caption>
+    <div .container .scroll-top ><picture/>a</div>
+    <caption>transition: scroll-bottom(quad-in-out,800ms):</caption>
+    <div .container .scroll-bottom ><picture/>b</div>
+    <caption>transition: scroll-left(quad-in-out,800ms):</caption>
+    <div .container .scroll-left  ><picture/>c</div>
+    <caption>transition: scroll-right(quad-in-out,800ms):</caption>
+    <div .container .scroll-right ><picture/>d<div>
+  </div>
+</body>
+</html>

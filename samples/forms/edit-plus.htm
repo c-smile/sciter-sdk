@@ -1,0 +1,75 @@
+<html>
+<head>
+  <style>
+  
+  input[type="text"]
+  {
+    prototype: LineEditor;
+  }
+  
+  </style>  
+  <script type="text/tiscript">
+  
+  
+    class LineEditor: Behavior
+    {
+      function selectAll()
+      {
+        this.xcall(#selectAll,true);
+        return this;
+      }
+      function select(start,end = undefined)
+      {
+        if( end === undefined ) end = start;
+        this.xcall(#setSelection,start,end);
+        return this;
+      }
+      property selection(v)
+      {
+        get { return this.xcall(#selectionText); }
+        set { this.xcall(#insertText,v); }
+      }
+      property selectionStart(v) 
+      {
+        get { return this.xcall(#selectionStart); }
+      }
+      property selectionEnd(v)
+      {
+        get { return this.xcall(#selectionEnd); }
+      }
+      property selectionLength(v)
+      {
+        get { return this.xcall(#selectionEnd) - this.xcall(#selectionStart); }
+      }
+      
+      // for demo purposes, filtering input characters:
+      /*function onKey(evt) {
+        const allowedChars = "0123456789ABCDEFabcdef"; // we filter only hex digits here
+        if( evt.type == (Event.KEY_CHAR | Event.SINKING) )  
+                     // processing chars in sinking phase so 
+                     // before the intrinsic edit behavior
+        {
+          var c = String.fromCharCode(evt.keyCode);
+          if( allowedChars.indexOf(c) < 0)
+            return true; // true - "consume" the event 
+        }
+      }*/
+      
+    }
+    
+    $(button#do-sel).onClick = function()
+    {
+      view.focus = $(#edit).select(0,5);
+    }
+    $(button#do-sel-all).onClick = function()
+    {
+      view.focus = $(#edit).selectAll();
+    }
+    
+  </script>  
+</head>
+<body>
+  <button #do-sel>Select "Hello"</button> <button #do-sel-all>Select All</button><br/>
+  Text: <input #edit type=text value="Hello World!"/> 
+</body>
+</html>

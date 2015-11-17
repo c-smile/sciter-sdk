@@ -1,0 +1,87 @@
+<html>
+<head>
+<title>Sciter clock</title>
+<style>
+   html  { background:transparent; } 
+   body  
+   { 
+     prototype: Clock url(analog-clock.tis); // will draw clock in between background and content layers
+     border-radius:50%; border:3dip solid brown; 
+     background:gold; 
+     margin:*; // flex margins will move the body in the mddle of the root
+     size:300dip; 
+     flow:vertical;
+     transform:scale(0.1); // initially it is collapsed to center
+     overflow:hidden;
+     font-size:10pt;
+     font-family: "Segoe UI", Tahoma, Helvetica, sans-serif;
+  }
+        
+  body.shown 
+  {
+    transform:scale(1);
+    transition: transform(back-out,600ms); 
+  }
+   
+  body.hidden 
+  {
+    transform:scale(0.1);
+    transition: transform(linear,600ms); 
+  }
+  
+  body > header { text-align:center; color:brown; margin-top:36dip; font-weight:bold; }
+   
+  body > footer { flow:vertical; margin-top:*; margin-bottom:20dip; }
+  body > footer > button { display:block; background:transparent; margin:8dip *; border: 1px solid brown; border-radius:4dip; font-rendering-mode:sub-pixel; /*for better font scaling*/ }
+  body > footer > button:hover { background-color:white; transition: background-color(linear,300ms);  }
+
+</style>
+<script type="text/tiscript">
+
+  include "moveable-view.tis";
+
+  const body = $(body);
+  
+  self.ready = function() // html loaded - DOM ready
+  {
+    view.caption = "Sciter Clock";
+  
+    // positioning the window in the middle of the screen:
+    var (sx,sy,sw,sh) = view.screenBox(#workarea,#rectw); // gettting screen/monitor size
+    var (w,h) = self.$(body).box(#dimension); 
+    w += w/2; h += h/2; // to accomodate expanding animation
+    
+    view.move( sx + (sw - w) / 2, sy + (sh - h) / 2, w, h);
+
+    body.timer(40, function() { body.attributes.addClass("shown") });
+    $(span#platform).text = System.PLATFORM;
+    $(span#arch).text = view.architecture(); // calling native function defined in ulayered.cpp
+  }
+
+  // <button #close> click handler 
+  $(#close).onClick = function()
+  {
+    body.onAnimationEnd = function() { view.close(); };
+    body.attributes.removeClass("shown");
+  }
+
+  // <button #minimize> click handler
+  $(#minimize).onClick = function()
+  {
+    view.state = View.WINDOW_MINIMIZED;
+  }
+ 
+  // setup movable window handler:
+  movableView();
+
+</script>
+
+</head>
+<body>
+  <header><span #platform /> <span #arch />bit time</header>
+  <footer>
+    <button #minimize>Minimize Window</button>
+    <button #close>Close Window</button>
+  </footer>
+</body>
+</html>

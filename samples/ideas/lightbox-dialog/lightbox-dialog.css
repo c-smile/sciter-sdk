@@ -1,0 +1,70 @@
+
+/* lightbox shim */
+div#lightbox-shim 
+{
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  /*background-color:rgba(0,0,0,0.3); or this*/
+  background: url(images/shim-bg.png) repeat;
+  background-image-transformation:color-schema("system");
+}
+
+/* dialog "window" frame */
+div#lightbox-shim > div.dialog-frame 
+{
+  font: system;
+  width: 300px;
+  min-width: min-content;
+  margin-left: 50%%;
+  margin-right: 50%%;
+  margin-top: 40%%;
+  background-image: url(images/dialog2.png);/* square top / round bottom */
+  background-repeat: expand;
+  background-position: 38px 20px 20px 20px;
+  background-image-transformation:color-schema("system");
+  
+  //background-color: window;
+  //border-radius: 0 0 10px 10px; /* square top / round bottom */
+  
+  padding:10px;
+}
+
+/* dialog "window" caption */
+div#lightbox-shim > div.dialog-frame > caption 
+{
+  font-weight: bold;
+  line-height: 28px;
+  background-color: threedface threedface threedshadow threedshadow;
+  padding:0 10px;
+}
+
+/* dialog body element */
+div#lightbox-shim > div.dialog-frame > :nth-child(2) 
+{
+  height: *;
+  padding: 10px;
+}
+
+/* dialog button bar */
+div#lightbox-shim > div.dialog-frame > text.buttons
+ {
+  margin:20px 10px 10px *;
+  width: max-intrinsic;
+  white-space: nowrap;
+  /*
+  border-top: 1px solid threedshadow;
+  padding-top: 10px;
+  */
+}
+
+/* button on dialog button bar */
+div#lightbox-shim > div.dialog-frame > text.buttons > button 
+{
+  width: 55px;
+  text-align: center;
+  vertical-align: middle;
+  padding: 5px 10px;
+}

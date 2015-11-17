@@ -1,0 +1,58 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      html { }
+      div.area {
+        flow: "1 3"
+              "2 4"
+              "5 7"
+              "6 8";
+        border-spacing:6px;
+      }
+
+      div.container.slide-over-top:hover    { transition: slide-over-top(quad-in-out,800ms); }
+      div.container.slide-over-bottom:hover { transition: slide-over-bottom(quad-in-out,800ms); }
+      div.container.slide-over-left:hover   { transition: slide-over-left(quad-in-out,800ms); }
+      div.container.slide-over-right:hover  { transition: slide-over-right(quad-in-out,800ms); }
+      
+      div.container
+      {
+        size:432dip 324dip;
+        background:#777;
+        assigned!: self.$1(picture).src = "images/photo1.jpg";
+      }
+      
+      div.container:hover
+      {
+        assigned!: self.$1(picture).src = "images/photo2.jpg"; // bacause of slide-over-*** transition
+                                                               // all content changes have to be made in transactional manner:
+                                                               // using CSSS! assigned! that triggers all new changes from old
+                                                               // state of the element to the new state. 
+      }
+      
+      div.container > picture
+      {
+        size:*;
+      }
+      
+
+    
+    </style>
+    <script type="text/tiscript"></script>
+  </head>
+<body>
+  Hover the image:
+  <div .area>
+    <caption>transition: slide-over-top(quad-in-out,800ms):</caption>
+    <div .container .slide-over-top ><picture/></div>
+    <caption>transition: slide-over-bottom(quad-in-out,800ms):</caption>
+    <div .container .slide-over-bottom ><picture/></div>
+    <caption>transition: slide-over-left(quad-in-out,800ms):</caption>
+    <div .container .slide-over-left  ><picture/></div>
+    <caption>transition: slide-over-right(quad-in-out,800ms):</caption>
+    <div .container .slide-over-right ><picture/><div>
+  </div>
+</body>
+</html>

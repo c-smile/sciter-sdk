@@ -1,0 +1,30 @@
+﻿<html>
+  <head>
+    <title>popup-position</title>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  The popup-position property allows to define explicitly position of the popup element in respect of position of its anchor element ( element to what the popup belong to).<p>The popup-position CSS property accepts one of followng formats:</p>
+  <ul>
+    <li><code>popup-position: default;</code> - default positioning (behavior specific).</li>
+    <li><code>popup-position: inherit;</code> - inherit the value from its paren.t</li>
+    <li><code>popup-position: &lt;popup-reference-point&gt; &lt;anchor-reference-point&gt;;</code> - explicit position.</li></ul>
+  <p>Where:</p>
+  <p><code>&lt;popup-reference-point&gt;</code> and <code>&lt;anchor-reference-point&gt;</code> are enumeration values:</p>
+  <ul>
+    <li><code>top-left</code></li>
+    <li><code>top-center</code></li>
+    <li><code>top-right</code></li>
+    <li><code>middle-left</code></li>
+    <li><code>middle-center</code></li>
+    <li><code>middle-right</code></li>
+    <li><code>bottom-left</code></li>
+    <li><code>bottom-center</code></li>
+    <li><code>bottom-right</code></li></ul>
+  <p>Example, this declaration:</p>
+  <pre>select &gt; popup {<br/>  popup-position: top-right bottom-right;<br/>
+}
+</pre>
+  <p>will position the popup element in the way that its top-right corner is placed at bottom-right corner of the anchor element (the select itself here).</p>
+</body>
+</html>

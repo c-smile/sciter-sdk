@@ -1,0 +1,48 @@
+﻿<html>
+  <head>
+    <title>TIScript - Date object</title>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>Angle object</h1>
+  <p>Holds an angle value. </p>
+  <dl>
+    <p>Angle values are constructed by global <code><strong>rad</strong>(float)</code> or <code><strong>deg</strong>(integer)</code> functions.</p>
+    <p>Angle literals are numeric values with unit designators. All these expressions evaluate to true:</p>
+    <pre>360deg instanceof Angle;<br/>360deg == Math.PI * 2 * 1rad;<br/>360deg == 400grad;<br/>360deg == 1turn;<br/>1turn / 2 == 180deg;
+</pre>
+    <p>TIScript supports all angle units defined by CSS:</p>
+    <li><code>deg</code> &nbsp;- degree, there are 360 degrees in full circle;</li>
+    <li><code>rad</code> - radians, 2*π radians in full circle;</li>
+    <li><code>grad</code> - gradians, 400 gradians in full circle;</li>
+    <li><code>turn</code> - turns, 1 turn is exactly 360 degree - one full circle</li>
+    <h2>Constants</h2>
+    <dd><strong>N/A</strong></dd>
+    <h2>Properties</h2>
+    <dt>degrees</dt>
+    <dd>read-only, <em>float</em>, number of degrees.</dd>
+    <dt>radians</dt>
+    <dd>read-only, float, number of radians.</dd>
+    <h2>Methods</h2>
+    <dt>parse</dt>
+    <dd>
+      <p>(<strong>s</strong>: string) : angle</p>
+      <p>Static method (of the class), parses the string using CSS rules.</p></dd>
+    <dt>toFloat</dt>
+    <dd>
+      <p>() : float</p>
+      <p>Returns number of radians.</p></dd>
+    <dt>toInteger()</dt>
+    <dd>
+      <p>() : integer</p>
+      <p>Returns number of degrees.</p></dd>
+    <dt>toString()</dt>
+    <dd>
+      <p>() : string</p>
+      <p>Returns &quot;NNNrad&quot; string where NNN is a number of radians.</p></dd>
+    <dt>morph</dt>
+    <dd>
+      <p>( from : angle, to:angle, ratio: float ) : angle</p>
+      <p>Computes the average angle using the formula: <code>(to - from) * ratio + from</code> .</p></dd></dl>
+</body>
+</html>

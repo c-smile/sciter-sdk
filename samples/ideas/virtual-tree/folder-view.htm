@@ -1,0 +1,58 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      widget#tree {
+        size: 300px *;
+        overflow-x:hidden;
+        prototype: VirtualTree;
+      }
+
+      widget#tree option:not(:node) 
+      {
+        padding:0;
+      }
+
+      widget#tree option > text  /* option text */
+      {
+        behavior:file-icon;
+        line-height:18px;        
+        padding:1dip 3dip 1dip 20dip;
+        foreground-repeat:no-repeat;
+        foreground-position:0 50%;
+        min-width:4em;
+      }
+      
+      widget#tree option > text:rtl
+      {
+        padding:1dip 20dip 1dip 3dip;
+        foreground-position:100% 50%;
+      }
+     
+      body { flow:horizontal; }
+    	  
+    </style>
+    <script type="text/tiscript">
+    
+    include "../../decorators.tis";
+    include "virtual-tree.tis";
+    include "tree-data-source.tis";
+    
+    var treew = $(widget#tree);
+
+    @click @on "#add-root":{
+      // init tree view by new instance of TreeDataSource
+      treew.dataSource = new TreeDataSource();
+    }   
+    
+    </script>
+  </head>
+<body>
+  <widget type=tree #tree>
+  </widget>
+  <section #ctls>
+    <button #add-root>Add root</button>
+  </section>
+</body>
+</html>

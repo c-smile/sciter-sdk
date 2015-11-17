@@ -1,0 +1,71 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      body { vertical-align:middle; horizontal-align:center; }
+      
+      body > p { text-align:center; }
+    
+      keyboard { 
+        display:block; flow:vertical; 
+        font-size: 18pt; 
+        background:gold;
+        size:max-content;
+        
+      } 
+      keyboard > div { flow:horizontal; }
+      keyboard > div:nth-child(even) { padding-left:1em; }
+      
+      keyboard > div > .key { 
+        display:block;
+        flow:vertical; 
+        min-width:2em;
+        min-height:2em;
+        position:relative;
+      }
+      
+      keyboard > div > .key > text {
+        size:2em;
+        line-height:2em;
+        text-align:center;
+        border-radius:1em;
+        background:gold;
+        position:absolute;
+        bottom:0;        
+      }
+
+     
+      keyboard > div > .key:active > text {
+        background:red;
+        height:80dip;
+        transition: height(linear,200ms) background-color(linear,200ms);
+      }
+      
+          
+    </style>
+    <script type="text/tiscript"></script>
+  </head>
+<body>
+  <p>click on one of characters below</p>
+  <keyboard>
+    <div>
+      <div.key><text>Q</text></div>
+      <div.key><text>W</text></div>
+      <div.key><text>E</text></div>
+      <div.key><text>R</text></div>
+      <div.key><text>T</text></div>
+      <div.key><text>Y</text></div>
+    </div>
+    <div>
+      <div.key><text>A</text></div>
+      <div.key><text>S</text></div>
+      <div.key><text>D</text></div>
+      <div.key><text>F</text></div>
+      <div.key><text>G</text></div>
+      <div.key><text>H</text></div>
+    </div>
+  </keyboard>
+
+</body>
+</html>

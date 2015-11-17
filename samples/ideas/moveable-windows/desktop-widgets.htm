@@ -1,0 +1,124 @@
+<html>
+<head>
+  <style>
+  
+    div.row { 
+      flow:horizontal; 
+    }
+  
+    form.window
+    {
+      prototype: Widget;
+      //position:absolute;
+      background-image: url(images/widget-back.png);
+      background-repeat: expand stretch-left stretch-right stretch-center;
+      background-position: 16 16 16 16;
+      height:110px;  
+      width:110px;
+			padding:4px;
+      //overflow:hidden;
+    }
+    
+    form.window[placement="left"]
+    {
+      background-image: url(images/widget-back-left.png);
+    }
+    form.window[placement="top"]
+    {
+      background-image: url(images/widget-back-top.png);
+    }
+    form.window[placement="bottom"]
+    {
+      background-image: url(images/widget-back-bottom.png);
+    }
+    form.window[placement="right"]
+    {
+      background-image: url(images/widget-back-right.png);
+    }
+    
+		form.window button.go-home 
+		{
+		  display:none;
+			transition:none;
+		}
+		form.window[placement] button.go-home 
+		{
+		  display:block;
+		}
+		
+    form.window > caption
+    {
+      width:*;
+      line-height:1.4em;
+      padding:4px 10px;
+      //background-color:threedhighlight threedhighlight threedshadow threedshadow;
+      cursor:move;
+    }
+    form.window > div
+    {
+      width:*;
+      height:*;
+      margin:0 6px 6px 6px;
+      background-color:window;
+      border-radius:16px;
+      padding:8px;
+    }
+    
+    form.window[placement="left"] > div 
+    {
+      border-radius:16px 0 0 16px;
+    }
+    form.window[placement="right"] > div 
+    {
+      border-radius:0 16px 16px 0;
+    }
+    form.window[placement="top"] > div 
+    {
+      border-radius:16px 16px 0 0;
+    }
+    form.window[placement="bottom"] > div 
+    {
+      border-radius:0 0 16px 16px;
+    }
+    
+    
+    form.window:not(:popup) .when-airborn { display:none; }
+    span.when-airborn { color:red; }
+  </style>  
+  <script type="text/tiscript" src="desktop-widgets.tis" />
+</head>
+<body>
+  Try to move the "window" outside of the view.
+  
+  <ol>
+    <li>If element ends moving inside the view it "returns" back in its static place.</li>
+    <li>If element is moved outside the view it is docked to the side of the window. <code>Element.move(..., #attached-window)</code></li>
+    <li>If element is moved far enough from the view it gets detached from the view - moving the view is not causing such element to move in sync with the view. <code>Element.move(..., #detached-window)</code></li>
+  </ol>
+  
+  <div .row #test>
+    <form.window>
+      <caption>Window #1</caption>
+      <div>
+        <text.status>.</text>
+        <button .go-home>Back home</button>
+      </div>
+    </form>
+    <form.window style="left:150px">
+      <caption>Window #2</caption>
+      <div>
+        <text.status>.</text>
+        <button .go-home>Back home</button>
+      </div>
+    </form>
+    <form.window style="left:300px">
+      <caption>Window #3</caption>
+      <div>
+        <text.status>.</text>
+        <button .go-home>Back home</button>
+      </div>
+    </form>
+  </div>
+
+</body>
+</html>

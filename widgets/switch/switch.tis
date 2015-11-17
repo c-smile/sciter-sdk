@@ -1,0 +1,62 @@
+class Switch: Behavior {
+  
+  function attached() { this.state.focusable = true; }
+  
+  function onMouse(evt) {
+    if( evt.type == Event.MOUSE_UP ) {
+      var opt = evt.target.$p(option);
+      if( !opt || opt.state.checked )
+        return;
+      if( !this.state.pressed )
+        return;
+      var popt = this.$(:root>option:checked);
+      if(popt) popt.state.checked = false;
+      opt.state.checked = true;
+      this.postEvent(Event.BUTTON_STATE_CHANGED);
+    }
+  }
+  
+  function onKey(evt) {
+    if( evt.type == Event.KEY_DOWN ) {
+      var popt = this.$(:root>option:checked);
+      var opt = popt;
+      switch(evt.keyCode) {
+        case Event.VK_LEFT: opt = popt? (popt.prior || popt) : this.first; break;
+        case Event.VK_RIGHT: opt = popt? (popt.next || popt) : this.last; break;
+        case Event.VK_HOME: opt = this.first; break;
+        case Event.VK_END: opt = this.last; break;
+      }
+      
+      if( opt != popt) {        
+        if(popt) popt.state.checked = false;
+        opt.state.checked = true;
+        this.postEvent(Event.BUTTON_STATE_CHANGED);
+        return true;
+      }
+    }
+  }
+  
+  property value(v) 
+  {
+    function optValue(opt) {  
+      var av = opt.attributes["value"];
+      if( !av ) return opt.text;
+      var v = parseData(av);
+      return v === undefined ? av : v;
+    }
+  
+    get { var opt = this.$(:root>option:checked); 
+          return opt ? optValue(opt) : undefined; }
+    set { 
+      var popt = this.$(:root>option:checked);
+      if( popt ) popt.state.checked = false;
+      for( var opt in this )
+        if( optValue(opt) == v ) {
+          opt.state.checked = true;
+          return;
+        }
+    }
+  }
+  
+  
+}

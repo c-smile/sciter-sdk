@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <title>CSS3 background-size variations</title>
+    <style>
+    
+    section > div { 
+      margin:10px; 
+      height:200px; 
+      background: brown url(images/background.jpg) no-repeat 50% 50%; 
+      font:10pt monospace;
+      color:white;
+      padding: 10px;
+    }
+    
+    section > div.contain { background-size:contain; }
+    section > div.cover { background-size:cover; }
+    section > div.h-auto { background-size:50% auto; }
+    section > div.w-auto { background-size:auto 50%; }
+    
+    section > div.repeat { background-repeat:repeat; }
+    
+    </style>
+    <script type="text/tiscript"></script>
+  </head>
+<body>
+
+<section>
+  <div class="contain">background-size:contain</div>
+  <div class="cover">background-size:cover</div>
+  <div class="h-auto">background-size:50% auto</div>
+  <div class="w-auto">background-size:auto 50%</div>
+  <div class="h-auto repeat">background-size:50% auto; background-repeat:repeat</div>
+</section>
+
+</body>
+</html>

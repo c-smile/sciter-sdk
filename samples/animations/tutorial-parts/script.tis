@@ -1,0 +1,12 @@
+include "../timeline/timeline.tis";
+
+var box = self#box;
+var src = self#src;
+
+self#run.onClick = function() {
+  box.eval(src.value);
+}
+self#clear.onClick = function() {
+  for(var el in box) el.style.clear();
+}
+

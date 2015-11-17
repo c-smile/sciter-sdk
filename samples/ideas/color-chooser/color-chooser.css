@@ -1,0 +1,64 @@
+
+input[type="color-chooser"]
+{
+    prototype: ColorChooser url(color-chooser.tis); 
+    flow:horizontal;
+    vertical-align:middle;
+}
+
+input[type="color-chooser"] > button[role="popup"]
+{
+    display:block;
+    width: 15px;
+    padding:0; 
+    foreground-image: url(res:arrow-down.png);
+    foreground-position:50% 50%;
+    foreground-repeat:no-repeat;
+    margin-left:0;
+    height:*;
+}
+input[type="color-chooser"] > button[role="apply"]
+{
+    display:block;
+    padding:5px;
+    margin-right:0;
+    height:*;
+}
+
+input[type="color-chooser"] img.current-color
+{
+    width: 10px; height: 10px;
+    border: 1px solid threedshadow;
+}
+
+
+/* popup with colors */
+popup.color-selector 
+{
+  margin-top:1px; /* distance from the buttom */
+  padding:2px;
+  background-color:scrollbar;
+  border:1px solid threedshadow;
+}
+
+popup.color-selector table
+{
+  border-spacing:1px;
+}
+
+popup.color-selector td /* cell of the color table */
+{
+  width:10px; height:10px;
+  border:1px solid transparent;
+}
+
+popup.color-selector td:hover 
+{
+  outline: 2px dashed highlight -1px;
+}  
+
+popup.color-selector td:current 
+{
+  outline: 2px solid threedshadow -1px;
+}  
+

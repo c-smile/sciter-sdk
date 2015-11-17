@@ -1,0 +1,50 @@
+﻿<html>
+  <head>
+    <meta name="source" content="http://www.terrainformatica.com/wiki/doku.php?id=h-smile:built-in-behaviors:edit"/>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>behavior: plaintext</h1>
+  <p>Multiline editting behavior that is optimized to handle relatively large (thousands of lines) texts. </p>
+  <h2>Elements</h2>
+  <p>that have this behavior applied by default:</p>
+  <ul>
+    <li><code>&lt;plaintext&gt;...&lt;/plaintext&gt;</code> display:block editor;</li></ul>
+  <h2>Attributes</h2>
+  <p>that this behavior knows about:</p>
+  <ul>
+    <li><code>readonly</code> - &nbsp;declares that element is read only.</li></ul>
+  <h2>Model</h2>
+  <p>Plaintext parses each line of text into separate &lt;text&gt; element: </p>
+  <pre>&lt;plaintext&gt;
+   &lt;text&gt;Line 1&lt;/text&gt;
+   &lt;text&gt;Line 2&lt;/text&gt;
+   &lt;text&gt;Line 3&lt;/text&gt;
+&lt;/plaintext&gt;
+</pre>
+  <h2>Events</h2>
+  <p>Together with the standard set of events (mouse, keyboard, focus) <em>behavior: button</em> generates:</p>
+  <ul>
+    <li>EDIT_VALUE_CHANGED event - value of the element was changed due to user actions. Posted (asynchronous) event.</li>
+    <li>EDIT_VALUE_CHANGING event - sent when value of the element is about to change. Synchronous event.</li></ul>
+  <h2>Value</h2>
+  <p>string, reflects current status of internal editing buffer.</p>
+  <h2>Special key combinations</h2>
+  <ul>
+    <li>LEFT, CTRL+LEFT, SHIFT+LEFT, CTRL+SHIFT+LEFT</li>
+    <li>RIGHT, CTRL+RIGHT, SHIFT+RIGHT, CTRL+SHIFT+RIGHT</li>
+    <li>HOME, SHIFT+HOME</li>
+    <li>END, SHIFT+END</li>
+    <li>BACKSPACE, ALT+BACKSPACE, CTRL+BACKSPACE</li>
+    <li>CTRL+A</li>
+    <li>DELETE, SHIFT+DELETE, CTRL+DELETE</li>
+    <li>INSERT, SHIFT+INSERT, CTRL+INSERT</li>
+    <li>CTRL+X</li>
+    <li>CTRL+V</li>
+    <li>CTRL+Z</li>
+    <li>CTRL+(LEFT)SHIFT and CTRL+(RIGHT)SHIFT - in forms having the <code>dir</code> attribute these key combinations switches between <code>dir=&quot;ltr&quot;</code> and <code>dir=&quot;rtl&quot;</code>.</li></ul>
+  <h2>Methods</h2>
+  <dl>
+    <dt>TBD</dt></dl>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<html>
+  <head>
+    <title>Sciter ImGraphics</title>
+    <style>
+      html { background: transparent; }
+      body { flow: "1 2" 
+                   "3 4"; }
+      widget.drawing1
+      {
+        prototype:Drawable1;
+        size: *;
+      }
+      widget.drawing2
+      {
+        prototype:Drawable2;
+        size: *;
+      }
+      
+      widget.opaque
+      {
+        background: yellow;
+      }
+      widget:hover /* just for fun */
+      {
+        transform: rotate(35deg) scale(.5);
+        transition: transform(quart-out,0.5s,quart-in);
+      }
+      
+      
+    </style>
+    <script type="text/tiscript">
+      class Drawable1 : Behavior
+      {
+        function attached() 
+        { // attaching the paint() to paintContent layer handler
+           this.paintContent = this.paint; 
+        }
+        
+        // function is called while handling WM_PAINT 
+        function paint(gfx)
+        {
+          var (w,h) = this.box(#dimension);
+          var x1 = 10, y1 = 10;
+          var x2 = w - 10, y2 = h - 10;
+          var w1 = w - 20, h1 = h - 20;
+          
+          //gfx.scale(0.5,0.5, w/2,h/2);
+          
+          gfx.lineWidth(2)
+             .lineLinearGradient(x1,y1,x1,y2,color(0xFF,0,0),color(0,0,0xFF) )
+             .fillLinearGradient(x1,y1,x1,y2,color(0xFF,0x7F,0x7F,0.3),color(0x7F,0x7F,0xFF,0.6) )
+             .rectangle( x1, y1, w1, h1, 20 );
+          
+          gfx.lineJoin = #round;
+          
+          gfx.lineWidth(10)
+             .strokeCap(#round)
+             .strokeDash(#dotted)
+             .lineColor(color(0,0xAF,0))
+             .fillRadialGradient( (x1+x2)/2, (y1+y2)/2, Integer.min(w,h) / 2, [color(0,0xFF,0,0.3), color(0xFF,0,0,0.5), color(0x7F,0xAF,0x7F)] )
+             .triangle( (x1+x2)/2, y1, x2, y2, x1, y2 )
+             .strokeDash(#solid);
+
+          gfx.lineWidth(2)
+             .lineColor(color(0,0,0xFF))
+             .line( x1, y1, x2, y2 );
+
+          gfx.lineWidth(2)
+             .lineColor(color(0,0xFF,0))
+             .fillColor(color(0,0x7F,0,0.5))
+             .polygon( 0,0, 40,40, 40, 0, 0, 40);
+
+          gfx.translate(w-40,h-40)
+             .lineWidth(2)
+             .lineColor(color(0xFF,0,0))
+             .polyline( 0,0, 40,40, 40, 0, 0, 40);
+             
+          //var (x,y) = gfx.worldToScreen(10,10);
+          //stdout.printf("%f,%f\n",x,y);
+        }
+      }
+      
+      class Drawable2 : Behavior
+      {
+        function attached() 
+        { // attaching the paint() to paintContent layer handler
+           this.paintContent = this.paint; 
+        }
+        
+        // function is called while handling WM_PAINT 
+        function paint(gfx)
+        {
+          var (w,h) = this.box(#dimension);
+          var x1 = 10, y1 = 10;
+          var x2 = w - 10, y2 = h - 10;
+          var w1 = w - 20, h1 = h - 20;
+          
+          //gfx.scale(0.5,0.5, w/2,h/2);
+          
+          gfx.lineWidth(2)
+             .lineLinearGradient(x1,y1,x1,y2,color(0xFF,0,0),color(0,0,0xFF) )
+             .fillLinearGradient(x1,y1,x1,y2,color(0xFF,0x7F,0x7F,0.3),color(0x7F,0x7F,0xFF,0.6) )
+             .ellipse( (x1+x2)/2, (y1+y2)/2, w1/2, h1/2 );
+
+          gfx.lineWidth(4)
+             .lineColor(color("gold"))
+             .fillColor(color(0xFF,0xFF,0,0.3))
+             .arc( (x1+x2)/2, (y1+y2)/2, w1/3, h1/3, 0, Math.PI / 2);
+          
+          gfx.lineJoin = #round;
+          
+          gfx.lineWidth(10)
+             .lineColor(color(0,0xAF,0))
+             .fillRadialGradient( (x1+x2)/2, (y1+y2)/2, Integer.min(w,h) / 2, color(0,0xFF,0,0.3), color(0x7F,0xAF,0x7F))
+             .star( (x1+x2)/2, (y1+y2)/2, w1/3, h1/3, 0, 7);
+
+          /*gfx.lineWidth(2)
+             .lineColor(color(0,0,0xFF))
+             .line( x1, y1, x2, y2 );*/
+             
+          //var (x,y) = gfx.worldToScreen(10,10);
+          //stdout.printf("%f,%f\n",x,y);
+        }
+      }
+      
+    </script>
+  </head>
+<body>
+
+  <widget .drawing1.opaque></widget>
+  <widget .drawing1></widget>
+  <widget .drawing2.opaque></widget>
+  <widget .drawing2></widget>
+
+</body>
+</html>

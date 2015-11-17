@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <title></title>
+    <style></style>
+    <script type="text/tiscript">
+    
+      include "sequence.tis";
+    
+      function self.ready() {
+
+        const test = $(#test);
+        
+        sequence(
+           0ms,   function() { test.text = "1" },
+           500ms,  function() { test.text = "2" },
+           500ms,  function() { test.text = "3" },
+           1000ms, function() { test.text = "ignition!" }
+        );
+     };
+    
+    </script>
+  </head>
+<body>
+  <p>Simple sequence</p>
+  <div #test>...</div>
+</body>
+</html>

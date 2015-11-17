@@ -1,0 +1,26 @@
+
+popup#notification { style-set: notification-message; }
+
+@set notification-message {
+
+  :root {
+    prototype: Notification url(notification.tis);
+    background: gold;
+    border: 2px solid gray;
+    border-radius: 10dip;
+    margin:20dip;
+    width: 300dip;
+    display:none;
+    transform: translate(0,0); opacity:1.0;
+    font:system;
+  }
+  
+  :root[state] {display:block;}
+  :root[state=initial] { transform: translate(0,100%); opacity:0.0; } /* offstage */
+  :root[state=shown]   { transform: translate(0,0);    opacity:1.0; transition: transform(quad-out,500ms) opacity(linear,500ms);  }
+  :root[state=closed]  { transform: translate(100%,0); opacity:0.0; transition: transform(linear,500ms) opacity(linear,500ms);  }
+  
+  header { display:block; border-bottom: 1px dashed gray; padding: 4dip; }
+  content { display:block; padding: 8dip; }
+
+}

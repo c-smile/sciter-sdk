@@ -1,0 +1,71 @@
+<html>
+  <head>
+  <title></title>
+  <style>
+    @import url(swipe-list.css);
+  
+    body { flow:horizontal; border-spacing:20dip; }
+    body > div { width:*; }
+  
+    ul#list { 
+      style-set: swipeable-list;
+      font:system;
+      font-rendering-mode:classic;
+      
+      height:*; 
+      width:25%;
+      background:white;
+      border:1px solid black;
+    }
+    ul#list > li { 
+      padding: 12dip;
+	  //background: #eeeef0;
+	  border-bottom:1px solid #aaa;
+      background: linear-gradient(top, #fff,#dedee0);
+    }
+
+    ul#list > li:hover { 
+      //background: linear-gradient(top, #fff,#dedef0);
+    }
+    
+    ul#list > menu
+    {
+      margin:0;
+      padding:0 10px;
+      flow:horizontal;
+      vertical-align:middle;
+      horizontal-align:right;
+    }
+    ul#list > menu > button { display:block; }
+
+  
+  </style>
+<script type="text/tiscript">
+  include "../decorators.tis";
+  
+  :{ 
+    var s = $(ul);
+    for(var n = 0; n < 100; ++n)
+      s.append(new Element("li", String.$(Item no. {n + 1})));
+  }();
+  
+</script>
+  </head>
+<body>
+  <ul #list>
+    <menu>
+      <button>1</button>
+      <button .delete>Delete</button>
+    </menu>
+  </ul>
+  <div>
+    <p>Scroll and swipe list demo</p>
+    <ul>
+      <li>Swipe right - shows item menu</li>
+      <li>Swipe left - deletes item</li>
+      <li>Panning in vertical direction - kinetic scroll</li>
+    </ul>
+  </div>
+  
+</body>
+</html>

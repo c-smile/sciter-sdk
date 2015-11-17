@@ -1,0 +1,50 @@
+<html custom-frame="layered" resizeable >
+<head>
+  <title>Resizeable dialog</title>
+  <style>
+    html 
+    { 
+      font:system;
+      min-width:min-content;  /* content will not overflow, no scrollbars */
+      max-width:100%;         /* max width - whole screen */
+      width:300dip;           /* preferred/initial width */
+      height:240dip;          /* content will not overflow, no vertical scrollbars on the window */  
+      min-height:min-content; 
+      max-height: 70%;        /* 70% of screen height */
+      overflow:none;
+      padding:0;
+      background-color:transparent;
+      background-image: url(custom-frame-hole.png);
+      background-repeat: expand;
+      background-position: 67 67 67 67;
+    }
+    
+    window-caption { display:block; flow:text; width:*; font:system; padding: 2px; }
+        
+    body { 
+      padding:0; margin:10px; 
+    }
+    
+    footer { margin-top:*; /*stick it to the bottom */
+             text-align:center;
+             padding-bottom:9px; }
+    
+    
+  </style>
+  <script type="text/tiscript">
+  
+    include "../../decorators.tis";
+    
+    @click @on "#close-dialog" :: view.close( true );
+    @click @on "#cancel-dialog" :: view.close( null );
+
+    </script>
+</head>
+<body>
+  <window-caption role="window-caption">Resizeable dialog</window-caption>
+  <footer>
+      <button id="close-dialog">Ok</button>
+      <button id="cancel-dialog" tabindex=1 >Cancel</button>
+  </footer>  
+</body>
+</html>

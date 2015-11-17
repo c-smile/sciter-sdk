@@ -1,0 +1,56 @@
+<html>
+  <head>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>Media Queries in H-SMILE core.</h1>
+  <p>Implementation of Media Queries resembles <a href="http://www.w3.org/TR/css3-mediaqueries" class="l vst" onmousedown="return clk(this.href,'','','res','1','n1c-ltxK7tB3dQHZvXaBMg','0CBcQFjAA')"><em>CSS3 Media Queries</em></a> but uses CSSS! expression syntax.</p>
+  <p>Therefore this CSS3 MQ </p>
+  <pre>@media handheld and (min-width: 20em),
+       screen and (min-width: 20em) { ... }
+</pre>
+  <p>in H-SMILE core will look like as:</p>
+  <pre>@media handheld &amp;&amp; (min-width &gt;= 20em),
+       screen &amp;&amp; (min-width &gt;= 20em) { ... }
+</pre>
+  <p>Media queries get executed in runtime when engine receives from the OS notification about environment changes. So if for example orientation of the device changes you can adjust some styles like:</p>
+  <pre>@media handheld &amp;&amp; orientation-portrait 
+{
+  body { flow:vertical; }
+}
+@media handheld &amp;&amp; orientation-landscape 
+{
+  body { flow:horizontal; }
+}
+</pre>
+  <p>By default H-SMILE core sets following variables. These variables can be reset by application for the whole view or particular <code>&lt;frame&gt;</code>.</p>
+  <ul>
+    <li><strong>&quot;width&quot;</strong>, <strong>&quot;height&quot;</strong> - pixels, width and height of the view;</li>
+    <li><strong>&quot;min-width&quot;</strong>, <strong>&quot;min-height&quot;</strong> - pixels, minimal width and height of the view;</li>
+    <li><strong>&quot;max-width&quot;</strong>, <strong>&quot;max-height&quot;</strong> - pixels, maximum width and height of the view if its window is opened in full screen;</li>
+    <li><strong>&quot;aspect-ratio&quot;</strong> - float, width/height ratio of the view;</li>
+    <li><strong>&quot;monitors&quot;</strong> - integer, number of monitors in the system;</li>
+    <li><strong>&quot;device-width&quot;</strong>, <strong>&quot;device-height&quot;</strong> - pixels, width and height of primary monitor;</li>
+    <li><strong>&quot;device-aspect-ratio&quot;</strong> - float, width/height ratio of primary monitor;</li>
+    <li><strong>&quot;orientation-portrait&quot;</strong> - bool, true if width is smaller than height;</li>
+    <li><strong>&quot;orientation-landscape&quot;</strong> - bool, true if width is larger than height;</li>
+    <li><strong>&quot;color&quot;</strong> - integer, bits per pixel of the display;</li>
+    <li><strong>&quot;color-index&quot;</strong> - integer, total number of colors supported;</li>
+    <li><strong>&quot;resolution&quot;</strong> - integer, DPI, number of dots per inch;</li>
+    <li><strong>&quot;min-resolution&quot;</strong> - integer, DPI, number of dots per inch;</li>
+    <li><strong>&quot;max-resolution&quot;</strong> - integer, DPI, number of dots per inch;</li>
+    <li><strong>&quot;resolution-dpcm&quot;</strong> - integer, DPCM, number of dots per centimeter;</li>
+    <li><strong>&quot;min-resolution-dpcm&quot;</strong> - integer, DPCM, number of dots per centimeter;</li>
+    <li><strong>&quot;max-resolution-dpcm&quot;</strong> - integer, DPCM, number of dots per centimeter;</li>
+    <li><strong>&quot;high-contrast&quot;</strong> - bool, is true when system is using high-contrast accessibility modes;</li>
+    <li><strong>&quot;has-pen&quot;</strong> - bool, is on if system is pen based;</li>
+    <li><strong>&quot;has-mouse&quot;</strong> - bool, is on if system has mouse;</li>
+    <li><strong>&quot;has-mouse-wheel&quot;</strong> - bool, is on if mouse has wheel;</li>
+    <li><strong>&quot;screen-reader&quot;</strong> - bool, accessibility, is on if screen reader is in effect;</li>
+    <li><strong>&quot;slow-machine&quot;</strong> - bool, is true if OS detects low end processor;</li>
+    <li><strong>&quot;engine&quot;</strong> - string, name of the engine, &quot;sciter&quot; or &quot;htmlayout&quot; at the moment. Use this MQ variable if you have the same markup/styles targeted to e.g. Sciter and conventional browsers;</li>
+    <li><strong>&quot;engine-version-minor&quot;</strong> - int, minor version number;</li>
+    <li><strong>&quot;engine-version-major&quot;</strong> - int, major version number, E.g. for the Sicter it will be 1 and minor number will be 0.</li></ul>
+  <p>Media Queries also supported by &lt;style media=&quot;&quot;&gt;, &lt;link media=&quot;&quot;&gt; elements and @import statements.</p>
+</body>
+</html>

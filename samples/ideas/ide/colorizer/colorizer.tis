@@ -1,0 +1,201 @@
+
+function colorize() 
+{
+  const apply = Selection.applyMark; // shortcut
+	const isEditor = this.tag == "plaintext";
+  
+  // forward declarations:
+  var doStyle;
+  var doScript;
+
+  // markup colorizer  
+  function doMarkup(tz) 
+  {
+		var bnTagStart = null;
+		var tagScript = false;
+		var tagScriptType = false;
+		var tagStyle = false;
+		var textElement;
+      
+    while(var tt = tz.token()) {
+      if( isEditor && tz.element != textElement )       
+      {
+         textElement = tz.element;
+         textElement.attributes["type"] = "markup";
+      }
+      //stdout.println(tt,tz.attr,tz.value);
+      switch(tt) {
+        case #TAG-START: {    
+            bnTagStart = tz.tokenStart; 
+            const tag = tz.tag;
+            tagScript = tag == "script";
+            tagStyle  = tag == "style";
+          } break;
+        case #TAG-HEAD-END: {
+            apply(bnTagStart,tz.tokenEnd,"tag"); 
+            if( tagScript ) { tz.push(#source,"</script>"); doScript(tz, tagScriptType, true); }
+            else if( tagStyle ) { tz.push(#source,"</style>"); doStyle(tz, true); }
+          } break;
+        case #TAG-END:      apply(tz.tokenStart,tz.tokenEnd,"tag"); break;  
+        case #TAG-ATTR:     if( tagScript && tz.attr == "type") tagScriptType = tz.value; 
+                            if( tz.attr == "id" ) apply(tz.tokenStart,tz.tokenEnd,"tag-id"); 
+                            break;
+      }
+    }
+  }
+ 
+  // script colorizer
+  doScript = function(tz, typ, embedded = false) 
+  {
+    const KEYWORDS = 
+    {
+      "type"    :true, "function":true, "var"       :true,"if"       :true,
+      "else"    :true, "while"   :true, "return"    :true,"for"      :true,
+      "break"   :true, "continue":true, "do"        :true,"switch"   :true,
+      "case"    :true, "default" :true, "null"      :true,"super"    :true,
+      "new"     :true, "try"     :true, "catch"     :true,"finally"  :true,
+      "throw"   :true, "typeof"  :true, "instanceof":true,"in"       :true,
+      "property":true, "const"   :true, "get"       :true,"set"      :true,
+      "include" :true, "like"    :true, "class"     :true,"namespace":true,
+      "this"    :true, "assert"  :true, "delete"    :true,"otherwise":true,
+      "with"    :true, "__FILE__":true, "__LINE__"  :true,"__TRACE__":true,
+      "debug"   :true 
+    };
+      
+    const LITERALS = { "true": true, "false": true, "null": true, "undefined": true };
+    
+    var firstElement;
+    var lastElement;
+   
+    while:loop(var tt = tz.token()) {
+      var el = tz.element;
+      if( !firstElement ) firstElement = el;
+      lastElement = el;
+      switch(tt) 
+      {
+        case #NUMBER:       apply(tz.tokenStart,tz.tokenEnd,"number"); break; 
+        case #NUMBER-UNIT:  apply(tz.tokenStart,tz.tokenEnd,"number-unit"); break; 
+        case #STRING:       apply(tz.tokenStart,tz.tokenEnd,"string"); break;
+        case #NAME:         
+        {
+          var val = tz.value;
+          if( val[0] == '#' )
+            apply(tz.tokenStart,tz.tokenEnd, "symbol"); 
+          else if(KEYWORDS[val]) 
+            apply(tz.tokenStart,tz.tokenEnd, "keyword"); 
+          else if(LITERALS[val]) 
+            apply(tz.tokenStart,tz.tokenEnd, "literal"); 
+          break;
+        }
+        case #COMMENT:      apply(tz.tokenStart,tz.tokenEnd,"comment"); break;
+        case #END-OF-ISLAND:  
+          // got </script>
+          tz.pop(); //pop tokenizer layer
+          break loop;
+      }
+    }
+    if(isEditor && embedded) {
+      for( var el = firstElement; el; el = el.next ) {
+        el.attributes["type"] = "script";
+        if( el == lastElement )
+          break;
+      }
+    }
+  };
+  
+  doStyle = function(tz, embedded = false) 
+  {
+    const KEYWORDS = 
+    {
+      "rgb":true, "rgba":true, "url":true, 
+      "@import":true, "@media":true, "@set":true, "@const":true
+    };
+      
+    const LITERALS = { "inherit": true };
+    
+    var firstElement;
+    var lastElement;
+    
+    while:loop(var tt = tz.token()) {
+      var el = tz.element;
+      if( !firstElement ) firstElement = el;
+      lastElement = el;
+      switch(tt) 
+      {
+        case #NUMBER:       apply(tz.tokenStart,tz.tokenEnd,"number"); break; 
+        case #NUMBER-UNIT:  apply(tz.tokenStart,tz.tokenEnd,"number-unit"); break; 
+        case #STRING:       apply(tz.tokenStart,tz.tokenEnd,"string"); break;
+        case #NAME:         
+        {
+          var val = tz.value;
+          if( val[0] == '#' )
+            apply(tz.tokenStart,tz.tokenEnd, "symbol"); 
+          else if(KEYWORDS[val]) 
+            apply(tz.tokenStart,tz.tokenEnd, "keyword"); 
+          else if(LITERALS[val]) 
+            apply(tz.tokenStart,tz.tokenEnd, "literal"); 
+          break;
+        }
+        case #COMMENT:      apply(tz.tokenStart,tz.tokenEnd,"comment"); break;
+        case #END-OF-ISLAND:  
+          // got </script>
+          tz.pop(); //pop tokenizer layer
+          break loop;
+      }
+    }
+    if(isEditor && embedded) {
+      for( var el = firstElement; el; el = el.next ) {
+        el.attributes["type"] = "style";
+        if( el == lastElement )
+          break;
+      }
+    }
+  };
+  
+  var me = this;
+  
+  function doIt() { 
+  
+    var typ = me.attributes["type"];
+      
+    var syntaxKind = typ like "*htm" || typ like "*html" || typ like "*xml" ? #markup : #source;
+    var syntax = typ like "*css"? #style : #script;
+    
+    stdout.println(syntaxKind,syntax);
+      
+    var tz = new Tokenizer( me, syntaxKind );
+  
+    if( syntaxKind == #markup )
+      doMarkup(tz);
+    else if( syntax == #style )
+      doStyle(tz);
+    else 
+      doScript(tz,typ);
+  }
+  
+  doIt();
+  
+  // redefine value property
+  this[#value] = property(v) {
+    get { return this.state.value; }
+    set { this.state.value = v; doIt(); }
+  };
+  
+  this.load = function(text,sourceType) 
+  {
+    this.attributes["type"] = sourceType;
+    this.state.value = text; 
+    doIt();
+  };
+  
+  this.sourceType = property(v) {
+    get { return this.attributes["type"]; }
+    set { this.attributes["type"] = v; doIt(); }
+  };
+  if (isEditor)
+		this.on("change", function() {
+			this.timer(40ms,doIt);
+		});
+ 
+
+}

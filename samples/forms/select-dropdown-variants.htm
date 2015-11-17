@@ -1,0 +1,152 @@
+<html>
+  <head>
+    <title>Select dropdown</title>
+    <style>
+    
+      form { flow:row(label,select); border-spacing: 0.5em;}
+      
+      form > label { font:system; line-height:1.5em; display:block; min-width: max-content; text-align:right; }
+      form > select {  }
+    
+      select[name=ddcm] option
+      {
+        padding-left:20px;
+      }
+      select[name=ddcm] option:checked
+      {
+        foreground-image:url(stock:checkmark);
+        foreground-repeat:no-repeat;
+        foreground-size:7px;
+        foreground-position:8px 50%;
+      }
+      
+      select[name=ddn]:empty > caption { color:red; }
+    
+    </style>
+    <script type="text/tiscript">
+    
+      $(button#get).onClick = function()
+      {
+        var v = $(form).value;
+        $(#out).value = String.printf("%V",v);
+      }
+      $(button#set).onClick = function()
+      {
+        var v = {
+          ddm: ["Five","Six","Seven"],
+          dde: "Five",
+          dd: "Five",
+          ddn: undefined // nullable
+        };
+        $(form).value = v;
+        assert $(form).value == v;
+        $(#out).value = String.printf("%V",v);
+      }
+    
+    
+    </script>
+  </head>
+<body>
+
+  <h3>&lt;select|dropdown&gt; variants</h3>
+
+  <button #get>Get values</button>
+  <button #set>Set values</button>
+  <form>
+  <label>dropdown:</label><select name=dd>
+    <option>One</option>
+    <option>Two</option>
+    <option>Three</option>
+    <option selected>Four</option>
+    <option>Five</option>
+    <option>Six</option>
+    <option>Seven</option>
+    <option>Eight</option>
+    <option>Nine</option>
+    <option>Ten</option>
+    <option>Eleven</option>
+    <option>Twelve</option>
+  </select>
+  <label>combobox (editable select):</label> <select name=dde editable>
+    <option>One</option>
+    <option>Two</option>
+    <option>Three</option>
+    <option selected>Four</option>
+    <option>Five</option>
+    <option>Six</option>
+    <option>Seven</option>
+    <option>Eight</option>
+    <option>Nine</option>
+    <option>Ten</option>
+    <option>Eleven</option>
+    <option>Twelve</option>
+  </select>
+  <label>dropdown multiple:</label><select name=ddm multiple>
+    <option>One</option>
+    <option>Two</option>
+    <option>Three</option>
+    <option selected>Four</option>
+    <option>Five</option>
+    <option>Six</option>
+    <option>Seven</option>
+    <option>Eight</option>
+    <option>Nine</option>
+    <option>Ten</option>
+    <option>Eleven</option>
+    <option>Twelve</option>
+  </select>
+  <label>dropdown with custom state styling:</label>
+  <select name=ddcm>
+    <option>One</option>
+    <option>Two</option>
+    <option>Three</option>
+    <option selected>Four</option>
+    <option>Five</option>
+    <option>Six</option>
+    <option>Seven</option>
+    <option>Eight</option>
+    <option>Nine</option>
+    <option>Ten</option>
+    <option>Eleven</option>
+    <option>Twelve</option>
+  </select>
+  <label>nullable dropdown:</label>
+  <select name=ddn novalue="(nothing)">
+    <option>One</option>
+    <option>Two</option>
+    <option>Three</option>
+    <option>Four</option>
+    <option>Five</option>
+    <option>Six</option>
+    <option>Seven</option>
+    <option>Eight</option>
+    <option>Nine</option>
+    <option>Ten</option>
+    <option>Eleven</option>
+    <option>Twelve</option>
+  </select>
+  <label>dropdown with groups:</label><select name=ddog>
+    <option>One</option>
+    <optgroup label="2..4">
+      <option>Two</option>
+      <option>Three</option>
+      <option>Four</option>
+    </optgroup>
+    <optgroup>
+      <caption>5..8</caption>
+      <option>Five</option>
+      <option>Six</option>
+      <option>Seven</option>
+      <option>Eight</option>
+    </optgroup>
+    <option>Nine</option>
+    <option>Ten</option>
+    <option>Eleven</option>
+    <option>Twelve</option>
+  </select>
+  
+</form>  
+<pre #out></pre>
+  
+</body>
+</html>

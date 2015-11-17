@@ -1,0 +1,58 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+    
+      svg { background: gold; }
+    
+      form#params { 
+        width:170px;
+        vertical-align:top;
+        text-align:center;
+        border:1px dotted white;
+      }
+      form#params > input { display:block; margin:*; }
+    
+    </style>
+    <script type="text/tiscript">
+    
+       var svg = $(svg#indicator);
+        
+       $(form#params).subscribe("change",function() {
+       
+          var percentage = this.value.volume; 
+          
+          var rcfill = $(rect#fill);
+          rcfill.attributes["y"] = 10 + 380 - ((percentage * 380) / 100); 
+          rcfill.attributes["height"] = ((percentage * 380) / 100);
+          
+          var rcblue = $(rect#blue);
+          rcblue.attributes["transform"] = "rotate("+percentage+"deg)";
+       
+       });
+    
+    </script>
+  </head>
+<body>
+
+  <svg id="indicator" width="400px" height="400px">
+    <rect id="blue" x="10" y="10" width="200" height="380"
+          fill="blue" stroke="none"  />
+    <rect id="fill" x="10" y="110" width="200" height="280"
+          fill="red" stroke="none" />
+          
+     <form id="params" x="220" y="10">
+        This form element is contained inside SVG
+        <input type="vslider" name="volume" max="100" min="0" value="74" buddy="buddy" /> 
+        <text>The tank is <span #buddy/>% full</text>
+     </form>
+   </svg>
+
+   <p>Sciter specific: SVG may contain arbitrary HTML elements positioned by x and y attributes.</p>
+   <p>x and y defines anchor position of the element inside SVG. If vertical-align:top; then anchor position is top-left corner of the element.
+   <br>If vertical-align:baseline; is defined then y defines baseline position of the element.</p>
+
+
+</body>
+</html>

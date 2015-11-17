@@ -1,0 +1,27 @@
+<html resizeable >
+  <head>
+    <title>Hello world!</title>
+    <style></style>
+    <script type="text/tiscript">
+
+    include "../../decorators.tis";
+    
+    function self.ready() {
+      // we do post here as window is still in construction phase. Just to avoid needless draws
+      this.post ( ::view.state = View.WINDOW_SHOWN ); 
+    }
+    @click @on "#test" :: stdout.println("test clicked");
+  
+    </script>
+  </head>
+<body>
+  Hello world!
+  
+  Test of animation <img src="../loading-16.png">
+  
+  <button id="test">Test message</button>
+  
+  <br>Test of external image <img src="http://www.terrainformatica.com/res/terrainformatica.gif">
+  
+</body>
+</html>

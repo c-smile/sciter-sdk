@@ -1,0 +1,65 @@
+<html>
+<head>
+  <script type="text/tiscript">
+
+    // decorator '@this' - defines ctor that initializes instance by copying fields from proto object.
+    //                     see sample below.     
+    function @this(func, proto)
+    {
+      this[#this] = // this is the class in decorators, cls this[#this] = function(){} is equivalent of function this(){} inside the class declaration.  
+        func ? 
+          function(params..)
+          {
+            for(var n in proto) this[n] = proto[n];
+            func.apply(this,params);
+          } 
+        : function()
+          {
+            for(var n in proto) this[n] = proto[n];
+          }
+    }
+    
+    // testing it:
+    
+    class Foo
+    {
+      // Declaration of ctor plus two predefined fields for the instance. 
+      // Notation is a bit unusual but works.
+      
+      @this { one:1, two:2 } :{} 
+      // ^  ^                ^ 
+      // |  |                | lambda function declaration (empty here) - body of the ctor. 
+      // |  |
+      // |  | object literal used for instance initialization
+      // |
+      // | name of our function-decorator (above).
+    }
+
+    class Bar
+    {
+      // Declaration of empty ctor - just predefined fields for the instance. 
+      @this { three:3, four:4 };  // ';' at the end designates an empty decorator
+    }
+    
+    var foo = new Foo();
+    var bar = new Bar();
+
+    stdout << foo.one << "\n"; // should print '1'
+    stdout << foo.two << "\n"; // should print '2'
+
+    //debug;    
+    stdout << bar.three << "\n"; // should print '3'
+    stdout << bar.four << "\n"; // should print '4'
+    
+  </script>
+  <style>
+  </style>
+</head>
+<body>
+Console output should show this:
+<pre>  stdout:1
+  stdout:2
+  stdout:3
+  stdout:4</pre>
+</body>
+</html>

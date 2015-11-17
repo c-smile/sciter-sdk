@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+		
+			video.generator {
+				behavior: video-generator video;
+				size: *;
+				foreground-size:contain;
+				border:1px solid #000;
+			}
+		
+		</style>
+    <script type="text/tiscript">
+		
+		$(video).onSize = function() {
+		  var (w,h) = this.box(#dimension);
+			$(form).value = { width:w, height:h };
+		}
+		
+		</script>
+  </head>
+<body>
+  <p>This demo simulates partial video frame update. See sdk/include/behaviors/behavior_video_generator.cpp source.
+  On each frame (24 FPS) it updates portion of the frame.</p>
+  <form>pixels <output(width)/>x<output(height)/></form>
+  <video.generator />
+</body>
+</html>

@@ -1,0 +1,64 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+      /* the repeatable rules: */
+      [repeatable] { aspect: Repeatable url(repeatable.tis);  }
+      [repeatable] > * { behavior:form; } /* each repeated child is treated as a form so it can accept object values */     
+      
+      /* #shopping-cart specifics */
+      
+      #shopping-cart > li { flow:horizontal; border-bottom: 1px solid #aaa; line-height: 2em; }
+      
+      #shopping-cart > li > [name=price] { margin-left:*; }
+      #shopping-cart > li > [name=calories] { margin:0 0.5em; font-weight:bold; }
+      #shopping-cart > li.food { background:#F5F5DC; }
+      #shopping-cart > li.thing { background:#ADD8E6; }
+      
+      
+    </style>
+    <script type="text/tiscript">
+    
+      var shoppingCartData = [
+        { product:"Apple", price: 0.95, calories:52 },
+        { product:"Orange", price: 0.75, calories:47 },
+        { product:"Toothbrush", price: 1.75 },
+        { product:"Pear", price: 1.25, calories:57 },      
+        { product:"Soap", price: 2.75 },
+      ];
+      
+    </script>
+    
+    <script type="text/tiscript" >
+    
+      function self.ready() {
+      
+        var list = $(ol#shopping-cart);
+        
+        list.value = shoppingCartData;
+      }
+    
+    </script>
+    
+  </head>
+<body>
+
+  Shopping cart demo, items in the list are rendered differently because of @if:
+ 
+  <ol #shopping-cart repeatable>
+  
+    <li if="{calories:Integer}" class="food">
+      <output(product)/>, food, <output(calories)/> calories <output|currency(price)/>
+    </li>
+    
+    <li class="thing">
+      <output(product)/>, thing <output|currency(price)/>
+    </li>
+  
+  </ol>
+  
+  
+
+
+</body>
+</html>

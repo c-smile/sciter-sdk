@@ -1,0 +1,22 @@
+<div(debugger-view) .debugger-area .panel >
+  <div .debugger-toolbar disabled>
+    <button .debug-continue  title="F5 - continue execution" accesskey="!F5">Run</button>
+    <button .debug-step-in   title="F11 - step into the function" accesskey="!F11">In</button>
+    <button .debug-step-over title="F10 - step over" accesskey="!F10">Over</button>
+    <button .debug-step-out  title="Shift+F11 - step out" accesskey="!_F11">Out</button>
+  </div>
+  <div .sections>
+    <section .debugger-vars-section>
+      <header>variables</header>
+      <dl .debugger-vars></dl>
+    </section>
+    <section  .debugger-stacktrace-section>
+      <header>stacktrace</header>
+      <ul .debugger-stacktrace></ul>
+    </section>
+    <section .debugger-breakpoints-section >
+      <header>breakpoints</header>
+      <ul .debugger-breakpoints></ul>
+    </section>
+  </div>
+</div>

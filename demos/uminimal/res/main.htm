@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      frame {size:*;}
+    
+    </style>
+    <script type="text/tiscript">
+    
+      include "tis/test.tis";
+      
+      // init native API 
+      
+      !function(){
+        if( !view.api )
+          View.api = view.nativeApi(); // getting API and assigning it to global View.api veriable seen by all windows
+      }();
+     
+      $(#test).on("click", function() {
+        view.window {
+                type: View.FRAME_WINDOW,
+                 url: self.url("main.htm"),
+               state: View.WINDOW_SHOWN,
+               width: 800,
+              height: 600,
+           alignment: 5 // center of the screen  
+        };
+      });      
+      
+      $(form#native-test).on("change", function() {
+        var v = this.value;
+        var res = view.api.math.sum(v.a, v.b);
+        this.value = { r: res };
+        return true;
+      });
+    
+    </script>
+  </head>
+<body>
+  <button #test>Open another one</button>
+  <form #native-test>
+    <text>Native API test</text>
+    <input|integer(a) /> + <input|integer(b) /> = <output(r) /> (computed by native_sum(int a, int b))
+  </form>
+  
+  <p id="message"></p>
+  <frame src="images/globe.svg" />
+
+</body>
+</html>

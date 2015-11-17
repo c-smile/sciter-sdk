@@ -1,0 +1,52 @@
+﻿<html>
+  <head>
+    <meta name="source"/>
+    <meta name="source"/>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>behavior:slider</h1>
+  <p>This behavior provides slider functionality..</p>
+  <h2>Elements</h2>
+  <p>that have this behavior applied by default to:</p>
+  <ul>
+    <li><code>&lt;input|hslider&gt;</code> - horizontal slider;</li>
+    <li><code>&lt;input|vslider&gt;</code> - vertical slider.</li></ul>
+  <h2>Model</h2>
+  <p>Upon initialization the behavior creates following DOM structure:</p>
+  <pre>&lt;input type=hslider&gt;
+  &lt;button.slider /&gt;
+&lt;/input&gt;
+</pre>
+  <p>Where <code>&lt;button.slider&gt;</code> is slider's &quot;knob&quot;.</p>
+  <h2>Attributes</h2>
+  <p>this behavior knows about:</p>
+  <dl>
+    <dt>min</dt>
+    <dd>integer, initial minimal value;</dd>
+    <dt>max</dt>
+    <dd>integer, initial maximal value;</dd>
+    <dt>step</dt>
+    <dd>integer, intitial step value, click on left/right sides of the slider de-/increments the value by this amount.</dd>
+    <dt>value</dt>
+    <dd>integer, initial value of the input</dd>
+    <dt>buddy</dt>
+    <dd>string, ID of &quot;buddy&quot; element, usually some &lt;span&gt; that receives textual representation of the value.</dd>
+    <h2>Methods</h2>
+    <dt>sliderMin</dt>
+    <dd>() : <em>integer</em><br/>reports current (runtime) minimal value.</dd>
+    <dt>sliderMax</dt>
+    <dd>() : <em>integer</em><br/>reports current (runtime) maximal value.</dd>
+    <dt>sliderStep</dt>
+    <dd>() : <em>integer</em><br/>reports current (runtime) step value.</dd>
+    <dt>sliderRange</dt>
+    <dd>(<strong>min</strong> : integer, <strong>max</strong> : integer [, <strong>step</strong> : integer]) <br/>sets range and optionally step.</dd>
+    <h2>Events</h2>
+    <dt>BUTTON_STATE_CHANGED</dt>
+    <dd>- posted when value of the input is changed by the user.</dd>
+    <dt>BUTTON_CLICK</dt>
+    <dd>- posted when user has finished editing.</dd></dl>
+  <h2>Value</h2>
+  <p>integer, the value of the input, in range [ min ... max ].</p>
+</body>
+</html>

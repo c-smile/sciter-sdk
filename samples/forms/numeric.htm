@@ -1,0 +1,46 @@
+<html>
+	<head>
+		<title>Numeric inputs demo</title>
+    <style>
+      body { font-family:verdana; font-size:10pt }
+      //* { outline:1px solid red; }
+      dl { 
+        behavior:form;
+        flow:row(dt,dd);
+        border-spacing: 6dip;
+      }
+      dl > dt { width:max-intrinsic; font-family:monospace; vertical-align:middle; }
+      dl > dd { width:*; }
+      input[type=number]:focus { outline:1px solid red; }
+      input[type=number]:invalid { color:red; }
+      /*input[type=number]:empty::after { content:"?"; color:red; }*/
+    </style>
+    
+    <script type="text/tiscript">
+      include "../decorators.tis";
+      
+      @click @on "button#get"
+        : { stdout.printf("values:%V\n", $(dl).value); }
+
+      @click @on "button#set"
+        : { $(dl).value = { n1:1, n2:2, n3:3, n4:4, n5:5, n6:6 }; }
+
+      @change @on "input[name]" 
+        : evt { stdout.printf("value of '%s':%v\n", evt.target.attributes#name, evt.target.value); }
+
+    </script>
+    
+	</head>
+	<body>
+    <h3>input type="number"</h3>
+    <dl>
+      <dt>&lt;input type=number&gt;</dt>
+        <dd>with step:<input !number name="n1" min=0 max=1000 step=100 /> without step:<input !number name="n2" min=0 max=1000 value=10 /></dd>
+      <dt>&lt;input type=integer&gt;</dt>
+        <dd>with step:<input !integer name="n3" min=0 max=1000 step=100 /> without step:<input !integer name="n4" min=0 max=1000 value=10 /></dd>
+      <dt>&lt;input type=decimal&gt;</dt>
+        <dd>with step:<input !decimal name="n5" min=0 max=1000 step=100 /> without step:<input !decimal name="n6" min=0 max=1000 value=10 /></dd>
+    </dl>
+    <button #get>Show values</button> <button #set>Set values</button>
+	</body>
+</html>

@@ -1,0 +1,116 @@
+
+
+class NodeBlock: Behavior
+{
+  function attached() {
+    var x = this.attributes["x"].toInteger();
+    var y = this.attributes["y"].toInteger();
+    this.moveTo(x,y);
+  }
+  
+  function moveTo(x,y)  {
+    this.style.set {
+      left: dip(x),
+      top: dip(y) 
+    };
+  }
+}
+
+function NodeCanvas() {
+
+  var canvas = this;
+  
+  var hscrollbar = canvas.parent.$(widget[type=hscrollbar]);  
+  var vscrollbar = canvas.parent.$(widget[type=vscrollbar]);  
+  
+  var xscroll = 0;
+  var yscroll = 0;
+  var scale = 1.0;
+
+  function DragNode() {
+  
+    var node = this.$p(node);  
+    var offx,offy;
+    
+    canvas.onMouse = function(evt) 
+    {
+      if( evt.type != Event.MOUSE_MOVE )
+        return false;
+      if( typeof offx != #integer )
+      {
+        var (nx,ny) = node.box(#position,#inner,#container);
+        offx = evt.x - nx;
+        offy = evt.y - ny;
+      } else {
+        canvas.refresh();
+        node.moveTo( evt.x - offx, evt.y - offy );
+        view.update();
+      }
+      return true;      
+    };
+    
+    node.style #z-index = 100;
+    canvas.capture( true );
+    view.doEvent(#untilMouseUp);
+    canvas.capture( false );
+    node.style #z-index = undefined;
+    canvas.onMouse = null;
+  }
+  
+  canvas.subscribe("mousedown","node > caption", DragNode );
+  
+  function updateZoomPan() {
+    canvas.style #transform = [[scale: scale], [translate: dip(0 - xscroll), dip(0 - yscroll) ]]; 
+  }
+  
+  canvas.zoom = property(v) {
+    get { return (scale * 100).toInteger(); }
+    set { 
+      scale = v / 100.0;
+      updateZoomPan();
+    }
+  }
+  
+  if( hscrollbar && vscrollbar ) {
+      hscrollbar.setValues(
+          xscroll, // position
+          -1000,   // min
+          1000,    // max (a.k.a. document size)
+          100,     // page (a.k.a. view size)
+          10       // step ( inc/dec on arrow buttons )
+      );
+      vscrollbar.setValues(
+          yscroll,   // position
+          -1000,   // min
+          1000,    // max (a.k.a. document size)
+          100,     // page (a.k.a. view size)
+          10       // step ( inc/dec on arrow buttons )
+      );
+      canvas.parent.onScroll = function(evt)
+      {
+        if(evt.target === hscrollbar)
+          switch(evt.type) {
+            case Event.SCROLL_HOME:        xscroll = hscrollbar.value = evt.scrollPos; updateZoomPan(); break;
+            case Event.SCROLL_END:         xscroll = hscrollbar.value = evt.scrollPos; updateZoomPan(); break;
+            case Event.SCROLL_STEP_PLUS:   xscroll = hscrollbar.value = evt.scrollPos; updateZoomPan(); break;
+            case Event.SCROLL_STEP_MINUS:  xscroll = hscrollbar.value = evt.scrollPos; updateZoomPan(); break;
+            case Event.SCROLL_PAGE_PLUS:   xscroll = hscrollbar.value = evt.scrollPos; updateZoomPan(); break;
+            case Event.SCROLL_PAGE_MINUS:  xscroll = hscrollbar.value = evt.scrollPos; updateZoomPan(); break;
+            case Event.SCROLL_POS       :  xscroll = hscrollbar.value = evt.scrollPos; updateZoomPan(); break;
+          }
+        else if(evt.target === vscrollbar)
+          switch(evt.type) {
+            case Event.SCROLL_HOME:        yscroll = vscrollbar.value = evt.scrollPos; updateZoomPan(); break;
+            case Event.SCROLL_END:         yscroll = vscrollbar.value = evt.scrollPos; updateZoomPan(); break;
+            case Event.SCROLL_STEP_PLUS:   yscroll = vscrollbar.value = evt.scrollPos; updateZoomPan(); break;
+            case Event.SCROLL_STEP_MINUS:  yscroll = vscrollbar.value = evt.scrollPos; updateZoomPan(); break;
+            case Event.SCROLL_PAGE_PLUS:   yscroll = vscrollbar.value = evt.scrollPos; updateZoomPan(); break;
+            case Event.SCROLL_PAGE_MINUS:  yscroll = vscrollbar.value = evt.scrollPos; updateZoomPan(); break;
+            case Event.SCROLL_POS       :  yscroll = vscrollbar.value = evt.scrollPos; updateZoomPan(); break;
+          }
+      }
+      
+      
+  }
+  
+}

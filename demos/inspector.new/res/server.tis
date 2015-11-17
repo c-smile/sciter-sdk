@@ -1,0 +1,22 @@
+include "view-driver.tis";
+include "settings.tis";
+
+function serve() {
+
+  const PORT = 0xDEB0;
+ 
+  function driver(socket) 
+  {
+    ViewDriver.create(socket);
+    return true; // we accept this connection
+  }
+ 
+  var serverSocket = DataSocket.listen(driver,PORT);
+  if( !serverSocket ) {
+    view.msgbox(#error, "Another instance of Inspector is running.");
+    view.close();
+  }
+  //else     
+  //  stdout.println("listening");
+}
+

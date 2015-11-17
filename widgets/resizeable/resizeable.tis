@@ -1,0 +1,54 @@
+
+// handles resizing of the element
+// when mouse is in bottom/right corner triggers class mouse-on-corner on the element
+// attached through CSS aspect property as:
+// [resizeable] { aspect: Resizeable url(resizeable.tis); }
+
+function Resizeable() {
+
+  function isMouseOnCorner(el,evt) {
+    var (w,h) = el.box(#dimension,#border);
+    return evt.x > (w - 15) && evt.y > (h - 15);
+  }
+  
+  var xs, ys;     // position of element at the moment mouse down
+  var dx, dy;     // deltas (offsets)
+  var isResizing = false; // true when inside mouse dragging loop
+  
+  function onMouseDown(evt) { 
+    if(!isMouseOnCorner(this,evt)) 
+      return false;
+    
+    var (x,y,w,h) = this.box(#rectw,#border,#view);
+    xs = x;
+    ys = y;
+    dx = w - evt.x;
+    dy = h - evt.y;
+    this.capture(true);
+    isResizing = true;
+    view.doEvent(#untilMouseUp);
+    isResizing = false;
+    this.capture(false);
+    return true; 
+  }
+
+  function onMouseMove(evt) { 
+  
+    if(isResizing) {
+      var neww = (evt.xView - xs + dx).toInteger();
+      var newh = (evt.yView - ys + dy).toInteger();
+      this.style#width = px(neww);
+      this.style#height = px(newh);
+      view.update();
+      return true;
+    }
+    else
+      this.attributes.toggleClass("mouse-on-corner", isMouseOnCorner(this, evt));
+    return false; 
+  }
+
+  this.subscribe("mousedown", onMouseDown);
+  this.subscribe("mousemove", onMouseMove);
+
+}
+

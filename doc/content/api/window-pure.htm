@@ -1,0 +1,333 @@
+<html><h3 id="test">Window and Engine Intialization functions.</h3>
+  <h4><a name="SciterClassName">SciterClassName</a></h4>
+  <p>Intializes the library and returns child window class.</p>
+  <table>
+    <tr>
+      <td>parameters:</td>
+      <td></td>
+      <td>(none)</td>
+      <td></td></tr>
+    <tr>
+      <td colspan="2" rowspan="2">returns:</td>
+      <td>LPCWSTR</td>
+      <td>name of Sciter child window class.</td></tr>
+    <tr>
+      <td>NULL</td>
+      <td>if initialization of the engine has failed.</td></tr></table>
+  <p>Use this <b>function</b> if you wish to create Sciter as a child window. The returned name can be used in CreateWindow(Ex)W function on Windows.</p>
+  <h4><a name="SciterVersion">SciterVersion</a></h4>
+  <div>Returns major and minor version of Sciter engine.</div>
+  <table>
+    <tr>
+      <td>parameters:</td>
+      <td><strong>major</strong></td>
+      <td>BOOL</td>
+      <td>TRUE - major part of version, FALSE - minor part of version</td></tr>
+    <tr>
+      <td colspan="2">returns:</td>
+      <td>UINT</td>
+      <td>High and low words of the UINT contains pair of version/subversion numbers.</td></tr></table>
+  <p>Example:</p>
+  <pre>UINT version = SciterVersion(true);
+// version -&gt; 0x0301 for sciter version 3.1.0.4
+</pre>
+  <h4><a name="SciterProc">SciterProc</a></h4>
+  <p>[Windows only] Sciter window procedure that can be used in ::RegisterClass().</p>
+  <table>
+    <tr>
+      <td rowspan="4">parameters:</td>
+      <td><strong>hwnd</strong></td>
+      <td><a href="#HWINDOW">HWINDOW</a></td>
+      <td>window handler</td></tr>
+    <tr>
+      <td><strong>msg</strong></td>
+      <td>UINT</td>
+      <td>Windows message code</td></tr>
+    <tr>
+      <td><strong>wParam</strong></td>
+      <td>WPARAM</td>
+      <td>wparam</td></tr>
+    <tr>
+      <td><strong>lParam</strong></td>
+      <td>LPARAM</td>
+      <td>lparam</td></tr>
+    <tr>
+      <td colspan="2">returns:</td>
+      <td>LRESULT</td>
+      <td>standard lresult value</td></tr></table>
+  <p>This function calls ::DefWindowProc() on all non-handled window messages.</p>
+  <h4><a name="SciterProcND">SciterProcND</a></h4>
+  <p>[Windows only] Partial implementation of Sciter window procedure that can be used for &quot;mix-in&quot; type of Sciter integration.</p>
+  <table>
+    <tr>
+      <td rowspan="5">parameters:</td>
+      <td>hwnd</td>
+      <td><a href="#HWINDOW">HWINDOW</a></td>
+      <td>window handler</td></tr>
+    <tr>
+      <td>msg</td>
+      <td>UINT</td>
+      <td>Windows message code</td></tr>
+    <tr>
+      <td>wParam</td>
+      <td>WPARAM</td>
+      <td>wparam</td></tr>
+    <tr>
+      <td>lParam</td>
+      <td>LPARAM</td>
+      <td>lparam</td></tr>
+    <tr>
+      <td>pbHandled</td>
+      <td>BOOL*</td>
+      <td>address of handled/not handled flag, Sciter sets it to TRUE if it a) handles the message and b) that message shall not be passed to ::DefWindowProc().</td></tr>
+    <tr>
+      <td colspan="2">returns:</td>
+      <td>LRESULT</td>
+      <td>standard lresult value</td></tr></table>
+  <p>This function does not call ::DefWindowProc().</p>
+  <h4><a name="SciterDataReady">SciterDataReady</a></h4>
+  <p>This function is used in response to SCN_LOAD_DATA request to supply data requested by the engine.</p>
+  <table>
+    <tr>
+      <td rowspan="4">parameters:</td>
+      <td><strong>hwnd</strong></td>
+      <td><a href="#HWINDOW">HWINDOW</a></td>
+      <td>window handler</td></tr>
+    <tr>
+      <td><strong>uri</strong></td>
+      <td>LPCWSTR</td>
+      <td>Url of data request</td></tr>
+    <tr>
+      <td><strong>data</strong></td>
+      <td>LPCBYTE</td>
+      <td>pointer to buffer containing the data</td></tr>
+    <tr>
+      <td><strong>dataLength</strong></td>
+      <td>UINT</td>
+      <td>length of the buffer - number of bytes.</td></tr>
+    <tr>
+      <td colspan="2">returns:</td>
+      <td>BOOL</td>
+      <td>TRUE if data is accepted by the engine, FALSE - otherwise.</td></tr></table>
+  <p>After the call application can free the data buffer as the engine makes copy of it.</p>
+  <div>WARNING: If used, call of this function MUST be done ONLY while handling SCN_LOAD_DATA request and in the same thread. For asynchronous resource loading use <a href="#SciterDataReadyAsync">SciterDataReadyAsync</a> function.</div>
+  <h4><a name="SciterDataReadyAsync">SciterDataReadyAsync</a></h4>
+  <p>This function is used in response to SCN_LOAD_DATA request to supply data requested by the engine.</p>
+  <table>
+    <tr>
+      <td rowspan="5">parameters:</td>
+      <td><strong>hwnd</strong></td>
+      <td><a href="#HWINDOW">HWINDOW</a></td>
+      <td>window handler</td></tr>
+    <tr>
+      <td><strong>uri</strong></td>
+      <td>LPCWSTR</td>
+      <td>Url of data request</td></tr>
+    <tr>
+      <td><strong>data</strong></td>
+      <td>LPCBYTE</td>
+      <td>pointer to buffer containing the data</td></tr>
+    <tr>
+      <td><strong>dataLength</strong></td>
+      <td>UINT</td>
+      <td>length of the buffer - number of bytes</td></tr>
+    <tr>
+      <td><strong>requestId</strong></td>
+      <td>LPVOID</td>
+      <td>SCN_LOAD_DATA requestId</td></tr>
+    <tr>
+      <td colspan="2">returns:</td>
+      <td>BOOL</td>
+      <td>TRUE if data is accepted by the engine, FALSE - otherwise.</td></tr></table>
+  <p>After the call application can free the data buffer as the engine makes copy of it.</p>
+  <div>WARNING: If used, call of this function MUST be done ONLY while handling SCN_LOAD_DATA request and in the same thread. For asynchronous resource loading use SciterDataReadyAsync.</div>
+  <h4><a name="SciterLoadFile">SciterLoadFile</a></h4>
+  <p>Load HTML file from local drive or from remote location.</p>
+  <table>
+    <tr>
+      <td rowspan="2">parameters:</td>
+      <td>hwnd</td>
+      <td><a href="#HWINDOW">HWINDOW</a></td>
+      <td>sciter window handler</td></tr>
+    <tr>
+      <td>uri</td>
+      <td>LPCWSTR</td>
+      <td>url of document to load</td></tr>
+    <tr>
+      <td colspan="2">returns:</td>
+      <td>BOOL</td>
+      <td>TRUE if document is parsed by the engine, FALSE - otherwise.</td></tr></table>
+  <p>This function can be used to load HTML into Sciter window from app specific storage as it generates <a href="#SC_LOAD_DATA">SC_LOAD_DATA</a> callback.</p>
+  <h4><a name="SciterLoadHtml">SciterLoadHtml</a></h4>
+  <p>Load HTML from memory location.</p>
+  <table>
+    <tr>
+      <td rowspan="4">parameters:</td>
+      <td><strong>hwnd</strong></td>
+      <td><a href="#HWINDOW">HWINDOW</a></td>
+      <td>sciter window handler</td></tr>
+    <tr>
+      <td><strong>html</strong></td>
+      <td>LPCBYTE</td>
+      <td>address of HTML buffer to load</td></tr>
+    <tr>
+      <td><strong>htmlSize</strong></td>
+      <td>UINT</td>
+      <td>Length of buffer pointed by html parameter</td></tr>
+    <tr>
+      <td><strong>baseUri</strong></td>
+      <td>LPCWSTR</td>
+      <td>base url used to resolve relative links in the document.</td></tr>
+    <tr>
+      <td colspan="2">returns:</td>
+      <td>BOOL</td>
+      <td>TRUE if document is parsed by the engine, FALSE - otherwise.</td></tr></table>
+  <h4><a name="SciterSetCallback">SciterSetCallback</a></h4>
+  <p>Load HTML file from local drive or from remote location.</p>
+  <table>
+    <tr>
+      <td rowspan="3">parameters:</td>
+      <td><strong>hwnd</strong></td>
+      <td><a href="#HWINDOW">HWINDOW</a></td>
+      <td>sciter window handler</td></tr>
+    <tr>
+      <td><strong>callback</strong></td>
+      <td>SciterHostCallback*</td>
+      <td>address of callback function handling callbacks</td></tr>
+    <tr>
+      <td><strong>callbackParam</strong></td>
+      <td>LPVOID</td>
+      <td>parameter passed to callback function as it is</td></tr>
+    <tr>
+      <td colspan="2">returns:</td>
+      <td>VOID</td>
+      <td></td></tr></table>
+  <p>This function is used to attach callback function to Sciter instance to handle various callbacks and notifications, see: <a href="#SC_LOAD_DATA">SC_LOAD_DATA</a> , <a href="#SC_DATA_LOADED">SC_DATA_LOADED</a>, etc.</p>
+  <p><a name="SciterHostCallback">SciterHostCallback</a> is a function that has the following signature:</p>
+  <p>UINT SC_CALLBACK SciterHostCallback( LPSCITER_CALLBACK_NOTIFICATION pns, LPVOID callbackParam );</p>
+  <p>where LPSCITER_CALLBACK_NOTIFICATION is an address of corresponding structure: <a href="#SC_LOAD_DATA">SCN_LOAD_DATA</a>, <a href="#SC_DATA_LOADED">SCN_DATA_LOADED</a>, etc.</p>
+  <h4><a name="SciterSetMasterCSS">SciterSetMasterCSS</a></h4>
+  <p>Styling of all standard HTML elements in Sciter is defined in so called &quot;master style sheet&quot; (CSS resource). This function allows to provide application specific version of all default styles.</p>
+  <table>
+    <tr>
+      <td rowspan="2">parameters:</td>
+      <td>utf8</td>
+      <td>LPCBYTE</td>
+      <td>utf8 encoded CSS data</td></tr>
+    <tr>
+      <td>numBytes</td>
+      <td>UINT</td>
+      <td>length of CSS data</td></tr>
+    <tr>
+      <td colspan="2">returns:</td>
+      <td>BOOL</td>
+      <td>TRUE if parsing was successful</td></tr></table>
+  <p>Call this function at the start up of your application - before creation of Sciter windows.</p>
+  <h4>SciterAppendMasterCSS</h4>
+  <p>Typedefs</p>
+  <h4><a name="HWINDOW">HWINDOW</a></h4>
+  <p>window handle, on Windows that is HWND that represents as window as its client part. On other OSes it is a root child widget representing client portion of the window.</p>
+  <table>
+    <tr>
+      <td>Windows</td>
+      <td>HWND</td>
+      <td>Window handle</td></tr>
+    <tr>
+      <td>OS X</td>
+      <td>NSView*</td>
+      <td>root NSView of OS X window.</td></tr>
+    <tr>
+      <td>Linux/GTK</td>
+      <td>GtkWidget*</td>
+      <td>root widget of GTK window.</td></tr></table>
+  <h3>Constants and Enumerations</h3>
+  <h4>Callback/notification codes</h4>
+  <p>Notification codes received by function set by SciterSetCallback</p>
+  <table>
+    <tr>
+      <td><a name="SC_LOAD_DATA"><strong>SC_LOAD_DATA</strong></a></td>
+      <td>1</td>
+      <td>Request to load data, see <a href="#SCN_LOAD_DATA">SCN_LOAD_DATA</a></td></tr>
+    <tr>
+      <td><a name="SC_DATA_LOADED"><strong>SC_DATA_LOADED</strong></a></td>
+      <td>2</td>
+      <td>Notification, data is received, see SCN_DATA_LOADED</td></tr>
+    <tr>
+      <td><a name="SC_ATTACH_BEHAVIOR"><strong>SC_ATTACH_BEHAVIOR</strong></a></td>
+      <td>4</td>
+      <td>Request to attach specific behavior to DOM element. behaviors are defined in CSS but implemented in native code.</td></tr>
+    <tr>
+      <td><a name="SC_ENGINE_DESTROYED"><strong>SC_ENGINE_DESTROYED</strong></a></td>
+      <td>5</td>
+      <td>This notification is sent when instance of the engine is destroyed. This is always a final notification.</td></tr></table>
+  <h4><a name="SciterResourceType">enum SciterResourceType</a></h4>
+  <p>Defines type of data requested by the engine.</p>
+  <div>values:</div>
+  <table>
+    <tr>
+      <td><strong>RT_DATA_HTML</strong></td>
+      <td>0</td>
+      <td>HTML data requested</td></tr>
+    <tr>
+      <td><strong>RT_DATA_IMAGE</strong></td>
+      <td>1</td>
+      <td>image data requested</td></tr>
+    <tr>
+      <td><strong>RT_DATA_STYLE</strong></td>
+      <td>2</td>
+      <td>CSS data requested</td></tr>
+    <tr>
+      <td><strong>RT_DATA_CURSOR</strong></td>
+      <td>3</td>
+      <td>cursor data requested</td></tr>
+    <tr>
+      <td><strong>RT_DATA_SCRIPT</strong></td>
+      <td>4</td>
+      <td>script requested</td></tr>
+    <tr>
+      <td><strong>RT_DATA_RAW</strong></td>
+      <td>5</td>
+      <td>raw data requested - data of any or unknown type</td></tr></table>
+  <h3>Structures</h3>
+  <h4><a name="SCN_LOAD_DATA">struct SCN_LOAD_DATA</a></h4>
+  <p>Structure passed by the engine in SC_LOAD_DATA callback notification.</p>
+  <div>Fields:</div>
+  <table>
+    <tr>
+      <td><strong>code</strong></td>
+      <td>UINT</td>
+      <td>SC_LOAD_DATA value</td></tr>
+    <tr>
+      <td><strong>hwnd</strong></td>
+      <td><a href="#HWINDOW">HWINDOW</a></td>
+      <td>window handler</td></tr>
+    <tr>
+      <td><strong>uri</strong></td>
+      <td>LPCWSTR</td>
+      <td>Url of data request</td></tr>
+    <tr>
+      <td><strong>outData</strong></td>
+      <td>LPCBYTE</td>
+      <td>pointer to buffer containing the data</td></tr>
+    <tr>
+      <td><strong>outDataLength</strong></td>
+      <td>UINT</td>
+      <td>length of the buffer - number of bytes</td></tr>
+    <tr>
+      <td><strong>dataType</strong></td>
+      <td>UINT</td>
+      <td>one of <a href="#SciterResourceType">SciterResourceType</a> values</td></tr>
+    <tr>
+      <td><strong>requestId</strong></td>
+      <td>LPVOID</td>
+      <td>requestId used for indentification of particular request</td></tr>
+    <tr>
+      <td><strong>principal</strong></td>
+      <td>HELEMENT</td>
+      <td>element handle - receiver of the data</td></tr>
+    <tr>
+      <td><strong>initiator</strong></td>
+      <td>HELEMENT</td>
+      <td>element handle - initiator of the request, usually is the same as the principal</td></tr></table>
+  <div></div>
+</html>

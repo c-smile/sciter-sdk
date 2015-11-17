@@ -1,0 +1,9 @@
+
+html[lang] { aspect:"Lang.Controller" url(lang.tis); }
+
+html[lang] label,
+html[lang] dfn,
+html[lang] .dfn { aspect:"Lang.Label"; }
+
+html[lang] var,
+html[lang] .var { aspect:"Lang.Formatter"; }

@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      section {
+        flow:horizontal;
+        border-spacing: 4dip; /* inter-child spacing */
+        border:2dip dotted brown;
+      }
+      
+      section > div {
+        background: gold;
+        height: 64dip;
+        border-color: brown;
+      }
+    
+    </style>
+    
+  </head>
+<body>
+
+  <h1>CSS Layout managers: flow:horizontal</h1>
+    
+  <h3>flexible width</h3>
+  <section>
+    <div style="width:64dip">64dip</div>
+    <div style="width:*">*</div>
+    <div style="width:64dip">64dip</div>
+  </section>
+
+  <h3>flexible margin</h3>
+  <section>
+    <div style="width:64dip">64dip</div>
+    <div style="width:64dip">64dip</div>
+    <div style="width:64dip;margin-left:*">64dip/margin-left:*</div>
+  </section>
+
+  <h3>flexible width and margin</h3>
+  <section>
+    <div style="width:64dip">64dip</div>
+    <div style="width:2*">2*</div>
+    <div style="width:64dip;margin-left:1*">64dip/margin-left:1*</div>
+  </section>
+
+  <h3>flexible width and border</h3>
+  <section>
+    <div style="width:64dip">64dip</div>
+    <div style="width:2*">2*</div>
+    <div style="width:64dip;border-width:0 0 0 1*; border-style:solid">64dip/border-left-width:1*</div>
+  </section>
+
+
+</body>
+</html>

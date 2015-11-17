@@ -1,0 +1,42 @@
+html { 
+  behavior:sticky-scroll; /* keep position of viewed element */
+  overflow:scroll-indicator;
+}
+
+body 
+{ 
+  font:10pt verdana;
+  font-rendering-mode:classic;  
+  behavior: htmlarea; /* to make it selectable */
+  cursor:text;
+  //outline:1px dotted orange -1px;
+}
+
+pre
+{
+  background-color:#F5FFFA;
+  border:1px dashed gray;
+  padding:4px;
+  margin:4px;
+}
+
+body > table { border-spacing:0; }
+body > table tr > td { 
+  padding:4px; 
+  border-top:1px solid #dedede;
+  vertical-align:top; }
+  
+body > table tr > td:first-child:not([colspan]) { text-align: right; white-space:nowrap; border-right:1px solid #dedede; }
+
+body > dl:not(.flat) { flow:row(dt, dd); }
+body > dl:not(.flat) > dt { text-align: right; font-weight:bold; margin:0; margin-top:2em; padding-right: 0.3em; white-space:nowrap; }
+body > dl:not(.flat) > dd { border-left:1px solid #dedede; margin:0; margin-top:2em; padding-left: 0.3em; width:*;  }
+
+
+[highlighted]
+{
+  background-color: red;
+  color: white;
+  assigned!: self.start-timer(1000); /* red blink */
+  timer!: self.highlighted = null, return cancel;
+}

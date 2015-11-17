@@ -1,0 +1,855 @@
+﻿<html>
+  <head>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>Element object</h1>
+  <p>Represents DOM element. Element has sub-objects: <a href="Attributes.htm">attributes</a> and styles.</p>
+  <p>The Element class is derived from the Node class.</p>
+  <dl>
+    <h2>Constants</h2>
+    <div>STATE_LINK</div>
+    <div>STATE_HOVER</div>
+    <div>STATE_ACTIVE</div>
+    <div>STATE_FOCUS</div>
+    <div>STATE_VISITED</div>
+    <div>STATE_CURRENT</div>
+    <div>STATE_CHECKED</div>
+    <div>STATE_DISABLED</div>
+    <div>STATE_READONLY</div>
+    <div>STATE_EXPANDED</div>
+    <div>STATE_COLLAPSED</div>
+    <div>STATE_INCOMPLETE</div>
+    <div>STATE_ANIMATING</div>
+    <div>STATE_FOCUSABLE</div>
+    <div>STATE_ANCHOR</div>
+    <div>STATE_POPUP</div>
+    <div>STATE_OWNS_POPUP</div>
+    <div>STATE_EMPTY</div>
+    <div>STATE_BUSY</div>
+    <dd>State flags (bits) of the element, used by get/setState functions. TBD.</dd>
+    <h2>Properties</h2>
+    <dt>length</dt>
+    <dd><font color="#999999">r</font> - <em>integer</em>, number of child elements in this element. Read-only property.</dd>
+    <dt>[index]</dt>
+    <dd><font color="#999999">rw - </font><em>Element</em>, child element of the element at the <em>index</em> position, Read-write index accessor. Zero-based index.</dd>
+    <dt>root</dt>
+    <dd><font color="#999999">r</font> - <em>Element</em>, root element of the DOM this element belongs to. Read-only.</dd>
+    <dt>parent</dt>
+    <dd><font color="#999999">r - </font><em>Element</em>, parent element of given element or <em>null</em> if this element is a root element. Read-only.</dd>
+    <dt>layoutParent</dt>
+    <dd><font color="#999999">r - </font><em>Element</em>, layout parent element of given element or <em>null</em> if this element is a root element. Read-only.<br/>For positioned elements (position:absolute) layout parent is the positioned container (closest positioned ancestor) element that is used for top/left/bottom/right calculations.</dd>
+    <dt>owner</dt>
+    <dd><font color="#999999">r - </font><em>Element</em>, owner element of given element or <em>null</em> if this element is a root element. Read-only.<br/>Most of the time the owner is the parent but for popup elements for example owner is the element that owns the popup, e.g. for the tooltip element the owner is the element that causes the tooltip to be shown.</dd>
+    <dt>index</dt>
+    <dd><font color="#999999">r</font> - Integer, index of the element in parent collection. Undefined if this element is not connected to any parent.</dd>
+    <dt>tag</dt>
+    <dd><font color="#999999">r</font> - <em>String</em>, tag name of the element. Read-only.</dd>
+    <dt>id</dt>
+    <dd><font color="#999999">r - </font><em>String</em>, value of attribute <em>id</em> (if any). Read-only.</dd>
+    <dt>next</dt>
+    <dd><font color="#999999">r - </font><em>Element</em>, next sibling element of the element or <em>null</em> if this is last element in the parent collection.</dd>
+    <dt>prior</dt>
+    <dd><font color="#999999">r</font> - <em>Element</em>, previous sibling element of the element or <em>null</em> if this is first element in the parent collection.</dd>
+    <dt>first</dt>
+    <dd><font color="#999999">r</font> - <em>Element</em>, first child (element) of the element or <em>null</em> if there are no children.</dd>
+    <dt>last</dt>
+    <dd><font color="#999999">r</font> - <em>Element</em>, last child (element) of the element or <em>null</em> if there are no children.</dd>
+    <dt><u>attributes</u></dt>
+    <dd><font color="#999999">c - </font><a href="Attributes.htm"><em>Attributes</em></a>, collection of html attributes of the element.</dd>
+    <dt><u>@</u></dt>
+    <dd><font color="#999999">c -</font> short form to access<font color="#999999"> </font><a href="Attributes.htm"><em>Attributes</em></a>, collection of html attributes of the element. It is just an alias of the <em>attributes</em> above.<br/>Sample:<br/><code>this.@[&quot;selected&quot;] = true</code> // or<br/><code>this.@#selected = true</code><br/>is an equivalent of <br/><code>this.attributes[&quot;selected&quot;] = true</code></dd>
+    <dt><u>style</u></dt>
+    <dd><font color="#999999">c - </font><a href="Style.htm">Style</a>, style attributes of the DOM element.</dd>
+    <dt><u>state</u></dt>
+    <dd><font color="#999999">c - </font><a href="States.htm">States</a>, collection of states (runtime flags) of the DOM element.</dd>
+    <dt><u>x</u></dt>
+    <dd><font color="#999999">c - </font>Extenders, interface to collection of native behaviors attached to the element:
+      <ul>
+        <li>element.x.length - reports number of native behaviors attached to the element;</li>
+        <li>element.x[n] - reports name of n-th native behavior attached to the element.</li>
+        <li>element.x.<em>funcname(....)</em> - call of methods implemented by native behaviors.</li></ul>
+      <p>Main purpose of this interface is to provide function call mechanism that is using separate namespace.</p></dd>
+    <dt>text</dt>
+    <dd><font color="#999999">rw</font> - <em>String</em>, text of the element. For compound elements this property returns plain-text version of the content</dd>
+    <dt>html</dt>
+    <dd><font color="#999999">rw</font> - <em>String</em>, (<em>inner HTML</em>) html source of the content of the element. Text returned (String) will not include head and tail tags of the element. Value to set can be either String or Stream object.</dd>
+    <dt>outerHtml</dt>
+    <dd>
+      <div><font color="#999999">rw - </font><em>String</em>, (<em>outer HTML</em>) html source of the element. Text returned (String) will include head and tail tags of the element.</div>
+      <div>Value to set can be either String or Stream object.</div></dd>
+    <dt>value</dt>
+    <dd><font color="#999999">rw - </font><em>String</em> by default and if the element has native behavior attached to the element it could be also: integer, boolean, array, etc. For example &lt;input type=&quot;radio&quot;&gt; will return <em>true</em> if this radio button has &quot;on&quot; state.
+      <p>Note: <code>property value(v)</code> can be overriden in a behavior class in script. To access native value in such case use <em>Element.state.value</em> property.</p></dd>
+    <dt>prototype</dt>
+    <dd><font color="#999999">rw - </font>Either Instance of Behavior or Element class object. Prototype can be set to the element through CSS (prototype:name_of_global_behavior_variable) or using this property.</dd>
+    <dt>isVisible</dt>
+    <dd><font color="#999999">r</font> - <em>true </em>if element and all its containers are in visible state - no visibility:hidden or display:none defined for them. false - otherwise.</dd>
+    <dt>isEnabled</dt>
+    <dd><font color="#999999">r</font> - <em>true </em>if element and all its containers are not in :disabled state ( setState(Element.STATE_DISABLED)).</dd>
+    <dt>ns</dt>
+    <dd><font color="#999999">r</font> - <em>Object</em>, namespace object of the element. All static functions and classes defined in scripts of current document are members of this [namespace] object.</dd>
+    <dt>rows</dt>
+    <dd><font color="#999999">r</font> - <em>integer</em>, Number of rows in the DOM element, for the &lt;table&gt; element returns number of rows in it, for other returns number of rows with respect of <em>flow</em> CSS property.</dd>
+    <dt>columns</dt>
+    <dd><font color="#999999">r</font> - <em>integer</em>, Number of columns in the DOM element, for the &lt;table&gt; element returns number of columns in it, for other returns number of rocolumns with respect of <em>flow</em> CSS property.</dd>
+    <dt>options</dt>
+    <dd><font color="#999999">r</font> - <em>Element</em>, for &lt;select&gt; element returns DOM element - container of options that can be used to populate list of options programmatically.</dd>
+    <dt>contentModel</dt>
+    <dd><font color="#999999">r</font> - <em>symbol</em>, Reports current content model of the element (as it defined in HTML5 spec) as one of:
+      <ul>
+        <li><strong>#block-inside</strong> - the element can contain block elements (e.g. &lt;div&gt;)</li>
+        <li><strong>#inline-inside</strong> - the element can contain inline elements (e.g. &lt;p&gt;).</li>
+        <li><strong>#transparent</strong> - the content model of a transparent element is derived from the content model of its parent element (e.g. &lt;a&gt;).</li>
+        <li><strong>#text-only</strong> - the element can contain only plain text (e.g. &lt;title&gt;).</li>
+        <li><strong>#table</strong>, <strong>#table-section</strong> and <strong>#table-row</strong> - &lt;table&gt;, &lt;tbody&gt;, &lt;tfoot&gt;, &lt;thead&gt; and &lt;tr&gt; elements.</li></ul></dd>
+    <dt>selection</dt>
+    <dd><font color="#999999">r</font> - <em>null | Selection</em>, returns <a href="selection.htm">Selection</a> object if the element has behavior (htmlarea or richtext) supporting selection functionality.</dd>
+    <dt>firstCaretPos</dt>
+    <dd><font color="#999999">r</font> - <em>null | bookmark</em>, returns bookmark of first caret position inside the element.</dd>
+    <dt>lastCaretPos</dt>
+    <dd><font color="#999999">r</font> - <em>null | bookmark</em>, returns bookmark of last caret position inside the element.</dd>
+    <dt>paintBackground</dt>
+    <dd><font color="#999999">w</font> - <em>null | </em>function(gfx), assigns background layer painting function. The function gets Graphics object that is used to draw the layer. If the function returns <em>true</em> then default background and borders drawing is suppressed. The background drawing function is drawn <strong>before</strong> native background drawing.</dd>
+    <dt>paintContent</dt>
+    <dd><font color="#999999">w</font> - <em>null | </em>function(gfx), assigns content layer painting function. The function gets Graphics object that is used to draw the layer. If the function returns <em>true</em> then default content drawing is suppressed. The content drawing function gets invoked <strong>before</strong> native content drawing.</dd>
+    <dt>paintForeground</dt>
+    <dd><font color="#999999">w</font> - <em>null | </em>function(gfx), assigns foreground layer painting function. The function gets Graphics object that is used to draw the layer. If the function returns <em>true</em> then default foreground drawing is suppressed. The content drawing function gets invoked <strong>before</strong> native foreground drawing.</dd>
+    <dt>paintOutline</dt>
+    <dd><font color="#999999">w</font> - <em>null | </em>function(gfx), assigns outline layer painting function. The function gets Graphics object that is used to draw the layer. If the function returns <em>true</em> then default outline drawing is suppressed. The outline drawing function gets invoked <strong>before</strong> native outline drawing.</dd>
+    <h3>properties inherited from Node class or Node specific properties</h3>
+    <dt>nodeIndex</dt>
+    <dd><font color="#999999">r</font> - Integer, index of the node in parent nodes collection.</dd>
+    <dt>nextNode</dt>
+    <dd><font color="#999999">r - </font><em>Element or Node</em>, next sibling node of the node or <em>null</em> if this is the last element in parent collection.</dd>
+    <dt>priorNode</dt>
+    <dd><font color="#999999">r</font> - <em>Element or Node</em>, previous sibling node of the node or <em>null</em> if this is the first node in it's parent's collection.</dd>
+    <dt>firstNode</dt>
+    <dd><font color="#999999">r</font> - <em>Element or Node</em>, reference to first child node (element,text,comment) of the element.</dd>
+    <dt>lastNode</dt>
+    <dd><font color="#999999">r</font> - <em>Element or Node</em>, reference to last child node (element,text,comment) of the element.</dd>
+    <dt>isElement</dt>
+    <dd><font color="#999999">r</font> - <em>true </em>if this node is an element, false - otherwise.</dd>
+    <dt>isText</dt>
+    <dd><font color="#999999">r</font> - <em>true </em>if the node is a text node.</dd>
+    <dt>isComment</dt>
+    <dd><font color="#999999">r</font> - <em>true </em>if the node is a comment node.</dd>
+    <h2>Enumeration</h2>
+    <dt>for ... in</dt>
+    <dd>
+      <div>for(var<strong> child</strong> in<strong> element</strong>)<strong> { </strong>/* loop body */<strong> }</strong> or <br/>for(var<strong> (index,child)</strong> in<strong> element</strong>)<strong> { </strong>/* loop body */<strong> }</strong></div>
+      <p>Executes body of the loop for each child elements of the element.</p>
+      <p>Example, for <em>p</em> element in html: <br/><code>&lt;p&gt;Hello &lt;em&gt;wonderfull&lt;/em&gt; world&lt;/p&gt;</code><br/>loop will be executed one time and <em>child</em> variable will get Element(&quot;em&quot;).</p></dd>
+    <h2>Methods</h2>
+    <dt>this</dt>
+    <dd>
+      <div><strong>(tagname[, text])</strong></div>
+      <p>Constructs new Element object with tag equal to <em>tagname</em> (string or symbol). Use it as:</p>
+      <pre>var el = new Element(&quot;option&quot;); // or
+var el = new Element(#option);
+</pre>
+      <p>Element will be created in disconnected state. To connect it to the DOM use <em>insert </em>method of the parent element.</p></dd>
+    <dt>create</dt>
+    <dd>
+      <div><strong>(object)</strong> : <em>Element</em></div>
+      <p>Static constructor of DOM elements. <em>object</em> here is an object literal with <a href="#object-template">microformat</a> defined below.</p>
+      <p>Example, following fragment is an equivalent of creating element with the markup <code>&lt;p&gt;before &lt;button&gt;Hi!&lt;/button&gt; after&lt;/p&gt;</code>:</p>
+      <pre>var para = Element.create { p, &quot;paragraph text&quot; }; // or if text is a variable:
+var para = Element.create { p, [paragraphText] };
+</pre></dd>
+    <dt>clear</dt>
+    <dd>
+      <div><strong>()</strong> : <em>undefined</em></div>
+      <p>Clears a content of the element, removing all its children.</p></dd>
+    <dt>toString</dt>
+    <dd>
+      <div><strong>()</strong> : <em>string</em></div>
+      <p>Returns string - html representation of the element. Text returned is outer html - includes head and tail tags and content s equal to text returned by В <em>html</em> attribute.</p></dd>
+    <dt>clone</dt>
+    <dd>
+      <div><strong>() </strong>:<em>Element</em></div>
+      <p>Returns new copy of the element. Method performs a deep copy of the element. New element is disconnected from the DOM state. Use insert() method to include it in the DOM.</p></dd>
+    <dt>select</dt>
+    <dd>
+      <div><strong>(CSSselector</strong>:string<strong> [, argument1 [, argument2, ... ]])</strong> : <em>Element</em></div>
+      <p>Returns first element satisfying CSS selector (<em>CSSselector</em>, string). CSSSelector may contain format specifiers like %d, %s which will be substituted by values of <em>argument1</em> ... <em>argumentN</em> in final CSS selector string. Function uses the same rules as does Stream.printf function.</p>
+      <p>Example, if document contains <code>&lt;input type=&quot;text&quot;/&gt;</code> element then following statement</p>
+      <pre>var inp = self.select(&quot;input[type='text']&quot;);
+</pre>
+      <p>will set <em>inp</em> by reference to such element.</p></dd>
+    <dt>$</dt>
+    <dd>
+      <div><strong>( </strong><em>CSSselector</em><strong> )</strong> : <em>Element</em></div>
+      <p>Returns first element satisfying CSS selector.</p>
+      <p>Note: this is a &quot;stringizer&quot; method so CSS selector can В be written without &quot;&quot; quotes.</p>
+      <p>Example, if document contains <code>&lt;input type=&quot;text&quot;/&gt;</code> elements then following statement</p>
+      <pre>var inp = self.$( input[type='text'] );
+</pre>
+      <p>will set <em><code>inp</code></em> by reference to such element.</p>
+      <p>And the following fragment:</p>
+      <pre>var n = 3;
+var li3 = self.$( ul &gt; li:nth-child({n}) );
+</pre>
+      <p>will find third list item in ul list element.</p></dd>
+    <dt>select</dt>
+    <dd>
+      <div><strong>(func , CSSselector</strong>: string<strong> [, argument1 [, argument2, ... ]])</strong> returns: <em>integer</em></div>
+      <p>Calls <em>func</em> (function reference) for each element satisfying (matching) <em>CSSselector.</em> Function <em>func</em> shall accept one parameter where select will provide reference to matched element. Function may return <em>true</em> to stop enumeration.</p>
+      <p>Example, following fragment will print out names of all input elements in the document: <br/>function printel(el) { В stdout.println( el.attributes[<font color="#336600">&quot;name&quot;</font>] ); В }<br/>document.select(printel, &quot;input&quot;);</p></dd>
+    <dt>selectAll</dt>
+    <dd>
+      <div><strong>(CSSselector</strong>: string<strong> [, argument1 [, argument2, ... ]])</strong> returns: <em>Array</em></div>
+      <p>Returns array of elements satisfying CSS selector (<em>CSSselector</em>, string). CSSSelector may contain format specifiers like %d, %s which will be substituted by values of <em>argument1</em> ... <em>argumentN</em> in final CSS selector string. Function uses the same rules as does Stream.printf function.</p></dd>
+    <dt>$$</dt>
+    <dd>
+      <div><strong>( </strong><em>CSSselector</em><strong> )</strong> returns: <em>Array</em></div>
+      <p>Returns array of elements satisfying CSS selector (<em>CSSselector</em>, string).</p>
+      <p>Note: this is a stringizer method - the <em>CSSselector</em> provided literally.</p></dd>
+    <dt>selectParent</dt>
+    <dd>
+      <div><strong>(CSSselector</strong>: string<strong> [, argument1 [, argument2, ... ]])</strong> returns: <em>Element</em></div>
+      <p>Returns first element in child/parent chain satisfying CSS selector (<em>CSSselector</em>, string). CSSSelector may contain format specifiers like %d, %s which will be substituted by values of <em>argument1</em> ... <em>argumentN</em> in final CSS selector string. Function uses the same rules as does Stream.printf function.</p>
+      <p>ATTN: Function also inspects <em>this</em> element.</p></dd>
+    <dt>$p</dt>
+    <dd>
+      <div><strong>( </strong><em>CSSselector</em><strong> )</strong> returns: <em>Element</em></div>
+      <p>Returns first element in child/parent chain satisfying CSS selector.</p>
+      <p>Note 1: this is a stringizer method - the <em>CSSselector</em> provided literally.</p>
+      <p>Note 2: Function also inspects <em>this</em> element.</p></dd>
+    <dt>selectParent</dt>
+    <dd>
+      <div><strong>(func , CSSselector</strong>: string<strong> [, argument1 [, argument2, ... ]])</strong> returns: <em>integer</em></div>
+      <p>Calls <em>func</em> (function reference) for each element satisfying (matching) <em>CSSselector.</em> Function <em>func</em> shall accept one parameter where select will provide reference to matched element. Function may return <em>true</em> to stop enumeration.</p>
+      <p>Example, following fragment will print out ids of all parent divs of some element:</p>
+      <pre>function printel(el) {  stdout.println( el.attributes[<font color="#336600">&quot;id&quot;</font>] );  }
+some.selectParent(printel, &quot;div&quot;);
+</pre>
+      <p>Note: Function also inspects <em>this</em> element.</p></dd>
+    <dt>$$p</dt>
+    <dd>
+      <div><strong>( </strong><em>CSSselector</em><strong> )</strong> returns: <em>Array of Element</em>s</div>
+      <p>Returns array of references of elements in child/parent chain satisfying CSS selector.</p>
+      <p>Note 1: this is a stringizer method - the <em>CSSselector</em> provided literally.</p>
+      <p>Note 2: Function also inspects <em>this</em> element.</p></dd>
+    <dt>match</dt>
+    <dd>
+      <div><strong>( CSSselector</strong>: string<strong> [, argument1 [, argument2, ... ]])</strong> returns: <em>true | false</em></div>
+      <p>Checks if this DOM element satisfies given <em>CSSselector</em>.</p></dd>
+    <dt>$is</dt>
+    <dd>
+      <div><strong>( </strong><em>CSSselector</em><strong> )</strong> returns: <em>true | false</em></div>
+      <p>Checks if this DOM element satisfies given <em>CSSselector</em>.</p>
+      <p>Note: this is a stringizer method - the <em>CSSselector</em> provided literally.</p></dd>
+    <dt>belongsTo</dt>
+    <dd>
+      <div><strong>(</strong> <strong>parent</strong>: Element [, <strong>useUITree</strong>: true | <em>false</em> [, <strong>includingThis</strong>: true | <em>false</em> ]] <strong>)</strong> : <em>true | false</em></div>
+      <p>Returns <em>true</em> if this element is has <em>parent</em> in its ancestor chain<em>.</em> If <strong>useUITree</strong> is provided and it is true then the function uses UI relationship rather than strict DOM parent/children relation. For example popup element can be declared outside of its host element but this function returns true for the popup if it was created for this element.</p>
+      <p>If <em>includingThis</em> is defined and is <em>true</em> then this function returns <em>true</em> for the element itself too : el.belongsTo(el,false,true) -&gt; true. By default <em>includingThis</em> is <em>false</em>.</p></dd>
+    <dt>find</dt>
+    <dd>
+      <div><strong>(x, y)</strong> returns: <em>Element</em>.</div>
+      <p>Returns reference to the child of the given element at x,y coordinates relative to the origin of the element. If there is no such element method returns element itself.</p></dd>
+    <dt>update</dt>
+    <dd>
+      <div><strong>([deep])</strong> returns: undefined</div>
+      <p>Remeasures given element (if deep == true) and invalidates its visual area after modifications. Use <strong>deep=true</strong> value if element will get new dimensions due to some operations on it. Omit <em>deep</em> parameter (or set it to <em>false</em>) if only decoration attributes (not changing dimensions, like color) were changed.</p></dd>
+    <dt>update</dt>
+    <dd>
+      <div><strong>(stateUpdateFunction)</strong> returns: undefined</div>
+      <p>That is &quot;transactioned update&quot;. The <em>stateUpdateFunction </em>is called with <em>this</em> variable set to the element object and is expected to contain code that modifies state of the element, its content or states of its subelements.</p>
+      <p>&quot;transactioned update&quot; mechanism is used when the element is expected to have &quot;content&quot; transitions defined in CSS as transition:blend(), scroll-***(), slide-***(), etc.</p>
+      <p>The <code>Element.update(stateUpdateFunction)</code> does these steps:</p>
+      <ol>
+        <li>Makes snapshot of intial state of the element;</li>
+        <li>Calls provided <code>stateUpdateFunction</code>() function that is expected to make all needed changes for the new state of the element;</li>
+        <li>Makes final state snapshot;</li>
+        <li>Starts the transitioning animation (if it is defined in CSS for the element) using these two snapshots.</li></ol>
+      <p>If there is no CSS transition defined for the element then <code>stateUpdateFunction</code>() is called and view is updated to the new state of the element immediately.</p></dd>
+    <dt>refresh</dt>
+    <dd>
+      <div><strong>( </strong>[<strong>x</strong>,<strong> y</strong>,<strong> width</strong>,<strong> height</strong>]<strong> )</strong> returns: true|false</div>
+      <p>Invalidates area occupied by the element on the screen. If <em>x</em> , <em>y</em>, <em>width</em>, <em>height </em>(coordinates of area inside element) are provided then it invalidates only that portion. This method is useful if you are using Graphics for rendering on element surface area.</p></dd>
+    <dt>animate</dt>
+    <dd>
+      <div><strong>( nextStep</strong>: function [, whenEnded: function] [, <strong>duration</strong>: diration | integer]<strong> )</strong> : undefined</div>
+      <p>Starts animation on the element. <em>nextStep</em> is a function that executes animation step (changes dimension, opacity, etc.). This function is called with <em>this</em> set to the element itself and should return integer - number of milliseconds for the next step. If it returns zero or not an integer then animation stops.</p>
+      <p>If <em>whenEnded</em> function is provided it will be called on the end of the animation.</p>
+      <p>The <em>duration</em> is a duration of the animation in milliseconds. If it is provided then signature of the <em>nextStep</em> function is expected to be:<br/> <code>function nextStep(progress: float) {}</code> <br/>where progress is a float number from 0.0 to 1.0 - progress of the animation. The nextStep function will always receive progress == 1.0 as the very last step.</p></dd>
+    <dt>box</dt>
+    <dd>
+      <div><strong>( part</strong> [, <strong>edge</strong> [, <strong>relativeTo</strong> ]] <strong>) </strong>returns: integer, device pixels</div>
+      <p>Returns coordinates of the edges of the element. Parameters:</p>
+      <ul>
+        <li><strong>part</strong> - one of symbolic constants <strong>#left</strong>, <strong>#top</strong>, <strong>#right</strong>, <strong>#bottom</strong>, <strong>#width</strong> or <strong>#height</strong>. Defines part of box (rectangle) to return.</li>
+        <ul>
+          <li>If <em>part</em> is <strong>#rect</strong> then the function returns four values - left, top, right, bottom. Use it for example as <code><br/>var (x1,y1,x2,y2) = this.box(#rect, #inner, #view)</code>;</li>
+          <li>If <em>part</em> is <strong>#rect</strong>w then the function returns four values - left, top, width and height. Use it for example as <code><br/>var (x,y,w,h) = this.box(#rectw, #inner, #view)</code>;</li>
+          <li>If part is <strong>#dimension</strong> the function returns two values - width and height. Use it as: <code><br/>var (w,h) = this.box(#dimension, #inner)</code>;</li>
+          <li>If part is <strong>#position</strong> the function returns two values - left and top. Use it as: <code><br/>var (x,y) = this.box(#position, #inner, #view)</code>;</li></ul>
+        <li><strong>edge</strong>, one of <a href="http://www.w3.org/TR/REC-CSS2/box.html">edges of element</a>:</li>
+        <ul>
+          <li><strong>#margin</strong> - margin box edge,</li>
+          <li><strong>#border</strong> - border box edge,</li>
+          <li><strong>#padding</strong> - padding box edge,</li>
+          <li><strong>#inner</strong>, <em>default value</em> - inner box edge,</li>
+          <li><strong>#content</strong> - content box edge. Content box here is outline of the content of the element and this is not В an inner box of the element. E.g. content box can be bigger than inner box if the element has <em>overflow</em> attribute set<em>.</em></li>
+          <li><strong>#client</strong> - client area, that is #inner box minus areas taken by [optional] scrollbars.</li>
+          <li><strong>#icon</strong> -area covered by element's icon. Icon here is element's foreground image with foreground-repeat: no-repeat. If element has no such image the function returns <strong>#width</strong> and <strong>#height</strong> equals to zero.</li></ul>
+        <li><strong>relativeTo</strong>, one of:</li>
+        <ul>
+          <li><strong>#screen</strong> - returns coordinate relative to the origin of the screen,</li>
+          <li><strong>#root</strong> - returns coordinate relative to the origin of root element (view),</li>
+          <li><strong>#parent</strong> - returns coordinate relative to the origin of its parent element. Note: parent scroll position relative.</li>
+          <li><strong>#content</strong> - returns coordinate of the element in content of its parent. Note: is not dependent on parent scroll position.</li>
+          <li><strong>#container</strong> - returns coordinate of the element relative to layout parent. Layout parent can be different from DOM parent element. E.g. position:absolute elements may have positioning layout parent different from DOM parent.</li>
+          <li><strong>#self</strong>, <em>default value</em> - all coordinates are relative to the origin of inner box of the element.</li>
+          <li><strong>#view</strong> - returns coordinate relative to the origin of the sciter window (view object).</li>
+          <li>or if <em>relativeTo</em> equals one of the following values:</li>
+          <ul>
+            <li><strong>#margin</strong> - margin box edge,</li>
+            <li><strong>#border</strong> - border box edge,</li>
+            <li><strong>#padding</strong> - padding box edge,</li>
+            <li><strong>#inner</strong> - inner box edge</li>
+            <p>the function will return cumulative widths of correspondent parts, examples:</p>
+            <p><code>var (mx1,my1,mx2,my2) = this.box(#rect, #margin, #inner)</code>;<br/>Each mx* value here will get sum of margin, border and padding in the left, top, right and bottom directions. In other words this call will return distances of margin box from inner(content) box of the element. And this call <code>var (mx1,my1,mx2,my2) = this.box(#rect, #margin, #border)</code>; will just return computed values of margin-left, margin-top, margin-right and margin-bottom CSS attributes.</p></ul></ul></ul>
+      <p>For more information see the <em>CSS b</em><a name="box-model"><em>ox model</em></a> specification: <a href="http://www.w3.org/TR/CSS2/box.html">http://www.w3.org/TR/CSS2/box.html</a></p></dd>
+    <dt>intrinsicWidthMin</dt>
+    <dd>
+      <div>( ) : integer, device pixels</div>
+      <p>returns min-intrinsic width of the element. min-intrinsic width is minimal width needed to show element without horizontal scrollbar.</p></dd>
+    <dt>intrinsicWidthMax</dt>
+    <dd>
+      <div>( ) : integer, device pixels</div>
+      <p>returns max-intrinsic width of the element. max-intrinsic width is minimal width needed to show element without wrapping, e.g. for the &lt;p&gt; element this will be width of its text replaced in single line.</p></dd>
+    <dt>intrinsicHeight</dt>
+    <dd>
+      <div>( <strong>forWidth</strong>: integer ) : integer, device pixels</div>
+      <p>returns min-intrinsic height of the element for the given <em>forWidth</em>. min-intrinsic heigh is minimal height needed to show element without vertical scrollbar.</p></dd>
+    <dt>toPixels</dt>
+    <dd>
+      <div><strong>( length : </strong>length | string | symbol<strong> </strong>[, <strong>#width</strong> | <strong>#height</strong> ]<strong> ) :</strong> integer, device pixels</div>
+      <p>returns the length value converted to the number of device pixels. Conversion is made in context of current element style so <code>el.toPixels( em(1.4) )</code> will number of pixel correspond to 1.4em that us dependent on current font size of the element.</p>
+      <p>length is a string or symbol then this string is treated as a CSS length literal so it is possible to get values like: <code>el.toPixels(#xx-small)</code> В or <code>el.toPixels(#system-scrollbar-width)</code>,</p>
+      <p>Second symbol parameter is used with the conversion from perecentage lengths:<br/><code>var h50p = el.toPixels( pr(50.0), #height );</code> - will calculate the same value as the following CSS declaration: <code>height:50%</code>.</p></dd>
+    <dt>scroll</dt>
+    <dd><img src="images/scroll.gif" align="right"/><strong>(part) </strong>returns: integer, device pixels
+      <p>Returns various scrolling related positions of the element. Parameters:</p>
+      <p><strong>part</strong> - one of symbolic constants:</p>
+      <ul>
+        <li><strong>#left</strong> - left position of the view relative to content origin,</li>
+        <li><strong>#top</strong> - top position,</li>
+        <li><strong>#right</strong> - offset of right edge of the view from right edge of В the content box,</li>
+        <li><strong>#bottom </strong>- offset of bottom edge of the view from bottom edge of the content box,</li>
+        <li><strong>#width </strong>- width of scrollable area,</li>
+        <li><strong>#height</strong> - height of scrollable area.</li></ul></dd>
+    <dt>scrollTo</dt>
+    <dd>
+      <div>( <strong>x</strong>:int, <strong>y</strong>:int [, <strong>smooth</strong>:bool [, <strong>unrestricted</strong> : bool] ] &nbsp;) : void</div>
+      <p>Sets scroll position of the element to x,y position. The element should have overflow: hidden-scroll, scroll or auto to be able to scroll its content. If <strong>unrestricted</strong> is set to true then scroll poistion is allowed to be out of content boundaries.</p></dd>
+    <dt>scrollToView</dt>
+    <dd>
+      <div>( [<strong>toTop</strong>:bool, <strong>smooth</strong>: bool = true ] )</div>
+      <p>Scrolls the element to the view - ensures that element is visible. В If <em>toTop</em> is <em>true </em>then forces element to be on top of its scrollable container. This method does deep scroll - it tries to make the element visible through all its scrollable containers. If <em>smooth</em> is false then no attempt to animate the scrolling will be made.</p>
+      <p>NOTE: in order that method to work the element should establish a box - to be of display: block | inline-block | table-cell | etc. In contrary <code>&lt;tr&gt;</code> (table row) for example is not a box element. In order to scroll to particular row in table you should choose first cell in that row.</p></dd>
+    <dt>insert</dt>
+    <dd>
+      <div><strong>( element</strong> | <strong>html</strong> | <strong>object </strong>| <strong>array</strong> [,<strong>index</strong> = Integer.MAX]<strong>)</strong> returns: true | false.</div>
+      <p><em>element</em> is a child DOM element (instance of this Element class) to be inserted at the <em>index</em> position. If index is greater than current number of children in this element then new element will be appended as a last element. <em>Index</em> is optional parameter, if ommited then element will be appended to collection. If <em>element</em> is already a child of some other parent then it will be disconnected from it automaticly.</p>
+      <p>If first parameter is string (<em>html</em> text) then attempt will be made to insert it at given position.</p>
+      <p>If first parameter is an object then it is considered as a template for creation of new DOM element. <a href="#object-template">Microformat</a> of that object is defined below.</p>
+      <p>If first parameter is an array it shall contain DOM Node references (elements and/or text nodes). &nbsp;</p></dd>
+    <dt>append</dt>
+    <dd>
+      <div><strong>( element</strong> | <strong>html</strong> | <strong>object</strong> | <strong>array )</strong> returns: true | false.</div>
+      <p>Equivalent of <code>insert ( ... , Integer.MAX )</code>;</p></dd>
+    <dt>prepend</dt>
+    <dd>
+      <div><strong>( element</strong> | <strong>html</strong> | <strong>object </strong>| <strong>array )</strong> returns: true | false.</div>
+      <p>Equivalent of <code>insert ( ... , 0 )</code>;</p></dd>
+    <dt>content</dt>
+    <dd>
+      <div><strong>( element</strong> | <strong>array</strong> [, <strong>element</strong>2 [, <strong>element</strong>3, ... ]]<strong> )</strong> returns: true | false.</div>
+      <p>Replaces content of the element by elements, that is short form of el.clear(); el.append(element1); el.append(element2); ...</p>
+      <p><em>This method can be used for setting cells in &lt;tr&gt;s. It handles properly cells with col/rowspans.</em></p>
+      <p>For all other elements <em>elementN</em> can be either DOM element, string, object ( template of the element that uses <a href="#object-template">microformat</a> ) or array of Elements/Nodes.</p></dd>
+    <dt>$content</dt>
+    <dd>
+      <div><strong>(</strong> .. inline html .. <strong>)</strong> : Element</div>
+      <p>Stringizer method, replaces content of the element by the inline html. As this is a stringizer method then html can be provided as it is, example:</p>
+      <pre>var el = ... , num = ...;
+el.$content(This is item number <b>{ num }</b>);
+</pre>
+      <p>Method returns the element itself.</p></dd>
+    <dt>$append</dt>
+    <dd>
+      <div><strong>(</strong> .. html .. <strong>)</strong> : Element</div>
+      <p>Stringizer method, adds content defined by the inline html to the end of the list of children of the element.</p>
+      <p>Method returns first added element.</p></dd>
+    <dt>$prepend</dt>
+    <dd>
+      <div><strong>( </strong>.. html .. <strong>)</strong> : Element</div>
+      <p>Stringizer method, insert content defined by the inline html at the start of children list of the element.</p>
+      <p>Method returns first added element.</p></dd>
+    <dt>$after</dt>
+    <dd>
+      <div><strong>(</strong> .. html .. <strong>)</strong> : Element</div>
+      <p>Stringizer method, adds content defined by the inline html to the parent of the element immediately after this one.</p>
+      <p>Method returns first added element.</p></dd>
+    <dt>$before</dt>
+    <dd>
+      <div>( .. html .. ) : Element</div>
+      <p>Stringizer method, insert content defined by the inline html to the parent of the element immediately before this one.</p>
+      <p>Method returns <em>last</em> added element (that will be new <em>this.prior</em> element).</p></dd>
+    <dt>$replace</dt>
+    <dd>
+      <div>( .. html .. ) : Element</div>
+      <p>Stringizer method, removes this element from the DOM and content defined by the html in its place.</p>
+      <p>Method returns first added element.</p></dd>
+    <dt>detach</dt>
+    <dd>
+      <div><strong>( ) </strong>: В Element</div>
+      <p>Removes this element from its parent's children collection so after call of this method this.<em>parent</em> become <em>null</em>. If update is true then calls update() for the parent element. Returns element that was just detached (this). This method does not destroy state and behaviors attached to the element until GC will not collect the element (if there are no references to it)</p></dd>
+    <dt>remove</dt>
+    <dd>
+      <div><strong>( ) </strong>: В Element</div>
+      <p>Removes this element from its parent's children collection so after call of this method this.<em>parent</em> become <em>null</em>. If update is true then calls update() for the parent element. Returns element that was just detached (this). All runtime states and behaviors are destroyed by the method. Native behaviors will receive BEHAVIOR_DETACHED event.</p></dd>
+    <dt>load</dt>
+    <dd>
+      <div><strong>( url</strong>: string[, <strong>headers</strong>: object] <strong>) </strong>returns: <em>true/false</em></div>
+      <p>Loads content of the document referred by <em>url</em> as a content of this element. For elements having <em>behavior:frame</em> assigned it loads html, styles and executes scripts refered by the url or contained in the stream. Upon completion of loading behavior:frame posts DOCUMENT_COMPLETE event. For any other elements it loads only content of body portion of the document, no style loading or script execution happens in this case. If the <em>url</em> points on external resource like &quot;http://...&quot; then the method is asynchronous. Otherwise it tries to load the resource synchronously.</p>
+      <p>If <em>headers</em> object ( name/value map) is present and url is http/https then HTTP GET request is sent with those headers.</p></dd>
+    <dt>load</dt>
+    <dd>
+      <div><strong>( stream</strong>: Stream<strong> ) </strong>returns: <em>true/false</em></div>
+      <p>Loads content of the document from in-memory <em>stream</em> as a content of this element. For elements having <em>behavior:frame</em> assigned it loads html, styles and executes scripts refered by the url or contained in the stream. For any other elements it loads only content of body portion of the document, no style loading or script execution happens in this case.</p></dd>
+    <dt>load</dt>
+    <dd>
+      <div><strong>( html</strong>: string, <strong>url</strong>:string<strong> ) </strong>returns: <em>true/false</em></div>
+      <p>Loads the <em>html</em> document from string as a content of this element. For elements having <em>behavior:frame</em> assigned it loads html, styles and executes scripts refered by the the html content. For any other elements it loads only content of body portion of the document, no style loading or script execution happens in this case.</p></dd>
+    <dt>loadImage</dt>
+    <dd>
+      <div><strong>( url</strong>: string [, <strong>callback</strong>: function <strong>) </strong>returns: <em>Image | null</em></div>
+      <p>Loads image from the url.<em> </em>If <em>callback</em> is ommited then the engine will try to load image sycnhronously otherwise (if <em>callback</em> is a function) engine will issue asynchronous request and will call this function upon arrival.</p>
+      <p>Signature of the callback function is <font face="Courier New">function callback(image)</font> where <em>image</em> is an object of class Image or null in case of error.</p></dd>
+    <dt>bindImage</dt>
+    <dd>
+      <div><strong>( url</strong>: string , <strong>img</strong>: Image <strong>) </strong>returns: <em>true</em> | <em>false</em></div>
+      <p>Binds the <em>img</em> with the URL. As a result the image can be used in CSS for example as a background. URL can be any arbitrary unique string here, like &quot;in-memory:dyn-image1&quot;.</p></dd>
+    <dt>bindImage</dt>
+    <dd>
+      <div><strong>( url</strong>: string <strong>) </strong>returns: <em>Image | null</em></div>
+      <p>Returns image that was previously bound with the URL or null if there is no such image.</p></dd>
+    <dt>request</dt>
+    <dd>
+      <div><strong>(</strong> <strong>callback</strong>: function | integer, <strong><em>#get</em> | <em>#post</em> | <em>#post-data</em> | <em>#put-data</em> |<em> #post-json</em></strong> <strong>|<em> #put-json | #delete</em></strong>, <strong>url</strong>: string [, <strong>params</strong>: object [, <strong>headers</strong>: object] ] <strong>) </strong>: Object | Stream | Bytes | Error</div>
+      <p>Sends synchronous or asynchronous http data GET/POST request to the server/page (url), a.k.a. JSON-RPC calls.</p>
+      <ul>
+        <li><em>#get</em>, <em>#post, #post-data #json</em> are literal symbols - type of http request to be sent:</li>
+        <ul>
+          <li><em><strong>#get</strong></em> - sends plain HTTP GET request, url-encoded params (if any) are appended to the <em>url</em> to form the request;</li>
+          <li><em><strong>#post</strong></em> - sends HTTP POST request with params serialized as <code>Content-Type: application/x-www-form-urlencoded;charset=utf-8</code>;</li>
+          <li><strong><em>#post-data</em></strong> - sends HTTP POST request with params serialized as <code>Content-Type: multipart/form-data; boundary= ...</code>;</li>
+          <li><strong><em>#put-data</em></strong> - sends HTTP PUT request with params serialized as <code>Content-Type: multipart/form-data; boundary= ...</code>;</li>
+          <li><strong><em>#post-json</em></strong> - sends HTTP POST request with params serialized as JSON, В <code>Content-Type: application/json;charset=utf-8</code>;</li>
+          <li><strong><em>#put-json</em></strong> - sends HTTP PUT request with params serialized as JSON, <code>Content-Type: application/json;charset=utf-8</code>;</li>
+          <li><strong><em>#delete</em></strong> - - sends HTTP DELETE request.</li></ul>
+        <li><em>url</em> is a string - url of the page (location) on the server handling HTTP requests.</li>
+        <li><em>params</em> is an object, its properties are serving role of parameters of HTTP request.</li>
+        <li><em>headers</em> is an object - a map of additional header key/value pairs to send along with the request.</li>
+        <li>returns: <em>true|false</em> for asynchronous requests or pair of (status:integer,data:any) - result of the request (see <em>data</em> below) and HTTP status code (e.g. 200 - OK, 404 - resource was not found on the server).</li></ul>
+      <div>If parameter <em>callback</em> is an integer than it is treated as a timeout value (number of milliseconds) and the function executes <em>synchronous</em> request. If the callback is a function then response from the server will be delivered by calling the <em>callback</em> function having following signature:</div>
+      <pre>function dataArrivedCallback( data: any, status: integer );
+</pre>
+      <p>where <em>data</em> is either one of:</p>
+      <ul>
+        <li><em>instanceof</em> <em>Error</em> object, in case of data response parsing problems;</li>
+        <li><em>stream</em>, if data returned by the server is of textual type (text/plain, text/html, text/xml, etc.)</li>
+        <li>instanceof Object, Array, etc. if response has content type text/javascript, text/ecmascript, text/tiscript or application/json and was successfully parsed into data object.</li>
+        <li><em>Bytes</em>, if data returned by the server is of binary type (image/*, etc.). Bytes.type in this case will contain a string - mime-type of the data reported by the server.</li></ul>
+      <p>and status code is an integer - HTTP status code (e.g. 200 - OK, 404 - resource was not found on the server) or if code is greater than 12000 it is a WinInet error code, see: <a href="http://support.microsoft.com/kb/193625">http://support.microsoft.com/kb/193625</a>.</p>
+      <p>Example of server data response (type: text/javascript) :</p>
+      <p><font face="Courier New"><code>({ id : 1234, message : &quot;Hello from XYS server!&quot; }</code></font><code>)</code></p>
+      <p>- in this case server returns object having two properties: id and message. Rationale behind of <font face="Courier New">({</font> and <font face="Courier New">})</font> was explained <a href="http://www.terrainformatica.com/index.php/?p=14">here</a>.</p></dd>
+    <dt>getState</dt>
+    <dd>
+      <div><strong>( </strong>[<strong>stateFlags</strong>:int]<strong> ) </strong>:int</div>
+      <p>Returns state of the element. <em>stateFlags</em> here is a set of bits - &quot;ORed&quot; constants STATE_***. <em>stateFlags</em> is provided then function returns <em>int </em>- flags of the element ANDed with the provided <em>stateFlags</em> variable. If no <em>stateFlags</em> is given then the function returns full set of flags element has at hte moment.</p></dd>
+    <dt>setState</dt>
+    <dd>
+      <div><strong>( stateFlags</strong>:int<strong>) </strong>:void</div>
+      <p>Function will set flags to the element update document on the screen accordingly (resolve styles and refresh).</p></dd>
+    <dt>clearState</dt>
+    <dd>
+      <div><strong>( stateFlags</strong>:int<strong> ) </strong>:void</div>
+      <p>Function will clear flags of the element and update document on the screen.</p></dd>
+    <dt>capture</dt>
+    <dd>
+      <div><strong>( onOff</strong>: true | false | #strict<strong> ) </strong>:void</div>
+      <p>element.capture(<em>true</em>) - sets &quot;soft&quot; mouse capture to the element, mouse messages are delivered to the element and its children;<br/>element.capture(#strict) - sets &quot;strict&quot; mouse capture to the element, mouse messages are delivered to the element only; <br/>element.capture(<em>false</em>) - removes mouse capture from the element.</p></dd>
+    <dt>popup</dt>
+    <dd>
+      <div><strong>( el</strong>: Element, <strong>placement</strong>: int<strong> )</strong> :void</div>
+      <p>Function will show element <em>el</em> as a popup window placed relatively to <em>this</em> element. <em>Placement</em> accepts following values:</p>
+      <ul>
+        <li><em>2</em> - popup element below this element (anchor);</li>
+        <li><em>8</em> - popup element above this element;</li>
+        <li><em>4</em> - popup element on the left side of this element;</li>
+        <li><em>6</em> - popup element on right side of this element;</li></ul>
+      <div>( see keyboard numpad to get an idea of numbering).</div></dd>
+    <dt>popup</dt>
+    <dd>
+      <div><strong>( el</strong>: Element, <strong>x</strong>:int, <strong>y</strong>:int ) :void</div>
+      <p>Function will show element <em>el</em> as a popup window placed at x, y (view relative coordinates). <em>Placement</em> is '7'.</p>
+      <div>( see keyboard numpad to get an idea of numbering).</div></dd>
+    <dt>closePopup</dt>
+    <dd>
+      <div><strong>()</strong> :void</div>
+      <p>Function will close popup if element <em>el</em> or any of its parent is a popup window.</p></dd>
+    <dt>timer</dt>
+    <dd>
+      <div><strong>(</strong> <strong>milliseconds</strong>: integer, <strong>callback</strong>: function [, <strong>avoidSameOriginCheck</strong> : bool ] <strong>)</strong></div>
+      <p>If <em>milliseconds</em> is greater than zero the method will create timer for the DOM element with <em>milliseconds</em> delay.</p>
+      <p>After <em>milliseconds</em> delay engine will call <em>callback</em> function with <em>this</em> variable set to the dom element. Return <em>true</em> from the <em>callback()</em> function if you need to continue timer ticks and <em>false</em> otherwise.</p>
+      <p>Call of timer() with <em>milliseconds = 0</em> parameter will stop the timer.</p>
+      <p>If the element already contains running timer with function of the same oringin as the callback then that timer gets removed before adding new timer. Passing <em>true</em> as <em>avoidSameOriginCheck</em> parameter will suppress same origin matching.</p></dd>
+    <dt>graphics</dt>
+    <dd>
+      <div><strong>(</strong> [ <strong>color</strong>: integer | <strong>color</strong>: color[, <strong>forceInitialization</strong>:bool = true ]] <strong>)</strong> : <a href="Graphics.htm">Graphics</a></div>
+      <p>Returns <a href="Graphics.htm">Graphics</a> object of the element. Graphics is a bitmap that has dimensions of the element therefore, once drawn, image will stay on the screen. Each invocation of the <em>graphics</em> method with color value will return that bitmap with all bits initialized with the <em>color</em> if <em>forceInitialization</em> is <em>true</em> or if graphics does not exist (first call of graphics()). Call of graphics() without parameters first time creates Graphics and initializes it with transparent color 0xFFFFFF, further calls returns created Graphics object and do nothing.</p>
+      <p>To remove graphics from the element use <code>el.graphics(#destroy)</code> call.</p></dd>
+    <dt>graphics</dt>
+    <dd>
+      <div><strong>(</strong> <strong>#destroy</strong> <strong>)</strong> : <a href="Graphics.htm">Graphics</a> | null</div>
+      <p>Removes graphics from the element.</p></dd>
+    <dt>swap</dt>
+    <dd>
+      <div><strong>(other</strong>: Element <strong>)</strong> : null</div>
+      <p>Swaps DOM positions of two elements - owner of the method and the <em>other</em>. Returns element whose method is called.</p></dd>
+    <dt>sendEvent</dt>
+    <dd>
+      <div><strong>( eventCode</strong>:int<em> </em>[<em>, </em><strong>reason</strong><em>:</em> int<em> </em>[, <strong>owner</strong>: Element | null [, <strong>data</strong>:value ]]]<strong> )</strong> : true | false | value</div>
+      <p>traverse (send) bubbling event to the parent/child chain of <em>this</em> element. Events generated by this method can be handled by <em>onControlEvent</em>() methods of elements in the chain.</p>
+      <ul>
+        <li><em>eventCode</em> is either one of constants from <em>Logical event codes from builtin behaviors </em>( see: <a href="Event.htm">Event</a> ) or any integer value above 0x1000 (custom control events range).</li>
+        <li><em>reason</em> here is an arbitrary integer value that sender and receiver knows about.</li>
+        <li><em>owner </em>is an optional reference to some DOM element. E.g. in MENU_ITEM_CLICK this is a reference to element - owner of popup menu or <em>null</em>.</li>
+        <li><em>data</em> is any json value that will passed to BEHAVIOR_EVENT_PARAMS.data field (see: sdk/api/sciter-x-behavior.h file)</li></ul>
+      <div>The <em>sendEvent</em> does traversal so it returns <em>true</em> if the event was consumed - one of <em>onControlEvent</em>() handlers in parent/child chain returned <em>true</em> while handling this event. If some element in child-parent chain consumes the event (returns true) and sets the <em>data</em> field the value of this updated data field will be returned from the sendEvent() function.</div></dd>
+    <dt>sendEvent</dt>
+    <dd>
+      <div><strong>( event</strong>:string<em> </em>[, <strong>data</strong>:value ]<strong> )</strong> : true | false | value</div>
+      <p>traverse (send) bubbling event to the parent/child chain of <em>this</em> element. Events generated by this method can be handled by <em>onControlEvent</em>() methods of elements in the chain.</p>
+      <ul>
+        <li><em>event</em> is an event name possibly with namespace, see Element.subscribe/unsubscribe() below.</li>
+        <li><em>data</em> is any json value that will passed to BEHAVIOR_EVENT_PARAMS.data field (see: sdk/api/sciter-x-behavior.h file). The data is also available as evt.data field in event handlers.</li></ul>
+      <div>The <em>sendEvent</em> does traversal so it returns <em>true</em> if the event was consumed - one of handlers in parent/child chain returned <em>true</em> while handling this event. If some element in child-parent chain consumes the event (returns true) and sets the <em>data</em> field the value of this updated data field will be returned from the sendEvent() function.</div></dd>
+    <dt>postEvent</dt>
+    <dd>
+      <div><strong>( event</strong>:string<em> </em>[, <strong>data</strong>:value ]<strong> )</strong> : true</div>
+      <p>The <em>postEvent</em> places event into the internal queue of posted events for future traversal by <em>sendEvent</em>(name,data) and returns immediately.</p></dd>
+    <dt>postEvent</dt>
+    <dd>
+      <div><strong>( eventCode</strong>:int<em> </em>[<em>, </em><strong>reason</strong><em>:</em> int<em> </em>[, <strong>owner</strong>: Element | null [, <strong>data</strong>:value ]]]<strong> )</strong> : undefined</div>
+      <p>The <em>postEvent</em> places event into the internal queue of posted events for future traversal by <em>sendEvent</em> and returns immediately.</p></dd>
+    <dt>sendKeyEvent</dt>
+    <dd>
+      <div><strong>( eventDef</strong>: object<strong> )</strong> : true | false | undefined</div>
+      <p>The <em>sendKeyEvent</em> simulates the key event. eventDef may have following fields:</p>
+      <pre>{
+  type: Event.KEY_DOWN or Event.KEY_UP or Event.KEY_CHAR; // type if key event
+  keyCode: int; // Key or char code, e.g. 'O'
+  altKey: true or false; // optional, 'ALT' key pressed flag
+  shiftKey: true or false; // optional, 'SHIFT' key pressed flag
+  ctrlKey: true or false; // optional, 'CTRL' key pressed flag
+  shortcutKey: true or false; // optional, 'CTRL/win' or 'COMMAND/mac' key pressed flag
+  commandKey: true or false; // optional, 'WIN/win' or 'COMMAND/mac' key pressed flag
+}
+</pre>
+      <p>Function returns <em>true</em> if the event was consumed during sinking/bubbling dispatching of the event using <em>this</em> element as a target.</p></dd>
+    <dt>sendMouseEvent</dt>
+    <dd>
+      <div><strong>( eventDef</strong>: object<strong> )</strong> : true | false | undefined</div>
+      <p>The <em>sendMouseEvent</em> simulates the mouse event. eventDef may have following fields:</p>
+      <pre>{
+  type: Event.KEY_DOWN or Event.KEY_UP or Event.KEY_CHAR, // type if key event
+  altKey: true or false, // optional, 'ALT' key pressed flag
+  shiftKey: true or false, // optional, 'SHIFT' key pressed flag
+  ctrlKey: true or false, // optional, 'CTRL' key pressed flag
+  shortcutKey: true or false; // optional, 'CTRL/win' or 'COMMAND/mac' key pressed flag
+  commandKey: true or false; // optional, 'win/win' or 'COMMAND/mac' key pressed flag
+  mainButton: true or false, // optional, left mouse button pressed flag
+  propButton: true or false, // optional, right mouse button pressed flag
+  x: int, // x mouse coordinate, view relative
+  y: int, // y mouse coordinate, view relative
+}
+</pre>
+      <p>Function returns <em>true</em> if the event was consumed during sinking/bubbling dispatching of the event using <em>this</em> element as a target.</p></dd>
+    <dt>post</dt>
+    <dd>
+      <div><strong>( callback</strong>: function [,<strong>only_if_not_there</strong>:boolean]<strong> ) </strong>: undefined</div>
+      <p>This method allows to delay execution of <em>callback</em> function. While calling the callback function engine will set <em>this</em> environment variable to the element this post call was invoked with.</p>
+      <p>Optional parameter <strong>only_if_not_there</strong> if defined and is <em>true</em> allows to post delayed event only once. Multiple post with the same callback function will yield to a single entry in posted events queue.</p></dd>
+    <dt>url</dt>
+    <dd>
+      <div><strong>( </strong>[ <strong>relativeUrl</strong>: string ]<strong> )</strong> : string</div>
+      <p>Method builds absolute url from the <em>relativeUrl</em> by using document url as a base. В If there is no <em>relativeUrl</em> then the method just returns url of the document this DOM element belongs to.</p></dd>
+    <dt>sort</dt>
+    <dd>
+      <div><strong>( comparator</strong>: function<strong> </strong>[, <strong>fromIndex</strong>: integer [, <strong>numOfElements</strong>:integer]]<strong> В )</strong> : void</div>
+      <p>Sorts children of the element by using <em>comparator</em> function. <em>comparator</em> function has to have following signature:</p>
+      <pre>function cmp(el1: Element, el2: Element) : int
+</pre>
+      <p>that returns negative int value if el1 is less than el2, 0 if they are equal and positive value if el1 is greater than el2.</p>
+      <p><em>fromIndex</em> and <em>numOfElements</em> are used for defining range of elements to sort.</p></dd>
+    <dt>move</dt>
+    <dd>
+      <div><strong>( </strong>[<strong>x</strong>: int, <strong>y</strong>: int [, <strong>w</strong>: int, <strong>h</strong>: int] [, <strong>#view</strong> | <strong>#root</strong> | <strong>#screen</strong> | <strong>#self</strong> [, mode: <strong>#auto</strong> | <strong>#attached-window</strong> | <strong>#detached-window</strong> | <strong>#detached-topmost-window</strong> ]]] &nbsp;<strong>)</strong> : void</div>
+      <p>This methods transforms the element into the &quot;sprite&quot; - element that moves independently from the rest of the DOM:</p>
+      <p>Declares element as having <em>position:popup</em> and moves it to the position (<em>x</em>,<em>y</em>). If the element happens to be outside of the view then engine creates special popup window for it. Third parameter describes role of x and y values. <em>w</em> and <em>h</em> parameters, if provided, change dimensions of the element.<br/><em>mode</em> parameter</p>
+      <ul>
+        <li><em>#auto</em> - window is created if element is moved outside of the view. If element stays inside the view it is rendered as popup:fixed.</li>
+        <li><em>#attached-window</em> - forces the engine to create popup window for the element, window is moved in sync with its host window (view).</li>
+        <li><em>#detached-window</em> - forces the engine to create popup window for the element, element's window position is indpenedent from the host window.</li>
+        <li><em>#detached-topmost-window</em> - that is <em>#detached-window</em> but created on topmost window layer.</li></ul>
+      <p>Samples are in sdk/samples/ideas/moveable-windows/ and sdk/samples/ideas/rect-tracker/ folders.</p>
+      <p>Call of the <code>move()</code> without parameters restores default positioning of the element.</p>
+      <p>See also: Element.style.dimension() method.</p></dd>
+    <dt>textWidth</dt>
+    <dd>
+      <div><strong>( text</strong>: string<strong> )</strong> : int</div>
+      <p>Calculates width of the text with respect of current font defined for the element. If text contains multiple lines separated by &quot;\n&quot; character then it returns width of widest string.</p></dd>
+    <dt>textHeight</dt>
+    <dd>
+      <div><strong>( text</strong>: string<strong> )</strong> : int</div>
+      <p>Calculates height of the text with respect of current font and line-height defined for the element. If text contains multiple lines separated by &quot;\n&quot; character then it returns sum of heights of all strings.</p></dd>
+    <dt>subscribe</dt>
+    <dd>
+      <div><strong>(</strong> <strong>handler</strong>: function, <strong>eventGroup</strong> : int [, <strong>eventType</strong>: int] <strong>)</strong> : &lt;this element&gt;</div>
+      <p>Assigns the <em>handler</em> function to the particular event that may occur on this particular DOM object.</p>
+      <p><em>handler</em> function should have following signature function(<em>evt</em>) {...}, where evt is an Event object that describes the event in details.</p>
+      <p><em>eventGroup</em> here is one of the following constants:</p>
+      <ul>
+        <li><code>Event.MOUSE</code> - group of mouse events (like Event.MOUSE_DOWN, Event.MOUSE_UP, etc. );</li>
+        <li><code>Event.KEY</code> - group of keyboard events (like Event.KEY_DOWN, Event.KEY_UP, etc. );</li>
+        <li><code>Event.BEHAVIOR_EVENT</code> - group of generated, synthetic events (a.k.a. control events like Event.BUTTON_CLICK, Event.HYPERLINK_CLICK, Event.BUTTON_STATE_CHANGED, etc. );</li>
+        <li><code>Event.FOCUS</code> - group of scroll events;</li>
+        <li><code>Event.SCROLL</code> - group of scroll events;</li>
+        <li><code>Event.SIZE</code> - size changed event;</li></ul>
+      <p><em>eventType</em> here is one of constants defined below for particular group of event. <em>eventType</em> parameter is optional - if it is not provided then the handler function will receive all events of the <em>eventGroup</em>.</p>
+      <p>subscribe() method allows to attach multiple and independent event handling functions to single element.</p>
+      <p>Note that subscribe() is not a substitution of <strong>onMouse</strong>(evt), <strong>onKey</strong>(evt), etc. event handlers defined below. These two ways of handling events work side-by-side. <strong>onXXXX</strong>() methods are used for defining event handlers in classes (Behaviors) so to handle events for classes of elements. And subscribe()/unsubscribe() are used for attaching event handlers to particular elements.</p>
+      <p>Method returns the element it was called for. This allows to chain subscribe() calls.</p></dd>
+    <dt>subscribe</dt>
+    <dd>
+      <div>( <strong>event</strong>: string [, <strong>selector</strong>: string] , <strong>handler</strong>: function ) : &lt;this element&gt;</div>
+      <p>Assigns the <em>handler</em> function to the particular event that may occur on this DOM object or on one of its children. The <em>event</em> here is a string that can accept following values:</p>
+      <ul>
+        <li>&quot;<strong>click</strong>&quot; - button and hyperlink clicks;</li>
+        <li>&quot;<strong>dblclick</strong>&quot; - mouse double clicks;</li>
+        <li>&quot;<strong>change</strong>&quot; - value has been changed by the user;</li>
+        <li>&quot;<strong>submit</strong>&quot; - form submit event fired before data of the form is submited;</li>
+        <li>&quot;<strong>reset</strong>&quot; - form reset event fired before data of the form gets reset;</li>
+        <li>&quot;<strong>expand</strong>&quot;, &quot;<strong>collapse</strong>&quot; - events generated by various behaviors to collapse/expand items (e.g. in tree view widget);</li>
+        <li>&quot;<strong>statechange</strong>&quot; - UI state change, for example behavior:textarea sends this event when caret or selection position changes;</li>
+        <li>&quot;<strong>contextmenu</strong>&quot; - context menu request (right button or property key click);</li>
+        <li>&quot;<strong>animationstart</strong>&quot;, &quot;<strong>animationend</strong>&quot; - animation life cycle events;</li>
+        <li>&quot;<strong>mousedown</strong>&quot;, &quot;<strong>mouseup</strong>&quot;, &quot;<strong>mousemove</strong>&quot;, &quot;<strong>mouseenter</strong>&quot;, &quot;<strong>mouseleave</strong>&quot; - &nbsp;mouse events;</li>
+        <li>&quot;<strong>mouseidle</strong>&quot; - mouse is inside the element and not moves for some time, by default the engine shows tooltip (if needed) while handling this event; </li>
+        <li>&quot;<strong>mousetick</strong>&quot; - mouse button is pressed inside the element, that's periodic event generated while left mouse button is pressed inside the element;</li>
+        <li>&quot;<strong>focusin</strong>&quot;, &quot;<strong>focusout</strong>&quot; - bubbling focus change notification events;</li>
+        <li>&quot;<strong>focus</strong>&quot;, &quot;<strong>blur</strong>&quot; - non-bubbling focus events - they are sent to elements themselves;</li>
+        <li>&quot;<strong>keydown</strong>&quot;, &quot;<strong>keyup</strong>&quot;, &quot;<strong>keypress</strong>&quot; - keyboard events;</li>
+        <li>&quot;<strong>scroll</strong>&quot; - scroll event;</li>
+        <p>Events that are dispatched to the document element only (<code>self</code>, <code>view.root</code> ):</p>
+        <li><strong>&quot;ready&quot;</strong> - is posted at the end of document loading sequence. At the moment DOM got its styles and DOM behaviors were assigned.</li>
+        <li><strong>&quot;complete&quot;</strong> - is posted when all resource requests issued by the document are complete with either success or failure.</li>
+        <li><strong>&quot;closerequest&quot;</strong> - is sent before window/document closing. To cancel closing request assign <code>#close</code> symbol to <code>event.data</code> field.</li>
+        <li><strong>&quot;close&quot;</strong> - is sent as a final event immediately before document gets closed/removed from the DOM.</li>
+        <p>any other string is considered as custom event, to post/send such events use <code>Element.postEvent</code>/<code>sendEvent(name,...)</code> &nbsp;methods.</p></ul>
+      <p>Event names may have namespaces in their names. For example: <code>&quot;click.mywidget&quot;</code> defines click handler assigned by some <em>mywidget</em> component. Namespaces are especially useful when you need to unsubscribe multiple handlers at once. For example this <code>el.unsubscribe(&quot;.mywidget&quot;)</code> will remove all handlers with <em>mywidget</em> namespace.</p>
+      <p>The <em>selector</em> is an optional parameter - CSS selector of child element. When provided allows containers to subscribe to events coming from particular children.</p>
+      <p>The <em>handler</em> can be any <code>function(evt:Event) {...}</code> - callback that gets invoked when the event occurs. <em>this</em> variable is set to the <code>evt.target</code> - element that originated the event.</p>
+      <p>To subscribe on event in EVENT_SINKING phase prepend the <em>event</em> name by <code>~</code> symbol. For example this handler <br/><code>container.subscribe(&quot;~keydown&quot;, function() {...});</code> <br/>will receive the keydown event before its children.</p>
+      <p>Note: this method mimics jQuery's <code>.on()</code> method and has the same semantics.</p></dd>
+    <dt>on</dt>
+    <dd>alias of <strong>subscribe</strong>(<strong>event</strong>: string [, <strong>selector</strong>: string] , <strong>handler</strong>: function) above.</dd>
+    <dt>unsubscribe</dt>
+    <dd>
+      <div>(<strong>handler</strong>: function ) or</div>
+      <div>(<strong>eventGroup</strong> : int [, <strong>eventType</strong>: int]) : &lt;this element&gt;</div>
+      <p><em>unsubscribe</em>() method detaches event handler[s] from the element.</p></dd>
+    <dt>unsubscribe</dt>
+    <dd>
+      <div>(<strong>event</strong> : string [, <strong>selector</strong>: string]) : &lt;this element&gt;</div>
+      <p>The method detaches matching event handlers from the element that were set previously by subscribe(&quot;name&quot;,...) method. <br/>Example: <br/> &nbsp;&nbsp;<code>el.unsubscribe(&quot;click&quot;)</code>;<br/>will remove all event handlers with &quot;click&quot; name. Even those that have also namespace defined like &quot;click.mywidget&quot;.</p>
+      <p>Note: this method mimics jQuery's <code>.off()</code> method.</p></dd>
+    <dt>off</dt>
+    <dd>alias of <strong>unsubscribe</strong> methods above.</dd>
+    <dt>commonParent</dt>
+    <dd>
+      <div>(<strong>other</strong> : Element) : Element</div>
+      <p>The method returns common parent element of <em>this</em> and <em>other</em> DOM elements.</p></dd>
+    <dt>row</dt>
+    <dd>
+      <div>(<strong>rowNo</strong>: integer) : array of Elements</div>
+      <p>The function returns list (array) of elements that were replaced in given row.</p></dd>
+    <dt>column</dt>
+    <dd>
+      <div>(<strong>colNo</strong>: integer) : array of Elements</div>
+      <p>The function returns list (array) of elements that were replaced in given column.</p></dd>
+    <dt>rowY</dt>
+    <dd>
+      <div>(<strong>rowNo</strong>: integer) : (y: integer, height: integer)</div>
+      <p>The function returns position and height of the row.</p></dd>
+    <dt>columnX</dt>
+    <dd>
+      <div>(<strong>colNo</strong>: integer) : (x: integer, width: integer)</div>
+      <p>The function returns position and width of the column.</p></dd>
+    <dt>transact</dt>
+    <dd>
+      <div>( <strong>action</strong>:function [, <strong>name</strong>:string] ) : <em>true</em> | <em>false</em></div>
+      <p>The transact method executes so called editing transaction - group of operations that can undone/redone as a whole. The <em>action</em> function should have this signature:</p>
+      <pre>function action(transaction) { ... }
+</pre>
+      <p>Where the transaction is an instance of the <a href="Transact.htm" target="content">Transaction</a> interface - primitives used to modify state of the DOM. Any modification made through these function will be undone/redone properly when user will issue Undo/Redo commands in the editor.</p></dd>
+    <h2>Node specific methods</h2>
+    <dt>insertNodeBefore</dt>
+    <dd>
+      <div><strong>( node: Node)</strong></div>
+      <p>Inserts the node in the DOM tree before this element.</p></dd>
+    <dt>insertNodeAfter</dt>
+    <dd>
+      <div><strong>( node: Node)</strong></div>
+      <p>Inserts the node in the DOM tree after this element.</p></dd>
+    <dt>appendNode</dt>
+    <dd><strong>( node: Node)</strong>
+      <p>Inserts the node after last node of this element so the node becomes last child node of the element.</p></dd>
+    <dt>prependNode</dt>
+    <dd><strong>( node: Node)</strong>
+      <p>Inserts the node before first node of this element so the node becomes first child node of the element.</p></dd></dl>
+  <h2>Element events</h2>
+  <dl>
+    <h3>Sinking/Bubbling events:</h3>
+    <h4>onMouse(event) : true|false</h4>
+    <dt>Event.MOUSE_ENTER</dt>
+    <dd>Mouse/Pointer enters the element.</dd>
+    <dt>Event.MOUSE_LEAVE</dt>
+    <dd>Mouse/Pointer leaves the element.</dd>
+    <dt>Event.MOUSE_MOVE</dt>
+    <dd>Mouse/Pointer moves over the element.</dd>
+    <dt>Event.MOUSE_DOWN</dt>
+    <dd>One of mouse buttons pressed in the element. <em>event.mainButton</em> and <em>event.</em>propButton will tell what button was pressed.</dd>
+    <dt>Event.MOUSE_UP</dt>
+    <dd>One of mouse buttons released in the element. <em>event.mainButton</em> and <em>event.</em>propButton will tell what button was pressed. <br/>To detect single MOUSE CLICK event use following condition:<br/><font face="Courier New" size="1">event.type == Event.MOUSE_UP &amp;&amp; this.getState(Element.STATE_PRESSED)</font></dd>
+    <dt>Event.MOUSE_DCLICK</dt>
+    <dd>Double mouse click in the element.</dd>
+    <dt>Event.MOUSE_WHEEL</dt>
+    <dd>Mouse wheel rotation. <em>event.wheelDelta</em> is a number of wheel ticks made.</dd>
+    <dt>Event.MOUSE_TICK</dt>
+    <dd>Repeatable event that is generated when one of mouse button pressed.</dd>
+    <dt>Event.MOUSE_IDLE</dt>
+    <dd>Pulsed event, is generated when mouse is not moving some short period of time. If it is not handled in the code then it is used by the engine to popup tooltip for the element.</dd>
+    <h4>onKey(event) : true|false</h4>
+    <dt>Event.KEY_DOWN</dt>
+    <dd>Keyboard key pressed. <em>event.keyCode</em> is virtual key code of the key.</dd>
+    <dt>Event.KEY_UP</dt>
+    <dd>Keyboard key released. <em>event.keyCode</em> is virtual key code of the key.</dd>
+    <dt>Event.KEY_CHAR</dt>
+    <dd>Character key pressed. <em>event.keyCode</em> is a value of UNICODE codepoint.</dd>
+    <h4>onFocus(event) : true|false</h4>
+    <dt>Event.GOT_FOCUS</dt>
+    <dd>Focusable element got input focus.</dd>
+    <dt>Event.LOST_FOCUS</dt>
+    <dd>Elements lost input focus.</dd>
+    <h4>onControlEvent(event) :true|false</h4>
+    <p>Synthetic (logical) events:</p>
+    <dt>Event.BUTTON_CLICK</dt>
+    <dd>Click on button, generated by behaviors: <em>button, checkbox, radio</em>.</dd>
+    <dt>Event.BUTTON_PRESS</dt>
+    <dd>Mouse/Key pressed in button, generated by behaviors: <em>button, checkbox, radio</em>.</dd>
+    <dt>Event.BUTTON_STATE_CHANGED</dt>
+    <dd>State (value) of button was changed, generated by behaviors: <em>checkbox, radio</em>.</dd>
+    <dt>Event.EDIT_VALUE_CHANGING</dt>
+    <dd>Value of editbox is about to be changed, generated by behaviors: <em>edit, number, decimal, date, masked</em>. <em>element.value</em> reflects old value.</dd>
+    <dt>Event.EDIT_VALUE_CHANGED</dt>
+    <dd>Value of editbox was just changed, generated by behaviors: <em>edit, number, decimal, date, masked</em>. <em>element.value</em> reflects new value.</dd>
+    <dt>Event.SELECT_SELECTION_CHANGED</dt>
+    <dd>Selection was changed in elements-selectors. generated by behaviors: <em>select, dropdown-select, calendar</em>.</dd>
+    <dt>Event.SELECT_STATE_CHANGED</dt>
+    <dd>State of item was changed in elements-selectors. generated by behaviors: <em>select</em> when some of the &lt;options&gt; are expanded/collapsed, <em>event.target</em> is the item that changed its state. <em>behavior: calendar</em> sends this event after calendar was switched to show another month so by handling this event you can update DOM inside the calendar. В</dd>
+    <dt>Event.HYPERLINK_CLICK</dt>
+    <dd>Click on hyperlink. <em>event.target</em> is that hyperlink element.</dd>
+    <dt>Event.ACTIVATE_CHILD</dt>
+    <dd>Request to container to activate child. <em>accesskey</em> processor post this message if accesskey is defined for the element but element is passive, e.g. tab on Tabs control. See: extenders.js / type Tabs.</dd>
+    <dt>Event.POPUP_REQUEST</dt>
+    <dd>Secret stuff.</dd>
+    <dt>Event.POPUP_READY</dt>
+    <dt>Event.POPUP_DISMISSED</dt>
+    <dt>Event.MENU_ITEM_ACTIVE</dt>
+    <dd>Happens when menu item is highlighted.</dd>
+    <dt>Event.MENU_ITEM_CLICK</dt>
+    <dd>Click on menu item. <em>event.target</em> is the item <em>event.owner</em> is an owner of the popup menu.</dd>
+    <dt>Event.range 0x1000 .. 0x7FFF</dt>
+    <dd>Custom control events. Any code from this range can be used in <em>element.sendEvent(code,...)</em> calls. <br/>If behavior class is designed to behave like for example a button then you may use <em>element.postEvent(Event.BUTTON_CLICK,...)</em> to notify all parties about clicks.</dd>
+    <h4>onGesture(event): true|false</h4>
+    <dd>Gestures, DOM events, available on devcices with touch screen support.
+      <p>See <strong>Gesture (touch screen) event codes</strong> in Event object definition.</p></dd>
+    <h3>Non-bubbling events</h3>
+    <h4>onScroll(event) : true|false</h4>
+    <dt>Event.SCROLL_HOME</dt>
+    <dd>
+      <div>Requests to scroll, typically are coming from &lt;input type=vscrollbar&gt; or &lt;input type=hscrollbar&gt;.</div>
+      <div>In case of SCROLL_POS use <em>event.scrollPos</em> field to get requested position to scroll.</div>
+      <div></div></dd>
+    <dt>Event.SCROLL_END</dt>
+    <dt>Event.SCROLL_STEP_PLUS</dt>
+    <dt>Event.SCROLL_STEP_MINUS</dt>
+    <dt>Event.SCROLL_PAGE_PLUS</dt>
+    <dt>Event.SCROLL_PAGE_MINUS</dt>
+    <dt>Event.SCROLL_POS</dt>
+    <h4>Behavior specific events</h4>
+    <dt>attached() : void</dt>
+    <dd>Method of behavior class (type). If defined in the type definition then it will be invoked by the engine when DOM element will be subclassed by this class. Variable <em>this</em> inside this function is a reference to the DOM element this behavior was just attached to. Consider <em>attached</em>() as an equivalent of constructor function for other classes.</dd>
+    <dt>onTimer()</dt>
+    <dd>Timer tick. To start timer on the element use <em>element.timer(milliseconds)</em> call. Return <em>false</em> from this method to stop the timer.</dd>
+    <dt>onSize()</dt>
+    <dd>Size of the element was changed. To get dimensions use <em>this.box()</em> function.</dd>
+    <h4>Root specific events</h4>
+    <dt>self.ready()</dt>
+    <dd>Event is generated as a final step of document loading.</dd>
+    <dt>self.closing(reason)</dt>
+    <dd>Document is about to be closed. Event handler can prevent unloading by returning <em>false</em> value. The reason parameter is one of following symbols:<br/><strong>- #by-chrome</strong> - user clicked close button on window;<br/><strong>- #by-code</strong> - view.close() issued;<br/><strong>- #by-load</strong> - document gets unloaded by loading new document.</dd></dl>
+  <h2 align="left"><a name="object-template">Element.create and Element.insert object-template microformat.</a></h2>
+  <div>Object-template is an object literal used for generation of new elements. It shall obey following rules:</div>
+  <pre>{
+  div, <font face="monospace" color="#336600">// mandatory, first property and without value - tag name of the DOM element.
+       // E.g. <em>div</em>, <em>p</em>, <em>option</em>, <em>select</em>, etc.
+</font>   attr1name : <font face="monospace" color="#cc00cc">&quot;attr1value&quot;</font><font face="monospace">, </font><font face="monospace" color="#336600">// optional, attribute #1 of created dom element.
+</font>   attrNname : <font face="monospace" color="#cc00cc">&quot;attrNvalue&quot;</font><font face="monospace">, </font><font face="monospace" color="#336600">// optional, attribute #N of created dom element.
+  </font><font face="monospace" color="#cc00cc"> &quot;some text&quot;</font><font face="monospace">, </font><font face="monospace" color="#336600">// optional string, text of the DOM element
+                // if that element is a text container like <em>p</em>,<em> text</em>, <em>span</em>, etc.
+</font>  [ object-1, <font face="monospace" color="#cc00cc">&quot;text&quot;</font>, ... object-N ] <font face="monospace" color="#336600">// optional array of templates - definitions
+                                     // of text and child elements of the element.
+</font>}
+</pre>
+  <p>The &quot;text&quot; and [ children ] definitions are mutually exclusive - either one of them shall be defined or none.</p>
+  <p>Example, following script:</p>
+  <pre> sb.insert
+ {
+    div, class:&quot;dyn&quot;,
+     [
+      {p, &quot;Text1&quot; },
+      {p, [&quot;Text2 before &quot;, {button, &quot;Hi!&quot;}, &quot; after&quot;] }
+     ]
+ };
+</pre>
+  <p>Is an equivalent of the following:</p>
+  <pre>sb.insert(
+   &quot;&quot;
+   &quot;Text 1&quot;
+   &quot;Text 2 before Hi! after&quot;
+   &quot;&quot;
+);
+</pre>
+</body>
+</html>

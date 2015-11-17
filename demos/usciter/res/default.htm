@@ -1,0 +1,205 @@
+<html aria-label="Sciter Frame" aria-description="Main Sciter Frame">
+  <head>
+    <title>Sciter</title>
+    <style>
+      
+      @image-map icons {
+        src: url(icons-n.png) 200dpi,
+             url(icons-h.png) ;
+        cells:3 2; /* 3 columns, 2 rows */
+        /* logical names of the parts, see toolbar-icons.png */ 
+        items:  open,
+                refresh,
+                inspector,
+                help,
+                glass,
+                open-in-view;   
+      }
+            
+      html { background-color:#5C4C4C; } 
+      body { flow:horizontal; margin:0; }
+     
+      toolbar  
+      {
+        display:block;
+        flow:vertical; 
+        width:max-content; 
+        padding:3dip; 
+        height:*;
+      }
+      toolbar > button                   
+      {
+        foreground-position: 50% 50%; 
+        foreground-repeat:no-repeat;
+        padding:0;
+        size:46dip; 
+      }
+      
+	    frame#content{ size:*; background :url(no-color.png) repeat; }
+      frame#content > div#intro
+      { 
+        font: system;
+        background-color:window; padding:3px; 
+        size:*;
+      }
+      frame#content > div#intro > img#arrow { vertical-align:middle; size:0.8em; color:brown; }
+      
+      frame#content[allow-drop]
+      {
+          outline:2px orange solid -2px;
+      }
+
+      toolbar > button#open         { foreground-image:image-map(icons,open); }
+      toolbar > button#reload       { foreground-image:image-map(icons,refresh); }
+      toolbar > button#help         { foreground-image:image-map(icons,help); }
+      toolbar > button#inspector    { foreground-image:image-map(icons,inspector); }
+      toolbar > button#open-in-view { foreground-image:image-map(icons,open-in-view); }
+      toolbar > button#glass        { foreground-image:image-map(icons,glass); margin-top:*; }
+      
+            
+      /*div#intro { behavior:htmlarea; }*/
+      
+      html[glassy] { background-color:transparent; }
+      html[glassy] frame#content { background-image:none; }
+      
+      hr { margin:0; padding:0; height:0; border:none; border-top: 1px dashed #999; }
+      
+    </style>
+
+    <script type="text/tiscript">
+
+      const native = view.nativeApi();
+
+      const content = $(frame#content);
+      const inspectorButton = $(button#inspector);
+
+	    var filename = null;
+      const file_filter = "files *.htm,*.html,*.svg,*.zip,*.scapp|*.HTM;*.HTML;*.SVG;*.ZIP;*.SCAPP|"
+				 "HTML files only(*.htm,*.html)|*.HTM;*.HTML|"
+         "SVG files only(*.svg)|*.SVG|"
+				 "SCAPP files only (*.zip,*.scapp)|*.ZIP;*.SCAPP|"
+				 "All Files (*.*)|*.*";
+         
+      var debugIsActive = false; 
+
+      function loadFile(fn)
+      {
+	      filename = fn;
+	      content.load(fn);
+        $(button#reload).state.disabled = false;
+        inspectorButton.state.disabled = false;
+        if(debugIsActive)
+          view.launchDebugView();
+        var croot = content[0];
+        var title = croot.$(head>title); 
+        // testing nativeApi:
+        var rootUid =  native.getElementUid(croot);
+        if( title )
+          view.caption =  String.printf("Sciter(%d):%s", rootUid, title.text || ""); 
+        else 
+          view.caption =  String.printf("Sciter(%d)",rootUid); 
+      }
+
+      $(button#open).onClick = function()
+      {
+        var fn = view.selectFile(#open,file_filter);
+		    if( fn ) 
+		    {
+          loadFile(fn);
+          // getting root node of the frame
+          //var croot = content[0];
+          //var title = croot.$(head>title); 
+          //if( title )
+          //  view.title(title.text); // calling native method defined in sciter.h 
+        }
+      }
+      $(button#reload).onClick = function()
+      {
+		    if( filename ) {
+          content.load(filename);
+          if(debugIsActive)
+            view.launchDebugView();
+        }
+      }
+
+      $(button#open-in-view).onClick = function()
+      {
+        var fn = view.selectFile(#open,file_filter);
+		    if( fn ) 
+		    {
+          view.load(fn);
+        }
+      }
+
+      $(button#glass).onClick = function()
+      {
+        view.root.attributes["glassy"] = this.value ? true : undefined;
+        stdout.println(view.root.attributes["glassy"]);
+      }
+      
+      $(button#help).onClick = function()
+      {
+		    //view.open("file://" + System.home("../doc/main.htm"));
+        view.window 
+        {
+          url: "file://" + System.home("../doc/main.htm"),
+          type: View.FRAME_WINDOW,
+          state: View.WINDOW_SHOWN,
+          alignment:5,
+          width: 1024,
+          height: 800
+        };
+      }
+
+      function content.onExchange(evt)
+      {
+         if( evt.type == Event.X_DRAG_ENTER && evt.draggingDataType == #file)
+         {
+           this.@#allow-drop = true;
+           return true;
+         }
+         else if( evt.type == Event.X_DRAG_LEAVE )
+         {
+           this.@#allow-drop = undefined;
+           return true;
+         }
+         else if( evt.type == Event.X_DRAG && evt.draggingDataType == #file)
+         {
+           return true;
+         }
+         else if( evt.type == Event.X_DROP && evt.draggingDataType == #file)
+         {
+           this.@#allow-drop = undefined;
+           var fn;
+           if(typeof evt.dragging == #array)
+             fn = evt.dragging[0];
+           else
+  		       fn = evt.dragging;
+           loadFile(fn);
+           return true;
+         }
+      }
+
+      $(button#inspector).onClick = function()
+      {
+        if( var connectToInspector = view.connectToInspector ) 
+          connectToInspector($(frame#content));
+      }
+           
+    </script>
+
+  </head>
+  <body aria-label="Sciter Frame Body">
+    <toolbar role="toolbar">
+      <button #open title="load html" aria-label="Load Document" />
+      <button #open-in-view title="load html in view" aria-label="Load Document in View" />
+      <button #reload title="reload html" disabled aria-label="Reload Document" />
+      <button #help title="Help browser" aria-label="Help" />
+      <hr>
+      <button #inspector title="DOM inspector" aria-label="DOM inspector" />
+      <button|checkbox #glass title="Glass mode" aria-label="Set Glass Mode"/> 
+
+    </toolbar>
+    <frame #content src="sys-info.htm" aria-label="Content" ></frame>
+  </body>
+</html>

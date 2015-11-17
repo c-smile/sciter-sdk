@@ -1,0 +1,58 @@
+<html>
+  <head>
+    <title>Plus: select element binding</title>
+    <style>
+      @import url(../plus.css); /* the only thing needed to include Plus framework */
+      @import url(../../note.css); 
+      
+      p { margin-top: 3em; }
+
+    </style>
+    
+    <script type="text/tiscript">
+  
+      namespace Data // our model
+      {  
+      
+        var currentVal = 1;
+      
+        var items = [
+          {name: "Foo", value: 1},
+          {name: "Bar", value: 2},
+          {name: "Buz", value: 3}
+        ];
+      }    
+    
+    </script>
+  </head>
+
+<body model="Data"> <!-- define data model we observe -->
+
+  <note>Demo of select option bound with data.</note>
+
+  <div>
+    Dropdown &lt;select&gt; with bound &lt;optgroup&gt;, list of options is bound with the <code>items</code> variable in <code>namespace Data</code>:
+    <select>
+      <option>ALL</option>
+      <optgroup each="item in items">
+        <option value="{{item.value}}"><output(item.name)/></option>
+      </optgroup>
+    </select>
+  </div>
+  <p>These two selects have their value bound with the same <code>currentVal</code> variable with the value: <code(currentVal) />.
+     <br>List of their options is also bound with the same <code>Data.items</code> </p> 
+  <div>
+    Dropdown &lt;select&gt; with bound &lt;option&gt;s
+    <select each="item in items" (currentVal)>
+      <option value="{{item.value}}"><output(item.name)/></option>
+    </select> 
+  </div>
+  <div>
+    &lt;select&gt; with bound &lt;option&gt;s
+    <select size=3 each="item in items" (currentVal)>
+      <option value="{{item.value}}"><output(item.name)/></option>
+    </select>
+  </div>
+
+</body>
+</html>

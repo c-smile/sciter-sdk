@@ -1,0 +1,108 @@
+class Drawable {
+  function invalidate() { this.path = null; if(this.parent) this.parent.invalidate(); }
+  property canvas(v) { get return this.parent ? this.parent.canvas : null; }
+  
+  function morph( from/*Object?*/, to/*Object?*/, ratio = 0.0 )  
+  {
+    this.invalidate();
+    return super.morph(from, to, ratio, false /*do not clone*/); // delegate it to object.morph()
+  }
+}
+
+class BrokenRing: Drawable {
+ 
+  function this() { assert this.x !== undefined; }
+  
+  function render(gfx) {
+    //if(!this.path) {
+      //var path;
+      //this.path = path = new Graphics.Path();
+      //var angle = this.angle;
+      //var sangle = this.sectorAngle; 
+            
+      //var x0 = Math.cos(angle - sangle / 2) * this.r;
+      //var x1 = Math.cos(angle + sangle / 2) * this.r;
+      //var y0 = Math.sin(angle - sangle / 2) * this.r;
+      //var y1 = Math.sin(angle + sangle / 2) * this.r;
+      
+      //path.moveTo(x0 + this.x, y0 + this.y);
+      //path.arcTo(x1 + this.x, y1 + this.y, 360deg - this.angle, this.r ,this.r, true, false);
+    //}
+    
+    gfx.strokeWidth(this.width + 0.5)
+       .strokeColor(this.color)
+       //.strokeCap(#round)
+       .arc(this.x,this.y,this.r,this.r, this.angle - this.sectorAngle / 2, 360deg - this.sectorAngle);
+  }
+} 
+
+// draws connector line between elementFrom and elementTo
+class Connector: Drawable {
+
+  this var from = null; // from DOM element
+  this var to = null; // to DOM element
+  this var style =  { // connector style:
+                      //fromCap   :#circle, 
+                      //fromSize  :4px,
+                      //fromPoint :5, // center-center
+                      toCap     :#arrow,
+                      toSize    :5px 8px,
+                      toPoint   :5 // center-center
+                   };
+  this var width = 1px;
+  this var color = color(255,0,0);
+
+  function render(gfx) {
+    var canvas = this.canvas;
+    assert canvas;  
+    assert this.from; 
+    assert this.to;
+    
+    var (canvasX,canvasY) = canvas.box(#position,#inner,#view);  
+    var (fromX,fromY,fromW,fromH) = this.from.box(#rectw,#border,#view);  
+    var (toX,toY,toW,toH) = this.to.box(#rectw,#border,#view);
+    fromX -= canvasX; // relative to the canvas we are in.
+    fromY -= canvasY;
+    toX -= canvasX;
+    toY -= canvasY;
+    
+    gfx.lineWidth(this.width)
+       .lineColor(this.color)
+       .connector( fromX,fromY,fromW,fromH,toX,toY,toW,toH,this.style );
+  }  
+}
+
+
+class Scene:Behavior {
+
+  function attached() {
+    this.drawables = [];
+    this.paintContent = this.render;
+  }
+  
+  function add(obj) {
+    if( typeof obj == #array ) {
+      for(var item in obj) 
+        this.add(item);
+    } else {
+      this.drawables.push(obj);
+      obj.parent = this;
+      this.refresh();
+    }
+  }
+  
+  function render(gfx) {
+    for(var drawable in this.drawables)
+      drawable.render(gfx);
+  }
+  
+  function invalidate() {
+    self.refresh();
+  }
+  property canvas(v)  {
+    get return this;
+  }
+  
+}
+
+

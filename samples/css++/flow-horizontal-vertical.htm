@@ -1,0 +1,81 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+    .tournament-table { 
+      flow:horizontal;  /* single row */
+      width:max-content; 
+    }
+    .tournament-table > div { 
+      height:*; /* takes full row height */
+    }
+    .tournament-table > div > div { 
+      padding:* 1em; /* vertical springs between elements */
+      flow:vertical; /* to force <text> to be created */
+    }
+    
+    .tournament-table > div > div > text { /* artificial text element */
+      background:gold;
+    }
+    
+    
+    </style>
+    
+  </head>
+<body>
+  <h1>CSS Layout managers: flow:horizontal and flow:vertical</h1>
+  
+  <p>Note: flexible paddings</p>
+  
+  <div class="tournament-table">
+      <!--Round 1-->
+      <div>
+          <div>game</div>
+          <div>game</div>
+          <div>game</div>
+          <div>game</div>
+          <div>game</div>
+          <div>game</div>
+          <div>game</div>
+          <div>game</div>
+          <div>game</div>
+          <div>game</div>
+          <div>game</div>
+          <div>game</div>
+          <div>game</div>
+          <div>game</div>
+          <div>game</div>
+          <div>game</div>
+      </div>
+      <!--Round 2-->
+      <div>
+          <div>game</div>
+          <div>game</div>
+          <div>game</div>
+          <div>game</div>
+          <div>game</div>
+          <div>game</div>
+          <div>game</div>
+          <div>game</div>
+      </div>
+      <!--Round 3-->
+      <div>
+          <div>game</div>
+          <div>game</div>
+          <div>game</div>
+          <div>game</div>
+      </div>
+      <!--Round 4-->
+      <div>
+          <div>game</div>
+          <div>game</div>
+      </div>
+      <!--Round 5-->
+      <div>
+          <div>final</div>
+      </div>
+  </div>  
+ 
+</body>
+</html>

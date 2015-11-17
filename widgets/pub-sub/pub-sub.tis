@@ -1,0 +1,77 @@
+﻿
+// PubSub controller for arbitrary objects
+
+// adds obj.on("event",handler), 
+//      obj.off("event"[,handler]), 
+//      obj.trigger("event"[,param1,param2,...]), 
+//      obj.post("event"[,param1,param2,...])
+// event methods to the object passed
+
+function PubSub(obj) {
+
+  var list = {};
+  /**
+   * Adds handler for event
+   * @param {string} event
+   * @param {Function} handler
+   * @return {self}
+   */
+   obj.on = function(event, handler) {
+      event = symbol(event);
+      (list[event] = list[event] || []).push(handler);
+      return obj;
+   }
+
+  /**
+   * Removes event handler
+   * @param {string} event
+   * @param {Function} handler
+   * @return {EventSource}
+   */
+  obj.off = function(event, handler) {
+      event = symbol(event);
+      if (handler)
+        list[event].removeByValue(handler);
+      else
+        list[event] = [];
+      return obj;
+    }
+
+  /**
+   * Triggers the event
+   * @param {string} event
+   * @param {optional} args - arbitrary list of parameters
+   * @return true if the event was handled by any handler
+   */
+  obj.trigger = function(event, args..) {
+    event = symbol(event);
+    var handlers = list[event];
+    var handled = false;
+    if (handlers) {
+      for (var (i,handler) in handlers) {
+        if(handler.apply(obj, args))
+          handled = true;
+      }
+    }
+    return handled;
+  }
+  
+  /**
+   * Same as trigger but posts the event rather than dispatching it immediately.
+   * @param {string} event
+   * @param {optional} args - arbitrary list of parameters
+   * @return undefined
+   */
+  obj.post = function(event, args..) {
+    event = symbol(event);
+    var handlers = list[event];
+    var handled = false;
+    if (handlers) {
+      self.post(function(){
+        for (var (i,handler) in handlers)
+          handler.apply(obj, args);
+      });
+    }
+  }
+  return obj;
+}

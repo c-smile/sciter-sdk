@@ -1,0 +1,65 @@
+﻿<html>
+  <head>
+    <title>XMLScanner</title>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>WebSocket object</h1>
+  <p>It is a basic implementation of <a href="http://tools.ietf.org/html/rfc6455">WebSocket protocol</a> .</p>
+  <dl>
+    <h2>Constants</h2>
+    <p>return values of <code>WebSocket.state</code> property</p>
+    <dt>INITIAL</dt>
+    <dd>- initial state of the websocket immediately after construction.</dd>
+    <dt>CONNECTING</dt>
+    <dd>- web socket is connecting to the host</dd>
+    <dt>CONNECTED</dt>
+    <dd>- socket is connected - ready to accept <code>WebSocket.sendText()</code> calls and data sent by the server.</dd>
+    <dt>CLOSING</dt>
+    <dd>- the socket is closing.</dd>
+    <dt>CLOSED</dt>
+    <dd>- the socket is closed. Any operation on it will throw an error.</dd>
+    <h2>Properties</h2>
+    <dt>state</dt>
+    <dd>- <em>integer</em>, socket state - one of constants above.</dd>
+    <dt>pending</dt>
+    <dd>- <em>integer</em>, number of bytes in outbound buffer. Zero means socket had sent all data queued for sending by WebSocket.sendText() and WebSocket.sendBinary() methods.</dd>
+    <h2>Methods</h2>
+    <dt>connect</dt>
+    <dd>
+      <p><strong>( url: string</strong> <strong>)</strong> : WebSocket</p>
+      <p>Static constructor of the WebSocket. Accepts websocket schema URL: &quot;ws://domain/path&quot;. Returns new socket in INITIAL state.</p></dd>
+    <dt>on</dt>
+    <dd>
+      <p><strong>( event</strong>: string<strong>, callback</strong>: function<strong> )</strong> : this</p>
+      <p>Subscribe &nbsp;callback on one of socket events:</p>
+      <ul>
+        <li><strong>&quot;connect&quot;</strong> -&gt; function(), socket just connected to the host;</li>
+        <li><strong>&quot;text&quot;</strong> -&gt; function(data), text packet received, data contains string; &nbsp;</li>
+        <li><strong>&quot;binary&quot;</strong> -&gt; function(data), binary packet received, data contains Bytes object;</li>
+        <li><strong>&quot;error&quot;</strong> -&gt; function(errmsg), error occured;</li>
+        <li><strong>&quot;close&quot;</strong> -&gt; function(), socket was closed;</li></ul>
+      <p>The event name may contain &quot;.namespace&quot; part that can be used in .off() call.</p></dd>
+    <dt>once</dt>
+    <dd>
+      <p><strong>( event</strong>: string<strong>, callback</strong>: function<strong> )</strong> : this</p>
+      <p>Same as on() but subscribes the callback for once execution ( record is auto removed after first callback )</p></dd>
+    <dt>off</dt>
+    <dd>
+      <p><strong>( event</strong>: string | <strong>callback</strong>: function<strong> )</strong> : this</p>
+      <p>Unsubscribe callback either by its name or by its function reference.</p>
+      <p>Event name may contain only namespace part, so this: <code>socket.off(&quot;.namespace&quot;)</code> will unsubscribe all handlers that were set with that namespace.</p></dd>
+    <dt>sendText</dt>
+    <dd>
+      <p><strong>( text</strong>: string <strong>)</strong></p>
+      <p>The menthod sends message as a text frame to the WebSocket server.</p></dd>
+    <dt>sendBinary</dt>
+    <dd>
+      <p><strong>( data</strong>: Bytes <strong>)</strong></p>
+      <p>The menthod sends data as a binary frame to the WebSocket server.</p></dd>
+    <dt>close</dt>
+    <dd>
+      <p><strong>( )</strong></p>
+      <p>Sends disconnect request to the server and closes the socket.</p></dd></dl>
+</body>
+</html>

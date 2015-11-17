@@ -1,0 +1,90 @@
+﻿<html>
+  <head>
+    <meta name="source"/>
+    <meta name="source"/>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>behavior:menu</h1>
+  <p>This behavior provides basic hierarchical menu functionality</p>
+  <h2>Elements</h2>
+  <p>that have this behavior applied by default to:</p>
+  <ul>
+    <li><code>&lt;menu class=&quot;context&quot;&gt;</code> - context menu;</li>
+    <li><code>&lt;menu class=&quot;popup&quot;&gt;</code> - popup menu.</li></ul>
+  <h2>Model</h2>
+  <p>Example of menu declaration in Sciter:</p>
+  <pre>&lt;menu.popup&gt;
+  &lt;li id=&quot;file-open&quot;&gt;Open File &lt;span.accesskey&gt;Ctrl+O&lt;/span&gt;&lt;/li&gt;
+  &lt;hr&gt;
+  &lt;li id=&quot;file-save&quot;&gt;Save File &lt;span.accesskey&gt;Ctrl+S&lt;/span&gt;&lt;/li&gt;
+  &lt;li id=&quot;file-save-as&quot;&gt;Save File as ...&lt;span.accesskey&gt;Ctrl+Shift+S&lt;/span&gt;&lt;/li&gt;
+&lt;/menu&gt;
+</pre>
+  <p><code>&lt;li&gt;</code> elements or any other block element that has <code>role=menu-item</code> attribute defined are treated as selectable menu items and can generate MENU_ITEM_CLICK events.</p>
+  <p>For example, this markup:</p>
+  <pre>&lt;menu.popup&gt;
+  &lt;table&gt;
+    &lt;tr&gt;&lt;td role=&quot;menu-item&quot; id=&quot;red&quot;&gt;Red&lt;/td&gt;
+        &lt;td role=&quot;menu-item&quot; id=&quot;green&quot;&gt;Green&lt;/td&gt;
+        &lt;td role=&quot;menu-item&quot; id=&quot;blue&quot;&gt;Blue&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td role=&quot;menu-item&quot; id=&quot;cyan&quot;&gt;Cyan&lt;/td&gt;
+        &lt;td role=&quot;menu-item&quot; id=&quot;magenta&quot;&gt;Magenta&lt;/td&gt;
+        &lt;td role=&quot;menu-item&quot; id=&quot;yellow&quot;&gt;Yellow&lt;/td&gt;&lt;/tr&gt;
+  &lt;/table&gt;
+&lt;/menu&gt;
+</pre>
+  <p>will render popup menu with menu items organized in 3x2 table.</p>
+  <p>Menu items may have sub-&lt;menu&gt;s</p>
+  <pre>&lt;menu.popup&gt;
+  &lt;li id=&quot;file-open&quot;&gt;Open File &lt;span.accesskey&gt;Ctrl+O&lt;/span&gt;&lt;/li&gt;
+  &lt;hr&gt;
+  &lt;li&gt;Recent Files
+    &lt;menu id=&quot;LRU&quot;&gt;
+      &lt;li&gt;My file.htm&lt;/li&gt;
+      &lt;li&gt;His file.htm&lt;/li&gt;
+      &lt;li&gt;Her file.htm&lt;/li&gt;
+    &lt;/menu&gt;
+  &lt;/li&gt;
+&lt;/menu&gt;
+</pre>
+  <h2>Attributes</h2>
+  <p>behavior:menu is not using any specific attributes. &nbsp;</p>
+  <dl>
+    <h2>Methods</h2>
+    <p>Normally menus are invisible - declared with display:none styles. As menus have quite specific life cycle their visibility cannot be described in terms of CSS.</p>
+    <p>To show the menu you shall call <code>menuOwnerElement.popup(menuElement, ...)</code>. Where the <code>menuOwnerElement</code> is the DOM element that will &quot;own&quot; the menu and menuElement is one of &lt;menu&gt; elements that you want to present for the owner element.</p>
+    <h2>States</h2>
+    <ul>
+      <li><code>:owns-popup</code> &nbsp;state flag is set on menu owner element ( <code>menuOwnerElement</code> above ) when menu is shown;</li>
+      <li><code>:popup</code> - is set on the<code> &lt;menu&gt;</code> &nbsp;element when it is shown.</li></ul>
+    <h2>Events</h2>
+    <dt>MENU_ITEM_CLICK</dt>
+    <dd>- posted when user clicks on menu item, Event.target is the menu item.</dd>
+    <dt>MENU_ITEM_ACTIVE</dt>
+    <dd>- is send when user activates the menu by mouse hovering or by navigating keys. Event.target is the menu item.</dd>
+    <dt>Menu item events get propagated in so called menu tree order. Element that owns the menu will receive all MENU_ITEM_CLICKs originated from menu it owns.</dt></dl>
+  <h2>Value</h2>
+  <p>N/A</p>
+  <h2>Menu item clicks handling in script</h2>raw <code>onControlEvent</code> handler
+  <pre>var edit = $(input#some);
+edit.onControlEvent = function(evt)
+{
+  switch(evt.type) {
+    case Event.MENU_ITEM_CLICK: /* evt.target is the menu item */ break;
+  }
+}
+</pre>
+  <h3><code>on()</code> subscription</h3>
+  <pre>var edit = $(input#some);
+edit.on(&quot;click&quot;, &quot;li#file-open&quot;, function(evt) { 
+  // 'this' here is that li#file-open item  
+});
+</pre>
+  <h3>decorators.tis handler</h3>
+  <pre>include &quot;decorators.tis&quot;;
+@click @on &quot;li#file-open&quot; :: ... event handling code ...;
+</pre>
+  <p></p>
+</body>
+</html>

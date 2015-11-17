@@ -1,0 +1,80 @@
+<html>
+  <head>
+    <title>Sciter ImGraphics</title>
+    <style>
+      
+      section.multicolumn {
+        aspect: ColumnDividers;
+        flow:vertical-wrap;
+        height:*;
+        width:*;
+        overflow-x: scroll-indicator;
+        border-spacing: 5dip;
+      }
+      
+      section.multicolumn > div { width:100px; line-height: 1.6em; background:gold; }
+      
+      
+    </style>
+    <script type="text/tiscript">
+    
+    function ColumnDividers() {
+    
+    
+      this.paintForeground = function(gfx) {
+      
+        var (w,h) = this.box(#dimension,#inner);
+      
+        gfx.noLine()
+           .fillColor(color(0xAF,0,0));
+           
+        for ( var nc = this.columns - 1; nc > 0; --nc ) {
+        
+          var (cx, cw) = this.columnX(nc);
+          gfx.rectangle( cx-3, 0, 1, h );
+        
+        }
+      } 
+    }
+    </script>
+  </head>
+<body>
+
+  <section .multicolumn>
+    <div>item</div>
+    <div>item</div>
+    <div>item</div>
+    <div>item</div>
+    <div>item</div>
+    <div>item</div>
+    <div>item</div>
+    <div>item</div>
+    <div>item</div>
+    <div>item</div>
+    <div>item</div>
+    <div>item</div>
+    <div>item</div>
+    <div>item</div>
+    <div>item</div>
+    <div>item</div>
+    <div>item</div>
+    <div>item</div>
+    <div>item</div>
+    <div>item</div>
+    <div>item</div>
+    <div>item</div>
+    <div>item</div>
+    <div>item</div>
+    <div>item</div>
+    <div>item</div>
+    <div>item</div>
+    <div>item</div>
+    <div>item</div>
+    <div>item</div>
+    <div>item</div>
+    <div>item</div>
+  </section>
+
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+<html>
+<head>
+  <style>
+    @import url(carousel.css);
+    
+    div#carousel { width: calc( ( 10px + 75px ) * 3 + 10px + 130px); height: 95px; background:#CCC; padding:10px }
+    
+    div#carousel > .list
+    {
+      border:1px solid #AAA;
+      background-color: gold;
+      foreground-image: url(images/cover.png);
+      foreground-repeat: expand;
+      foreground-position: 16px 32px 16px 32px; 
+    }
+    
+    div#carousel picture { width:75px; height: 75px; margin: 10px; }
+    div#carousel > widget.button.prev 
+    {
+      background:url(images/button-left.png) no-repeat 50% 50%;
+      width:45px;
+      height:45px;
+      margin:* 10px;
+    }
+    div#carousel > widget.button.next 
+    {
+      background:url(images/button-right.png) no-repeat 50% 50%;
+      width:45px;
+      height:45px;
+      margin:* 10px;
+    }
+    div#carousel > widget.button:hover { background-image-transformation: contrast-brightness-gamma(0.5,0.58, 1.1); }
+    div#carousel > widget.button:active { background-image-transformation: contrast-brightness-gamma(0.5,0.58, 1.4); }
+  
+  </style>  
+  <script type="text/tiscript">
+    include "carousel.tis";
+  </script>  
+</head>
+<body>
+  
+  <h1>Demo of the Carousel class</h1>
+
+  <div #carousel .carousel>
+    <picture src="images/199481236_dc98b5abb3_s.jpg" />
+    <picture src="images/199481072_b4a0d09597_s.jpg" />
+    <picture src="images/199481087_33ae73a8de_s.jpg" />
+    <picture src="images/199481108_4359e6b971_s.jpg" />
+    <picture src="images/199481143_3c148d9dd3_s.jpg" />
+    <picture src="images/199481203_ad4cdcf109_s.jpg" />
+    <picture src="images/199481218_264ce20da0_s.jpg" />
+    <picture src="images/199481255_fdfe885f87_s.jpg" />
+    <picture src="images/199480111_87d4cb3e38_s.jpg" />
+    <picture src="images/229228324_08223b70fa_s.jpg" />
+  </div>
+
+</body>
+</html>

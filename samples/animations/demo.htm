@@ -1,0 +1,121 @@
+<html>
+  <head>
+  <title>Demo of the Timeline animation framework</title>
+<style>
+
+  body { font:system; size:*; vertical-align:middle; horizontal-align:center; }
+  h1 { horizontal-align:center; flow:horizontal; }
+  h1 > span { margin:0 0.3em; }
+  div#scene { prototype: Scene; size:300px; border:2px dotted gray; }
+  form#states { flow:horizontal; horizontal-align:center; }
+  form#states button { padding:4px 8px 4px 20px; border-radius:4px; background-position:4px 50%; margin: 10px; }
+  note {
+    display:block;
+    border:3px solid #aaa; border-radius: 6px;
+    background-color: #eee;
+    padding: 4px 8px;
+    position:fixed;
+    left:5%;
+    bottom:5%;
+    width:20%;
+    text-align:center;
+  }
+
+</style>
+<script type="text/tiscript">
+
+  include "timeline/timeline.tis";
+  include "canvas.tis";
+  
+  function self.ready() {
+  
+    var scene = $(div#scene);
+
+    // defining drawables:
+    var rings = [
+      BrokenRing { x:150px, y:150px, r:90px, sectorAngle:90deg, width:20px, color:rgb(127,0,127), angle: -90deg },
+      BrokenRing { x:150px, y:150px, r:70px, sectorAngle:90deg, width:20px, color:rgb(127,127,0), angle: -90deg },
+      BrokenRing { x:150px, y:150px, r:50px, sectorAngle:90deg, width:20px, color:rgb(127,0,0),   angle: -90deg },
+      BrokenRing { x:150px, y:150px, r:30px, sectorAngle:90deg, width:20px, color:rgb(0,127,127), angle: -90deg }
+    ];
+    // adding them to the scene:
+    scene.add(rings);
+    
+    // adding connector (arrow) line between two DOM elements.
+    var connector = Connector{ from:$(note), to:$(button#state1), color:rgb(0xaa,0xaa,0xaa), width:3px }
+    scene.add( connector );
+    
+    function enableButtons(on = true) { for(var btn in $$(button)) { btn.state.disabled = !on; btn.style.clear(); } }
+    function disableButtons(on = true) { for(var btn in $$(button)) btn.state.disabled = on; }
+    
+    // Initial animation, from these values to the ones defined by CSS initially:
+    Timeline.on(scene)
+      
+      // default parameters of each tween on the timeline:
+      .defaults { duration: 1s, ease: Ease.quadOut }
+      
+      // drawables, rings:
+      .from( rings[0], { start:0.9s }, { r:inc(200px), angle:90deg, width:60px, color:rgba(127,127,127,0.0) })
+      .from( rings[1], { start:0.6s }, { r:inc(200px), angle:90deg, width:60px, color:rgba(127,127,127,0.0) })
+      .from( rings[2], { start:0.3s }, { r:inc(200px), angle:90deg, width:60px, color:rgba(127,127,127,0.0) })
+      .from( rings[3], { start:0.0s }, { r:inc(200px), angle:90deg, width:60px, color:rgba(127,127,127,0.0) })
+      
+      // DOM elements, buttons:
+      .from( $(button#state1), { start:1.3s }, { transform: scale(4) translate(-150px,150px) rotate(-2turn)  }) // rotate it two times (turns) and move from -150px,1500px offset from its normal position
+      .from( $(button#state2), { start:1.6s }, { transform: scale(4) translate(300px,300px) rotate(2turn)  })
+      
+      // DOM elements, spans in header, note this will do "staggering" - each item in the group is shifted by 0.3s interval:
+      .from( $$(h1 > span), { interval:0.3s }, { transform: translate(0px,-400px) })
+      // mark current position on the timeline
+      .label("final-scene")
+      // animate <note> bottom:
+      .from( $(note), { ease: Ease.bounceOut }, { bottom:120pr /*aka 120% */ })
+      // reveal the connector, starts at "final-scene" + 0.2s 
+      .from( connector, { ease: Ease.linear, duration: 0.3s, start: [label:"final-scene", 0.2s] }, { color: rgba(127,127,127,0.0) })
+      
+      .play(); // play it right now (when self.ready() is invoked)
+    
+    $(button#state1).onClick = function() {
+      // defining timeline and starting it.
+      Timeline.on(self)
+        .defaults { duration: 0.5, ease: Ease.bounceOut }
+        .to( rings[0], { start:0.0s }, { angle:90deg, color:rgb(127,0,127) } )
+        .to( rings[1], { start:0.3s }, { angle:90deg, color:rgb(127,127,0) } )
+        .to( rings[2], { start:0.6s }, { angle:90deg, color:rgb(127,0,0)   } ) 
+        .to( rings[3], { start:0.9s }, { angle:90deg, color:rgb(0,127,127) } )
+        
+        .play(disableButtons,enableButtons); // play, enable them back when finish
+        
+      return true;
+    }
+    $(button#state2).onClick = function() {
+      // defining timeline and starting it.
+      Timeline.on(self)
+        .defaults { ease: Ease.elasticOut, start:0s }
+        .to( rings[0], { duration: 1.75s }, { angle:inc(-180deg) , color:tint(0.7) })
+        .to( rings[1], { duration: 1.50s }, { angle:inc(+45deg) , color:tint(0.7) })
+        .to( rings[2], { duration: 1.25s }, { angle:inc(-90deg) , color:tint(0.7) }) 
+        .to( rings[3], { duration: 1.0s },  { angle:inc(+130deg), color:tint(0.7) })
+        
+        .play(disableButtons,enableButtons); // play, enable them back when finish
+        
+      return true;
+    }
+    
+  
+  }
+
+</script>
+  </head>
+<body>
+  <h1><span>Demo</span><span>of</span><span>the</span><span>Timeline</span><span>animation</span><span>framework</span></h1> 
+  <div #scene />
+  <form #states>
+    <button #state1 type=radio>State1</button>
+    <button #state2 type=radio>State2</button>
+  </form>
+  <note>
+    Use these buttons to switch state of the Canvas
+  </note>
+</body>
+</html>

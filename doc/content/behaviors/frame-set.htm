@@ -1,0 +1,45 @@
+﻿<html>
+  <head>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>behavior:frame-set</h1>
+  <p>This element handles functionality of &lt;frameset&gt; elements - containers of blocks-panes separated by so called splitters allowing to adjust the relative sizes of the panes. </p>
+  <p>The behavior can be applied to any block container, &lt;div&gt; or &lt;section&gt; for example.</p>
+  <h2>Elements</h2>
+  <p>These elements have <em>behavior:frame</em> applied by default:</p>
+  <ul>
+    <li><code>&lt;frameset&gt;</code> - panes container.</li></ul>
+  <h2>Model</h2>
+  <p>In Sciter &lt;frameset&gt; element may contain as &lt;frame&gt; elements as any other block containers like &lt;div&gt; or &lt;section&gt; as panes. </p>
+  <p>Panes can be split by &lt;splitter&gt; elements if some special styling of splitters is required.</p>
+  <p>Example, typical help window layout:</p>
+  <pre>&lt;frameset cols=&quot;120px,*&quot;&gt;
+   &lt;div id=&quot;help-index&quot;&gt;
+      &lt;a href=&quot;first-topic.htm&quot; target=&quot;help-content&quot;&gt;First topic&lt;/a&gt; 
+   &lt;/div&gt;
+   &lt;splitter/&gt;
+   &lt;frame id=&quot;help-content&quot;&gt;Select topic from index&lt;/frame&gt;
+&lt;/frameset&gt;
+</pre>
+  <p>First pane here is &lt;div&gt; element having static content. &lt;frame&gt; is a container of selected topic element and &lt;splitter&gt; element used for interactive size adjustment.</p>
+  <h2>Attributes</h2>
+  <p>&lt;frame&gt; attributes that have special meaning:</p>
+  <ul>
+    <li><code>cols=&quot;widths list&quot;</code> - declares column layout and specifies initial size of columns in a &lt;frameset&gt;;</li>
+    <li><code>rows=&quot;height list&quot;</code> - declares rows layout and specifies initial size of rows in a &lt;frameset&gt;;</li></ul>
+  <p>Either cols or rows attribute has to be defined. width/height list is a comma separated list of Sciter length units: dips, px, mm, etc. including flex units (<code>*</code>). </p>
+  <h2>Events</h2>
+  <p>N/A - no specific events.</p>
+  <ul/>
+  <h2>Methods</h2>
+  <dl>
+    <dt>uiState</dt>
+    <dd>() : array - returns array of lengths - current widths/heights of panes in the frameset;</dd>
+    <dt>uiState</dt>
+    <dd>(lengths: array) - applies lengths to columns/rows in the frameset. </dd></dl>
+  <p>uiState methods are used to persist UI state of the frameset.</p>
+  <h2>Value</h2>
+  <p>N/A</p>
+</body>
+</html>

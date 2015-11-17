@@ -1,0 +1,59 @@
+<html>
+<head>
+  <style>
+  
+    html { background-color:#EEE; }
+    
+    div.test
+    {
+      background-color: gold;
+      color: black;
+      width:100px;
+      height:1.2em;
+      padding:4px;
+      margin:4px;
+    }
+    div.test:hover
+    {
+      background-color: red;
+      width:150px;
+      height:150px;
+      border-radius: 14px;
+      transition: height( timing-function:cubic-in-out, duration:0.4s, delay:0.4s)
+                  width( timing-function:cubic-out, duration:0.4s)
+                  border-radius(timing-function:cubic-in-out, duration:0.4s, delay:0.4s)
+                  background-color(timing-function:linear, duration:0.7s, delay:0.2s);
+    }
+    
+    div#ani-container
+    {
+      overflow:hidden; 
+      height:*; 
+      width:200px;
+      background-color:#FFF;
+    }
+    
+  </style>  
+  <script type="text/tiscript"></script>  
+</head>
+<body>
+  <h1>Extended transition property demo</h1>
+  <p>Folding elements</p>
+  
+  <div#ani-container>
+    <div .test>
+      Hover me #1!
+    </div>
+    <div .test >
+      Hover me #2!
+    </div>
+    <div .test>
+      Hover me #3!
+    </div>
+    <div #test2>
+      ...
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+<frameset cols="3*,*" .view-driver>
+  <tabs.driver-views.top-level-tabs>
+    <labels>
+        <label for="resources-view">Sources</label>
+        <label for="dom-view" selected>DOM</label>
+        <ul.dom-element-path><text>SHIFT+CTRL+Click to select element</text></ul>
+        <text.resource-url></text>
+    </labels>
+    <include src="dom-view.htm" />
+    <include src="resources-view.htm" />
+  </tabs>
+  <splitter/>
+  <tabs.props-script.top-level-tabs>
+    <labels>
+        <label for="styles-view">Styles</label>
+        <label for="debugger-view">Script</label>
+        <label for="test-view">Testing</label>
+    </labels>
+    <include src="styles-view.htm" />
+    <include src="debugger-view.htm" />
+    <div(test-view)>
+      {under construction}
+    </div>
+  </tabs>
+</frameset>

@@ -1,0 +1,102 @@
+﻿<html>
+  <head>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>behavior:form</h1>
+  <p>This element handles extended functionality of &lt;form&gt; elements. The behavior can be applied to any container where &quot;compund value&quot; is needed.</p>
+  <p>Intended use cases of the behavior:form : </p>
+  <ul>
+    <li>classic web forms use cases - when attribute <em>action</em> is defined the behavior will do HTTP/POST to that URL with the data (a.k.a. value) of the form.</li>
+    <li>compound value container use cases - value of the form is a map of name/value pairs of named elements (that have attribute name defined) inside the form.</li></ul>
+  <h2>Elements</h2>
+  <p>These elements have behavior:form applied by default:</p>
+  <ul>
+    <li><code>&lt;form&gt;</code></li></ul>
+  <h2>Model</h2>
+  <p>Any DOM element having <em>name</em> attribute defined inside the form is treated as submittable and participates in form value formation. </p>
+  <p>Value of the form is always compound (aggregate, map ) JSON value.</p>
+  <p>Example, value of the form:</p>
+  <pre>&lt;form&gt;
+   First name: &lt;input}text name=&quot;first&quot; value=&quot;Foo&quot;&gt; 
+   Last name: &lt;input}text name=&quot;last&quot; value=&quot;Bar&quot;&gt;
+&lt;/form&gt;
+</pre>
+  <p>is</p>
+  <pre>{
+  first: &quot;Foo&quot;,
+  last: &quot;Bar&quot; 
+}
+</pre>
+  <h3>Radio groups and check boxes</h3>
+  <p>Group of radio elements having the same name is treated as a group. Value of the group is a single value - value attribute of :checked radio button. </p>
+  <p>Value of check box element is a content of its value attribute. If &nbsp;checkbox ins not checked then it has undefined value.</p>
+  <p>Therefore value of the form:</p>
+  <pre>&lt;form&gt;
+   Name: &lt;input|text name=&quot;firstName&quot; value=&quot;Ivan&quot;&gt;<br/>
+   Male: &lt;input|radio name=&quot;sex&quot; value=&quot;male&quot; checked&gt;
+   Female: &lt;input|radio name=&quot;sex&quot; value=&quot;female&quot;&gt;
+   Adult: &lt;input|checkbox name=&quot;adult&quot; value=&quot;mature&quot; checked&gt;
+   Owns Cadillac: &lt;input|checkbox name=&quot;ownsCadddilac&quot; value=&quot;yes&quot;&gt;
+&lt;/form&gt;
+</pre>
+  <p>is </p>
+  <pre>{
+  firstName:&quot;Ivan&quot;,
+  sex: &quot;male&quot;,
+  adult: &quot;mature&quot;,
+  ownsCadddilac: undefined
+}
+</pre>
+  <h3>Field groups</h3>
+  <p>Some fileds can be grouped into named continers forming subobjects in value map:</p>
+  <pre>&lt;form&gt;
+   &lt;div name=&quot;credentials&quot;&gt;
+     User name: &lt;input|text name=&quot;un&quot; value=&quot;Ivan&quot;&gt;
+     Password: &lt;input|password name=&quot;pwd&quot; value=&quot;12345&quot;&gt;
+   &lt;/div&gt;<br/>   Save login: &lt;input|checkbox name=&quot;parsistLogin&quot; value=&quot;true&quot; checked&gt;
+&lt;/form&gt;
+</pre>
+  <p>produces value: </p>
+  <pre>{  
+   credentials: { 
+     un: &quot;Ivan&quot;, 
+     pwd: &quot;12345&quot; },
+   persistLogin: true; 
+}
+</pre>
+  <h2>Attributes</h2>
+  <p>These attributes are used in web forms cases:</p>
+  <ul>
+    <li><code>action</code> - URL, required for web form submission, receiver of submitted form data;</li>
+    <li><code>target</code> - optional, name or id of target frame that will render rsponse of action URL;</li>
+    <li><code>method</code> - the HTTP method that the browser uses to submit the form. Possible values are: &quot;post&quot; and &quot;get&quot;. Default value: &quot;post&quot;</li>
+    <li><code>enctype</code> - for <code>method=&quot;post&quot;</code> defines MIME format of the submission, can be:</li>
+    <ul>
+      <li><code>&quot;application/x-www-form-urlencoded&quot;</code> - default value if the attribute is not specified;</li>
+      <li><code>&quot;multipart/form-data&quot;</code> - is used when the form contains <code>&lt;input name=&quot;...&quot; type=&quot;file&quot;&gt;</code>.</li></ul></ul>
+  <h2>Events</h2>
+  <ul>
+    <li>FORM_RESET event - generated in response of &lt;button|reset&gt; click event inside the form. If this event is not consumed by script then the form clears values of inputs to their default values; </li>
+    <li>FORM_SUBMIT event - generated in response of &lt;button|submit&gt; click event inside the form. If this event is not consumed by script then the behavior send form values to the <em>action</em> URL; </li>
+    <li>FORM_VALUE_CHANGED event - generated in response of one of &quot;change&quot; events on inputs inside the form. The event is translated to &quot;change&quot; event on the form element.</li></ul>
+  <h2>Methods</h2>
+  <dl>
+    <dt>submit</dt>
+    <dd>() - submits content of the form if its <em>action</em> attribute is defined on the form. </dd>
+    <dt>reset</dt>
+    <dd>() - resets input elements to their initial values.</dd></dl>
+  <h2>Value</h2>
+  <p>name/value map - object in TIScript terms with names corresponding to name attributes of DOM elements inside the form.</p>
+  <h2>Form change handling in script</h2>
+  <h3><code>on()</code> subscription</h3>
+  <pre>var frm = $(form#some);
+frm.on(&quot;change&quot;, function() { var formValue = this.value; ... });
+self.on(&quot;change&quot;, &quot;form#some&quot;, function() { var formValue = this.value; ... });
+</pre>
+  <h3>decorators.tis handler</h3>
+  <pre>include &quot;decorators.tis&quot;;
+@change @on &quot;form#some&quot; :: ... event handling code ...;
+</pre>
+</body>
+</html>

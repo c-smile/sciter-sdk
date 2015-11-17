@@ -1,0 +1,93 @@
+include "decorators.tis";
+
+// handles list of host resources
+class ResourceList: Behavior {
+
+  const DATA_HTML = 0;
+  const DATA_IMAGE = 1;
+  const DATA_STYLE = 2;
+  const DATA_CURSOR = 3;
+  const DATA_SCRIPT = 4;
+  const DATA_RAW_DATA = 5;    // raw data request
+  const DATA_FONT = 6;
+  const DATA_SOUND = 7; // wav bytes
+    
+  function attached() {
+  
+    this.driver = this.$p(.view-driver);
+  
+    this.sections = [
+      this.$(.resurces-markup > ul),
+      this.$(.resurces-images > ul),
+      this.$(.resurces-styles > ul),
+      null,
+      this.$(.resurces-scripts > ul),
+      null,
+      null,
+      null ];
+      
+    this.othersList = this.$(.resurces-others > ul);
+   
+    var me = this;
+    this.driver.on("resource-arrived.resource-list", function(evt) { 
+      me.timer( 200ms, me.show ); 
+    });
+
+    this.driver.on("navigate-to-source.resource-list", function(evt) { 
+      me.highlight(evt.data.url);
+    });
+    
+    this.show();
+    
+  }
+  function detached() {
+    this.driver.off(".resource-list");
+  }
+  
+  function show() {
+    
+    var sections = this.sections;
+    
+    for( var list in sections )
+      if(list) {
+        list.clear();
+        list.parent.attributes.addClass("no-items");
+      }
+      
+    const URL_PARTS = /^([^:]+:)(.+\/)*([^.]+)(.+)$/;
+    
+    for( var (url,res) in this.driver.resources ) 
+    {
+      var list = this.sections[res.type];
+      if( !list ) list = this.othersList;
+      var urlparts = res.url.match(URL_PARTS);
+      if( !urlparts[2] ) // non-hierarchical    
+        list.$append(<li res="{res.url}"><span.prot>{urlparts[1]}</span><span.file>{urlparts[3]}</span><span.ext>{urlparts[4]}</span></li>);
+      else
+        list.$append(<li res="{res.url}"><span.prot>{urlparts[1]}</span><span.path>{urlparts[2]}</span><span.file>{urlparts[3]}</span><span.ext>{urlparts[4]}</span></li>);
+      list.parent.attributes.removeClass("no-items");
+    }
+    return false;
+  }
+  
+  
+  function highlight(url) {
+    var prev = this.$(li:current);
+    var next = this.$(li[res="{url}"]);
+    if( prev !== next ) {
+      if(prev) prev.state.current = false;
+      if(next) next.state.current = true;
+    }
+  }
+  
+  @click @on "li[res]" : evt {
+    var url = evt.target.attributes["res"];
+    //this.show({url:url});
+    this.postEvent("navigate-to-source",{url:url});
+    return true;
+  }
+
+ 
+}
+
+

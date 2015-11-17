@@ -1,0 +1,36 @@
+
+function SetupIndexer()
+{
+  var storage = null;
+
+  function buildIndex() {
+    
+    var indexRoot = $(#index);
+    
+    var docList = indexRoot.$$(a[href][target=content]).map(:el: el.attributes["href"]);
+    
+    for( var doc in docList ) 
+      stdout.println(doc);
+    
+  }
+  
+  function getStorage() 
+  {
+    if( storage ) 
+      return storage;
+    var dbpath = self.url("index.db");
+    var storage = Storage.open(dbpath);
+    if( !storage.root ) {
+      storage.root = { 
+        keywords: storage.createIndex(#string,false);
+      }; // brand new, initialize schema.
+      buildIndex();  
+    }
+    return storage;
+  }
+  
+  //buildIndex();
+  
+}
+
+SetupIndexer();

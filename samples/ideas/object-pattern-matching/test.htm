@@ -1,0 +1,51 @@
+<html>
+<head>
+  <style>
+  
+    ol > li { border-top:1px solid; }
+    ol > li:first-child { border-top:none; }
+    ol > li button { margin-left:*; }
+  
+  </style>  
+  <script type="text/tiscript">
+  
+  include "match.tis";
+  
+  function render(o, el) 
+  {
+      o.match { id:#exist, 
+                name:String, 
+                contact:"tel:*" } ?    el.$append(<li id={o.id} href="{o.contact}"><span .name>{o.name}</span><button>Call</button></li>)
+    : o.match { id:#exist, 
+                name:String, 
+                contact:"mailto:*" } ? el.$append(<li id={o.id} href="{o.contact}"><span .name>{o.name}</span><button>Send</button></li>)
+    : o.match { id:#exist, 
+                name:String } ?        el.$append(<li id={o.id}><span .name>{o.name}</span><button>Mail</button></li>)
+    : o.match { name:String } ?        el.$append(<li .unknown>{o.name}</li>)
+    :                                  el.$append(<li .unknown>(Unknown contact)</li>); 
+  }
+  
+  var contacts = 
+  [
+    { id:1, name:"Andrew", contact:"tel:123-456-7890" },
+    { id:2, name:"Olga", contact:"mailto:olga@example.com" },
+    { id:3, name:"Ivan", contact:"1234 Nice St, Wonderful City, Great Country" },
+    { id:4, name:"Masha, the cat" },
+    { id:5 },
+  ];
+
+  function self.ready()
+  {
+    var l = $(#contacts);
+    for(var contact in contacts)  
+      render(contact,l);
+  }
+  
+  
+  </script>  
+</head>
+<body>
+  <h2>Demo of Object.match() function</h2>
+  <ol #contacts></ol>
+</body>
+</html>

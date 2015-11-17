@@ -1,0 +1,48 @@
+<html>
+  <head>
+  <title></title>
+  <style>
+    @import url(tabs.css);
+    
+    html { background:#ffffee; }
+    form { margin-bottom:1em; }
+    section { text-align: center; vertical-align:middle; }
+    
+  </style>
+  <script type="text/tiscript">
+  
+    self.subscribe("statechange","tabs", function() { $(select).value = this.current; });
+    self.subscribe("change", "select", function() { $(tabs).current = this.value; });
+  
+  </script>
+  </head>
+<body>
+
+  <form>
+    current tab: <select #current-tab>
+      <option value=first>First</option>
+      <option value=second>Second</option>
+      <option value=third>Third</option>
+    </select>
+  </form>
+
+  <tabs #test>
+    <div.strip>
+      <label for=first >First</label>
+      <label for=second >Second</label>
+      <label for=third >Third</label>
+    </div>
+    <section(first)>
+      First tab content
+    </section>
+    <section(second)>
+      Second tab content
+    </section>
+    <section(third)>
+      Third tab content
+    </section>
+  </tabs>
+
+
+</body>
+</html>

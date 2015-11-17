@@ -1,0 +1,199 @@
+<html>
+  <head>
+  <style>
+    @import url(std-menu.css);
+
+    /* cool menu */    
+    menu.cool,
+    menu.cool menu 
+    {
+      background-color: yellow red red yellow;
+      color:white;
+    }
+   
+    menu.cool li:current
+    {     
+      //background-color: white;    //transparent url(images/transparent.png) repeat;
+      //opacity:0.5;
+      background: transparent url(images/transparent.png) repeat;
+    }
+    
+    menu.office,
+    menu.office menu
+    {
+      background: url(images/menu-back-office.png) expand;
+      background-position: 0 0 0 24;
+      text-align:left;
+    }
+        
+    /* table menu */    
+    menu.table 
+    {
+      border-spacing:1px;
+    }
+    menu.table td[role="menu-item"]
+    { 
+      border:1px solid threedface; 
+    }
+    menu.table td[role="menu-item"]:current
+    { 
+      background-color:highlight; color:highlighttext; 
+    }
+    menu.table caption
+    {
+      padding:2px;
+      font-size:8.5pt;
+      background-color: threedlightshadow;
+      color: threedshadow;
+    }
+
+    /* menu with clock */
+    .clock 
+    {
+      behavior:clock;
+      padding:4px;
+      color:black; /* our behavior will use it for "hands" */
+      width:153px;
+      height:153px;
+
+      /* clock face */	   
+      background-image:url(clock-images/clock-back.png);
+      background-repeat:no-repeat;	   
+      background-position:50% 50%; /* middle center */
+	   
+      /* clock glass */	   
+      foreground-image:url(clock-images/clock-fore.png);
+      foreground-repeat:no-repeat;	   
+      foreground-position:50% 50%; /* middle center */
+    }	
+
+    .with-popup-menu
+    {
+      behavior:popup-menu;
+      border:1px dotted red;
+      background-color: #FFFAFA;
+      padding: 4px;
+      width:max-intrinsic;
+    }
+    .with-popup-menu:hover
+    {
+      background-color: #FFAFAF;
+    }
+    .with-popup-menu:owns-popup
+    {
+      border:1px solid red;
+      background-color: #FF0000;
+      color: #FFFFFF;
+    }
+    
+  </style>
+  </head>
+
+<body>
+
+<h2>&lt;button type="menu" /&gt;</h2>
+
+<button type="menu">Button with menu (custom back)
+  <menu class="office">
+    <li title="hello!">First item</li>
+    <li>Second item</li>
+    <li>Third item
+      <menu>
+        <li>First sub-item</li>
+        <li>Second sub-item</li>
+      </menu>
+    </li>
+    <li>Fourth item</li>
+  </menu>
+</button>
+<button type="menu">Gradient back menu
+  <menu class="cool" #level1>
+    <li>First item</li>
+    <li>Second item</li>
+    <li>Third item
+      <menu #level2>
+        <li>First sub-item</li>
+        <li>Second sub-item</li>
+        <li>Third sub-item
+          <menu #level3>
+            <li>First sub-sub-item</li>
+            <li>Second sub-sub-item</li>
+          </menu>
+        </li>
+        <li>Fourth sub-item</li>
+      </menu>
+    </li>
+    <li>Fourth item</li>
+  </menu>
+</button>  
+
+<button type="menu">Table menu
+  <menu class="table">
+    <caption>Here is an example of<br/>menu items organized in table:</caption>
+    <table width="100%">
+    <tr>
+      <td role="menu-item">item#1.1</td>
+      <td role="menu-item">item#1.2</td>
+      <td role="menu-item">item#1.3</td>
+    </tr>
+    <tr>
+      <td role="menu-item">item#2.1</td>
+      <td role="menu-item">item#2.2...
+          <menu>
+            <li>First sub-sub-item</li>
+            <li>Second sub-sub-item</li>
+          </menu>
+      </td>
+      <td role="menu-item">item#2.3</td>
+    </tr>
+    </table>    
+    <caption><img src="progress.gif" />Note that menu panels can have<br/>arbitrary markup and layout<br/>Even animated images!</caption>
+  </menu>
+</button>  
+
+<button type="menu">Menu with behaviors
+  <menu class="cool">
+    <li>First item</li>
+    <li>Second item</li>
+    <li>What time is it now?
+      <menu>
+        <div class="clock"></div>
+      </menu>
+    </li>
+    <li>Fourth item</li>
+  </menu>
+</button>  
+<button type="menu" align-popup="right">Menu aligned to the right
+  <menu class="cool">
+    <li>First item</li>
+    <li>Second item</li>
+    <li>Third item</li>
+    <li>Fourth item</li>
+  </menu>
+</button>  
+
+
+<h2>Other elements with behavior:popup-menu attached</h2>
+Here is a simple non focusable div with popup-menu as an example: 
+<div class="with-popup-menu">
+  Click here to see the menu
+  <menu class="cool">
+    <li>First item </li>
+    <li>Second item <button>button</button></li>
+    <li>What time is it now?
+      <menu>
+        <div class="clock"></div>
+      </menu>
+    </li>
+    <li>Fourth item</li>
+  </menu>
+</div>
+
+
+</body>
+
+
+
+</html>
+	
+	

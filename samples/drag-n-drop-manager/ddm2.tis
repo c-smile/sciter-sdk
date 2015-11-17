@@ -1,0 +1,542 @@
+
+// variation of drag-n-drop manager that do not create any DOM elements while D&D
+// Example of the call of this function (using "call-object" notation):
+// DragDrop
+//    {
+//      what      : "ul#tools > li, ul.zone > li",
+//      where     : "ul.zone",
+//      notBefore : "ul.zone > caption",
+//      acceptDrag: dragType,
+//      easeDrop  : Animation.Ease.OutQuad
+//    };
+
+function DragDrop2(def) 
+{
+  //| 
+  //| def here is an object that has following fields:
+  //|
+  //| def.what = selector [string], defines group of draggable elements.
+  //| def.where = selector [string], defines group of target elements where dragables can be dropped.
+  //| def.notBefore = selector [string], defines positions where drop is not allowed. 
+  //| def.acceptDrop = function(draggable, target, indexAtTarget), function to be called before the drop, if it is defined and returns true operation ends successfully.
+  //| def.acceptDrag = function(draggable), function to be called before the drag starts, if it is defined and returns either #copying or #moving operation starts successfully.
+  //| def.arrivedTo = function(draggable, target), function to be called when draggable enters the target.
+  //| def.dropped = function(draggable, from), function to be called when draggable dropped on the target. 
+  //|               target is new draggable.parent and 'from' is a previous parent of the draggable.
+  //| def.container = parent-selector [string], selector of the nearest parent of def.what elements where DD operation is allowed.
+  //| def.easeDrop = function(t, b, c, d) - ease function used for the drop animation, one of Animation.Ease.*** functions.
+  //| def.setupPlaceholder = function(placeholderElement) - do something special with created placeholder.
+  //| def.animationDuration = milliseconds, duration of "docking" animation
+  //| def.before = function(), called before entering DD loop
+  //| def.after = function(), called after finshing DD loop
+  //| def.autoScroll = true | false , if autoScroll of container is required
+
+  const X_THRESHOLD = 4;
+  const Y_THRESHOLD = 4;
+  const STEP_DELAY  = 8;
+  const PING_THRESHOLD = 400ms;
+  const ANI_DURATION = def.animationDuration || 200ms;
+
+  const dd_marker_color = color("highlight");
+  const dd_marker_width = 4;
+
+  var dd_x, dd_y;
+  var dd_cx, dd_cy;         // drag position inside the container
+  var dd_op = #moving;
+  var dd_source = null;     // the draggable
+  var dd_target = null;     // current target, mouse is over it.
+  var dd_targets = def.where instanceof Element ? [def.where] : self.selectAll(def.where);
+  //var dd_placeholder_src = null;
+  //var dd_placeholder_dst = null;
+  var dd_container = self;  // DD happens inside this element only
+  var dd_width, dd_height;  // dims of the draggable
+  var is_animating;
+  var requested_cancel = false;
+  var dd_dragging = null;
+  var dd_autoScroll = def.autoScroll !== undefined ? def.autoScroll : true;
+  
+  var dd_draggable_image = null; // Image instance - holds snapshot of the draggable
+  var dd_marker_x1 = null, dd_marker_x2, dd_marker_y1, dd_marker_y2; 
+  var dd_marker_position; // index of marker position (insertion point) 
+ 
+  // forward declaration of functions:
+  var doDrop; 
+  var doCancelDrop; 
+  var doMove;
+  //var onMouseHandler;
+    
+  // do cleanup
+  function ddFinalize()
+  {
+    // clean all this up
+    for(var tel in dd_targets)
+      tel.state.droptarget = false; 
+    if(dd_target) dd_target.state.dragover = false; 
+    //if(dd_placeholder_dst) dd_placeholder_dst.remove();
+    //if(dd_placeholder_src) dd_placeholder_src.remove();
+    if(dd_source) {
+      dd_source.state[ dd_op ] = false;
+      dd_source.state.dragsource = false;
+    }
+    
+    // Be polite with the GC:
+    dd_target = dd_source = null;
+    
+    if( dd_draggable_image ) {
+      dd_draggable_image.destroy();
+      dd_draggable_image = null;
+    }
+    dd_container.paintForeground = null;
+    dd_marker_x1 = null;
+  }
+   
+  function ddPainter(gfx) {
+  
+    gfx.save();
+    gfx.blendImage( dd_draggable_image, dd_cx, dd_cy, dd_width, dd_height, 0.75 );
+    gfx.strokeColor(dd_marker_color);
+    gfx.strokeWidth(dd_marker_width);
+    if(dd_marker_x1 !== null)
+      gfx.line(dd_marker_x1, dd_marker_y1, dd_marker_x2, dd_marker_y2);
+    gfx.restore();
+  
+  }
+  
+  // init-loop-commit:
+  function doDD(el, vx, vy) // DD loop
+  {
+   // 1) ask initiator about our draggable:
+    if( def.acceptDrag ) 
+    {
+      dd_op = def.acceptDrag( el );
+      if( dd_op != #copying && dd_op != #moving )
+        return false; // not this time, sigh.
+    }
+  // 1-bis) setup container, if any:  
+    if( def.container )
+    {
+      dd_container = el.parent.selectParent(def.container);
+      assert dd_container;
+    }
+  
+  // 2) find and mark all allowed targets:
+    dd_targets = def.where instanceof Element ? [def.where] : self.selectAll(def.where);
+    
+  // sort all dd_targets by depth, so child options can be found before the whole <select>
+    dd_targets.sort(:e1,e2{
+      function depth(e)
+      {
+        var depth = 0;
+        do { e = e.parent; depth++; } while(e.parent);
+        return depth;
+      }
+      var d1 = depth(e1);
+      var d2 = depth(e2);
+      if( d1 < d2 ) return 1;
+      if( d1 === d2 ) return 0;
+      return -1;
+
+    });
+
+    assert dd_targets.length > 0;
+    for(var tel in dd_targets) 
+      tel.state.droptarget = true; // to give CSS a chance to highlight them somehow using :drop-target
+    
+    dd_source = el;
+    (dd_width, dd_height) = el.box(#dimension);
+    
+    dd_source.state[ dd_op ] = true;
+    
+    dd_draggable_image = new Image(dd_width, dd_height, dd_source);
+    
+    // 3) setup paintHandler on container
+    
+    doMove(vx, vy);
+    
+    dd_container.paintForeground = ddPainter;
+
+    // 4) mark the draggable as dragsource...
+  
+    dd_source.state.dragsource = true;
+    
+    if(def.before) 
+      def.before();
+    
+  // 5) commit screen updates:
+    view.update();
+   
+  // 6) DD events until mouse up is received
+    requested_cancel = false;
+    dd_dragging = el;
+    el.capture(#strict);
+    
+    if(!view.doEvent(#untilMouseUp))
+      requested_cancel = true;
+
+    el.capture(false);
+    dd_dragging = null;
+     
+  // 7) Loop finished, do either drop or cancel it:   
+  
+    if( !requested_cancel && dd_target && dd_source) 
+      doDrop();
+    else if(dd_source)
+      doCancelDrop();
+
+  // 7) run user's finalizer   
+    if(def.after) 
+      el.post(def.after);
+   
+    return true;
+  }
+  
+  function validPosition(index) {
+    //if(!def.notBefore && def.notAfter) return index;
+    
+    if( index < dd_target.length ) {
+      if(dd_target[index] === dd_source) { return null; }
+      if(dd_target[index] === dd_source.next) { return null; }
+    }
+    
+    if( def.notBefore && index < dd_target.length && dd_target[index].match(def.notBefore)) { return null; }
+    if( def.notAfter && index > 0 && dd_target[index-1].match(def.notAfter)) {  return null; }
+    
+    return index;
+  }
+  
+  function findPosHorz(vx,vy) 
+  {
+    var notb = def.notBefore;
+    var firstIdx = 0; 
+    var lastIdx = dd_target.length - 1; /*non inclusive*/    
+
+    if( firstIdx > lastIdx )
+      return firstIdx;
+      
+    var i;
+    for( i = firstIdx; i <= lastIdx; ++i ) 
+    {
+      var tc = dd_target[i];
+      var (x1,y1,x2,y2) = tc.box(#rect, #margin, #view);
+      if(  vx < ((x1 + x2) / 2) ) {
+        if(!notb || !tc.match(notb)) 
+          return i;
+      }
+    }
+    return i;
+  }
+
+  function findPosVert(vx,vy) 
+  {
+    var notb = def.notBefore;
+    var firstIdx = 0; 
+    var lastIdx = dd_target.length - 1; /*non inclusive*/    
+    
+    if( firstIdx > lastIdx )
+      return firstIdx;    
+
+    var i;
+    var tc;
+    for( i = firstIdx; i <= lastIdx; ++i) 
+    {
+      tc = dd_target[i];
+      var (x1,y1,x2,y2) = tc.box(#rect, #margin, #view);
+      var my = (y1 + y2) / 2;
+      if(  vy < my )
+        return validPosition(i);
+      if( vy < y2 )
+        return validPosition(i+1);
+    }
+    return tc? validPosition(tc.index + 1):null;
+  }
+ 
+  
+  function findPosWrap(vx,vy,vert) 
+  {
+    var notb = def.notBefore;
+    
+    var (tvx, tvy) = dd_target.box(#position,#inner,#view);
+    var tc = dd_target.find(vx - tvx, vy - tvy);
+    
+    while(tc && tc.parent !== dd_target )
+      tc = tc.parent;
+    
+    if( tc )
+      return validPosition(tc.index);
+      
+    return null;
+  }
+  
+  doMove = function(vx, vy)
+  {
+   //   stdout.$n({vx} {vy});
+    if( !dd_source ) return;
+    
+    var x = vx - dd_x;
+    var y = vy - dd_y;
+    // move the draggable:
+    if( dd_container )
+    {
+      var (x1,y1,x2,y2) = dd_container.box(#rect, #inner, #view);
+      var (mx1,my1,mx2,my2) = dd_source.box(#rect, #margin, #inner); // actual margin sizes of the draggable
+      var (w,h) = dd_source.box(#dimension, #inner); // actual dimensions of the draggable
+      // inflate container rect:
+      x1 += mx1; x2 -= mx2; 
+      y1 += my1; y2 -= my2; 
+      // apply positioning constraints we've got:
+      if( x < x1 ) x = x1; else if( x + w > x2 ) x = x2 - w + 1;
+      if( y < y1 ) y = y1; else if( y + h > y2 ) y = y2 - h + 1;
+      vy = y; vx = x;
+      dd_cx = vx - x1;
+      dd_cy = vy - y1;
+    }
+    
+    //dd_source.move(x, y, dd_width, dd_height /*, #view, #detached-window*/);
+    dd_container.refresh();
+  
+    var found = null;
+    for( var tel in dd_targets )
+    {
+      var (x1,y1,x2,y2) = tel.box(#rect, #inner, #view);
+      if( vx >= x1 && vy >= y1 && vx <= x2 && vy <= y2 ) { found = tel;  break; }
+    }
+    //stdout.$n({found.tag});
+    if( dd_target !== found )
+    {
+      if(dd_target) // we have left it
+        dd_target.state.dragover = false; // CSS: :drag-over 
+      dd_target = found;
+      if(dd_target) dd_target.state.dragover = true;
+    }
+   
+    if(!dd_target) 
+      return;
+    
+    // ok, we are on dd_target, find insert position on it
+    var flow = dd_target.style#flow;
+    var horz = false;
+    var pos = 0;
+
+    switch( flow )
+    {
+      case "horizontal-wrap": 
+      case "horizontal-flow": horz = true; pos = findPosWrap(vx,vy,false); break;
+      case "horizontal":      horz = true; pos = findPosHorz(vx,vy); break;
+      
+      case "table-body":      horz = false; pos = findPosVert(vx,vy); break; 
+      case "vertical-wrap": 
+      case "vertical-flow":   horz = false; pos = findPosWrap(vx,vy,true); break;
+      default:                horz = false; pos = findPosVert(vx,vy); break; 
+    }
+    
+    // check for positions that are not allowed in DD:
+    if( typeof pos != #integer )
+      return;
+/*    else if( pos >= dd_target.length ) // after last pos
+    {
+      var tc = dd_target.last;
+      if(tc === dd_source) 
+        return; // not allowing to insert next to source
+    }
+    else
+    {
+      var tc = dd_target[pos];
+      if( tc === dd_source) 
+        return; // not allowing to insert before the source
+    }*/
+    
+    var after = false;
+    var marker;
+    if( pos < dd_target.length )
+      marker = dd_target[pos];
+    else {
+      marker = dd_target.last;
+      after = true;
+    }
+    
+    dd_marker_position = pos;
+      
+    var (x1,y1,x2,y2) = marker.box(#rect,#border,#view);
+    var (cx,cy) = dd_container.box(#position,#inner,#view);
+    
+    if( horz ) {
+      dd_marker_y1 = y1 - cy; dd_marker_y2 = y2 - cy;
+      if( after )
+        dd_marker_x1 = dd_marker_x2 = x2 - cx; 
+      else
+        dd_marker_x1 = dd_marker_x2 = x1 - cx; 
+    } else  {
+      dd_marker_x1 = x1 - cx; dd_marker_x2 = x2 - cx;
+      if( after )
+        dd_marker_y1 = dd_marker_y2 = y2 - cy; 
+      else
+        dd_marker_y1 = dd_marker_y2 = y1 - cy; 
+    }
+  };
+  
+  function easeOutQuad( t, b, c, d) { return -c *(t/=d)*(t-2) + b; }
+  
+  function moveIt(whenDone)
+  {
+    var easef = def.easeDrop || easeOutQuad;
+    if( !easef )
+      { whenDone(); return; } // just return
+    
+    //stdout.println(where.parent);
+    
+    var (fromx,fromy) = (dd_cx,dd_cy);
+    var (tox,toy) = ( dd_marker_x1, dd_marker_y1 );
+    //var progress = 0.0;
+    function anim(progress) 
+    {
+      if( !dd_source || progress >= 1.0 ) { 
+        is_animating = false; 
+        whenDone(); 
+        return false; 
+      }
+      dd_cx = easef(progress, fromx, tox - fromx, 1.0).toInteger();
+      dd_cy = easef(progress, fromy, toy - fromy, 1.0).toInteger();
+      dd_container.refresh();
+      return true;
+    }
+    is_animating = true; 
+    dd_container.animate(anim, ANI_DURATION);
+  }
+ 
+  doDrop = function() 
+  {
+    assert dd_source && dd_target;
+    if(!def.acceptDrop || def.acceptDrop( dd_source, dd_target, dst.index ))
+    {
+      moveIt(function(){
+        var from = dd_source.parent;
+        dd_target.insert(dd_source,dd_marker_position);
+        if(def.dropped) def.dropped(dd_source, from);
+        ddFinalize();
+      }); 
+    }
+    else 
+      doCancelDrop();
+  }
+  doCancelDrop = function() 
+  {
+    ddFinalize();
+  }
+  
+  function offset( parent, child )
+  {
+    var (px,py) = parent.box(#position, #inner, #view);
+    var (cx,cy) = child.box(#position, #inner, #view);
+    return (cx - px, cy - py);
+  }
+  
+  function localCoord(el,evt) {
+    var (tx,ty) = el.box(#position, #inner, #view);
+    tx = evt.xView - tx;
+    ty = evt.yView - ty;
+    return (tx,ty);
+  }
+  
+  var xViewPos, yViewPos;
+  
+  function ping() {
+    var el = view.root.find(xViewPos, yViewPos);
+    if( el ) {
+      el.postEvent("drag-n-drop-ping"); // generate "ping" event in case of UI need to scrolling, etc.
+    }
+  }
+  
+  function draggableMouseHandler(evt)
+  { 
+    switch(evt.type)  
+    {
+      case Event.MOUSE_DOWN | Event.SINKING:  
+      {
+        (dd_x,dd_y) = localCoord(this,evt);
+        return false;
+      }
+      case Event.MOUSE_UP | Event.SINKING:  
+        dd_x = dd_y = null; 
+        this.timer(0, ping);
+        return true; 
+      case Event.MOUSE_ENTER | Event.SINKING:  
+      case Event.MOUSE_LEAVE | Event.SINKING:  
+        if(!dd_source)
+          dd_x = dd_y = null; 
+        break; 
+        
+      case Event.MOUSE_TICK | Event.SINKING:  
+        {
+          var (x1,y1,x2,y2) = dd_container.box(#rect,#inner,#view);
+          var xv = evt.xView;
+          var yv = evt.yView;
+          if( yv < y1 )      dd_container.postEvent("drag-n-drop-ping", 8); // generate "ping" event in case of UI need to scroll, etc.
+          else if( yv > y2 ) dd_container.postEvent("drag-n-drop-ping", 2); // evt.data -> direction
+          else if( xv < x1 ) dd_container.postEvent("drag-n-drop-ping", 4); 
+          else if( xv > x2 ) dd_container.postEvent("drag-n-drop-ping", 6); 
+        }
+        return true;
+  
+      case Event.MOUSE_MOVE | Event.SINKING: 
+        if( !evt.mainButton ) 
+          return; 
+        if( is_animating )
+          return;
+        if(dd_source) {
+          xViewPos = evt.xView;
+          yViewPos = evt.yView;
+          this.timer(PING_THRESHOLD, ping);
+          return doMove( xViewPos, yViewPos);
+        }
+        else if( typeof dd_x == #integer )
+        {
+          var (x,y) = localCoord(this,evt);
+          var deltax = dd_x - x;
+          var deltay = dd_y - y;
+          //stdout.$n({dd_x} {dd_y});
+          if( deltax < -X_THRESHOLD || deltax > X_THRESHOLD ||
+              deltay < -Y_THRESHOLD || deltay > Y_THRESHOLD )
+              dd_x = x;
+              dd_y = y;
+              doDD( this, evt.xView, evt.yView );
+          return true;
+        }
+    }
+  }
+  // ready to go, attach onMouseHandler to the draggables
+  
+  function validDraggable(draggable) {
+    for(var t in dd_targets)
+      if( draggable.belongsTo(t,true,true) )
+              return true;
+    return false;
+  }
+
+  function mouseEventMonitor(evt) {
+    if( !evt.target )
+      return false;
+    var draggable = evt.target.selectParent(def.what);
+    if( draggable && validDraggable(draggable) )
+      return draggableMouseHandler.call(draggable,evt);
+  }
+
+  function ddCancel() { // cancel DD loop
+    requested_cancel = true;
+    if(dd_dragging) 
+      dd_dragging.capture(false); // remove capture, stop view.doEvent(#untilMouseUp) loop
+  }
+
+  function ddShutdown() { // cancel DD loop and remove traces of this DragDrop call.
+    ddCancel(); 
+    self.unsubscribe(mouseEventMonitor); 
+  }
+
+  self.subscribe(mouseEventMonitor, Event.MOUSE); 
+  
+  return {
+    cancel : ddCancel, 
+    remove : ddShutdown
+  };
+  
+  
+}

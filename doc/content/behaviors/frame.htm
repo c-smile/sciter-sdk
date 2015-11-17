@@ -1,0 +1,77 @@
+﻿<html>
+  <head>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>behavior:frame</h1>
+  <p>This element handles functionality of &lt;frame&gt;/&lt;iframe&gt; elements - containers of sub-documents inside host document.</p>
+  <p>The behavior can be applied to any block element, &lt;div&gt; or &lt;section&gt; for example.</p>
+  <h2>Elements</h2>
+  <p>These elements have <em>behavior:frame</em> applied by default:</p>
+  <ul>
+    <li><code>&lt;frame&gt;</code> - block document container;</li>
+    <li><code>&lt;iframe&gt;</code> - inline block document container.</li></ul>
+  <p>In Sciter, <code>&lt;frame&gt;</code> is an ordinary DOM element that can appear in any context where other block elements can appear. Not only as a child of &lt;frameset&gt;.</p>
+  <h2>Model</h2>
+  <p>&lt;frame&gt; element can have any arbitrary content initially. In this respect &lt;frame&gt; is not anyhow different from &lt;div&gt; or &lt;section&gt;.</p>
+  <pre>&lt;frame&gt;
+   &lt;p&gt;Select document to load&lt;/p&gt; 
+&lt;/frame&gt;
+</pre>
+  <p>After contect loading ( due to <em>src</em> attribute handling or <code>.load()</code> method call ) the frame will have single child element - root element of loaded document, &lt;html&gt; for example</p>
+  <p>The &lt;frame&gt; with loaded document:</p>
+  <pre>&lt;frame&gt;
+   &lt;html&gt;
+     &lt;head&gt;...&lt;/head&gt;  
+     &lt;body&gt;...&lt;/body&gt;  
+   &lt;/html&gt;
+&lt;/form&gt;
+</pre>
+  <p>To access loaded document from script use frame[0] reference to get first child of the frame - child document root:</p>
+  <pre>var frm = $(frame#main);
+var childDoc = frm[0];
+var someBtn = childDoc.$(&quot;button#some&quot;);
+...
+</pre>
+  <h2>Attributes</h2>
+  <p>&lt;frame&gt; attributes that have special meaning:</p>
+  <ul>
+    <li><code>src=&quot;url&quot;</code> - optional, URL of document to load in the frame;</li>
+    <li><code>content-style=&quot;url&quot;</code> - optional, URL of .css file to be applied to the content. Useful when host document needs to apply some specific styles on top of styles defined in document itself.</li></ul>
+  <h2>State flags</h2>
+  <ul>
+    <li><code>:busy</code> - this flag is in on state during document loading. It can be used to style &quot;document loading...&quot; state.</li></ul>
+  <h2>Events</h2>
+  <ul>
+    <li>DOCUMENT_CREATED event - generated as a first step of document loading. At this moment new document exists but empty;</li>
+    <li>DOCUMENT_COMPLETE event - document has finished loading - DOM is ready and all penfing resource requests have finished. Note: this attribute is Sciter specific.</li></ul>
+  <h2>Methods</h2>
+  <dl>
+    <dt>load</dt>
+    <dd>(url:string) - initiates loading of the document from the URL;</dd>
+    <dt>load</dt>
+    <dd>(html:string, baseUrl: string) - loads content from the <em>html</em> string. baseUrl is used for resolving relative URLs inside the document.</dd>
+    <dt>clear</dt>
+    <dd>() - clears the content of the frame by loading empty document in it.</dd>
+    <dt>mediaVars</dt>
+    <dd>() : object - returns key/value map of media variables used by the document.</dd>
+    <dt>mediaVars</dt>
+    <dd>( map: object [,reset: true | false] ) - sets media variables to the loaded document and if <em>reset</em> is true applies them.</dd></dl>
+  <h2>Value</h2>
+  <p>N/A</p>
+  <h2>Frame events handling in script</h2>
+  <pre>var frame = $(frame#some);
+btn.onControlEvent = function(evt)
+{
+  switch(evt.type) {
+    case Event.DOCUMENT_CREATED: /* evt.target is the document */ break;
+    case Event.DOCUMENT_COMPLETE: /* evt.target is the document */ break;
+  }
+}
+</pre>
+  <h3>decorators.tis handler</h3>
+  <pre>include &quot;decorators.tis&quot;;
+@when Event.DOCUMENT_COMPLETE @on &quot;frame#some&quot; :: ... event handling code ...;
+</pre>
+</body>
+</html>

@@ -1,0 +1,51 @@
+
+//| this defines following methods: 
+//|
+//|   http.get { params }
+//|   http.post { params }
+//|   http.put { params }
+//|   http.del { params }
+//|   http.download(fromUrl, toPath, onsuccess, onfailure, onprogress [,params[,headers]] )
+//|
+
+const http = function() { 
+  
+  function makeRequest(httpverb) {
+    return function( params ) {
+      params.type = httpverb;
+      view.request(params);
+    };
+  }
+  
+  function download(from, to, args..) 
+  {
+      var rqp = { type:#get, url: from, toFile: to };
+      var fn = 0;
+      var on = 0;
+      for( var p in args )
+        if( p instanceof Function )
+        {
+          switch(++fn) {
+            case 1: rqp.success = p; break;
+            case 2: rqp.error = p; break;
+            case 3: rqp.progress = p; break;
+          }
+        } else if( p instanceof Object )
+        {
+          switch(++on) {
+            case 1: rqp.params = p; break;
+            case 2: rqp.headers = p; break;
+          }
+        }  
+      view.request(rqp);
+  }
+  
+  return {
+    get:  makeRequest(#get),
+    post: makeRequest(#post),
+    put:  makeRequest(#put),
+    del:  makeRequest(#delete),
+    download: download
+  };
+
+}();

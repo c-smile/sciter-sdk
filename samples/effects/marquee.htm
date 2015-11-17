@@ -1,0 +1,170 @@
+<html>
+<head>
+  <style>
+    body { flow:horizontal; }
+  
+    div.marquee-h 
+    {
+      border:1px solid black;
+      background: gold;
+      behavior: marquee;
+      width:100px;
+      overflow:hidden;
+      flow:horizontal;
+      -marquee: horizontal;
+      -marquee-direction: forward;
+      -marquee-style: scroll;
+    }
+    
+    div.marquee-v 
+    {
+      border:1px solid black;
+      background: gold;
+      behavior: marquee;
+      height:100px;
+      width:max-intrinsic;
+      overflow:hidden;
+      flow:vertical;
+      -marquee: vertical;
+      -marquee-direction: forward;
+      -marquee-style: scroll;
+    }
+    
+    
+    div.marquee-h > p
+    {
+      margin:10px 20px;
+    }
+    
+    div.slide 
+    { 
+      -marquee-style: slide;
+      -marquee-play-count:1; /* playing once */
+    }
+    div.alternate 
+    { 
+      -marquee-style: alternate;
+    }    
+  
+  </style>  
+</head>
+<body>
+  
+  <div #horizontal>
+    <h1>-marquee: horizontal</h1> 
+    marquee-style: scroll
+    <div .marquee-h>
+      <p>Abra</p>
+      <p>Abrak</p>
+      <p>Abraka</p>
+      <p>Abrakad</p>
+    </div>
+    marquee-style: slide
+    <div .marquee-h .slide>
+      <p>Abra</p>
+      <p>Abrak</p>
+      <p>Abraka</p>
+      <p>Abrakad</p>
+    </div>
+    marquee-style: alternate
+    <div .marquee-h .alternate >
+      <p>Abra</p>
+      <p>Abrak</p>
+      <p>Abraka</p>
+      <p>Abrakad</p>
+    </div>
+  </div>  
+  <div #vertical>
+    <h1>-marquee: vertical</h1> 
+    marquee-style: scroll
+    <div .marquee-v>
+      <p>A</p>
+      <p>Ab</p>
+      <p>Abr</p>
+      <p>Abra</p>
+      <p>Abrak</p>
+      <p>Abraka</p>
+      <p>Abrakad</p>
+      <p>Abrakada</p>
+      <p>Abrakadab</p>
+      <p>Abrakadabr</p>
+      <p>Abrakadabra</p>
+    </div>
+    marquee-style: slide
+    <div .marquee-v .slide>
+      <p>A</p>
+      <p>Ab</p>
+      <p>Abr</p>
+      <p>Abra</p>
+      <p>Abrak</p>
+      <p>Abraka</p>
+      <p>Abrakad</p>
+      <p>Abrakada</p>
+      <p>Abrakadab</p>
+      <p>Abrakadabr</p>
+      <p>Abrakadabra</p>
+    </div>
+    marquee-style: alternate
+    <div .marquee-v .alternate >
+      <p>A</p>
+      <p>Ab</p>
+      <p>Abr</p>
+      <p>Abra</p>
+      <p>Abrak</p>
+      <p>Abraka</p>
+      <p>Abrakad</p>
+      <p>Abrakada</p>
+      <p>Abrakadab</p>
+      <p>Abrakadabr</p>
+      <p>Abrakadabra</p>
+    </div>
+  </div>  
+
+  <div #vertical>
+    <h1>-marquee: vertical, various speeds</h1> 
+    marquee-speed:slow
+    <div .marquee-v marquee-speed="slow">
+      <p>A</p>
+      <p>Ab</p>
+      <p>Abr</p>
+      <p>Abra</p>
+      <p>Abrak</p>
+      <p>Abraka</p>
+      <p>Abrakad</p>
+      <p>Abrakada</p>
+      <p>Abrakadab</p>
+      <p>Abrakadabr</p>
+      <p>Abrakadabra</p>
+    </div>
+    marquee-speed:normal
+    <div .marquee-v marquee-speed="normal">
+      <p>A</p>
+      <p>Ab</p>
+      <p>Abr</p>
+      <p>Abra</p>
+      <p>Abrak</p>
+      <p>Abraka</p>
+      <p>Abrakad</p>
+      <p>Abrakada</p>
+      <p>Abrakadab</p>
+      <p>Abrakadabr</p>
+      <p>Abrakadabra</p>
+    </div>
+    marquee-speed:fast
+    <div .marquee-v marquee-speed="fast" >
+      <p>A</p>
+      <p>Ab</p>
+      <p>Abr</p>
+      <p>Abra</p>
+      <p>Abrak</p>
+      <p>Abraka</p>
+      <p>Abrakad</p>
+      <p>Abrakada</p>
+      <p>Abrakadab</p>
+      <p>Abrakadabr</p>
+      <p>Abrakadabra</p>
+    </div>
+  </div>  
+
+</body>
+</html>

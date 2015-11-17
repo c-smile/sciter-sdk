@@ -1,0 +1,87 @@
+<html>
+  <head>
+  <title></title>
+<style>
+
+  #container { 
+    size:*; 
+    border-spacing: 10px; 
+  }
+  #container > li { 
+    behavior:clickable;
+    size:80px; background:yellow; display:block; 
+    border-radius:8px;
+  }
+  #container > li > caption { background:#FF9F70; padding:4px; border-radius:8px 8px 0 0; }
+  #container > li > p { display:none; }
+
+  #container[n=4] { 
+    flow:"1 4"
+         "2 4"
+         "3 4"; 
+  }
+  #container[n=4] > li:nth-child(4) { size:*; background:gold; }
+  #container[n=4] > li:nth-child(4) > p { display:block; }
+ 
+  #container[n=1] {
+    flow:"2 1"
+         "3 1"
+         "4 1"; 
+  }
+  #container[n=1] > li:nth-child(1) { size:*; background:gold; }
+  #container[n=1] > li:nth-child(1) > p { display:block; }
+  
+  #container[n=2] {
+    flow:"3 2"
+         "4 2"
+         "1 2"; 
+  }
+  #container[n=2] > li:nth-child(2) { size:*; background:gold; }
+  #container[n=2] > li:nth-child(2) > p { display:block; }
+  
+  #container[n=3] {
+    flow:"4 3"
+         "1 3"
+         "2 3"; 
+  }
+  #container[n=3] > li:nth-child(3) { size:*; background:gold; }  
+  #container[n=3] > li:nth-child(3) > p { display:block; }
+
+</style>
+<script type="text/tiscript">
+
+  include "../decorators.tis";
+  include "replace-animator.tis";
+  
+  @click @on "#switch" : 
+  {
+    var container = $(#container);
+    var n = container.attributes["n"].toInteger();
+    function stateChanger() { if(++n > 4) n=1; container.attributes["n"] = n; }
+    AniReplace(container, stateChanger);
+  }
+  @click @on "#container>li" : evt
+  {
+    var container = $(#container);
+    var n = 1 + evt.target.index;
+    function stateChanger() { container.attributes["n"] = n; }
+    AniReplace(container, stateChanger);
+  }
+
+</script>
+  </head>
+<body>
+  <button #switch>Switch layout</button>
+  <ul #container n=4 >
+    <li><caption>First</caption><p><b>Lorem ipsum</b> dolor sit amet, consectetur adipisicing elit.</p></li>
+    <li #test><caption>Second</caption><p>Nor again is there anyone who loves or pursues or desires to obtain pain of itself, 
+         because it is pain, but because occasionally circumstances occur 
+         in which toil and pain can procure him some great pleasure.</p></li>
+    <li><caption>Third</caption><p><b>Temporibus</b> autem quibusdam et aut officiis debitis aut rerum necessitatibus 
+         saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.</p></li>
+    <li><caption>Fourth</caption><p>But who has any right to find fault with a man who chooses to enjoy a pleasure that 
+         has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?</p></li>
+  </ul>
+
+</body>
+</html>

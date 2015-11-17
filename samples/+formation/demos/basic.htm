@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      section { flow:row(label,input); font:system; border-spacing:4px; margin:4px; }
+      section > label { vertical-align: baseline; }
+      #structure span.name { display:inline-block; border:1px solid #999; background:#eee; padding: 1px 2px;}
+      #structure li { margin-top:2px; margin-bottom:2px; }
+    
+    </style>
+    <script type="text/tiscript">
+    
+      include "../formation.tis";
+      
+      var root = formation( self );
+      
+      $(#set).onClick = function() {
+      
+        // Note: accessing sub-formation from root one
+        root.person.value = {
+          name : {
+            first: "Albert",
+            last: "Einshtein"
+          },
+          age:69
+        };
+        
+      }
+
+      $(#get).onClick = function() { $(#out).text = String.printf("%V", root.value ).replace("\t","  "); }
+      $(#show).onClick = function() { $(#structure).html = root.toHtmlString(); }
+    
+    </script>
+  </head>
+<body>
+
+  <h1>Formation. Basic demo of.</h1>
+
+  <section(person)>
+    <label for=name.first >First</label> <input(name.first)>
+    <label for=name.last >Second</label> <input(name.last)>
+    <label for=age >Age</label> <input|integer(age)>
+  </section>
+  
+  <button #get>Get</button>
+  <button #set>Set</button>
+  <button #show>Formation structure</button>
+  
+  <pre #out></pre>
+  <div #structure></div>
+
+</body>
+</html>

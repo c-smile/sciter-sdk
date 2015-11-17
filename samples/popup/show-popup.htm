@@ -1,0 +1,85 @@
+<html>
+<head>
+  <style>
+  
+    popup#test
+    {
+      background-color: orange;
+      border:1px solid red;
+      width:100px;
+      height:100px;
+      cursor:pointer;
+      border-radius: 12px; 
+    }
+    div#anchor
+    {
+      border:1px solid blue;
+      width:50px;
+      height:50px;
+      cursor:pointer;
+    }
+
+    popup#test > div {
+      background:red; size:10px;
+    }
+    popup#test > div:hover {
+      background:blue;
+    }
+
+  </style>  
+  <style #actions>
+    div#anchor
+    {
+      behavior: button; 
+    }
+  </style>    
+  <script type="text/tiscript">
+    
+      $(div#anchor).on("mousedown", function() 
+      {
+        if(!this.state.ownspopup) {
+          var anchorPoint = $(select#anchor-point).value;
+          var popupPoint = $(select#popup-point).value;
+          this.popup( $(popup#test), (popupPoint << 16) | anchorPoint);
+        }
+      }); 
+    </script>
+  
+</head>
+<body>
+
+   popup point (see num keypad):
+   <select #popup-point>
+     <option value=1>1 - left/bottom</option>   
+     <option value=2>2 - middle/bottom</option>   
+     <option value=3>3 - right/bottom</option>   
+     <option value=4>4 - left/middle</option>   
+     <option value=5>5 - middle/middle</option>   
+     <option value=6>6 - right/middle</option>   
+     <option value=7>7 - left/top</option>   
+     <option value=8 selected>8 - middle/top</option>   
+     <option value=9>9 - right/top</option>   
+   </select> is on anchor point:
+   <select #anchor-point>
+     <option value=1>1 - left/bottom</option>   
+     <option value=2 selected>2 - middle/bottom</option>   
+     <option value=3>3 - right/bottom</option>   
+     <option value=4>4 - left/middle</option>   
+     <option value=5>5 - middle/middle</option>   
+     <option value=6>6 - right/middle</option>   
+     <option value=7>7 - left/top</option>   
+     <option value=8>8 - middle/top</option>   
+     <option value=9>9 - right/top</option>   
+   </select>
+   <p>Choose position above and click on the anchor:</p>
+    <div#anchor> 
+      anchor
+    </div>
+    <popup #test>
+      popup
+      <div></div>
+    </popup>
+    
+
+</body>
+</html>

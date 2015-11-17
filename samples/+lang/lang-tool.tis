@@ -1,0 +1,47 @@
+// this script is meant to be included at design time only to generate translation stats
+// Note: only after include "lang.tis" please.
+
+!function() { // see http://stackoverflow.com/questions/5827290/javascript-function-leading-bang-syntax/5827420#5827420
+
+  // get stat functions 
+  var (notFoundItemsFn, notUsedItemsFn) = Lang.initStats();
+  
+  function handler(evt) {
+  
+    if(!evt.ctrlKey || !evt.shiftKey || (evt.keyCode != Event.VK_F11))
+      return false;
+    
+    var nf = notFoundItemsFn();
+    var nu = notUsedItemsFn();
+    
+    if( nf.length == 0 && nu.length == 0) {
+      view.msgbox(#information, "You are good. All items are used and there are no unknown items");
+      return;
+    }
+    
+    function f1(k,v) { return v == #text ? "?" : "function (v){ return \"?\" }"; }
+    function f2(k,v) { return typeof v == #function ? "{function}" : v; }
+    
+    var out = "";
+    
+    if( nf.length == 0 ) 
+      out += "// OK, all items found\r";
+    else
+      out += "// items not found:\r" + JSON.stringify(nf,f1,"\t") + "\r"; 
+      
+    if( nu.length == 0 )  
+      out += "// OK, no unused items\r";
+    else 
+      out += "// non used items:\r" + JSON.stringify(nu,f2,"\t");
+        
+    view.clipboard(#put,out);   
+    view.msgbox(#alert, "Translation report is placed to clipboard");
+    
+  }
+  
+  self.subscribe("~keydown", handler);
+  
+  stdout.println("lang-tool");
+  
+
+}();

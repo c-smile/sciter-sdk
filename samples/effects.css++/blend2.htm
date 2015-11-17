@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      html { }
+      div.area {
+        flow: "1 3"
+              "2 4";
+        border-spacing:6px;
+      }
+      picture
+      {
+        size:432dip 324dip;
+        border:3px solid gray;
+        foreground-image: url(images/photo1.jpg);
+      }
+      picture:hover 
+      {
+        foreground-image: url(images/photo2.jpg);
+      }
+      
+      picture.blend:hover 
+      {
+        transition: blend(linear,800ms);
+      }
+      
+      picture.blend-atop:hover 
+      {
+        transition: blend-atop(linear,800ms);
+      }
+
+    
+    </style>
+    <script type="text/tiscript"></script>
+  </head>
+<body>
+  Hover the image:
+  <div .area>
+    <caption>transition: blend(linear,800ms):</caption>
+    <picture .blend />
+    <caption>transition: blend-atop(linear,800ms):</caption>
+    <picture .blend-atop />
+  </div>
+</body>
+</html>

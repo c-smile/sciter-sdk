@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <title>Tooltip manager</title>
+    <style>
+    
+      popup[role=tooltip] { prototype: Tooltip; }
+    
+    </style>
+    <script type="text/tiscript">
+    
+
+    class Tooltip: Behavior {
+      
+      var all = [];
+      
+      function attached() { all.push(this); stdout.println("added"); }
+      function detached() { all.removeByValue(this); stdout.println("removed"); }
+      
+      function dropAll() {
+        for(var popup in all)
+          popup.state.popup = false;
+      }
+    }    
+    
+    self.timer(1s, function(){
+    
+      //stdout.println("popups", Tooltip.all.length);
+      Tooltip.dropAll();
+      return true;
+    
+    });
+    
+    
+    </script>
+  </head>
+<body>
+
+The script will kill all popups once per second.
+
+<div title="Woohoo!">
+  HOVER ME!
+</div>
+
+</body>
+</html>

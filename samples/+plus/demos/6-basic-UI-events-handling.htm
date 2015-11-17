@@ -1,0 +1,85 @@
+<html>
+  <head>
+    <title>Plus: very basic sample</title>
+    <style>
+      @import url(../plus.css); /* the only thing needed to include Plus framework */
+      @import url(../../note.css); 
+      @import url(../../../widgets/switch/switch.css); 
+      
+      html { font:system; }
+      
+      section#items { width:6*; margin:1em 2*; }
+      
+      section#items > input.new { margin-left:4em; width:*; display:block; min-width:235dip; }
+      
+      section#items > ol { width:*; margin-top:4px; }
+      section#items > ol > li { flow:horizontal; border-bottom:1px solid dotted;}
+      section#items > ol > li > input[type=checkbox] { display: block; vertical-align:middle;}
+      section#items > ol > li > input[type=text] { display: block; width:*; vertical-align:middle; background:white;}
+      section#items > ol > li.done > output { text-decoration:line-through; }
+      section#items > ol > li > b { behavior:clickable; font-size:150%; display:block; visibility:hidden; cursor: pointer; }
+      section#items > ol > li:hover { color:red; }
+      section#items > ol > li:hover > b { visibility:visible; }
+      
+    </style>
+    
+    <script type="text/tiscript">
+    
+      include "../plus.tis"; // we use @observing so need to include plus.tis upfront.
+  
+      namespace Todo // our model
+      {  
+        var items = [ {subject:"Basic variable binding demo", done:true},
+                      {subject:"Basic function binding demo", done:true},
+                      {subject:"Basic repeatable demo", done:true},
+                      {subject:"Repeatable table", done:true},
+                      {subject:"CSS class binding", done:true},
+                      {subject:"Repeatable filtering demo", done:false},
+                      {subject:"UI events handling, Plus flavour", done:false},
+                    ];
+                    
+        function addNewFrom(el) // called by input|text.new, @enter 
+        {
+          items.unshift { subject:el.value, done:false }; // insert new item in front.
+          el.value = undefined;
+        }
+        
+        @observing "items[]",  
+                   "items[].subject",  
+                   "items[].done"  
+        function showItems() {
+          $(#out).value = String.printf("%v",items).replace("},", "},\n ");
+        }
+        
+        
+      }    
+    
+    </script>
+  </head>
+
+<body model="Todo"> <!-- define data model we observe -->
+
+  <note>This sample demonstrates handling of ENTER keys and button click handling (check item removal button).
+    <br>For full list of supported 'active' attributes see plus.css file.
+    <br>Each item is editable and bound with corresponding record field.</note>
+
+  <section #items>
+    
+    <input|text .new novalue="type next To-do item here and click ENTER" enter="addNewFrom(this)"/> 
+  
+    <ol each="index,item in items">
+      <li class="done:item.done">
+           <input|checkbox(item.done)/>
+           <input|text(item.subject)/> 
+           rec # <output(index)/> of <output(items.length)/>
+           <b click="items.removeByValue(item)">&times;</b></li>
+    </ol>
+  </section>
+  
+  <p>Items data:</p>
+  <pre #out></pre>
+  
+  
+  
+</body>
+</html>

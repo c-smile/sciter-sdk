@@ -1,0 +1,20 @@
+
+
+function Object.match(pattern)
+{
+  for( var (k,v) in pattern )
+  {
+    if( v === #exist ) { if( !this.exists(k) ) return false; }
+    else 
+    {
+      var thisv = this[k];
+           if( v === #non-empty )   { if( !thisv ) return false; }
+      else if( thisv === undefined ) return false;
+      else if( typeof v == #symbol ){ if( typeof thisv != v ) return false; }
+      else if( typeof v == #string || v instanceof RegExp) { if( thisv !like v ) return false; }
+      else if( v instanceof Type || v instanceof Class) { if( thisv !instanceof v ) return false; }
+      else if( v != thisv ) { return false; }
+    }
+  }
+  return true;
+}

@@ -1,0 +1,39 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      div.area 
+      {
+        background:red;
+        border:4px solid brown;
+        color:yellow;
+        size:300px 40px;
+        margin:10px;
+      }
+      div.area:hover 
+      {
+        background:orange;
+        color:red;
+        
+      }
+      div.area.case1:hover  { transition: blend(linear,400ms); }
+      div.area.case2:hover  { transition: blend(cubic-in,400ms); }
+      div.area.case3:hover  { transition: blend(quad-in,400ms,quad-out); }
+      
+      div.area.area:active 
+      {
+        background:yellow;
+        color:red;
+      }
+    
+    </style>
+    <script type="text/tiscript"></script>
+  </head>
+<body>
+  <div .area.case1>transition:blend(linear,400ms)</div>
+  <div .area.case2>transition:blend(cubic-in,400ms)</div>
+  <div .area.case3>transition:blend(quad-in,400ms,quad-out)</div>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+
+//|
+//| returns new array that has the same number of elements, 
+//| where each element is value of this[key] property. 
+//|
+
+function Array.pluck(key) {
+  var out = new Array(this.length);
+  for(var (i,v) in this) out[i] = v[key];
+  return out;
+}
+
+//| 
+//| Shuffle an array, using the modern version of the Fisher-Yates shuffle.
+//| 
+function Array.shuffle() {
+    var ri; const rnd = rand; // shortcut to global rand() function
+    var shuffled = new Array(this.length);
+    for(var (i,v) in this ) {
+      ri = rnd(i);
+      shuffled[i] = shuffled[ri];
+      shuffled[ri] = v;
+    }
+    return shuffled;
+  }
+  
+//|   
+//| Groups the object's values by a criterion. 
+//| Pass either a string attribute to group by, or a 
+//| function that returns the criterion.  
+//| 
+  
+function Array.groupBy(criterion) {
+  var result = {};
+  var group = typeof criterion == #function ? criterion : (:v: v[criterion] );
+  for( var v in this ) {
+    var key = group(v);
+    if(key in result) result[key].push(v);
+    else result[key] = [v];
+  } 
+  return result;
+}
+
+//|
+//| Zip together multiple lists into a single array,
+//| elements that share an index go together.
+//|
+//| Note can be used as:
+//|
+//|  var z = [['moe', 'larry', 'curly'], [30, 40, 50], [true, false, false]].zip(); or 
+//|  var z = Array.zip(['moe', 'larry', 'curly'], [30, 40, 50], [true, false, false]);
+//|  
+//|  In all cases z will be [["moe", 30, true], ["larry", 40, false], ["curly", 50, false]];
+//|  
+  
+function Array.zip(args..) 
+{
+  var arrays = args.length ? args : this;
+  var length = arrays.reduce( :ml,v: v.length > ml?v.length:ml , 0);
+  var results = new Array(length);
+  for (var i in length)
+    results[i] = arrays.pluck(i);
+  return results;
+}

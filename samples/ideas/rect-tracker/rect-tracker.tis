@@ -1,0 +1,106 @@
+  // rect tracker implementation. 
+
+  function RectTracker() {
+  
+    const DRAG_THRESHOLD = 3; // px
+    const SEL_COLOR = color(0x3F,0xFF,0,0.5);
+  
+    const container = this;
+        
+    var ax, ay; // anchor point
+    var cx, cy; // current point
+    var dragging;
+    
+    function drawCover(gfx) {
+      gfx.noLine()
+         .fillColor(SEL_COLOR)
+         .rectangle( ax, ay, cx - ax , cy - ay);
+    }
+    
+    function max(a,b) { return a > b? a : b; }
+    function min(a,b) { return a < b? a : b; }
+    function abs(a)   { return a < 0? -a : a; }
+    
+    function clearSelection()
+    {
+      for( var el in container.$$([selected]) )
+        el.@#selected = undefined;
+    }
+    
+    function onCoverChanged()
+    {
+      var x1 = min(ax,cx), x2 = max(ax,cx); 
+      var y1 = min(ay,cy), y2 = max(ay,cy); 
+      for( var child in container )
+      {
+        var (cx1,cy1,cx2,cy2) = child.box(#rect, #border, #parent);
+        child.@#selected = ( max(x1,cx1) < min(x2,cx2) && max(y1,cy1) < min(y2,cy2) )? true : undefined;
+      }
+    }    
+        
+
+    function onMouseMove(evt)  {
+    
+      if( !dragging ) {
+          if( abs( ax - evt.x ) > DRAG_THRESHOLD || 
+              abs( ay - evt.y ) > DRAG_THRESHOLD )  
+          {
+                dragging = true;
+                cx = evt.x;
+                cy = evt.y;
+                container.paintForeground = drawCover;
+                container.capture(true);
+                container.refresh();
+                return true;
+          }
+          return false;
+      }
+      else  { // dragging
+          cx = evt.x;
+          cy = evt.y;
+          container.refresh();
+          onCoverChanged();
+          return true;
+      }
+    }
+    
+    function onMouseUp(evt) {
+      container.capture(false);
+      container.paintForeground = null;
+      container.refresh();
+      dragging = false;
+      this.unsubscribe(".tracker");
+    }
+    
+    function onMouseDown(evt)  {
+      if( evt.mainButton ) {
+        ax = evt.x;
+        ay = evt.y;
+        clearSelection();
+        view.focus = this;
+        this.subscribe("mousemove.tracker", onMouseMove);
+        this.subscribe("mouseup.tracker", onMouseUp);
+        return true;
+      }
+    }
+    
+    container.subscribe("mousedown", onMouseDown);
+    
+    function selection2clipboard()
+    {
+      var str = "";
+      for(var el in container.$$([selected]))
+         str += el.text + "\r\n"; 
+      view.clipboard(#put, str );
+      return true;
+    }
+    
+    container.subscribe("keydown", function(evt)
+    {
+      if( evt.ctrlKey && evt.keyCode == 'C' )
+          return selection2clipboard();
+    });
+   
+  }
+  
+

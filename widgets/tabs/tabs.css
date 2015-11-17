@@ -1,0 +1,122 @@
+tabs 
+{
+  font:system;
+  prototype:Tabs url(tabs.tis);
+  size:*;
+  overflow:hidden;
+  display:block;
+  flow:vertical;
+}
+
+tabs > div.strip /* the tab strip */
+{
+  flow: horizontal;
+  margin-bottom:-1px;
+  padding: 2px 2px 0 2px;
+}
+
+tabs > div.strip > label /* all tab labels, passive by default */
+{
+  display:block;
+  padding: 3px 8px;
+  margin-bottom:1px;
+  height:*;
+  max-width: auto; /* not wider than max-intrinsic  */
+  background-image:url(theme:tab-item-normal);
+  background-repeat:stretch;
+}
+tabs > div.strip > label:hover /* passive tab */
+{
+  background-image:url(theme:tab-item-hover);
+  color: highlight;
+}
+tabs > div.strip > label:current /*active tab*/
+{
+  background-image:url(theme:tab-item-selected);
+  margin:-2px -2px -1px -2px;
+  padding: 4px 10px 5px 10px; 
+  position:relative;
+}
+tabs > div.strip > label:current:hover /*active tab*/
+{
+  background-image:url(theme:tab-item-selected);
+}
+
+tabs:tab-focus > div.strip > label:current  {
+  outline: 1px dotted -4px;
+}
+
+
+tabs > div.strip > label:current:first-child,
+tabs > div.strip > label:current:hover:first-child
+{
+  background-image:url(theme:tab-item-leftmost-selected);
+}
+
+tabs:tab-focus > div.strip > label:current > * /* outline active tab content if we've gotten focus by tab*/
+{
+  outline: 1px dotted invert;
+}
+
+/* tab containers, MUST have 'name' attribute defined */
+tabs > [name] { display:none; }
+
+tabs > [name]:expanded 
+{ 
+  background-image:url(theme:tab-panel);
+  background-repeat:stretch;
+  padding:4px;
+  display:block; 
+  height:*;
+}
+
+
+/* tabs at bottom */
+
+tabs.bottom > div.strip
+{
+  margin-bottom:0px;
+  padding: -1px 10px 4px 10px;
+  /*background-color: threedface threedface window window;*/
+  border-top:1px solid threedshadow;
+}
+
+tabs.bottom > [name]:expanded /* current, presented tab */
+{ 
+  background:window;
+  padding:4px;
+  display:block; 
+  height:*;
+  border-top:1px solid threedshadow;
+  border-left:1px solid threedshadow;
+  border-right:1px solid threedshadow;
+}
+
+tabs.bottom > div.strip > label /* all tabs, passive by default */
+{
+  padding: 3px 8px;
+  height: 100%%;
+  max-width: auto; /* not wider than max-intrinsic  */
+  background-image:none;
+  border: 1px solid transparent;
+}
+tabs.bottom > div.strip > label:hover /* passive tab */
+{
+  background-image:none;
+}
+
+tabs.bottom > div.strip > label:current  /*active tab*/
+{
+  background-image:none;
+  background-color:window;
+  margin:0 -2px -1px -2px;
+  padding: 4px 10px 5px 10px; 
+  position:relative;
+  border: 1px solid threedshadow;
+  border-top: 1px solid transparent;
+}
+tabs.bottom > div.strip > label:current:hover /*active tab*/
+{
+  background-image:none;
+}
+

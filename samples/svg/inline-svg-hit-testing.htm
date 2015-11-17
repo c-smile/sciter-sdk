@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      svg { border:3px solid; size:300dip; }
+      
+      svg > ellipse { behavior:radio; }
+      
+      svg > ellipse:nth-child(1) { fill:purple; }
+      svg > ellipse:nth-child(2) { fill:green; }
+      svg > ellipse:nth-child(3) { fill:gold; }
+      
+      svg > ellipse:hover { fill-opacity:0.7; }
+      svg > ellipse:active { fill:rgb(255,0,0); }
+      
+      svg > ellipse:checked { stroke:navy; stroke-width:4px; }
+    
+    </style>
+    <script type="text/tiscript">
+    
+      self.subscribe("click","svg > ellipse", function );
+    
+    </script>
+  </head>
+<body>
+
+  <p>Hit testing of SVG elements. Move and click mouse over the shapes. These ellipses have <code>behavior:radio</code> applied so they bahave as a radio group.</p>
+  <svg viewbox="0 0 440 150">
+    <ellipse cx="220" cy="120" rx="210" ry="60" name="group1" />
+    <ellipse cx="220" cy="70" rx="190" ry="40" name="group1" />
+    <ellipse cx="220" cy="25" rx="170" ry="30" name="group1" />
+  </svg>
+  
+</body>
+</html>

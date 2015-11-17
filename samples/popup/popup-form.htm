@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      popup {padding:1em; background:gold;}
+      
+    
+    </style>
+    <script type="text/tiscript">
+    
+      $(#show).onClick = function() { 
+        this.popup( $(popup#test));
+      }
+    
+    
+    </script>
+        
+    <popup #test>
+      <button>Test</button>
+    </popup>
+    
+  </head>
+<body>
+
+  <button #show>Show popup</button>
+  
+
+</body>
+</html>

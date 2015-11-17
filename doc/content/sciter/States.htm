@@ -1,0 +1,90 @@
+﻿<html>
+  <head>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>States object</h1>
+  <p>Represents states of DOM <a href="Element.htm">elements</a>.</p>
+  <p>To access state collection of the element use its <em>state</em> property: element.state</p>
+  <dl>
+    <h2>Properties</h2>
+    <dt>link</dt>
+    <dd><font color="#999999">rw</font> - true/false, true if this element is a link - has <em>href</em> attribute defined.</dd>
+    <dt>hover</dt>
+    <dd><font color="#999999">rw</font> - true/false,</dd>
+    <dt>active</dt>
+    <dd><font color="#999999">rw</font> - true/false,</dd>
+    <dt>focus</dt>
+    <dd><font color="#999999">rw</font> - true/false, this element is in focus. To set focus on the element is it enough to assign <em>true</em> value to the attribute:
+      <pre>el.state.focus = true;
+</pre></dd>
+    <dt>tabfocus</dt>
+    <dd><font color="#999999">r</font> - true/false, this element is in focus and got the focus due to TAB/SHIFT+TAB key handling.</dd>
+    <dt>visited</dt>
+    <dd><font color="#999999">rw</font> - true/false,</dd>
+    <dt>current</dt>
+    <dd><font color="#999999">rw</font> - true/false,</dd>
+    <dt>checked</dt>
+    <dd><font color="#999999">rw</font> - true/false,</dd>
+    <dt>disabled</dt>
+    <dd><font color="#999999">rw</font> - true/false,</dd>
+    <dt>readonly</dt>
+    <dd><font color="#999999">rw</font> - true/false,</dd>
+    <dt>expanded</dt>
+    <dd><font color="#999999">rw</font> - true/false,</dd>
+    <dt>collapsed</dt>
+    <dd><font color="#999999">rw</font> - true/false,</dd>
+    <dt>incomplete</dt>
+    <dd><font color="#999999">rw</font> - true/false,</dd>
+    <dt>animating</dt>
+    <dd><font color="#999999">r</font> - true/false, element is running animation.</dd>
+    <dt>focusable</dt>
+    <dd><font color="#999999">rw</font> - true/false, element is focusable. Focusable is the element having either: tabindex &gt;= 0 attribute defined or it has behavior that has focus handler defined.</dd>
+    <dt>anchor</dt>
+    <dd><font color="#999999">rw</font> - true/false, element is an anchor (first element) in selection.</dd>
+    <dt>synthetic</dt>
+    <dd><font color="#999999">rw</font> - true/false, element was synthesized - created by some behavior.</dd>
+    <dt>popup</dt>
+    <dd><font color="#999999">rw</font> - true/false, element is shown as popup window. To close such popup window simply assign value false to the attribute:
+      <pre>el.state.popup = false;
+</pre></dd>
+    <dt>ownspopup</dt>
+    <dd><font color="#999999">r</font> - true/false, element is requested popup to be shown and that popup is visible. Following:
+      <pre>el.popup(elementToPopup, pos);
+</pre>
+      <p>will cause this flag to be set for the element <em>el</em>.</p></dd>
+    <dt>empty</dt>
+    <dd><font color="#999999">r</font> - true/false, the element is empty - has no children and no text.</dd>
+    <dt>busy</dt>
+    <dd><font color="#999999">rw</font> - true/false, element is requested data to be delivered by calling <code>el.request(...)</code> and that data is not delivered yet.</dd>
+    <dt>dragover</dt>
+    <dd><font color="#999999">r</font> - true/false, the dragged element is over the element.</dd>
+    <dt>droptarget</dt>
+    <dd><font color="#999999">r</font> - true/false, dragging is active and the element is active drop target for the dragging element.</dd>
+    <dt>moving<br>copying</dt>
+    <dd><font color="#999999">r</font> - true/false, either one of these is true for the element that is being dragged. Engine creates copy of drag-source element and that copy is being dragged.</dd>
+    <dt>dragsource</dt>
+    <dd><font color="#999999">r</font> - true/false, element one of these is true for the element that being dragged.</dd>
+    <dt>pressed</dt>
+    <dd><font color="#999999">rw</font> - true/false, element has mouse pressed in it.</dd>
+    <dt>isltr<br>isrtl</dt>
+    <dd><font color="#999999">r</font> - true/false, element is in directional environment - itself or one of its parents has attribute <em>dir</em> defined.</dd>
+    <dt>value</dt>
+    <dd><font color="#999999">rw</font> - &quot;raw&quot; value of the element. It is either the value managed by native behavior or, if the element has no behavior attached, it is a text of the element (see Element.text).</dd>
+    <dt>screen</dt>
+    <dd><font color="#999999">r</font> - integer, number of screen (monitor) on which this element is rendered at the moment. Note in can be different from view.screen for popup elements.</dd>
+    <h2>Methods</h2>
+    <dt>get</dt>
+    <dd>
+      <div><strong>()</strong> returns: <em>int</em></div>
+      <p>Returns integer - &quot;ORed&quot; set of Element.STATE_*** constants.</p></dd>
+    <dt>set</dt>
+    <dd>
+      <div><strong>(</strong>flags:int<strong>) </strong>returns: <em>undefined</em></div>
+      <p>Sets flags. <em>flags</em> here &quot;ORed&quot; set of Element.STATE_*** constants.</p></dd>
+    <dt>clear</dt>
+    <dd>
+      <div><strong>(</strong>flags:int<strong>) </strong>returns: <em>undefined</em></div>
+      <p>Clears <em>flags</em>.</p></dd></dl>
+</body>
+</html>

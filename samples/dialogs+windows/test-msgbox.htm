@@ -1,0 +1,103 @@
+<html>
+  <head>
+  <title>view.msgbox() variations</title>
+<style></style>
+
+<script type="text/tiscript">
+  include "../decorators.tis";
+
+  @click @on "#hello-world-1": {
+    var r = view.msgbox(#alert,"Hello world!");
+    stdout.println(r);        
+  }
+  @click @on "#hello-world-2": {
+    var r = view.msgbox { type:#information, 
+                  content:"Hello world!", 
+                  title:"Greeting:" };
+    stdout.println(r);        
+  }
+  @click @on "#hello-world-3": {
+    view.msgbox { type:#information, 
+                  content:"world!", 
+                  title:"Hello",
+                  onLoad: function(root){ stdout.printf("msgbox loaded with %s\n",root); },
+                  onClose: function(root,buttonSym){ stdout.printf("msgbox closed with #%s\n",buttonSym); }
+                };
+  }
+
+  @click @on "#hello-world-4": {
+    var result = view.msgbox { type:#question, 
+                               content:"Is anybody out there?", 
+                               buttons:[#yes,#no]
+                             };
+    stdout.printf("msgbox result: #%s\n",result);
+  }
+
+  @click @on "#hello-world-5": {
+    var result = view.msgbox { type:#error, 
+                               content:"<b #name></b> something is terribly\nwrong under your Sun.<br>Let's fix it!", 
+                               onLoad: function(root){ root.$(#name).text = "World!"; }
+                             };
+  }
+
+  @click @on "#hello-world-6": {
+
+    var data = { name:"", password:"" };  
+    
+    function onClose(root,btn)
+    {
+      if(btn == #cancel)
+        return true;
+      data = root.$(form).value; // gather fields from the form
+      if( !data.password || !data.name)
+      {
+        root.$(p#error).text = "Neither name nor password can be empty";
+        return false; // reject closing
+      }
+      return true;
+    }
+    
+    var result = view.msgbox { //type:#error, - no type
+                               icon: "user-login-48.png",
+                               title: "Login",
+                               content:$(#msg-box-contnent).text, // see <script type=...> above
+                               onClose: onClose,
+                               buttons:[{id:#login,text:"Login"},{id:#cancel,text:"Not now"}]
+                             };
+    if( result == #login )
+      stdout.printf("Got login request: %V\n",data);
+  }
+
+
+</script>
+
+  </head>
+<body>
+
+  <h1>view.msgbox() variations</h1>
+
+  <button #hello-world-1>Simple</button>
+  <button #hello-world-2>Simple with title</button>
+  <button #hello-world-3>Msgbox with events</button>
+  <button #hello-world-4>Msgbox with custom buttons</button>
+  <button #hello-world-5>Msgbox with initialization</button>
+  <button #hello-world-6>Msgbox with custom icon and inputs</button>
+  <img src="sres:busy.png">
+
+  <!-- custom layout for message box -->  
+  <script type="text/html" #msg-box-contnent>
+    <style>
+	  form { flow:row(label,input); border-spacing:10dip; }
+	  form > * { vertical-align:baseline; }
+	  form > label { horizontal-align:right; }
+	</style>
+    <p>Please provide login credentials <img src="sres:busy.png">:</p>
+    <form>
+      <label>Name:</label><input name="name" type="text" />
+      <label>Password:</label><input name="password" type="password" />
+    </form>
+    <p #error style="color:red; height:1.4em;"></p>
+  </script>
+    
+</body>
+</html>

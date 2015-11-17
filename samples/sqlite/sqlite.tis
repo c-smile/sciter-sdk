@@ -1,0 +1,310 @@
+namespace SQLite
+{  
+  include library "tiscript-sqlite"; // places its DB and Recordset objects in SQLite namespace.
+                                     // Use include inside namespace if you expect conflicting names.
+
+  include "commondataprovider.tis";   
+  // returns map of table definitions found in the DB
+  function DB.tables()
+  {
+    var rs = this.exec("SELECT name,sql FROM sqlite_master WHERE type='table' ORDER BY name;" );
+    var names = {};
+    if ( rs instanceof Recordset )
+      do names[rs#name] = rs#sql while( rs.next() );
+    return names;
+  }
+  // returns map of indexes found in the DB
+  function DB.indexes()
+  {
+    var rs = this.exec("SELECT name,sql FROM sqlite_master WHERE type='index' ORDER BY name;" );
+    var names = {};
+    if ( rs instanceof Recordset )
+      do names[rs#name] = rs#sql while( rs.next() );
+    return names;
+    
+  }
+  
+  // fills the table DOM element by data from the Recordset: 
+  function Recordset.present( tbl )
+  {
+    tbl.clear();
+    var tr = new Element("tr");
+    for (var n = 0; n < this.length; ++n)
+    {
+      var th = new Element("th", this.name(n)); 
+      th.@#title = String.printf("%s:%s:%s", this.name(n,#database), this.name(n,#table), this.name(n,#field) );
+      tr.insert(th);
+    } 
+    tbl.insert(tr);
+    // data rows:
+    do 
+    {
+      tr = new Element("tr");
+      for (var v in this)
+      {
+        var td = new Element("td", v.toString()); 
+        tr.insert(td);
+      } 
+      tbl.insert(tr);
+    } while( this.next() );
+  }
+
+  // fills the table DOM element (tbody + thead) by data from the Recordset:
+  function Recordset.present_tbody( tbl )
+  {
+    tbl.clear();
+    var thead;
+    var tbody;
+    tbl.insert( thead = Element.create{ thead });
+    tbl.insert( tbody = Element.create{ tbody });
+    
+    var tr = new Element("tr");
+    for (var n = 0; n < this.length; ++n)
+    {
+      var th = new Element("th", this.name(n)); 
+      tr.insert(th);
+    } 
+    thead.insert(tr);
+    // data rows:
+    do 
+    {
+      tr = new Element("tr");
+      for (var v in this)
+      {
+        var td = new Element("td", v.toString()); 
+        tr.insert(td);
+      } 
+      tbody.insert(tr);
+    } while( this.next() );
+  }
+  
+  // Returns object constructed from current row as { field1: value1, field2: value2, etc. }
+  // Not too much effective but someone may need it
+  function Recordset.rowAsObject()
+  {
+    var names = this.names;
+    if( !names )
+    {
+      names = [];
+      for (var n = 0; n < this.length; ++n)
+        names.push( symbol(this.name(n)) );
+      this.names = names;
+    }
+    var obj = {}; var n = 0;    
+    for (var v in this)
+      obj[names[n++]] = v;
+    return obj;
+  }
+  
+  function Recordset.getColumnIndexes()
+  {
+    var r = {};
+    for(var i = 0; i < this.length; i++)
+    {
+      r[symbol(this.name(i, #field))] = i;
+    }
+    return r;
+  }
+  
+  function Recordset.asArray()
+  {
+    var data = [];
+    do {
+      var item = [];
+      for( var v in this )
+         item.push(v);
+      data.push(item);
+    } while( this.next() );
+    return data;
+  }
+
+  // TODO: it is more optimal to store in Julian datetime format,
+  // unfortunetly nor class Data neither Datetime control do not support Julian calendar
+  function obj2str(p)
+  {
+    if( p instanceof Date )
+    {
+      return String.printf("%.2d-%.2d-%.2d %.2d:%.2d:%.2d", p.UTCyear, p.UTCmonth, p.UTCday, p.UTChour, p.UTCminute, p.UTCsecond);
+    } else
+    if( typeof p == #boolean )
+      return p ? 1 : 0;
+    else
+      return p;
+  }
+  
+  function DB.bindParams(table_name, data_object, data)
+  {
+    // get columns information
+    var sql = "(";
+    var rs = this.exec(String.printf("pragma table_info(%s);", table_name));
+    assert rs instanceof Recordset;
+    var i = 0;
+    do {
+      if( i > 0 ) sql += ",";
+      var field_name = symbol(rs[1]);
+      var f = data_object[field_name];
+      if( f !== null && f !== undefined )
+      {
+        sql += "?";
+        data.push(obj2str(data_object[field_name]));
+      }
+      else
+        sql += "NULL";
+      i++;
+    } while( rs.next() );
+    sql += ")";
+    return sql;
+  }
+  
+  function DB.insert(table_name, data_object)
+  {
+    var sql = String.printf("insert into %s values", table_name);
+    var data = [];
+    sql += this.bindParams(table_name, data_object, data);
+    this.exec(sql, data) == SQLite.DONE;
+  }
+  
+  function DB.update(table_name, dataSource, gridRowIndex, dataObject)
+  {
+    var sql = String.printf("update %s set ", table_name);
+    i = 0;
+    for( var field_name in dataObject )
+    {
+      var f = dataObject[field_name];
+      if( f === null || f === undefined )
+        sql += String.printf("%s = NULL", field_name);
+      else
+      {
+        var obj = obj2str(f);
+        if( i > 0 ) sql += ", ";        
+        sql += String.printf("%s = '%s'", field_name, obj);
+      }
+      ++i;
+    }
+    
+    sql += String.printf(" where rowid = %d;", dataSource.rowid[gridRowIndex]);
+    var result = this.exec(sql) == DB.DONE;
+    if( result )
+    {
+      // update data source & grid
+      dataSource.updateRow(gridRowIndex, dataObject);
+    }
+    return result;
+  }
+  
+// for using with /samples/ideas/virtual-grid
+// select rowid column (SELECT rowid, ...), it will be hidden and
+// you will be able to get table record rowid from virtual grid row index.
+// rowid column is created automatically by sqlite, so no need for you to worry about that.
+
+// this.columns = [ { allowSorting: true }] allows user sorting of the column
+
+
+class SqliteDataProvider : CommonDataProvider
+{
+  
+  function this(rowset)
+  {
+    this.columns = [];
+    
+    if( !(rowset instanceof Recordset) )
+    {
+      if( rowset === DB.DONE )
+      {
+        this.data = [];
+        return; // empty rowset
+      }
+      else
+        throw String.printf("Sqlite error %d", rowset);
+    }
+
+    this.rowid = [];
+    var rowid_column = null;
+    this.schema = {};
+       
+    for (var n = 0; n < rowset.length; ++n)
+    {
+      var name = rowset.name(n);      
+      if( name == "rowid" ) rowid_column = n;
+      else
+      {
+        this.schema[symbol(rowset.name(n, #field))] = n;
+        this.columns.push( { caption: name, allowSorting: true } );
+      }
+    }
+
+    this.createDefaultSortMapping();
+
+    if( rowid_column !== null )
+      this.data = this.asArray(rowset, rowid_column);
+    else this.data = rowset.asArray();
+
+    this.grid = null;
+  }
+  
+  function findGridId(table_rowid)
+  {
+    return this.rowid.indexOf(table_rowid);
+  }
+
+  function asArray(rowset, rowid_column)
+  {   
+    var data = [];
+    var rowid = this.rowid;
+    do {
+      var item = [];
+      var k = 0;
+      for( var v in rowset )
+      {
+        if( k == rowid_column )
+          rowid.push(v);
+        else
+          item.push(v);
+        k++;
+      }
+      data.push(item);
+    } while( rowset.next() );
+    return data;    
+  }
+  
+  function cellData(rowNo, field_symbol)
+  {
+    return this.data[rowNo][this.schema[field_symbol]];
+  }
+  
+  // dataObj: { field_name: value }
+  function updateRow(rowNo, dataObj)
+  {
+    var me = this.grid;
+    var rowData = this.data[rowNo];
+    for(var i in dataObj)
+    {
+      var colNo = this.schema[i];
+      if( colNo !== undefined )
+        rowData[colNo] = dataObj[i];      
+    }
+    if( this.grid )
+      this.grid.timer(5, :{ me.updateRow(rowNo); return false; });
+  }
+    
+  // can be called before bindDataSource to prevent
+  // setting table cells data twice
+  
+  // sortOrder - #ascending and #decending
+  function updateSorting(columnIndex, sortOrder) 
+  {
+    var src = this.data;        
+    var rowid = this.ds.rowid;
+    
+    for(var k = 0; k < rowid.lenth; k++)
+      src[k].push(rowid[k]);
+    
+    super.updateSorting(columnIndex, sortOrder);
+    rowid = this.ds.rowid;
+    for(var k = 0; k < rowid.lenth; k++)
+      rowid[k] = src[k].pop();
+  }
+
+}  
+}
+

@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+      textarea { display:block; }
+      code { display:block; margin-top:1em; }
+      pre { border:2px dashed gray; background:#F6F6EE; padding: 0.5em; }
+    </style>
+    <script type="text/tiscript">
+    
+    function show() {
+    
+      var val = JSON.parse($(#JSON).value);
+    
+      $(#out1).value = String.printf("%v",val);
+      $(#out2).value = String.printf("%V",val).replace("\t","    ");
+      $(#out3).value = JSON.stringify(val);
+      $(#out4).value = JSON.stringify(val,"  ");
+    }
+    
+    $(#show).onClick = show;
+    show();
+    
+    </script>
+  </head>
+<body>
+
+JSON: <textarea #JSON rows=12 >{
+    "a": 1,
+    "b": "foo",
+    "c": [ true, false ],
+    "d": {
+        "e": "bar",
+        "f": null
+    },
+    "g": [ { "A": "bar", "B": null },
+           { "C": "baz", "D": 45 } ]
+}</textarea> <button #show>Stringify</button>
+
+<code>.printf("%v",val)</code>
+<pre #out1 />
+<code>.printf("%V",val)</code>
+<pre #out2 />
+<code>JSON.stringify(val)</code>
+<pre #out3 />
+<code>JSON.stringify(val,"    ")</code>
+<pre #out4 />
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+    div#pie-chart {
+      size:200px;
+      border:1px dotted #aaa;
+    }
+    
+    </style>
+    <script type="text/tiscript">
+    
+      function PieChartOn(element) 
+      {
+        const strokeWidth = 20; // px
+        const strokeColor = color(100,150,200); // blue
+        const circleColor = color(230,230,230); // gray
+      
+        var start = 0; 
+        var value = 0.25; 
+      
+        function render(gfx) 
+        {
+          var (w,h) = this.box(#dimension); 
+          var (x,y) = (w/2, h/2);  
+          var r = Integer.min(w,h) / 2 - strokeWidth / 2;  
+          
+          gfx.strokeWidth(strokeWidth + 0.5)
+             .strokeColor(circleColor)
+             .arc(x,y,r,r, 0deg, 360deg)
+             .strokeColor(strokeColor)
+             .arc(x,y,r,r, 360deg * start, 360deg * value);
+        }  
+        
+        element.paintContent = render;
+        
+      }
+      
+      PieChartOn( $(#pie-chart) );
+      
+    
+    </script>
+  </head>
+<body>
+
+  <div #pie-chart />
+
+</body>
+</html>

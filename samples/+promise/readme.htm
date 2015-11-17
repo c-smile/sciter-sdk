@@ -1,0 +1,23 @@
+﻿<html>
+  <head>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>Implementation of <a href="http://promises-aplus.github.io/promises-spec">Promises/A+ specification</a></h1>
+  <h2>The promise() function</h2>
+  <p>The <code>promise()</code> function returns callable object(function) that has method <code>.then(onFulfilled, onRejected)</code></p>
+  <p>The promise is created as:</p>
+  <pre>var prom = promise();
+</pre>
+  <h3>To fulfill/satisfy the promise</h3>
+  <p>call it as <code>prom(</code><u><code>true</code></u><code>, params)</code>. Where the <em>params</em> is an array of values that will be applied to onFulfilled callback functions registered by <code>.then()</code> method.</p>
+  <h3>To reject the promise </h3>
+  <p>call it as <code>prom(</code><u><code>false</code></u><code>, params)</code>. Where the <em>params</em> is an array of values that will be applied to onRejected callbacks registered by <code>.then()</code> method.</p>
+  <h2>Redefined Element.request() function</h2>
+  <p>The <em>promise.tis</em> also redefines the Element.request() method - http get/post/put/delete call. So with this module included the Element.request() can be called in one of three forms:</p>
+  <ol>
+    <li><strong>element.request(</strong> <strong>callback</strong>: function, <strong>httpcmd </strong>, <strong>url</strong>: string [, <strong>params</strong>: object [, <strong>headers</strong>: object] ] <strong>) </strong>: true | false<br/>- asynchronous request with server response delivered to callback function.</li>
+    <li><strong>element.request(</strong> <strong>timeout</strong>: integer, <strong>httpcmd </strong>, <strong>url</strong>: string [, <strong>params</strong>: object [, <strong>headers</strong>: object] ] <strong>) </strong>: (data, status)<br/>- synchronous request with server response delivered as first return value and http status code as second.</li>
+    <li><strong>element.request(</strong> <strong>httpcmd </strong>, <strong>url</strong>: string [, <strong>params</strong>: object [, <strong>headers</strong>: object] ] <strong>) </strong>: promise,<br/>- asynchronous request, server response is delivered to the onsuccess callback registered by <code>.then(onsuccess,onfailure)</code> call of the promise.</li></ol>
+</body>
+</html>

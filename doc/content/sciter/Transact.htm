@@ -1,0 +1,90 @@
+<html>
+  <head>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>Transaction object</h1>
+  <p>The Transaction object (interface) is passed as a first parameter to the callback function used in <code>Element.transact(callback,name)</code> method.</p>
+  <p><code>Element.transact</code> provides a way to execute one or many editing actions as a single transaction that can be undone (Undo/Redo functionality) or rolled back.</p>
+  <p>All DOM modifications that are made by other methods are not transactable. </p>
+  <dl>
+    
+      
+        <h2>Properties</h2>
+    
+      <dt/>
+      <dd>N/A</dd>
+    
+      
+        <h2>Enumeration</h2>
+    
+      <dt/>
+      <dd>
+        <div>N/A</div></dd>
+    
+      
+        <h2>Methods</h2>
+    
+      <dt>attr</dt>
+      <dd>
+        <div><strong>( element</strong>:Element, <strong>name</strong>: string, <strong>value</strong>: undefined | string <strong>)</strong> : <em>Transact</em></div>
+        <p>Add or remove elements attribute by name. To remove attribute use <em>undefined</em> value.</p></dd>
+    
+      <dt>tag</dt>
+      <dd>
+        <div><strong>( element</strong>:Element, <strong>tag</strong>: string<strong> ) </strong>: <em>Transact</em></div>
+        <p>Change tag of the element. For example in some cases you may want to change <code>&lt;p&gt;</code> to <code>&lt;li&gt;</code> without recreating the element.</p></dd>
+    
+      <dt>split</dt>
+      <dd>
+        <div><strong>( pos</strong>:bookmark, <strong>until</strong>: Element <strong>)</strong> : <em>Transact</em></div>
+        <p>Split DOM elements at <em>pos</em> position until the element. Example, for the markup:</p>
+        <pre>&lt;p id=test&gt;123&lt;b&gt;456&lt;/b&gt;789&lt;/p&gt;
+</pre>
+        <p>This code:</p>
+        <pre>var p = $(p#test);
+var b = p.$(b);
+var pos = [bookmark: b.nodes()[0], 1, false]; // start edge of character '5' in first text node of the &lt;b&gt; element.
+transact.split( pos, p );
+</pre>
+        <p>will change the DOM to this state:</p>
+        <pre>&lt;p id=test&gt;123&lt;b&gt;4&lt;/b&gt;&lt;b&gt;56&lt;/b&gt;789&lt;/p&gt;
+</pre></dd>
+    
+      <dt>wrap</dt>
+      <dd>
+        <div><strong>( from</strong>:bookmark, <strong>to</strong>:bookmark, <strong>into</strong>: Element <strong>)</strong> : <em>Transact</em></div>
+        <p>TBD (wraps range into the element)</p></dd>
+    
+      <dt>unwrap</dt>
+      <dd>
+        <div><strong>( el</strong>: Element <strong>)</strong> : <em>Transact</em></div>
+        <p>TBD (moves content of the element into its parent, removes the element).</p></dd>
+    
+      <dt>insertNode</dt>
+      <dd>
+        <div><strong>( node</strong>: Node,<strong> el</strong>: Element, <strong>at</strong>: index [, <strong>after</strong>: true] <strong>)</strong> : <em>Transact</em></div>
+        <p>TBD (insert Node or Element at <em>index</em> position inside the <em>el</em>).</p></dd>
+    
+      <dt>removeNode</dt>
+      <dd>
+        <div><strong>( node</strong>: Node <strong>)</strong> : <em>Transact</em></div>
+        <p>TBD (remove Node or Element from the DOM).</p></dd>
+    
+      <dt>insertHtml</dt>
+      <dd>
+        <div><strong>( at</strong>:bookmark, <strong>html</strong>:string <strong>)</strong> : <em>[nodes]</em></div>
+        <p>Inserts HTML fragment at the position. Returns array of inserted [top level] nodes.</p></dd>
+    
+      <dt>insertText</dt>
+      <dd>
+        <div><strong>( at</strong>:bookmark, <strong>text</strong>:string <strong>)</strong> : <em>bookmark</em></div>
+        <p>Inserts text at the position. Returns bookmark of last character inserted.</p></dd>
+    
+      <dt>removeRange</dt>
+      <dd>
+        <div><strong>( from</strong>:bookmark, <strong>to</strong>:bookmark <strong>)</strong> : <em>Transact</em></div>
+        <p>TBD (removes range from the DOM).</p></dd></dl>
+  <p/>
+</body>
+</html>

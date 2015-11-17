@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      section { width: max-content; font:system; background:#383830; color:#fff; padding:6px; }
+      
+      section > div { line-height:32dip;
+                      padding-left: 34dip; 
+                      background-repeat:no-repeat; 
+                      background-position: 0 50%; 
+                      background-size:32dip; 
+                      margin:4dip;
+                    }
+                      
+      section > div:hover { background-color: #6699FF; border-radius: 4dip; }
+    
+      section > div.clear-night        { background-image:url(weather-icons/weather-clear-night.svg); } 
+      section > div.clear              { background-image:url(weather-icons/weather-clear.svg); } 
+      section > div.few-clouds-night   { background-image:url(weather-icons/weather-few-clouds-night.svg); } 
+      section > div.few-clouds         { background-image:url(weather-icons/weather-few-clouds.svg); } 
+      section > div.overcast           { background-image:url(weather-icons/weather-overcast.svg); } 
+      section > div.severe-alert       { background-image:url(weather-icons/weather-severe-alert.svg); } 
+      section > div.showers-scattered  { background-image:url(weather-icons/weather-showers-scattered.svg); } 
+      section > div.showers            { background-image:url(weather-icons/weather-showers.svg); } 
+      section > div.snow               { background-image:url(weather-icons/weather-snow.svg); } 
+      section > div.storm              { background-image:url(weather-icons/weather-storm.svg); } 
+    
+      section[iconsize=large] > div   { line-height:48dip; padding-left: 50dip; background-size:48dip; font-size:20dip; }    
+      section[iconsize=x-large] > div { line-height:64dip; padding-left: 66dip; background-size:64dip; font-size:30dip;}    
+    
+    </style>
+    <script type="text/tiscript">
+    
+      $(form).onValueChanged = function() {
+        var sz = this.value.iconSize;
+        $(section).attributes["iconsize"] = sz;
+      }
+    
+    </script>
+  </head>
+<body>
+
+<h2>Use of SVGs as fore/background-image in CSS</h2> 
+
+<form>
+Choose icon size: <button|radio(iconSize) value="normal" checked>normal</button>
+                  <button|radio(iconSize) value="large">large</button>
+                  <button|radio(iconSize) value="x-large">x-large</button>
+</form>
+<section>
+  <div class="clear-night"      >clear-night</div>
+  <div class="clear"            >clear</div>
+  <div class="few-clouds-night" >few-clouds-night</div>
+  <div class="few-clouds"       >few-clouds</div>
+  <div class="overcast"         >overcast</div>
+  <div class="severe-alert"     >severe-alert</div>
+  <div class="showers-scattered">showers-scattered</div>
+  <div class="showers"          >showers</div>
+  <div class="snow"             >snow</div>
+  <div class="storm"            >storm</div>
+</section>
+
+</body>
+</html>

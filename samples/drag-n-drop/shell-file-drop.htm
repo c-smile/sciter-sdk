@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+      
+      div.file-drop-zone {
+        prototype: FileDropZone;
+        size:200px;
+        color: gray;
+        border: 4px dashed;
+        vertical-align:middle;
+        text-align:center;
+      }
+      div.file-drop-zone.active-target {
+        background:gold;
+      }
+      
+    </style>
+    <script type="text/tiscript">
+    
+    class FileDropZone :Behavior 
+    {
+    
+      function onExchange(evt)
+      {
+        if( evt.type == Event.X_DRAG_ENTER && evt.draggingDataType == #file)
+        {
+          this.attributes.addClass("active-target");
+          return true;
+        }
+        else if( evt.type == Event.X_DRAG_LEAVE )
+        {
+          this.attributes.removeClass("active-target");
+          return true;
+        }
+        else if( evt.type == Event.X_DRAG && evt.draggingDataType == #file)
+        {
+          stdout.println(evt.x,evt.y);
+          return true;
+        }
+        else if( evt.type == Event.X_DROP && evt.draggingDataType == #file)
+        {
+          this.attributes.removeClass("active-target");
+          var fn = evt.dragging;
+          view.msgbox(#information, String.printf("Dropped:%V",fn));
+          return true;
+        }
+      }    
+    }
+    
+    </script>
+  </head>
+<body>
+
+  <h2>IDropTarget demo, D&amp;D files from Windows Shell to DOM elements</h2> 
+
+  <div.file-drop-zone>
+    Drop your files here
+  </div>
+
+</body>
+</html>

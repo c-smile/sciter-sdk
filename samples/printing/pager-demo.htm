@@ -1,0 +1,68 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+    frame {  background: #A2C2EA #A2C2EA #638EC8 #638EC8; }
+    
+    frame > pagebox {
+      background-color:white;
+      /*border: 1px solid #444;*/
+      box-shadow: 2px 2px 6px #224;
+    }
+    
+    </style>
+    <script type="text/tiscript">
+      var pager = $(frame);
+      var currentPageNo = $(#current-page);
+      var contentUrl = self.url("samples/print-test.htm");
+
+      $(button#select-printer).on("click",function() {  pager.selectPrinter(); });
+      $(button#print).on("click", function() { pager.print(); });
+      
+      $(select#to-load).on("change", function() { 
+        contentUrl = self.url( this.value );
+        currentPageNo.attributes["max"] = 1;
+        currentPageNo.value = 1;
+        pager.loadDocument( contentUrl ); 
+      });
+      
+      currentPageNo.on("change", function(){
+        pager.pageNo( this.value );
+      });
+
+      $(button#load-template-alt).on("click", function() { 
+        var templ = self.url("page-template-alt.htm");
+        pager.loadDocument( templ, contentUrl ); 
+      });
+      
+      pager.on("paginationend", function(evt) {
+        $(#numpages).value = evt.reason;
+        $(#current-page).attributes["max"] = evt.reason;
+      });
+      
+      
+      
+      
+      
+    </script>
+  </head>
+<body>
+  <p>Sciter print preview using <code>&lt;frame|pager&gt;</code></p>
+  <button #select-printer>Select printer</button>
+  <button #print>Print</button>
+  <button #load-template-alt>set alt template</button>
+  
+  Load <select|dropdown #to-load>
+    <option>samples/print-test.htm</option>
+    <option>samples/print-svg.htm</option>
+    <option>samples/print-drawing.htm</option>
+    <option>samples/print-image.htm</option>
+    <option>samples/print-metrics.htm</option>
+  </select>
+  
+  Page <input|integer #current-page value=1 step=1 min=1 max=1> of 
+  pages: <output|integer #numpages />
+  <frame|pager cols=2 src="samples/print-test.htm" page-template="page-template.htm" />
+</body>
+</html>

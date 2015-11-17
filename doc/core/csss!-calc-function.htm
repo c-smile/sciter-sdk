@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>H-SMILE core. CSSS! (css-script) language.</h1>
+  <h1>The calc() function.</h1>
+  <p>The <dfn id="calcltexpressiongt">calc(&lt;expression&gt;)</dfn> function can be used wherever length values are allowed. The expression within the parethesis is computed at the same time as <em>em</em> lengths are computed. In h-smile core engine expression inside the calc() is being interpreted by CSSS! evaluation engine can use limited subset of CSSS! features. In particular you can access DOM attributes and states of the element using following notation:</p>
+  <ul>
+    <li><code>self.attribute</code> - access to DOM attributes of the element.</li>
+    <li><code>self:state-flag</code> - access to runtime flags of the DOM element: hover, active, focus, etc.</li></ul>
+  <p>Where <code>self</code> designates the element for what the <code>calc()</code> is called.</p>
+  <h2>Functions (methods) supported by the DOM element inside the calc()</h2>
+  <p>There is a set of methods that are defined for the DOM element in CSSS! in context of <code>calc()</code> execution:</p>
+  <ul>
+    <li><code>[element.]children()</code> - integer, returns number of children of the element.</li>
+    <li><code>[element.]child(n:integer)</code> - DOM element, returns child element at index <em>n. n</em> is a positive number in the range <code>1..children()</code>.</li>
+    <li><code>[element.]next()</code> - DOM element, returns next sibling DOM element of this one.</li>
+    <li><code>[element.]previous()</code> - DOM element, returns previous sibling DOM element of this one.</li>
+    <li><code>[element.]parent()</code> - DOM element, returns parent DOM element of this one.</li>
+    <li>selectors methods:</li>
+    <ul>
+      <li><code>element.$( selector )</code> - returns set of elements matching the selector. The method does lookup only among children of the element. <code>:root</code> pseudo class matches the element iself in this metod. &nbsp;Example: <code>self.$(:root &gt; li):expanded = true</code> will set expanded state for only <em>li</em> elements that are immediate children of the self.</li>
+      <li><code>element.$1( selector )</code> - the same as above but will return single element matching the selector.</li>
+      <li><code>element.$p( selector )</code> - returns set of parent elements of the element. :root is global DOM root element here.</li>
+      <li><code>element.$1p( selector )</code> - returns nearest parent element matching the selector. :root is global DOM root element here.</li></ul>
+    <li><code>[element.]text-width(&quot;string&quot;)</code> - returns width of the string in pixels measured using current style of the element.</li>
+    <li><code>[element.]min-intrinsic-width()</code>, <code>[element.]max-intrinsic-width()</code> - intrinsic widths of the element.</li>
+    <li><code>[element.]min-intrinsic-height()</code>, <code>[element.]max-intrinsic-height()</code> - intrinsic heights of the element.</li>
+    <li><code>[element.]system-scrollbar-width(),[element.]system-scrollbar-height()</code> - width and height of vertical and horizontal scrollbars in the system.</li>
+    <li><code>[element.]system-border-width()</code> - width of borders in system shapes of input elements.</li>
+    <li><code>[element.]system-small-icon-width(),[element.]system-small-icon-height()</code> - dimensions of small icons used by host system.</li>
+    <li><code>[element.]foreground-image-width(),[element.]foreground-image-height()</code> - physical dimensions of foreground image defined for the element (if any).</li>
+    <li><code>[element.]background-image-width(),[element.]background-image-height()</code> - physical dimensions of background image defined for the element (if any).</li></ul>
+</body>
+</html>

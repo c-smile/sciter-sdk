@@ -1,0 +1,95 @@
+<html>
+  <head>
+    <title>Frameset, splitter and transform/transition demo</title>
+    <style>
+      html { background:transparent; }
+      frameset {  }
+      .panel 
+      {
+        size:*;
+        background-image:url(images/back-alpha.png); 
+        background-position:12px 12px 12px 12px; /*top right bottom left offsets*/
+        background-repeat:expand; /* h-smile specific */
+        border: none;
+        padding: 8px;
+      }
+      
+      splitter { background:transparent; }
+      splitter:hover { background:rgba(255,255,127,0.25); }
+      
+      ul.panel { height:*; margin:0; overflow:auto;}
+      ul.panel > li 
+      {
+        font: 10pt Verdana;
+        font-rendering-mode:classic;
+        display:block;
+        background-color:rgba(255,255,255,0.01);
+        color:rgba(0,0,0,0.01);
+        transform-origin:0 0;
+        transform:translate(100px,0);
+        border:2px solid rgba(0,0,0,0.01);
+        //border-radius:3px;
+        margin:10px;
+        padding:4px;
+        width:50%;
+      }
+      
+      ul.panel > li.shown 
+      {
+        color:rgba(0,0,0,1.0);
+        background-color:rgb(255,255,255);
+        border-color:rgba(255,0,0,1.0);
+        transform:translate(0px,0);
+        transition: transform(cubic-out,0.5s)
+                    color(linear,1s)
+                    background-color(linear,1s)
+                    border-color(linear,1s);
+      }
+      
+            
+    </style>
+    <script type="text/tiscript">
+    
+       function startSequence(cont)
+       {
+          var n = -1;
+          function ty()
+          {
+            if(++n >= cont.length)
+              return 0; // stop the animation
+            cont[n].@.addClass("shown");
+            return View.ANIMATION_TIMER_SPAN;
+          }
+          cont.animate(ty);
+       }
+       function self.ready()
+       {
+          startSequence($(#list));
+       }
+    </script>
+  </head>
+  <frameset cols="200px,*">
+    <div .panel>Panel 1</div>
+    <splitter />
+    <ul .panel #list>
+      <li>default-floats.htm</li>
+      <li>default.htm</li>
+      <li>inclusion.htm</li>
+      <li>main.htm</li>
+      <li>test-frames.htm</li>
+      <li>test-frameset.htm</li>
+      <li>test-grids.htm</li>
+      <li>test-htmlarea.htm</li>
+      <li>test-rounded-borders.htm</li>
+      <li>test-script.htm</li>
+      <li>test-set-html.htm</li>
+      <li>test-stack.htm</li>
+      <li>test-table.htm</li>
+      <li>test-textarea.htm</li>
+      <li>test-transform-transition.htm</li>
+      <li>test-transform.htm</li>
+      <li>test-transitions-folding.htm</li>
+      <li>test-transitions.htm</li>
+    </ul>
+  </frameset>
+</html>

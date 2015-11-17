@@ -1,0 +1,39 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+    @import url(../note.css);
+    
+    form {
+      flow: row(label, input);
+    }
+    form > label { white-space:nowrap; }
+    
+    </style>
+    <script type="text/tiscript">
+    
+      $(button).onClick = function() {
+        view.msgbox(#information, "Got button click");
+      };
+    
+    </script>
+  </head>
+<body>
+
+  <note>
+    <ul>
+      <li><kbd>Ctrl+1</kbd> - set focus on first input</li>
+      <li><kbd>Ctrl+2</kbd> - set focus on second input</li>
+      <li><kbd>Ctrl+T</kbd> - simulate click on Test button</li>
+    </ul>
+  </note>
+
+  <form>
+    <label>Input 1</label> <input|text accesskey="^1" />
+    <label>Input 2</label> <input|text accesskey="^2" />
+    <button accesskey="^T">Test</button>
+  </form>
+
+</body>
+</html>

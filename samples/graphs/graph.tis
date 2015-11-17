@@ -1,0 +1,45 @@
+
+function functionChart(element,F) 
+{
+  var pathLine = new Graphics.Path();
+  var pathFill = new Graphics.Path();
+  var v = F(0.0, 0.0, 1.0, 1.0);  
+  pathLine.moveTo(0.0,v);
+  pathFill.moveTo(0.0,v);
+  for( var p = 0.01; p <= 1. ; p += 0.01 )
+  {
+    v = F(p, 0.0, 1.0, 1.0);
+    pathLine.lineTo(p,v);
+    pathFill.lineTo(p,v);
+    //stdout.$n(p={p});
+  }
+  pathFill.lineTo(1.0,0.0);
+  pathFill.close();
+  
+  function draw(gfx)
+  {
+    var width = element.box(#width);
+    var height = element.box(#height);
+
+    var margin = width / 4.0 + 0.5;    
+    gfx.translate(margin,height-margin);
+    gfx.scale(width - 2 * margin, -(height - 2 * margin));
+    var s = width - 2. * margin;
+  
+    //draw axis       
+    gfx.lineColor(color(0x7F,0x7F,0x7F))
+       .lineWidth(1./s)
+       .line(0,0,0,1.0).line(0,0,1.0,0);
+  
+    // draw fill
+    gfx.fillColor(color(0xDF,0,0,0.3)).noLine();
+    gfx.drawPath(pathFill);
+    
+    // draw line
+    gfx.lineColor(color(0xBF,0,0)).lineWidth(3./s).noFill();
+    gfx.drawPath(pathLine);
+  }
+  element.paintContent = draw;
+  element.refresh();
+}
+

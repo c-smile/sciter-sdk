@@ -1,0 +1,142 @@
+/*
+  function dialogs shows params.body element as so called document modal dialog.
+  params here is an object with following fields:
+    - params.body: string | Element, body of the dialog, either html fragment (string) or existing <form> element
+    - params.title: string, title of the dialog, html fragment string or plain text,
+                            if title is not provided the function will try to use @title attribute of the params.body element
+    - params.buttons: array of button definitions, objects of following structure:
+                      {
+                        caption: string,              // button caption      
+                        value: primitive | function,  // return value or result of the function 
+                        role: #cancel | #ok
+                      }  
+    - params.returns: if it == #values then return value is a collection of input fields rather than button pressed.
+                            
+ */
+ 
+function dialog(params)
+{
+  // init phase, build markup
+  var body = params.body || "Nothing to say, eh?";
+  var body_html = "";
+  var caption;
+  if( body !instanceof Element )
+  {
+    body_html = "<div.body>" + body.toString() +"</div>";
+    body = null;
+    caption = params.caption || "?"; 
+  }
+  else
+    caption = body.@#caption || params.caption || "?";
+    
+  var buttons = params.buttons ||
+                [{ caption:"OK", role:#ok, value:true },
+                 { caption:"Cancel", role:#cancel, value:false }];
+  var buttons_html = "";
+  for(var button_def in buttons) 
+      buttons_html += String.printf("<button>%s</button>", button_def.caption || "");
+
+  
+  var html = "<div#lightbox-shim>"
+    "<div.dialog-frame>"
+      "<caption>" + caption + "</caption>"
+      + body_html + 
+      "<text.buttons>" + buttons_html + "</text>"
+    "</div>"
+  "</div>";
+
+  //self.$(body).append(html);
+  self.append(html);
+  
+  var dlg = self.last; // our dialog layer
+  var prev_parent = null;
+  var prev_index;
+ 
+  if( !body ) 
+    body = dlg.$(div.body); // if we've got dialog body as an html text 
+  else {
+    // if we've got dialog body as a reference of existing Element 
+    prev_parent = body.parent;
+    prev_index = body.index;
+    dlg.$(div.dialog-frame).insert(body,1); // insert it after the <caption>
+  }  
+  
+  var ret_val = null; // value to return
+  
+  function handleValue(button_val)  
+  {
+    if( typeof button_val == #function) 
+    { // if it is a function, call it with the body element reference
+      ret_val = button_val(body);
+      if(ret_val)
+        body.state.collapsed = true; // to signal that we are done with it.
+    }
+    else
+    {
+      ret_val = button_val;
+      body.state.collapsed = true; // to signal that we are done with it.
+    }
+  }
+  
+  // setup control event handler
+  dlg.onControlEvent = function(evt)
+  {
+    if( evt.type != Event.BUTTON_CLICK || !evt.target.$is(div#lightbox-shim > div.dialog-frame > text.buttons > button))
+      return;
+    //evt.target is a button on text.buttons bar
+    var button_val = buttons[evt.target.index].value;
+    handleValue(button_val);
+    return true;
+  }
+  // setup keyboard event handler
+  dlg.onKey = function(evt)
+  {
+    if( evt.type != Event.KEY_DOWN)
+      return;
+    
+    var cmd;
+    
+    if( evt.keyCode == Event.VK_ESCAPE )
+      cmd = #cancel;
+    else if( evt.keyCode == Event.VK_RETURN )
+      cmd = #ok;
+    else 
+      return; // we handle only ESCAPE and ENTER here.
+      
+    for( var button_def in buttons )
+    {
+      if( button_def.role == cmd )
+      {
+        handleValue(button_def.value);
+        return true;
+      }  
+    }
+  }
+  
+  if( params.initial )
+    body.value = params.initial;
+  
+  // and finally run the modal loop:
+  
+  body.state.expanded = true;
+
+  view.update(); 
+
+  var sfocus = view.focus;
+  view.eventsRoot = dlg;
+  while (dlg.isVisible && !body.state.collapsed && view.state != View.WINDOW_HIDDEN) 
+     view.doEvent();
+  view.eventsRoot = null;
+  view.focus = sfocus;
+  
+  if(prev_parent) //we were using existing DOM element so put it back
+    prev_parent.insert(body,prev_index);
+  
+  dlg.detach(); // remove it from the DOM
+  view.update(); 
+  
+  if(params.returns == #values && ret_val == #ok)
+    return body.value;
+  
+  return ret_val;
+}

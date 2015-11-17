@@ -1,0 +1,36 @@
+﻿<html>
+  <head>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>Sciter object</h1>
+  <p>Represents current instance of Sciter application.</p>
+  <dl>
+    <h2>Constants</h2>
+    <dt>VERSION</dt>
+    <dd>version of the Sciter, integer. High word is version number, low word is a sub-version number</dd>
+    <dt>REVISION</dt>
+    <dd>revision of the Sciter, integer. High word is a revision number and low word is a sequential build number.</dd>
+    <dt>LICENSEE</dt>
+    <dd>string, name of licensee organization/person of the Sciter.</dd>
+    <h2>Methods</h2>
+    <dt>this</dt>
+    <dd><strong>N/A, </strong>non constructible for a while.</dd>
+    <dt>userName</dt>
+    <dd>
+      <div><strong>()</strong> returns: <em>string</em></div>
+      <p>Returns string - name of the user logged in the system running this sciter.</p></dd>
+    <dt>machineName</dt>
+    <dd>
+      <div><strong>(</strong>[<strong>full</strong>]<strong>) </strong>returns: <em>string</em></div>
+      <p>Returns name of the machine running this sciter. If <em>full</em> parameter provided and equals to <em>true</em> then this function returns fully qualified network domain name of the machine.</p></dd>
+    <dt>home</dt>
+    <dd>
+      <div><strong>(</strong>[<strong>rel</strong>:string]<strong>)</strong> returns: <em>string</em></div>
+      <p>Returns home folder of the sciter - folder where sciter started from. If <em>rel</em> is some string then it will be appended to the return value. Use this if you need to find fully qualified file name residing in sciter folder or subfolder.</p></dd>
+    <dt>launch</dt>
+    <dd>
+      <div><strong>( filename</strong>: string<strong> ) </strong>returns: <em>true/false</em></div>
+      <p>Launches external application on this machine<em>. Filename </em>is a filename of executable or document to open.</p></dd></dl>
+</body>
+</html>

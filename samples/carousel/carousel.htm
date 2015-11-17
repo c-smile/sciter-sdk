@@ -1,0 +1,70 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+    div.carousel {
+    
+      aspect: Carousel url(carousel.tis);
+    
+      flow:grid(1 2 3,
+                4 4 4);
+      width: max-content;
+      border: 1px solid black;
+    }
+            
+    div.carousel > .button { height:*; width: 33dip; behavior:button; foreground: url(stock:arrow-left) 50% 50% no-repeat; }
+    
+    div.carousel > .button.prev { foreground-image:url(stock:arrow-left); }
+    div.carousel > .button.next { foreground-image:url(stock:arrow-right); }
+    
+    div.carousel > .button.prev:disabled,
+    div.carousel > .button.next:disabled { color:#ccc; }
+    
+    div.carousel > widget.list {
+      flow:vertical-wrap;
+      size: 300dip 280dip;
+      overflow:hidden;
+    }
+    div.carousel > widget.list > div.box { 
+      behavior:button;
+      size: 150dip 140dip; 
+      outline:1px solid red -1px; 
+      background:gold; 
+    }
+    
+    div.carousel > widget.list > div.placeholder { outline:2px gray dashed -3px; background:none; overflow:hidden;  }
+    div.carousel > widget.list > div:moving { background-color:yellow;  size: 150dip 140dip;  }
+    
+    div.carousel > div.paging { flow:horizontal; horizontal-align: center; }
+    div.carousel > div.paging > span { display:block; width:max-content; }
+    div.carousel > div.paging > span:current { color:red; }
+   
+    </style>
+    <script type="text/tiscript"></script>
+  </head>
+<body>
+
+  <p>Carousel with D-n-D support</p>
+
+  <div class="carousel">
+    <widget class="button prev" />
+    <widget class="list">
+      <div class="box">1</div>
+      <div class="box">2</div>
+      <div class="box">3</div>
+      <div class="box">4</div>
+      <div class="box">5</div>
+      <div class="box">6</div>
+      <div class="box">7</div>
+      <div class="box">8</div>
+      <div class="box">9</div>
+    </widget>
+    <widget class="button next" />
+    <div.paging><span>&#8226;</span></div>
+  </div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+    div#test {
+      border:1px solid;    
+      background-image:url(images/stretchable.png);
+      background-repeat:no-repeat;
+      background-size:187dip 183dip;
+      size: 187dip 183dip;      
+      /* or
+        background-repeat:stretch; 
+           and no need for background-size in this case.
+      */
+      /* or
+        background-repeat:no-repeat; 
+        background-size:100% 100%;
+      */
+    }
+    
+    </style>
+    <script type="text/tiscript"></script>
+  </head>
+<body>
+  Due to background-size background image will fill the box in full in different DPI settings.
+
+  <div #test>
+  </div>
+  
+</body>
+</html>

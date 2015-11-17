@@ -1,0 +1,56 @@
+<html>
+  <head>
+    <title>behavior:htmlarea demo</title>
+    <style>
+      div.selectable {
+        border:1px solid;
+        behavior:htmlarea;
+        context-menu: selector(menu#for-htmlarea);
+      }
+    </style>
+    <menu.context #for-htmlarea>
+      <li command="edit:copy"	style="foreground-image:url(sciter:copy.png)"><label>Copy</label><span class="accesskey">Ctrl+C</span></li>
+      <hr/>
+      <li command="edit:selectall"><label>Select All</label><span class="accesskey">Ctrl+A</span></li>
+      <hr/>
+      <caption>Custom actions</caption>
+      <li #selected-text><label>Show selected text</label></li>
+      <li #selected-html><label>Show selected HTML</label></li>
+    </menu>
+    <script type="text/tiscript">
+    
+    function getSelectedText() {
+      return $(div.selectable).selection.text;
+    }
+    
+    function getSelectedHTML() {
+      return $(div.selectable).selection.html;
+    }
+    
+    function hasSelection() {
+      return $(div.selectable).selection.type;
+    }
+    
+    
+    $(div.selectable).on("click","li#selected-text", function() { view.msgbox(#information,getSelectedText().htmlEscape()); })
+                     .on("click","li#selected-html", function() { view.msgbox(#information,getSelectedHTML().htmlEscape()); })
+                     .on("keydown", function(evt) { return true; /*supress key handling in selectable */ } );
+    
+    </script>
+  </head>
+<body>
+  <p>Element below is selectable as it uses <code>behavior:htmlarea</code></p>
+  <div.selectable>
+    <h1>behavior:menu</h1>
+    <p>This behavior provides basic hierarchical menu functionality</p>
+    <h2>Elements</h2>
+    <p>that have this behavior applied by default to:</p>
+    <ul>
+      <li><code>&lt;menu class=&quot;context&quot;&gt;</code> - context menu;</li>
+      <li><code>&lt;menu class=&quot;popup&quot;&gt;</code> - popup menu.</li></ul>
+    <h2>Model</h2>
+    <p>Example of menu declaration in Sciter:</p>
+ <div>
+</body>
+</html>
+

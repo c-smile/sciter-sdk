@@ -1,0 +1,67 @@
+  
+  input#show-defintions
+  {
+    value-changed!: $1(body).hide-defintions = self:value ? null # true;
+  }
+  
+  body 
+  {
+    font-family: verdana, arial, sans-serif;
+    font-size: 10pt;
+  }
+  
+  tt, code, samp, kbd
+  {
+    font-family: monospace;
+  } 
+ 
+  pre
+  {
+    font-family  : monospace;
+    margin       : 10px 0;
+    padding      : 4px; 
+    background-color: #f0faff;
+    border       : 1px dotted #ccc;
+    white-space  : pre;
+  }
+  
+  pre code { color:blue; }
+  
+  p 
+  {
+    margin       : 10px 0;
+  }
+  
+  blockquote
+  {
+    margin       : 10px 0 10px 10px;
+    border-left  : 2px solid #ccc;
+    padding-left : 8px;
+  }
+  
+  dt 
+  { 
+    margin-top: 10px; 
+    margin-bottom: 10px;
+  }
+ 
+  dd 
+  { 
+    margin-top: 10px; 
+    margin-left: 10px; 
+    margin-bottom: 20px;
+    /*background-color: infobackground;
+    border-left: 1px solid #ccc;*/
+    
+  }
+  
+  body[hide-defintions] dd
+  {
+    display:none;
+  }
+  body[hide-defintions] dt
+  {
+    margin-top: 0; 
+    margin-bottom: 0;
+  }
+

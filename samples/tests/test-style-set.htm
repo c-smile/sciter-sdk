@@ -1,0 +1,30 @@
+<html>
+  <head>
+  <title></title>
+  <style>
+  
+    div { border:1px solid; size:100px; background-color:gold; }
+  
+  </style>
+  <script type="text/tiscript">
+
+    $(button).onClick = function() {
+        if(this.value)
+          $(div).style.set
+          { 
+            background-color: "red",
+            transform:        "translate(0, 100%)", 
+            transition:       "transform(quad-out,0.4s,0.3s,none) background-color(linear,0.7s)"
+          }; 
+        else
+          $(div).style.clear();
+    }
+  
+  </script>
+  </head>
+<body>
+  <p>Transition set by script, click on the checkbox</p> 
+  <button type="checkbox">Test</button>
+  <div>Div</div>
+</body>
+</html>

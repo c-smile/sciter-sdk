@@ -1,0 +1,80 @@
+﻿<html>
+  <head>
+    <title>XMLScanner</title>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>Tokenizer</h1>
+  <p>The Tokenizer is a helper class aimed at support of syntax highlighting / colorizing of source codes loaded into DOM elements for rendering: &lt;pre&gt;,&lt;code&gt;,&lt;textarea&gt;,&lt;plaintext&gt;.</p>
+  <p>Intended to be used together with Selection.applyMark() function to mark text runs.</p>
+  <dl>
+    <h2>Constants</h2>
+    <p>N/A</p>
+    <h2>Properties</h2>
+    <dt>tokenStart</dt>
+    <dd>- <a href="Selection.htm#bookmark">bookmark</a>, start of token.</dd>
+    <dt>tokenEnd</dt>
+    <dd>- <a href="Selection.htm#bookmark">bookmark</a>, position where token ends.</dd>
+    <dt>tag</dt>
+    <dd>- string, markup tokenizer only - tag name, valid at #TAG-START and #TAG-END tokens.</dd>
+    <dt>attr</dt>
+    <dd>- string, markup tokenizer only - attribute name, valid at TAG-ATTR token.</dd>
+    <dt>value</dt>
+    <dd>- string, token text content or attribute value at TAG-ATTR token.</dd>
+    <dt>type</dt>
+    <dd>- symbol, either #source or #markup - type of current tokenizer model.</dd>
+    <dt>element</dt>
+    <dd>- DOM element where parsed token was found.</dd>
+    <h2>Methods</h2>
+    <dt>this</dt>
+    <dd>
+      <strong>( element</strong>: Element, <strong>tokenizerType</strong>: symbol [, <strong>subType</strong>: symbol] <strong>)</strong> : Tokenizer
+      <p>Constructs Tokenizer instance, parameters:</p>
+      <ul>
+        <li><strong>element</strong> - DOM element that renders the source code text.</li>
+        <li><strong>tokenizerType</strong> - defines type of tokenizer used, either <code>#markup</code> or <code>#source</code>. </li>
+        <li><strong>subType</strong> - symbol, at the moment it can be <code>#style</code> &nbsp;or anything else. &nbsp;When #style is provided then tokenizers changes behavaior of #NAME token parsing - allows dash ( <code>-</code> ) to be a part of name token according to CSS syntax.</li></ul></dd>
+    <dt>push</dt>
+    <dd>
+      <strong>( tokenizerType</strong>: symbol<strong>, until</strong>: string<strong> </strong>[, <strong>subType</strong>: symbol]<strong> )</strong> : this
+      <p>Pushes sub-tokenizer for the &quot;island&quot; with different syntax. As a rule it is used with base <code>#markup</code> tokenizer to parse content of &lt;style&gt; and &lt;script&gt; elements.</p>
+      <ul>
+        <li><strong>tokenizerType</strong> - defines type of tokenizer used, either <code>#markup</code> or <code>#source</code>.</li>
+        <li><strong>until</strong> - string, defines end of &quot;island&quot;, examples: <code>&quot;&lt;/script&gt;&quot;</code>, <code>&quot;&lt;/style&gt;&quot;</code> . When until is encountered the tokenizer returns special <code>#END-OF-ISLAND</code> token.</li>
+        <li><strong>subType</strong> - see above.</li></ul></dd>
+    <dt>pop</dt>
+    <dd>
+      <strong>( )</strong> : this
+      <p>Pops last pushed tokenizer from internal stack. As a rule it is used in response of getting <code>#END-OF-ISLAND</code> token.</p></dd>
+		<dt>token</dt>
+    <dd>
+      <strong>( )</strong> : symbol
+      <p>parses input and returns type of token:</p>
+      <ul>
+        <li>Tokens of <strong>#markup</strong> tokenizer:</li>
+        <ul>
+          <li><strong>#TAG-START</strong> - start of tag, e.g. when <code>&lt;div</code> is parsed;</li>
+          <li><strong>#TAG-HEAD-END</strong> - end of tag &quot;head&quot;, e.g. when <code>&lt;div id=&quot;some&quot;&gt;</code> &nbsp;is parsed;</li>
+          <li><strong>#TAG-EMPTY-END</strong> - empty tag ended, &nbsp;when <code>&lt;div id=&quot;some&quot; /&gt;</code> &nbsp;is parsed;</li>
+          <li><strong>#TAG-END</strong> - end of tag, e.g. when <code>&lt;/div&gt;</code> is parsed; </li>
+          <li><strong>#TAG-ATTR</strong> - when attribute name/value parsed in tag head;</li>
+          <li><strong>#TEXT</strong> - when text is parsed, tokenizer.value is the text;</li>
+          <li><strong>#COMMENT</strong> - when comment is parsed, tokenizer.value is the comment;</li>
+          <li><strong>#CDATA</strong> - when CDATA SGML sections is parsed;</li>
+          <li><strong>#PI</strong> - when SGML processing instruction is parsed;</li>
+          <li><strong>#DOCTYPE</strong> - when doctype declaration is parsed;</li>
+          <li><strong>#ENTITY</strong> - after parse of HTML/XML entity, tokenizer.value is the entity text;</li>
+          <li><strong>#ERROR</strong> - on basic HTML/XML syntax errors.</li></ul>
+        <li><strong>#source </strong>specific tokens:</li>
+        <ul>
+          <li><strong>#NUMBER</strong> - number literal is parsed: 123, 456.09, 0xFF, etc.</li>
+          <li><strong>#NUMBER-UNIT</strong> - number with unit desgnator is parsed: 100px, 400ms, etc.</li>
+          <li><strong>#STRING</strong> - string literal, only &quot;string&quot; or 'string' at the moment.</li>
+          <li><strong>#NAME</strong> - name token is parsed - sequence of characters that looks like keyword or variable name.</li>
+          <li><strong>#COMMENT</strong> - comment is parsed, either single line <code>//</code> &nbsp;comment or multi-line <code>/* ... */</code> .</li>
+          <li><strong>#OPERATOR</strong> - sequence of &quot;opeartor&quot; characters: <code>:!%+-/*;</code> ,etc. </li>
+          <li><strong>#O-PAREN</strong> and <strong>#C-PAREN</strong> - <code>(</code> or <code>)</code> &nbsp;are encountered.</li>
+          <li><strong>#ERROR</strong> - basic syntax errors, for example not closed string literal.</li>
+          <li><strong>#END-OF-ISLAND</strong> - when pushed tokeinizer gets sequence of characters defined by <em>until </em>parameter.</li></ul></ul></dd></dl>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<html>
+	<head>
+		<title>Width 120% is cute</title>
+		<style type="text/css"> 
+		
+body { 
+	font:10pt Verdana;  
+	background: linear-gradient(top,white,peachpuff); 
+}
+
+/* style block defining vertical scrollbar */
+@set my-v-scrollbar
+{
+  .prev 
+  { 
+    border:1px solid #AAA; 
+    foreground-image:url( images/sb-v-scroll-prev.png ); 
+    foreground-position:50% 50%;
+    foreground-repeat:no-repeat;
+    height:15px;
+  }
+  
+  .next 
+  { 
+    border:1px solid #AAA; 
+    foreground-image:url( images/sb-v-scroll-next.png ); 
+    foreground-position:50% 50%;
+    foreground-repeat:no-repeat; 
+    height:15px;
+  }
+  
+  .base,
+  .next-page, 
+  .prev-page 
+  { 
+    background-image:url( images/sb-scroll-back.png ); 
+    background-position:5 5 5 5; /*left top right bottom offsets*/
+    background-repeat:expand; 
+  }
+  .slider 
+  { 
+    border:1px solid #AAA; 
+    foreground-image:url( images/sb-scroll-slider.png ); 
+    foreground-position:50% 50%;
+    foreground-repeat:no-repeat; 
+  }
+  
+  .next:disabled, .slider:disabled, 
+  .prev:disabled  { height:0; border:none; foreground-image:none; }
+  
+  .base:disabled
+  {
+    background-image:url( images/sb-scroll-base.png ); 
+    background-repeat:repeat; 
+    background-position:0 0 0 0;
+  }
+    
+  .next:hover,   .slider:hover, 
+  .prev:hover     { background-color: #EEE; }
+  
+  .next:active,  .slider:active, 
+  .prev:active    { background-color: #FFF; }
+  
+  .base { width: 15px; } /* explicit declaration of its width */
+  .corner { background-color: transparent; }
+  
+}
+
+/* style block defining horizontal scrollbar */
+@set my-h-scrollbar
+{
+  .prev 
+  { 
+    border:1px solid #AAA; 
+    foreground-image:url( images/sb-h-scroll-prev.png ); 
+    foreground-position:50% 50%;
+    foreground-repeat:no-repeat;
+    width:15px;
+  }
+  .next 
+  { 
+    border:1px solid #AAA; 
+    foreground-image:url( images/sb-h-scroll-next.png ); 
+    foreground-position:50% 50%;
+    foreground-repeat:no-repeat; 
+    width:15px;
+  }
+  .next-page, 
+  .prev-page, .base 
+  { 
+    background-image:url( images/sb-scroll-back.png ); 
+    background-position:5px 5px 5px 5px; /*left top right bottom offsets*/
+    background-repeat:expand; 
+  }
+ 
+  .slider 
+  { 
+    border:1px solid #AAA; 
+    foreground-image:url( images/sb-scroll-slider.png ); 
+    foreground-position:50% 50%;
+    foreground-repeat:no-repeat; 
+  }
+  
+  .next:disabled, .slider:disabled, 
+  .prev:disabled  { foreground-image:none; border:none; foreground-image:none; width:0; }
+
+  .base:disabled
+  {
+    background-image:url( images/sb-scroll-base.png ); 
+    background-repeat:repeat; 
+    background-position:0 0 0 0;
+  }  
+  
+  .next:hover,   .slider:hover, 
+  .prev:hover     { background-color: #EEE; }
+  
+  .next:active,  .slider:active, 
+  .prev:active    { background-color: #FFF; }
+  
+  .base { height: 15px; } /* explicit declaration of its height */
+  
+}
+
+
+#horizontal-container 
+{ 
+	size:*;
+	flow:horizontal; 
+}
+
+div { height:75%; width:*; }
+ul { 
+  vertical-scrollbar: my-v-scrollbar;
+  horizontal-scrollbar: my-h-scrollbar;
+	margin: 10px; 
+	padding: 5px; 
+	size: *; 
+	border: dashed black 4px; 
+	list-style-type: none; 
+	color: black; 
+}
+li { 
+	margin: 5px; 
+	padding: 5px; 
+	width: 240px; 
+	border: dashed black 1px; 
+	background-color: white; 
+	color: black; 
+	}
+#window-scroll-always
+{ 
+	overflow: scroll;
+}
+#window-scroll-auto
+{ 
+	overflow: auto; 
+}
+#window-scroll-hidden
+{ 
+	overflow: hidden; 
+}
+#window-scroll-visible
+{ 
+	overflow: visible; 
+}
+
+	</style>
+	</head>
+	<body>
+	<h1>gradient background and transparent overflows</h1>
+	<div id="horizontal-container">
+		<div>
+			<center>oveflow:scroll</center>
+			<ul id="window-scroll-always" tabindex=0>
+				<li>
+					Hello</li>
+				<li>
+					Wibble</li>
+				<li>
+					Foo</li>
+				<li>
+					Bar</li>
+				<li>
+					Baz</li>
+			</ul>
+		</div>
+		<div>
+			<center>oveflow:auto</center>
+			<ul id="window-scroll-auto" tabindex=0>
+				<li>
+					Hello</li>
+				<li>
+					Wibble</li>
+				<li>
+					Foo</li>
+				<li>
+					Bar</li>
+				<li>
+					Baz</li>
+			</ul>
+		</div>
+		<div>
+			<center>oveflow:hidden</center>
+			<ul id="window-scroll-hidden" tabindex=0>
+				<li>
+					Hello</li>
+				<li>
+					Wibble</li>
+				<li>
+					Foo</li>
+				<li>
+					Bar</li>
+				<li>
+					Baz</li>
+			</ul>
+		</div>
+		<div>
+			<center>oveflow:visible</center>
+			<ul id="window-scroll-visible">
+				<li>
+					Hello</li>
+				<li>
+					Wibble</li>
+				<li>
+					Foo</li>
+				<li>
+					Bar</li>
+				<li>
+					Baz</li>
+			</ul>
+		</div>
+	</div>		
+	</body>
+</html>

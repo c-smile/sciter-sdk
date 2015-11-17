@@ -1,0 +1,61 @@
+﻿<html>
+  <head>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>behavior:history</h1>
+  <p>This behavior provides navigation history support, close to what browsers do on go-back go-forward buttons clicks.</p>
+  <h2>Elements</h2>
+  <p><code>&lt;frame history&gt;</code> - standard frame element but with attribute history defined.</p>
+  <h2>Model</h2>
+  <p>This bevavior is applicable to any elements containing frames inside. For example it can be applied to &lt;frameset&gt; if needed.</p>
+  <h2>Attributes</h2>
+  <p>behavior:history is not using any specific attributes. &nbsp;</p>
+  <h2>Methods</h2>
+  <dl>
+    <dt>canGoBack</dt>
+    <dd><strong>(</strong> <strong>)</strong> : <em>true</em> | <em>false</em>, &nbsp;true if history is available and method goBack() will be successful.</dd>
+    <dt>canGoForward</dt>
+    <dd><strong>(</strong> <strong>)</strong> : <em>true</em> | <em>false</em>, &nbsp;true if forward state(s) are available and method goForward() will be successful.</dd>
+    <dt>goBack</dt>
+    <dd><strong>(</strong> <strong>)</strong> : <em>true</em> | <em>false</em>, &nbsp;goes back on navigational stack, returns <em>true</em> if navigation was successful.</dd>
+    <dt>goForward</dt>
+    <dd><strong>(</strong> <strong>)</strong> : <em>true</em> | <em>false</em>, &nbsp;goes forward on navigational stack, returns <em>true</em> if navigation was successful.</dd></dl>
+  <h2>States</h2>
+  <p>N/A</p>
+  <h2>Events</h2>
+  <p>The behavior generates the following event:</p>
+  <dl>
+    <dt>HISTORY_STATE_CHANGED</dt>
+    <dd>- generated when state of internal navigation stack is changed.</dd></dl>
+  <p>The behavior reacts on the following events:</p>
+  <dl>
+    <dt>HISTORY_PUSH</dt>
+    <dd>- posted on hyperlink navigations and load new content handling by behavior:frame.</dd>
+    <dt>HISTORY_PRIOR</dt>
+    <dd>- the behavior will handle the event by calling goBack() method.</dd>
+    <dt>HISTORY_NEXT</dt>
+    <dd>- the behavior will handle the event by calling goForward() method.</dd></dl>
+  <h2>Value</h2>
+  <p>N/A</p>
+  <h2>History state change handling in script</h2>raw <code>onControlEvent</code> handler
+  <pre>var edit = $(input#some);
+edit.onControlEvent = function(evt)
+{
+  switch(evt.type) {
+    case Event.HISTORY_STATE_CHANGED: 
+       /* evt.target is the element */ 
+       break;
+  }
+}
+</pre>
+  <h3>decorators.tis handler</h3>
+  <pre>include &quot;decorators.tis&quot;;
+
+@when Event.HISTORY_STATE_CHANGED @on &quot;frame#content&quot; 
+   function() {
+     ... event handling code ...;
+   }
+</pre>
+</body>
+</html>

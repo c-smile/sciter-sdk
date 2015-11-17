@@ -1,0 +1,83 @@
+<html>
+  <head>
+    <title>q test suite</title>
+    <style>
+    
+      body { behavior:htmlarea; cursor:text; }
+    
+      li.failure { color:red; }
+      div.invisible { display:none; }
+      
+      div#arena { color: rgb(0,0,0); }
+    
+    </style>
+    <script type="text/tiscript">
+    
+      include "q.tis";
+      
+      var ulr = self.select("#results");
+  
+      function run(TestFunc)
+      {
+        var li = new Element("li");
+        ulr.append(li);
+        try 
+        {
+          TestFunc();
+          li.text = String.printf("%s passed", TestFunc );
+        }
+        catch(err)
+        {
+          li.html = String.printf("%s failed with <pre>%s</pre>", TestFunc, err );
+          li.@#class = "failure";
+        }
+      }    
+
+      include "q-tests.tis";  
+    
+    </script>
+  </head>
+<body>
+
+  <p>Please note that test coverage provided in q-tests.tis is far from being complete. If you will find any error please report it on Sciter forum at http://www.terrainformatica.com/forum/list.php?4</p>
+
+  <ol #results>
+  </ol>
+
+  <div #arena .invisible>
+    <div>First</div>
+    <div>Last, has <a href=#>a</a> inside</div>
+  </div>
+  <div #arena-for-after .invisible>
+    <div>First</div>
+    <div>Last</div>
+  </div>
+  <div #arena-for-attr .invisible>
+    <div>First</div>
+    <div>Last</div>
+  </div>
+  <div #arena-for-before .invisible>
+    <div>First</div>
+    <div>Last</div>
+  </div>
+  <div #arena-for-wrap .invisible>
+    <span>First</span>
+    <span>Last</span>
+  </div>
+  <div #arena-for-unwrap .invisible>
+    <button><span>First</span></button>
+    <button><span>Last</span></button>
+  </div>
+  <div #arena-for-appendTo>
+  </div>
+  
+  <div #arena-for-onoff>
+    <button #test-on .not-once>Test On</button> 
+    <button #test-off .not-once>Test Off (shall do nothing)</button> 
+    <button #test-one>Test One (shall do it only once)</button> 
+  </div>
+  <button #test-trigger-1>Test trigger, shows alert</button>
+  <button #test-trigger-2>Test trigger, shall not show alert</button>
+  <button #test-trigger-3>Test trigger, custom event</button>
+</body>
+</html>

@@ -1,0 +1,292 @@
+
+class Richtext: Behavior {
+
+  const ACTIVE = 0x01;
+  const DISABLED = 0x02;
+
+  function attached() { 
+    var nodes = this.nodes(); // store initial content
+    this.clear();             // clear 
+    this.append(this.toolbar = new Element("toolbar"));
+    this.append(this.htmlarea = new Element("htmlarea"));
+    //this.append(this.textarea = new Element("textarea"));
+    for( var node in nodes ) // assign content to htmlarea 
+      this.htmlarea.appendNode(node);
+    this.observers = [];
+    this.initToolbar();
+    this.setupKeyBindings();
+  }
+  function detached() {}
+  
+  property source(v) {
+    get return this.htmlarea.html;
+  }
+      
+  // binds UI thing (e.g. toolbar button) with command|function to be executed onClick
+  function bind(selector, cmd, param = undefined) {
+    var me = this;
+    var uiel = this.select(selector); assert uiel;
+    if(typeof cmd == #function) {
+      uiel.onClick = :: cmd.call(me,#exec,param);
+      this.observers.push( function() {
+        var cmdState = cmd.call(me,#query,param) || 0;
+        uiel.state.checked  = (cmdState & ACTIVE) != 0;
+        uiel.state.disabled = (cmdState & DISABLED) != 0;
+      });
+    } else if(typeof cmd == #string) {
+      uiel.onClick = :: me.htmlarea.execCommand(cmd,param);
+      this.observers.push( function() {
+        var cmdState = me.htmlarea.queryCommand(cmd,param) || 0;
+        uiel.state.checked  = (cmdState & ACTIVE) != 0;
+        uiel.state.disabled = (cmdState & DISABLED) != 0;
+      });
+    } else 
+      assert false: "Bad cmd type";
+  }
+    
+  function initToolbar() {
+
+    // build toolbar
+    this.toolbar.$content
+       (<button .bold />
+        <button .italic />
+        <button .underline />
+        <button .strikethrough />
+        <splitter/>
+        <button .font-family />
+        <button|menu .font-size>
+          <menu.popup #test>
+            <li>1 - xx-small</li>
+            <li>2 - x-small</li>
+            <li>3 - small</li>
+            <li>4 - normal</li>
+            <li>5 - large</li>
+            <li>6 - x-large</li>
+            <li>7 - xx-large</li>
+          </menu>
+        </button>
+        <button .text-color />
+        <button .text-back-color />
+        <splitter/>
+        <button .ulist title="unordered list" />
+        <button .olist title="ordered list" />
+        <button .dlist title="definitions list" />
+        <splitter/>
+        <button .pre title="pre block" />
+        <splitter/>
+        <button .unindent tooltip='unindent selection: <kbd>CTRL</kbd>+<kbd>-</kbd>' />
+        <button .indent tooltip='indent selection: <kbd>CTRL</kbd>+<kbd>+</kbd>' />
+        <splitter/>
+        <button .align type="menu">
+              <menu>
+                <li .align-left>Align left</li>
+                <li .align-center>Align center</li>
+                <li .align-right>Align right</li>
+                <li .align-justify>Justify</li>
+              </menu>
+            </button>
+        <splitter/>
+        <button .picture />
+        <button .table type="menu"><menu /></button>
+        <button .link />
+        <button .fullscreen />);
+        
+    this.bind("button.bold",          "format:toggle-span:b|strong");    
+    this.bind("button.italic",        "format:toggle-span:i|em");
+    this.bind("button.underline",     "format:toggle-span:u");
+    this.bind("button.strikethrough", "format:toggle-span:s|strike");
+                                      
+    this.bind("button.ulist",         "format:toggle-list:ul");
+    this.bind("button.olist",         "format:toggle-list:ol");
+    this.bind("button.dlist",         "format:toggle-list:dl");
+    this.bind("button.pre",           "format:toggle-pre");
+                                      
+    this.bind("button.unindent",      "format:unindent");
+    this.bind("button.indent",        "format:indent");
+    
+    this.bind("button.font-size li:nth-child(1)", "format:apply-span:font", {size:1});
+    this.bind("button.font-size li:nth-child(2)", "format:apply-span:font", {size:2});
+    this.bind("button.font-size li:nth-child(3)", "format:apply-span:font", {size:3});
+    this.bind("button.font-size li:nth-child(4)", "format:apply-span:font", {size:4});
+    this.bind("button.font-size li:nth-child(5)", "format:apply-span:font", {size:5});
+    this.bind("button.font-size li:nth-child(6)", "format:apply-span:font", {size:6});
+    this.bind("button.font-size li:nth-child(7)", "format:apply-span:font", {size:7});
+    
+    this.SetupTableSelector(this.toolbar.$(button.table));
+  }
+  
+  function onControlEvent(evt) {
+    
+    switch( evt.type ) {
+      case Event.UI_STATE_CHANGED: // caret position changed in htmlarea, update all observers (buttons).
+      {
+        // simple binds:
+        for(var func in this.observers) func(); 
+        // menus
+        var noSelection = this.htmlarea.selection.isCollapsed;
+        for( var button in this.toolbar.$$(button.font-size,button.font-family))
+          button.state.disabled = noSelection; 
+
+        if( evt.target !== this ) // to avoid UI loop
+          this.postEvent("statechange.richtext");
+        return true; 
+      }
+      case Event.CONTENT_CHANGED: 
+      {
+        //"value" change
+        //var undoStackNonEmpty = (this.execCommand("edit:undo") & ACTIVE) == ACTIVE;
+        if( evt.target !== this ) // to avoid UI loop  
+          this.postEvent("change.richtext" /*, undoStackNonEmpty */);
+        return true;
+      }
+    }
+  }
+  
+  function SetupTableSelector(button) 
+  {
+      const DEF_TABLE_COLS = 8;
+      const DEF_TABLE_ROWS = 5;
+
+      var selTableRow = -1;
+      var selTableCol = -1;
+      
+      var me = this;
+      var menu = button.$(:root>menu);
+      
+      const tableStyle = "<header>table width:<button.radio name='tablewidth' value='' checked>auto</button>"
+                                             "<button.radio name='tablewidth' value='width=100%'>100%</button></header>";
+
+        // initialization    
+      var tableGrid = "<table>";
+        for( var r in DEF_TABLE_ROWS ) {
+          tableGrid += "<tr>";
+          for( var c in DEF_TABLE_COLS )
+            tableGrid += "<td/>";
+          tableGrid += "</tr>";
+        }
+      tableGrid += "</table>";
+      
+      menu.html = tableStyle + tableGrid;
+          
+      var table = button.$(:root>menu>table);
+      
+      function setSelection(R = -1,C = -1) {
+        if( C == selTableCol && R == selTableRow )
+          return;
+        for( var r in DEF_TABLE_ROWS )
+          for( var c in DEF_TABLE_COLS )
+                table[r][c].attributes["selected"] = r <= R && c <= C ? true : undefined; 
+        selTableCol = C;
+        selTableRow = R;
+      }
+      
+      table.onMouse = function(evt) 
+      {
+          if( evt.type == Event.MOUSE_MOVE ) {
+            var td = evt.target.$p(td);
+            if( !td || !evt.target.belongsTo(table)) return;
+            var C = td.index;
+            var R = td.parent.index;
+            setSelection(R,C);
+          } else if( evt.type == Event.MOUSE_LEAVE ) 
+            setSelection();
+      }
+      
+      button.onControlEvent = function(evt) {
+        if(evt.type == Event.POPUP_READY) 
+          setSelection();
+        else if(evt.type == Event.MENU_ITEM_CLICK) {
+          var C = evt.target.index;
+          var R = evt.target.parent.index;
+          //stdout.printf("%V\n",menu.$(header).value);
+          me.insertTable(R+1,C+1, menu.$(header).value.tablewidth);
+          return true; // handled
+        } 
+      }
+      
+      //this.htmlarea
+      
+  }
+  
+  function insertTable(rows, columns, width=undefined, border=undefined) 
+  {
+    var html = "<table border " + (width || "") + ">";
+    for( var r in rows ) {
+      html += "<tr>";
+      for( var r in columns )
+          html += "<td />";
+      html += "</tr>";
+    }  
+    html += "</table>";
+    
+    function insertIt(transaction) {
+      // 'this' here is an htmlarea
+      var pos = transaction.removeRange();                    // delete selection if any
+      var container = (this super).blockContainerOf(pos[0]);  // get container that can hold the <table>
+      pos = transaction.split(pos,container);                 // split the pos until the container
+      var insertedNodes = transaction.insertHtml(pos, html);  // insert the html at pos
+      assert insertedNodes.length && insertedNodes[0].tag == "table";
+      var table = insertedNodes[0];
+      var firstTextPos = table.$(td).firstCaretPos;
+      this.state.focus = true;
+      this.selection.select(firstTextPos);                    // move caret to pos
+      return true;
+    }
+    this.htmlarea.transact(insertIt,"insert table"); // do the action inside undoable transaction.
+  }
+    
+  // helper methods:
+  function blockContainerOf(node) {
+    var root = this.htmlarea;
+    var c = node;
+    while( c ) 
+    {
+      if(c.contentModel == #block-inside) return c;
+      if(c == root) return null;
+      c = c.parent;
+    }
+    return null;
+  }
+  
+  function setupKeyBindings() {
+  
+    const magickeys = 
+    [
+      { name: "B", code: Event.VK_B,              cmd:"format:toggle-span:b|strong",    desc: "apply <strong> span" },
+      { name: "I", code: Event.VK_I,              cmd:"format:toggle-span:i|em",        desc: "apply <em> span" },
+      { name: "U", code: Event.VK_U,              cmd:"format:toggle-span:u",           desc: "apply <u> (underline) span" },
+      { name: "T", code: Event.VK_T,              cmd:"format:toggle-span:s|strike",    desc: "apply <strike> span" },
+      { name: "D", code: Event.VK_D,              cmd:"format:toggle-span:code",        desc: "apply <code> span" },
+      { name: "ENTER",   code: Event.VK_RETURN,   cmd:"edit:insert-block-break",        desc: "break block element" },
+      { name: "NUMPAD+", code: Event.VK_ADD,      cmd:"format:indent",                  desc: "indent selection" },
+      { name: "NUMPAD-", code: Event.VK_SUBTRACT, cmd:"format:unindent",                desc: "unindent selection" },
+      { name: "NUMPAD1", code: Event.VK_NUMPAD1,  cmd:"format:morph-block:h1",          desc: "transform to <H1>" },
+      { name: "NUMPAD2", code: Event.VK_NUMPAD2,  cmd:"format:morph-block:h2",          desc: "transform to <H2>" },
+      { name: "NUMPAD3", code: Event.VK_NUMPAD3,  cmd:"format:morph-block:h3",          desc: "transform to <H3>" },
+      { name: "NUMPAD4", code: Event.VK_NUMPAD4,  cmd:"format:morph-block:h4",          desc: "transform to <H4>" },
+      { name: "NUMPAD5", code: Event.VK_NUMPAD5,  cmd:"format:morph-block:h5",          desc: "transform to <H5>" },
+      { name: "NUMPAD6", code: Event.VK_NUMPAD6,  cmd:"format:morph-block:h6",          desc: "transform to <H6>" },
+      { name: "NUMPAD*", code: Event.VK_MULTIPLY, cmd:"format:morph-block:p",           desc: "transform to <P>" },
+      { name: "NUMPAD/", code: Event.VK_DIVIDE,   cmd:"format:morph-block:div",         desc: "transform to <DIV>" },
+      
+      { name: "NUMPAD0", code: Event.VK_NUMPAD0,  cmd:"format:toggle-list:ol",          desc: "toggle ordered list <OL>/<LI>" },
+      { name: "NUMPAD.", code: Event.VK_DECIMAL,  cmd:"format:toggle-list:ul",          desc: "toggle unordered list <UL>/<LI>" },
+      
+    ];
+  
+    this.htmlarea.onKey = function(evt) {
+      if( evt.type != Event.KEY_DOWN ) return;
+      if( !evt.ctrlKey ) return;
+      for(var mk in magickeys)
+        if( evt.keyCode == mk.code ) {
+          return this.execCommand(mk.cmd,undefined);
+        }
+    }
+  
+  }
+  
+  
+}
+
+
+

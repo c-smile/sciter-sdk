@@ -1,0 +1,199 @@
+﻿<html>
+  <head>
+    <title>Sciter Script Syntax</title>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h2>Lexical structure</h2>
+  <h2>Identifiers</h2>
+  <p>Identifiers start with an alphabetic character or '_' or '$' or '@', followed by any number of alphabetic characters, '_', '$', '@' or digits ([0-9]). <br/>&quot;Foo&quot;, &quot;foo&quot; and &quot;FOO&quot; are three distinct and valid identifiers.</p>
+  <h2>Keywords</h2>
+  <p>Here is a full list of keywords used by the language. These cannot be used as identifiers:</p>
+  <pre>function,   var,      if,       else,     while,     return,   for,
+break,      continue, do,       switch,   case,      default,  null,
+super,      new,      try,      catch,    finally,   throw,    typeof,
+instanceof, in,       property, const,    get,       set,      include,
+like,       yield,    type,     class,    namespace, assert,   debug
+otherwise
+</pre>
+  <h2>Operators</h2>
+  <p>Operators used by the language:</p>
+  <pre>      =     !     ~     ^     *     /     %
++     -     &amp;     |     =    &gt;    &amp;&amp;    ||    ++    --    +=    -=    *=    /=
+%=    &amp;=    |=    ^=    &gt;=   ..    ===   !==
+&gt;&gt;   &gt;&gt;=  ~/    ~%    /~    %~
+</pre>
+  <p>Special symbols are:</p>
+  <pre>[ ] { } # &quot; ' `
+</pre>
+  <h2>Comments</h2>
+  <p>A multi line comment is text enclosed in <code>/*</code> and &nbsp;<code>*/</code> brackets.</p>
+  <p>A single line comment starts with <code>//</code> and spans everything until the end of that line.</p>
+  <h2>Literals</h2>
+  <h3>Integer literals</h3>
+  <table cellspacing="1" cellpadding="3" border="0" bgcolor="black">
+    <tr valign="top">
+      <td bgcolor="white"><b>Pattern</b></td>
+      <td bgcolor="white"><b>Example</b></td>
+      <td bgcolor="white"><b>Description</b></td></tr>
+    <tr valign="top">
+      <td bgcolor="white"><code>-?[1-9][0-9]*</code></td>
+      <td bgcolor="white">34</td>
+      <td bgcolor="white">Decimal number</td></tr>
+    <tr valign="top">
+      <td bgcolor="white"><code>-?0[0-9]*</code></td>
+      <td bgcolor="white">0336</td>
+      <td bgcolor="white">Octal number</td></tr>
+    <tr valign="top">
+      <td bgcolor="white"><code>-?0[xX][0-9a-fA-F]+</code></td>
+      <td bgcolor="white">0x3d</td>
+      <td bgcolor="white">Hexadecimal number</td></tr>
+    <tr valign="top">
+      <td bgcolor="white"><code>'.'</code></td>
+      <td bgcolor="white">'A'</td>
+      <td bgcolor="white">Character code (integer)</td></tr></table>
+  <h3>Float literals</h3>
+  <table cellspacing="1" cellpadding="3" border="0" bgcolor="black">
+    <tr valign="top">
+      <td bgcolor="white"><b>Pattern</b></td>
+      <td bgcolor="white"><b>Example</b></td>
+      <td bgcolor="white"><b>Description</b></td></tr>
+    <tr valign="top">
+      <td bgcolor="white"><code>-?[0-9]*\.[0-9]+</code></td>
+      <td bgcolor="white">3.1415926</td>
+      <td bgcolor="white">3.1415926</td></tr>
+    <tr valign="top">
+      <td bgcolor="white"><code>-?[0-9]+[eE]-?[0-9]+</code></td>
+      <td bgcolor="white">-5e3</td>
+      <td bgcolor="white">-5000.0</td></tr>
+    <tr valign="top">
+      <td bgcolor="white"><code>-?[0-9]*\.[0-9]+[eE]-?[0-9]+</code></td>
+      <td bgcolor="white">.22e-2</td>
+      <td bgcolor="white">0.0022</td></tr></table>
+  <h3>String literals</h3>
+  <p>String literals are sequences of characters, enclosed by double quotes - <code>&quot;</code>, or back ticks (grave accent, character with code 0x60) - <code>`</code></p>
+  <p><code>&quot;Hello world&quot;</code> and <code>`Hello world`</code> are valid string literals. The escapement symbol in string literals is the back slash - <code>\</code>.</p>
+  <p>Escapement rules:</p>
+  <table bgcolor="#000000" border="0" cellpadding="3" cellspacing="1">
+    <tr valign="top">
+      <td bgcolor="#ffffff"><strong>Sequence</strong></td>
+      <td bgcolor="#ffffff"><strong>Character</strong></td></tr>
+    <tr valign="top">
+      <td bgcolor="#ffffff"><code>\b</code></td>
+      <td bgcolor="#ffffff">backspace character</td></tr>
+    <tr valign="top">
+      <td bgcolor="#ffffff"><code>\t</code></td>
+      <td bgcolor="#ffffff">tab character</td></tr>
+    <tr valign="top">
+      <td bgcolor="#ffffff"><code>\n</code></td>
+      <td bgcolor="#ffffff">newline character</td></tr>
+    <tr valign="top">
+      <td bgcolor="#ffffff"><code>\f</code></td>
+      <td bgcolor="#ffffff">form feed character</td></tr>
+    <tr valign="top">
+      <td bgcolor="#ffffff"><code>\r</code></td>
+      <td bgcolor="#ffffff">carriage return character</td></tr>
+    <tr valign="top">
+      <td bgcolor="#ffffff"><code>\&quot;</code></td>
+      <td bgcolor="#ffffff">double quote character</td></tr>
+    <tr valign="top">
+      <td bgcolor="#ffffff"><code>\\</code></td>
+      <td bgcolor="#ffffff">backslash character</td></tr>
+    <tr valign="top">
+      <td bgcolor="#ffffff"><code>\`</code></td>
+      <td bgcolor="#ffffff">backtick character</td></tr>
+    <tr valign="top">
+      <td bgcolor="#ffffff"><code>\[0-7]{1,3}</code></td>
+      <td bgcolor="#ffffff">\116 - octal character literal</td></tr>
+    <tr valign="top">
+      <td bgcolor="#ffffff"><code>\x[0-9a-fA-F]{1,2}</code></td>
+      <td bgcolor="#ffffff">\4e - hexadecimal character code</td></tr>
+    <tr valign="top">
+      <td bgcolor="#ffffff"><code>\u[0-9a-fA-F]{4}</code></td>
+      <td bgcolor="#ffffff">\u004E - unicode character code</td></tr></table>
+  <p>Two or more string literals, separated by whitespaces or EOL characters, constitute a single string literal. Thus, the following two strings:</p>
+  <pre>var str1 = &quot;The quick brown &quot;
+           &quot;fox jumps over &quot;
+           &quot;the lazy dog&quot;;
+
+var str2 = &quot;The quick brown fox jumps over the lazy dog&quot;;
+</pre>
+  <p>are equivalent.</p>
+  <h3>Symbol literals</h3>
+  <p>Symbol literals are sequences of valid characters starting from '<code>#</code>' symbol.</p>
+  <p>Valid characters here are: lower- and upper-case letters, digits, '_' (underscore sign), '<code>$</code>' (dollar sign), '<code>@</code>' (at-sign) and '<code>-</code>' (minus sign).</p>
+  <p>Note that symbols may contain minus sign. This is made intentionally to support CSS names. Examples of valid symbol literals:</p>
+  <pre>var symFontFace = #font-face;
+var symBorder = #border;
+</pre>
+  <h3>Special literals</h3>
+  <table bgcolor="#000000" border="0" cellpadding="3" cellspacing="1">
+    <tr valign="top">
+      <td bgcolor="#ffffff"><strong>Literal</strong></td>
+      <td bgcolor="#ffffff"><strong>Description</strong></td></tr>
+    <tr valign="top">
+      <td bgcolor="#ffffff"><code>undefined</code></td>
+      <td bgcolor="#ffffff">implicit no-value, this value is returned by an attempt to read a non-existing property of an object.<br/>typeof <em>undefined</em> is #symbol</td></tr>
+    <tr valign="top">
+      <td bgcolor="#ffffff"><code>null</code></td>
+      <td bgcolor="#ffffff">explicit no-value. typeof <em>null</em> is #object</td></tr>
+    <tr valign="top">
+      <td bgcolor="#ffffff"><code>true</code></td>
+      <td bgcolor="#ffffff">true value in logical operations. typeof <em>true</em> is #boolean</td></tr>
+    <tr valign="top">
+      <td bgcolor="#ffffff"><code>false</code></td>
+      <td bgcolor="#ffffff">false value in logical operations. typeof <em>false</em> is #boolean</td></tr></table>
+  <h3>Array literals</h3>
+  <p>Array literals allow to define (construct) arrays inline. The array literal is a list of expressions-initializers, separated by comma <code>,</code> and enclosed in <code>[</code> and <code>]</code> brackets (square brackets):</p>
+  <pre>var a = [ 1, 2, 3, &quot;four&quot;, 5 ];
+</pre>
+  <p>In the statement above, variable <em>a</em> gets the reference to the newly defined array with five elements.</p>
+  <p>Any <code>,</code> (comma) appearing between the last element, and the <code>]</code> (closing square bracket) is ignored. Therefore, this is also a valid array declaration:</p>
+  <pre>var a = [ 1, 2, 3, &quot;four&quot;, 5, ];
+</pre>
+  <p>The kind-of-formal definition of the array literal:</p>
+  <p><code>[</code> ( <code>&lt;rs-expr&gt;</code> <code>,</code> )* &nbsp;<code>]</code></p>
+  <p>Where &lt;rs-expr&gt; is the so-called right side expression - the expression that can appear on the right side of the <code>=</code> (assignment) operator.</p>
+  <h3>Object literals</h3>
+  <p>Object literals allow to define (construct) objects inline. The object literal is a list of key-value pairs separated by <code>,</code> (comma) or <code>;</code> (semicolon), and enclosed in <code>{</code> and <code>}</code> brackets (curled brackets). Each key-value pair consists of the key expression-initializer, and the value expression-initializer, separated by <code>:</code> (colon).</p>
+  <pre>var obj = { one: 1, two: 2, three: &quot;three&quot;, four:4 };
+</pre>
+  <p>If the key is presented as a name token, it is interpretted as a symbol name. Thus, the following statement:</p>
+  <pre>var obj = { #one: 1, #two: 2, #three: &quot;three&quot;, #four:4 };
+</pre>
+  <p>is a precise equivalent of the statement above.</p>
+  <p>If the first token after the opening <code>{</code> bracket &nbsp;is <code>:</code> (semicolon), &nbsp;the expression that follows is treated as a class name. This allows to define objects of user-defined classes in literal form:</p>
+  <pre>var myObj = {:MyClass one:1, two:2, three: &quot;three&quot;, four:4 };
+</pre>
+  <p>The formal definition of the object literal:</p>
+  <p><code>{</code> [ <code>:</code> <code>&lt;class-name&gt;</code> &nbsp;] ( <code>&lt;rs-expr&gt;</code> <code>:</code> <code>&lt;rs-expr&gt;</code> [ <code>,;</code> ] )* &nbsp;( <code>&lt;rs-expr&gt;</code> <code>:</code> <code>&lt;rs-expr&gt;</code> )? &nbsp;<code>}</code></p>
+  <h3>RegExp literals</h3>
+  <p>The RegExp literal is a sequence of regular expression components, enclosed by <code>/</code> (forward slash) :</p>
+  <pre>var re = /^[ \t]*$/ ; // RE expression for matching blank lines.
+</pre>
+  <p>The kind-of-formal definition of RE literal:</p>
+  <p><code>/</code> &lt;re-expression&gt; <code>/</code>[<code>i</code>][<code>g</code>]</p>
+  <p>where <em>i</em> means case-insensitive match, and <em>g</em> enables &quot;global&quot; matching. When using the <em>RegExp.exec()</em> method, specify this modifier to return all matches, rather than the first one.</p>
+  <h3>Tuple literals</h3>
+  <p>Tuple literals allow to define (construct) tuples inline. The tuple literal is a <code>[</code> (opening square bracket) followed by symbol - tag of the tuple, then <code>:</code> symbol and the list of expressions-initializers, separated by comma <code>,</code> &nbsp;closed by <code>]</code> bracket (closing square bracket):</p>
+  <pre>var tup = [tupletag: 1, 2, 3, &quot;four&quot;, 5 ];
+</pre>
+  <p>In the statement above, variable <em>tup</em> gets the reference to the newly defined 5-tuple - tuple that has five elements. <code>tup.tag</code> &nbsp;property will have value of <code>#tupletag</code>.</p>
+  <p>Any <code>,</code> (comma) appearing between the last element, and the <code>]</code> (closing square bracket) is ignored. Therefore, this is also a valid tuple declaration:</p>
+  <pre>var tup = [tupletag: 1, 2, 3, &quot;four&quot;, 5, ];
+</pre>
+  <p>The kind-of-formal definition of the tuple literal:</p>
+  <p><code>[</code> <code>&lt;symbol&gt;</code> <code>:</code> &nbsp;( <code>&lt;rs-expr&gt;</code> <code>,</code> )* &nbsp;<code>]</code></p>
+  <p>Where &lt;rs-expr&gt; is the so-called right side expression - the expression that can appear on the right side of the <code>=</code> (assignment) operator.</p>
+  <h3>Macro variables</h3>
+  <p>There are three macro variables that can be used for logging and debugging purposes:</p>
+  <ul>
+    <li><code>__FILE__</code> - name of current file;</li>
+    <li><code>__LINE__</code> - current line number in the file;</li>
+    <li><code>__TRACE__</code> - actually is an instruction that creates current call trace snapshot as a vector of triplets. Each triplet is a vector of three elements where:</li>
+    <ul>
+      <li><code>[0]</code> - integer, line number;</li>
+      <li><code>[1]</code> - symbol, function name;</li>
+      <li><code>[2]</code> - symbol, file name.</li></ul></ul>
+</body>
+</html>

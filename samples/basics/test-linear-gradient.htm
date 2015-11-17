@@ -1,0 +1,136 @@
+<html>
+  <head>
+  <title></title>
+<style>
+
+  body
+  {
+    /*font-rendering-mode: ui ;*/
+    flow:horizontal-flow;
+    background: url(images/back.png) repeat;
+    color:white;
+    margin:0; padding:10px;
+    border-spacing:10px;
+  }
+
+  div { width:*; height:100px; 
+        padding:6px; /*border-radius:10px;*/ }
+        
+  div:nth-child(2n) { clear:right; }
+  
+  div:hover
+  {
+    transform:rotate(15deg) scale(.5);
+    transition: transform(quart-out,0.5s,quart-in);
+  }
+  
+  @const START: rgb(255,0,0);
+  @const END: rgba(0,0,255,0.5);
+
+  div.gradient
+  {
+    background: linear-gradient(top, @START, @END);
+  }
+  div.gradient:hover
+  {
+    transform:none;
+    background: linear-gradient(top, @END, @START);
+    transition: background(linear,0.5s);
+  }
+  
+  
+  div.gradient-2
+  {
+    background: linear-gradient(left, red, yellow, green, blue, magenta);
+  }
+  
+  div.diagonal-gradient
+  {
+    background: linear-gradient(top left, @START, @END);
+  }
+  div.diagonal-gradient-2
+  {
+    background: linear-gradient(top left, red, yellow, green, blue, magenta);
+  }
+  
+  div.gradient-fixed
+  {
+    background: linear-gradient(100% 100%, 80px 80px, @START, @END);
+  }
+  div.gradient-fixed:hover
+  {
+    transform:none;
+    background: linear-gradient(0% 0%, 80px 80px, @START, @END);
+    transition: background(quart-out,0.5s,quart-in);
+  }
+  
+  div.gradient-fixed-2
+  {
+    background: linear-gradient(100% 100%, -80px -80px, red, yellow, green, blue, magenta);
+  }
+  
+  
+  div.angle-gradient
+  {
+    background: linear-gradient(45deg, @START, @END);
+  }
+  div.angle-gradient-2
+  {
+    background: linear-gradient(45deg, red, yellow, green, blue, magenta);
+  }
+  div.angle-gradient-pos
+  {
+    background: linear-gradient(25% 25%, 45deg, @START, @END);
+  }
+  
+  div.angle-gradient-pos:hover
+  {
+    transform:none;
+    background: linear-gradient(25% 25%, 135deg, @START, @END);
+    transition: background(linear,0.5s);
+  }
+  
+  
+  div.angle-gradient-pos-2
+  {
+    background: linear-gradient(25% 25%, 45deg, red, yellow, green, blue, magenta);
+  }
+  div.angle-gradient-dim
+  {
+    background: linear-gradient(center center, 80px 80px, 45deg, @START, @END);
+  }
+  div.angle-gradient-dim:hover
+  {
+    transform:none;
+    background: linear-gradient(center center, 80px 80px, 135deg, @START, @END);
+    transition: background(quart-out,0.5s,quart-in);
+  }
+  
+  div.angle-gradient-dim-2
+  {
+    background: linear-gradient(40px 40px, 80px 80px, 45deg, red, yellow, green, blue, magenta);
+  }
+  
+
+  
+  
+</style>
+<script type="text/tiscript"></script>
+  </head>
+<body>
+
+  <div .gradient>Gradient 1</div>
+  <div .gradient-2>Gradient 2</div>
+  <div .diagonal-gradient>Diagonal gradient 1</div>
+  <div .diagonal-gradient-2>Diagonal gradient 1</div>
+  <div .gradient-fixed>Gradient 1 fixed</div>
+  <div .gradient-fixed-2>Gradient 2 fixed</div>
+  <div .angle-gradient>Angle gradient 1</div>
+  <div .angle-gradient-2>Angle gradient 2</div>
+  <div .angle-gradient-pos>Angle + pos gradient 1</div>
+  <div .angle-gradient-pos-2>Angle + pos gradient 2</div>
+  <div .angle-gradient-dim>Angle + dim gradient 1</div>
+  <div .angle-gradient-dim-2>Angle + dim gradient 2</div>
+
+</body>
+</html>

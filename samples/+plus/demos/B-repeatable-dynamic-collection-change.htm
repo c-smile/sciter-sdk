@@ -1,0 +1,66 @@
+<html>
+  <head>
+    <title>Plus: select element binding</title>
+    <style>
+      @import url(../plus.css); /* the only thing needed to include Plus framework */
+      @import url(../../note.css); 
+      
+      @import url(../../../widgets/switch/switch.css); 
+      
+      p { margin-top: 3em; }
+      select#list { display:block; width:100dip; }
+
+    </style>
+    
+    <script type="text/tiscript">
+      
+      include "../plus.tis"; // model below uses @observing decorator defined in plus.tis
+    
+      namespace Data // our model
+      {  
+        var items1 = [
+          {name: "Foo", value: 1},
+          {name: "Bar", value: 2},
+          {name: "Buz", value: 3}
+        ];
+        
+        var items2 = [
+          {name: "FooBar",  value: 11},
+          {name: "BarBuz",  value: 12},
+          {name: "BuzFoo",  value: 13},
+          {name: "FooDoz",  value: 14},
+          {name: "DozTrez", value: 15}
+        ];
+      
+        var items = items1;
+      
+        var currentSet = "items1";
+        
+        @observing "currentSet" // set `items` by name of variable 
+          function switchSets() 
+          {
+            items = eval(currentSet,Data); // eval name in Data context, it will get us either items1 or items2 arrays
+          }
+          
+          
+      }    
+      
+    
+    </script>
+  </head>
+
+<body model="Data"> <!-- define data model we observe -->
+
+  <note>Demo of repeatable changing sets.</note>
+  
+  Choose input data set: <switch(currentSet)>
+    <option value="items1">Item Set 1</option>
+    <option value="items2">Item Set 2</option>
+  </switch>  
+
+  <select #list size=5 each="item in items">
+    <option value="{item.value}"><output(item.name)/></option>
+  </select>
+
+</body>
+</html>

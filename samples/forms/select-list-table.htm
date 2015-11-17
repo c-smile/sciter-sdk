@@ -1,0 +1,51 @@
+<html>
+	<head>
+		<title>Select table</title>
+		<style>
+        
+        select
+        { 
+          display:block;
+          flow: table;
+          
+          height:max-content; 
+          width:200px;
+          
+          padding:0; 
+          border-spacing:-1px;
+          border:none;
+        }
+        select > option { flow:table-row; }
+        select > option > td { border:1px solid grey; padding:4px 8px; }
+        select > option:current td:last-child { background:green; }
+        select > option > td:nth-child(2) { 
+          width:*;
+          overflow-x:hidden;
+          white-space: nowrap;
+          text-overflow:ellipsis;
+        }
+				
+			}
+		</style>
+	</head>
+	<body>
+    <p>Table as select|list</p>
+		<select|list>
+        <option value="1">
+            <td>Option 1</td>
+            <td>*Short*</td>
+            <td>123456</td>
+        </option>
+        <option value="2">
+            <td>Option 2</td>
+            <td>******* LOONG ********</td>
+            <td>123456</td>
+        </option>
+        <option value="3">
+            <td>Option 3</td>
+            <td>*Short*</td>
+            <td>123456</td>
+        </option>
+		</select>
+	</body>
+</html>

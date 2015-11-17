@@ -1,0 +1,65 @@
+﻿<html>
+  <head>
+    <meta name="source"/>
+    <meta name="source"/>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>behavior:menu-bar</h1>
+  <p>This behavior provides horizontal menu bar - top level container for popup menus.</p>
+  <p>Default style system of the engine does not provide default styling of menu bars. If your application needs menu bars use {sdk}/samples/menu/std-menu.css as a prototype. </p>
+  <h2>Elements</h2>
+  <p>No elements has this behavior applied by default. &nbsp;<u>{sdk}/samples/menu/std-menu.css</u> assumes that top level menu is defined by <code>&lt;ul id=&quot;menu-bar&quot;&gt;</code> &nbsp;element.</p>
+  <h2>Model</h2>
+  <p>Example of menu declaration in Sciter:</p>
+  <pre>&lt;ul id=&quot;menu-bar&quot;&gt;
+  &lt;li&gt;
+    &lt;caption&gt;File&lt;/caption&gt;
+    &lt;menu&gt;
+      &lt;li id=&quot;file-open&quot;&gt;Open File &lt;span.accesskey&gt;Ctrl+O&lt;/span&gt;&lt;/li&gt;
+      &lt;hr&gt;
+      &lt;li id=&quot;file-save&quot;&gt;Save File &lt;span.accesskey&gt;Ctrl+S&lt;/span&gt;&lt;/li&gt;
+      &lt;li id=&quot;file-save-as&quot;&gt;Save File as ...&lt;span.accesskey&gt;Ctrl+Shift+S&lt;/span&gt;&lt;/li&gt;
+    &lt;/menu&gt;
+   &lt;li&gt;
+   ...
+&lt;/ul&gt;
+</pre>
+  <h2>Attributes</h2>
+  <p>behavior:menu-bar is not using any specific attributes. &nbsp;</p>
+  <dl>
+    <h2>Methods</h2>
+    <p>No specific methods.</p>
+    <h2>States</h2>
+    <ul>
+      <li><code>:owns-popup</code> &nbsp;state flag is set on menu owner element ( <code>menuOwnerElement</code> above ) when menu is shown;</li>
+      <li><code>:popup</code> - is set on the<code> &lt;menu&gt;</code> &nbsp;element when it is shown.</li></ul>
+    <h2>Events</h2>
+    <dt>MENU_ITEM_CLICK</dt>
+    <dd>- posted when user clicks on menu item, Event.target is the menu item.</dd>
+    <dt>MENU_ITEM_ACTIVE</dt>
+    <dd>- is send when user activates the menu by mouse hovering or by navigating keys. Event.target is the menu item.</dd>
+    <dt>Menu item events get propagated in so called menu tree order. Element that owns the menu will receive all MENU_ITEM_CLICKs originated from menu it owns.</dt></dl>
+  <h2>Value</h2>
+  <p>N/A</p>
+  <h2>Menu item clicks handling in script</h2>raw <code>onControlEvent</code> handler
+  <pre>var edit = $(input#some);
+edit.onControlEvent = function(evt)
+{
+  switch(evt.type) {
+    case Event.MENU_ITEM_CLICK: /* evt.target is the menu item */ break;
+  }
+}
+</pre>
+  <h3><code>on()</code> subscription</h3>
+  <pre>var edit = $(input#some);
+edit.on(&quot;click&quot;, &quot;li#file-open&quot;, function(evt) {
+  // 'this' here is that li#file-open item
+});
+</pre>
+  <h3>decorators.tis handler</h3>
+  <pre>include &quot;decorators.tis&quot;;
+@click @on &quot;li#file-open&quot; :: ... event handling code ...;
+</pre>
+</body>
+</html>

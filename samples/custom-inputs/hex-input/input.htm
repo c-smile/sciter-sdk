@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <style>
+    
+      @import url(hex-editor.css);
+    
+    </style>
+    <script type="text/tiscript">
+    
+    $(button#show).onClick = function()
+    {
+      var v = $(input#hex).value;
+      $(pre).text = String.printf("%d %x",v,v);
+    }
+    
+    </script>
+  </head>
+<body>
+  <input type="hex-number" value="0xAFED" id="hex" />
+  <button id="show">Show value</button>
+  <pre> </pre>
+</body>
+</html>

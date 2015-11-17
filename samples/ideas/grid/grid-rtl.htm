@@ -1,0 +1,267 @@
+<html>
+<head>
+<style> 
+
+  html { background-color: #fff #e9e8f3 #e9e8f3 #fff; }
+
+  table 
+  { 
+    font:system;
+    border:1px solid #bdbccc; 
+    flow:table-fixed;
+    width:100%%;
+    height:100%%;
+    padding:0;
+    prototype:Grid url(grid.tis);
+    border-spacing:0;
+  }
+
+  table > thead {
+    behavior:column-resizer;  
+  }
+    
+  table > tbody {
+    overflow-y: scroll-indicator;  
+  }
+ 
+  table th 
+  { 
+    color: white;
+    font-family:"Century Gothic","Verdana"; 
+	  font-size:10pt; 
+    border:none;
+    padding:4px; 
+    background-color:#DDD; 
+    background-image:url(header.png);
+    background-repeat:expand stretch-left stretch-right stretch-middle;
+	  background-position:3px 3px 3px 3px;
+  }
+  
+  table th.sortable 
+  { 
+    padding:4px 12px 4px 4px; 
+    foreground-repeat:no-repeat;
+    foreground-position: 50% 3px auto auto;
+  }
+  table th.sortable[sort=asc] 
+  { 
+    foreground-image:url(stock:arrow-down);
+  }
+  table th.sortable[sort=desc] 
+  { 
+    foreground-image:url(stock:arrow-up);
+  }
+  
+  
+  table th:hover 
+  { 
+	  color: #ffe598;
+    transition:blend;
+	  background-image:url(header-hover.png);
+  }
+  
+  table tr:nth-child(odd) { background-color:white; } /* each odd row */
+  table tr:nth-child(even) { background-color:#F4F3F9; } /* each even row */
+  
+  table tr:current /* current row */ 
+  { 
+    background-color:#bdbccc; 
+    color:white;
+  } 
+  
+  table td 
+  { 
+    padding:2px; 
+  }
+  
+  table td:nth-child(1) { font-weight:bold; text-align:center; width:10%%; } /* first column */
+  table td:nth-child(2) { border-right:1px solid #bdbccc; color:#8380A0; width:10%%; } /* second column */
+  table td:nth-child(3) /* last column */
+  { 
+     text-align:right;
+     overflow:hidden;        /* three line below - ellipsis */
+     text-overflow:ellipsis;
+     white-space:nowrap;
+     width:80%;
+     border-right:1px solid #bdbccc;
+  } 
+    
+</style>
+  <script type="text/tiscript">
+  
+    include "../../decorators.tis";
+    
+    const table = self.$(#thetable);
+    assert table : "Cannot find #thetable";
+
+    @click @on "button#AddNewRow" :
+    {
+      var row = new Element("tr");
+      row.insert( new Element("td","&yuml;".htmlUnescape()) );
+      row.insert( new Element("td","&yuml;") );
+      row.insert( new Element("td","small y with diaeresis") );
+      table.body.insert(row,1);
+      table.setCurrentRow(row);
+    }
+
+    @click @on "button#RemoveCurrentRow" :
+    {
+      if(table.body.length <= 0) 
+        return;
+      var row = table.getCurrentRow();
+      if(!row)
+        return;
+      var row_index = row.index;
+      row.remove();
+      if( row_index < table.body.length)
+        table.setCurrentRow(table.body[row_index]);
+    }
+    
+    @click @on "button#SwapCurrentRowWithFirst" :
+    {
+      var row = table.getCurrentRow();
+      if(!row)
+        return;
+      if(row === table.body.first)
+        return;
+      row.swap(table.body.first);
+    }    
+
+    @click @on "button#Sort2C" :
+    {
+      table.body.sort( :r1,r2: r1[1].text < r2[1].text? -1:1 );
+    }    
+
+    
+    // attaching custom handler to onRowClick port. 
+    table.onRowClick = function( row, reason )
+    {
+      if(reason == #by_mouse)
+        stdout << "got mouse click on row:" << row << "\n";
+    }
+    
+
+    
+    </script>
+
+</head>
+
+<body>
+
+<button id="AddNewRow">Add new row test</button>
+<button id="RemoveCurrentRow">Remove current row test</button>
+<button id="SwapCurrentRowWithFirst">Swap current row with first</button>
+<button id="Sort2C">Sort by second column</button>
+
+<h2>RTL table, letters in the Latin-1 Set:</h2>
+<table id="thetable"  style="margin:20px" dir=rtl>
+  <thead>
+    <tr><th .sortable>Character</th><th .sortable>Entity</th><th>Description</th></tr>
+  </thead>  
+  <tbody>
+    <tr><td>&Agrave;</td><td>&amp;Agrave;</td><td><font color="brown">capital</font> A <font color="green">with</font> grave = <font color="brown">capital</font> A grave</td></tr>
+    <tr><td>&Aacute;</td><td>&amp;Aacute;</td><td><font color="brown">capital</font> A with acute</td></tr>
+    <tr><td>&Acirc;</td><td>&amp;Acirc;</td><td><font color="brown">capital</font> A with circumflex</td></tr>
+    <tr><td>&Atilde;</td><td>&amp;Atilde;</td><td><font color="brown">capital</font> A with tilde</td></tr>
+    <tr><td>&Auml;</td><td>&amp;Auml;</td><td><font color="brown">capital</font> A with diaeresis</td></tr>
+    <tr><td>&Aring;</td><td>&amp;Aring;</td><td><font color="brown">capital</font> A with ring above = <font color="brown">capital</font> A ring</td></tr>
+    <tr><td>&AElig;</td><td>&amp;AElig;</td><td><font color="brown">capital</font> AE = <font color="brown">capital</font> ligature AE</td></tr>
+    <tr><td>&Ccedil;</td><td>&amp;Ccedil;</td><td><font color="brown">capital</font> C with cedilla</td></tr>
+    <tr><td>&Egrave;</td><td>&amp;Egrave;</td><td><font color="brown">capital</font> E with grave</td></tr>
+    <tr><td>&Eacute;</td><td>&amp;Eacute;</td><td><font color="brown">capital</font> E with acute</td></tr>
+    <tr><td>&Ecirc;</td><td>&amp;Ecirc;</td><td><font color="brown">capital</font> E with circumflex</td></tr>
+    <tr><td>&Euml;</td><td>&amp;Euml;</td><td><font color="brown">capital</font> E with diaeresis</td></tr>
+    <tr><td>&Igrave;</td><td>&amp;Igrave;</td><td><font color="brown">capital</font> I with grave</td></tr>
+    <tr><td>&Iacute;</td><td>&amp;Iacute;</td><td><font color="brown">capital</font> I with acute</td></tr>
+    <tr><td>&Icirc;</td><td>&amp;Icirc;</td><td><font color="brown">capital</font> I with circumflex</td></tr>
+    <tr><td>&Iuml;</td><td>&amp;Iuml;</td><td><font color="brown">capital</font> I with diaeresis</td></tr>
+    <tr><td>&ETH;</td><td>&amp;ETH;</td><td><font color="brown">capital</font> ETH</td></tr>
+    <tr><td>&Ntilde;</td><td>&amp;Ntilde;</td><td><font color="brown">capital</font> N with tilde</td></tr>
+    <tr><td>&Ograve;</td><td>&amp;Ograve;</td><td><font color="brown">capital</font> O with grave</td></tr>
+    <tr><td>&Oacute;</td><td>&amp;Oacute;</td><td><font color="brown">capital</font> O with acute</td></tr>
+    <tr><td>&Ocirc;</td><td>&amp;Ocirc;</td><td><font color="brown">capital</font> O with circumflex</td></tr>
+    <tr><td>&Otilde;</td><td>&amp;Otilde;</td><td><font color="brown">capital</font> O with tilde</td></tr>
+    <tr><td>&Ouml;</td><td>&amp;Ouml;</td><td><font color="brown">capital</font> O with diaeresis</td></tr>
+    <tr><td>&times;</td><td>&amp;times;</td><td>multiplication sign</td></tr>
+    <tr><td>&Oslash;</td><td>&amp;Oslash;</td><td><font color="brown">capital</font> O with stroke = <font color="brown">capital</font> O slash</td></tr>
+    <tr><td>&Ugrave;</td><td>&amp;Ugrave;</td><td><font color="brown">capital</font> U with grave</td></tr>
+    <tr><td>&Uacute;</td><td>&amp;Uacute;</td><td><font color="brown">capital</font> U with acute</td></tr>
+    <tr><td>&Ucirc;</td><td>&amp;Ucirc;</td><td><font color="brown">capital</font> U with circumflex</td></tr>
+    <tr><td>&Uuml;</td><td>&amp;Uuml;</td><td><font color="brown">capital</font> U with diaeresis</td></tr>
+    <tr><td>&Yacute;</td><td>&amp;Yacute;</td><td><font color="brown">capital</font> Y with acute</td></tr>
+    <tr><td>&THORN;</td><td>&amp;THORN;</td><td><font color="brown">capital</font> THORN</td></tr>
+    <tr><td>&szlig;</td><td>&amp;szlig;</td><td>small sharp s = ess-zed</td></tr>
+    <tr><td>&agrave;</td><td>&amp;agrave;</td><td>small a with grave = small a grave</td></tr>
+    <tr><td>&aacute;</td><td>&amp;aacute;</td><td>small a with acute</td></tr>
+    <tr><td>&acirc;</td><td>&amp;acirc;</td><td>small a with circumflex</td></tr>
+    <tr><td>&atilde;</td><td>&amp;atilde;</td><td>small a with tilde</td></tr>
+    <tr><td>&auml;</td><td>&amp;auml;</td><td>small a with diaeresis</td></tr>
+    <tr><td>&aring;</td><td>&amp;aring;</td><td>small a with ring above = small a ring</td></tr>
+    <tr><td>&aelig;</td><td>&amp;aelig;</td><td>small ae = small ligature ae</td></tr>
+    <tr><td>&ccedil;</td><td>&amp;ccedil;</td><td>small c with cedilla</td></tr>
+    <tr><td>&egrave;</td><td>&amp;egrave;</td><td>small e with grave</td></tr>
+    <tr><td>&eacute;</td><td>&amp;eacute;</td><td>small e with acute</td></tr>
+    <tr><td>&ecirc;</td><td>&amp;ecirc;</td><td>small e with circumflex</td></tr>
+    <tr><td>&euml;</td><td>&amp;euml;</td><td>small e with diaeresis</td></tr>
+    <tr><td>&igrave;</td><td>&amp;igrave;</td><td>small i with grave</td></tr>
+    <tr><td>&iacute;</td><td>&amp;iacute;</td><td>small i with acute</td></tr>
+    <tr><td>&icirc;</td><td>&amp;icirc;</td><td>small i with circumflex</td></tr>
+    <tr><td>&iuml;</td><td>&amp;iuml;</td><td>small i with diaeresis</td></tr>
+    <tr><td>&eth;</td><td>&amp;eth;</td><td>small eth</td></tr>
+    <tr><td>&ntilde;</td><td>&amp;ntilde;</td><td>small n with tilde</td></tr>
+    <tr><td>&ograve;</td><td>&amp;ograve;</td><td>small o with grave</td></tr>
+    <tr><td>&oacute;</td><td>&amp;oacute;</td><td>small o with acute</td></tr>
+    <tr><td>&ocirc;</td><td>&amp;ocirc;</td><td>small o with circumflex</td></tr>
+    <tr><td>&otilde;</td><td>&amp;otilde;</td><td>small o with tilde</td></tr>
+    <tr><td>&ouml;</td><td>&amp;ouml;</td><td>small o with diaeresis</td></tr>
+    <tr><td>&divide;</td><td>&amp;divide;</td><td>division sign</td></tr>
+    <tr><td>&oslash;</td><td>&amp;oslash;</td><td>small o with stroke = small o slash</td></tr>
+    <tr><td>&ugrave;</td><td>&amp;ugrave;</td><td>small u with grave</td></tr>
+    <tr><td>&uacute;</td><td>&amp;uacute;</td><td>small u with acute</td></tr>
+    <tr><td>&ucirc;</td><td>&amp;ucirc;</td><td>small u with circumflex</td></tr>
+    <tr><td>&uuml;</td><td>&amp;uuml;</td><td>small u with diaeresis</td></tr>
+    <tr><td>&yacute;</td><td>&amp;yacute;</td><td>small y with acute</td></tr>
+    <tr><td>&thorn;</td><td>&amp;thorn;</td><td>small thorn</td></tr>
+    <tr><td>&yuml;</td><td>&amp;yuml;</td><td>small y with diaeresis</td></tr>
+    
+    <tr><td>&nbsp;</td><td>&amp;nbsp;</td><td>non-breaking space</td></tr>
+    <tr><td>¡</td><td>&amp;iexcl;</td><td>inverted exclamation mark</td></tr>
+    <tr><td>¢</td><td>&amp;cent;</td><td>cent</td></tr>
+    <tr><td>£</td><td>&amp;pound;</td><td>pound</td></tr>
+    <tr><td>¤</td><td>&amp;curren;</td><td>currency</td></tr>
+    <tr><td>¥</td><td>&amp;yen;</td><td>yen</td></tr>
+    <tr><td>¦</td><td>&amp;brvbar;</td><td>brokenverticalbar</td></tr>
+    <tr><td>§</td><td>&amp;sect;</td><td>section</td></tr>
+    <tr><td>¨</td><td>&amp;uml;</td><td>spacingdiaeresis</td></tr>
+    <tr><td>©</td><td>&amp;copy;</td><td>copyright</td></tr>
+    <tr><td>ª</td><td>&amp;ordf;</td><td>feminineordinalindicator</td></tr>
+    <tr><td>«</td><td>&amp;laquo;</td><td>anglequotationmark(left)</td></tr>
+    <tr><td>¬</td><td>&amp;not;</td><td>negation</td></tr>
+    <tr><td>&shy;</td><td>&amp;shy;</td><td>softhyphen</td></tr>
+    <tr><td>®</td><td>&amp;reg;</td><td>registeredtrademark</td></tr>
+    <tr><td>¯</td><td>&amp;macr;</td><td>spacingmacron</td></tr>
+    <tr><td>°</td><td>&amp;deg;</td><td>degree</td></tr>
+    <tr><td>±</td><td>&amp;plusmn;</td><td>plus-or-minus</td></tr>
+    <tr><td>¹</td><td>&amp;sup1;</td><td>superscript1</td></tr>
+    <tr><td>²</td><td>&amp;sup2;</td><td>superscript2</td></tr>
+    <tr><td>³</td><td>&amp;sup3;</td><td>superscript3</td></tr>
+    <tr><td>´</td><td>&amp;acute;</td><td>spacingacute</td></tr>
+    <tr><td>µ</td><td>&amp;micro;</td><td>micro</td></tr>
+    <tr><td>¶</td><td>&amp;para;</td><td>paragraph</td></tr>
+    <tr><td>·</td><td>&amp;middot;</td><td>middledot</td></tr>
+    <tr><td>¸</td><td>&amp;cedil;</td><td>spacingcedilla</td></tr>
+    <tr><td>º</td><td>&amp;ordm;</td><td>masculineordinalindicator</td></tr>
+    <tr><td>»</td><td>&amp;raquo;</td><td>anglequotationmark(right)</td></tr>
+    <tr><td>¼</td><td>&amp;frac14;</td><td>fraction1/4</td></tr>
+    <tr><td>½</td><td>&amp;frac12;</td><td>fraction1/2</td></tr>
+    <tr><td>¾</td><td>&amp;frac34;</td><td>fraction3/4</td></tr>
+    <tr><td>¿</td><td>&amp;iquest;</td><td>invertedquestionmark</td></tr>
+    <tr><td>×</td><td>&amp;times;</td><td>multiplication</td></tr>
+    <tr><td>÷</td><td>&amp;divide;</td><td>division</td></tr>
+    
+  </tbody>
+</table>
+
+</body>
+
+</html>

@@ -1,0 +1,118 @@
+<html>
+	<head>
+		<title>Title and popup windows</title>
+	<style type="text/css"> 
+  dt 
+  { 
+    border-bottom:1px dashed gray; 
+  }
+  dd 
+  { 
+    margin-top:10px; 
+    margin-bottom:10px; 
+  }
+  
+  /* styles for our popup element */
+  popup.info 
+  { 
+    padding:4px;
+    font: system;
+    background-color:infobackground infobackground #FFEFD5 #FFEFD5;
+    width: 220px; 
+    border: 1px solid chocolate;
+  }
+  popup.info p { margin:4px 0;}
+  popup.info .with-divider
+  {
+    margin-top: 0.5em;
+    border-top: 1px dashed chocolate;
+    padding-top: 0.5em;
+    text-align:center;
+  }
+  popup.info em {
+    font-weight: bold;
+    font-style: normal;
+    color: red;
+  }  
+
+  /* styles for our popup element */
+  popup.balloon 
+  { 
+    background-color:transparent;
+    background-image: url(images/speech-bubble.png);
+    background-repeat: expand;
+    background-position:80px 33px 33px 74px; /*top right bottom left offsets*/
+    padding:71px 25px 25px 16px;
+    border: none;
+    font: 11pt "Comic Sans MS", Verdana;
+    width:30%;
+  }
+
+  popup.balloon em {
+    font-weight: bold;
+    font-style: normal;
+    color: red;
+  }  
+
+  popup.balloon p {
+  
+    background-image: url(images/corner.png);
+    background-repeat: no-repeat;
+    background-position:100% 100%;
+  }  
+
+  popup#balloon-transparent
+  {
+    opacity:0.75;
+  }
+
+  /* styling of standard tooltips ( attribute title ). 
+     For sample purposes only: width here is max intrinsic but not more than 100px */
+  _service > popup[role=tooltip]
+  { 
+    width:max-intrinsic; background-color:orange; 
+    font: 24pt Verdana;
+    font-weight:normal;
+  }
+  
+	</style>
+	</head>
+<body>
+	<dl>
+		<dt>Simple title (tooltip)</dt>
+		<dd>If you hover over the <b title="This is pretty long text!">bold section</b> of this text,
+			you'll get simple advisory text</dd>
+		<dt>Simple tooltip with markup</dt>
+		<dd>If you hover over the <b tooltip="This is pretty long <b>bold</b> text!">bold section</b> of this text,
+			you'll get simple advisory text</dd>
+		<dt>Formatted title (tooltip)</dt>
+		<dd>If you hover over the <b titleid="info">bold section</b> of this text,
+			you'll get advisory text defined as separate element in the document </dd>
+		<dt>Non-rectangular tooltip</dt>
+		<dd>If you hover over the <b titleid="balloon">bold section</b> of this text,
+			you'll get advisory text defined as separate element in the document as a speech buuble</dd>
+		<dt>Non-rectangular transparent(opacity:0.75) tooltip </dt>
+		<dd>If you hover over the <b titleid="balloon-transparent">bold section</b> of this text,
+			you'll get advisory text defined as separate element in the document as a speech buuble</dd>
+	</dl>
+  <popup id="info" class="info">
+    <p><img src="images/attn.png" align="left" hspace=8>This is a demo of <b>html popup</b>.</p>
+    <p>Titles (popups) can be defined now as <b>HTML</b> and styled by <em>CSS</em>.</p>
+    <p>To define tooltip for the element use titleid="id-of-popup-element" attribute and define somewhere in your doc block element with the id.</p>
+  </popup>
+
+  
+  <popup id="balloon" class="balloon">
+    <p>This is a demo of <b>html popup</b>.</p>
+    <p>Titles (popups) can be defined now as <b>HTML</b> and styled by <em>CSS</em>.</p>
+    <p>To define tooltip for the element use titleid="id-of-popup-element" attribute and define somewhere in your doc block element with the id.</p>
+  </popup>
+
+  <popup id="balloon-transparent" class="balloon">
+    <p>This is a demo of <b>html popup</b>.</p>
+    <p>Titles (popups) can be defined now as <b>HTML</b> and styled by <em>CSS</em>.</p>
+    <p>To define tooltip for the element use titleid="id-of-popup-element" attribute and define somewhere in your doc block element with the id.</p>
+  </popup>
+  
+</body>
+</html>

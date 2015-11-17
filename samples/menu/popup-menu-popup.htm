@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      button > menu { width:*; }
+   
+      popup { background:gold; padding:1em; border:1px solid; prototype: PopupDialog; }
+      
+    
+    </style>
+    <script type="text/tiscript">
+      class PopupDialog {
+        function onControlEvent(evt) {
+          if( evt.type == Event.BUTTON_CLICK ||
+              evt.type == (Event.BUTTON_CLICK | Event.HANDLED) ) {
+              this.state.popup = false;
+          }
+        }
+      } 
+    </script>
+  </head>
+<body>
+
+<button|menu #main>Show menu
+  <menu>
+    <li>First item</li>
+    <li>Second item</li>
+    <li>Third item with&nbsp;<button|menu>Question
+        <popup>
+          <caption>Test?</caption>
+          <button>Yes</button>
+          <button>No</button>
+        </popup>
+      </button>
+    </li>
+    
+  </menu>
+</button>  
+
+
+</body>
+</html>

@@ -1,0 +1,286 @@
+<HTML>
+  <HEAD>
+    <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <META name="GENERATOR" content="BLOCKNOTE.NET">
+    <META name="source" content="http://www.w3.org/TR/CSS21/selector.html">
+    <BASEFONT face="Verdana" size="2">
+    <TITLE>+Selectors in HTMLayout</TITLE><STYLE>BODY { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+P { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+DIV { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+TD { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+</STYLE>
+  </HEAD>
+<BODY>
+<TABLE border="1">
+  <TR>
+    <TD>&nbsp;</TD>
+    <TD><STRONG>Meaning</STRONG></TD>
+    <TD><STRONG>Described in section</STRONG></TD>
+  </TR>
+  <TR>
+    <TD colspan="3"><STRONG>CSS 2.1 selectors. </STRONG>Following fragment was taken from <A href="http://www.w3.org/TR/CSS21/selector.html#q2">W3C CSS 2.1 specification</A></TD>
+  </TR>
+  <TR>
+    <TD>*</TD>
+    <TD>Matches any element.</TD>
+    <TD><A href="#universal-selector">Universal selector</A></TD>
+  </TR>
+  <TR>
+    <TD>E</TD>
+    <TD>Matches any E element (i.e., an element of type E).</TD>
+    <TD><A href="#type-selectors">Type selectors</A></TD>
+  </TR>
+  <TR>
+    <TD>E F</TD>
+    <TD>Matches any F element that is a descendant of an E element.</TD>
+    <TD><A href="#descendant-selectors">Descendant selectors</A></TD>
+  </TR>
+  <TR>
+    <TD>E &gt; F</TD>
+    <TD>Matches any F element that is a child of an element E.</TD>
+    <TD><A href="#child-selectors">Child selectors</A></TD>
+  </TR>
+  <TR>
+    <TD>E:first-child</TD>
+    <TD>Matches element E when E is the first child of its parent.</TD>
+    <TD><A href="#first-child">The :first-child pseudo-class</A></TD>
+  </TR>
+  <TR>
+    <TD>E:link<BR>E:visited</TD>
+    <TD>Matches element E if E is the source anchor of a hyperlink of which the target is not yet visited (:link) or already visited (:visited).</TD>
+    <TD><A href="#link-pseudo-classes">The link pseudo-classes</A></TD>
+  </TR>
+  <TR>
+    <TD>E:active<BR>E:hover<BR>E:focus</TD>
+    <TD>Matches E during certain user actions.</TD>
+    <TD><A href="#dynamic-pseudo-classes">The dynamic pseudo-classes</A></TD>
+  </TR>
+  <TR>
+    <TD>E + F</TD>
+    <TD>Matches any F element immediately preceded by a sibling element E.</TD>
+    <TD><A href="#adjacent-selectors">Adjacent selectors</A></TD>
+  </TR>
+  <TR>
+    <TD>E[foo]</TD>
+    <TD>Matches any E element with the &quot;foo&quot; attribute set (whatever the value).</TD>
+    <TD><A href="#attribute-selectors">Attribute selectors</A></TD>
+  </TR>
+  <TR>
+    <TD>E[foo=&quot;warning&quot;]</TD>
+    <TD>Matches any E element whose &quot;foo&quot; attribute value is exactly equal to &quot;warning&quot;.</TD>
+    <TD><A href="#attribute-selectors">Attribute selectors</A></TD>
+  </TR>
+  <TR>
+    <TD>E[foo~=&quot;warning&quot;]</TD>
+    <TD>Matches any E element whose &quot;foo&quot; attribute value is a list of space-separated values, one of which is exactly equal to &quot;warning&quot;.</TD>
+    <TD><A href="#attribute-selectors">Attribute selectors</A></TD>
+  </TR>
+  <TR>
+    <TD>E[foo%=&quot;warning&quot;]</TD>
+    <TD>Matches any E element whose &quot;foo&quot; attribute value is a list of space-separated values, one of which is equal to &quot;warning&quot; case insensitively.</TD>
+    <TD>non-standard</TD>
+  </TR>
+  <TR>
+    <TD>E[lang|=&quot;en&quot;]</TD>
+    <TD>Matches any E element whose &quot;lang&quot; attribute has a hyphen-separated list of values beginning (from the left) with &quot;en&quot;.</TD>
+    <TD><A href="#attribute-selectors">Attribute selectors</A></TD>
+  </TR>
+  <TR>
+    <TD>DIV.warning</TD>
+    <TD><EM>Language specific.</EM> (In HTML, the same as DIV[class~=&quot;warning&quot;].)</TD>
+    <TD><A href="#class-html">Class selectors</A></TD>
+  </TR>
+  <TR>
+    <TD>E#myid</TD>
+    <TD>Matches any E element with ID equal to &quot;myid&quot;.</TD>
+    <TD><A href="#id-selectors">ID selectors</A></TD>
+  </TR>
+  <TR>
+    <TD colspan="3"><STRONG>CSS 3.0 selectors</STRONG></TD>
+  </TR>
+  <TR>
+    <TD>E:not( {simple selector} )</TD>
+    <TD>
+<DIV>Negation.</DIV>
+<DIV>Example: E:not(:first-child) matches all E elements that are not at first child position in their containers.</DIV></TD>
+    <TD><A href="http://www.w3.org/TR/css3-selectors/#negation">The negation pseudo-class</A></TD>
+  </TR>
+  <TR>
+    <TD>E[foo^=&quot;val&quot;]</TD>
+    <TD>Matches any E element having &quot;foo&quot; attribute whose value begins with the prefix &quot;val&quot;</TD>
+    <TD>&nbsp;</TD>
+  </TR>
+  <TR>
+    <TD>E[foo$=&quot;val&quot;]</TD>
+    <TD>Matches any E element having &quot;foo&quot; attribute whose value ends with the suffix &quot;val&quot;</TD>
+    <TD>&nbsp;</TD>
+  </TR>
+  <TR>
+    <TD>E[foo*=&quot;val&quot;]</TD>
+    <TD>Matches any E element having &quot;foo&quot; attribute whose value contains at least one instance of the substring &quot;val&quot;.</TD>
+    <TD>&nbsp;</TD>
+  </TR>
+  <TR>
+    <TD>E:nth-child(<EM>A</EM>n+<EM>B</EM>)</TD>
+    <TD>Matches any E element which is <EM>B</EM>th child of an parent element after all its children have been split into groups of <EM>A</EM> elements each. A and B are integer numbers.</TD>
+    <TD rowspan="2"><A href="http://www.w3.org/TR/2001/CR-css3-selectors-20011113/#structural-pseudos">Structural Pseudo Classes</A></TD>
+  </TR>
+  <TR>
+    <TD>E:nth-last-child(<EM>A</EM>n+<EM>B</EM>)</TD>
+    <TD>Matches any E element which is <EM>B</EM>th child of an parent element after all its children have been split into groups of <EM>A</EM> elements each and counting from last to first direction.</TD>
+  </TR>
+  <TR>
+    <TD>E:not(<EM>simple selector</EM>)</TD>
+    <TD>Represents an element that is not represented by the <EM>simple selector.</EM></TD>
+    <TD><A href="http://www.w3.org/TR/css3-selectors/#negation">Negation Pseudo Class</A></TD>
+  </TR>
+  <TR>
+    <TD>E:only-child</TD>
+    <TD>Represents an element that has a parent element and whose parent element has no other children other than this one. </TD>
+    <TD><A href="#only-child-pseudo">:only-child pseudo-class</A></TD>
+  </TR>
+  <TR>
+    <TD>E:only-of-type</TD>
+    <TD>Represents an element that has a parent element and whose parent element has no other element children with the same element name</TD>
+    <TD><A href="#only-of-type-pseudo">:only-of-type pseudo-class</A></TD>
+  </TR>
+  <TR>
+    <TD>E:has-child-of-type(T)</TD>
+    <TD>Represents an element that has exactly single child element of type T among its other children.</TD>
+    <TD rowspan="2"><FONT color=#cc0000>Non standard, h-smile core specific.</FONT></TD>
+  </TR>
+  <TR>
+    <TD>E:has-children-of-type(T)</TD>
+    <TD>Represents an element that has one or more children elements of type T among its other children.</TD>
+  </TR>
+  <TR>
+    <TD colspan="3"><STRONG>Run-time state flags (mostly h-smile core specific)</STRONG></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top"><STRONG>E:focus</STRONG></TD>
+    <TD valign="middle">Matches element in focus state.</TD>
+    <TD valign="middle">STATE_FOCUS</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top"><STRONG>E:tab-focus</STRONG></TD>
+    <TD valign="middle">Matches element that got focus by pressing TAB keyboard button.</TD>
+    <TD valign="middle">STATE_TABFOCUS</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top"><STRONG>E:focusable</STRONG></TD>
+    <TD valign="middle">Matches any element which has tabindex defined or will accept focus. Behaviors attached to elements are responsible for &quot;focusability&quot; (accept HANDLE_FOCUS events). For example behaviors under &lt;a href&gt;'s and most of &lt;input&gt;/&lt;widget&gt; elements are focusable by default. Elements that have overflow:auto | scroll are also intrinsically focusable.</TD>
+    <TD valign="middle">STATE_FOCUSABLE</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top"><STRONG>E:current</STRONG></TD>
+    <TD valign="middle">Matches current element in collection. E.g. current &lt;option&gt; in &lt;select&gt;.</TD>
+    <TD valign="middle">STATE_CURRENT</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top"><STRONG>E:checked</STRONG></TD>
+    <TD valign="middle">Matches element in checked state. Internal behaviors <EM>checkbox</EM>, <EM>radio</EM> and <EM>select</EM> (for option) are known to set/reset this flag.</TD>
+    <TD valign="middle">STATE_CHECKED</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top"><STRONG>E:disabled</STRONG></TD>
+    <TD valign="middle">Matches element in disabled state. All elements in container having <EM>disabled</EM> attribute defined will also have this flag set.</TD>
+    <TD valign="middle">STATE_DISABLED</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top"><STRONG>E:read-only</STRONG></TD>
+    <TD valign="middle">Matches element in read-only state (with readonly attribute defined)</TD>
+    <TD valign="middle">STATE_READONLY</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top"><STRONG>E:expanded</STRONG></TD>
+    <TD valign="middle">Matches element in expanded state. Internal behavior <EM>select</EM> are known to set/reset this flag. Used for implementation of collapsible nodes in the &lt;select&gt;.</TD>
+    <TD>STATE_EXPANDED</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top"><STRONG>E:collapsed</STRONG></TD>
+    <TD valign="middle">Inversed to <STRONG>:expanded</STRONG> attribute. Element can have either expanded or collapsed or neither expanded nor collapsed state but not both.</TD>
+    <TD>STATE_COLLAPSED</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top"><STRONG>E:incomplete</STRONG></TD>
+    <TD valign="middle">Is set when element is in incomplete state - one of requested resources (e.g. background or foreground image) is not arrived yet.</TD>
+    <TD valign="middle">STATE_INCOMPLETE</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top"><STRONG>E:busy</STRONG></TD>
+    <TD valign="middle">E.g. is set when element requested some data to download and this data is not arrived yet. This flag can be set from code of behaviors.</TD>
+    <TD valign="middle">STATE_BUSY</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top"><STRONG>E:empty</STRONG></TD>
+    <TD valign="middle">Matches element that has no textual content and no children.</TD>
+    <TD valign="middle">STATE_EMPTY</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top"><STRONG>E:has-child</STRONG></TD>
+    <TD valign="middle">Matches element that has exactly one child.</TD>
+    <TD valign="middle">STATE_HAS_CHILD</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top"><STRONG>E:has-children</STRONG></TD>
+    <TD valign="middle">Matches element that has more than one child.</TD>
+    <TD valign="middle">STATE_HAS_CHILDREN</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top"><STRONG>E:animating</STRONG></TD>
+    <TD valign="middle">Element, at the moment, is animating e.g. expanding/collapsing</TD>
+    <TD valign="middle">STATE_ANIMATING</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top"><STRONG>E:popup</STRONG></TD>
+    <TD valign="middle">Element, at the moment, is shown as a popup.</TD>
+    <TD valign="middle">STATE_POPUP</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top"><STRONG>E:owns-popup</STRONG></TD>
+    <TD valign="middle">Element requested popup to be shown and that popup is shown at the moment.</TD>
+    <TD valign="middle">STATE_OWNS_POPUP</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top"><STRONG>E:synthetic</STRONG></TD>
+    <TD valign="middle">Element is synthesized by the engine while parsing e.g. all missed cells in tables (&lt;td&gt;) are getting this flag.</TD>
+    <TD valign="middle">STATE_SYNTHETIC</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top"><STRONG>E:drop-target</STRONG></TD>
+    <TD valign="middle">While inside the active drag-n-drop opeartion this element is a valid drop target for the dragged element.</TD>
+    <TD valign="middle">STATE_DROP_TARGET</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top"><STRONG>E:drag-over</STRONG></TD>
+    <TD valign="middle">Matches drop target element when dragged element is over it.</TD>
+    <TD valign="middle">STATE_DRAG_OVER</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top"><STRONG>E:moving</STRONG></TD>
+    <TD valign="middle">Matches drag-moving element (temporary copy of the drag-source).</TD>
+    <TD valign="middle">STATE_MOVING</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top"><STRONG>E:copying</STRONG></TD>
+    <TD valign="middle">Matches drag-copying element (temporary copy of the drag-source).</TD>
+    <TD valign="middle">STATE_COPYING</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top"><STRONG>E:drag-source</STRONG></TD>
+    <TD valign="middle">Matches drag source element in active drag-n-drop operation.</TD>
+    <TD valign="middle">STATE_DRAG_SOURCE</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top"><STRONG>E:rtl</STRONG></TD>
+    <TD valign="middle">Matches element in strictly Right-To-Left environment - when it or its nearest container has defined <EM>dir</EM> attribute and the value of that dir attribute is exactly &quot;rtl&quot;.</TD>
+    <TD valign="middle">&nbsp;</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top"><STRONG>E:ltr</STRONG></TD>
+    <TD valign="middle">Matches element in strictly Left-To-Right environment - when it or its nearest container has defined <EM>dir</EM> attribute and the value of that dir attribute is exactly &quot;ltr&quot;.</TD>
+    <TD valign="middle">&nbsp;</TD>
+  </TR>
+</TABLE>
+</BODY>
+</HTML>

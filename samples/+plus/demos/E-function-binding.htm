@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <title>Plus: function binding</title>
+    <style>
+      @import url(../plus.css); 
+      @import url(../../note.css); 
+      
+      output { display: inline-block; border: 1px gray dotted; }
+    </style>
+    
+    <script type="text/tiscript">
+    
+      include "../plus.tis"; // model below uses @observing decorator defined in plus.tis
+  
+      namespace Data // our model
+      {  
+        var a = 0; 
+        var b = 32;
+        var sum = 0;
+        
+        // this function is observing 'a' and 'b' and calculates 'sum'
+        @observing "a", "b"
+          function calcSum() {
+            sum = a + b;
+          }
+      }    
+    
+    </script>
+  </head>
+
+<body model="Data"> <!-- define data model we observe -->
+
+  <note>Two inputs below are bound with <code>a</code> and <code>b</code> variables.
+  calcSum() function is bound with both of them calculating their sum.
+  </note>
+
+  <p><input|number(a) > + <input|number(b)> = <output(sum)></p>
+
+</body>
+</html>

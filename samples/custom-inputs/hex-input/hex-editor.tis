@@ -1,0 +1,56 @@
+
+class HexEditor : Behavior {
+
+  function attached() {
+    // create structure:
+    this.caption = new Element("caption"); this.append(this.caption);
+    this.inc = new Element("button"); this.inc.attributes["class"] = "plus"; this.append(this.inc);
+    this.dec = new Element("button"); this.dec.attributes["class"] = "minus"; this.append(this.dec);
+    
+    var ininitalVal = this.attributes["value"];    
+    if( ininitalVal ) this.value = ininitalVal.toInteger();
+  }
+  
+  property value(v)  
+  {
+    get { 
+      var va = (this.caption.value || "").scanf("%x")
+      return typeof va == #array && va.length == 1 ? va[0]: undefined; 
+    }
+    set { 
+      this.caption.value = String.printf("%X",v); 
+    }
+  }
+  
+  function onControlEvent(evt)
+  {
+    if( evt.type == Event.BUTTON_CLICK && evt.target == this.inc )
+      this.doInc();
+    else if( evt.type == Event.BUTTON_CLICK && evt.target == this.dec )
+      this.doDec();
+  }
+  
+  function onMouse(evt)
+  {
+    if( evt.type == Event.MOUSE_WHEEL )
+    {
+      if( evt.wheelDelta < 0 ) this.doDec();
+      else this.doInc();
+    }
+      
+  }
+  
+  function doInc()
+  {
+    var v = this.value;
+    if( typeof v == #integer ) this.value += 1;
+    else this.value = 0;
+  }
+  function doDec()
+  {
+    var v = this.value;
+    if( typeof v == #integer ) this.value -= 1;
+    else this.value = 0xFFFF;
+  }
+
+}

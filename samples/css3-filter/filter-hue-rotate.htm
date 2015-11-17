@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+    //filter: drop-shadow(10px,10px,10px,#f00);
+    //filter: hue-rotate(90deg);
+    
+    div 
+    {
+      border:1px solid black;
+      width:max-content;
+    }
+    
+    div > text { color:red; margin-top:*; text-align:center; width:*; }
+    
+    div.filtered {
+      filter: hue-rotate(90deg);
+    }
+
+    </style>
+  </head>
+<body>
+
+<div>
+  <picture src="images/cvece.png" />
+  <text>original</text>
+</div>  
+<div.filtered>
+  <picture src="images/cvece.png" />
+  <text>hue-rotate(90deg)</text>
+</div>
+
+</body>
+</html>

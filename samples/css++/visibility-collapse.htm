@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+    section {
+      flow:vertical;
+      border:1px solid;
+      width:max-content;
+      margin:1em;
+    }
+    
+    div { margin:1em; }
+    
+    [collapsed] { visibility:collapse; }
+    [hidden] { display:none; }
+    
+    
+    </style>
+    <script type="text/tiscript"></script>
+  </head>
+<body>
+
+<h3><code>visibility:collpase</code> effect</h3>
+
+All children are visible/displayed
+<section>
+  <div>short text</div>
+  <div>some long text</div>
+</section>
+
+Second child is <code>visibility:collpase;</code>
+<section>
+  <div>short text</div>
+  <div collapsed>some long text</div>
+</section>
+
+Second child is <code>display:none;</code>
+<section>
+  <div>short text</div>
+  <div hidden>some long text</div>
+</section>
+
+</body>
+</html>

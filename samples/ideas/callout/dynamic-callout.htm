@@ -1,0 +1,59 @@
+<html>
+  <head>
+  <title></title>
+  <style>
+ 
+  #samples 
+  {
+    flow: row(label, input widget);
+    border-spacing: 10dip;
+  }
+  #samples > label { 
+    font:system;
+    white-space: nowrap; 
+    vertical-align:middle; display:block; text-align:right; 
+  }
+   
+  input[type=hslider] { prototype:SliderCallout; }
+  
+  popup.callout { 
+    font:system;
+    display:block;
+    width:max-content; 
+    min-width:28dip;
+    text-align:center;
+    padding:12px 10px 10px 8px;
+    background:url(callout-back.png);
+    background-repeat: expand stretch-left stretch-right stretch-middle;
+    background-position:16 10 10 10;
+  } 
+  
+  popup.callout.message {
+    padding:15px 12px 12px 10px;
+  }
+  
+  </style>
+  <script type="text/tiscript">
+    include "../../decorators.tis";
+    include "callout.tis";
+    
+    $(#text-with-callout).onFocus = function(evt)
+    {
+      if( evt.type == Event.GOT_FOCUS )
+        ShowCallout(this, "Hello world",3000);
+    }
+    
+    
+  </script>
+  </head>
+<body>
+
+  <form #samples>
+    <label>slider with value callout:</label>
+    <input type=hslider>
+    <label>input with validation:</label>
+    <input type=text #text-with-callout>
+  </form>
+  
+</body>
+</html>

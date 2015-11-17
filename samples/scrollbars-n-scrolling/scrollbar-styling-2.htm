@@ -1,0 +1,142 @@
+<html>
+	<head>
+		<title>Width 120% is cute</title>
+		<style type="text/css"> 
+		
+body { 
+	font:10pt Verdana;  
+	background: linear-gradient(top,white,peachpuff); 
+}
+
+/* style block defining vertical scrollbar */
+@set my-v-scrollbar
+{
+  .prev { display:none; }
+  .next { display:none; }
+  
+  .base,
+  .next-page, 
+  .prev-page { background:white; border-left:1px solid #AAA; }
+  
+  .slider    { background: gray; }
+ 
+  .base:disabled { background: #aaa; }
+    
+  .slider:hover  { background: gold; border-left:1px solid #AAA; }
+  
+  .slider:active { background: khaki; }
+  
+  .base { width: 15px; } /* explicit declaration of its width */
+  .corner { background: transparent; }
+}
+
+#horizontal-container 
+{ 
+	size:*;
+	flow:horizontal; 
+}
+
+div { height:75%; width:*; }
+ul { 
+  vertical-scrollbar: my-v-scrollbar;
+	margin: 10px; 
+	padding: 5px; 
+	size: *; 
+	border: dashed black 4px; 
+	list-style-type: none; 
+	color: black; 
+  overflow-x: hidden;
+}
+li { 
+	margin: 5px; 
+	padding: 5px; 
+	width: 80%; 
+	border: dashed black 1px; 
+	background-color: white; 
+	color: black; 
+	}
+#window-scroll-always
+{ 
+	overflow-y: scroll;
+}
+#window-scroll-auto
+{ 
+	overflow-y: auto; 
+}
+#window-scroll-hidden
+{ 
+	overflow-y: hidden; 
+}
+#window-scroll-visible
+{ 
+	overflow-y: visible; 
+}
+
+	</style>
+	</head>
+	<body>
+	<h1>gradient background and transparent overflows</h1>
+	<div id="horizontal-container">
+		<div>
+			<center>oveflow:scroll</center>
+			<ul id="window-scroll-always" tabindex=0>
+				<li>
+					Hello</li>
+				<li>
+					Wibble</li>
+				<li>
+					Foo</li>
+				<li>
+					Bar</li>
+				<li>
+					Baz</li>
+			</ul>
+		</div>
+		<div>
+			<center>oveflow:auto</center>
+			<ul id="window-scroll-auto" tabindex=0>
+				<li>
+					Hello</li>
+				<li>
+					Wibble</li>
+				<li>
+					Foo</li>
+				<li>
+					Bar</li>
+				<li>
+					Baz</li>
+			</ul>
+		</div>
+		<div>
+			<center>oveflow:hidden</center>
+			<ul id="window-scroll-hidden" tabindex=0>
+				<li>
+					Hello</li>
+				<li>
+					Wibble</li>
+				<li>
+					Foo</li>
+				<li>
+					Bar</li>
+				<li>
+					Baz</li>
+			</ul>
+		</div>
+		<div>
+			<center>oveflow:visible</center>
+			<ul id="window-scroll-visible">
+				<li>
+					Hello</li>
+				<li>
+					Wibble</li>
+				<li>
+					Foo</li>
+				<li>
+					Bar</li>
+				<li>
+					Baz</li>
+			</ul>
+		</div> 
+	</div>		
+	</body>
+</html>

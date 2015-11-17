@@ -1,0 +1,51 @@
+﻿<html>
+  <head>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <p>Quite often in HTML/CSS based UIs we need to hide/show some elements in runtime.</p>
+  <p>Probably the most widespread (and the worst) solution is to set <code>display:none</code> CSS property programmatically. </p>
+  <p>That sounds quite easy on the first glance but solves only half of the problem - it hides - removes the element from rendering tree. But what you would do when you need to show element that was previously hidden that way? Setting it to <code>display:block</code> is very wrong. Far not all elements have display:block model by default in HTML. &nbsp;&lt;img&gt;, &lt;input&gt;, &lt;select&gt;, &lt;textarea&gt;, etc are <code>display:inline-block</code>. &lt;table&gt; and all its children have special display:table**** values. Setting them to <code>display:block</code> will lead you to quite surprising results. </p>
+  <p>Therefore in order to use <code>display:none</code> in runtime you will need to know original display value of the element. Not quite convenient and maintainable. Imagine that your web designer (proabably sitting on other continent) decided to replace some elements horizontally by declaring <code>display: table-cell</code> on them. You will get problems hidding/showing such elements by switching display: none &lt;-&gt; block.</p>
+  <p>To overcome such a problem jQuery for example implements its <code>hide()</code> method &nbsp;( see: http://robflaherty.github.io/jquery-annotated-source/docs/13-effects.html#section-6 ) &nbsp;by storing existing display value to special property named &quot;olddisplay&quot;. And restores the display from that property when you need to show the element. That approach is far from ideal either for obvious reasosns.</p>
+  <h2>Better solution</h2>
+  <p>Better solution is to use attribute &quot;hidden&quot;. So instead of setting element.style.display CSS property you will need to add attribute &quot;hidden&quot; to the element when you need to hide it and remove that attribute when you will want to show the element. In order this to work you will need to add single and simple rule tou your stylesheet:</p>
+  <pre>[hidden] { display:none !important; }
+</pre>
+  <p>If some elements need to be hidden by default you will use hidden attribute in your markup, for example as:<br/></p>
+  <pre>&lt;button id=&quot;ok-button&quot; hidden&gt;OK&lt;/button&gt;
+</pre>
+  <p>In Sciter you can define some virtual property, e.g. &quot;shown&quot;, to all DOM elements (in some common &quot;utilities&quot; module):</p>
+  <pre>/* CSS must have [hidden] { display:none } rule in order this to work */
+property Element.shown(v) 
+{
+  get return this.style#display != &quot;none&quot;;
+  set this.attributes[&quot;hidden&quot;] = v ? undefined : true;
+}
+</pre>
+  <p>and use it as </p>
+  <pre>var someEl = ...<br/><br/>someEl.shown = true; // to show<br/>someEl.shown = false; // to hide
+</pre>
+  <p>The solution is not free from obvious drawbacks though: </p>
+  <ol>
+    <li>you need that special <code>[hidden] { display:none; }</code> rule.be present in your CSS and </li>
+    <li>In all cases when you need to hide/show the element you should do it either through that special &quot;shown&quot; property or explicitly by removing &quot;hidden&quot; attribute from the element.</li></ol>
+  <h2>visibility:none</h2>
+  <p>Since Sciter version 3.1.0.15 you can use <code>visibility:none;</code> &nbsp;in CSS to exclude the element from rendering. Exactly in the same way as <code>display:none;</code>. It has exactly the same effect.</p>
+  <p>As the visibility property is orthogonal to the dsiplay you can safely assign &quot;none&quot; and &quot;visible&quot; property to it without affecting display model of the element. </p>
+  <p>Therefore, the <strong>visibility</strong> property in Sciter can accept following values:</p>
+  <ul>
+    <li><em>none</em> - the element is excluded from rendering tree in the same way as display:none, that is Sciter specific;</li>
+    <li><em>hidden</em> - the element is in rendering tree, takes space but not rendered;</li>
+    <li><em>collapse</em> - the element is in rendering tree, takes space but its height or width is collapsed to zero. E.g. in flow:horizontal container visibility:collapse child will take space vertically but rendering width will be set to zero. In Sciter this will work for any elements but in standard CSS only for table rows for some unknown to me reason.</li>
+    <li><em>visible</em> - default value, element is rendered normally.</li></ul>
+  <p>And here is modified version of the shown scripting property defined above:</p>
+  <pre>property Element.shown(v) 
+{
+  get return this.isVisible;
+  set this.style#visibility = v ? &quot;visible&quot; : &quot;none&quot;;
+} 
+</pre>
+  <p></p>
+</body>
+</html>

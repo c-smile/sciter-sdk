@@ -1,0 +1,58 @@
+﻿<html>
+  <head>
+    <meta name="source" content="http://www.terrainformatica.com/wiki/doku.php?id=h-smile:built-in-behaviors:edit"/>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>behavior: integer</h1>
+  <p>Integer number input element behavior. This behavior can be applied to any suitable element..</p>
+  <h2>Elements</h2>
+  <p>that have this behavior applied by default:</p>
+  <ul>
+    <li><code>&lt;input type=&quot;integer&quot; /&gt;</code> - inline integer input element</li></ul>
+  <h2>Model</h2>
+  <p>Upon initialization the behavior creates following DOM structure:</p>
+  <pre>&lt;input&gt;
+  <code>&lt;caption&gt; 
+  &lt;button.plus&gt;
+  &lt;button.minus&gt;
+</code>&lt;/input&gt;
+</pre>
+  <p>Where &lt;caption&gt; will have <code>behavior:edit</code> applied with corresponding filter set. <code>&lt;button.plus&gt;</code>/<code>&lt;button.minus&gt;</code> sub-elements will be created if the input has attribute <code>step</code> defined. </p>
+  <p>All sub-elements will have <code>:synthetic</code> state flag set on them.</p>
+  <h2>Attributes</h2>
+  <p>that this behavior knows about:</p>
+  <ul>
+    <li><code>value=integer</code> - initial value of the input element</li>
+    <li><code>min=integer</code> - minimal allowed value.</li>
+    <li><code>max=integer</code> - maximal allowed value.</li>
+    <li><code>step=integer</code> - increment/decrement step. If this property is defined the behavior will create additional -/+ buttons.</li>
+    <li><code>novalue=&quot;text&quot;</code> - if editbox is empty then it shows text provided by the <em>novalue</em> attribute. You can style this state by using <code>:empty</code> CSS selector.</li>
+    <li><code>readonly</code> - &nbsp;declares that element is read only.</li></ul>
+  <h2>Events</h2>
+  <p>Aside of standard set of events (mouse, keyboard, focus) <em>behavior: button</em> generates:</p>
+  <ul>
+    <li>EDIT_VALUE_CHANGED event - value of the element was changed due to user actions. Posted (asynchronous) event.</li>
+    <li>EDIT_VALUE_CHANGING event - sent when value of the element is about to change. Synchronous event.</li></ul>
+  <h2>Value</h2>
+  <p>integer or undefined, reflects current status of internal editing buffer.</p>
+  <h2>Special key combinations</h2>
+  <ul>
+    <li>LEFT, CTRL+LEFT, SHIFT+LEFT, CTRL+SHIFT+LEFT</li>
+    <li>RIGHT, CTRL+RIGHT, SHIFT+RIGHT, CTRL+SHIFT+RIGHT</li>
+    <li>HOME, SHIFT+HOME</li>
+    <li>END, SHIFT+END</li>
+    <li>BACKSPACE, ALT+BACKSPACE, CTRL+BACKSPACE</li>
+    <li>CTRL+A</li>
+    <li>DELETE, SHIFT+DELETE, CTRL+DELETE</li>
+    <li>INSERT, SHIFT+INSERT, CTRL+INSERT</li>
+    <li>CTRL+X</li>
+    <li>CTRL+V</li>
+    <li>CTRL+Z</li>
+    <li>CTRL+(LEFT)SHIFT and CTRL+(RIGHT)SHIFT - in forms having the <code>dir</code> attribute these key combinations switches between <code>dir=&quot;ltr&quot;</code> and <code>dir=&quot;rtl&quot;</code>.</li></ul>
+  <h2>Methods</h2>
+  <p>N/A - this input element has no specific methods but &lt;caption&gt; sub-element has behavior:edit specific methods.</p>
+  <dl>
+    <dt></dt></dl>
+</body>
+</html>

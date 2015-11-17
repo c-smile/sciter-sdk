@@ -1,0 +1,107 @@
+<html>
+  <head>
+  <title></title>
+<style>
+
+  body
+  {
+    /*font-rendering-mode: classic;*/
+    flow:horizontal-flow;
+    background: url(images/back.png) repeat;
+    color:gray;
+    margin:0; padding:10px;
+    border-spacing:10px;
+  }
+
+  div { width:*; height:100px; padding:6px; }
+  div:nth-child(2n) { clear:right; }
+  
+  div:hover
+  {
+    transform:rotate(15deg) scale(.5);
+    transition: transform(quart-out,0.5s,quart-in);
+  }
+
+  //white, orange, rgba(0,0,204,0.5)
+  //red, yellow, green, blue, rgba(255,0,255,0.5) 
+  div.gradient-ellipse-farthest-corner
+  {
+    background: radial-gradient(25% 25%, ellipse farthest-corner, red, yellow, green, blue, rgba(255,0,255,0.5) );
+  }
+  div.gradient-ellipse-farthest-corner:hover
+  {
+    background: radial-gradient(25% 25%, ellipse farthest-corner, red, yellow 70%, green 75%, blue, rgba(255,0,255,0.5) );
+    transform:none;
+    transition: background(quart-out,0.5s,quart-in);
+  }
+  
+  
+  div.gradient-ellipse-farthest-side
+  {
+    background: radial-gradient(25% 25%, ellipse farthest-side, red, yellow, green, blue, rgba(255,0,255,0.5) );
+  }
+
+  div.gradient-ellipse-closest-corner
+  {
+    background: radial-gradient(25% 25%, ellipse closest-corner, red, yellow, green, blue, rgba(255,0,255,0.5) );
+  }
+  div.gradient-ellipse-closest-side
+  {
+    background: radial-gradient(25% 25%, ellipse closest-side, red, yellow, green, blue, rgba(255,0,255,0.5) );
+  }
+  
+  div.gradient-circle-farthest-corner
+  {
+    background: radial-gradient(75% 75%, circle farthest-corner, white, orange 50%, rgba(0,0,204,0.5));
+  }
+  div.gradient-circle-farthest-corner:hover
+  {
+    background: radial-gradient(75% 75%, circle farthest-corner, white, orange 80%, rgba(0,0,204,0.5));
+    transform:none;
+    transition: background(quart-out,0.5s,quart-in);
+  }
+  
+  
+  div.gradient-circle-farthest-side
+  {
+    background: radial-gradient(75% 75%, circle farthest-side, white, orange, rgba(0,0,204,0.5));
+  }
+
+  div.gradient-circle-closest-corner
+  {
+    background: radial-gradient(75% 75%, circle closest-corner, white, orange, rgba(0,0,204,0.5));
+  }
+  div.gradient-circle-closest-side
+  {
+    background: radial-gradient(75% 75%, circle closest-side, white, orange, rgba(0,0,204,0.5));
+  }
+
+ 
+  div.rounded { border-radius:10px; }
+  
+</style>
+<script type="text/tiscript"></script>
+  </head>
+<body>
+
+  <div .gradient-ellipse-farthest-corner>ellipse farthest corner</div>
+  <div .gradient-circle-farthest-corner>circle farthest corner</div>
+  <div .gradient-ellipse-farthest-side>ellipse farthest side</div>  
+  <div .gradient-circle-farthest-side>circle farthest side</div>
+
+  <div .gradient-ellipse-closest-corner>ellipse closest corner</div>
+  <div .gradient-circle-closest-corner>circle closest corner</div>
+  <div .gradient-ellipse-closest-side>ellipse closest side</div>  
+  <div .gradient-circle-closest-side>circle closest side</div>
+  
+  
+<!--    <div .gradient .rounded>Gradient 1 rounded</div>
+  <div .gradient-2 .rounded>Gradient 2 rounded</div>
+   
+  <div .diagonal-gradient>Diagonal gradient 1</div>
+  <div .diagonal-gradient-2>Diagonal gradient 1</div>
+  <div .angle-gradient>Angle gradient 1</div>
+  <div .angle-gradient-2>Angle gradient 2</div> -->
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<html>
+<head>
+  <script type="text/tiscript">
+    class Fruits
+    {
+      function this()
+      {
+        this._data = ["apple","orange","lime","lemon","pear","banan","kiwi","pineapple"];
+      } 
+      function forward()
+      {
+        var items = this._data;
+        var idx = -1;
+        return function()
+        {
+          if( ++idx < items.length )
+            return items[idx];
+        }
+      }
+      function backward()
+      {
+        var items = this._data;
+        var idx = items.length;
+        return function()
+        {
+          if( --idx >= 0 )
+            return items[idx];
+        }
+      }
+    }
+    
+    function range( from, to )
+    {
+      var idx = from - 1;
+      return function() 
+      { 
+        if( ++idx <= to ) return idx; 
+      } 
+    }
+    
+    function self.ready()
+    {
+      var src = new Fruits();
+      var ol = self.select("ol#forward");
+      for(var item in src.forward())
+        ol.insert { li, [item] };
+      ol = self.select("ol#backward");
+      for(var item in src.backward())
+        ol.insert { li, [item] };
+        
+      var ul = self.select("ul#range");
+      for(var item in range(12,21))
+        ul.insert { li, [item.toString()] };
+    }
+    
+  </script>
+</head>
+<body>
+  Fruits, forward:
+  <ol #forward />
+  Fruits, backward:
+  <ol #backward />
+  Range items:
+  <ul #range />
+  
+</body>
+</html>

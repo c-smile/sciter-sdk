@@ -1,0 +1,111 @@
+<html>
+  <head>
+    <title>Sciter2 clock</title>
+    <style>
+    
+      div.clock { 
+        prototype:Clock; 
+        width:*;
+        height:*;
+        /*border:1px solid black;*/
+      }
+    
+    </style>
+    <script type="text/tiscript">
+
+!function(){
+
+  $(span#os).text = System.OS;
+
+}();   
+
+    
+class Clock: Behavior 
+{
+
+  function attached() { 
+    this.paintContent = this.drawclock; // attaching draw handler to paintContent layer
+    this.timer(300,::this.refresh());
+  }
+
+  function drawclock(gfx)
+  {
+    var (x,y,w,h) = this.box(#rectw);
+    var scale = w < h? w / 300.0: h / 300.0;
+    var now = new Date();
+    gfx.save();
+    gfx.translate(w/2.0,h/2.0);
+    gfx.scale(scale,scale);    
+    gfx.rotate(-Math.PI/2);
+    gfx.lineColor(color(0,0,0));
+    gfx.lineWidth(8);
+    gfx.lineCap = Graphics.CAP_ROUND;
+       
+    // Hour marks
+    gfx.save();
+    gfx.lineColor(color(0x32,0x5F,0xA2));
+    for (var i in 12) {
+      gfx.rotate(Math.PI/6);
+      gfx.line(100,0,120,0);
+    }
+    gfx.restore();
+
+    // Minute marks
+    gfx.save();
+    gfx.lineWidth(5);
+    for (var i in 60) {
+      if ( i % 5 != 0)
+        gfx.line(117,0,120,0);
+      gfx.rotate(Math.PI/30);
+    }
+    gfx.restore();
+
+    var sec = now.second;
+    var min = now.minute;
+    var hr  = now.hour;
+    hr = hr >= 12 ? hr-12 : hr;
+  
+    // write Hours
+    gfx.save();
+    gfx.rotate( hr*(Math.PI/6) + (Math.PI/360)*min + (Math.PI/21600)*sec )
+    gfx.lineWidth(14);
+    gfx.line(-20,0,70,0);
+    gfx.restore();
+
+    // write Minutes
+    gfx.save();
+    gfx.rotate( (Math.PI/30)*min + (Math.PI/1800)*sec )
+    gfx.lineWidth(10);
+    gfx.line(-28,0,100,0);
+    gfx.restore();
+      
+    // Write seconds
+    gfx.save();
+    gfx.rotate(sec * Math.PI/30);
+    gfx.lineColor(color(0xD4,0,0));
+    gfx.fillColor(color(0xD4,0,0));
+    gfx.lineWidth(6);
+    gfx.line(-30,0,83,0);
+    gfx.ellipse(0,0,10);
+    
+    gfx.noFill();
+    gfx.ellipse(95,0,10);
+    gfx.restore();
+    
+    // outline
+    gfx.lineWidth(14);
+    gfx.lineColor(color(0x32,0x5F,0xA2));
+    gfx.ellipse(0,0,142);
+    
+    gfx.restore();
+  }    
+}
+    
+    </script>
+  </head>
+<body>
+  <h2>Sciter 3 clock using immediate mode drawing on <span #os></span></h2>
+  <div class="clock" ></div>
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+
+video[controls] { 
+  style-set: "video-controls"; 
+  aspect: VideoControls url(video-controls.tis);
+}
+
+@set video-controls {
+  :root { background:#CCD; flow:vertical; overflow:hidden; }
+  
+  :root > div.bar {
+    width:*; 
+    height:30dip; 
+    margin-top:* 0 0 0;
+    transform:translate(0,0);
+    flow:horizontal;
+    border-top: 1px solid rgba(245,245,245,0.5); 
+    background-color: rgba(45,45,45,0.75); 
+    color:white;
+    padding:4dip;
+    border-spacing:4dip;
+  }
+  :root > div.bar.hidden {
+    transform:translate(0,100%);
+    transition: transform(quart-in-out,400ms);
+  }
+  
+  :root > div.bar > * { display:block; margin:* 0; }
+  
+  :root               > div.bar > svg.command { behavior:button; size:30dip; background:transparent; border-radius:4dip; }
+  :root               > div.bar > svg.command:hover { background:rgba(255,255,255,0.5); }
+  :root               > div.bar > svg.command:active { background:rgba(204,204,221,0.5); }
+  :root               > div.bar > svg.command > path { fill:#fff; stroke:none; display:none; }
+  :root[mode=stopped] > div.bar > svg.command > path.play   { display:block; }
+  :root[mode=playing] > div.bar > svg.command > path.stop   { display:block; }
+  :root[mode=ended]   > div.bar > svg.command > path.rewind { display:block; }
+  
+  :root > div.bar > :first-child { margin-left:*; }
+  :root > div.bar > :last-child { margin-right:*; }
+  
+  :root               > div.bar > input.position { width:*; max-width:8em; min-width:2em }
+  :root               > div.bar > input.volume { width:*; max-width:2em;  min-width:1em }
+ 
+}

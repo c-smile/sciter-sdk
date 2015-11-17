@@ -1,0 +1,121 @@
+
+function VideoControls() {
+
+  var video = this;
+  var cmd;
+  var bar;
+  var barIsShown = true;
+  var mode = #playing;
+  var posCtl;
+  var timesCtl;
+  var volCtl;
+  
+  //<path.stop   d="M 10,10 22,10 22,22 10,22 z"  /> 
+  
+  this.$append(
+    <div.bar>
+      <svg.command viewbox="1 1 33 33" >
+        <path.play   d="M 11,10 21,17 11,24 z"  />
+        <path.stop   d="M 10,10 15,10 15,24 10,24 z M 19,10 24,10 24,24 19,24 z"  />  
+        <path.rewind d="M 9,10 14,10 14,24 9,24 z M 14,17 24,10 24,24 z"  />
+      </svg>
+      <input|hslider.position />
+      <output.times value="0:00:00 of 0:00:00" />
+      <input|hslider.volume value=10 min=1 max=10 />
+    </div>
+  );
+    
+  function updateMode() { video.attributes["mode"] = mode.toString(); }
+  
+  function onCommandClick() { 
+    switch( mode ) {
+      case #playing: video.videoStop(); break;
+      case #stopped: video.videoPlay(); break;
+      case #ended: video.videoPlay(0); break;
+    }
+    updateMode();
+  }  
+  
+ // log10
+  const vlog10 = [0,0,0.3010,0.4771,0.6020,0.6989,0.7781,0.8450,0.9030,0.9542,1];
+  function get_vlog10_idx(val) {
+    for( var (idx, v) in vlog10 )
+      if( v >= val ) return idx;
+  }
+     
+  function hms(seconds)
+  {
+    var h,m,s;
+    s = seconds % 60; seconds /= 60;
+    m = seconds % 60; seconds /= 60;
+    h = seconds % 60; return ( h, m, s );
+  }
+  
+  function pulse() {
+  
+    var m = (video.videoDuration() + 0.5).toInteger();
+    var t = (video.videoPosition() + 0.5).toInteger();
+    if( ! posCtl.state.hover ) { // avoid shooting on moving target
+      posCtl.sliderRange(0, m); 
+      posCtl.value = t;
+    }
+    var (th,tm,ts) = hms(t);
+    var (mh,mm,ms) = hms(m);
+    timesCtl.value = String.printf("%d:%02d:%02d of %d:%02d:%02d", th,tm,ts,mh,mm,ms);
+    volCtl.value = get_vlog10_idx(video.audioVolume());
+    return barIsShown;
+  }
+  
+  function showBar(onOff) { 
+    barIsShown = onOff;  
+    bar.attributes.toggleClass("hidden", !barIsShown); 
+    if( barIsShown ) {
+      video.timer(0.5s, pulse);
+      pulse();
+    }
+  }
+  
+  video.onControlEvent = function(evt) {
+    switch(evt.type) {
+      case Event.VIDEO_INITIALIZED: return false;
+      case Event.VIDEO_STARTED:     mode = #playing; updateMode(); return false;
+      case Event.VIDEO_STOPPED:     mode = video.videoIsEnded() ? #ended : #stopped; updateMode(); return false; 
+    }
+  }  
+  
+  video.onMouse = function(evt) {
+    switch(evt.type) {
+      case Event.MOUSE_ENTER: showBar(true); break;
+      case Event.MOUSE_LEAVE: showBar(false); break;
+    }
+  }
+
+  bar = this.$(div.bar);
+  cmd = this.$(svg.command);
+  cmd.onClick = onCommandClick;
+  posCtl = this.$(input.position);
+  timesCtl = this.$(output.times);
+  volCtl = this.$(input.volume);
+  
+  posCtl.onValueChanged = function() {
+    video.videoStop();
+    video.videoPosition(this.value);
+  }
+  posCtl.onClick = function() {
+    video.videoPosition(this.value);
+    video.videoPlay();
+  }  
+ 
+  volCtl.onValueChanged = function() {
+    video.audioVolume( vlog10[this.value] );    
+  }
+
+  updateMode();
+  
+  if(!video.state.hover)
+    this.timer(2s, function() { 
+       if(!video.state.hover) 
+         this.showBar(false) ;
+    });
+
+}

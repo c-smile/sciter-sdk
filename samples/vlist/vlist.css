@@ -1,0 +1,25 @@
+
+
+vlist 
+{ 
+  display:block; 
+  height:*; width:300px; 
+  border:1px solid black; 
+  overflow: auto;
+  prototype: VList url(vlist.tis);
+}
+
+vlist > li {
+  display:block; 
+  padding:0 6dip;
+  line-height:31dip;
+  background-color:#fff #fff #ddd #ddd;
+}
+
+vlist > li:hover {
+  background-color:#fff #fff #bcd #bcd;
+}
+
+vlist > li:current {
+  background-color:#bcd;
+}

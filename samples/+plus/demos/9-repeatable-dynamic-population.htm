@@ -1,0 +1,69 @@
+﻿<!-- saved from url=(0022)http://internet.e-mail -->
+<html>
+  <head>
+    <title>Plus: very basic sample</title>
+    <style>
+      @import url(../plus.css); /* the only thing needed to include Plus framework */
+      @import url(../../note.css); 
+      
+      @import url(volume/volume.css);
+      
+      #channels { width: 300px; height:300px; margin: 20px auto ; border: 1px solid; overflow:scroll-indicator;}
+      #channels > li { flow:horizontal; }
+      #channels > li > output { display:block;  width:*;}
+      #channels > li > volume { display:block;  margin:* 3px; }
+      
+      .comment { font-size:85%; }
+           
+    </style>
+    
+    <script type="text/tiscript">
+    
+      include "../plus.tis"; // we use @observing so need to include plus.tis upfront.
+         
+      class Instrument {
+         this var name;
+         this var volume;
+         function this( name, volume ) {  this.name = name; this.volume = volume; }
+      };
+
+      namespace Data // our model
+      {  
+        var instruments = [];
+      }    
+      
+      var i = 0;
+      var state = #adding;
+
+      view.root.timer( 100, function() {
+          
+          if( state == #adding ) {
+            if(Data.instruments.length > 100)
+              state = #removing;
+            else
+              Data.instruments.push( new Instrument( "Name " + (++i), i % 5 ) );
+          } else {
+            if(Data.instruments.length == 0)
+              state = #adding;
+            else 
+              Data.instruments.remove(Data.instruments.length - 1);
+          }
+          return true; // keep it running
+      });
+    
+    </script>
+  </head>
+
+<body model="Data"> <!-- define data model we observe -->
+
+  <note>This sample demonstrates repeatable binding with dynamic data population. Each 100ms item in the list gets added or removed.</note>
+  
+  <!-- the repeateable section -->
+  <ol #channels each="instrument in instruments">
+    <li><output name="instrument.name" /> <volume name="instrument.volume" /></li>
+  </ol>
+  
+  <p .comment>Volume here is "clickable" element.</p>
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+<p>The Start Task onClick handler is defined as</p>
+<pre>$(#start-task).onClick = function()
+{
+  var taskElem = $(div#tasks > select)
+      .$append(&lt;option>Task { ++taskNo }
+               &lt;progress max=100 /> 
+               &lt;span.result />&lt;/option>);
+  function onProgress(p100) { taskElem.$(progress).value = p100; }
+  function onDone(taskId) { 
+     taskElem.$(span.result).text = "Done!"; 
+     taskElem.$(progress).remove(); 
+  }
+
+  view.execTask(taskId,onProgress,onDone);
+}</pre>
+
+<p>It defines couple of callback functions and calls <code>view.execTask()</code> with them.</p>
+<p>The <code>view.execTask()</code> native method is implemented in <code>window::exec_task()</code>.</p>
+<p>The <code>window::exec_task()</code> starts worker thread passing <em>taskNo</em>, <em>onProgress</em> and 
+   <em>onDone</em> parameters to it.</p>
+<p>Worker thread body is defined in C++ as:</p>
+<pre>// worker thread body, simulate time consuming task
+void thread_body(thread_params params)
+{
+  for(int i = 1; i &lt;= 100; ++i) {
+    ::Sleep(100);
+GUI_CODE_START
+     params.progressCb.call(i); // report task progress
+GUI_CODE_END
+  }
+  // report task completion,
+  // we can pass some result data here, for now just taskId
+GUI_CODE_START
+    params.doneCb.call(params.taskId);  
+GUI_CODE_END
+}</pre>
+<p>As you see it calls passed callback functions in GUI thread</p>
+
+

@@ -1,0 +1,57 @@
+<html custom-frame="glassy" resizeable>
+<head>
+  <title>Resizeable dialog</title>
+  <style>
+    html 
+    { 
+      font:system;
+      min-width:min-content;  /* content will not overflow, no scrollbars */
+      max-width:100%;         /* max width - whole screen */
+      width:300dip;            /* preferred/initial width */
+      height:240dip;     /* content will not overflow, no vertical scrollbars on the window */  
+      min-height:min-content; 
+      max-height: 70%;        /* 70% of screen height */
+      background:window; 
+      overflow:none;
+      padding:0;
+    }
+    
+    @media composition-supported /* Aero DWM is in effect*/
+    {
+      html 
+      {
+        background:transparent; /* so background is that aged plastic */
+      }
+    }    
+    
+    body { padding:0; margin:0; }
+    
+    h1, p { text-align:center; }
+
+    #content { flow:horizontal; size:*; }   
+    #content > picture { display:block; size:auto; margin:6px; }
+    #content > textarea { display:block; size:*; min-width:16em; min-height:6em; }   
+    
+  </style>
+  <script type="text/tiscript">
+  
+    include "../../decorators.tis";
+    
+    @click @on "#close-dialog" :: view.close( $(textarea).value );
+    @click @on "#cancel-dialog" :: view.close( null );
+
+    </script>
+</head>
+<body>
+  <h1>Resizeable dialog</h1>
+  <p>Try to resize the window</p>
+  <div #content>
+    <picture src="../user-login-48.png" />
+    <textarea novalue="Paste your PGP public key here"></textarea>
+  </div>
+  <p>
+    <button id="close-dialog">Ok</button>
+    <button id="cancel-dialog" tabindex=1 >Cancel</button>
+  </p>
+</body>
+</html>

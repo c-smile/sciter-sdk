@@ -1,0 +1,55 @@
+  function movableView() // install movable window handler
+  {
+    var xoff,yoff;
+    var dragging = false;
+    var body = $(body);
+      
+    function doDrag()
+    {
+      while( dragging )
+        view.doEvent();
+    }
+      
+    function onMouseDown(evt)
+    {
+      //if( evt.target !== body )
+      //  return false;
+      xoff = evt.x;
+      yoff = evt.y;
+      dragging = true;
+      //view.root.capture(true);
+      doDrag();
+      return true;
+    }
+      
+    function onMouseMove(evt)
+    {
+      if( dragging )
+      {
+        view.move( evt.xScreen - xoff, evt.yScreen - yoff, true); // true - x,y are coordinates of the client area on the screen
+        return true;
+      }
+      return true;
+    }
+      
+    function stopDrag()
+    {
+      if(dragging)
+      {
+        dragging = false;
+        //view.root.capture(false);
+        return true;
+      }
+      return false;
+    }
+      
+    function onMouseUp(evt) { return stopDrag(); }
+    function onKeyDown(evt) { if(evt.keyCode == Event.VK_ESCAPE ) return stopDrag(); }
+      
+    // hookup event handlers:
+    view.root.on("mousedown",onMouseDown );
+    view.root.on("~mouseup",onMouseUp ); // installing mouseup handler in sinking phase (before all children)
+    view.root.on("mousemove",onMouseMove );
+    view.root.on("keydown", onKeyDown );
+    return false;
+  }

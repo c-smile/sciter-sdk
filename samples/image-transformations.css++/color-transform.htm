@@ -1,0 +1,77 @@
+<html>
+	<head>
+		<title>CSS background/foreground images</title>
+<style type="text/css"> 
+	body { 
+		font-family:Verdana; font-size:10pt; 
+		width:100%%; height:100%%;  
+		background-color: window;
+		padding:10px;
+		margin:0;
+	}
+  header { font-size:150%; margin-top:1em; margin-bottom:0.5em; }
+
+	img
+  {
+	  //foreground-image: url(images/color-transform.png);
+		margin: 6px;
+	}	
+
+	#c1 img
+  {
+    //foreground-image-transformation: color-schema(system);
+	}	
+	#c1 
+  {
+    background-color: threedface;
+	}	
+	#c1:hover img
+  {
+    foreground-image-transformation: color-schema(darksalmon,salmon,lightsalmon,peachpuff,antiquewhite);
+	}	
+	#c1:hover
+  {
+    transition:blend;
+    background-color: darksalmon;
+	}	
+  
+  #c1:active img
+  {
+    foreground-image-transformation: color-schema(brown,red,lightsalmon,peachpuff,white);
+	}	
+	
+  
+  
+  #c2 
+  {
+    background-color: threedface;
+	}	  
+  #c2:hover img
+  {
+    foreground-image-transformation: colorize(black);
+	}	
+  #c2:active img
+  {
+    foreground-image-transformation: colorize(salmon);
+	}	
+
+	
+</style>
+	</head>
+	<body>
+	<header>Image color transformation. Move mouse over the block below. Image should change color from system gamma to custom set.</header>
+  <p id="c1"><img src="images/color-transform.png" /> </p>
+  
+  <p>But please don't ask me what is going on here...</p> 
+  <p>Well... following is a definition of five strong points of interpolation curve - from pure grey to final color.</p>
+ <pre>
+    foreground-image-transformation: color-schema(darksalmon,salmon,lightsalmon,peachpuff,antiquewhite);  
+ </pre> 
+  pixels which are not grey are not converted. That red ball is it. Use this feature when you will want to show the same image in different states.
+  
+	<header>Image color transformation. <b>colorize</b></header>
+  <p id="c2"><img src="images/color-transform.png" /> </p>
+  
+  
+ 	</body>  
+</html>

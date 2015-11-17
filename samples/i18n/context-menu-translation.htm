@@ -1,0 +1,37 @@
+﻿<html lang=en>
+  <head>
+    <title></title>
+    <style>
+
+      menu.context li[name="edit:undo"] label:lang(ru) { content: "Отменить"; }
+      menu.context li[name="edit:redo"] label:lang(ru) { content: "Повторить"; }
+      menu.context li[name="edit:cut"] label:lang(ru) { content: "Вырезать"; }
+      menu.context li[name="edit:copy"] label:lang(ru) { content: "Копировать"; }
+      menu.context li[name="edit:paste"] label:lang(ru) { content: "Вставить"; }
+      menu.context li[name="edit:selectall"] label:lang(ru) { content: "Выделить всё"; }
+   
+    </style>
+    
+    <script type="text/tiscript">
+    
+      $(form).on("change", function() {
+        self.attributes["lang"] = this.value.lang;
+      });
+    
+    </script>
+   
+  </head>
+<body>
+
+  <h2>Context menu customization</h2>
+
+  <form>
+  Choose language: <button|radio(lang) value="en">En</button>
+                   <button|radio(lang) value="ru">Ru</button>
+  </form>
+
+  <input|text value="menu test" />
+  <textarea style="display:block">menu test</textarea>
+
+</body>
+</html>

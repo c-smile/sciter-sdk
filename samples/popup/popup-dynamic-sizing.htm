@@ -1,0 +1,77 @@
+<html>
+<head>
+  <style>
+  
+    @import url(../+plus/plus.css);
+        
+    popup#test
+    {
+      background-color: gold;
+      border:2px solid red;
+      width:100px;
+      height:auto;
+    }
+    
+    div#anchor
+    {
+      border:1px solid blue;
+      width:50px;
+      height:50px;
+      cursor:pointer;
+    }
+  </style>  
+  <style #actions>
+    div#anchor
+    {
+      behavior: button; 
+    }
+  </style>    
+  <script type="text/tiscript">
+  
+      // NOTE: this demo uses Plus bound Demo.list 
+      
+      namespace Demo 
+      {
+        var list = ["item"];
+      
+        function showPopup(anchor) 
+        {
+          var anchorPoint = 1; // left/bottom
+          var popupPoint = 7;  // left/top
+          anchor.popup( $(popup#test), (popupPoint << 16) | anchorPoint);
+        }
+        
+        function addListItem() { 
+          if( list.length > 10 ) 
+            touchList = removeListItem; 
+          else 
+            list.push("new item");
+        }
+        function removeListItem() { 
+          if( list.length <= 1 ) 
+            touchList = addListItem; 
+          else 
+            list.pop();
+        }
+        
+        var touchList = addListItem;
+        
+      }        
+      
+      self.timer(1000, function() { Demo.touchList(); return true; } );    
+        
+    </script>
+  
+</head>
+<body model="Demo">
+
+    <p>This sample demonstrates automatic/dynamic popup sizing when its content changes and height:auto is set.</p>
+    <p>Click below to see popup changing once per second.</p>
+    <div#anchor click="showPopup(this)">click me</div>
+    <popup#test each="i,item in list">
+      <div><(i)> - <(item)></div>
+    </popup>
+    
+
+</body>
+</html>

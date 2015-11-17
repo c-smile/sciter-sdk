@@ -1,0 +1,72 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      div#clock {
+        size:250px 100px;
+        background:gold;
+        font-family: "Century Gothic", sans-serif;
+        border: 3px solid brown;
+        font-size: 48px;
+        border-radius:8px;
+      }
+    
+    </style>
+    <script type="text/tiscript">
+    
+    
+    function DigitalClock(params = {}) {
+    
+      var el = params.on || self;
+      var fontName  = params.fontName;
+      var fontSize  = params.fontSize;
+      var textColor = params.textColor || color(255,0,0);
+      var outlineColor = params.textOutlineColor;
+      var position  = params.textAlignment || 5;  // center by default
+      
+      function timeText() {
+        var now = new Date();
+        return String.printf("%02d:%02d:%02d", now.hour, now.minute, now.second);
+      }
+      
+      var textLayout = new Graphics.Text(timeText(),el);
+      if( fontName && fontSize )
+         textLayout.font(fontName,fontSize);
+      
+      el.paintContent = function(gfx) {
+        var (x,y,w,h) = el.box(#rectw,#inner);
+        if(outlineColor) {
+          gfx.save();
+            gfx.lineWidth(0.5);
+            gfx.lineColor(outlineColor);
+            gfx.fillColor(textColor);
+            gfx.drawText(textLayout, x + w / 2, y + h / 2, position);
+          gfx.restore();
+        } else
+          gfx.drawText(textLayout, x + w / 2, y + h / 2, textColor, position ); 
+      }
+      el.timer(0.99s, function() {  
+        textLayout.chars = timeText();
+        el.refresh();
+        return true; // keep ticking;
+      })
+    }
+    
+    
+    DigitalClock {
+      on               : $(div#clock),
+      textColor        : color("brown"),
+      //textOutlineColor : color(0,0,0)
+    };
+    
+    </script>
+  </head>
+<body>
+
+  <p>This sample demonstrates use <code>chars</code> property of <code>Graphics.Text</code> object and drawing alignment in <code>Graphics.drawText()</code></p>
+
+  <div #clock />
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+﻿<html>
+  <head>
+    <title>XMLScanner</title>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>DataSocket object</h1>
+  <p>DataSocket's are used to duplex data transfer using TCP/IP sockets between two Sciter processes running either on the same machine (&quot;localhost&quot; address) or over the wire inside local network. DataSocket supports server listening sockets (<code>DataSocket.listen()</code> ) and client sockets (<code>DataSocket.connect()</code>) .</p>
+  <p>DataSocket sends/receive data in serialized binary form - you send data by <code>socket.send(data)</code> and receive them by <code>socket.on(&quot;receive&quot;, function(data) {})</code> on other end. No additional stringify/parsing is required.</p>
+  <dl>
+    <h2>Properties</h2>
+    <dt>active</dt>
+    <dd>- <em>boolean</em>, socket state, true - socket is alive.</dd>
+    <dt>address</dt>
+    <dd>- string, address of the remote machine.</dd>
+    <h2>Methods</h2>
+    <dt>connect</dt>
+    <dd>
+      <p><strong>( port: </strong>integer [<strong>, domain</strong>: string] <strong>)</strong> : DataSocket</p>
+      <p>Constructs client DataSocket. Returns new socket in connecting state.</p></dd>
+    <dt>listen</dt>
+    <dd>
+      <p><strong>( acceptor</strong>: function,<strong> port: </strong>integer [, <strong>domain</strong>: string] <strong>)</strong> : DataSocket</p>
+      <p>Constructs server DataSocket. Returns new socket in listening state.</p>
+      <p>The <em>acceptor</em> function is being called on each new connection request to the server. It has following signature:</p>
+      <pre>function acceptor( connectionSocket: DataSocket ) : true | false
+</pre>
+      <p>where <em>connectionSocket</em> is another instance of DataSocket used for communication with remote peer.</p>
+      <p>You MUST return <em>true</em> from the acceptor in order to accept and use the connection.</p></dd>
+    <dt>on</dt>
+    <dd>
+      <p><strong>( event</strong>: string<strong>, callback</strong>: function<strong> )</strong> : this</p>
+      <p>Subscribes the callback to one of socket events:</p>
+      <ul>
+        <li><strong>&quot;connect&quot;</strong> -&gt; function(), socket just connected to the host;</li>
+        <li><strong>&quot;data&quot;</strong> -&gt; function(data:any), the data has been received; &nbsp;</li>
+        <li><strong>&quot;sent&quot;</strong> -&gt; function(), data were sent in full;</li>
+        <li><strong>&quot;error&quot;</strong> -&gt; function(err: Error), error occured, error object passed to the function;</li>
+        <li><strong>&quot;close&quot;</strong> -&gt; function(), socket was closed;</li></ul>
+      <p>The event name may contain &quot;.namespace&quot; part that can be used in .off() call.</p></dd>
+    <dt>once</dt>
+    <dd>
+      <p><strong>( event</strong>: string<strong>, callback</strong>: function<strong> )</strong> : this</p>
+      <p>Same as on() but subscribes the callback for one time execution ( handler will be auto removed after first call )</p></dd>
+    <dt>off</dt>
+    <dd>
+      <p><strong>( event</strong>: string | <strong>callback</strong>: function<strong> )</strong> : this</p>
+      <p>Unsubscribe callback either by its name or by its function reference.</p>
+      <p>Event name may contain only namespace part, so this: <code>socket.off(&quot;.namespace&quot;)</code> will unsubscribe all handlers that were set with that namespace.</p></dd>
+    <dt>send</dt>
+    <dd>
+      <p><strong>( data</strong>: any <strong>)</strong></p>
+      <p>The menthod sends data to the peer. The data can be any serializeable data type (object, number, string, array, etc.).</p></dd>
+    <dt>close</dt>
+    <dd>
+      <p><strong>( )</strong></p>
+      <p>Closes the socket.</p></dd></dl>
+</body>
+</html>

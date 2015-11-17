@@ -1,0 +1,20 @@
+
+/* principal handlers */
+[model] { aspect:"Plus.Model" url(plus.tis); }
+[model] [each] { aspect:"Plus.Repeater"; } /* note repeater shall come first before [model] [name] for <select each="..." name="var"> */
+[model] [name] { aspect:"Plus.Terminal"; }
+[model] [class*='{{'] { aspect:"Plus.ClassTerminal"; }
+[model] [value*='{{'] { aspect:"Plus.valAttrTerminal"; }
+[model] [href*='{{'] { aspect:"Plus.hrefAttrTerminal"; }
+[model] [src*='{{'] { aspect:"Plus.srcAttrTerminal"; }
+
+/* auxiliary event handlers */
+[model] [click] { aspect:"Plus.Click"; }
+[model] [dblclick] { aspect:"Plus.DblClick"; }
+[model] [change] { aspect:"Plus.Change"; }
+[model] [enter] { aspect:"Plus.Enter"; }
+[model] [escape] { aspect:"Plus.Escape"; }
+[model] [focusin] { aspect:"Plus.FocusIn"; }
+[model] [focusout] { aspect:"Plus.FocusOut"; }
+
+

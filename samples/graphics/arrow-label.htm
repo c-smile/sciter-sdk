@@ -1,0 +1,114 @@
+<html>
+  <head>
+  <title></title>
+<style>
+
+  select#tag-list { 
+      background:threedface; 
+      padding:0; 
+      display:block; 
+      flow:horizontal; 
+      width:*; 
+      height:2.2em; 
+      overflow-x:scroll-indicator; 
+      overflow-y:none; 
+      vertical-align:middle;
+    }
+    select#tag-list > option { 
+      prototype:ArrowLabel; 
+      background-color:#FFF; 
+      vertical-align:center;
+      width:max-intrinsic; 
+      height:*;
+      margin:3px; 
+      padding:1px 0.4em 3px 0.7em;
+      hit-margin:3px 6px;
+    }
+    select#tag-list > option:current 
+    { 
+      background-color:threeddarkshadow; 
+      color:highlighttext;  
+    }
+    select#tag-list:focus > option:current 
+    { 
+      background-color:highlight; 
+      color:highlighttext;  
+    }
+
+</style>
+<script type="text/tiscript">
+
+    class ArrowLabel : Behavior
+    {
+      function attached() { this.paintBackground = this.paint; }
+          
+      function getShape()
+      {
+        var shape = this.shape;
+        if(!shape) 
+        {
+          shape = this.shape = new Graphics.Path();
+          this.shapeWidth = null;
+          this.shapeHeight = null;
+        }
+       
+        var (x1,y1,x2,y2) = this.box(#rect,#border);
+        var w = (x2-x1);
+        var h = (y2-y1);
+       
+        if( this.shapeWidth == w && this.shapeHeight == h)
+          return shape; // nothing to do already calculated
+
+        this.shapeWidth = w;
+        this.shapeHeight = h;
+        
+        shape.reset();
+        var d = h / 6.0;
+        
+        x1 += 0.5; y1 += 0.5; x2 += 0.5; y2 += 0.5;
+        
+        if( this.index == 0 )
+          shape.moveTo(x1,y1)
+             .lineTo(x2-d,y1)
+             .lineTo(x2+d,(y1+y2)/2)
+             .lineTo(x2-d,y2)
+             .lineTo(x1,y2)
+             .close();
+        else
+          shape.moveTo(x1-d,y1)
+             .lineTo(x2-d,y1)
+             .lineTo(x2+d,(y1+y2)/2)
+             .lineTo(x2-d,y2)
+             .lineTo(x1-d,y2)
+             .lineTo(x1+d,(y1+y2)/2)
+             .close();
+
+        return shape; 
+      }      
+      
+      // function is called while handling WM_PAINT 
+      function paint(gfx)
+      {
+        if(var shape = this.getShape())
+        {
+          gfx.lineWidth(1)
+             .lineColor(color(128,128,128))
+             .fillColor(color(this.style#background-color))
+             .drawPath( shape );
+          return true;
+        }
+      }
+    }
+
+</script>
+  </head>
+<body>
+  <p>Horizontal &lt;select> with drawable non-rectangular &lt;option>s</p>
+  <select id="tag-list" type=select>
+    <option>html</option>
+    <option>body</option>
+    <option>div</option>
+    <option>p</option>
+  </select>
+</body>
+</html>

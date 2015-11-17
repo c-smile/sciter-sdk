@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <title>Plus: very basic sample</title>
+    <style>
+      @import url(../plus.css); /* the only thing needed to include Plus framework */
+      @import url(../../note.css); 
+      
+      output { display: inline-block; border: 1px gray dotted; }
+    </style>
+    
+    <script type="text/tiscript">
+  
+      namespace Data // our model
+      {  
+        var greeting = "?"; // observable variable 
+      }    
+    
+    </script>
+  </head>
+
+<body model="Data"> <!-- define data model we observe -->
+
+  <note>Input and output elements below are bound with single <code>Data.greeting</code> variable.
+  <br>Changes in input are reflected in output, type something:</note>
+
+  <p>Whom to greet: <input|text(greeting) /></p>
+  <p>Greeting: Hello <output(greeting) />!</p>
+
+</body>
+</html>

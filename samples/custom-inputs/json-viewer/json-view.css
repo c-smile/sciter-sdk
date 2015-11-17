@@ -1,0 +1,26 @@
+
+json-view {
+  display:block;
+  font: system;
+  border: 1px solid grey;
+  background: white;
+  overflow: scroll-indicator;
+  aspect: JsonView url(json-view.tis);
+}
+
+json-view,
+json-view dl { flow: row(dt,dd); border-spacing:2px; margin:0; padding:2px;}
+json-view dt { text-align:right; font-weight:bold; width:max-content; max-width:6em; white-space:nowrap; overflow-x:hidden; text-overflow:ellipsis; 
+ }
+json-view dd { margin:0; padding-left:12px; width:*; white-space:nowrap; overflow-x:hidden; text-overflow:ellipsis;  }
+json-view caption { behavior:clickable; cursor: pointer; }
+json-view caption:hover { background: gold; }
+json-view dd.compound {  background-image:url(stock:arrow-e-hollow); /* that arrow */
+                              background-repeat: no-repeat;
+                              background-position-top: 6px;
+                              background-position-left: 3px;
+                              padding-left:12px;
+                            }
+json-view dd > dl { display:none; }
+json-view dd:expanded > dl { display:block; }
+json-view dd:expanded.compound { background-image:url(stock:arrow-s-hollow); }

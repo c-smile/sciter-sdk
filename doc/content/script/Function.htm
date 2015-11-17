@@ -1,0 +1,73 @@
+<html>
+  <head>
+    <title>Function object</title>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>Function object</h1>
+  <p>Script Function object.</p>
+  
+    <dl>
+      
+        
+        <h2>Properties</h2>
+      
+        <dt>name</dt>
+        <dd>readonly, string. name of the function. For anonymous (lambda) functions it is undefined.</dd>
+      
+        <dt>fullName</dt>
+        <dd>readonly, string. Fully qualified name of the function, includes name of class or namespace. For anonymous (lambda) functions it is undefined.</dd>
+      
+        <dt>length</dt>
+        <dd>readonly, integer. Returns total number of declared parameters.</dd>
+      
+        <dt>optionals</dt>
+        <dd>readonly, integer. Returns number of optional parameters.</dd>
+      
+        
+          <h2>Methods</h2>
+      
+        <dt>[this]</dt>
+        <dd>
+          <p>([<em>arg1</em>:string [, <em>arg2</em>:string [, ... <em>argN</em>:string]],] <em>functionBody</em>:string)</p>
+          <p>constructor, compiles the functionBody and creates function object of it. arg1... argN are names to be used by the function as formal argument names. Each must be a string that corresponds to a valid JavaScript identifier.</p></dd>
+      
+        <dt>call</dt>
+        <dd>
+          <p>( thisObj: object [, p0:value, ... pN:value] ) : value</p>
+          <p>Invokes the function in context of <em>this</em> set to thisObj</p></dd>
+      
+        <dt>apply</dt>
+        <dd>
+          <p>( thisObj: object [,p0:value, ... pN:value] [, argv:array] ) : value</p>
+          <p>Invokes the function in context of <em>this</em> set to thisObj. Parameters of the function call are compsed from list of parameters p0 ... pN and appended by members of <em>argv</em> array. Thus actual call will have following parameters list: p0, ..., pN, argv[0], ... argv[N].</p></dd>
+      
+        <dt>exists</dt>
+        <dd>( <strong>tag</strong>: value, [<strong>deep</strong> = false] ) : true | false
+          <p>Checks property by its tag for existence. If deep == true then does deep lookup - in function itself and its chain of classes.</p></dd>
+      
+        <dt>remove</dt>
+        <dd>( <strong>tag</strong>: value ) : void
+          <p>Removes property of the function by its tag (a.k.a. name).</p></dd>
+      
+        <dt>propertyAt</dt>
+        <dd>( <strong>tag</strong>: value ) : value
+          <p>Does lookup in the object for member/property by its tag. This is a direct equivalent of <em>obj.tag</em> construction.</p></dd>
+      
+        <dt>seal</dt>
+        <dd><strong>( </strong>[<strong>strict</strong>:true|false] <strong>)</strong> : object
+          <p>Locks structure of the object - after the call any attempt to add or remove object's property will throw an error. Values of existing properties can be changed though. Returns the object iself. If <em>strict</em> parameter is provided and it is exactly <em>true</em> then any attempt to get unknown property will throw an error.</p></dd>
+      
+        <dt>isSealed</dt>
+        <dd><strong>( </strong>[<strong>strict</strong>:true|false]<strong> )</strong> : true | false | undefined
+          <p>Returns <em>true</em> if the object is sealed. If <em>strict</em> parameter is provided and is exactly <em>true</em> then the method returns <em>true</em> only if <em>seal(true)</em> was called for it.</p></dd>
+      
+        <dt>freeze</dt>
+        <dd><strong>( </strong>[<strong>strict</strong>:true|false] <strong>)</strong> : object
+          <p>Locks the object - makes it immutable - any attempt to add, remove and modify value of any object's property will throw an error. Returns the object itself. If there is a <em>strict</em> parameter and it is exactly <em>true</em> then any attempt to get unknown property will throw an error.</p></dd>
+      
+        <dt>isFrozen</dt>
+        <dd><strong>( </strong>[<strong>strict</strong>:true|false]<strong> )</strong> : true | false | undefined
+          <p>Returns <em>true</em> if the object is frozen. If <em>strict</em> parameter is provided and is exactly <em>true</em> then the method returns <em>true</em> only if <em>freeze(true)</em> was called for it.</p></dd></dl>
+</body>
+</html>

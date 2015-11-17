@@ -1,0 +1,72 @@
+<html>
+  <head>
+    <title>Plus: very basic sample</title>
+    <style>
+      @import url(../plus.css); /* the only thing needed to include Plus framework */
+      @import url(../../note.css); 
+      @import url(../../../widgets/switch/switch.css); 
+      
+      html { font:system; }
+      
+      section#items { width:6*; margin:1em 2*; }
+      
+      section#items > input.new { margin-left:4em; width:*; display:block; min-width:235dip; }
+      
+      section#items > ol { width:*; margin-top:4px; }
+      section#items > ol > li { flow:horizontal; border-bottom:1px solid dotted;}
+      section#items > ol > li > input[type=checkbox] { display: block; vertical-align:middle;}
+      section#items > ol > li > input[type=text] { display: block; width:*; vertical-align:middle; background:white;}
+      section#items > ol > li.done > output { text-decoration:line-through; }
+      section#items > ol > li > b { behavior:clickable; font-size:150%; display:block; visibility:hidden; cursor: pointer; }
+      section#items > ol > li:hover { color:red; }
+      section#items > ol > li:hover > b { visibility:visible; }
+      
+    </style>
+    
+    <script type="text/tiscript">
+    
+      include "../plus.tis"; // we use @observing so need to include plus.tis upfront.
+      
+      function openStorage() {
+        var dbpath = self.url("todo.db");
+        var storage = Storage.open(dbpath);
+        if( !storage.root )
+          storage.root = { items: [] }; // brand new, initialize schema.
+        return storage;
+      }
+  
+      namespace Todo // our model
+      {  
+        var items = openStorage().root.items;
+                    
+        function addNewFrom(el) // called by input|text.new, @enter 
+        {
+          items.unshift { subject:el.value, done:false }; // insert new item in front.
+          el.value = undefined;
+        }
+      }    
+    
+    </script>
+  </head>
+
+<body model="Todo"> <!-- define data model we observe -->
+
+  <note>This sample demonstrates binding with persistent data in sciter's Storage.
+        <br><code>Todo.items</code> is a reference to <code>storage.root.items</code> thus will survive opening/closing of the application.</note>
+
+  <section #items>
+    
+    <input|text .new novalue="type next To-do item here and click ENTER" enter="addNewFrom(this)"/> 
+  
+    <ol each="item in items">
+      <li class="done:item.done">
+           <input|checkbox(item.done)/>
+           <input|text(item.subject)/> 
+           <b click="items.removeByValue(item)">&times;</b></li>
+    </ol>
+  </section>
+  
+  <p>Change data and close and reopen the application. You should see the data persisted in the state you left them.</p>
+  
+</body>
+</html>

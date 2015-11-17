@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <title>Source code colorizing viewer</title>
+    <style>
+    
+      @import url(source-code.css);
+      
+      h2, p { margin:12dip; }
+      
+      /* for the demo 
+         purposes: */
+         
+      widget#some-id { background:url(some.png); }
+      
+      // another comment (sciter support single line comments in CSS)
+          
+    </style>
+    <SCRIPT type="text/tiscript">
+    
+      var sourceCode = $(source-code);
+      
+      // hyperlinks here will open them in browser:
+      
+      self.on("click", "a[href]", function() {
+        Sciter.launch( this.attributes["href"] );
+        return true; // consume it
+      });
+      
+     /* for the demo 
+        purposes: */
+      
+      $(button#set-current).on("click", function() {
+        sourceCode.setCurrentLine(23,"active");
+      }) 
+      
+    </SCRIPT>
+  </head>
+<body>
+  <h2>Source code colorizing viewer</h2>
+  <p>This implementation uses tis-ported 
+     <a href="http://craig.is/making/rainbows">Rainbow JavaScript colorizing 
+        engine written by Craig Campbell</a></p>
+  <!-- multiline
+       comment  -->
+  <source-code src="demo.htm">Let's do selfie</source-code>
+  
+  <button #set-current>Set current line to 23</button>
+  
+  
+</body>
+</html>

@@ -1,0 +1,48 @@
+﻿<html>
+  <head>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>behavior:select-multiple</h1>
+  <p>Behavior of &lt;select multiple&gt; lists. In principle it can be applied to any DOM element.</p>
+  <h2>Elements</h2>
+  <p>These elements have behavior:select applied by default:</p>
+  <ul>
+    <li><code>&lt;select size=&quot;2...N&quot; multiple&gt;&lt;/select&gt;</code></li>
+    <li><code>&lt;select|list multiple&gt;&lt;/select&gt;</code></li></ul>
+  <h2>Model</h2>
+  <p>Same as behavior:select.</p>
+  <p>Selected options are getting <code>:checked</code> state flag set therefore custom styling of selected state can be made using :checked pseudo-class in CSS:</p>
+  <pre>select &gt; option:checked { background-image: url(my-checkmark.png); }
+</pre>
+  <h2>Attributes</h2>
+  <p>This behavior knows about:</p>
+  <ul>
+    <li><code>size=integer</code> - number of visible elements in the list. Note: height of the select element can be overriden by CSS.</li>
+    <li><code>name=&quot;name&quot;</code> - standard attribute <em>name</em> - name of the input element on a form.</li>
+    <li><code>novalue=&quot;text&quot;</code> - if select has no <code>&lt;option selected&gt;</code> initially it will have this text rendered.</li></ul>
+  <h2>Events</h2>
+  <p>Other than standard set of events (mouse, keyboard, focus) behavior:button generates:</p>
+  <ul>
+    <li>SELECT_SELECTION_CHANGED event, generated when user changes selection of the select (click on one of options). Posted event.</li>
+    <li>SELECT_SELECTION_CHANGING event, selection is about to change. Synchronous event.</li></ul>
+  <h2>Methods</h2>
+  <p>N/A - behavior:select does not introduce any specific methods.</p>
+  <h2>Value</h2>
+  <p>array of values, read/write, list of selected options. </p>
+  <h2>Selection change handling in script</h2>
+  <h3>raw <code>onValueChanged</code> handler</h3>
+  <pre>var btn = $(select#some);
+btn.onValueChanged = function() { var v = this.value; ... }
+</pre>
+  <h3><code>on()</code> subscription</h3>
+  <pre>var btn = $(select#some);
+btn.on(&quot;change&quot;, function() { ... event handling code ... });
+self.on(&quot;change&quot;, &quot;select#some&quot;, function() { ... event handling code ... });
+</pre>
+  <h3>decorators.tis handler</h3>
+  <pre>include &quot;decorators.tis&quot;;
+@change @on &quot;select#some&quot; :: ... event handling code ...;
+</pre>
+</body>
+</html>

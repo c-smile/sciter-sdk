@@ -1,0 +1,127 @@
+<html>
+  <head>
+  <style>
+    @import url(std-menu.css);
+    
+    ul#menu-bar 
+    {
+      margin:0;
+      border-bottom:1px solid threedface;
+      border-left:1px solid transparent;
+    }
+    
+    ul#menu-bar:focus 
+    {
+      border-left:1px solid highlight;
+    }
+    
+    //ul#menu-bar menu menu { background:yellow; }
+    
+
+    ul#menu-bar > li 
+    {
+      margin:0 8px;
+      background-color:threedface;
+    }
+    
+    /* table menu */    
+    menu.table 
+    {
+      border-spacing:1px;
+    }
+    menu.table td[role="menu-item"]
+    { 
+      border:1px solid threedface; 
+    }
+    menu.table td[role="menu-item"]:current
+    { 
+      background-color:highlight; color:highlighttext; 
+    }
+    menu.table caption
+    {
+      padding:2px;
+      font-size:8.5pt;
+      background-color: threedlightshadow;
+      color: threedshadow;
+    }
+    
+    //If you need popup menus to outstand from the bar uncomment this.
+    //ul#menu-bar menu { margin-top:10px; hit-margin:10px 0 0 0; }
+    //ul#menu-bar menu menu{ margin:0; hit-margin:0; }
+    
+  </style>
+  
+    <script type="text/tiscript">
+    
+      self.on("click", "menu > li ", function() {
+        stdout.println("menu item click on ", this); 
+      });
+    
+    
+    </script>  
+  
+  
+  </head>
+
+<body>
+
+<ul id="menu-bar"> <!-- top level - menu bar, it must match ul#menu-bar selector, see std-menu.css -->
+  <li>Simple
+    <menu class="cool">
+      <li title="Hello world!">First item (with tooltip)</li>
+      <li accesskey="^2" #test>Second item<span class="accesskey">Ctrl+<font color="red">2</font></span></li>
+      <li>Third item
+        <menu>
+          <li style="background:linear-gradient(left,yellow,red)">First sub-item</li>
+          <li>Second sub-item</li>
+        </menu>
+      </li>
+      <li accesskey="^4">Fourth item<span class="accesskey">Ctrl+<font color="red">4</font></span></li>
+    </menu>
+  </li>
+  <li>Inputs
+    <menu class="cool">
+      <li type="radio" name="myradios" id="myradios-1">First radio item</li>
+      <li type="radio" name="myradios" id="myradios-2">Second radio item</li>
+      <li type="radio" name="myradios" id="myradios-3">Third radio item</li>
+      <hr/>
+      <li type="check" name="mychecks" id="mychecks-1">First check item</li>
+      <li type="check" name="mychecks" id="mychecks-2">Second check item</li>
+      <li type="check" name="mychecks" id="mychecks-3">Third check item</li>
+      <hr/>
+      <li>Volume is <input type="hslider" name="volume" max="10" value="0" buddy="volume-buddy" /> <b id="volume-buddy">x</b> Db</li>
+    </menu>
+  </li>
+
+  <li>Complex
+    <menu class="cool">
+      <li> 
+        <input type="radio" name="myradios" id="myradios-1" />First
+        <input type="radio" name="myradios" id="myradios-2" />Second
+        <input type="radio" name="myradios" id="myradios-3" />Third
+      </li>
+      <hr/>
+      <li type="check" name="mychecks" id="mychecks-1">First check item</li>
+      <li type="check" name="mychecks" id="mychecks-2">Second check item</li>
+      <li type="check" name="mychecks" id="mychecks-2">Third check item</li>
+      <hr/>
+      <li>Status:<input type="progress" name="p2" maxvalue="100" value="25"/></li>
+      <li>Value:<input type="number" name="num" size=4 step=1 minvalue=0 maxvalue=100 value="25"/></li>
+      <li><button name="just-a-button">Just a button</button></li>
+    </menu>
+  </li>
+</ul>
+
+<!--<menu class="cool" style="display:block;">
+  <li title="Hello world!">First item (with tooltip)</li>
+  <li accesskey="^2">Second item<span class="accesskey">Ctrl+<font color="red">2</font></span></li>
+</menu>-->
+
+
+</body>
+
+
+
+</html>
+	
+	

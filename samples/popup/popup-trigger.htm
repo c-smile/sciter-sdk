@@ -1,0 +1,71 @@
+<html>
+<head>
+  <style>
+  
+    popup#test
+    {
+      background-color: orange;
+      border:1px solid red;
+      width:100px;
+      height:100px;
+      cursor:pointer;
+    }
+    div#anchor
+    {
+      behavior: button;    
+      border:1px solid blue;
+      width:50px;
+      height:50px;
+      cursor:pointer;
+      aspect: PopupTrigger;
+    }
+
+  </style>  
+  <style #actions>
+    div#anchor
+    {
+      behavior: button; 
+    }
+  </style>    
+  <script type="text/tiscript">
+    
+    function PopupTrigger() {
+      var popup;
+      if( var popupSelector = this.attributes["popup"] )
+        popup = self.select(popupSelector);
+      if( !popup )
+        popup = this.select("popup");
+      assert popup : "PopupTrigger: popup not found";
+      
+      var popupShown = false;
+      var me = this;
+      
+      this.subscribe("click", function() {
+        if(popupShown)
+          popup.state.popup = false;
+        else
+          this.popup(popup);
+      });
+     
+      popup.subscribe("popupready",     function(evt) { popupShown = true });
+      popup.subscribe("popupdismissed", function(evt) { me.timer(500ms, ::popupShown = false); });
+
+    } 
+      
+    </script>
+  
+</head>
+<body>
+
+   <p>Choose position above and click on the anchor:</p>
+    <div#anchor popup="#test" title="hello"> 
+      anchor
+    </div>
+    
+    <popup #test>
+      popup
+    </popup>
+    
+
+</body>
+</html>

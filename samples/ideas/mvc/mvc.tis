@@ -1,0 +1,86 @@
+namespace mvc 
+{
+  class View:Behavior 
+  {
+    function attached()
+    {
+      var modelName = this.attributes["model"];
+      assert modelName;
+      this.model = eval(modelName);
+      assert this.model;
+      for( var (name,item) in this.model )
+        if( item.isObservable ) item._attach( this );
+      this.notifyChange();    
+    }
+    function onControlEvent(evt)
+    {
+      switch( evt.type )
+      {
+        case Event.EDIT_VALUE_CHANGED:
+        case Event.BUTTON_STATE_CHANGED:
+        case Event.SELECT_SELECTION_CHANGED:
+          this.notifyChange();
+      }
+    }
+    function notifyChange() { 
+      var vals = this.value;
+      var changes = [];
+      for( var (name,item) in this.model ) 
+        if( item.isObservable && item._updateValue(vals[name])) changes.push(item);
+      
+      for(var change in changes) 
+        change._notify();
+    }
+    function updateFromModel() { 
+      var vals = {};
+      for( var (name,item) in this.model )
+        if( item.isObservable ) vals[name] = item.value;
+      this.value = vals;
+    }
+    function requestUpdate() { this.post(this.updateFromModel,true); }
+  }
+   
+  function observable(initialCallback = null) // creates observable point
+  {
+    var _val;
+    var _view = null; // view DOM element
+    var _subscriptions = []; // subscription list
+    var _in_notify = false; 
+    
+    function notify() {
+      if(_in_notify) return false;
+      _in_notify = true;
+      try { 
+        for(var subs in _subscriptions) 
+          subs(val); 
+      }
+      finally { _in_notify = false; }
+    }
+    function subscribe(callback) {
+      _subscriptions.removeByValue(callback);
+      _subscriptions.push(callback);
+    }
+    function attach(vw) {
+      _view = vw;
+    }
+    function updateValue(v) { 
+      if( _val != v && v !== undefined ) { _val = v; return true; }
+      return false;
+    } 
+    if(initialCallback) 
+      _subscriptions.push(initialCallback);
+
+    return {
+      isObservable: true,
+      value: property(v) { // value, computable property
+        set { if(v != _val) { _val = v; notify(); if(_view) _view.requestUpdate(); } }
+        get { return _val; }
+      },
+      subscribe: subscribe, // add subscriber
+      _attach: attach, // attach DOM element (called by the view)
+      _updateValue: updateValue, // check value change and update it
+      _notify: notify  // notify subscribers
+    };
+  }
+  
+}

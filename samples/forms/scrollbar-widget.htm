@@ -1,0 +1,64 @@
+<html>
+  <head>
+    <title>widget vscrollbar demo</title>
+    <style>
+    
+      #container {
+        margin:*;
+        size:*;
+        flow:horizontal;
+        border:1px solid;
+      }
+      #container > div {
+        size:*;
+      }
+      #container > widget {
+        height:*;
+        width:auto;
+      }
+    
+    </style>
+    <script type="text/tiscript">
+    
+      
+      var container = $(#container);
+      var vsb = $(#container>widget);
+      
+      vsb.setValues(
+          0,   // position
+          0,   // min
+          100, // max (a.k.a. document size)
+          25,  // page (a.k.a. view size)
+          10   // step ( inc/dec on arrow buttons )
+      );
+
+
+      // by default standalone scrollbar sends onScroll event to its parent:
+      container.onScroll = function(evt)
+      {
+        var div = $(#container>div);//.text = this.value.toString();
+        switch(evt.type) {
+          case Event.SCROLL_HOME:             div.$content(Event.SCROLL_HOME {evt.scrollPos}); vsb.value = evt.scrollPos; break;
+          case Event.SCROLL_END:              div.$content(Event.SCROLL_END {evt.scrollPos}); vsb.value = evt.scrollPos; break;
+          case Event.SCROLL_STEP_PLUS:        div.$content(Event.SCROLL_STEP_PLUS {evt.scrollPos}); vsb.value = evt.scrollPos; break;
+          case Event.SCROLL_STEP_MINUS:       div.$content(Event.SCROLL_STEP_MINUS {evt.scrollPos}); vsb.value = evt.scrollPos; break;
+          case Event.SCROLL_PAGE_PLUS:        div.$content(Event.SCROLL_PAGE_PLUS {evt.scrollPos}); vsb.value = evt.scrollPos; break;
+          case Event.SCROLL_PAGE_MINUS:       div.$content(Event.SCROLL_PAGE_MINUS {evt.scrollPos}); vsb.value = evt.scrollPos; break;
+          case Event.SCROLL_POS       :       div.$content(Event.SCROLL_POS {evt.scrollPos}); vsb.value = evt.scrollPos; break;
+        }
+      }
+    
+    </script>
+  </head>
+<body>
+ 
+  <h2>Standalone &lt;widget|vscrollbar&gt; demo.</h2>   
+ 
+  <div #container>
+    <div>
+    </div>
+    <widget|vscrollbar />  
+  </div>
+
+</body>
+</html>

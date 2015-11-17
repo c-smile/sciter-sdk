@@ -1,0 +1,111 @@
+<html>
+  <head>
+    <style>
+      select.file-list > option
+      {
+        behavior:file-icon;
+        padding:2px 2px 2px 20px;
+        foreground-repeat: no-repeat;
+        foreground-position: 2px 50%;
+        foreground-image:url(images/unknown-icon.png);
+      }
+      
+      select.file-list > option:invalid { /* file not found */
+        color:gray;
+      }
+      
+      widget.file-list
+      {
+        width:*;
+        height:min-content;
+        flow:h-flow;
+        border-spacing:3px;
+      }
+      widget.file-list > option
+      {
+        behavior:file-icon; 
+        foreground-repeat: no-repeat;
+        foreground-position: 50% 2px;
+        foreground-image:url(images/unknown-icon.png);
+        width:max-intrinsic;
+      }
+
+      widget.file-list.large > option
+      {
+        -icon-size:"large"; // use large icons
+        padding:32px 2px 2px 2px;        
+      }
+      widget.file-list.x-large > option
+      {
+        -icon-size:"x-large"; // use x-large icons
+        padding:48px 2px 2px 2px;        
+      }
+      widget.file-list.xx-large > option
+      {
+        -icon-size:"xx-large"; // use xx-large icons, a.k.a. "jumbo"
+        padding:256px 2px 2px 2px;
+        width:256px;
+      }
+
+
+      /* image-transformation can be applied to icons too: */
+      widget.file-list > option:current 
+      {
+        foreground-image-transformation: hue(highlight);
+      }
+      
+    </style>
+  </head>
+<body>
+  <h1>behavior:file-icon sample</h1>
+  <p>behavior:file-icon Windows Shell services to retrieve and draw icon associated with the file or extension.</p>
+  <p>To get file name behavior:file-icon is using value of <code>filename</code> attribute. 
+     If there is no such attribute then it uses <b>text of the DOM element</b> as a file name.</p>
+  <p>&lt;select&gt; with &lt;option&gt;s using behavior:file-icon:</p>
+  <p>text as a file name:  
+  <select .file-list size=6>
+    <option>c:\windows\notepad.exe</option>
+    <option>c:\windows\regedit.exe</option>
+    <option>c:\windows\system.ini</option>
+    <option>c:\windows\explorer.exe</option>
+    <option>c:\windows\twain.dll</option>
+    <option>c:\unknown.unk</option>
+  </select> and with attribute filename:
+  <select .file-list size=6 >
+    <option filename="c:\windows\notepad.exe" >c:\windows\notepad.exe</option>
+    <option filename="c:\windows\regedit.exe" >c:\windows\regedit.exe</option>
+    <option filename="c:\windows\system.ini"  >system.ini</option>
+    <option filename="c:\windows\explorer.exe">explorer.exe</option>
+    <option filename="c:\windows\twain.dll">twain.dll</option>
+    <option filename="c:\unknown.unk">unknown.unk</option>
+  </select></p>
+  <p>Use -icon-size:"large" CSS attribute or icon-size="large" DOM attribute if you need to use large icons:</p>
+  <widget type="select" .file-list .large >
+    <option filename="c:\windows\notepad.exe" >notepad.exe</option>
+    <option filename="c:\windows\regedit.exe" >regedit.exe</option>
+    <option filename="c:\windows\system.ini"  >system.ini</option>
+    <option filename="c:\windows\explorer.exe">explorer.exe</option>
+    <option filename="c:\windows\twain.dll">twain.dll</option>
+    <option filename="c:\windows\nonexistent.dll">nonexistent.dll</option>
+  </widget>         
+  <p>icon-size:"x-large"</p>  
+  <widget type="select" .file-list .x-large >
+    <option filename="c:\windows\notepad.exe" >notepad.exe</option>
+    <option filename="c:\windows\regedit.exe" >regedit.exe</option>
+    <option filename="c:\windows\system.ini"  >system.ini</option>
+    <option filename="c:\windows\explorer.exe">explorer.exe</option>
+    <option filename="c:\windows\twain.dll">twain.dll</option>
+    <option filename="c:\windows\nonexistent.dll">nonexistent.dll</option>
+  </widget>
+  <p>icon-size:"xx-large"</p>  
+  <widget type="select" .file-list .xx-large >
+    <option filename="c:\windows\notepad.exe" >notepad.exe</option>
+    <option filename="c:\windows\regedit.exe" >regedit.exe</option>
+    <option filename="c:\windows\system.ini"  >system.ini</option>
+    <option filename="c:\windows\explorer.exe">explorer.exe</option>
+    <option filename="c:\windows\twain.dll">twain.dll</option>
+    <option filename="c:\windows\nonexistent.dll">nonexistent.dll</option>
+  </widget>         
+
+</body>
+</html>

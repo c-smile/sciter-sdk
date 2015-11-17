@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <title></title>
+    <style></style>
+    <script type="text/tiscript">
+    
+      $(button#set).onClick = function()
+      {
+        $(form).value = { 
+          name : {
+            first: "Albert",
+            last: "Einstein",
+          },
+          age:64
+        };
+      }
+      
+      $(button#get).onClick = function()
+      {
+        var msg = String.printf("%V", $(form).value ).replace("\t","  ");
+        view.msgbox(#information,msg);
+      }
+      
+    
+    </script>
+  </head>
+<body>
+
+  <form>
+    <span(name) >
+      <input(first) novalue="first">
+      <input(last)>
+    </span>
+    <input|integer(age)>
+  </form>
+  <button #set>Set form value</button>
+  <button #get>Get form value</button>
+
+</body>
+</html>

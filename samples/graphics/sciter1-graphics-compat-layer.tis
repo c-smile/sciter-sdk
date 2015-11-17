@@ -1,0 +1,126 @@
+
+// Sciter 1 Graphics compatibility layer 
+!function(){
+
+  if(Sciter.VERSION < 0x20000)
+  {
+    Graphics.textColor = function(col) 
+    { 
+      this.fillColor(col); 
+      this.noLine();
+    }
+    return; // rest is needed only for Sciter 2.0 and above to emulate Sciter 1.0
+  }
+
+  // Path in Sciter2 is a separate object  
+  Graphics.beginPath = function()
+  {
+    if(this._path) this._path.destroy();
+    this._path = new Graphics.Path();
+  };
+  Graphics.closePath = function() { if(this._path) this._path.close(); return this;  }
+
+  // signature of Graphics.drawPath has changed so we need to make a proxy
+  var originalDrawPath = Graphics.drawPath;
+  Graphics.drawPath = function(path = null) 
+  { 
+    if(path != null) // // Sciter 2
+      originalDrawPath.call(this,path); 
+    else if(this._path) // Sciter 1
+      originalDrawPath.call(this,this._path); 
+    return this; 
+  };
+  
+  Graphics.moveTo = function(x,y,r=false) { if(this._path) this._path.moveTo(x,y,r); return this; };
+  Graphics.lineTo = function(x,y,r=false) { if(this._path) this._path.lineTo(x,y,r); return this; };
+  Graphics.hlineTo = function(x,r=false) { if(this._path) this._path.hlineTo(x,r); return this; };
+  Graphics.vlineTo = function(y,r=false) { if(this._path) this._path.vlineTo(y,r); return this; };
+  Graphics.arcTo = function(x,y,angle,rx,ry,largeArc,sweep,relative=false) { if(this._path) this._path.arcTo(x,y,angle,rx,ry,largeArc,sweep,relative); return this; };
+  Graphics.ellipseTo = function(x,y,rx,ry,clockwise=true) { if(this._path) this._path.ellipseTo(x,y,rx,ry,clockwise); return this; };
+  Graphics.quadraticCurveTo = function( xc, yc, x, y, relative=false) { if(this._path) this._path.quadraticCurveTo(xc,yc,x,y,relative); return this; };
+  Graphics.bezierCurveTo = function(xc1,yc1,xc2,yc2,x,y,relative=false) { if(this._path) this._path.bezierCurveTo(xc1,yc1,xc2,yc2,x,y,relative); return this; };
+  
+  // Text in Sciter2 is a separate object:
+  
+  Graphics.ALIGN_LEFT = Graphics.ALIGN_START;
+  Graphics.ALIGN_RIGHT = Graphics.ALIGN_END;
+  Graphics.ALIGN_TOP = Graphics.ALIGN_START;
+  Graphics.ALIGN_BOTTOM = Graphics.ALIGN_END;
+
+  Graphics.textAlignment = function(horz,vert) { this._text_h_align = horz; this._text_v_align = vert; return this; }
+  Graphics.font = function(name,size = 12,bold=false,italic=false) { 
+    this._text_font_name = name;
+    this._text_font_size = size;
+    this._text_font_bold = bold;
+    this._text_font_ital = italic;
+    return this; 
+  };
+  
+  Graphics.text_layout= function(t)
+  {
+    if(this._text != t || !this._text_layout)
+    {
+      this._text = t;    
+      if( this._text_layout ) this._text_layout.destroy();
+      this._text_layout = new Graphics.Text(t,self);
+      this._text_layout.font(this._text_font_name || "Verdana",this._text_font_size || 12, this._text_font_bold || false, this._text_font_ital || false);
+      var (maw,miw) = this._text_layout.width();
+      this._text_layout.width(maw);
+    }
+    return this._text_layout;
+  }
+  
+  Graphics.textColor = function(col) { this._text_color = col; }
+  
+  Graphics.textWidth = function(t)
+  {
+    var (maw,miw) = this.text_layout(t).width();
+    return maw;
+  };
+  
+  Graphics.text = function( x,y,t ) { 
+    var refPoint = 5;
+    switch(this._text_v_align)
+    {
+      case Graphics.ALIGN_START: refPoint = 7; break;
+      case Graphics.ALIGN_CENTER: refPoint = 4; break;
+      case Graphics.ALIGN_END: refPoint = 1; break;
+      default: refPoint = 4; break;
+    }
+    switch(this._text_h_align)
+    {
+      case Graphics.ALIGN_START: break;
+      case Graphics.ALIGN_CENTER: refPoint += 1; break;
+      case Graphics.ALIGN_END: refPoint += 2; break;
+    }
+    this.drawText(this.text_layout(t),x,y,this._text_color,refPoint);
+  }  
+ 
+  Element.textWidth = function(text)
+  {
+    var text_layout = new Graphics.Text(text,this);
+    var (maw,miw) = text_layout.width();
+    //text_layout.width(maw);
+    text_layout.destroy();
+    return maw;
+  }
+  Element.textHeight = function(text)
+  {
+    var text_layout = new Graphics.Text(text,this);
+    var (maw,miw) = text_layout.width();
+    text_layout.width(maw);
+    var (h,lh) = text_layout.height();
+    text_layout.destroy();
+    return h;
+  }
+  Element.textDim = function(text)
+  {
+    var text_layout = new Graphics.Text(text,this);
+    var (maw,miw) = text_layout.width();
+    text_layout.width(maw);
+    var (h,lh) = text_layout.height();
+    text_layout.destroy();
+    return (maw,h);
+  }
+
+}(); 

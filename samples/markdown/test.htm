@@ -1,0 +1,78 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      toolbar { display:block; flow:horizontal; }
+      textarea { display:block; size:*; }
+      
+      section { background:white; padding:0.5em; overflow: scroll-indicator; }
+      pre#debug { size:*; }
+    
+    </style>
+    <script type="text/tiscript">
+    
+      include "markdown.tis";
+      
+      include "../+lib/function.tis";
+      
+      const md = $(textarea#markdown);
+      const pv = $(section#preview);
+      
+      function preview() {
+        var html = markdown.parse(md.value);
+        pv.html = html;
+        //$(pre#debug).text = html;
+      }
+      
+      md.on("change", preview.debounce(500ms));
+     
+      preview();
+    
+    </script>
+  </head>
+<body>
+  <!--<toolbar>
+    <button>New</button>
+    <button>Open</button>
+    <button>Save</button>
+  </toolbar>-->
+  
+  <h2>Simple "markdown" converter</h2> 
+  <p>Type in the left pane to see result</p>
+  
+  <frameset cols="*,*,*">
+    <textarea #markdown>= Heading 1
+== Heading 2
+=== Heading 3
+==== Heading 4
+
+**bold** //italic// ``formatted``
+
+* Bullet list
+* Second item
+** Sub item
+
+# Numbered list
+# Second item
+## Sub item
+
+[[link]]
+{{image}}
+
+|= table |= hdr |=
+| table | row |
+| table | row |
+
+> blockquote
+
+{{{ unformatted text }}}
+--- horizontal rule
+
+Just text
+    </textarea>
+    <section #preview></section>
+<!--    <pre#debug></pre>-->
+  </frameset>
+</body>
+</html>

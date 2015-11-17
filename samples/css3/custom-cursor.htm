@@ -1,0 +1,43 @@
+<html>
+	<head>
+		<title>Animated cursor</title>
+	    <style type="text/css"> 
+
+    div
+    {
+      border: 1px solid;
+      width:50%;
+      height:50px;
+      padding:10px;
+      text-align:center;
+      vertical-align:middle;
+    }
+    
+    #anicur 
+    {
+      cursor:url(images/artcur5.ani);
+    }
+    #nocur 
+    {
+      cursor:none;
+    }
+    #pngcur 
+    {
+      cursor:url(images/custom-cursor.png) 20 20;
+    }
+  
+	</style>
+	</head>
+<body>
+  <div id="anicur">
+    <p>Move mouse over this rectangle to see animated cursor.</p>
+  </div>
+  <div id="nocur">
+    <p>Move mouse here, you should not see any cursor.</p>
+  </div>
+  <div id="pngcur">
+    <p>Move mouse here, you should cursor created from PNG image.</p>
+  </div>
+  <img src='images/custom-cursor.png'>
+</body>
+</html>

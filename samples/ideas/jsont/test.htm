@@ -1,0 +1,66 @@
+<html>
+ <head>
+    <style>
+    widget[type="jsont-reference"]
+    {
+        prototype:jsontReference;
+    }
+    </style>
+    
+    <script type="text/jsont" id="rules_digit">
+    function ($, d)
+    {
+        return 
+        {
+            ""          : $(<table #reftable><thead><tr><th>id1</th><th>id2</th><th>id3</th><th>id4</th></tr></thead><tbody>{d}</tbody></table>),
+            "[]"        : $(<tr>{d.id1}{d.id2}{d.id3}{d.id4}</tr>),
+            "[].id1"    : $(<td>{d}</td>),
+            "[].id2"    : $(<td>{d}</td>),
+            "[].id3"    : $(<td>{d}</td>),
+            "[].id4"    : $(<td>{d}</td>)
+        };
+    }
+    </script>
+    <script type="text/jsont" id="rules_char">
+    function ($, d)
+    {
+        return 
+        {
+            ""            : $(<table #reftable><thead><tr><th>name1</th><th>name2</th><th>name3</th></tr></thead><tbody>{d}</tbody></table>),
+            "[]"          : $(<tr>{d.name1}{d.name2}{d.name3}</tr>),
+            "[].name1"    : $(<td>{d}</td>),
+            "[].name2"    : $(<td>{d}</td>),
+            "[].name3"    : $(<td>{d}</td>)
+        };
+    }
+    </script>
+    
+    <script type="text/tiscript">
+    include "jsont.tis";
+
+    class jsontReference : Behavior
+    {
+        function attached()
+        {
+            var path = this.attributes["src"];
+        
+            var s = Stream.openFile(self.url(path), "rt");
+            if( !s ) return;
+            var data = parseData(s);
+            
+            var rulesId = this.attributes["rules"];
+            var r = JSONT.transform(data, rulesId);
+            this.append(r);
+        }
+    }
+    
+    </script>
+</head>
+<body>
+
+    <p>JsonT is Sciter's XSLT alike transformation mechanism where rules are expressed by tiscript declarations:</p> 
+
+    <widget|jsont-reference src="data_digit.json" rules="#rules_digit"/>
+    <widget|jsont-reference src="data_char.json" rules="#rules_char"/>
+</body>
+</html>

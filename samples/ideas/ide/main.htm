@@ -1,0 +1,52 @@
+<html custom-frame="solid" resizeable>
+  <head>
+    <title>Sciter IDE</title>
+    <style >
+      @import url(styles/main.css);
+      @import url(colorizer/colorizer.css);
+    </style>
+    <script type="text/tiscript">
+      include "widgets/tree-data-source.tis";
+      
+      function self.ready() {
+        const folderView = $(widget#tree);
+        const editor = $(plaintext#editor);
+      
+        var thisPath = self.url() /~ "/";
+        folderView.dataSource = new TreeDataSource(thisPath);
+            
+        folderView.on("~mousedown", "option[filename]", function() {
+          var fn = this.attributes["filename"];
+          var str = self.request(0,#get,"file://" + fn);
+          editor.load(str.toString(), "text/" +(fn %~ ".") );
+          str.close();
+        });
+      }
+    </script>
+    <include src="fonts/font-awesome.inc.htm" />
+  </head>
+<body>
+  <header id="window">
+    <caption role="window-caption">editor caption</caption> 
+    <chrome-button role="window-minimize">0</chrome-button> 
+    <chrome-button role="window-maximize">1</chrome-button> 
+    <chrome-button role="window-close">r</chrome-button> 
+  </header>
+  <menubar><include src="menu.htm"/></menubar>
+  <main>
+    <frameset cols="200dip,*">
+      <widget type="tree" id="tree" />
+      <splitter/>
+      <section id="content">
+        <plaintext id="editor" type="html" />
+        <toolbar id="content-bar"></toolbar>
+      </section>
+    </frameset>
+    <toolbar id="sidebar">
+      <button>&fa-play-circle;</button>
+      <button>&fa-gear;</button>
+      <button>&fa-print;</button>
+    </toolbar>
+  </main>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <title>Plus: very basic sample</title>
+    <style>
+      @import url(../plus.css); /* the only thing needed to include Plus framework */
+      @import url(../../note.css); 
+      @import url(../../../widgets/switch/switch.css); 
+      
+      html { font:system; }
+      
+      ol { width:*; }
+      ol > li { flow:horizontal; border-bottom:1px solid dotted;}
+      ol > li > input { display: block; vertical-align:middle;}
+      ol > li > output { display: block; width:*; vertical-align:middle;}
+      ol > li.done > output { text-decoration:line-through; }
+    </style>
+    
+    <script type="text/tiscript">
+  
+      namespace Todo // our model
+      {  
+        var items = [ {subject:"Basic variable binding demo", done:true},
+                      {subject:"Basic function binding demo", done:true},
+                      {subject:"Basic repeatable demo", done:true},
+                      {subject:"Repeatable table", done:true},
+                      {subject:"CSS class binding", done:true},
+                      {subject:"Repeatable filtering demo", done:false},
+                      {subject:"UI events handling, Plus flavour", done:false},
+                    ];
+                    
+        var filter = null; // current filter, null - show all.  
+      }    
+    
+    </script>
+  </head>
+
+<body model="Todo"> <!-- define data model we observe -->
+
+  <note>List below is bound with <code>Todo.items</code> array and uses filtering bound with <code>filter</code> variable in model.
+  <br>The switch allows to select filter you need.</note>
+
+  Show <switch(filter)> <!-- defines filter variations -->
+    <option value="null">All</option>
+    <option value="{done:false}">Pending</option>
+    <option value="{done:true}">Complete</option>
+  </switch>
+
+  <!-- the repeateable section bound with the filter variable -->
+  <ol each="item in items|filter">
+      <li class="{{done:item.done}}"><input|checkbox(item.done)/> <output|text(item.subject)/></li>
+  </ol>
+  
+  
+</body>
+</html>

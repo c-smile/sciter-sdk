@@ -1,0 +1,32 @@
+<html custom-frame="solid-with-shadow" resizeable >
+  <head>
+    <title>Hello world!</title>
+    <style></style>
+    <script type="text/tiscript">
+    
+    function self.ready() {
+      view.state = View.WINDOW_SHOWN;
+    }
+    
+    function self#full-screen.onClick() {
+      view.state = this.value ? View.WINDOW_FULL_SCREEN : View.WINDOW_SHOWN;
+    }
+
+    function self#close.onClick() {
+      view.close();
+    }
+    
+    </script>
+  </head>
+<body>
+  Hello world!
+  
+  Test of animation <img src="../loading-16.png">
+  
+  <br>Test of external image <img src="http://www.terrainformatica.com/res/terrainformatica.gif">
+  
+  <button|checkbox #full-screen>Full screen</button>
+  <button #close>Close</button>
+  
+</body>
+</html>

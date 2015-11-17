@@ -1,0 +1,224 @@
+<html>
+  <head>
+    <title>Sciter ImGraphics</title>
+    <style>
+      html { background: transparent; }
+      header { background: white; padding:8px; margin-bottom:8px; }
+      
+      widget.tabs
+      {
+        flow:vertical;
+        prototype:AniTabs;
+        size:*;
+        
+      }
+      
+      widget.tabs > div.content 
+      { 
+        size:*;
+        flow:stack;
+        background-color:white;
+      }
+      
+      widget.tabs > div.content > frame          { visibility:collapse; size:*; border:2px solid #777; }
+      widget.tabs > div.content > frame.current  { visibility:visible; }
+      
+      widget.tabs > div.selectors 
+      {
+        //background: linear-gradient(bottom, #aaa, #333);      
+        flow:horizontal; 
+        padding:16px;
+        border-spacing: 24px;
+        horizontal-align:center;
+        vertical-align:middle;
+        //height:148px;
+      }
+      widget.tabs > div.selectors > picture 
+      { 
+        behavior:clickable;
+        size:64px; 
+        padding:2px; 
+        foreground-clip: content-box;
+        border-radius:8px;        
+      }
+      widget.tabs > div.selectors > picture:nth-child(1) { background: rgba(255,127,127,0.45);  }
+      widget.tabs > div.selectors > picture:nth-child(2) { background: rgba(127,255,127,0.45);  }
+      widget.tabs > div.selectors > picture:nth-child(3) { background: rgba(127,127,255,0.45);  }
+
+      widget.tabs > div.selectors > picture.current
+      { 
+        behavior:none;
+        background: rgba(255,255,255,0.45);
+      }
+      widget.tabs > div.selectors > picture:hover:not([current]) { 
+        transform: scale(1.3); 
+        transition: transform(xx-back-out,0.3s,quart-in);
+        //size:96px;
+        //transition: size(quart-out,0.3s,quart-in);
+      }
+      
+    </style>
+    <script type="text/tiscript">
+      class AniTabs : Behavior
+      {
+        const DURATION = 1000; // ms
+
+        function attached() 
+        { 
+          var first_panel = this.$(.content > :first-child);
+          var first_selector = this.$(.selectors > :first-child);
+          if( first_panel && first_selector )
+          {
+            first_panel.attributes.addClass("current");
+            first_selector.attributes.addClass("current");
+          }
+        }
+
+        /*function attached() 
+        { // attaching the paint() to paintContent layer handler
+          this.paintContent = this.paint;
+          this.image = null;
+          this.post(::this.animate(this.animationStep));
+          this.scale = 1.0;
+          this.scaleStep = -SCALE_STEP;
+        }
+        
+       
+        function animationStep()
+        {
+          if(this.scaleStep < 0.0) 
+          {
+            if( this.scale < 0.5 ) { this.scale = 0.5; this.scaleStep = SCALE_STEP; }
+            else this.scale += this.scaleStep;
+          } else {
+            if( this.scale >= 1.0 ) { this.scale = 1.0; this.scaleStep = -SCALE_STEP; }
+            else this.scale += this.scaleStep;
+          }
+          this.refresh();
+          return View.ANIMATION_TIMER_SPAN;
+        } */
+        
+        function reveal(what,from, whenDone)
+        {
+          var me = this;
+          // content container:
+          var content = this.$(div.content);
+          this.animating = true;
+          
+          // gather all coordinates:
+          var (vx,vy) = this.box(#position,#inner,#view);
+          var (dstx1,dsty1,dstx2,dsty2) = content.box(#rect,#inner,#view);
+          var (srcx1,srcy1,srcx2,srcy2) = from.box(#rect,#border,#view);
+                    
+          // normalize coords to this element coordinate space
+          dstx1-=vx; dsty1-=vy; dstx2-=vx; dsty2-=vy; 
+          srcx1-=vx; srcy1-=vy; srcx2-=vx; srcy2-=vy; // ditto
+         
+          // create snapshot of the panel element for the animation:
+          var w = dstx2 - dstx1 + 1; var h = dsty2 - dsty1 + 1;
+          var image = new Image(w,h,what); // snapshot per se.
+          
+          var startTime = System.ticks;
+          var stop = null;    // forward declaration
+          var progress = 0.0; // current animation progress
+                              
+          // expanding animation worker
+          function step()
+          {
+            //stdout.printf("%v %v\n",System.ticks,startTime);
+            var timePassed = System.ticks - startTime;
+            if( timePassed > DURATION ) { stop(); this.refresh(); return 0; }
+            progress = timePassed.toFloat() / DURATION; // 0.0 ... 1.0
+            this.refresh();
+            return View.ANIMATION_TIMER_SPAN;
+          }
+          stop = function()
+          {
+            me.paintForeground = null; // remove our painter
+            me.animating = false;
+            image.destroy(); // don't need it anymore, free resources.
+            whenDone();
+          }
+          
+          function OutBack( t, b = 0.0, c = 1.0, d = 1.0, s = 1.70158) 
+          {
+            return c*((t=t/d-1)*t*((s+1)*t + s) + 1) + b;
+          }
+          function OutQuad( t, b = 0.0, c = 1.0, d = 1.0) 
+          {
+            return -c *(t/=d)*(t-2) + b;
+          }
+          function OutBounce( t, b = 0.0, c = 1.0, d = 1.0) 
+          {
+            if ((t/=d) < (1/2.75)) 
+              return c*(7.5625*t*t) + b;
+            else if (t < (2/2.75))
+              return c*(7.5625*(t-=(1.5/2.75))*t + .75) + b;
+            else if (t < (2.5/2.75)) 
+              return c*(7.5625*(t-=(2.25/2.75))*t + .9375) + b;
+            else 
+              return c*(7.5625*(t-=(2.625/2.75))*t + .984375) + b;
+          }          
+          
+          // function is called while handling WM_PAINT 
+          function paint(gfx)
+          {
+            var k1 = OutBounce(progress);
+            var k2 = 1.0 - k1;
+            var x1 = dstx1 * k1 + srcx1 * k2;
+            var x2 = dstx2 * k1 + srcx2 * k2;
+            var y1 = dsty1 * k1 + srcy1 * k2;
+            var y2 = dsty2 * k1 + srcy2 * k2;
+            gfx.blendImage(image, x1, y1, x2-x1+1,y2-y1+1, 0.75 + progress*0.25);
+          }
+          // ready to go, setup custom painter and start animation
+          this.paintForeground = paint;
+          this.animate(step);
+        }
+        
+        function switchTab(n)
+        {
+          var what = this.$(.content > :nth-child( {n+1} ));
+          var from = this.$(.selectors > :nth-child( {n+1} ));
+          var panel_current = this.$(.content > .current);
+          var selector_current = this.$(.selectors > .current);
+          
+          function finish() {
+            if( panel_current ) panel_current.attributes.removeClass("current");
+            if( selector_current ) selector_current.attributes.removeClass("current");
+            what.attributes.addClass("current");
+            from.attributes.addClass("current");
+          }
+          this.reveal(what, from, finish);
+        }
+
+        function onControlEvent(evt)
+        {
+          if( !this.animating 
+            && evt.type == Event.BUTTON_CLICK 
+            && evt.target.$is(.selectors > picture) )
+          {
+            this.switchTab(evt.target.index);
+            return true;
+          }
+        }
+        
+      }
+    </script>
+  </head>
+<body>
+  <header>Demo of Image.render(element) and Graphics.blendImage(img). Click on selectors at the bottom.</header>
+  <widget .tabs>
+    <div .content>
+      <frame src="sections/n1.htm" />
+      <frame src="sections/n2.htm" />
+      <frame src="sections/n3.htm"/>
+    </div>
+    <div .selectors> 
+      <picture src="sections/n1.png" />
+      <picture src="sections/n2.png" />
+      <picture src="sections/n3.png" />
+    </div> 
+  </widget>
+</body>
+</html>

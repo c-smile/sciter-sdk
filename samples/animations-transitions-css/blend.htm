@@ -1,0 +1,97 @@
+<html>
+	<head>
+	<title>Title and popup windows</title>
+	<style type="text/css"> 
+  
+  body 
+  { 
+    margin:0;
+    padding:10px;
+    background-color:#c7c5c6; 
+  }
+  
+  .leds { flow:horizontal-wrap; width:*; }
+  .leds > img { display:block; }
+  .leds > img:nth-child(20n) { clear:after; }
+  
+  img 
+  { 
+    width:16px; 
+    height:16px; 
+    foreground-image:url(images/led-green.png);
+  }
+
+  img:hover
+  { 
+    foreground-image:url(images/led-red.png);
+    transition: blend-atop( timing-function: linear, duration-in:1ms, duration-out:400ms );
+  }
+  
+  /* styles for our popup element */
+  
+  #test > popup
+  { 
+    width: 164px;
+    padding:4px;
+	  background: radial-gradient(0% 0%, ellipse farthest-corner, white, #c7c5c6 );
+    border-left: 1px solid gray;
+	  border-top: 1px solid gray;
+	  border-right: 1px solid black;
+	  border-bottom: 1px solid black;
+    flow:horizontal-wrap;
+    horizontal-align:center;
+  }
+
+  #test > popup img
+  { 
+    display:block;  
+    foreground-image:url(images/led-yellow.png);
+  }
+  
+  #test > popup > img:hover
+  { 
+    foreground-image:url(images/led-blue.png);
+    transition: blend-atop( timing-function: linear, duration-in:20ms, duration-out:400ms );
+  }
+  
+	</style>
+	</head>
+<body>
+
+  <div.leds><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/>
+            <img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/>
+            <img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/>
+            <img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/>
+            <img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/>
+            <img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/>
+            <img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/>
+            <img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/><img/>
+  </div>
+  <button|menu id="test">
+    <caption>Click here to see popup</caption>
+	  <popup>
+		  <img/><img/><img/><img/><img/><img/><img/><img/><img/><img/>
+		  <img/><img/><img/><img/><img/><img/><img/><img/><img/><img/>
+		  <img/><img/><img/><img/><img/><img/><img/><img/><img/><img/>
+		  <img/><img/><img/><img/><img/><img/><img/><img/><img/><img/>
+		  <img/><img/><img/><img/><img/><img/><img/><img/><img/><img/>
+		  <img/><img/><img/><img/><img/><img/><img/><img/><img/><img/>
+		  <img/><img/><img/><img/><img/><img/><img/><img/><img/><img/>
+		  <img/><img/><img/><img/><img/><img/><img/><img/><img/><img/>
+		  <img/><img/><img/><img/><img/><img/><img/><img/><img/><img/>
+		  <img/><img/><img/><img/><img/><img/><img/><img/><img/><img/>
+		  <img/><img/><img/><img/><img/><img/><img/><img/><img/><img/>
+		  <img/><img/><img/><img/><img/><img/><img/><img/><img/><img/>
+		  <img/><img/><img/><img/><img/><img/><img/><img/><img/><img/>
+		  <img/><img/><img/><img/><img/><img/><img/><img/><img/><img/>
+	  </popup>
+  </button>
+  
+  <p>Test cases:</p>
+  <ol>
+      <li>Move mouse over leds - you should see dissolving track in main window and on popup</li>
+	  <li>Clicking outside of popup, it disappears. This shall not left tracks  of dissolving leds.</li>
+	  <li>Scrolling main window by mouse shall retain proper positions of tracks.</li>
+  </ol>
+</body>
+</html>

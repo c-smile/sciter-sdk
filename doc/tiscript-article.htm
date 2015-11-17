@@ -1,0 +1,212 @@
+<html>
+  <head>
+    <meta name="generator" content="h-smile:richtext"/>
+    <meta name="source"/>
+  </head>
+<body>
+  <h1>TIScript, a gentle extension of JavaScript</h1>
+  <p>As a language, TIScript is an extended version of ECMAScript (JavaScript 1.X). You could think of it as JavaScript++, if you wish.</p>
+  <p>The design of TIScript was based on the analysis of practical JavaScript use cases. In some areas, it simplifies and harmonizes JavaScript features. For example, the <em>prototype</em> mechanism was simplified. In other cases, it extends JavaScript, while preserving the original &quot;look-and-feel&quot; of JS.</p>
+  <p>TIScript Engine consists of:</p>
+  <ul>
+    <li><em>compiler</em> that produces byte code</li>
+    <li><em>virtual machine</em> (VM) that executes this bytecode</li>
+    <li><em>heap manager</em> that uses a copying garbage collector (GC)</li>
+    <li><em>runtime</em> - implementation of native object classes</li></ul>
+  <p>This article describes major features of TIScript that do not exist or differ from JavaScript. You should be familiar with at least the basics of JavaScript, or any other dynamic language, such as Python, Perl, Lua, Ruby, etc.</p>
+  <h2>Namespaces</h2>
+  <p>Namespaces are declared by using the <code>namespace</code> keyword. They can contain classes, functions, variables and constants:</p>
+  <pre><em>namespace</em> MyNamespace
+{
+  var nsVar = 1;
+  function Foo() { nsVar = 2; }  // sets nsVar to 2
+}
+MyNamespace.Foo();  // invokes Foo
+</pre>
+  <p>JavaScript does not support namespaces. You can emulate them by using objects, but that is just an emulation indeed.</p>
+  <p>Namespaces in TIScript are simply named scopes. For example, while handling the assignment to something that looks like a global variable, TIScript runtime first makes an attempt to find that variable in the current namespace chain this function belongs to.</p>
+  <h2>Classes, constructors, and properties</h2>
+  <p>TIScript introduces real classes. A class is declared by the <code>class</code> keyword and may contain functions, property-functions, variables, constants, and other classes:</p>
+  <pre><em>class</em> Bar
+{
+  function this() {   // the function named 'this' is
+    this._one = 1;    // a constructor of objects in
+  }                   // the class being defined
+  function foo(p1) {  // a method
+    this._one = p1;
+  }
+<em>  property</em> one(v) {           // property-function
+<em>    get</em> { return this._one; } // has getter and
+<em>    set</em> { this._one = v; }    // setter sections
+  }
+}
+</pre>
+  <p>Note the <code>property</code> function above. This is a special kind of function, used for declaring computable properties. Properties wrapped in such functions are accessible normally:</p>
+  <pre>var bar = new Bar();  // invokes Bar.this()
+bar.one = 2;          // invokes Bar.one()::set section
+</pre>
+  <p>There are situations when a set of properties is unknown at design time. TIScript allows you to implement accessors for such properties via the <code>property undefined()</code> method:</p>
+  <pre>class Recordset
+{
+  function getFieldValue(idx) { ... }
+  function getFieldIdx(byName) { ... }
+
+<em>  property undefined</em>(name, val)
+  {
+    get { var fieldIdx = this.getFieldIdx(name);
+          return this.getFieldValue(fieldIdx); }
+  }
+}
+</pre>
+  <p>This property handler can be used as follows:</p>
+  <pre>var rs = DB.exec( &quot;SELECT one, two FROM sometable&quot; );
+var one = rs.one; // access the column named &quot;one&quot; in the recordset
+                  // via the <code>special </code>handler above
+</pre>
+  <h2>Lightweight anonymous functions</h2>
+  <p>TIScript introduces lightweight syntax for defining anonymous (lambda) functions. This makes for a total of three ways of declaring anonymous functions in TIScript:</p>
+  <dl>
+    <dt>Single statement lambda function:</dt>
+    <dd><code>':' [param-list] ':' &lt;statement&gt;;</code></dd>
+    <dt>Lambda function block:</dt>
+    <dd><code>':' [param-list] '{' &lt;statement-list&gt; '}'</code></dd>
+    <dt>Classic anonymous function:</dt>
+    <dd><code>'function(' [param-list] ')' '{' &lt;statement-list&gt; '}'</code></dd></dl>
+  <p>Here is an axample of how you would sort an array in descending order by using a comparator function that is defined in-place:</p>
+  <pre>var arr = [1,2,3];
+arr.sort( :a,b: a &lt; b? 1:-1 );
+</pre>
+  <p>Here, <code>:a,b: a &lt; b? 1:-1</code> is an inplace declaration of a lambda function that will be passed to the <code>Array.sort()</code> method.</p>
+  <h2>Decorators</h2>
+  <p>Decorators are a sort of meta-programming feature that was borrowed from the Python language. In TIScript, a decorator is an ordinary function. Its name must start with the '@' character, and it must have at least one parameter. That parameter (the first one) is a reference to some other function (or class) that is being decorated. Here is an example of a decorator function declaration:</p>
+  <pre>function @KEY(func, keyCode)
+{
+  function t(event) // wraps a call to func()
+  {                 // into a filter function
+    if(event.keyCode == keyCode)
+      func();
+    if(t.next)
+      t.next.call(this,event);
+  }
+  t.next = this.onKey; // establishes the chain
+  this.onKey = t;      // of event handlers
+}
+</pre>
+  <p>If we have something like this in place, then we can define code blocks that will be activated on different keys pressed on the widget:</p>
+  <pre>class MyWidget : Widget
+{
+  @KEY 'A' : { this.doSelectAll(); }
+  @KEY 'B' : { this.doSomethingWhenB(); }
+}
+</pre>
+  <p>Here, the two <code>@KEY</code> entries decorate two anonymous functions (see previous section). The code above assumes that there is a <code>class Widget</code> defined somewhere with the callback method <code>onKey(event)</code>.</p>
+  <p>Decorators is an advanced feature, and may require some effort to understand. When established, decorators may significantly the increase expressiveness of your code. More detail about decorators can be found <a href="/wiki/tiscript/decorators" class="wikilink1" title="tiscript:decorators">here</a> and <a href="http://www.terrainformatica.com/index.php/?p=108" rel="bookmark">here</a>.</p>
+  <h2>Iterators</h2>
+  <p>JavaScript (and so TIScript) has pretty handy for-each statement: <code>for( var item in collection ){..}</code> where the <em>collection</em> is an instance of object or array. </p>
+  <p>In TIScript list of enumerable objects is extended by function instances. Thus statement <code>for( var item in <em>func</em> )</code> will call the <em>func</em> and execute body of the loop with its value on each iteration. Example, this function:</p>
+  <pre>function range( from, to )
+{
+  var idx = from - 1;
+  return function() { if( ++idx &lt;= to ) return idx; }
+}
+</pre>
+  <p>will generate consecutive numbers in the range [from..to]. So if you will write something like this:</p>
+  <pre>for( var item in range(12,24) )
+   stdout &lt;&lt; item &lt;&lt; &quot; &quot;;
+</pre>
+  <p>then you will get numbers from 12 to 24 printed one by one in stdout.</p>
+  <p>Here is another example of a class-collection that allows to enumerate its members in two directions:</p>
+  <pre>class Fruits
+{
+  function this() {
+    this._data = [&quot;apple&quot;,&quot;orange&quot;,&quot;lime&quot;,&quot;lemon&quot;,
+                  &quot;pear&quot;,&quot;banan&quot;,&quot;kiwi&quot;,&quot;pineapple&quot;]; }
+
+  property forward(v)
+  {
+    get {
+      var items = this._data;  var idx = -1;
+      // return function that will supply &quot;next&quot; value
+      // on each invocation
+      return function() { if( ++idx &lt; items.length ) return items[idx]; }
+    }
+  }
+  property backward(v)
+  {
+    get {
+      var items = this._data; var idx = items.length;
+      return function() { if( --idx &gt;= 0 ) return items[idx]; }
+    }
+  }
+}
+</pre>
+  <p>As you may see the class above has two properties that return iterators allowing to scan the collection in both directions:</p>
+  <pre>var fruits = new Fruits();
+  stdout &lt;&lt; &quot;Fruits:\n&quot;;
+for( var item in <strong>fruits.forward</strong> ) stdout &lt;&lt; item &lt;&lt; &quot;\n&quot;;
+  stdout &lt;&lt; &quot;Fruits in opposite direction:\n&quot;;
+for( var item in <strong>fruits.backward</strong> ) stdout &lt;&lt; item &lt;&lt; &quot;\n&quot;;
+</pre>
+  <p>People from Mozilla introduced their version of <a href="https://developer.mozilla.org/en/Core_JavaScript_1.5_Guide/Iterators_and_Generators" class="l" onmousedown="return clk(this.href,'','','res','1','&sig2=Z5S9FJOQ4UcsNkUoe67JEQ')">Iterators in Spider Monkey</a> that was I believe borrowed &quot;as is&quot; from the Python. I think that my version of iterators better suits JavaScript spirit. At least it does not introduce new entities and classes.</p>
+  <h2>The <code>prototype</code> property</h2>
+  <p>Compared with JavaScript, the prototyping mechanism has been simplified in TIScript.</p>
+  <p>Each object in TIScript has a property named <code>prototype</code>. The prototype of an object is a reference to its class, which is also simply an object. The prototype of a class is a reference to its superclass. Similarly, the prototype of a namespace (which is an object, like anything else) is a reference to its parent namespace.</p>
+  <p>For example all these statements evaluate to <code>true</code>:</p>
+  <pre>&quot;somestring&quot;.prototype === String; // prototype of the string is String class object.
+{ some:&quot;object&quot;, literal:true }.prototype === Object;
+</pre>
+  <p>And for user defined classes:</p>
+  <pre>class Foo { ... }
+  var foo = new Foo();
+      foo.prototype === Foo;
+</pre>
+  <h2>Type system</h2>
+  <p>The <code>number</code> type of JavaScript unifies integer and float numbers into one. In TIScript, it's split into two distinct classes: <a href="Integer.htm">Integer</a> and <a href="Float.htm">Float</a> as they really represent two distinct entities.</p>
+  <p>TIScript also introduces a number of new types:</p>
+  <dl>
+    <dt><a href="Stream.whtm"><em>Stream</em></a></dt>
+    <dd>Stream is a sequence of characters or bytes. TIScript runtime supports three types of streams: in-memory (a.k.a. String stream), socket stream, and file stream. In-memory streams are an effective ways of generating text. They are introduced for the same purposes as the StringBuffer/StringBuilder classes in the &quot;big Java&quot;.</dd>
+    <dt><a href="Bytes.whtm"><em>Bytes</em></a></dt>
+    <dd>An instance of the Bytes object is an array of bytes.</dd>
+    <dt><a href="Storage.htm"><em>Storage</em></a> and <a href="Index.htm"><em>Index</em></a></dt>
+    <dd>These two classes make up the core of TIScript built-in persistence. A TIScript object (and all objects it refers to) can be made persistent by assigning it to the <code>storage.root</code> property. The whole tree of objects is transparently placed in a storage file. <strong>Where is this file located? </strong>Essentially, this is an object database. I call this JSON-DB, as only JSON subset of JS objects can be persistent. For example, socket stream is not persistent by nature.</dd>
+    <dt><em>Symbol</em> (also known as Atom)</dt>
+    <dd>Almost all dynamic languages have a concept of atoms in one form or another. TIScript has them too:</dd></dl>
+  <h3>Symbols</h3>
+  <p>A name of an object is a string of allowed characters. A symbol is a number assosiated with the name. TIScript maintains a global map of such <code>name&lt;-&gt;int</code> pairs (implemented internally as a <em>ternary search tree</em>). At compile time, each name gets translated into an int32 number - its symbol.</p>
+  <p>In some cases, you may want to declare symbols explicitly. In this case, symbol literals come in handy. The symbol literal is a sequence of characters that starts with the <code>'#'</code> character. It can contain alpha-numeric characters, underscores (<code>'_'</code>) , and dashes (<code>'-'</code>). Dashes are used in symbols for compatibility with CSS (Cascading Style Sheets), where they are parts of name tokens.</p>
+  <p>Example of symbol use:</p>
+  <pre>function ChangeMode( mode )
+{
+  if( mode == <strong>#edit</strong> )
+    this.readOnly = false;
+  else if( mode == <strong>#read-only</strong> )
+    this.readOnly = true;
+  else
+    throw mode.toString() + &quot; - bad symbol!&quot;;
+}
+</pre>
+  <p>As you can see, symbols may be used as self descriptive, convenient, and effective auto-enum values.</p>
+  <p>Another feature that makes symbols quite useful is <em>access-by-symbol notation</em>.</p>
+  <p>Constructions like:</p>
+  <pre><code>var aa = obj#name;
+         obj#name = val;
+</pre></code>
+  <p>get translated into</p>
+  <pre><code>var aa = obj[#name]; //</code> and
+<code>         obj[#name] = val
+</pre></code>
+  <p>statements. Not too much but will make code a bit more readable.</p>
+  <p>This is often used in <a href="/sciter/main.whtm">Sciter</a>, which is an embeddable HTML/CSS/Scripting engine. For example, to access style (CSS) attributes of DOM elements:</p>
+  <pre>var elem = self.select(&quot;#some&quot;);
+elem.style#display = &quot;block&quot;;
+elem.style#border-left-width = px(1); // or elem.style[#border-left-width] = &quot;1px&quot;;
+elem.style#border-right-width = px(2);
+...
+</pre>
+  <h3>Conclusion</h3>
+  <p>This concludes a brief overview of TIScript. In the next article, I will explain how to embed the TIScript engine into your application.</p>
+  <p>This article was written in a WYSIWYG HTML editor scapp (short for <strong>Sc</strong>iter <strong>app</strong>lication), which can be found in <a href="sciter-sdk.zip">Sciter SDK</a>/scapps/blocknote.net. Therefore TIScript VM was running to help write it:</p>
+  <p><img src="sciter-blocknote.png"/></p>
+</body>
+</html>

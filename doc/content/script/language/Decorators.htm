@@ -1,0 +1,92 @@
+<html>
+  <head>
+    <title>Decorators of functions, classes and namespaces</title>
+    <link rel="stylesheet" href="for-screen.css"/>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>Decorators of functions, classes and namespaces</h1>
+  <div class="level1">
+    <h2><a id="introduction" name="introduction">Introduction</a></h2>
+    <div class="level2">
+      <p>Decorators <sup><a class="fn_top" id="fnt__1" href="#fn__1" name="fnt__1">1)</a></sup> are a meta-programming feature. A decorator is a function aimed to modify another function or method. Usually, decorator functions create another function that wraps the call of the original (decorated) function with some additional pre- and/or post-processing.</p>
+      <p>In TIScript, decorators are ordinary functions that accept one or more parameters. The first parameter is always a reference to the object (function, class or namespace) being decorated. The name of the decorator function should start with the <code>@</code> character (at-symbol).</p>
+      <p>Here is an example of the <code>@returns</code> decorator. This decorator creates a proxy function which verifies the return value of the original, decorated, function:</p>
+      <pre class="code tiscript">function @returns(func, return_type)
+{
+  return function(params..) // returning proxy-function of the 'func'
+  {
+    var rv = func.apply(this, params); // call the 'func'
+    if( typeof rv != return_type )     // verify its return type
+      throw String.printf(&quot;Function %s expected to return %s but got %s&quot;,
+                           func.name, return_type, typeof rv);
+    return rv;
+  }
+}
+</pre>
+      <p>When declared, such decorator can be used to ensure that a function returns a value of desired type:</p>
+      <pre class="code tiscript">@returns #integer
+function SumInt(a, b)
+{
+  return a + b;
+}
+</pre></div>
+    <h2><a id="syntax-of-decorator-invocation" name="syntax-of-decorator-invocation">Syntax of decorator invocation</a></h2>
+    <div class="level2">
+      <p>The core syntax of TIScript was extended to support functions and methods with decorators. Function declaration now looks like:</p>
+      <pre class="code">[&lt;decorator-list&gt;] <code>function</code> &lt;name&gt; <code>(</code> &lt;arguments &gt; <code>)</code> <code>{</code> &lt;function body&gt; <code>}</code> -- named function;
+[&lt;decorator-list&gt;] <code>:</code> &lt;arguments &gt; <code>:</code> &lt;statement&gt; -- anonymous lambda statement;
+[&lt;decorator-list&gt;] <code>:</code> &lt;arguments &gt; <code>{</code> &lt;function body&gt; <code>}</code> -- anonymous lambda function.
+</pre>
+      <p>Where the <em>decorator-list</em> is a list of one or more decorator calls. Each decorator call is a name of a decorator function (starting with '@'), and an optional whitespace-separated list of parameter values for the decorator invocation.</p>
+      <pre class="code">@decoratorname [p1 [p2 [... pN ]]] &lt;function-or-lambda-declaration&gt;
+</pre></div>
+    <h3><a id="empty-decorator" name="empty-decorator">Empty decorator</a></h3>
+    <div class="level3">
+      <p>Sometimes you need to use an empty decorator that is used for e.g. creating some function rather than decorating another one. Empty decorators end with a <code>;</code> (semicolon):</p>
+      <pre class="code">@decoratorname [p1 [p2 [... pN ]]] ;
+</pre></div>
+    <h2><a id="the-decorator-function" name="the-decorator-function">The decorator function</a></h2>
+    <div class="level2">
+      <p>The function name must start with the <code>@</code> character (at-symbol) in order to be used as a decorator.</p>
+      <p>The decorator function must have at least one parameter. This parameter is used to pass the reference to the object being decorated into the decorator function.</p>
+      <p>The decorator function is an ordinary function and even can be used in other places as any other function.</p></div>
+    <h3><a id="this" name="this">this</a></h3>
+    <div class="level3">
+      <p><em>this</em> environment variable inside the decorator refers to the current namespace/class where the decorator is applied. If the decorator is used for a global function, then <em>this</em> refers to the global namespace object.</p>
+      <h2>Sample of decorators use</h2>
+      <p>Here is a fragment of ScIDE source code:</p>
+      <pre>@key 'N' @CTRL @NOSHIFT @NOALT : { openFile(); return true; } // Ctrl+N
+@key 'S' @CTRL @SHIFT @NOALT : { saveAllDocuments(); return true; } // Ctrl+Shift+S
+</pre>
+      <p>These two lines attach event handlers (anonymous functions on the right) &nbsp;to the self.onKey event ( see declaration of <code>function @key()</code> below ). @CTRL, @SHIFT and @NOALT are also decorators, each of them adds its own filtering expression to the chain with the event handler code at the end.</p>
+      <p>Here is how such decorators are implemented:</p>
+      <pre>// decorator '@key' - filters Event.KEY_DOWN events by keyCode and ctrl, shift, alt flags.
+// Establishes chain of event handlers on onKey
+function <code>@key</code>(func, keyCode = undefined, modifiers..)
+{
+  function t(evt)
+  {
+    var r = false;
+    if( evt.type == Event.KEY_DOWN &amp;&amp;
+        (keyCode === undefined || (keyCode == evt.keyCode)) )
+          r = func.call(this,evt);
+    if(t.next) return t.next.call(this,evt) || r;
+    return r;
+  }
+  // note 'this' in decorators is a current namespace - class or global (ns)
+  var principal = this instanceof Behavior ? this : self;
+  t.next = principal.onKey;
+  principal.onKey = t;
+}
+
+// decorator '@CTRL' - pass if evt.ctrlKey === true
+function <code>@CTRL</code>(func) { return function(evt) { if( evt.ctrlKey === true ) return func.call(this,evt); } }
+// decorator '@NOCTRL' - pass if evt.ctrlKey === false
+function <code>@NOCTRL</code>(func) { return function(evt) { if( evt.ctrlKey === false ) return func.call(this,evt); } }
+</pre>
+      <hr/></div>
+    <div class="footnotes">
+      <div><sup><a class="fn_bot" id="fn__1" href="#fnt__1" name="fn__1">1)</a></sup> Decorators in TIScript are modeled after the <a class="urlextern" title="http://en.wikipedia.org/wiki/Python_syntax_and_semantics#Decorators" href="http://en.wikipedia.org/wiki/Python_syntax_and_semantics#Decorators" rel="nofollow">decorators in the Python</a> programming language.</div></div></div>
+</body>
+</html>

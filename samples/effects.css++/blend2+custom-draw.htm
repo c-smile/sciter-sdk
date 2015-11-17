@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      html { }
+      div.area {
+        flow: "1 3"
+              "2 4";
+        border-spacing:6px;
+      }
+      picture
+      {
+        size:432dip 324dip;
+        border:3px solid gray;
+        foreground-image: url(images/photo1.jpg);
+      }
+      picture:hover 
+      {
+        foreground-image: url(images/photo2.jpg);
+      }
+      
+      picture.blend:hover 
+      {
+        transition: blend(linear,800ms);
+      }
+      
+      picture.blend-atop:hover 
+      {
+        transition: blend-atop(linear,800ms);
+      }
+
+    
+    </style>
+    <script type="text/tiscript">
+    
+      $(picture).paintOutline = function(gfx) {
+      
+          var (w,h) = this.box(#dimension);
+          var x1 = 10, y1 = 10;
+          var x2 = w - 10, y2 = h - 10;
+          var w1 = w - 20, h1 = h - 20;
+          
+          //gfx.scale(0.5,0.5, w/2,h/2);
+          
+          gfx.lineWidth(2)
+             .lineLinearGradient(x1,y1,x1,y2,color(0xFF,0,0),color(0,0,0xFF) )
+             .fillLinearGradient(x1,y1,x1,y2,color(0xFF,0x7F,0x7F,0.3),color(0x7F,0x7F,0xFF,0.6) )
+             .rectangle( x1, y1, w1, h1, 20 );      
+      
+        return false;
+      }
+    
+    </script>
+  </head>
+<body>
+  Hover the image:
+  <div .area>
+    <caption>transition: blend(linear,800ms):</caption>
+    <picture .blend />
+    <caption>transition: blend-atop(linear,800ms):</caption>
+    <picture .blend-atop />
+  </div>
+</body>
+</html>

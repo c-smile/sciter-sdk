@@ -1,0 +1,44 @@
+<html>
+	<head>
+		<title>CSS background/foreground images</title>
+<style type="text/css"> 
+	body { 
+		font-family:Verdana; font-size:10pt; 
+		width:100%%; height:100%%;  
+		background-color: window;
+		padding:10px;
+		margin:0;
+	}
+
+  header { font-size:150%; }
+
+	#c1 
+  {
+    background-color: threedface;
+	}	
+
+	img
+  {
+		margin: 6px;
+	}	
+
+	img:hover
+  {
+    foreground-image-transformation: contrast-brightness-gamma(0.5,0.5, 1.3);
+	}
+	img:active
+  {
+    foreground-image-transformation: contrast-brightness-gamma(0.25,0.95, 1.0);
+	}	
+	
+</style>
+	</head>
+	<body>
+	<header>Image color transformation. Move mouse over the block below. Image will change gamma. On press image will change contrast and brightness.</header>
+  <p id="c1"><img src="images/flowers.jpg" /> <img src="images/icon.png" /></p>
+  <pre>
+    :hover -> foreground-image-transformation: contrast-brightness-gamma(0.5,0.5, 1.3);  
+    :active -> foreground-image-transformation: contrast-brightness-gamma(0.25,0.95, 1.0);  
+ </pre> 
+ 	</body>
+</html>

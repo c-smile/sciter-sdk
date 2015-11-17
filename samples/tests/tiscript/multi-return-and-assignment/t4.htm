@@ -1,0 +1,28 @@
+<html>
+<head>
+  <style></style>  
+  <script type="text/tiscript">
+  
+    var obj1 = { zero:0, one: 1, two: 2, three: 3, four: 4};
+    var obj2 = { zero:0, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9};
+    
+    for( var (k,v) in obj1 )
+      stdout.printf("obj1: k=%v v=%v\n", k, v);
+      
+    for( var (k,v) in obj2 )
+      stdout.printf("obj2: k=%v v=%v\n", k, v);
+
+    for( var k in obj2 )
+      stdout.printf("k,obj2: k=%v\n", k);
+      
+    var arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    for( var (i,v) in arr )
+      stdout.printf("arr: i=%v v=%v\n", i, v);
+      
+      
+  </script>  
+</head>
+<body>
+  
+</body>
+</html>

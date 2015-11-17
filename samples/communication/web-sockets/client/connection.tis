@@ -1,0 +1,27 @@
+
+function connection(params) {
+ 
+  var socket = WebSocket.connect(params.url);
+  
+  socket.on("connect", function() { if(var cb = params.onConnect) cb(); })
+        .on("close", function() { socket = null; if(var cb = params.onClose) cb(); })
+        .on("text", function(text) { if(var cb = params.onText) cb(text); })
+        .on("binary", function(data) { if(var cb = params.onBinary) cb(data); })
+        .on("error", function(msg) { 
+                    if( socket.state == WebSocket.CONNECTING )
+                      stderr.println(socket, "connection failure:", msg); 
+                    else // socket.state == WebSocket.CONNECTED
+                      stderr.println(socket, "ERROR:", msg); 
+                    if(var cb = params.onError) cb(msg);
+                  });
+  
+  // returns function used for sending text to the server and closing the connection by passing null value to it
+  return function(text) { 
+    if( !socket ) return;
+    if(text === null)
+      socket.close(); 
+    else
+      socket.sendText(text); 
+  }
+
+}

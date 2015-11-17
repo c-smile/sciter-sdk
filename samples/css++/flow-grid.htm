@@ -1,0 +1,88 @@
+<!-- saved from url=(0022)http://internet.e-mail -->
+<html>
+  <head>
+    <title></title>
+    <style>
+		.page {
+			width: 100%%;
+			height: 100%%;
+			border: 1px solid red;
+		}
+
+      .grid div { size: 50px; background:gold; font-size:20pt; }
+      .grid {
+        // grid flow:      
+        flow: grid( 1  2  3  4  5  13,
+                    1  2  8  9  9  14,
+                    6  2  10 11 15 17,
+                    6  12  7  16 18 17 );
+        border-spacing:4dip;
+        size:max-content;
+		    margin: *;
+		    border: 1px solid blue;
+      }
+      
+    </style>
+    
+    <script type="text/tiscript">
+    
+      const grid_flow = [grid:[1,  2,  3,  4,  5,  13], 
+                              [6,  6,  8,  9,  9,  14],
+                              [6,  6,  10, 11, 15, 17],
+                              [12, 12, 7,  16, 18, 17]];
+                              
+      const rows_flow = [row: #div, #div, #div, #div ]; // four columns grid
+      
+      //var g = $(.grid).style#flow = flow;
+      var g = $(.grid);
+      $(form).on("change", function() {
+        var flow = this.value.flow;     
+        g.style#size = "max-content"; 
+        if( flow == "grid" )
+          g.style#flow = grid_flow;
+        else if( flow == "rows" )
+          g.style#flow = rows_flow;
+        else if( flow == "hf" ) {
+          g.style#flow = "horizontal-flow";
+          g.style#width = fx(100);
+        }
+      });
+      
+      stdout.printf("flow=%V\n", g.style#flow );      
+      
+    </script>
+    
+    
+  </head>
+<body>
+  <form>
+    Layout 
+    <button|radio(flow) value="grid">grid</button>
+    <button|radio(flow) value="rows">rows</button>
+    <button|radio(flow) value="hf">horizontal-flow</button>
+  </form>
+
+	<div class="page">
+	<div class="grid">
+		<div>1</div>
+		<div>2</div>
+		<div>3</div>
+		<div>4</div>
+		<div>5</div>
+		<div>6</div>
+		<div>7</div>
+		<div>8</div>
+		<div>9</div>
+		<div>10</div>
+		<div>11</div>
+		<div>12</div>
+		<div>13</div>
+		<div>14</div>
+		<div>15</div>
+		<div>16</div>
+		<div>17</div>
+		<div>18</div>
+	</div>
+	</div>
+</body>
+</html>

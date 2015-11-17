@@ -1,0 +1,65 @@
+<html>
+<head>
+  <style>
+    table { border:1px solid black; border-spacing:-1px; }
+    th,td { border:1px solid black; padding:3px; }
+  </style>  
+  <script type="text/tiscript">
+  
+  include library "tiscript-sqlite";
+    
+  function self#test.onClick()
+  {  
+    var db = DB.open(":memory:"); // in memory, temporary DB
+           //DB.open("c:/test.db");
+    var r = db.exec("create table stocks (date text, trans text, symbol text, qty real, price real)" );
+        self#result.text = r.toString();
+        // as a string   
+        db.exec("insert into stocks values ('2006-01-05','BUY','RHAT',100,35.14)" );
+        db.exec("insert into stocks values ('2006-01-05','BUY','BANT',10,5.23)" );
+        // with params:
+        db.exec("insert into stocks values (?,?,?,?,?)", "2006-04-05", "BUY", "MSOFT", 1000, 72.00 );
+        db.exec("insert into stocks values (?,?,?,?,?)", "2006-04-06", "SELL", "IBM", 500, 53.00 );
+        
+    var rs = db.exec("select * from stocks order by price");
+    if ( rs instanceof Recordset )
+      showRecordset(rs);
+    else
+      self#result.text = "Wrong type:" + rs;
+  
+    db.close();
+  }
+  
+  function showRecordset(rs)
+  {
+    var tbl = new Element("table");
+    self.$(body).insert(tbl);
+    // header row:
+    var tr = new Element("tr");
+    for (var n = 0; n < rs.length; ++n)
+    {
+      var th = new Element("th", rs.name(n)); 
+      th.@#title = String.printf("%s:%s:%s", rs.name(n,#database), rs.name(n,#table), rs.name(n,#field) );
+      tr.insert(th);
+    } 
+    tbl.insert(tr);
+    // data rows:
+    do 
+    {
+      tr = new Element("tr");
+      for (var v in rs)
+      {
+        var td = new Element("td", v.toString()); 
+        tr.insert(td);
+      } 
+      tbl.insert(tr);
+    } while( rs.next() );
+  }
+
+  </script>  
+</head>
+<body>
+  <button #test>Test it</button>
+  <text #result />
+</body>
+</html>

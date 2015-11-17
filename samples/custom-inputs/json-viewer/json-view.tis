@@ -1,0 +1,81 @@
+
+
+function JsonView() {
+
+  var widget = this;
+
+  function formatVal(varval) {
+    if( varval === null )
+      return ("null",false);
+    else if( varval === undefined )
+      return ("undefined",false);
+ 
+    switch( typeof varval ) {
+      case #boolean:
+        return (varval.toString(),false);
+      case #object:
+        return (String.printf("{%d}", varval.length), #object);
+      case #array:
+        return (String.printf("[%d]", varval.length), #array);
+      case #date:
+        return (varval.toISOString(), false);
+      case #string:
+      case #integer:
+      case #float:
+        return (JSON.stringify(varval), false);
+      case #symbol: 
+        return (varval.toString(), false);
+      default:
+        return (varval.toString(), false);
+    }
+  }
+  
+  function renderVars(list, props)
+  {
+    for( var (varname,varval) in props ) {
+      var (caption, compound) = formatVal(varval);
+      if( compound == #object) {
+        list.$append(<dt>{varname}:</dt><dd.compound.object><caption>{ caption }</caption><dl></dl></dd>);
+        list.last.data = varval;
+      }
+      else if( compound == #array) {
+        list.$append(<dt>{varname}:</dt><dd.compound.array><caption>{ caption }</caption><dl></dl></dd>);
+        list.last.data = varval;
+      }
+      else 
+        list.$append(<dt>{varname}:</dt><dd>{ caption }</dd>);
+    }
+  }
+
+  function render(val)
+  {
+    widget.clear();
+    if(val)
+      renderVars(widget,val);
+  }
+  
+  function toggle() 
+  {
+    var cont = this.parent; 
+    if(cont.state.expanded)
+      cont.state.collapsed = true; 
+    else {
+      var dl = cont[1];
+      if( dl.length == 0 && cont.data)
+        renderVars( dl, cont.data );
+      cont.state.expanded = true;
+    }
+    return true;
+  }
+  
+  widget.subscribe("click","dd.compound > caption", toggle );  
+  
+  var val = null;
+  
+  widget[#value] = property(v) {
+    get return val;
+    set render( val = v );
+  }
+  
+
+}

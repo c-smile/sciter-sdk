@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+      
+      video {
+        background: gray;
+        size: *;
+        text-align: center;
+        vertical-align: middle;
+        color:gold;
+        font-size: 24pt;
+      }
+      
+      video:hover
+      { 
+        transform: rotate(15deg) scale(.75);
+        transition: transform(quart-out,0.5s,quart-in);
+      }
+	  
+	    div { flow:horizontal; size:*; border-spacing: 8px;}
+    
+    </style>
+    <script type="text/tiscript"></script>
+  </head>
+<body>
+<p>video sizing modes</p>
+<div>
+	<video src="movies/carribean.wmv" sizing=contain >contain</video>
+	<video src="movies/carribean.wmv" sizing=cover >cover</video>
+</div>
+</body>
+</html>

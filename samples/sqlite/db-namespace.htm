@@ -1,0 +1,55 @@
+<html>
+<head>
+  <style>
+    table { border:1px solid black; border-spacing:-1px; }
+    th,td { border:1px solid black; padding:3px; }
+  </style>  
+  <script type="text/tiscript">
+  
+  include "sqlite.tis";
+    
+  function self#test.onClick()
+  {  
+    var db = SQLite.DB.open(":memory:"); // in memory, temporary DB
+           //DB.open("c:/test.db");
+    var r = db.exec("CREATE TABLE stocks (key INTEGER PRIMARY KEY, date TEXT, trans TEXT, symbol TEXT, qty REAL, price REAL);" );
+        self#result.text = r.toString();
+        // as a string   
+        db.exec("insert into stocks values (NULL,'2006-01-05','BUY','RHAT',100,35.14)" );
+        db.exec("insert into stocks values (NULL,'2006-01-05','BUY','BANT',10,5.23)" );
+        // with params:
+        db.exec("insert into stocks values (NULL,?,?,?,?,?)", "2006-04-05", "BUY", "MSOFT", 1000, 72.00 );
+        db.exec("insert into stocks values (NULL,?,?,?,?,?)", "2006-04-06", "SELL", "IBM", 500, 53.00 );
+        
+    var rs = db.exec("select * from stocks order by price");
+    if ( rs instanceof Recordset )
+      showRecordset(rs);
+    else
+      self#result.text = "Wrong type:" + rs;
+
+    showSchema(db);  
+    db.close();
+  }
+  
+  function showRecordset(rs)
+  {
+    var tbl = new Element("table");
+    self.$(body).insert(tbl);
+    rs.present(tbl);
+  }
+  function showSchema(db)
+  {
+    self.$(body).append( 
+      "<caption>Tables:</caption>"
+      + String.printf("<pre>%V</pre>", db.tables()) );
+    self.$(body).append( 
+      "<caption>Indexes:</caption>"
+      + String.printf("<pre>%V</pre>", db.indexes()) );
+  }
+  </script>  
+</head>
+<body>
+  <button #test>Test it</button>
+  <text #result />
+</body>
+</html>

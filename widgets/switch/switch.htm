@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+      @import url(switch.css);
+    </style>
+    <script type="text/tiscript">
+    
+    $(button#get).onClick = function() { $(#out).text = String.printf("switch value:%V", $(switch).value); }
+    $(button#set).onClick = function() { $(switch).value = 1; }
+    
+    </script>
+  </head>
+<body>
+  Simple radio-group switch: 
+  <switch>
+    <option value=0>All</option>
+    <option value=1>Pending</option>
+    <option value=2>Complete</option>
+  </switch>
+  <p>
+    <button#get>get value</button>
+    <button#set>set value</button>
+  </p>
+  <pre #out>
+  </pre>
+</body>
+</html>

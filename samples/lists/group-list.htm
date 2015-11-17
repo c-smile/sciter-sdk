@@ -1,0 +1,160 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      ul { width:25%;
+           height:*; 
+           overflow-y:scroll-indicator; padding:0;
+           border: 1px solid; }
+      ul > li { display:block; padding:4px 4px; }
+      
+      ul > header { 
+        background:gold; 
+        padding:2px 4px; 
+        font-size:200%; 
+        font-weight:bold; 
+        position:relative; /* position:relative is mission critical here */
+        border-bottom:1px solid #AAA;
+        border-top:1px solid #FFA;
+      }
+      
+    </style>
+    <script type="text/tiscript">
+    
+      function GroupList(el) {
+      
+        var headers = [];  // header elements
+        var headerys = []; // original header elements positions
+        var y = 0,viewy;
+        var shifted;       // current header
+        
+        // find current header that will be shifted into the view:
+        function findHeader() 
+        {
+          var n = 0;
+          for( var (i,iy) in headerys ) { if( iy > y ) break; n = i; }
+          return n;
+        }
+        
+        function replaceHeaders() {
+        
+          var i = findHeader();
+          
+          var sh = headers[i];
+          
+          if( i < headers.length - i ) {
+            // there is next header
+            var h = sh.box(#height,#border);
+            if( headerys[i+1] < y + h )
+              y -= h - (headerys[i+1] - y);
+          }
+          // shift the header from its current position to get it into the view.
+          sh.style#top = px(y - headerys[i]);
+          if( sh != shifted ) {
+            shifted.style#top = undefined;
+            shifted = sh;
+          }
+        }
+      
+        el.onScroll = function(evt) {
+          if(evt.type == Event.SCROLL_POS && headers) {
+            if(y != evt.scrollPos) {
+              y = evt.scrollPos;
+              el.post(replaceHeaders);
+            }
+          }
+        }
+        
+        el.onSize = function() {
+          headers = el.$$(header);
+          headerys = [];
+          for(var h in headers) {
+            var (x1,y1,x2,y2) = h.box(#rect,#border,#content);
+            headerys.push(y1);
+          }
+          delete el.onSize; // run it once
+        }
+      
+      }
+      
+      GroupList($(ul));
+    
+    </script>
+  </head>
+<body>
+
+<h1>Scrollable list with headers</h1>
+
+<ul>
+  <header>A</header>
+    <li>Achilles</li>
+    <li>Acoose</li>
+    <li>Acotas</li>
+    <li>Acton</li>
+    <li>Adahy</li>
+    <li>Adair</li>
+    <li>Adam</li>
+    <li>Adan</li>
+    <li>Adarsh</li>
+    <li>Addae</li>
+    <li>Addison</li>
+    <li>Ade</li>
+    <li>Adeben</li>
+    <li>Adelio</li>
+    <li>Adem</li>
+  <header>B</header>
+    <li>Blaine</li>
+    <li>Blair</li>
+    <li>Blaise</li>
+    <li>Blake</li>
+    <li>Blakeley</li>
+    <li>Blakey</li>
+    <li>Blanco</li>
+    <li>Bland</li>
+    <li>Blandford</li>
+    <li>Blase</li>
+    <li>Blaxland</li>
+    <li>Bleddian</li>
+    <li>Bledig</li>
+    <li>Blenda</li>
+    <li>Bliss</li>
+    <li>Blumenthal</li>
+    <li>Blundel</li>
+    <li>Bly</li>
+    <li>Blythe</li>
+    <li>Bo</li>
+    <li>Boaz</li>
+    <li>Bob</li>
+    <li>Bobby</li>
+    <li>Bobo</li>
+    <li>Bodaway</li>
+    <li>Boden</li>
+  <header>C</header>
+    <li>Caesar</li>
+    <li>Caffer</li>
+    <li>Cahil</li>
+    <li>Cahir</li>
+    <li>Cai</li>
+    <li>Caiden</li>
+    <li>Caillum</li>
+    <li>Cain</li>
+    <li>Caine</li>
+    <li>Cairbre</li>
+    <li>Cairn</li>
+    <li>Cairo</li>
+    <li>Caislav</li>
+    <li>Caius</li>
+    <li>Cal</li>
+    <li>Calder</li>
+    <li>Caldwell</li>
+    <li>Cale</li>
+    <li>Caleb</li>
+    <li>Caley</li>
+    <li>Calhoun</li>
+    <li>Calisto</li>
+</ul>
+
+
+</body>
+</html>

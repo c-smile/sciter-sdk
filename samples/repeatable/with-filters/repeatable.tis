@@ -1,0 +1,62 @@
+
+// version of the repeatable that knows about different element types and @if
+// it also supports recursive data (tree alike)
+
+function Repeatable() 
+{
+  var temp = []; // templates, dom elements
+  var cond = []; // conditionals, objects to match
+
+  this.templates = function() { return (temp,cond); }  
+  
+  while( var el = this.first )
+  {
+    temp.push( el );
+    if( var filter = el.attributes["if"] ) {
+      var c = parseData(filter);
+      cond.push(c);
+      el.remove();
+    } else {
+      cond.push(#any);
+      el.remove();
+      break;
+    }   
+  }
+  
+  this[#value] = property(v) {
+  
+    get {
+      v = [];
+      for( var el in this ) v.push(el.value);
+      return v;
+    }
+    set {
+    
+      this.clear();
+      
+      if( temp.length == 0 ) // that is inner repeatable without templates
+                             // get collection of templates/conditionals from its parent
+        for(var p = this.parent; p; p = p.parent) 
+          if( p.templates ) {
+            (temp,cond) = p.templates();
+            break;
+          }
+          
+      //assert this.length == 0 : "Element without @if shall be the last one";
+      assert temp.length != 0 : "No template items provided";
+      
+      for(var rec in v) 
+      {
+        for( var (i,c) in cond ) {
+          if(rec !like c)
+            continue;
+          var el = temp[i].clone();
+          this.append(el); 
+          el.value = rec;
+          break;
+        }
+      }
+    }
+  }
+
+}

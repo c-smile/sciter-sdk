@@ -1,0 +1,31 @@
+
+div.tapev
+{
+  width:300px;
+  height:*;
+  prototype: TapeV;
+  border:1px solid #AAA;
+  background-color: gold;
+  overflow:hidden-scroll; /* this allows to scroll content without scrollbars */
+  flow:vertical;
+  /* Following prevents use of ::ScrollDC but creates realistic effect. 
+     To reduce CPU consumption simply delete these three: */  
+  foreground-image: url(images/cover.png);
+  foreground-repeat: expand;
+  foreground-position: 32px 16px 32px 16px; 
+}
+
+div.tapev > div.item
+{
+  margin:10px;
+  padding:4px;
+  background-color: white;
+  min-height:64px;
+}
+
+div.tapev > div.item > caption
+{
+  background-color: #DDD;
+  margin:-4px -4px 4px -4px;
+  padding:4px;
+}

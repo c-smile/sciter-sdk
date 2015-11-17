@@ -1,0 +1,20 @@
+<html>
+  <head>
+    <title></title>
+    <style></style>
+    <script type="text/tiscript">
+  
+
+    $(button).onClick = function() {  
+      var val = {age:19}; 
+      var fs = Stream.openFile("file://c:/test.tis", "w");
+      fs.printf("%V",val);
+      fs.close(); 
+    }
+    
+    </script>
+  </head>
+<body>
+  <button>Save</button>
+</body>
+</html>

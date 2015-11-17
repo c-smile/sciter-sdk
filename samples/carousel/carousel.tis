@@ -1,0 +1,75 @@
+include "../drag-n-drop-manager/ddm.tis";
+include "../drag-n-drop-manager/animations.tis";
+
+function Carousel() {
+
+  var me = this;
+
+  var prev = this.$(:root>.prev);
+  var next = this.$(:root>.next);
+  var list = this.$(:root>.list);
+  var paging = this.$(:root>.paging);
+  
+  var listWidth = 0;
+  var listHeight = 0;
+  var pages = 0;
+  var pageNo = 0;
+
+  var listContentWidth = 0;
+    
+  function checkScrollState() {
+    paging[pageNo].state.current = false;
+    var sx = list.scroll(#left);
+    pageNo = (sx + listWidth - 1) / listWidth;
+    paging[pageNo].state.current = true;
+    prev.state.disabled = pageNo == 0;
+    next.state.disabled = pageNo == pages - 1;
+  }
+  
+  list.onSize = function() {
+    (listWidth,listHeight) = this.box(#dimension);
+    listContentWidth = this.box(#width,#content);
+    //stdout.println(listWidth,listHeight,listContentWidth);
+    var npages = listContentWidth / listWidth + 1;
+    if( npages != pages )
+    {
+      pages = npages;
+      paging.clear();
+      for( var n = 0; n < pages; ++n )  
+        paging.$append(<span>&#8226;</span>);
+    }
+    checkScrollState();
+  }
+  
+  list.on("animationend",checkScrollState);
+  
+  next.onClick = function() {
+    var sp = list.scroll(#left);
+    list.scrollTo(sp + listWidth,0,true);
+    checkScrollState();
+  }
+  prev.onClick = function() {
+    var sp = list.scroll(#left);
+    list.scrollTo(sp - listWidth,0,true);
+    checkScrollState();
+  }
+  
+  next.on("drag-n-drop-ping", function(evt) {
+    next.onClick();
+    return true;
+  });
+  
+  prev.on("drag-n-drop-ping", function(evt) {
+    prev.onClick();
+    return true;
+  });
+  
+  DragDrop
+  {
+    what    : "div.box",
+    where   : list,
+    easeDrop: Animation.Ease.OutQuad
+  };
+
+
+}

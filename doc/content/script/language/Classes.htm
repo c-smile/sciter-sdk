@@ -1,0 +1,149 @@
+<html>
+  <head>
+    <title>Classes and namespaces</title>
+    <link rel="stylesheet" href="for-screen.css"/>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>Classes and namespaces</h1>
+  <p>The keyword <strong>namespace</strong> is used to declare new namespaces. A namespace is a collection of functions, classes, variables, etc. aggregated in a single unit. Namespaces can also contain other (inner) namespaces. Under the hood, a namespace is just a named global object. The keyword <em>super</em> can be used to access members of the parent namespace that have the same name as those in the inner namespace.</p>
+  <p>Declaration of a namespace:</p>
+  <pre class="code tiscript"><code>namespace</code> &lt;name&gt;
+<code>{
+</code>  [ &lt;function&gt; | &lt;var&gt; | &lt;const&gt; | &lt;class&gt; | &lt;namespace&gt; ]*
+<code>}
+</pre>
+  <h1><a name="classes" id="classes">Classes</a></h1>
+  <p>The keyword <strong>class</strong> is used to define new classes (types of objects):</p>
+  <pre class="code tiscript"><code>class</code> &lt;class-name&gt; [ <code>:</code> &lt;parent-class name&gt; ]
+<code>{
+</code>  [ &lt;function&gt; | &lt;constructor&gt; | &lt;property&gt; | &lt;var&gt; | &lt;const&gt; | &lt;this var&gt; | &lt;class&gt; ]*
+<code>}
+</pre>
+  <dl>
+    <dt>Where:</dt>
+    <dd><code>&lt;function&gt;</code> is a standard function declaration. Such functions can be used as instance or static methods of the class.<br/><code>&lt;constructor&gt;</code> is a function with predefined name <em>this</em>.<br/><code>&lt;property&gt;</code> is a special type of member function. See more details below.<br/><code>&lt;var&gt;</code> is a standard var declaration - allows to define class or module variables (a.k.a. static variables)<br/><code>&lt;const&gt;</code> is a declaration of named constant.<br/><code>&lt;class&gt;</code> is a declaration of inner class.<br/><code>&lt;this var&gt;</code> is a declaration of member variable[s]:<br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>this var &lt;name&gt; [= &lt;value&gt;] [, &lt;name&gt; = &lt;value&gt; , ...];</code> </dd></dl>
+  <h2><a name="constructors" id="constructors">Constructors</a></h2>
+  <p>The function with the name <em>this</em>, declared in the context of a class, serves the role of the function-constructor for all instances of the class:</p>
+  <pre class="code tiscript">class Tor
+{
+  <code>this var</code> one = 1; // declaration of member variable
+  <code>function</code> <code>this</code>() { <code>this</code>.two = 2; } // constructor
+}
+</pre>
+  <p>The main goal of the constructor is to initialize new instances of the class (a.k.a. objects) by creating and initializing all the fields that the instance shall contain. The object that is being created is accessible through the variable named <em>this</em> inside the constructor <sup><a href="#fn__1" name="fnt__1" id="fnt__1" class="fn_top">1)</a></sup>.</p>
+  <p>The compiler invokes the constructor when it handles the new operator:</p>
+  <pre class="code tiscript">var tor = new Tor();
+//  tor.one == 1 and
+//  tor.two == 2 at this point
+</pre>
+  <p>In any other aspect, <code>function this()</code> is an ordinary function that may have any number of parameters defined, including the <a href="/wiki/tiscript/functions#optional_parameters" class="wikilink1" title="tiscript:functions">optional parameters</a>.</p>
+  <h2><a name="methods" id="methods">Methods</a></h2>
+  <p>A function with any other name, declared in the context of a class, is known as a method of that class. If a method has a reference to the <em>this</em> variable, it is called an <em><strong>instance method</strong></em> (a.k.a. <em>dynamic</em>). If it does not refer to the <em>this</em> variable, it is a <em><strong>class method</strong></em> (a.k.a. <em>static</em>). In principle, the same function can be used as both, an instance and a class method. When invoked as a <em>class method</em>,<em> this</em> will have a reference to the class or namespace where the method is defined. When invoked as an instance method ( e.g. <em>obj.method()</em> ) <em>this</em> will be equal to the object instance (<em>obj</em> in this case).</p>
+  <h3><a name="instance-methods" id="instance-methods">Instance Methods</a></h3>
+  <p>Instance methods must be called in the context of particular object of the class:</p>
+  <pre class="code tiscript">class Tor
+{
+  function rotate( angle ) {  this.angle = angle; this.update(); }
+}
+var tor = new Tor();
+tor.rotate(270);     // Tor.rotate() method called in the context
+                     // of a particular instance - 'tor'
+</pre>
+  <h3><a name="static-methods" id="static-methods">Static Methods</a></h3>
+  <p>Static method of a class or namespace can be called by using the <em>ClassOrNamespace.Method</em> notation (a.k.a. the &quot;dot notation&quot;):</p>
+  <pre class="code tiscript">class Tor
+{
+  var all = [];
+  function rotateAll( angle ) {  for(var t in Tor.all) t.rotate(angle);  }
+}
+Tor.rotateAll(270); // Tor.rotateAll() method called as a class method
+</pre>
+  <h2><a name="properties" id="properties">Properties</a></h2>
+  <p>TIScript supports definitions of computable (a.k.a. virtual) properties. These are special functions that are executed to set or get the value of a property. The syntax of a computable property definition:</p>
+  <pre class="code tiscript"><code>property</code> &lt;function-name&gt; <code>(</code> &lt;parameter&gt; <code>)
+</code>{
+  [ &lt;statement&gt; | get &lt;statement&gt; | set &lt;statement&gt; ]*
+}
+</pre>
+  <p>The body of the property can contain statements that may appear in a normal function body and also the special <em>get</em> and <em>set</em> sections. The <em>get</em> section (one or more) is executed conditionally when the function is invoked for getting &nbsp;the property value, and the <em>set</em> section for setting the property value. Example:</p>
+  <pre class="code tiscript">class Baz
+{
+  function this() { this._first = 1; this._second = 2; }
+
+  property first( val )
+  {
+    get return this._first; // single expression get block
+    set this._first = val;  // single expression set block
+  }
+
+  property second( val )
+  {
+    stdout &lt;&lt; &quot;second&quot;;
+    get
+    {
+      stdout &lt;&lt; &quot;get\n&quot;;
+      return this._second + 2;
+    }
+    set
+    {
+      stdout &lt;&lt; &quot;set\n&quot;;
+      this._second = val - 2;
+    }
+  }
+}
+</pre>
+  <div>Note that the property function declaration must have a single parameter defined, e.g. <code>val</code>.</div>
+  <h3>Undefined Property Handler</h3>
+  <p>It is possible to define a so-called <em>Undefined Property Handler</em>, which deals with undefined properties. The syntax of the <em>UPH</em> is similar to the computable property handler, except for the <em>undefined</em> name token used in its name:</p>
+  <pre class="code tiscript"><code>property</code> <code>undefined</code> ( &lt;name&gt;, &lt;value&gt; )
+<code>{
+</code>  [&lt;statement&gt; | <code>get</code> &lt;statement&gt; | <code>set</code> &lt;statement&gt; ]*
+<code>}
+</pre>
+  <p>The UPH function must have precisely two parameters: the <em>name</em> of the property, and its <em>value</em> (used in the property set operation). UPH's can be used in cases where the set of properties is unknown upfront. For example, you may wish to access the fields of a recordset as properties:</p>
+  <pre class="code tiscript">property Recordset.undefined(name, val)
+{
+  get return this.getFieldValue(name);
+}
+...
+
+var rs = DB.exec(&quot;SELECT firstName, secondName FROM employee&quot;);
+var n1 = rs.firstName;  // redirect to rs.getFieldValue(#firstName); call
+var n2 = rs.secondName; // through property undefined()
+</pre>
+  <h2><a name="type-variables" id="type-variables">Class/Namespace variables</a></h2>
+  <p>Class, or namespace, variables are defined in the context of a class or namespace by using the <em>var</em> keyword. Example:</p>
+  <pre class="code tiscript">namespace Toz
+{
+  var all = []; // create variable that contains empty array;
+  var singleton = { something: 123; }; // create variable
+                                       // that contains object;
+  var counter = 0; // create variable that contains integer zero;
+}
+</pre>
+  <p>To access such variables, use their fully qualified names:</p>
+  <pre class="code tiscript">Toz.all.push(&quot;anything&quot;);
+Toz.counter += 1;
+</pre>
+  <h2><a name="constants" id="constants">Constants</a></h2>
+  <p>Namespace constants (a.k.a. constants) are read-only variables, defined in the context of a type by using the <code>const</code> keyword. Example:</p>
+  <pre class="code tiscript">namespace Toz
+{
+  const ALIGN_LEFT = 1;
+  const ALIGN_CENTER = 2;
+  const ALIGN_RIGHT = 3;
+}
+</pre>
+  <p>To access such constants, use their fully qualified names:</p>
+  <pre class="code tiscript">switch(alignment)
+{
+  case Toz.ALIGN_LEFT: ... break;
+  case Toz.ALIGN_CENTER: ... break;
+  case Toz.ALIGN_RIGHT: ... break;
+  default: ... break;
+}
+</pre>
+  <p><sup><a href="#fnt__1" id="fn__1" name="fn__1">1)</a></sup> The idea for using <em>this</em> for a constructor name was borrowed from the <a href="http://digitalmars.com/d/class.html#constructors" class="urlextern" title="http://digitalmars.com/d/class.html#constructors" rel="nofollow">D language</a></p>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<html>
+  <head>
+  <title></title>
+<style>
+  #errmsg { color:red; }
+</style>
+<script type="text/tiscript">
+  include "connection.tis";
+
+  var sendStart = 0;
+  
+  var channel = connection {
+    url       : "ws://localhost:8126/echo",
+    onText    : function(text) { 
+                  var t = System.ticks - sendStart; 
+                  $(#messages).$append(<li>{text} in {t}ms </li>); 
+                },
+    onConnect : function() { 
+                  $(form).state.disabled = false; // enable inputs 
+                },
+    onClose   : function() { 
+                  $(form).state.disabled = true;  // disable inputs
+                },
+    onError   : function(msg) {
+                  $(#errmsg).text = msg; 
+                }
+  };
+  
+  $(button#send).onClick = function() { var msg = $(input#message);  channel( msg.value ); msg.value = ""; sendStart = System.ticks; }
+  $(button#close).onClick = function() { channel( null ); }
+  
+</script>
+  </head>
+<body>
+
+  <ol #messages>
+  </ol>
+  <form disabled>
+    <input|text #message novalue="type message">
+    <button #send>Send</button>
+    <button #close>Close</button> or send "." to the server to close the connection from server side.
+  </form>
+  <p #errmsg />
+</body>
+</html>

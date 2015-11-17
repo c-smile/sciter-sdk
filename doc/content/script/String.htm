@@ -1,0 +1,185 @@
+﻿<html>
+  <head>
+    <meta name="GENERATOR" content="BLOCKNOTE.NET"/>
+    <meta name="source"/>
+    <meta name="source"/>
+    <meta name="source"/>
+    <basefont face="Verdana" size="2"/>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>String object</h1>
+  <dl>
+    <h2>Properties</h2>
+    <dt>length</dt>
+    <dd bgcolor="#fffff0" valign="middle">- <em>integer</em>, number of characters in the string. Read-only property.</dd>
+    <dt>[index]</dt>
+    <dd bgcolor="#fffff0" valign="middle">- <em>integer</em>, code of character at the <em>index</em> position, Read-write index accessor. Zero-based index.</dd>
+    <dt>[begin..end]</dt>
+    <dd bgcolor="#fffff0" valign="middle">- <em>integers</em>, zero-based indexes of first and last character. Returns string slice contained characters from <em>start</em> index and up to but not included <em>end</em> index. <em>Begin</em> or/and <em>end</em> are optional. If begin is ommited then it is assumed to be 0, if end - <em>length</em> is used as end value.</dd>
+    <h2>Methods</h2>
+    <dt>toInteger</dt>
+    <dd>
+      <p><strong>([defaultValue[, radix:integer]])</strong> : integer | defaultValue | (undefined)</p>
+      <p>Tries to parse content of the string. If parsing failed then returns defaultValue if provided, or undefined value.<br/>toInteger expects string in the following format:</p>
+      <pre>[<em>whitespace</em>] [{<strong>+</strong> | -}] [<strong>0</strong> [{ <strong>x</strong> | <strong>X</strong> }]] [<em>digits</em>]
+</pre></dd>
+    <dt>toFloat</dt>
+    <dd>
+      <p><strong>([defaultValue])</strong> : В float | defaultValue | (undefined)</p>
+      <p>Tries to parse content of the string. If parsing failed then returns defaultValue if provided, or undefined value.<br/>toInteger expects string in the following format:</p>
+      <pre>[<em>whitespace</em>] [<em>sign</em>] [<em>digits</em>] [<strong>.</strong><em>digits</em>] [ {<strong>d</strong> | <strong>D</strong> | <strong>e</strong> | <strong>E</strong>}[<em>sign</em>]<em>digits</em>]
+</pre></dd>
+    <dt>toNumber</dt>
+    <dd>
+      <p><strong>([defaultValue])</strong> : integer | float | defaultValue | (undefined)</p>
+      <p>Tries to parse the string into either float or integer value. This is an equivalent of:</p>
+      <pre>var n = s.toInteger( s.toFloat() );
+</pre></dd>
+    <dt>toString</dt>
+    <dd>
+      <p><strong>()</strong> : string</p>
+      <p>Returns string itself.</p></dd>
+    <dt>toHtmlString</dt>
+    <dd>
+      <p><strong>()</strong> : string</p>
+      <p>Returns string escaped by html rules. Is an alias of the htmlEscape() method.</p></dd>
+    <dt>toUrlString</dt>
+    <dd>
+      <p><strong>()</strong> : string</p>
+      <p>Returns string escaped by url rules. Is an alias of the urlEscape() method.</p></dd>
+    <dt>substring</dt>
+    <dd>
+      <p><strong>(start [,end])</strong> : string | undefined</p>
+      <p><em>start</em> and <em>end </em>are integers - zero-based indexes of first and last character. Method returns string slice consisting from characters starting from <em>start</em> index and up to but not included <em>end</em> index. If end is ommited it is interpretted as equal to <em>length</em>.</p>
+      <p>Negative values of <em>start</em> or <em>end</em> treated as a &quot;right side indexes&quot; thus expression &quot;Script&quot;.substring(0,-1) == &quot;Script&quot; is valid.</p></dd>
+    <dt>substr</dt>
+    <dd>
+      <div><strong>(start [,length])</strong> : string | undefined</div>
+      <p><em>start</em> and <em>length </em>are integers. <em>Start</em> is zero-based index of first character and length is a number of characters in the slice.</p>
+      <p>Negative value of <em>start</em> interpreted as a &quot;right side index&quot; thus expression &quot;Script&quot;.substr(-6) == &quot;Script&quot; is valid.</p></dd>
+    <dt>slice</dt>
+    <dd>
+      <p><strong>(start [,end])</strong> : string | undefined</p>
+      <p>Equivalent of <em>substring</em> method.</p></dd>
+    <dt>splice</dt>
+    <dd>
+      <div><strong>(index</strong>: int<strong>, count</strong>: int<strong> [, string1, string2, ...] )</strong> returns: string</div>
+      <p>This method:</p>
+      <ol>
+        <li>Removes <em>count</em> number of characters at <em>index</em>.</li>
+        <li>Inserts string1, string2, ... at <em>index</em> position.</li>
+        <li>Returns new string - result of the operation.</li></ol></dd>
+    <dt>concat</dt>
+    <dd>
+      <p><strong>( [string1[, string2[, ... [, stringN]]] )</strong> : string</p>
+      <p>Returns string consisting from concatenated arguments: <em>self</em> + <em>string1</em> + <em>string2</em> + <em>string3</em> + ... + <em>stringN</em>.</p></dd>
+    <dt>charAt</dt>
+    <dd>
+      <p><strong>( index )</strong> : string.</p>
+      <p>Returns one character string. Equivalent of substr( index, 1 ). If <em>index</em> is out of bounds of the string then <em>charAt</em> returns empty string.</p></dd>
+    <dt>charCodeAt</dt>
+    <dd>
+      <p><strong>( index )</strong> : integer | undefined</p>
+      <p>Returns (uni)code of character at <em>index</em> position.</p></dd>
+    <dt>indexOf</dt>
+    <dd>
+      <p><strong>( substring [,start] )</strong> : integer</p>
+      <p>Searches this string for text in <em>substring</em>. Returns index of <strong>first</strong> occurence of <em>substring</em> or -1 if not found.</p></dd>
+    <dt>lastIndexOf</dt>
+    <dd>
+      <div><strong>( substring [,start] )</strong> : integer</div>
+      <p>Searches this string for text in <em>substring</em>. Returns index of <strong>last</strong> occurence of <em>substring</em> or -1 if not found.</p></dd>
+    <dt>lexicalCompare</dt>
+    <dd>
+      <p><strong>( what , </strong>[<strong> caseInsensitive:</strong> <em>true</em> | <em>false</em> ] <strong>)</strong> : integer</p>
+      <p>Compares this string with <em>what</em> string using lexicographic character order. For example: <code>&quot;ABC&quot; &lt; &quot;abc&quot;</code> В is true but <code>&quot;ABC&quot;.lexicalCompare(&quot;abc&quot;)</code> yelds to &gt;= 1. If caseInsensitive is provided and true it does case insensitive comparison. By default comparison is case sensitive.</p></dd>
+    <dt>match</dt>
+    <dd>
+      <p><strong>( regexp )</strong> : string | array of strings | null value</p>
+      <div>Returns fragment(s) of the string which satisfy <em>regexp</em>.</div></dd>
+    <dt>match</dt>
+    <dd>
+      <p><strong>( string )</strong> ' RegExp object instance | null value</p>
+      <div>Returns RegExp object instance which satisfy <em>string pattern</em>.</div></dd>
+    <dt>replace</dt>
+    <dd>
+      <p><a>( regexp</a>, <a>replaceBy: string | function</a> ) : string</p>
+      <p>Returns copy of the string where all fragments satisfying <em>regexp</em> are replaced by <em>replaceBy</em>. If <em>replaceBy</em><a> is a function</a> then this function will be called for each matching substring with parameters corresponding to the whole match and each matched sub-group.</p>
+      <p>This example:</p>
+      <pre>var s = &quot;212F&quot;;
+var test = /(\d+(?:\.\d*)?)F\b/g;
+function f2c(str, g1)
+{
+   return ((g1.toNumber() - 32) * 5/9) + &quot;C&quot;;
+}
+stdout.printf(&quot;%V\n&quot;, s.replace(test, f2c ));
+</pre>
+      <p>will convert each Fahrenheit to Celsius number in the given string (<em>s</em>).</p></dd>
+    <dt>search</dt>
+    <dd>
+      <p><strong>( regexp )</strong> : integer</p>
+      <p>Returns index of first occurence of string fragment satisfying <em>regexp</em> or -1 if not found.</p></dd>
+    <dt>split</dt>
+    <dd>
+      <p><strong>(<a>separator</a>[, <a>limit</a>])</strong> : string</p>
+      <p>Splits the string separated on components by <em>separator</em>. <em>Separator</em> is either regexp object or string. Returns array of strings - substrings between separators. Limit is an integer - maximum number of elements in returned array.</p></dd>
+    <dt>fromCharCode</dt>
+    <dd>
+      <p><strong>([<a>code1</a>[, code2[, <a>...</a>[, <a>codeN</a>]]]])</strong> : string</p>
+      <p>Static method. Returns string build from character with given integer <em>codes.</em></p></dd>
+    <dt>toLowerCase</dt>
+    <dd>
+      <p><strong>()</strong> : string</p>
+      <p>Returns lower case copy of the string.</p></dd>
+    <dt>toUpperCase</dt>
+    <dd>
+      <div><strong>()</strong> : string</div>
+      <p>Returns upper case copy of the string.</p></dd>
+    <dt>trim</dt>
+    <dd>
+      <div><strong>( </strong>[<strong>#left</strong> | <strong>#right</strong>]<strong> ) </strong>: string</div>
+      <p>Returns copy of the string with spaces removed.</p></dd>
+    <dt>urlEscape</dt>
+    <dd>
+      <p><strong>()</strong> : string</p>
+      <p>Returns <a href="http://pdos.csail.mit.edu/rover/RoverDoc/escape_url_table.html">url-escaped</a> copy of the string if it contains characters need to be escaped or string itself if there are no such characters. Note that non-ascii characters are converted to utf-8 sequences first and resulting codes will be escaped.</p></dd>
+    <dt>urlUnescape</dt>
+    <dd>
+      <div><strong>()</strong> : string</div>
+      <p>Restores url-escaped string.</p></dd>
+    <dt>htmlEscape</dt>
+    <dd>
+      <p><strong>()</strong> : string</p>
+      <p>Returns string where each <font size="3">&lt; &gt; &amp; &quot; </font>or<font size="3"> '</font> В character replaced by <em>&amp;lt;</em> <em>&amp;gt;</em> <em>&amp;amp;</em> <em>&amp;quot;</em> or <em>&amp;apos;</em> sequence.</p></dd>
+    <dt>htmlUnescape</dt>
+    <dd>
+      <div><strong>()</strong> : string</div>
+      <p>Returns string where <a href="http://www.w3.org/TR/REC-html40/sgml/entities.html">html entities</a> replaced by correspondent character codes.</p></dd>
+    <dt>$</dt>
+    <dd>
+      <p><strong>(</strong> ... <strong>)</strong> : string</p>
+      <p>static method, returns composed string. Note, this is a &quot;stringizer&quot; method.</p>
+      <p>Example, this:</p>
+      <pre>var pt = { x:12, y:42  };
+var msg = String.$(coordinates are x:{ pt.x } y:{ pt.y });
+</pre>
+      <p>produces string <code>&quot;coordinates are x:12 y:42&quot;</code> В in <code>msg</code> variable.</p></dd>
+    <dt><a name="printf">printf</a></dt>
+    <dd>
+      <p>( format, [<a>value1</a>[, value2[, <a>...</a>[, <a>valueN</a>]]]]) : string</p>
+      <p>Static method. Returns string formatted by the rules of <a href="http://www.cplusplus.com/ref/cstdio/printf.html" target="_blank">sprintf C/C++ function</a>.</p>
+      <div>Additional format types:</div>
+      <ul>
+        <p><strong>%v</strong> and <strong>%V</strong> - these format types accept any value as an argument and produce source code representation of the value suitable for later parsing by eval() method. Thus if value is an array of values it will be printed as &quot;[element1, element2, element3... elementN]&quot; and object (instance of Object class) will be printed as &quot;{key1:value1, key2:value2,..., keyN:valueN}&quot;. %v produces one line output and %V tries to produce human readable output with line feeds and tabulations.<br/>Use it if you need to serialize objects in AJAX/JSON fashion.</p>
+        <p><strong>%S</strong> - this format type converts its argument into string and outputs it with <em>HTML escapement</em>. So characters like '&lt;' will be converted to &quot;&amp;lt;&quot; sequences in the output.</p></ul></dd>
+    <dt>scanf</dt>
+    <dd>
+      <div><strong>( </strong><em>format</em>: string <strong>)</strong> : array</div>
+      <p>Scans the string for values according to the rules of <a href="http://www.cplusplus.com/reference/clibrary/cstdio/scanf.html">scanf C/C++ function</a> with wildcard (like %[a-z] ) extensions. See definition of <a href="http://msdn.microsoft.com/en-us/library/xdb9w69d(VS.71).aspx">scanf in MSDN</a>.</p>
+      <p>Additional format types:</p>
+      <ul>
+        <p><strong>%N</strong> - scans for either float or integer number.</p></ul>
+      <p>Function returns array of successfully parsed values.</p></dd></dl>
+</body>
+</html>

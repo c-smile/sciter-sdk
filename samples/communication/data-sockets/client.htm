@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <title></title>
+    <style></style>
+    <script type="text/tiscript">
+    
+      var socket = null;
+      var form = $(form#data);
+      var log = $(pre#out);
+      
+      function reportData(data) {
+        log.text += "<text>received:\n" + JSON.stringify(data, "  ") + "</text>";
+      }
+      function reportConnected() {
+        log.text = "connected";
+        form.state.disabled = false;
+      }
+      
+    
+      $(button#connect).onClick = function() {
+        if(socket = DataSocket.connect(22349)) 
+        {
+          socket.on("connect",reportConnected)
+                .on("data",reportData);
+                
+        } else {
+          log.text = "connection failed";
+        }
+      }
+
+      $(button#send).onClick = function() {
+        socket.send({test:1});
+        socket.send(form.value);
+      }
+
+    
+    </script>
+  </head>
+<body>
+  <button#connect>Connect to localhost:22349</button>
+
+  <form #data disabled>
+    <label>Number<label> <input|integer(number) value=0>
+    <label>Message<label> <input|text(message) value="hello world">
+    <button#send>Send</button>
+  </form>
+  
+  <pre#out>
+  </pre>
+
+</body>
+</html>

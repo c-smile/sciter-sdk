@@ -1,0 +1,23 @@
+<html>
+  <head>
+  <title>Word wrapping modes in textarea</title>
+<style>
+
+  textarea { display:block; width:200px; }
+  #pre-wrap { white-space:pre-wrap; }
+  #char-wrap { white-space:pre-wrap; word-wrap:break-word; }
+
+</style>
+<script type="text/tiscript"></script>
+  </head>
+<body>
+  <h2>Word wrapping modes in textarea</h2>
+  <p>Default wrapping (white-space:pre):</p>
+  <textarea id="pre">The quick brown fox jumps over the lazy dog</textarea> 
+  <p>Wrapping on word boundaries (white-space:pre-wrap):</p>
+  <textarea id="pre-wrap">The quick brown fox jumps over the lazy dog</textarea> 
+  <p>Wrapping on characters (white-space:pre-wrap; word-wrap:break-word):</p>
+  <textarea id="char-wrap">The quick brown fox jumps over the lazy dog</textarea> 
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+<html>
+<head>
+  <style>
+
+    input[type="serial-number"] 
+    {
+      behavior: masked-edit;
+      prototype:SerialNumber;
+      padding:3px; 
+      background-image:url(theme:edit-normal); 
+      background-repeat:stretch; 
+      font-family: consolas monospace;
+      width: min-intrinsic;
+      height: min-intrinsic;
+      white-space:pre;
+    }
+    
+    input[type="serial-number"] > span { display:inline-block; }
+    input[type="serial-number"] > span:current { background:highlight; color:highlighttext; }
+
+    pre#out
+    {
+      clear:left;
+      border:1px solid gray;
+      background: #F5F5DC;
+      -spaces-per-tab:2;
+    }
+  </style>  
+  <script type="text/tiscript">
+  
+    $(button.show).onClick = function()
+    {
+      var val = $(input).value;
+      self.$(pre#out).value = String.printf("%V",val);
+    }
+    
+    class SerialNumber: Behavior
+    {
+      const imask = [
+            { type:"text", width:5  }, " - ",
+            { type:"text", width:5  }, " - ",
+            { type:"text", width:5  }, " - ",
+            { type:"text", width:5  }, " - ",
+            { type:"text", width:5  } ];
+            
+      function attached()
+      {
+        // setup the mask:
+        this.mask(imask);
+        var init = this.attributes["value"];
+        if( init ) this.value = init.scanf("%s - %s - %s - %s - %s");
+      }
+      
+      function onControlEvent(evt)
+      {
+        if( (evt.type == Event.EDIT_VALUE_CHANGING) && (typeof evt.data == #string))
+        {
+          stdout.println(this);
+          evt.data = evt.data.toUpperCase();  
+          return true;
+        }
+      }
+      
+      /*function onKey(evt) // converts input to uppercase:
+      {
+        if( evt.type == (Event.KEY_CHAR | Event.SINKING))
+        {
+          var S = String.fromCharCode(evt.keyCode).toUpperCase();
+          evt.keyCode = S.charCodeAt(0);
+        }
+      }*/
+      
+      property value(v)
+      {
+        get { 
+          v = this.state.value;
+          for(var f in v)
+            if( f.trim().length != 5 )
+              return undefined;
+          return v.join("");
+        }
+      }
+    }
+      
+  </script>  
+</head>
+<body>
+    Serial number: <input type="serial-number" name="sn" value="AAAAA - BBBBB - CCCCC - DDDDD - EEEEE" placeholder=" "/><br/>
+    <button .show>Show Values</button>
+  </form>
+  <pre #out />
+</body>
+</html>

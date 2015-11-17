@@ -1,0 +1,71 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      section { display:block; flow:horizontal; width:max-content; border-spacing:6dip; padding:6dip;  }
+      section > div { size: 64dip; background:#eee; }
+      
+      toolbar#positioning > button#at-bottom > popup[role="tooltip"] {
+        popup-position: at-bottom; /* like popup menu from menu bar */
+      }
+      toolbar#positioning > button#at-top > popup[role="tooltip"] {
+        popup-position: at-top;
+      }
+      toolbar#positioning > button#at-right > popup[role="tooltip"] {
+        popup-position: at-right; /* like secondary popup menu */
+      }
+      
+      popup {
+        background-color:transparent;
+        background-repeat:expand;
+        width:128dip;
+        color: #fff;
+      }
+      
+      popup#lorem-ipsum-1 {
+        popup-position: at-tail; 
+        margin:6dip -6dip;
+        padding:10px 6px;
+      }
+      popup#lorem-ipsum-2 {
+        popup-position: at-end; 
+        margin:0 6dip;
+        padding:10px 12px;
+      }
+
+      popup#lorem-ipsum-1[vpos="at-bottom"][hpos="at-left"] { background-image: url(images/callout-at-bottom-left.png); background-position: 10 6 6 26; }
+      popup#lorem-ipsum-1[vpos="at-bottom"][hpos="at-right"] { background-image: url(images/callout-at-bottom-right.png); background-position: 10 26 6 6; }
+      popup#lorem-ipsum-1[vpos="at-top"][hpos="at-left"] { background-image: url(images/callout-at-top-left.png); background-position: 6 6 10 26; }
+      popup#lorem-ipsum-1[vpos="at-top"][hpos="at-right"] { background-image: url(images/callout-at-top-right.png); background-position: 6 26 10 6; }
+                 
+      popup#lorem-ipsum-2[hpos="at-left"]  { background-image: url(images/callout-at-left.png); background-position: 19 10 6 6; }
+      popup#lorem-ipsum-2[hpos="at-right"] { background-image: url(images/callout-at-right.png); background-position: 19 6 6 10; }
+      
+    
+    </style>
+    <script type="text/tiscript"></script>
+    
+    <popup#lorem-ipsum-1>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
+      labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation 
+      ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
+      in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+    </popup>
+
+    <popup#lorem-ipsum-2>
+      Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt 
+      mollit anim id est laborum.
+    </popup>
+
+    
+  </head>
+<body>
+  <p>Callout positioning:</p>
+  <section>
+    <div titleid="lorem-ipsum-1">below</div>
+    <div titleid="lorem-ipsum-2">aside</div>
+  </section>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      toolbar { display:block; flow:horizontal; }
+      
+      toolbar#back-colors > button > popup[role="tooltip"] { padding:2dip 16dip; border:1px solid grey; }
+      button#red > popup[role="tooltip"] { background:#FDD; }
+      button#green > popup[role="tooltip"] { background:#DFD; }
+      button#blue > popup[role="tooltip"] { background:#DDF; }
+      
+      toolbar#positioning > button > popup[role="tooltip"] { 
+        padding:2dip 8dip; border:1px solid grey; background:#FFD; 
+        margin:6dip; /* offset from owner */
+      }
+      
+      toolbar#positioning > button#at-bottom > popup[role="tooltip"] {
+        popup-position: top-center bottom-center; /* popup-point owner-point */
+      }
+      toolbar#positioning > button#at-top > popup[role="tooltip"] {
+        popup-position: bottom-center top-center;
+      }
+      toolbar#positioning > button#at-right > popup[role="tooltip"] {
+        popup-position: middle-left middle-right;
+      }
+    
+    </style>
+    <script type="text/tiscript"></script>
+  </head>
+<body>
+  <p>Tooltips: different background colors:</p>
+  <toolbar #back-colors>
+    <button #red title="red">Red</button>
+    <button #green title="green">Green</button>
+    <button #blue title="blue">Blue</button>
+  </toolbar>
+  <p>Tooltips: positioning:</p>
+  <toolbar #positioning>
+    <button #at-bottom title="bottom">bottom</button>
+    <button #at-top title="top">top</button>
+    <button #at-right title="right">right</button>
+  </toolbar>
+
+</body>
+</html>

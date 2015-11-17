@@ -1,0 +1,85 @@
+<html>
+  <head>
+    <title>Sciter ImGraphics</title>
+    <style>
+      html { background: transparent; }
+      widget.drawing
+      {
+        prototype:Drawable;
+        size: *;
+      }
+
+      //widget:hover /* just for fun */
+      //{
+      //  transform: rotate(35deg) scale(.5);
+      //  transition: transform(quart-out,0.5s,quart-in);
+      //}
+      
+    </style>
+    <script type="text/tiscript">
+      class Drawable : Behavior
+      {
+        const SCALE_STEP = 0.005;
+        function attached() 
+        { 
+          this.loadImage("http://www.terrainformatica.com/wp-content/uploads/2014/06/mac-osx-svg-tiger.png", 
+            function(img) {
+              this super.imageArrived(img);
+		          stdout.println("arrived", img, img.url, img.height);
+	          });
+        }
+        
+        function imageArrived(img) {
+          // attaching the paint() to paintContent layer handler
+          this.paintContent = this.paint;
+          this.image = img;
+          this.post(::this.animate(this.animationStep));
+          this.scale = 1.0;
+          this.scaleStep = -SCALE_STEP;
+          this.corner = 0;
+        }
+        
+        // function is called while handling WM_PAINT 
+        function paint(gfx)
+        {
+          if( !this.image ) return;
+          var (w,h) = this.box(#dimension);
+          var (iw,ih) = this.image.size();
+          iw *= this.scale;
+          ih *= this.scale;
+          
+          var x = (w-iw)/2.0, y = (h-ih)/2.0;
+          var dx = (1.0-this.scale)*(w-iw);
+          var dy = (1.0-this.scale)*(h-ih);
+          switch(this.corner)
+          {
+            case 0: x -= dx; y -= dy; break;
+            case 1: x += dx; y -= dy; break;
+            case 2: x += dx; y += dy; break;
+            case 3: x -= dx; y += dy; break;
+          }
+          
+          gfx.blendImage(this.image,x, y,iw,ih,this.scale);
+        }
+        
+        function animationStep()
+        {
+          if(this.scaleStep < 0.0) 
+          {
+            if( this.scale < 0.5 ) { this.scale = 0.5; this.scaleStep = SCALE_STEP; }
+            else this.scale += this.scaleStep;
+          } else {
+            if( this.scale >= 1.0 ) { this.scale = 1.0; this.scaleStep = -SCALE_STEP; this.corner = (this.corner + 1) % 4;}
+            else this.scale += this.scaleStep;
+          }
+          this.refresh();
+          return View.ANIMATION_TIMER_SPAN;
+        }
+      }
+      
+    </script>
+  </head>
+<body>
+  <widget .drawing></widget>
+</body>
+</html>

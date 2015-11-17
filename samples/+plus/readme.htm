@@ -1,0 +1,24 @@
+﻿<html>
+  <head>
+    <style></style>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>The Plus Framework</h1>
+  <p>Main goal of the Plus is to provide declarative data binding facilities - data (model) can be bound with its HTML representation in various ways.</p>
+  <h2>Model declaration, the <em>model</em> attribute</h2>
+  <p>Any DOM element-container can be linked with some namespace (object) that contains data (a.k.a. model) to be viewed inside the container. Such a link is established by special model attribute: </p>
+  <pre>&lt;body model=&quot;MyDataNamespace&quot;&gt;
+   ... 
+&lt;/body&gt; 
+</pre>
+  <p>And if you have in your script this: </p>
+  <pre>namespace MyDataNamespace {
+   ...
+}
+</pre>
+  <p>then content of the body element (in this case) can be linked (bound) with the data in MyDataNamespace.</p>
+  <p></p>
+  <p></p>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<html>
+<head>
+  <style>
+  
+    popup.bubble
+    {
+      prototype: BubblePopup;
+      background-color: transparent;
+      width:400px;
+      height:300px;
+      cursor:pointer;
+      padding-top: 12dip;
+      cursor: default;
+      margin:2dip;
+    }
+    popup.bubble > .content {
+      margin:6dip;
+    }
+    
+    div#anchor
+    {
+      border:1px solid blue;
+      width:50px;
+      height:50px;
+      cursor:pointer;
+    }
+  </style>  
+  <style #actions>
+    div#anchor
+    {
+      behavior: button; 
+      margin:0 *;
+    }
+  </style>    
+  <script type="text/tiscript">
+    
+      $(div#anchor).onClick = function() 
+      {
+        this.popup( $(popup.bubble), (8 /*popup middle-top*/ << 16) | 2 /*at anchor's middle-top*/);
+      } 
+      
+      class BubblePopup: Behavior {
+      
+        const RADIUS = 10;
+        const ARROW_HEIGHT = 12;
+        const STROKE_WIDTH = 1.0;
+        const STROKE_COLOR = color(0xCF,0xAF,0x33);
+        const BACK_COLOR = color(0xFF,0xFF,0xFF);
+      
+        function attached() { 
+          this.paintBackground = this.drawBackground;
+        }
+      
+        function getShape()
+        {
+          var shape = this.shape;
+          if(!shape) 
+          {
+            shape = this.shape = new Graphics.Path();
+            this.shapeWidth = null;
+            this.shapeHeight = null;
+          }
+         
+          var (x,y,w,h) = this.box(#rectw);
+         
+          if( this.shapeWidth == w && this.shapeHeight == h)
+            return shape; // nothing to do already calculated
+          
+          shape.reset();
+          
+          // lines shall go through pixels middles:
+          x += STROKE_WIDTH / 2; y -= STROKE_WIDTH / 2; w -= STROKE_WIDTH; h -= STROKE_WIDTH;
+          
+          const r = RADIUS;
+          const ah = ARROW_HEIGHT;
+          
+          shape          
+            .moveTo(x+r, y)
+            // that arrow
+            .lineTo(x+w/2-ah,y) 
+            .lineTo(x+w/2,y-ah)
+            .lineTo(x+w/2+ah,y)
+            // round rect
+            .arcTo(x+w, y,   x+w, y+h, r)
+            .arcTo(x+w, y+h, x,   y+h, r)
+            .arcTo(x,   y+h, x,   y,   r)
+            .arcTo(x,   y,   x+w, y,   r)              
+            .close();
+          return shape; 
+        }      
+      
+        function drawBackground( gfx ) {
+          if(var shape = this.getShape()) {
+             gfx.lineWidth(STROKE_WIDTH)
+                .lineColor(STROKE_COLOR)
+                .fillColor(BACK_COLOR)
+                .drawPath( shape );
+          }
+        }
+      }
+      
+      
+    </script>
+  
+</head>
+<body>
+   <p>Popup with custom shape</p>
+   <div#anchor> 
+      click to reveal popup
+   </div>
+    <popup .bubble>
+      <div.content>Content</div>
+    </popup>
+    
+
+</body>
+</html>

@@ -1,0 +1,69 @@
+<html>
+  <head>
+  <title>Sciter Help</title>
+  <style>
+    @import url(styles/main.css);
+  </style>
+  <script type="text/tiscript">
+    include "toc.tis";
+    include "indexer.tis";
+    var back      = self.$(#toolbar>button.back);
+    var forward   = self.$(#toolbar>button.forward);
+    var frameset  = self.$(frameset#body);
+    var contentFrame = self.$(frame#content);
+    var toc = self.$(#toc);
+    back.onClick    = :: frameset.goBack();  
+    forward.onClick = :: frameset.goForward();  
+
+    function generateToc()
+    {
+      var cbody = contentFrame[0].$(body);
+      if( cbody ) makeToc(cbody,toc);
+      else toc.clear();
+    }
+   
+    frameset.onControlEvent = function(evt)
+    {
+      if( evt.type == Event.HISTORY_STATE_CHANGED )
+      {
+        back.state.disabled = !frameset.canGoBack();
+        forward.state.disabled = !frameset.canGoForward();
+        generateToc();
+        return true;
+      }
+    }
+    contentFrame.onControlEvent = function(evt)
+    {
+      if( evt.type == Event.DOCUMENT_COMPLETE )
+        generateToc();
+      else if(evt.type == (Event.HYPERLINK_CLICK | Event.SINKING))
+      {
+        var url = evt.target.@["href"];
+        if( url like "http:*" || url like "https:*" )
+        {
+          Sciter.launch(url); // show external URLs in system browser.
+          return true;
+        }
+      }
+    }
+    
+  </script>
+  </head>
+  <body>
+  <div #toolbar>
+    <button accesskey="LEFT" .back disabled title="Go backward" />
+    <button accesskey="RIGHT" .forward disabled title="Go forward" />
+  </div>
+  <frameset #body history>
+    <div #index >
+      <include src="help-index.htm">
+        help-index.htm not found!  
+      </include>
+    </div>
+    <splitter/>
+    <frame #content src="" src="content/preface.htm" content-style="styles/content.css"/>
+    <splitter/>    
+    <div #toc />
+  </frameset>
+  </body>
+</html>

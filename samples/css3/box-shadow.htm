@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <title>CSS box-shadow demo</title>
+    <style>
+      body { margin:0; background:#bbb; padding:40px; 
+             flow: vertical-flow; border-spacing:40px; }
+             
+      div { width:150px; height:150px; 
+            background:#fff; padding:15px; border-radius:6px; }
+      div:nth-child(2n) { clear:after; }
+      div.inner1 { box-shadow: inset 5px 5px 20px #555;  }
+      div.outer1 { box-shadow: 5px 5px 20px #555; }
+      
+      div.inner2 { background: #aaa;
+                   box-shadow: inset -5px -5px 10px #fff,
+                               inset 5px 5px 10px #555; }
+      div.outer2 { background: #aaa;
+                   box-shadow: -5px -5px 10px #fff,
+                               5px 5px 10px #555; }
+
+
+      div.inner3 { background: #aaa;
+                   box-shadow: inset 0 0 5px 15px #fff,
+                               inset 0 0 5px 5px #999; }
+
+      div.outer3 { background: #aaa; 
+                   box-shadow: 0 0 25px 5px #fff,
+                               0 0 5px #111; }
+
+    </style>
+  </head>
+<body>
+
+  <div class="outer1">outer shadow</div>
+  <div class="inner1">inner shadow</div>
+
+  <div class="outer2">outer shadows</div>
+  <div class="inner2">inner shadows</div>
+  
+  <div class="outer3">outer shadows</div>
+  <div class="inner3">inner shadows</div>
+
+
+
+</body>
+</html>

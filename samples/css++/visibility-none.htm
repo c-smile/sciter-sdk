@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      @import "../../widgets/switch/switch.css";
+      
+      
+      // visiblity rules:
+      [for-mode] { visibility:none; /* same as display:none */ }
+      
+      // this defines @for-mode as a visibility descriptor for different modes:
+      html[mode='all']      [for-mode~='all'], 
+      html[mode='pending']  [for-mode~='pending'], 
+      html[mode='complete'] [for-mode~='complete'] { visibility:visible; }
+      
+      html[mode='pending'] tr:not(.pending), 
+      html[mode='complete'] tr:not(.complete) { visibility:none; }
+    
+    </style>
+    <script type="text/tiscript">
+    
+    self.on("change","switch", :: self.attributes["mode"] = this.value); 
+    
+    </script>
+  </head>
+<body>
+
+<p>Click on the switch above</p>
+
+<switch>
+    <option value="all">All</option>
+    <option value="pending">Pending</option>
+    <option value="complete">Complete</option>
+</switch>
+
+  <p for-mode="all pending complete" >Current mode is 
+     <span for-mode="all">All</span><span for-mode="pending">Pending</span><span for-mode="complete">Complete</span></p>
+
+  <table border>
+    <caption>Todos:</caption>
+    <tbody>
+      <tr.complete><td>Implement visibility:none</td><td>Complete</td></tr>
+      <tr.complete><td>Fix DDM</td><td>Complete</td></tr>
+      <tr.pending><td>memcpy -> memcpy_s</td><td>Pending</td></tr>
+      <tr.pending><td>CSS perspective</td><td>Pending</td></tr>
+    </tbody>
+  </table>
+  
+  <p for-mode="pending complete">Warning: not all records are presented!</p>  
+
+</body>
+</html>

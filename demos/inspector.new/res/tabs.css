@@ -1,0 +1,14 @@
+
+tabs                  { display:block; flow:vertical; size:*; prototype: Tabs url(tabs.tis); }
+tabs > labels         { display:block; flow:horizontal; width:*; font:system; }
+tabs > labels > label { display:block; width:max-content; height:*; min-width:1em; min-height:1em; }
+/*tabs > labels > label:current { color:red; }*/
+
+tabs.aside                   { display:block; flow:horizontal; }
+tabs.aside > labels          { display:block; flow:vertical; width:max-content; height:*; }
+tabs.aside > labels > label  { display:block; width:*; height:max-content; }
+
+tabs > :not(labels)          { visibility:none; background:white; }
+tabs > :not(labels):expanded { visibility:visible; size:*; }
+
+

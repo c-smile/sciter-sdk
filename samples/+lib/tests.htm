@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <title>+lib tests</title>
+    <style>
+    
+      #results li.failure { color:red; }   
+      var { color:red; }
+    
+    </style>
+    <script type="text/tiscript">
+      include "function.tis";
+      include "array.tis";
+            
+      var cnt1 = 0;
+      function show1() { $(var[name=cnt1]).text = (++cnt1).toString(); }
+      var cnt2 = 0;
+      function show2() { $(var[name=cnt2]).text = (++cnt2).toString(); }
+      
+      $(body).subscribe("mousemove", show1.debounce(0.5s) );
+      $(body).subscribe("mousemove", show2.throttle(1s) );
+      
+      var ulr = $(#results);
+      
+      function run(TestFunc)
+      {
+        var li = new Element("li");
+        ulr.insert(li);
+        try 
+        {
+          TestFunc();
+          li.text = String.printf("%s passed", TestFunc );
+        }
+        catch(err)
+        {
+          li.html = String.printf("%s failed with <pre>%s</pre>", TestFunc, err );
+          li.@#class = "failure";
+        }
+      }
+      
+      include "tests.tis";
+      
+    </script>
+  </head>
+<body>
+  <p>debounce() demo: Move mouse and stop it for some time, you should see event #<var(cnt1) /> fired.</p>
+  <p>throttle() demo: Move mouse, you should see event #<var(cnt2) /> fired not more frequent than once per second.</p>
+  
+  <ul #results>
+  </ul>
+  
+</body>
+</html>

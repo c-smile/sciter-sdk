@@ -1,0 +1,233 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      html { background-color: rgb(255,196,196); }
+    
+    </style>
+    <script type="text/tiscript"></script>
+  </head>
+<body>
+  <h1>To-do's</h1>
+  <picture src="n1.png" />
+  <H2>Abstract</H2>
+<HR/>
+<P>The HyperText Markup Language (HTML) is a simple markup language used to 
+create hypertext documents that are portable from one platform to another. HTML 
+documents are SGML documents with generic semantics that are appropriate for 
+representing information from a wide range of applications. This specification 
+defines HTML version 3.2. HTML 3.2 aims to capture recommended practice as of 
+early '96 and as such to be used as a replacement for HTML 2.0 (<A 
+href="#refs">RFC 
+1866</A>). 
+<HR/>
+
+<H2>Contents</H2>
+<UL>
+  <LI><A 
+  href="#intro">Introduction 
+  to HTML 3.2</A> 
+  <LI><A 
+  href="#sgml">HTML 
+  as an SGML application</A> 
+  <LI><A 
+  href="#html">The 
+  Structure of HTML documents</A> 
+  <LI><A 
+  href="#head">The 
+  HEAD element and its children</A> 
+  <LI><A 
+  href="#body">The 
+  BODY element and its children</A> 
+  <LI><A 
+  href="#catalog">Sample 
+  SGML Open Catalog for HTML 3.2</A> 
+  <LI><A 
+  href="#sgmldecl">SGML 
+  Declaration for HTML 3.2</A> 
+  <LI><A 
+  href="#dtd">HTML 
+  3.2 Document Type Definition</A> 
+  <LI><A 
+  href="#latin1">Character 
+  Entities for ISO Latin-1</A> 
+  <LI><A 
+  href="#charset">Table 
+  of printable Latin-1 Character codes</A> 
+  <LI><A 
+  href="#acks">Acknowledgements</A> 
+
+  <LI><A 
+  href="#refs">Further 
+  Reading ...</A> </LI></UL>
+<HR/>
+
+<H2><A name=intro>Introduction to HTML 3.2</A></H2>
+<P>HTML 3.2 is W3C's specification for HTML, developed in early `96 together 
+with vendors including IBM, Microsoft, Netscape Communications Corporation, 
+Novell, SoftQuad, Spyglass, and Sun Microsystems. HTML 3.2 adds widely deployed 
+features such as tables, applets and text flow around images, while providing 
+full backwards compatibility with the existing standard HTML 2.0. 
+<P>W3C is continuing to work with vendors on extensions for accessibility 
+features, multimedia objects, scripting, style sheets, layout, forms, math and 
+internationalization. W3C plans on incorporating this work in further versions 
+of HTML. 
+<H3><A name=sgml>HTML as an SGML Application</A></H3>
+<P>HTML 3.2 is an SGML application conforming to International Standard ISO 8879 
+-- Standard Generalized Markup Language. As an SGML application, the syntax of 
+conforming HTML 3.2 documents is defined by the combination of the <A 
+href="#sgmldecl">SGML 
+declaration</A> and the <A 
+href="#dtd">document 
+type definition</A> (DTD). This specification defines the intended 
+interpretation of HTML 3.2 elements, and places further constraints on the 
+permitted syntax which are otherwise inexpressible in the DTD. 
+<P>The SGML rules for record boundaries are tricky. In particular, a record end 
+immediately following a start tag should be discarded. For example: <PRE>&lt;P&gt;
+Text</PRE>
+<P>is equivalent to:</P><PRE>&lt;P&gt;Text</PRE>
+<P>Similarly, a record end immediately preceding an end tag should be discarded. 
+For example: <PRE>Text
+&lt;/P&gt;</PRE>
+<P>is equivalent to: </P><PRE>Text&lt;/P&gt;</PRE>
+<P>Except within literal text (e.g. the <SAMP>PRE</SAMP> element), HTML treats 
+contiguous sequences of white space characters as being equivalent to a single 
+space character (ASCII decimal 32). These rules allow authors considerable 
+flexibility when editing the marked-up text directly. Note that future revisions 
+to HTML may allow for the interpretation of the horizontal tab character (ASCII 
+decimal 9) with respect to a tab rule defined by an associated style sheet. 
+<P>SGML entities in PCDATA content or in CDATA attributes are expanded by the 
+parser, e.g. <SAMP>&amp;#233;</SAMP> is expanded to the ISO Latin-1 character 
+decimal 233 (a lower case letter e with an acute accent). This could also have 
+been written as a named character entity, e.g. <SAMP>&amp;eacute;</SAMP>. The 
+&amp; character can be included in its own right using the named character 
+entity <SAMP>&amp;amp;</SAMP>. 
+<P>HTML allows CDATA attributes to be unquoted provided the attribute value 
+contains only letters (a to z and A to Z), digits (0 to 9), hyphens (ASCII 
+decimal 45) or, periods (ASCII decimal 46). Attribute values can be quoted using 
+double or single quote marks (ASCII decimal 34 and 39 respectively). Single 
+quote marks can be included within the attribute value when the value is 
+delimited by double quote marks, and vice versa. 
+<P>Note that some user agents require attribute minimisation for the following 
+attributes: <SAMP>COMPACT</SAMP>, <SAMP>ISMAP</SAMP>, <SAMP>CHECKED</SAMP>, 
+<SAMP>NOWRAP</SAMP>, <SAMP>NOSHADE</SAMP> and <SAMP>NOHREF</SAMP>. These user 
+agents don't accept syntax such as <SAMP>COMPACT=COMPACT</SAMP> or 
+<SAMP>ISMAP=ISMAP</SAMP> although this is legitimate according to the HTML 3.2 
+DTD. 
+<P>The SGML declaration and the DTD for use with HTML 3.2 are given in 
+appendices. Further guidelines for parsing HTML are given in <A 
+href="#refs">WD-html-lex</A>. 
+
+<HR/>
+
+<H3><A name=html>The Structure of HTML documents</A></H3>
+<P>HTML 3.2 Documents start with a &lt;!DOCTYPE&gt; declaration followed by an 
+HTML element containing a <A 
+href="#head"><SAMP>HEAD</SAMP></A> 
+and then a <A 
+href="#body"><SAMP>BODY</SAMP></A> 
+element: <PRE>  &lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN"&gt;
+  &lt;HTML&gt;
+  &lt;HEAD&gt;
+  &lt;TITLE&gt;A study of population dynamics&lt;/TITLE&gt;
+  <I>... other head elements</I>
+  &lt;/HEAD&gt;
+  &lt;BODY&gt;
+  <I>... document body</I>
+  &lt;/BODY&gt;
+  &lt;/HTML&gt;</PRE>
+<P>In practice, the <SAMP>HTML</SAMP>, <A 
+href="#head"><SAMP>HEAD</SAMP></A> 
+and <A 
+href="#body"><SAMP>BODY</SAMP></A> 
+start and end tags can be omitted from the markup as these can be inferred in 
+all cases by parsers conforming to the <A 
+href="#dtd">HTML 
+3.2 DTD</A>. 
+<P>Every conforming HTML 3.2 document <B>must</B> start with the 
+<SAMP>&lt;!DOCTYPE&gt;</SAMP> declaration that is needed to distinguish HTML 3.2 
+documents from other versions of HTML. The HTML specification is not concerned 
+with storage entities. As a result, it is not required that the document type 
+declaration reside in the same storage entity (i.e. file). A Web site may choose 
+to dynamically prepend HTML files with the document type declaration if it is 
+known that all such HTML files conform to the HTML 3.2 specification. 
+<P>Every HTML 3.2 document must also include the descriptive title element. A 
+minimal HTML 3.2 document thus looks like: <PRE>  &lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN"&gt;
+  &lt;TITLE&gt;A study of population dynamics&lt;/TITLE&gt;</PRE>
+<P><I>Note: the word "Final" replaces "Draft" now that the HTML 3.2 
+specification has been ratified by the W3C member organizations.</I> 
+<HR/>
+
+<H2><A name=head>The HEAD element</A></H2>
+<P>This contains the document head, but you can always omit both the start and 
+end tags for <SAMP>HEAD</SAMP>. The contents of the document head is an 
+unordered collection of the following elements: 
+<UL>
+  <LI><A 
+  href="#title">The 
+  TITLE element</A> 
+  <LI><A 
+  href="#script">The 
+  STYLE element</A> 
+  <LI><A 
+  href="#script">The 
+  SCRIPT element</A> 
+  <LI><A 
+  href="#isindex">The 
+  ISINDEX element</A> 
+  <LI><A 
+  href="#base">The 
+  BASE element</A> 
+  <LI><A 
+  href="#meta">The 
+  META element</A> 
+  <LI><A 
+  href="#link">The 
+  LINK element</A> </LI></UL><PRE>&lt;!ENTITY % head.content "TITLE &amp; ISINDEX? &amp; BASE?"&gt;
+&lt;!ENTITY % head.misc "SCRIPT|STYLE|META|LINK"&gt;
+
+&lt;!ELEMENT HEAD O O  (%head.content) +(%head.misc)&gt;</PRE>
+<P>The %head.misc entity is used to allow the associated elements to occur 
+multiple times at arbitrary positions within the HEAD. The following elements 
+can be part of the document head: 
+<DL>
+  <DT><B><A 
+  href="#title">TITLE</A></B> 
+  defines the document title, and is always needed. 
+  <DT><B><A 
+  href="#isindex">ISINDEX</A></B> 
+  for simple keyword searches, see <SAMP>PROMPT</SAMP> attribute. 
+  <DT><B><A 
+  href="#base">BASE</A></B> 
+  defines base URL for resolving relative URLs. 
+  <DT><B><A 
+  href="#script">SCRIPT</A></B> 
+  reserved for future use with scripting languages. 
+  <DT><B><A 
+  href="#style">STYLE</A></B> 
+  reserved for future use with style sheets. 
+  <DT><B><A 
+  href="#meta">META</A></B> 
+  used to supply meta info as name/value pairs. 
+  <DT><B><A 
+  href="#link">LINK</A></B> 
+  used to define relationships with other documents. </DT></DL>
+<P><SAMP>TITLE</SAMP>, <SAMP>SCRIPT</SAMP> and <SAMP>STYLE</SAMP> are containers 
+and require both start and end tags. The other elements are not containers so 
+that end tags are forbidden. Note that conforming browsers won't render the 
+contents of <SAMP>SCRIPT</SAMP> and <SAMP>STYLE</SAMP> elements. 
+<H3><A name=title>TITLE</A></H3><PRE>&lt;!ELEMENT TITLE - -  (#PCDATA)* -(%head.misc)&gt;</PRE>
+<P>Every HTML 3.2 document <B>must</B> have exactly one <SAMP>TITLE</SAMP> 
+element in the document's <SAMP>HEAD</SAMP>. It provides an advisory title which 
+can be displayed in a user agent's window caption etc. The content model is 
+PCDATA. As a result, character entities can be used for accented characters and 
+to escape special characters such as &amp; and &lt;. Markup is not permitted in 
+the content of a <SAMP>TITLE</SAMP> element. 
+<P>Example TITLE element: <PRE>    &lt;TITLE&gt;A study of population dynamics&lt;/TITLE&gt;</PRE>
+<H3><A name=style>STYLE</A> and <A name=script>SCRIPT</A></H3><PRE>&lt;!ELEMENT STYLE  - - CDATA -- placeholder for style info --&gt;
+&lt;!ELEMENT SCRIPT - - CDATA -- placeholder for script statements --&gt;
+</PRE>
+
+</body>
+</html>

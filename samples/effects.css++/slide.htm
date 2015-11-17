@@ -1,0 +1,58 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      html { }
+      div.area {
+        flow: "1 3"
+              "2 4"
+              "5 7"
+              "6 8";
+        border-spacing:6px;
+      }
+
+      div.container.slide-top:hover    { transition: slide-top(quad-in-out,400ms); }
+      div.container.slide-bottom:hover { transition: slide-bottom(quad-in-out,400ms); }
+      div.container.slide-left:hover   { transition: slide-left(quad-in-out,400ms); }
+      div.container.slide-right:hover  { transition: slide-right(quad-in-out,400ms); }
+      
+      div.container
+      {
+        size:432dip 324dip;
+        background:#777;
+        assigned!: self.$1(picture).src = "images/photo1.jpg";
+      }
+      
+      div.container:hover
+      {
+        assigned!: self.$1(picture).src = "images/photo2.jpg"; // because of slide-*** transition
+                                                               // all content changes have to be made in transactional manner:
+                                                               // using CSSS! assigned! that triggers all new changes from old
+                                                               // state of the element to the new state. 
+      }
+      
+      div.container > picture
+      {
+        size:*;
+      }
+      
+
+    
+    </style>
+    <script type="text/tiscript"></script>
+  </head>
+<body>
+  Hover the image:
+  <div .area>
+    <caption>transition: slide-top(quad-in-out,400ms):</caption>
+    <div .container .slide-top #test ><picture/></div>
+    <caption>transition: slide-bottom(quad-in-out,400ms):</caption>
+    <div .container .slide-bottom ><picture/></div>
+    <caption>transition: slide-left(quad-in-out,400ms):</caption>
+    <div .container .slide-left  ><picture/></div>
+    <caption>transition: slide-right(quad-in-out,400ms):</caption>
+    <div .container .slide-right ><picture/><div>
+  </div>
+</body>
+</html>

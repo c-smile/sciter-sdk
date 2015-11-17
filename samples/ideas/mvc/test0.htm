@@ -1,0 +1,41 @@
+<html>
+  <head>
+<style>
+  form#myView { prototype: "mvc.View"; behavior:form; }
+</style>
+
+<script type="text/tiscript">
+  include "mvc.tis";
+  
+  namespace MyModel
+  {
+    function onArgChanged() { result.value = arg1.value + arg2.value; }
+  
+    var arg1   = mvc.observable(onArgChanged);
+    var arg2   = mvc.observable(onArgChanged);
+    var result = mvc.observable();
+  }
+  
+  $(button#test).onClick = function()
+  {
+    MyModel.arg1.value = 100;
+  }
+  
+</script>
+
+  </head>
+<body>
+
+  <h2>MVC test, knockout.js inspired</h2>
+
+  <form id="myView" model="MyModel">
+    <input type="number" name="arg1" value="1" max=10000 /> + 
+    <input type="number" name="arg2" value="1" max=10000 /> =
+    <span name="result" />
+  </form>
+  
+  <button #test>Change arg1 test</button>
+  
+
+</body>
+</html>

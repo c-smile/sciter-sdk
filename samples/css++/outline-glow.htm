@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      input.glow { background:white; border:1px solid threedshadow; border-radius:3px; }
+    
+      input.glow:focus { 
+        border-color:highlight;
+        outline:5px glow highlight -1px;
+        transition: outline(linear,0.25s) border-color(linear,0.25s);
+      }
+    
+    </style>
+  </head>
+<body>
+  <h2>outline-style:glow demo</h2>
+  <p>Set focus on these inputs:</p> 
+  <input|text class=glow value="First input"/>
+  <input|text class=glow value="Second input"/>
+
+</body>
+</html>

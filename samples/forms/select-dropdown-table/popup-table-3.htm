@@ -1,0 +1,48 @@
+<html>
+	<head>
+		<title>Shared-width</title>
+		<style>
+        
+        select tr:current { background:highlight; color:highlighttext; }
+        select tr:current td:last-child { background:orange; }
+        
+        select > caption { flow:horizontal; }
+        select > caption > td { padding:0 8px; }
+        select > caption > td:nth-child(2) { width:*; border-left:1px solid grey; border-right:1px solid grey; }
+        
+        select > popup 
+        { 
+          flow: table;
+          
+          height:max-content; 
+          max-height:300p; 
+          
+          padding:0; 
+          border-spacing:-1px;
+          border:none;
+        }
+        select > popup  td { border:1px solid grey; padding:4px 8px; }
+				
+			}
+		</style>
+	</head>
+	<body>
+		<select>
+        <tr role=option value="1">
+            <td>Option 1</td>
+            <td>*Short*</td>
+            <td>123456</td>
+        </tr>
+        <tr role=option value="2">
+            <td>Option 2</td>
+            <td>******* LOONG ********</td>
+            <td>123456</td>
+        </tr>
+        <tr role=option value="3">
+            <td>Option 3</td>
+            <td>*Short*</td>
+            <td>123456</td>
+        </tr>
+		</select>
+	</body>
+</html>

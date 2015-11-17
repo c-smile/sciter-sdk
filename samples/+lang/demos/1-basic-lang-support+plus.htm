@@ -1,0 +1,38 @@
+﻿<html lang="en">
+  <head>
+    <title>Basic UI translation sample with Plus</title>
+    
+        <!-- these four links define two translation files for different languages. -->
+    <link href="lang/ru.tis" hreflang="ru" rel="translation" >
+    <link href="lang/en.tis" hreflang="en" rel="translation" >
+    <link href="lang/zh.tis" hreflang="zh" rel="translation" >
+    <link href="lang/en.tis" hreflang="ar" rel="translation" >
+    
+    <style>
+      @import url(../lang.css);
+      @import url(../../+plus/plus.css);
+    </style>
+    
+    <script type="text/tiscript">
+    
+      $(select#lang).onValueChanged = function() { self.language = this.value; }
+      
+      namespace Matchbox 
+      {
+        var matches = 0;
+      }
+    
+    </script>
+    
+  </head>
+  <body model="Matchbox">
+  
+    <h2>Basic UI translation sample using Lang and Plus frameworks</h2>
+  
+    <p><dfn>UI language</dfn><include src=lang-selector.htm /></p>
+      
+    <label.dfn>Matches</label> : <input|integer(matches) min=0 max=100 step=1 >
+    <p><var(matches)>There are # matches in the box</var>.</p> 
+  </body>
+</html>
+

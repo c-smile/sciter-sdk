@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+    div 
+    {
+      border:1px solid black;
+      width:max-content;
+      margin:1em;
+    }
+    
+    div > text { color:red; margin-top:*; text-align:center; width:*; }
+    
+    div.filtered {
+      filter: drop-shadow(10px,10px,10px,#007);
+    }
+
+    </style>
+  </head>
+<body>
+
+<div>
+  <picture src="images/cvece.png" />
+  <text>original</text>
+</div>  
+<div.filtered>
+  <picture src="images/cvece.png" />
+  <text>drop-shadow(10px,10px,10px,#007)</text>
+</div>
+
+</body>
+</html>

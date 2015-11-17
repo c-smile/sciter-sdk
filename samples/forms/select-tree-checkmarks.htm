@@ -1,0 +1,80 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+      body { flow:row(select,select); border-spacing:10dip; }
+      select { display:block; height:*; }
+      option > code { color:red; 
+                      display:inline-block; 
+                      border:1px solid #DCB; 
+                      width:1.4em; 
+                      margin-right:2px; 
+                      text-align:center; 
+                      }
+      option:current > code { border-color:transparent;  }
+      
+      
+      /*  uncomment the following if you want click on labels to toggle checkmark state.
+          option:not(:node) { behavior:clickable; } */
+      
+    </style>
+    <script type="text/tiscript">
+    
+      $(#get).on("click", :: $(pre#out).text = String.printf("%V\n",$(select).value) );
+      $(#set).on("click", :: $(select).value = ["Na","Sc"] );
+      $(#clear).on("click", :: $(select).value = undefined );
+
+      $(select).on("change", :: $(pre#out).text = String.printf("%V",this.value) );
+     
+    </script>
+  </head>
+<body>
+  <header>value <button #get>get</button> <button #set>set</button> <button #clear>clear</button></header>
+
+  <select #dd type="tree" multiple="checkmarks" size=16 >
+    <option expanded>Metals
+      <option expanded>Alkaline Metals
+        <option value="Li" selected><code>Li</code>Lithium</option>
+        <option value="Na"><code>Na</code>Sodium</option>
+        <option value="K"><code>K</code>Potassium</option>
+      </option>
+      <option expanded>Transition Metals
+        <option value="Sc"><code>Sc</code>Scandium</option>
+        <option value="Ti"><code>Ti</code>Titanium</option>
+        <option value="V"><code>V</code>Vanadium</option>
+      </option>
+    </option>
+    <option expanded>Halogens
+        <option value="F"><code>F</code>Fluorine</option>
+        <option value="Cl"><code>Cl</code>Chlorine</option>
+        <option value="Br"><code>Br</code>Bromine</option>
+    </option>
+    <option value="He"><code>He</code>Helium</option>
+  </select> 
+  <select #dd type="tree" multiple="checkmarks" size=16 dir=rtl >
+    <option expanded>Metals
+      <option expanded>Alkaline Metals
+        <option value="Li" selected><code>Li</code>Lithium</option>
+        <option value="Na"><code>Na</code>Sodium</option>
+        <option value="K"><code>K</code>Potassium</option>
+      </option>
+      <option expanded>Transition Metals
+        <option value="Sc"><code>Sc</code>Scandium</option>
+        <option value="Ti"><code>Ti</code>Titanium</option>
+        <option value="V"><code>V</code>Vanadium</option>
+      </option>
+    </option>
+    <option expanded>Halogens
+        <option value="F"><code>F</code>Fluorine</option>
+        <option value="Cl"><code>Cl</code>Chlorine</option>
+        <option value="Br"><code>Br</code>Bromine</option>
+    </option>
+    <option value="He"><code>He</code>Helium</option>
+  </select>
+
+  <pre#out>
+  </pre>
+
+  
+</body>
+</html>

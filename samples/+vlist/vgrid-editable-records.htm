@@ -1,0 +1,54 @@
+<html>
+  <head>
+  <style>
+    @import url(vgrid.css);
+    
+    table { style-set: vgrid; 
+            width:*;
+            height:*; } 
+    table th:nth-child(1) { width:2em; }
+    table th:nth-child(3) { width:*; }
+    table th:last-child { width:8em; }
+    
+    table input { display:block; }
+      
+  </style>
+  <script type="text/tiscript">
+  
+  function self.ready() {
+  
+    var records = new Array(5);
+    
+    for(var i = 0; i < records.length; ++i)
+      records[i] = {selected: false, index: i, caption:"Item", status:"aaaa" };    
+      
+    var vlist = $(table);
+    vlist.value = records;
+    
+    vlist.on("change","tr", function() { // some change inside tr 
+      // note: each row (this) is a form here so its value is structure: 
+      this.data.selected = this.value.selected; // input(selected).value to record.selected in this case
+    });
+    
+    $(#test).on("click", function () {
+      view.msgbox(#information, String.printf("%V", records).replace("\t", " "));
+    });
+
+  }
+  
+  
+  </script>
+  </head>
+<body>
+  <button #test>Show records</button>
+
+  <table resizeable>
+    <thead>
+      <tr><th(selected)></th><th(index)>index</th><th(caption)>caption</th><th(status)>status</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><input(selected)|checkbox /></td><td(index)></td><td(caption)></td><td(status)></td></tr>
+    </tbody>
+  </table>
+</body>
+</html>

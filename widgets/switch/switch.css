@@ -1,0 +1,23 @@
+
+switch {
+  font:system;
+  display:inline-block;
+  flow:horizontal;
+  width:max-content;
+  background: url(theme:button-normal) stretch;
+  prototype: Switch url(switch.tis);
+}
+
+switch > option {
+  margin:2px 0;
+  border-right: 1px solid threedshadow;
+  padding: 3px 8px 4px 8px;
+  text-shadow:#eee 0px 1px;
+}
+
+switch > option:first-child { margin-left:2px }
+switch > option:last-child { border-right: none; margin-right:2px }
+switch > option:hover { color:brown; }
+switch > option:checked { background: threedshadow; text-shadow:none; color: highlighttext; }
+switch:focus > option:checked { background: highlight; }
+switch:tab-focus > option:checked { outline:1px dotted -2px; }

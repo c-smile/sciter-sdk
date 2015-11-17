@@ -1,0 +1,54 @@
+<html>
+  <head>
+  <title></title>
+  <style>
+    @import url(vlist.css);
+    
+    body { flow:horizontal; border-spacing:1em;  }
+    
+    body > vlist { width:*; }
+    
+    /*vlist > li { flow:horizontal;}
+      vlist > li > span { display:block; }
+      vlist > li > span[name=index] { width:3em; text-align:right; margin-right:0.5em; } */
+      
+      
+    body > div { width:*; }      
+      
+    picture { 
+      foreground-position:50% 50%; 
+      foreground-repeat:no-repeat; 
+      width:280px;
+      height:*; } 
+      
+  </style>
+  <script type="text/tiscript">
+  
+  function self.ready() {
+    var records = [];
+    for(var i in 10000)
+      records.push { index: i, caption:"Item" };
+    // feed it by these 5000 records
+    $(vlist).records = records;
+  }
+  
+  </script>
+  </head>
+<body>
+
+  <vlist>
+    <li><span name="index" /> <span name="caption">???</span></li>
+  </vlist>
+  
+  <div>
+    <h1>VList - Virtual scrollable list with items of fixed height</h1>
+    <p>The list on the left contains fixed number DOM elements in the sliding buffer.</p>
+    <p>At any given moment of time it contains max of BUFFER_SIZE (100 here) DOM elements representing list items.</p>
+    <p>Therefore it can handle large number of records in the list without degradation. Here it shows 10,000 records.</p>
+    <p>Basic idea of the implementation is explained by the image on the right.</p>
+  </div>
+  
+  <picture src=vlist-idea.png />
+  
+</body>
+</html>

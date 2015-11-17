@@ -1,0 +1,36 @@
+<html>
+	<head>
+		<title>Shared-width</title>
+		<style>
+        
+        select > caption, select option { flow: horizontal; }
+        
+        select span { display:block; }
+        
+        select span:nth-child(1)  {	width: 50dip;	}
+        select span:nth-child(2)  {	width: *; min-width: max-content;	}
+        select span:nth-child(3)  {	width: 40dip;	}
+				
+			}
+		</style>
+	</head>
+	<body>
+		<select type="dropdown">
+        <option value="1">
+            <span>Option 1</span>
+            <span>*Short*</span>
+            <span>123456</span>
+        </option>
+        <option value="2">
+            <span>Option 2</span>
+            <span>******* LOONG ********</span>
+            <span>123456</span>
+        </option>
+        <option value="3">
+            <span>Option 3</span>
+            <span>*Short*</span>
+            <span>123456</span>
+        </option>
+		</select>
+	</body>
+</html>

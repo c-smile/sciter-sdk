@@ -1,0 +1,103 @@
+﻿<html>
+  <head>
+    <title>Sciter Graphics.Text</title>
+    <style>
+      html { background: transparent; }
+      body { flow: grid(1 1,
+                        2 3,
+                        4 5,
+                        6 7); 
+                   
+             border-spacing:6dip; }
+         
+      p { height:1.2em; background: rgba(255,255,255,0.7); padding: 1em 2em;}          
+      div
+      {
+        behavior:radio;
+        border:1px solid gold;
+        border-radius: 6dip;
+        background: rgba(127,127,140,0.5);
+        vertical-align: middle;
+      }
+                   
+      div.drawing1
+      {
+        prototype:FancyText;
+        size: *;
+        font: 48pt Gabriola,Verdana;
+        font-weight: bold;
+        text-align:center;
+      }
+      div.drawing2
+      {
+        prototype:FancyText;
+        size: *;
+        font: 48pt "Times New Roman";
+        font-weight: bold;
+        text-align:center;
+      }
+      div.drawing3
+      {
+        prototype:FancyText;
+        size: *;
+        font: 36pt Arial;
+        font-weight: bold;
+        text-align:center;
+      }
+      
+      div:checked /* just for fun */
+      {
+        transform: rotate(35deg) scale(.5);
+        transition: transform(quart-out,0.5s,quart-in);
+      }
+      
+      
+    </style>
+    <script type="text/tiscript">
+      class FancyText : Behavior
+      {
+        function attached() 
+        { // attaching the paint() to paintContent layer handler
+          this.paintContent = this.paint; 
+          this.textLayout = new Graphics.Text(this.text,this);
+          //this.textLayout.font("Times",36.0); 
+          this.background = this.loadImage("back.jpg");
+          this.textLayout.alignment(Graphics.ALIGN_CENTER,Graphics.ALIGN_CENTER);
+        }
+        
+        // function is called while handling WM_PAINT 
+        function paint(gfx)
+        {
+          var (w,h) = this.box(#dimension);
+          var x1 = 10, y1 = 10;
+          var x2 = w - 10, y2 = h - 10;
+          var w1 = w - 20, h1 = h - 20;
+          
+          this.textLayout.width(x2-x1);//.height(y2-y1);
+          this.textLayout.height(y2-y1);
+          
+          gfx.lineWidth(1)
+             .lineColor(color("gold"))
+             //.fillLinearGradient(x1,y1,x1,y2,color(0xFF,0,0),color(0,0xFF,0) )
+             .fillImage(this.background)
+             .drawText(this.textLayout, (x2+x1)/2, (y2+y1)/2,5 );
+             
+          return true; // done, no default drawing please.             
+        }
+      }
+      
+      
+    </script>
+  </head>
+<body>
+  <p>Click on block to transform</p>
+  <div .drawing1>Hello World!</div>
+  <div .drawing2 dir=rtl>مرحبا العالم!</div>
+  <div .drawing2 dir=rtl>שלום עולם!</div>
+  <div .drawing2>Привет, Мир!</div>
+  <div .drawing3>您好，世界！</div>
+  <div .drawing3 lang="ja">こんにちは、世界！</div>
+  
+  
+</body>
+</html>

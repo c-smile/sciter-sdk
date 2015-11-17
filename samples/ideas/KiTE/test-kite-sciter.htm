@@ -1,0 +1,146 @@
+<html>
+  <head>
+  <title></title>
+    <style>
+    
+      .c1 { color:green; }
+      .c2 { color:blue; }
+      .c3 { color:gray; }
+    
+    </style>
+    <script type="text/tiscript" src="kite.tis"></script>
+
+    <!-- simple list --> 
+    <script type="text/kite" id="t1">
+      Simple list:
+      <ul>
+        {{#contacts}}
+          <li><b>{{firstName}}</b> <i>{{lastName}}</i></li>
+        {{/contacts}}
+      </ul>
+    </script>
+    
+    <!--list with conditionals --> 
+    <script type="text/kite" id="t2">
+      List with conditionals:
+      <ul>
+        {{#contacts}}
+          {{? role == "writer"}}
+            <li class="c1"><b>{{firstName}}</b>
+                           <i>{{lastName}}</i>, writer</li>
+          {{? role == "actor"}}
+            <li class="c2"><b>{{firstName}}</b>
+                           <i>{{lastName}}</i>, actor</li>
+          {{^?}}
+            <li class="c3"><b>{{firstName}}</b>
+                           <i>{{lastName}}</i>, other</li>
+          {{/?}}
+        {{/contacts}}
+      </ul>
+    </script>
+    
+    <!--list with conditionals, optional {{/?}} trailer --> 
+    <script type="text/kite" id="t3">
+      list with conditionals, optional { {/?} } trailer:
+      <ul>
+        {{#contacts}}
+          {{? role == "writer"}}
+            <li class="c1"><b>{{firstName}}</b>
+                           <i>{{lastName}}</i>, writer</li>
+          {{? role == "actor"}}
+            <li class="c2"><b>{{firstName}}</b>
+                           <i>{{lastName}}</i>, actor</li>
+          {{^?}}
+            <li class="c3"><b>{{firstName}}</b>
+                           <i>{{lastName}}</i>, other</li>
+        {{/contacts}}
+      </ul>
+    </script>
+    
+    <!-- list with sublists--> 
+    <script type="text/kite" id="t4">
+      List with sublists:
+      <ul>
+        {{#contacts}}
+          <li><b>{{firstName}}</b> <i>{{lastName}}</i>, works:
+            <ol>
+             {{#works}}
+               <li><q>{{.}}</q></li>
+             {{^works}}
+               No significant masterpieces?
+             {{/works}}
+            </ol>
+          </li>
+        {{/contacts}}
+      </ul>
+    </script>
+    
+    <!-- list with sublists--> 
+    <script type="text/kite" id="t5">
+      List indexes handling (note comma generation in the list):
+      <dl>
+        {{#contacts}}
+          <dt><b>{{firstName}}</b> <i>{{lastName}}</i><br/></dt>
+          <dd>
+             {{#works}}
+                {{? at != 0}}, {{/?}} <q>{{.}}</q>
+             {{^works}}
+               No significant masterpieces?
+             {{/works}}
+          </dd>
+        {{/contacts}}
+      </dl>
+    </script>
+    
+
+    <!-- Custom formatters --> 
+    <script type="text/kite" id="t6">
+      Custom field formatters:
+      <ul>
+        {{#contacts}}
+          <li><b>{{firstName}}</b> <i>{{lastName}}</i>, 
+              born on {{birthdate|date}}</li>
+        {{/contacts}}
+      </ul>
+    </script>
+    
+  <script type="text/tiscript" >
+    
+    var data = { 
+      contacts:[ 
+        { firstName: "Ernest", lastName:"Hemingway", role:"writer", birthdate:"1899-07-21",
+            works:["For Whom the Bell Tolls", "Indian Camp","The Sun Also Rises"] },
+        { firstName: "Scott", lastName:"Fitzgerald", role:"writer", birthdate:"1896-09-24",
+            works:["This Side of Paradise", "The Beautiful and Damned","The Last Tycoon"] }, 
+        { firstName: "Charlie",lastName:"Chaplin", role:"actor", birthdate:"1889-04-16",
+            works:["Making a Living", "Kid Auto Races at Venice","The Face on the Bar Room Floor"] }, 
+        { firstName: "Peter",lastName:"Romanov", role:"tzar", birthdate:"1672-06-09" },       
+        ] 
+    };
+    
+    function run_tests()
+    {
+      for(var n = 1; n <= 6; ++n)
+      {
+        self.select("#r" + n ).html = kite("#t" + n, data);
+        self.select("#s" + n + ">pre").text = self.select("#t" + n ).text;
+      }
+    }
+    
+    run_tests();
+    
+    </script>
+    
+  </head>
+<body>
+  KiTE samples, results and sources:
+  <table border="1" width="100%">
+    <tr><th>Source</th><th>Result</th></tr>
+    <tr><td id="s1"><pre/></td><td id="r1"></td></tr>
+    <tr><td id="s2"><pre/></td><td id="r2"></td></tr>
+    <tr><td id="s3"><pre/></td><td id="r3"></td></tr>
+    <tr><td id="s4"><pre/></td><td id="r4"></td></tr>
+    <tr><td id="s5"><pre/></td><td id="r5"></td></tr>
+    <tr><td id="s6"><pre/></td><td id="r6"></td></tr>
+</body>
+</html>

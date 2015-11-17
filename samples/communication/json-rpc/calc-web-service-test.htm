@@ -1,0 +1,149 @@
+﻿<html>
+<head>
+<style> 
+
+  html 
+  { 
+    background-color: threedface; 
+  }
+  #sandbox 
+  { 
+    margin:20px; 
+    padding:20px; 
+    overflow:auto;
+    background-color:window; 
+    border:1px solid threedface; 
+    width:*; height:*;
+  }
+ 
+  #sandbox:busy // that small spinning thing...
+  {
+    visibility:visible;
+    foreground-image:url(res:busy.png); 
+    foreground-repeat:no-repeat; 
+    foreground-position:2px 2px; 
+  }
+  
+  code { background:white; }
+      
+</style>
+  <script type="text/tiscript">
+  
+    include "jsonrpc.tis";
+    //include "../../+promise/promise.tis";
+  
+    var sandbox = $(#sandbox);
+    if( !sandbox) 
+      stderr << "sandbox not found"; 
+      
+    sandbox.value = "ready!";
+    
+    var rpc = new JsonRPC( "http://www.terrainformatica.com/tests/calc-web-service.php", sandbox );
+    //try this to get 404 request:
+    //var rpc = new JsonRPC( "http://www.terrainformatica.com/tests/calc-web-service-no.php", sandbox );
+
+    // show delivered data
+    function show(data,status = 200)
+    {
+      if( data instanceof Error ) // Error parsing received data
+        sandbox.value = String.$(Error: {data.toString()} Status: {status});
+      else if( data instanceof String ) // not a script object...
+        sandbox.value = String.$(Text: {data} Status: {status});
+      else if( data instanceof Stream ) // not a script object...
+        sandbox.value = String.$(Stream, Status: {status} Url: { data.name } Content: {data.toString()});
+        //sandbox.value = "Status:" + status + "\nText(stream):" + data.toString();
+      else
+        sandbox.value = String.printf("Value: %v Status: %d", data, status );  // parsed data, print it as JSON+ literal (%v)
+    }
+
+    // async requests
+    $(#SumA).onClick = function()
+    {
+      var p0 = $(#p0).value;
+      var p1 = $(#p1).value;
+      // note, use of promises here:
+      rpc.post("add", p0, p1).then(show,show); // .then(show,show) a.k.a .always(show)
+    }
+
+    $(#SubA).onClick = function()
+    {
+      var p0 = $(#p0).value;
+      var p1 = $(#p1).value;
+      // note, use of promises here:
+      rpc.post( "sub", p0, p1 ).then(show, show); 
+    }
+    
+    // sequential
+    $(#Sum3seq).onClick = function()
+    {
+      var p2 = $(#p2).value;
+      var p3 = $(#p3).value;
+      var p4 = $(#p4).value;
+      // chaining promises (sequential execution):
+      rpc.post( "add", p2, p3 )
+       .then( :data: rpc.post("add", data, p4) )
+       .then( show, show) ; 
+    }
+    
+    // parallel, use of promise.when combinator
+    $(#Sum3par).onClick = function()
+    {
+      var p2 = $(#p2).value;
+      var p3 = $(#p3).value;
+      var p4 = $(#p4).value;
+      // parallel execution:
+      promise.when( rpc.post( "add", p2, p3 ), rpc.post( "add", 0, p4 ) )
+             .then( function(result1,result2) { show(result1 + result2)} ); 
+    }
+    
+    // sync requests
+    $(#SumS).onClick = function()
+    {
+      var p0 = $(#p0).value;
+      var p1 = $(#p1).value;
+      
+      var (status,v) = rpc.send("add", p0, p1);
+      // at this point data are delivered to the v, show them
+      show(v,status);
+    }
+
+    $(#SubS).onClick = function()
+    {
+      var p0 = $(#p0).value;
+      var p1 = $(#p1).value;
+
+      var (status,v) = rpc.send("sub", p0, p1);      
+      // at this point data are delivered to the v, show them
+      show(v,status);
+       
+    }
+    
+    </script>
+
+</head>
+
+<body>
+<h1>JSON Remote Procedure Call Demo, ASYNC and SYNC calls</h1>
+<p>Input two numbers and press + or - buttons:<br>
+  <input type="number" id="p0" value=1 max=10000 step=1/>
+  <input type="number" id="p1" value=2 max=10000 step=1/> 
+  async: <button id="SumA">+</button><button id="SubA">-</button>
+  sync: <button id="SumS">+</button><button id="SubS">-</button></p>
+
+<p>Input three numbers and click on "sum" buttons:<br>
+  <input type="number" id="p2" value=1 max=10000 step=1/>
+  <input type="number" id="p3" value=2 max=10000 step=1/> 
+  <input type="number" id="p4" value=3 max=10000 step=1/> 
+  <button id="Sum3seq">sum sequential</button>
+  <button id="Sum3par">sum parallel</button></p>
+<ol>
+  <li>Sequential sum will send two requests to the server one by one: 1) <code>A + B -> R</code> and 2) <code>R + C -> final result</code></li>
+  <li>Parallel sum sends two requests to the server at the same time: 1) <code>A + B -> R1</code> and 2) <code>0 + C -> R2</code>, final result is shown as <code>R1 + R2</code></li>
+</ol>
+<pre id="sandbox">
+  sandbox
+</pre>
+<div id="indicator">Talking...</div>
+</body>
+
+</html>

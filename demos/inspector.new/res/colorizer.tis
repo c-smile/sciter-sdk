@@ -1,0 +1,201 @@
+
+function colorize() 
+{
+  const apply = Selection.applyMark; // shortcut
+  
+  // forward declarations:
+  var doStyle;
+  var doScript;
+
+  // markup colorizer  
+  function doMarkup(tz) 
+  {
+    var bnTagStart = null;
+    var tagScript = false;
+    var tagScriptType = false;
+    var tagStyle = false;
+    var textElement;
+      
+    while(var tt = tz.token()) {
+      if( tz.element != textElement )       
+      {
+         textElement = tz.element;
+         textElement.attributes["type"] = "markup";
+      }
+      //stdout.println(tt,tz.attr,tz.value);
+      switch(tt) {
+        case #TAG-START: {    
+            bnTagStart = tz.tokenStart; 
+            const tag = tz.tag;
+            tagScript = tag == "script";
+            tagStyle  = tag == "style";
+          } break;
+        case #TAG-HEAD-END: {
+            apply(bnTagStart,tz.tokenEnd,"markup"); 
+            if( tagScript ) { tz.push(#source,"</script>"); doScript(tz, tagScriptType, true); }
+            else if( tagStyle ) { tz.push(#source,"</style>", #style); doStyle(tz, true); }
+          } break;
+        case #TAG-END:      apply(tz.tokenStart,tz.tokenEnd,"markup"); break;  
+        case #TAG-ATTR:     if( tagScript && tz.attr == "type") tagScriptType = tz.value; 
+                            if( tz.attr == "id" ) apply(tz.tokenStart,tz.tokenEnd,"markup-id"); 
+                            break;
+        case #COMMENT:      apply(tz.tokenStart,tz.tokenEnd,"markup-comment"); 
+                            break;
+      }
+    }
+  }
+ 
+  // script colorizer
+  doScript = function(tz, typ, embedded = false) 
+  {
+    const KEYWORDS = 
+    {
+      "type"    :true, "function":true, "var"       :true,"if"       :true,
+      "else"    :true, "while"   :true, "return"    :true,"for"      :true,
+      "break"   :true, "continue":true, "do"        :true,"switch"   :true,
+      "case"    :true, "default" :true, "null"      :true,"super"    :true,
+      "new"     :true, "try"     :true, "catch"     :true,"finally"  :true,
+      "throw"   :true, "typeof"  :true, "instanceof":true,"in"       :true,
+      "property":true, "const"   :true, "get"       :true,"set"      :true,
+      "include" :true, "like"    :true, "class"     :true,"namespace":true,
+      "this"    :true, "assert"  :true, "delete"    :true,"otherwise":true,
+      "with"    :true, "__FILE__":true, "__LINE__"  :true,"__TRACE__":true,
+      "debug"   :true 
+    };
+      
+    const LITERALS = { "true": true, "false": true, "null": true, "undefined": true };
+    
+    var firstElement;
+    var lastElement;
+   
+    while:loop(var tt = tz.token()) {
+      var el = tz.element;
+      if( !firstElement ) firstElement = el;
+      lastElement = el;
+      switch(tt) 
+      {
+        case #NUMBER:       apply(tz.tokenStart,tz.tokenEnd,"source-number"); break; 
+        case #NUMBER-UNIT:  apply(tz.tokenStart,tz.tokenEnd,"source-number-unit"); break; 
+        case #STRING:       apply(tz.tokenStart,tz.tokenEnd,"source-string"); break;
+        case #NAME:         
+        {
+          var val = tz.value;
+          if( val[0] == '#' )
+            apply(tz.tokenStart,tz.tokenEnd, "source-symbol"); 
+          else if(KEYWORDS[val]) 
+            apply(tz.tokenStart,tz.tokenEnd, "source-keyword"); 
+          else if(LITERALS[val]) 
+            apply(tz.tokenStart,tz.tokenEnd, "source-literal"); 
+          break;
+        }
+        case #COMMENT:      apply(tz.tokenStart,tz.tokenEnd,"source-comment"); break;
+        case #END-OF-ISLAND:  
+          // got </script>
+          tz.pop(); //pop tokenizer layer
+          break loop;
+      }
+    }
+    if(embedded) {
+      for( var el = firstElement; el; el = el.next ) {
+        el.attributes["type"] = "script";
+        if( el == lastElement )
+          break;
+      }
+    }
+  };
+  
+  doStyle = function(tz, embedded = false) 
+  {
+    const KEYWORDS = 
+    {
+      "@import":true, "@media":true, "@set":true, "@const":true, "@mixin":true,
+    };
+     
+    const LITERALS = { 
+      "inherit": true, "selector":true,
+      "rgb":true, "rgba":true, "url":true, 
+    };
+    
+    var firstElement;
+    var lastElement;
+    var nmtokenStart;
+    
+    while:loop(var tt = tz.token()) {
+      var el = tz.element;
+      if( !firstElement ) firstElement = el;
+      lastElement = el;
+      switch(tt) 
+      {
+        case #NUMBER:       apply(tz.tokenStart,tz.tokenEnd,"source-number"); break; 
+        case #NUMBER-UNIT:  apply(tz.tokenStart,tz.tokenEnd,"source-number-unit"); break; 
+        case #STRING:       apply(tz.tokenStart,tz.tokenEnd,"source-string"); break;
+        case #NAME:         
+        {
+          nmtokenStart = tz.tokenStart;
+          var val = tz.value;
+          if( val[0] == '#' )
+            apply(tz.tokenStart,tz.tokenEnd, "source-symbol"); 
+          else if(KEYWORDS[val]) 
+            apply(tz.tokenStart,tz.tokenEnd, "source-keyword"); 
+          else if(LITERALS[val]) 
+            apply(tz.tokenStart,tz.tokenEnd, "source-literal"); 
+          break;
+        }
+        case #COMMENT:      apply(tz.tokenStart,tz.tokenEnd,"source-comment"); break;
+        
+        case #OPERATOR:     if( (tz.value[0] == ':') && (nmtokenStart != null)) { 
+                              apply(nmtokenStart, tz.tokenStart,"source-property"); 
+                              nmtokenStart = null; 
+                            } break;
+        
+        case #END-OF-ISLAND:  
+          // got </style>
+          tz.pop(); //pop tokenizer layer
+          break loop;
+      }
+    }
+    if(embedded) {
+      for( var el = firstElement; el; el = el.next ) {
+        el.attributes["type"] = "style";
+        if( el == lastElement )
+          break;
+      }
+    }
+  };
+  
+  var me = this;
+  
+  function doIt() { 
+  
+    var typ = me.attributes["type"];
+      
+    var syntaxKind = typ like "*htm" || typ like "*html" || typ like "*xml" ? #markup : #source;
+    var syntax = typ like "*css"? #style : #script;
+      
+    var tz = new Tokenizer( me, syntaxKind, syntax );
+
+    if( syntaxKind == #markup )
+      doMarkup(tz);
+    else if( syntax == #style )
+      doStyle(tz);
+    else 
+      doScript(tz,typ);
+  }
+  
+  doIt();
+  
+  // redefine value property
+  this[#value] = property(v) {
+    get { return this.state.value; }
+    set { this.state.value = v; doIt(); }
+  };
+  
+  this.load = function(text,sourceType) 
+  {
+    me.attributes["type"] = sourceType;
+    me.state.value = text; 
+    doIt();
+  };
+  
+
+}

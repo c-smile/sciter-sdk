@@ -1,0 +1,9 @@
+﻿({
+  "UI language": "界面语言",
+  "Matches":"匹配数", 
+  "There are # matches in the box" : function(n) {
+      return n == 0 ? "没有匹配" 
+            : n == 1 ? "方框内仅有一个匹配" 
+            : "方框内有 " + n + " 匹配";
+  }
+})

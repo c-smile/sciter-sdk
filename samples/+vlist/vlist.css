@@ -1,0 +1,26 @@
+
+
+vlist 
+{ 
+  display:block; 
+  height:*; width:300px; 
+  border:1px solid black; 
+  overflow: scroll-indicator;
+  prototype: VList url(vlist.tis);
+}
+
+vlist > li {
+  display:block; 
+  padding:0 6dip;
+  line-height:31dip;
+  background: linear-gradient(top, #fff, #ddd);
+  behavior:form; /* each repeated child is treated as a form so it can accept object values */ 
+} 
+
+vlist > li:hover {
+  background: linear-gradient(top, #fff, #bcd);
+}
+
+vlist > li:current {
+  background:gold;
+}

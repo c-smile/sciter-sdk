@@ -1,0 +1,53 @@
+<html>
+  <head>
+  <title>System font and DIP units</title>
+  <style>
+  
+    html
+    {
+      //font:system;
+    }
+    
+    div#cont { flow:horizontal; border-spacing:10px; }
+    div#cont > div { border:4px solid black; width:100px; height:100px; }
+    div#cont > div.dip { size:100dip; }
+    div#cont > div.dip-all { size:100dip; border-width:4dip; }
+    
+  
+  </style>
+  <script type="text/tiscript">
+  
+    function showResolution() {
+      var ppi = (1in).toFloat(#px);
+      var ppdip = (1dip).toFloat(#px);
+      
+      $(#ppi).value = ppi;
+      $(#ppdip).value = ppdip;
+    }  
+  
+    view.onResolutionChanged = showResolution; // when it will change
+    showResolution(); // right now
+  
+  
+  </script>
+  </head>
+<body>
+
+  <p>This page is using system (UI default) font</p>
+  
+  Physical and Device Independent Pixels (1/96th of inch)
+  <div id=cont>
+    <div>100px</div>
+    <div .dip>100dip size</div>
+    <div .dip-all>100dip size and borders</div>
+  </div>
+  <text .comment>Note 1: on 125% screen scale factor these rectangles will have different sizes. Last rectangle will have wider borders.</text>
+  <text .comment>Note 2: lengths are rounded to nearest pixel</text>
+
+  <p style="font-size:16px">font-size:16px</p>
+  <p style="font-size:16dip">font-size:16dip</p>
+  
+  <p>Current window resolution is <code #ppi /> pixels per inch, <code #ppdip /> pixels per dip.</p>
+  
+</body>
+</html>

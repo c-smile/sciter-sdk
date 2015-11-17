@@ -1,0 +1,180 @@
+<html>
+  <head>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>Stream object</h1>
+  
+    <dl>
+      
+        
+          <h2>Properties</h2>
+      
+        <dt>isInput</dt>
+        <dd>read only, <em>true</em> | <em>false</em>
+          <p>reports if this is an input stream or not.</p></dd>
+      
+        <dt>isInput</dt>
+        <dd>read only, <em>true</em> | <em>false</em>
+          <p>reports if this is an output stream or not.</p></dd>
+      
+        <dt>isPipe</dt>
+        <dd>read only, <em>true</em> | <em>false</em>
+          <p>reports if this is a pipe stream or not.</p></dd>
+      
+        <dt>proxy</dt>
+        <dd><em>object</em> | <em>null</em>
+          <p>(Pipe only)</p>
+          <p>Gets/sets proxy object used as an interface of the thread for other thread - proxy of this thread on the remote side (other thread). Each instance of the pipe can have only one proxy object on either side of the pipe so duplex inter-thread communications require two pipe streams.</p></dd>
+      
+        <dt>pending</dt>
+        <dd>read only, <em>integer</em>
+          <p>(Pipe only)</p>
+          <p>Returns number of pending requests (not processed at the moment) issued by <em>post()</em> and <em>print**()</em> methods.</p></dd>
+      
+        <dt>encoding</dt>
+        <dd>read/write - gets/sets encoding used by the stream.
+          <p>For now it supports either &quot;none&quot; (raw byte stream) and &quot;utf-8&quot; encodings.</p></dd>
+      
+        <dt>name</dt>
+        <dd>read only, <em>string</em>
+          <p>Name of the stream - either file name or url where the data came from. Can be an empty string, e.g. for in memory streams.</p></dd>
+      
+        
+          <h2>Methods</h2>
+      
+        <p class="note">Stream object has no public constructors so it is impossible to create it using new operator.<br/>To create streams use static open*** methods.</p>
+      
+        <dt>openFile</dt>
+        <dd>
+          <p><strong>(</strong><em>file-name</em> [,<em>mode</em>]<strong>) </strong>: <em>stream</em> | <em>null</em></p>
+          <p>Static method. Opens the file which name is stored in the <em>file-name</em> string and returns an instance of Stream object. Operations allowed to the stream returned are defined by the <em>mode</em> parameter-string.</p>
+          <p>Script engine uses C/C++ runtime for opening file streams. See <a href="http://www.cplusplus.com/ref/cstdio/fopen.html" target="_blank">fopen function definition</a> for the meaning of the <em>mode</em> string.</p></dd>
+      
+        <dt>openSocket</dt>
+        <dd>
+          <p><strong>(</strong><em>&quot;address:port&quot; </em>[,<em> timeout</em>[, numberOfAttempts:1 ] ] <strong>)</strong> :  <em>stream</em> | <em>null</em></p>
+          <p>Static method. Opens the socket stream which address and port is stored in the <em>address-port </em>string and returns an instance of Stream object. Opens socket stream in read-write mode. <em>Address</em> can be either domain name or IP address. Format of <em>address:port</em> string is <font color="#006666">&quot;domain<strong>:</strong>NNN&quot;</font> or <font color="#006666">&quot;NNN.NNN.NNN.NNN:NNN&quot;</font> where N is a decimal digit. <em>timeout</em> is a number of seconds to wait on any operations on this socket. If execution of operation on this socket will take more than this limit then exception will be thrown by runtime system.</p>
+          <p><em>numberOfAttempts</em> is an integer - number of attempts to connect, 1 by default.</p>
+          <p>Example: following code will print out http server response of terrainformatica.com server:</p>
+          <pre><font color="#0000cc">var</font> sock <font color="#0000cc">=</font> <em>Stream</em>.<em>openSocket</em>( <font color="#006666">&quot;www.terrainformatica.com:80&quot;</font> , 5 <font color="#339900">/*seconds timeout*/</font> );
+<font color="#0000cc">if</font>( !sock ) <font color="#0000cc">return</font>;
+
+sock.println(<font color="#006666">&quot;GET http://www.terrainformatica.com/main.whtm HTTP/1.0&quot;</font>);
+sock.println(&quot;User-Agent: TIScript [en]&quot;);
+sock.println(&quot;&quot;);
+
+<font color="#0000cc">while</font>( <font color="#0000cc">true</font> )
+{
+<font color="#0000cc">  var</font> s = sock.readln();
+<font color="#0000cc">  if</font>(s == <font color="#0000cc">undefined</font>) <font color="#0000cc">break</font>;
+<font color="#0000cc">  stdout</font>.println(s);
+}
+</pre></dd>
+      
+        <dt>openString</dt>
+        <dd>
+          <div><strong>(</strong>[<em>initialSize</em>:int | <em>initialValue</em>:string]<strong>) :</strong> <em>stream</em></div>
+          <p>Static method. Opens in-memory string output stream with <em>initialSize (integer)</em> of its buffer. Use string streams when you plan to update some string frequently or compose string from many components. String streams are also known as StringBuffer/StringBuilder in Java or .NET. To get current content of the string stream use its method <em>toString</em>.</p></dd>
+      
+        <dt>openPipe</dt>
+        <dd>
+          <div>( [<em>receiver</em>: function [, <em>proxy</em>: object]] ) : <em>stream</em></div>
+          <p>Creates so called pipe - stream used for inter-thread communications. Pipe is shared between two threads allowing two threads to  communicate. See methods <em>send()</em>, <em>post()</em> and properties <em>pending</em> and <em>proxy</em>.</p>
+          <p>The <em>receiver</em> is the function that has following signature: <code>function recv(value)</code>. This function will be called when data printed by print(), println() or printf() will arrive from other side of the pipe.</p>
+          <p>The <em>proxy</em> object is an object that is used as an interface with functions accessible from the alien thread (VM) sitting on other side of the pipe, See methods <em>send()</em> and <em>post()</em> below.</p>
+          <p>Example, following fragment (from ScIDE/facades.tis) creates three pipes that are used as stdin, stdout and stderr streams in the alien VM (other ScIDE window running is separate thread).</p>
+          <pre>  <code>function</code> receiverOut(data) { Log.print(data,false); }
+  <code>function</code> receiverErr(data) { Log.print(data,true); }
+
+  // callback interface
+  <code>var</code> iface =
+  {
+    foo: <code>function</code>(v1,v2) { stdout.printf(&quot;got a call of 'foo' with %V,%V\n&quot;,v1,v2); <code>return</code> v1 + v2; }
+  };
+
+  view.open(f,
+      Stream.openPipe( null, iface ), // call interface for the alien
+      Stream.openPipe( receiverOut ), // stdout
+      Stream.openPipe( receiverErr )  // stderr
+  );
+</pre></dd>
+      
+        <dt>toString</dt>
+        <dd>
+          <p><strong>( ) </strong>:  <em>stream</em></p>
+          <p>Returns content of string buffer if this is a string stream or name/address of the stream if it was open as file or socket stream.</p></dd>
+      
+        <dt>close</dt>
+        <dd>
+          <p><strong>( </strong>[<em>returnString</em>:true|false]<strong> )</strong> : <em>string | true | false</em></p>
+          <p>Closes this stream - file, socket or string stream buffer. If <em>returnString</em> is <em>true</em> then return value is a result of <em>toString()</em> method. </p></dd>
+      
+        <dt>print</dt>
+        <dd>
+          <div><strong>( </strong><em>string</em><strong> ) </strong>:<strong> </strong><em>true</em> | <em>false</em></div>
+          <p>Outputs <em>string</em> into the stream.</p>
+          <p>print is an equivalent of: <em>stream &lt;&lt; string</em>; operation.</p></dd>
+      
+        <dt>$</dt>
+        <dd>
+          <div>( ... ) :<strong> </strong><em>true</em> | <em>false</em></div>
+          <p>Stringizer method, outputs content in brackets into the stream.</p></dd>
+      
+        <dt>println</dt>
+        <dd>
+          <div><strong>( </strong><em>string</em><strong> ) </strong>:<strong> </strong><em>true</em> | <em>false</em></div>
+          <p>Outputs <em>string</em> appended by \r\n into the stream.</p></dd>
+      
+        <dt>$n</dt>
+        <dd>
+          <div><strong>( </strong><em>string</em><strong> ) </strong>:<strong> </strong><em>true</em> | <em>false</em></div>
+          <p>Stringizer method, outputs content in brackets appended by \r\n into the stream.</p></dd>
+      
+        <dt>printf</dt>
+        <dd>
+          <div><strong>(</strong> <em>format</em>:string, [<a>value1</a>[, value2[, <a>...</a>[, <a>valueN</a>]]]]<strong>)</strong> : <em>true</em> | <em>false</em></div>
+          <p>Prints formatted text by the rules of <a href="http://www.cplusplus.com/ref/cstdio/printf.html" target="_blank">printf C/C++ function</a>.</p>
+          <p>Additional format types:</p>
+          <ul>
+            <p><strong>%v</strong> and <strong>%V</strong> - these format types accept any value as an argument and produce source code representation of the value suitable for later parsing by eval() method. Thus if value is an array of values it will be printed as &quot;[element1, element2, element3... elementN]&quot; and object (instance of Object class) will be printed as &quot;{key1:value1, key2:value2,..., keyN:valueN}&quot;. %v produces one line output and %V tries to produce human readable output with line feeds and tabulations.<br/>Use it if you need to serialize objects in AJAX/JSON fashion.</p>
+            <p><strong>%S</strong> - this format type converts its argument into string and outputs it with <em>HTML escapement</em>. So characters like '&lt;' will be converted to &quot;&amp;lt;&quot; sequences in the output.</p></ul></dd>
+      
+        <dt>scanf</dt>
+        <dd>
+          <div><strong>( </strong><em>format</em>: string <strong>)</strong> : array</div>
+          <p>Scans the stream for values according to the rules of <a href="http://www.cplusplus.com/reference/clibrary/cstdio/scanf.html">scanf C/C++ function</a> with wildcard (like %[a-z] ) extensions. See definition of  <a href="http://msdn.microsoft.com/en-us/library/xdb9w69d(VS.71).aspx">scanf in MSDN</a>.</p>
+          <p>Additional format types:</p>
+          <ul>
+            <p><strong>%N</strong> - scans for either float or integer number.</p></ul>
+          <p>Function returns array of successfully parsed values.</p></dd>
+      
+        <dt>putc</dt>
+        <dd>
+          <div><strong>( </strong><em>char-code</em><strong> ) </strong>:<strong> </strong><em>true</em> | <em>false</em></div>
+          <p>Outputs <em>character</em> into the stream. Character defined by its integer code.</p>
+          <p>putc is an equivalent of: <em>stream &lt;&lt; charcode</em>; operation.</p></dd>
+      
+        <dt>getc</dt>
+        <dd>
+          <div><strong>( ) </strong>:<strong> </strong><em>integer</em> | <em>undefined</em></div>
+          <p>Reads one character from the stream. Returns its code as <em>integer</em> or <em>undefined </em>if stream was closed or got EOF.</p></dd>
+      
+        <dt>readln</dt>
+        <dd>
+          <div><strong>( ) </strong>:<strong> </strong><em>string</em> | <em>undefined</em></div>
+          <p>Reads sequence of characters from stream until '\n' character. Returns string read without trailing '\r' and '\n'.</p></dd>
+      
+        <dt>send</dt>
+        <dd>
+          <div>(<em>methodName</em>: symbol [, .. ] ) : <em>value</em></div>
+          <p>(Pipe only)</p>
+          <p>Sends call request to the proxy interface object on other side of the pipe and waits its completion. Returns result of the remote method. Additional parameters that follow the <em>methodName</em> are passed to the call of remote method as normal parameters.</p></dd>
+      
+        <dt>post</dt>
+        <dd>
+          <div>(<em>methodName</em>: symbol [, .. ] ) : <em>undefined</em></div>
+          <p>(Pipe only)</p>
+          <p>Posts call request to the proxy interface object on other side of the pipe. This method does not wait for the completion of the remote method it just increases the <em>pending</em> counter. Additional parameters that follow the <em>methodName</em> are passed to the call of remote method as normal parameters.</p></dd></dl>
+</body>
+</html>

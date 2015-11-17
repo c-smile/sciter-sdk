@@ -1,0 +1,41 @@
+<HTML>
+	<HEAD>
+		<TITLE></TITLE>
+		<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<META name="GENERATOR" content="BLOCKNOTE.NET">
+		<STYLE>
+      HTML { background-color:threedlight; }
+      BODY { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+      P { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+      DIV { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+      
+      
+	</STYLE>
+	</HEAD>
+	<BODY>
+      <h1>slider bar test</h1>
+      <h2>horizontal</h2>
+      <p>0%:<input type="hslider" name="p1" max="100" value="0" style="border:1px solid white" />
+         25%:<input type="hslider" name="p2" max="100" value="25"/>
+         50%:<input type="hslider" name="p3" max="100" value="50"/>
+         75%:<input type="hslider" name="p4" max="100" value="75"/>
+         100%:<input type="hslider" name="p5" max="100" value="100"/></p>
+
+      <h2>horizontal with "buddy" and step</h2>
+      <p><input type="hslider" name="p1a" max="100" value="0" step="10" buddy="p1a-buddy" />
+      There are <b id="p1a-buddy">x</b> parrots in the room</p>
+
+      <h2>vertical</h2>
+      <p>0%:<input type="vslider" name="p1b" max="100" value="0" style="border:1px solid white" />
+         25%:<input type="vslider" name="p2b" max="100" value="25"/>
+         50%:<input type="vslider" name="p3b" max="100" value="50"/>
+         75%:<input type="vslider" name="p4b" max="100" value="75"/>
+         100%:<input type="vslider" name="p5b" max="100" value="100"/></p>
+      <h2>vertical with "buddy"</h2>   
+         <input type="vslider" name="p1c" max="99" value="99" buddy="p1c-buddy" /> There are <b id="p1c-buddy">x</b> bottles of beer on the wall.
+      <h2>vertical with "buddy", inversed</h2>   
+         <input type="vslider" name="p2c" min=99 max=0 value="99" buddy="p2c-buddy" /> There are <b id="p2c-buddy">x</b> bottles of beer on the wall.
+         
+	</BODY>
+	</BASEFONT>
+</HTML>
