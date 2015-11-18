@@ -1,15 +1,17 @@
 # sciter-sdk
 
-[Sciter Engine](http://sciter.com) SDK distribution by [Terra Informatica Software](http://terrainformatica.com)
+[Sciter Engine](http://sciter.com) SDK distribution by [Terra Informatica Software](http://terrainformatica.com) - multiplatform embedeable HTML/CSS/script UI engine.
 
-Sciter uses Plain C and C++ API for embedding it into native desktop applications. 
+![Sciter Clock demo on Mac,Win,Lin](http://sciter.com/images/sciter-clock.png)
+
+Sciter uses Plain C and C++ API for embedding it into native desktop applications on various desktop OSes. 
 
 Other programming language bindings and runtimes:
 
-*   [Delphi 7 wrapper on GitHub](https://github.com/da-baranov/SciDe) by Mr. Baranov D.A.
-*   [D language SDK port](https://github.com/midiway/sciter-dport) on GitHub by [Mr. Ramon F. Mendes](http://misoftware.rs/)
-*   [Go language SDK binding](https://github.com/datagoes/sciter) on GitHub by Oskca
-*   [.NET and C# SDK bindings](https://github.com/midiway/SciterSharp) on GitHub by  [Mr. Ramon F. Mendes](http://misoftware.rs/)
+*   [Sciter Delphi 7 wrapper on GitHub](https://github.com/da-baranov/SciDe) by Mr. Baranov D.A.
+*   [D language Sciter SDK port](https://github.com/midiway/sciter-dport) on GitHub by [Mr. Ramon F. Mendes](http://misoftware.rs/)
+*   [Go language Sciter SDK binding](https://github.com/datagoes/sciter) on GitHub by Oskca
+*   [.NET and C# Sciter bindings](https://github.com/midiway/SciterSharp) on GitHub by  [Mr. Ramon F. Mendes](http://misoftware.rs/)
 
 
 ## Sciter SDK contains the following folders:
