@@ -2,6 +2,16 @@
 
 [Sciter Engine](http://sciter.com) SDK distribution by [Terra Informatica Software](http://terrainformatica.com)
 
+Sciter uses Plain C and C++ API for embedding it into native desktop applications. 
+
+Other programming language bindings and runtimes:
+
+*   [Delphi 7 wrapper on GitHub](https://github.com/da-baranov/SciDe) by Mr. Baranov D.A.
+*   [D language SDK port](https://github.com/midiway/sciter-dport) on GitHub by [Mr. Ramon F. Mendes](http://misoftware.rs/)
+*   [Go language SDK binding](https://github.com/datagoes/sciter) on GitHub by Oskca
+*   [.NET and C# SDK bindings](https://github.com/midiway/SciterSharp) on GitHub by  [Mr. Ramon F. Mendes](http://misoftware.rs/)
+
+
 ## Sciter SDK contains the following folders:
 
 *   **bin**, **bin.osx** and **bin.gtk** - folders with the compiled Sciter engine: sciter32/64.dll (Windows), sciter-osx-64.dylib (OS X), sciter-gtk-64.so (Linux) and sciter.exe variations - demo "browser" with builtin DOM inspector, script debugger and Sciter documentation browser (see screenshot above). There are compiled versions of samples from the demo folder.
