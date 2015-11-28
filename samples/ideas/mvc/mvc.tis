@@ -52,7 +52,7 @@ namespace mvc
       _in_notify = true;
       try { 
         for(var subs in _subscriptions) 
-          subs(val); 
+          subs(_val); 
       }
       finally { _in_notify = false; }
     }
