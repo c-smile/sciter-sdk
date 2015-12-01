@@ -18,7 +18,7 @@ class ColorChooser: Behavior
   // this behavior has been attached to the element, setup its shape.
   function attached()
   {
-    this.html = "<button role='apply'><img class='current-color' /></button><button role='popup' />";
+    this.html = "<button role='apply'><span.current-color /></button><button role='popup' />";
   }
   
   // get popup element, create it if needed
@@ -39,12 +39,11 @@ class ColorChooser: Behavior
   
   property value(strColor)
   {
-    var img = this.select("img.current-color");
+    var img = this.select(".current-color");
     set
     {
       //stdout << " set =" << strColor << "\n";
       img.style["background-color"] = strColor;
-      img.update();
       this.onValueChanged(this);
     }
     get
@@ -54,7 +53,6 @@ class ColorChooser: Behavior
   function showPopup()
   {
       var pe = this.getPopupElement();
-      pe.owner = this;
       this.popup( pe, 2); // show our popup underneath of this element
   }
   
@@ -84,12 +82,12 @@ class ColorChooser: Behavior
       case Event.MOUSE_UP:
       {
         var cell = evt.target.selectParent("td"); // find td container
-        this.clearState(Element.STATE_POPUP); // hide popup
         if(cell) 
         {
           this.owner.value = cell.style["background-color"]; // notify our owner
           this.owner.onClick(this.owner);
         }
+        this.state.popup = false; // hide popup
         return true; // to prevent its handling in the button
       }
     }

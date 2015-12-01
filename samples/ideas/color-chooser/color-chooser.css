@@ -9,56 +9,59 @@ input[type="color-chooser"]
 input[type="color-chooser"] > button[role="popup"]
 {
     display:block;
-    width: 15px;
+    width: 15dip;
     padding:0; 
-    foreground-image: url(res:arrow-down.png);
+    foreground-image: url(stock:arrow-down);
     foreground-position:50% 50%;
     foreground-repeat:no-repeat;
+    foreground-size:5dip;
     margin-left:0;
     height:*;
 }
 input[type="color-chooser"] > button[role="apply"]
 {
     display:block;
-    padding:5px;
+    padding:5dip;
     margin-right:0;
     height:*;
 }
 
-input[type="color-chooser"] img.current-color
+input[type="color-chooser"] > button[role="apply"] > .current-color
 {
-    width: 10px; height: 10px;
-    border: 1px solid threedshadow;
+    display:block;
+    width: 10dip; height: 10dip;
+    border: 1dip solid threedshadow;
+    overflow:hidden;
 }
 
 
 /* popup with colors */
 popup.color-selector 
 {
-  margin-top:1px; /* distance from the buttom */
-  padding:2px;
+  margin-top:1dip; /* distance from the buttom */
+  padding:2dip;
   background-color:scrollbar;
-  border:1px solid threedshadow;
+  border:1dip solid threedshadow;
 }
 
 popup.color-selector table
 {
-  border-spacing:1px;
+  border-spacing:1dip;
 }
 
 popup.color-selector td /* cell of the color table */
 {
-  width:10px; height:10px;
-  border:1px solid transparent;
+  width:10dip; height:10dip;
+  border:1dip solid transparent;
 }
 
 popup.color-selector td:hover 
 {
-  outline: 2px dashed highlight -1px;
+  outline: 2dip dashed highlight -1dip;
 }  
 
 popup.color-selector td:current 
 {
-  outline: 2px solid threedshadow -1px;
+  outline: 2dip solid threedshadow -1dip;
 }  
 
