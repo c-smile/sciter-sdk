@@ -27,19 +27,19 @@ namespace formation {
   
   class RadioGroup: Formation 
   {
-    function this(el) { this[0] = el; }
+    function this(el) { this.group = [el]; }
     property value(v) {
       get {
-        for( var el in this ) 
+        for( var el in this.group ) 
           if( el.state.checked ) 
             return el.attributes["value"];
       }
       set {
-        for( var el in this ) 
+        for( var el in this.group ) 
           el.state.checked = el.attributes["value"] == v; 
       }
     }
-    function add(el) { this[ this.length ] = el; }
+    function add(el) { this.group.push(el); }
   }
 
   // the formation constructor
