@@ -482,6 +482,8 @@ function Object_test()
   assert "three" !in {one:1, two:2 };     
   assert #three !in {one:1, two:2 };
   
+  var keylist = [#for, #while, #do, #delete, #return, #get,#set, #throw];
+  assert kw.keys() == keylist: "Object.keys()";
   
 }
 
@@ -1041,6 +1043,9 @@ function Units_test()
   assert 2cm / 2 == 10mm;
   assert 2cm * 2 == 40mm;
   assert (1in).toFloat(#dip) == 96.0;
+  
+  assert 4 * 10px == 40px;
+  assert 4.15 * 10pt == 41.5pt;
   
   assert 360deg == Math.PI * 2 * 1rad;
   assert 360deg == 400grad;

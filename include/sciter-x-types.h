@@ -1,10 +1,17 @@
-//
-//  sciter-x-types.h
-//  sciter
-//
-//  Created by andrew on 2014-03-29.
-//  Copyright (c) 2014 andrew fedoniouk. All rights reserved.
-//
+/*
+ * The Sciter Engine of Terra Informatica Software, Inc.
+ * http://sciter.com
+ * 
+ * The code and information provided "as-is" without
+ * warranty of any kind, either expressed or implied.
+ * 
+ * (C) 2003-2015, Terra Informatica Software, Inc.
+ */
+
+/*
+ * Sciter basic types, platform isolation declarations 
+ */
+
 
 #ifndef sciter_sciter_x_types_h
 #define sciter_sciter_x_types_h

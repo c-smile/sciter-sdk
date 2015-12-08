@@ -50,7 +50,7 @@
       self.timer(1s, function() { 
       
         for(var m = 0; m < snapshots.length; ++m ) 
-          snapshots[m].destroy();
+          if(snapshots[m]) snapshots[m].destroy();
         snapshots = [];          
         for(var m = 0; m < nmons; ++m )
           //snapshots.push( downScaleTwice(downScaleTwice(View.screenBox(m,#snapshot))) );
@@ -101,7 +101,7 @@
           gfx.noLine();
           gfx.fillColor( mdef.primary ? color(248,0,0,0.4) : color(0,0,248,0.4) );
           gfx.rectangle( mdef.ax, mdef.ay, mdef.aw, mdef.ah );
-          if(snapshots.length)
+          if(snapshots.length && snapshots[m])
             gfx.drawImage( snapshots[m], mdef.x, mdef.y, mdef.w, mdef.h );
 
           gfx.fillColor( color(255,255,255) );

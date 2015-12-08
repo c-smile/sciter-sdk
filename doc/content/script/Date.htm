@@ -1,6 +1,6 @@
 ﻿<html>
   <head>
-    <title>TIScript - Date object</title>
+    <title>Date object</title>
     <meta name="generator" content="h-smile:richtext"/>
   </head>
 <body>
@@ -47,13 +47,13 @@
     <h2>Methods</h2>
     <dt>[new Date]</dt>
     <dd>
-      <p><strong>( </strong>[<em>string</em><strong> </strong>|<strong> </strong>&nbsp;[ year, month, day [, hour [, minute [, second [, millisecond ]]]]]] )</p>
-      <p>Creates new date object. If no parameters were given then initializes date fields to the current time(UTC).<br/>If single <em>string</em> parameter provided then parses date contained in the string.<br/>And if year, month, day, etc. provided uses these numeric values to initialize new Date instance. Note: values are in <strong>UTC</strong> timezone.</p>
+      <p><strong>( </strong>[<em>string</em><strong> </strong>| <em>float</em> | <em>Date</em> |<strong> </strong>&nbsp;[ year, month, day [, hour [, minute [, second [, millisecond ]]]]]] )</p>
+      <p>Creates new date object. If no parameters were given then initializes date fields to the current time(UTC).<br/>If single <em>string</em> parameter provided then parses date contained in the string.<br/>If single <em>float</em> parameter provided then it is treated as number of <em>milliseconds</em> since midnight, January 1, 1970 UTC.<br/>If single <em>Date</em> parameter provided then copy of that date object is created.<br/>And if year, month, day, etc. provided uses these numeric values to initialize new Date instance. Note: values are in <strong>UTC</strong> timezone.</p>
       <p><code>new Date(string)</code> form recognizes date in RFC-822 date format ( <a href="http://www.w3.org/Protocols/rfc822/#z28">http://www.w3.org/Protocols/rfc822/#z28</a> ) and ISO 8601 ( <a href="http://www.w3.org/TR/NOTE-datetime">http://www.w3.org/TR/NOTE-datetime</a> ).</p></dd>
     <dt>utc</dt>
     <dd>
       <p><strong>( </strong>year, month, day [, hour [, minute [, second [, millisecond ]]]]] )</p>
-      <p>Sattic method, constructs new date object from year, month, day, etc. </p>
+      <p>Sattic method, constructs new date object from year, month, day, etc.</p>
       <p>Note: values are in <strong>UTC timezone</strong>.</p>
       <p>Use it as <code>var date = Date.utc(1999,1,1);</code></p></dd>
     <dt>local</dt>

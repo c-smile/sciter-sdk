@@ -140,6 +140,12 @@
         stdout << "got mouse click on row:" << row << "\n";
     }
     
+    // attaching custom handler to onRowClick port. 
+    table.onRowDoubleClick = function( row, reason )
+    {
+      stdout << "got double click on row:" << row << "\n";
+    }
+
 
     
     </script>

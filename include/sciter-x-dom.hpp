@@ -1,3 +1,17 @@
+/*
+ * The Sciter Engine of Terra Informatica Software, Inc.
+ * http://sciter.com
+ * 
+ * The code and information provided "as-is" without
+ * warranty of any kind, either expressed or implied.
+ * 
+ * (C) 2003-2015, Terra Informatica Software, Inc.
+ */
+
+/*
+ * DOM access methods, C++ interface, sciter::dom namespace
+ */
+
 #ifndef __sciter_dom_hpp__
 #define __sciter_dom_hpp__
 

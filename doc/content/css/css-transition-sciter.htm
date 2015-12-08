@@ -1,0 +1,48 @@
+﻿<html>
+  <head>
+    <title>transition CSS attribute</title>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>H-SMILE core, CSS, the <code>transition</code> attribute.</h1>
+  <p>The transition attribute accepts single value or list of values - functions describing animated transformation of CSS attributes between initial state and the state described by &nbsp;the rule where the transition is defined. Example:</p>
+  <pre>div
+{
+  width:100px;
+  height:100px;
+}
+div:hover
+{
+  width:200px;
+  height:200px;
+  transition: width(linear,400ms)
+              height(linear,400ms);
+}
+</pre>
+  <p>Second rule here defines transition of width and height attributes between normal state to the :hover state of the element. The transition attribute defines both directions of the transition - from normal state to :hover and from :hover state to normal.</p>
+  <h2>Transition definition syntax</h2>
+  <p>Transition definition is a single function or space delimited list of functions where each function is one of:</p>
+  <ol>
+    <li>Cannonic defintion using named parameters:<br/><code><em>attribute</em> <strong>(</strong> <strong>easing-function:</strong><em>name</em><strong> ,</strong> duration: <em>duration</em> <strong>,</strong> delay: <em>duration</em> <strong>)</strong></code> or<br/><code><em>attribute</em> <strong>(</strong> <strong>easing-function-in:</strong><em>name</em><strong> ,</strong> duration-in: <em>duration</em> <strong>,</strong> delay-in: <em>duration</em>, <strong><br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;easing-function-out:</strong><em>name</em><strong> ,</strong> duration-out: <em>duration</em> <strong>,</strong> delay-out: <em>duration</em> &nbsp;<strong>)</strong></code></li>Declares animation of the attribute in both directions - when element gets and looses the style where transition is defined. When element looses the style engine initiates automatic rollback animation - value of the property is changing in opposite direction as if time is running back. Order of named parameters is not relevant.
+    <li><code><em>attribute</em> <strong>(</strong> <em>easing-function</em><strong> ,</strong> <em>duration</em> [<strong>,</strong> <em>delay</em> ] <strong>)</strong></code></li>Declares animation of the attribute in both directions - when element gets and looses the style where transition is defined. When element looses the style engine initiates automatic rollback animation - value of the property is changing in opposite direction as if time is running back.
+    <li><code><em>attribute</em> <strong>(</strong> <em>easing-function</em><strong> ,</strong> <em>duration</em> <strong>,</strong> <em>delay</em> , <em>rollback-easing-function</em>, [<em>rollback-duration</em> [<strong>,</strong> <em>rollback-delay</em> ]] <strong>)</strong></code></li>Declares animation of the attribute in both directions with explicit declaration of the rollback method.
+    <li><code><em>attribute</em> <strong>(</strong> <em>easing-function</em><strong> ,</strong> <em>duration</em> [<strong>,</strong> <em>delay</em> ], <strong>none</strong> <strong>)</strong></code></li>Declares animation of the attribute only in initial-to-this direction suppressing rollback animation. When element looses the style no animation happens - elements gets new style values immediately.
+    <li><code><em>attribute</em> <strong>(</strong> <strong>none</strong> , <em>rollback-easing-function</em>, <em>rollback-duration</em> [<strong>,</strong> <em>rollback-delay</em> ] <strong>)</strong></code></li>Declares animation of the attribute only in this-to-initial (rollback) direction suppressing direct animation. When element gets the style no animation happens - elements gets new style values immediately.
+    <li><code><strong>sound</strong> ( <strong>in</strong>: url(sound1.wav) [,<strong>out</strong>: url(sound2.wav)] )</code></li>Defines sounds to be played during in and out transitions.</ol>
+  <p>Where:</p>
+  <ul>
+    <li><em><code>attribute</code></em> - name of animatable CSS attribute, e.g. function <code>width(linear,0.4s)</code> defines rule of the transition of the <em>width</em> attribute;</li>
+    <li><code><em>easing-function</em></code> - name of one of easing functions listed in easing-functions.htm file;</li>
+    <li><code><em>duration</em></code> - animation duration, number of seconds or milliseconds, e.g. <code>0.4s</code> and <code>400ms</code>; &nbsp;</li>
+    <li><code><em>delay</em></code> - delay before start of animaton of the property.</li></ul>
+  <h2>Transition triggering</h2>
+  <p>When element changes its state (e.g. :hover or value of some attribute changes) it may have new style applied to it (if such style is defined at all). It is said that the element has two style bags at the moment of change: <em>p-style</em> - previous style and <em>n-style</em> - new style that is about to be applied. If one or both styles have transition property defined then following actions are taken:</p>
+  <ul>
+    <li><strong>p-style</strong>.transition - <strong>null</strong>, &nbsp;<strong>n-style</strong>.transition - <strong>defined</strong> : <br/>Direct transition initiated, <strong>n-style</strong>.transition definition is used.</li>
+    <li><strong>p-style</strong>.transition - <strong>defined</strong>, &nbsp;<strong>n-style</strong>.transition - <strong>null</strong> : <br/>Rollback transition initiated, <strong>p-style</strong>.transition definition is used.</li>
+    <li><strong>p-style</strong>.transition - <strong>defined</strong>, &nbsp;<strong>n-style</strong>.transition - <strong>defined</strong> and transitions are not the same - transition is explicitly defined by the new rule: <br/>Direct transition initiated, <strong>n-style</strong>.transition definition is used.</li></ul>
+  <p></p>
+  <h2>Transition interruption</h2>
+  <p>If the element gets new value of the transition style attribute while transition is running then the transition switches direction by using rules above. The only difference is that overall duration of the transition will be equal to current time of the transition. E.g. rollback of not-finished transition will take shorter time than full rollback. In the same way reaplying of some transition that is rolling back at the moment will be shorter than full direct transition.</p>
+</body>
+</html>

@@ -1,11 +1,19 @@
+/*
+ * The Sciter Engine of Terra Informatica Software, Inc.
+ * http://sciter.com
+ *
+ * The code and information provided "as-is" without
+ * warranty of any kind, either expressed or implied.
+ *
+ * (C) 2003-2015, Terra Informatica Software, Inc.
+ */
+
+
 #ifndef __SCITER_API_X__
 #define __SCITER_API_X__
 
-//|
-//| Redirection of
-//|
-
 #include "sciter-x-types.h"
+#include "sciter-x-def.h"
 #include "sciter-x-dom.h"
 #include "value.h"
 #include "tiscript.hpp"
@@ -21,6 +29,8 @@
 #if defined(OSX)
   #include <dlfcn.h>
 #endif
+
+struct SciterGraphicsAPI;
 
 typedef struct _ISciterAPI {
 
@@ -231,6 +241,8 @@ typedef struct _ISciterAPI {
   LPVOID SCFN( SciterGetCallbackParam )(HWINDOW hwnd);
   UINT_PTR SCFN( SciterPostCallback )(HWINDOW hwnd, UINT_PTR wparam, UINT_PTR lparam, UINT timeoutms);
 
+  LPSciterGraphicsAPI SCFN( GetSciterGraphicsAPI )();
+
 } ISciterAPI;
 
 typedef ISciterAPI* (SCAPI *SciterAPI_ptr)();
@@ -394,6 +406,12 @@ typedef ISciterAPI* (SCAPI *SciterAPI_ptr)();
 
 
 #endif
+
+  inline LPSciterGraphicsAPI gapi()
+  {
+    static LPSciterGraphicsAPI _gapi = SAPI()->GetSciterGraphicsAPI();
+    return _gapi;
+  }
 
   // defining "official" API functions:
 

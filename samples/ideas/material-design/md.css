@@ -1,0 +1,52 @@
+@const BUTTON-RAISED-BACK-COLOR: #26a69a;
+@const BUTTON-RAISED-FORE-COLOR: #fff;
+@const BUTTON-RAISED-HOVER-BACK-COLOR: #2BBBAD;
+@const BUTTON-RAISED-ACTIVE-BACK-COLOR: #8BDAD2;
+@const BUTTON-RAISED-DISABLED-BACK-COLOR: #DFDFDF;
+@const BUTTON-RAISED-DISABLED-FORE-COLOR: #555;
+
+
+@const BUTTON-FLAT-FORE-COLOR: #26a69a;
+@const BUTTON-FLAT-BACK-COLOR: transparent;
+@const BUTTON-FLAT-HOVER-BACK-COLOR: #FDFDFD;
+@const BUTTON-FLAT-ACTIVE-BACK-COLOR: #DFDFDF;
+@const BUTTON-FLAT-DISABLED-FORE-COLOR: #AFAFAF;
+
+
+
+button { style-set: md-button; }
+
+@set md-button < std-button-base
+{
+  :root
+  { 
+    font:system;
+    font-rendering-mode:snap-pixel;
+    color:@BUTTON-FLAT-FORE-COLOR;
+    background:@BUTTON-FLAT-BACK-COLOR; 
+    padding:0 0.5em;     
+    line-height:1.8em;
+  }
+      
+  :root[role="default-button"]    { background: @BUTTON-FLAT-BACK-COLOR; }
+  :root:hover                     { background: @BUTTON-FLAT-HOVER-BACK-COLOR; }
+  :root:focus                     { background: @BUTTON-FLAT-BACK-COLOR; }
+  :root:active:not(:animating)    { background: @BUTTON-FLAT-ACTIVE-BACK-COLOR; }
+  :root:disabled                  { background: @BUTTON-FLAT-BACK-COLOR; color: @BUTTON-FLAT-DISABLED-FORE-COLOR; }
+  :root:tab-focus                 { outline:1dip dashed @BUTTON-FLAT-FORE-COLOR -4dip; /* inside */ }
+
+  :root.raised                           { background: @BUTTON-RAISED-BACK-COLOR; color: @BUTTON-RAISED-FORE-COLOR; 
+                                           box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.16), 0 2px 5px 0 rgba(0, 0, 0, 0.12); }
+  :root.raised[role="default-button"]    { background: @BUTTON-RAISED-BACK-COLOR; }
+  :root.raised:hover                     { background: @BUTTON-RAISED-HOVER-BACK-COLOR;  
+                                           box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.16), 0 4px 7px 0 rgba(0, 0, 0, 0.12);
+                                           transition: box-shadow(linear,400ms);  }
+  :root.raised:focus                     { background: @BUTTON-RAISED-BACK-COLOR; }
+  :root.raised:active:not(:animating)    { background: @BUTTON-RAISED-ACTIVE-BACK-COLOR; }
+  :root.raised:disabled                  { background: @BUTTON-RAISED-BACK-COLOR; color: BUTTON-RAISED-DISABLED-FORE-COLOR; }
+  :root.raised:tab-focus                 { outline:1dip dashed @BUTTON-RAISED-FORE-COLOR -4dip; /* inside */ }
+
+  
+
+}
+

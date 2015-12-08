@@ -1,24 +1,21 @@
-#if !defined(__SCITER_THREADS_H__)
-#define __SCITER_THREADS_H__
-
 /*
- * The Sciter Engine
- * http://terrainformatica.com/sciter
- *
- * Asynchronous GUI Task Queue.
- * Use these primitives when you need to run code in GUI thread.
- *
+ * The Sciter Engine of Terra Informatica Software, Inc.
+ * http://sciter.com
+ * 
  * The code and information provided "as-is" without
  * warranty of any kind, either expressed or implied.
- *
- *
- * (C) 2003-2015, Andrew Fedoniouk (andrew@terrainformatica.com)
+ * 
+ * (C) 2003-2015, Terra Informatica Software, Inc.
  */
 
-/*!\file
-\brief Asynchronous GUI primitives
-*/
+/*
+ * Asynchronous GUI Task Queue.
+ * Use these primitives when you need to run code in GUI thread.
+ */
 
+
+#if !defined(__SCITER_THREADS_H__)
+#define __SCITER_THREADS_H__
 
 #if defined(WINDOWS)
   #include <specstrings.h>

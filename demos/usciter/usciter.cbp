@@ -53,10 +53,13 @@
 			<Add option="-Wall" />
 			<Add option="`pkg-config gtk+-3.0 --cflags` -std=c++11" />
 			<Add directory="../../include" />
+			<Add directory="." />
 		</Compiler>
 		<Linker>
 			<Add option="`pkg-config gtk+-3.0 --libs` -ldl" />
+			<Add option="-pthread" />
 		</Linker>
+		<Unit filename="../../include/behaviors/behavior_drawing.cpp" />
 		<Unit filename="../../include/sciter-gtk-main.cpp" />
 		<Unit filename="usciter.cpp" />
 		<Extensions>

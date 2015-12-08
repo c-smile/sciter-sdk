@@ -1,3 +1,20 @@
+/*
+ * The Sciter Engine of Terra Informatica Software, Inc.
+ * http://sciter.com
+ * 
+ * The code and information provided "as-is" without
+ * warranty of any kind, either expressed or implied.
+ * 
+ * (C) 2003-2015, Terra Informatica Software, Inc.
+ */
+
+/*
+ * Sciter windowless engine instance 
+ * 
+ * !!!! NOT READY YET !!!!  
+ */
+
+
 #ifndef __sciter_lite_hpp__
 #define __sciter_lite_hpp__
 

@@ -1,6 +1,6 @@
 
 #include "sciter-x-window.hpp"
-
+#include "behaviors/behavior_video_generator.cpp"
 
 // native API demo
 
@@ -10,6 +10,7 @@ static int native_get_element_uid(sciter::value vel) {
   sciter::dom::element el = (HELEMENT)vel.get_object_data();
   return (int)el.get_element_uid();
 }
+
 
 static sciter::value native_api() {
 

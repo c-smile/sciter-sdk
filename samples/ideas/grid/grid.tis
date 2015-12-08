@@ -67,13 +67,14 @@ class Grid: Behavior
       var prev = this.getCurrentRow();
       if( prev )
       {
-        if( prev === row ) return; // already here, nothing to do.
+        if( prev === row && !doubleClick) return; // already here, nothing to do.
         prev.state.current = false; // drop state flag
       }
       row.state.current = true; 
       row.scrollToView();
+     
       if( doubleClick )
-        this.onRowDoubleClick(row);
+        this.onRowDoubleClick(row,reason);
       else
         this.onRowClick(row,reason);
     }
@@ -138,7 +139,7 @@ class Grid: Behavior
           this.sortRows(headerCell);
       }
             
-      return true; // as it is always ours then stop event bubbling
+      //return true; // as it is always ours then stop event bubbling
     }
   
   function onFocus(evt)

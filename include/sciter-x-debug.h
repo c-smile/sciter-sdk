@@ -1,3 +1,13 @@
+/*
+ * The Sciter Engine of Terra Informatica Software, Inc.
+ * http://sciter.com
+ * 
+ * The code and information provided "as-is" without
+ * warranty of any kind, either expressed or implied.
+ * 
+ * (C) 2003-2015, Terra Informatica Software, Inc.
+ */
+
 #ifndef __SCITER_X_DEBUG_H__
 #define __SCITER_X_DEBUG_H__
 

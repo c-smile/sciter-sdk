@@ -1,22 +1,17 @@
-/** \mainpage Terra Informatica Sciter engine.
- *
- * \section legal_sec In legalese
- *
+/*
+ * The Sciter Engine of Terra Informatica Software, Inc.
+ * http://sciter.com
+ * 
  * The code and information provided "as-is" without
  * warranty of any kind, either expressed or implied.
- *
- * <a href="http://terrainformatica.com/sciter">Sciter Home</a>
- *
- * (C) 2003-2015, Terra Informatica Software, Inc. and Andrew Fedoniouk
- *
- * \section structure_sec Structure of the documentation
- *
- * See <a href="files.html">Files</a> section.
- **/
+ * 
+ * (C) 2003-2015, Terra Informatica Software, Inc.
+ */
 
-/**\file
- * \brief Standard implementation of the Sciter notificantion handler.
- **/
+/*
+ * Sciter host application helpers 
+ */
+
 
 #ifndef __sciter_x_host_callback_h__
 #define __sciter_x_host_callback_h__

@@ -1,14 +1,15 @@
 /*
- * Terra Informatica Sciter Engine
- * http://terrainformatica.com/sciter
- *
- * Behaviors support (a.k.a windowless controls)
- *
+ * The Sciter Engine of Terra Informatica Software, Inc.
+ * http://sciter.com
+ * 
  * The code and information provided "as-is" without
  * warranty of any kind, either expressed or implied.
- *
- *
- * (C) 2003-2015, Andrew Fedoniouk (andrew@terrainformatica.com)
+ * 
+ * (C) 2003-2015, Terra Informatica Software, Inc.
+ */
+
+/*
+ * Behaviors support (a.k.a windowless controls)
  */
 
 #ifndef __sciter_x_behavior_h__
@@ -21,6 +22,7 @@
 #include "sciter-x-types.h"
 #include "sciter-x-dom.h"
 #include "sciter-x-value.h"
+#include "sciter-x-graphics.h"
 
 #pragma pack(push,8)
 
@@ -35,7 +37,7 @@
       HANDLE_SCROLL = 0x0008,         /** scroll events */
       HANDLE_TIMER = 0x0010,          /** timer event */
       HANDLE_SIZE = 0x0020,           /** size changed event */
-      //HANDLE_DRAW = 0x0040,           /** drawing request (event) */
+      HANDLE_DRAW = 0x0040,           /** drawing request (event) */
       HANDLE_DATA_ARRIVED = 0x080,    /** requested data () has been delivered */
       HANDLE_BEHAVIOR_EVENT        = 0x0100, /** logical, synthetic events:
                                                  BUTTON_CLICK, HYPERLINK_CLICK, etc.,
@@ -286,7 +288,7 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
   struct DRAW_PARAMS
   {
       UINT             cmd;       // DRAW_EVENTS
-      SCITER_GRAPHICS* gfx;       // hdc to paint on
+      HGFX             gfx;       // hdc to paint on
       RECT             area;      // element area, to get invalid area to paint use GetClipBox,
       UINT             reserved;  // for DRAW_BACKGROUND/DRAW_FOREGROUND - it is a border box
                                   // for DRAW_CONTENT - it is a content box
@@ -667,7 +669,7 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
       virtual bool on_focus  (HELEMENT he, HELEMENT target, UINT event_type ) { return false; }
       virtual bool on_timer  (HELEMENT he ) { return false; /*stop this timer*/ }
       virtual bool on_timer  (HELEMENT he, UINT_PTR extTimerId ) { return false; /*stop this timer*/ }
-      virtual bool on_draw   (HELEMENT he, UINT draw_type, SCITER_GRAPHICS* hdc, const RECT& rc ) { return false; /*do default draw*/ }
+      virtual bool on_draw   (HELEMENT he, UINT draw_type, HGFX hgfx, const RECT& rc ) { return false; /*do default draw*/ }
       virtual void on_size   (HELEMENT he ) { }
 
       virtual bool on_method_call (HELEMENT he, UINT methodID, METHOD_PARAMS* params ) { return false; /*not handled*/ }
@@ -717,7 +719,7 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
             case HANDLE_MOUSE: {  MOUSE_PARAMS *p = (MOUSE_PARAMS *)prms; return pThis->handle_mouse( he, *p );  }
             case HANDLE_KEY:   {  KEY_PARAMS *p = (KEY_PARAMS *)prms; return pThis->handle_key( he, *p ); }
             case HANDLE_FOCUS: {  FOCUS_PARAMS *p = (FOCUS_PARAMS *)prms; return pThis->handle_focus( he, *p ); }
-            //case HANDLE_DRAW:  {  DRAW_PARAMS *p = (DRAW_PARAMS *)prms; return pThis->handle_draw(he, *p ); }
+            case HANDLE_DRAW:  {  DRAW_PARAMS *p = (DRAW_PARAMS *)prms; return pThis->handle_draw(he, *p ); }
             case HANDLE_TIMER: {  TIMER_PARAMS *p = (TIMER_PARAMS *)prms; return pThis->handle_timer(he, *p); }
             case HANDLE_BEHAVIOR_EVENT:   { BEHAVIOR_EVENT_PARAMS *p = (BEHAVIOR_EVENT_PARAMS *)prms; return pThis->handle_event(he, *p ); }
             case HANDLE_METHOD_CALL:      { METHOD_PARAMS *p = (METHOD_PARAMS *)prms; return pThis->handle_method_call(he, *p ); }

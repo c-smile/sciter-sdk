@@ -120,6 +120,12 @@
     <ClInclude Include="..\..\include\sciter-x-lite.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sciter-x-graphics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sciter-x-graphics.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -138,6 +144,9 @@
       <Filter>behaviors</Filter>
     </ClCompile>
     <ClCompile Include="..\..\include\behaviors\behavior_video_generator.cpp">
+      <Filter>behaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\behaviors\behavior_drawing.cpp">
       <Filter>behaviors</Filter>
     </ClCompile>
   </ItemGroup>
