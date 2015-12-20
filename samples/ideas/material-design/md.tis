@@ -1,0 +1,54 @@
+
+namespace MD 
+{
+
+  // that wave effect
+  function Wave() {
+  
+    this.on("mousedown",function(evt){
+    
+      // ripple - expanding disk animation     
+      var (x1, y1, x2, y2) = this.box(#rect,#border,#self);
+      var x = evt.x; var y = evt.y;
+      
+      function distance( xt,yt ) { return Math.sqrt((xt - x)*(xt - x) + (yt - y)*(yt - y)); }
+      
+      assert this.state.active;
+      
+      var active =  this.style["-active-color"] || color(0x8B,0x8B,0x8B,0.0);
+      
+      var maxradii = Float.max( distance(x1,y1),
+                                distance(x1,y2),
+                                distance(x2,y1),
+                                distance(x2,y2) ); 
+
+      var radii = 0.0;
+                         
+      function step(progress) {
+        if( !this.state.active )
+          return false;
+        radii = progress * maxradii;
+        active = color(active.r,active.g,active.b,progress);
+        this.refresh();
+      }
+      function end() { 
+        this.paintContent = null; 
+      }
+      
+      this.paintContent = function(gfx) {
+        gfx.pushLayer(#background-area);
+        gfx.fillColor(active);
+        gfx.ellipse(x,y,radii);
+        gfx.popLayer();
+      }
+     
+      this.animate( step, end, 300ms );
+    
+      return false;
+    
+    
+    });
+  
+  }
+
+}

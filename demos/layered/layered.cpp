@@ -68,6 +68,7 @@ bool window::init()
    SetWindowLongPtr(_hwnd, GWLP_USERDATA, LONG_PTR(this));
    setup_callback();
    load_file(L"res:default.htm");
+   //load_file(L"http://sciter.com/test/layered/default.html");
    return true;
 }
 

@@ -49,6 +49,10 @@
     //ul#menu-bar menu { margin-top:10px; hit-margin:10px 0 0 0; }
     //ul#menu-bar menu menu{ margin:0; hit-margin:0; }
     
+    select {
+      vertical-align:middle;
+    }
+    
   </style>
   
     <script type="text/tiscript">
@@ -69,7 +73,7 @@
   <li>Simple
     <menu class="cool">
       <li title="Hello world!">First item (with tooltip)</li>
-      <li accesskey="^2" #test>Second item<span class="accesskey">Ctrl+<font color="red">2</font></span></li>
+      <li accesskey="^2">Second item<span class="accesskey">Ctrl+<font color="red">2</font></span></li>
       <li>Third item
         <menu>
           <li style="background:linear-gradient(left,yellow,red)">First sub-item</li>
@@ -78,9 +82,16 @@
       </li>
       <li accesskey="^4">Fourth item<span class="accesskey">Ctrl+<font color="red">4</font></span></li>
     </menu>
+   </li>
+   <li>Simple 2
+    <menu class="cool">
+      <li >First item</li>
+      <li >Second item</li>
+      <li >Third item</li>
+    </menu>
   </li>
   <li>Inputs
-    <menu class="cool">
+    <menu class="cool" id="test">
       <li type="radio" name="myradios" id="myradios-1">First radio item</li>
       <li type="radio" name="myradios" id="myradios-2">Second radio item</li>
       <li type="radio" name="myradios" id="myradios-3">Third radio item</li>
@@ -108,6 +119,11 @@
       <li>Status:<input type="progress" name="p2" maxvalue="100" value="25"/></li>
       <li>Value:<input type="number" name="num" size=4 step=1 minvalue=0 maxvalue=100 value="25"/></li>
       <li><button name="just-a-button">Just a button</button></li>
+      <li>dropdown select: <select>
+        <option>First</option>
+        <option>Second</option>
+        <option>Third</option>
+      </li>
     </menu>
   </li>
 </ul>

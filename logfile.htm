@@ -11,6 +11,25 @@
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
     <tr>
+      <td valign="top" bgcolor="#FFFADA">3.3.1.1</td>
+      <td nowrap valign="top" align="center">19-12-2015</td>
+      <td>
+        <p>fixes:</p>
+        <ul>
+          <li>[osx] fix of touchpad/mousewheel horizontal scroll on popups.</li>
+          <li>[richtext] fix of deletion over whitespace and other deletion related issues;</li>
+          <li>[inspector] listens on port 0x0DEB and address &quot;0.0.0.0&quot; (all interfaces). This allows to use inspector on other machine other than the debugee;</li>
+          <li>[css,layout] fix of display:inline-block handling;</li>
+          <li>[layered] Fix of http://... resource loading as a facade into layered window;</li>
+          <li>DataSocket, fix of connections where host address is given by IP;</li>
+          <li>[CSS] better @font-face handling, works on Window/Direct2D and OSX. See sample: /sdk/samples/font-@font-face/;</li>
+          <li>[png] other way of handling malformed PNG images;</li>
+          <li>[css] fix of color:inherit handling;</li>
+          <li>[sciter-x-graphics.h] <em>imageCreateFromPixmap</em> signature adjustment.</li>
+          <li>fix of implicit focus on popup and moved elements. NOTE: that may require explicit view.focus(element) call if popup/moved element requires focus.</li>
+          <li>[css,calc] fix of vw/vh/vmin/vmax units handling in calc(...);</li></ul>Builds: win32, win64, osx64, linux/gtk64
+        <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
+    <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.1.0</td>
       <td nowrap valign="top" align="center">08-12-2015</td>
       <td>
@@ -18,7 +37,7 @@
         <ul>
           <li><strong>+ sdk/include/sciter-x-graphics.h /.hpp </strong>- native drawing by event_handlers/behaviors; &nbsp;Sciter exposes sciter::graphics - platform independent 2D AA drawing primitives.</li>
           <ul>
-            <li>see: sdk/samples/behaviors/native-drawing.htm demo that demonstarates native drawing behavior: /sdk/include/behaviors/behavior_drawing.cpp </li></ul>
+            <li>see: sdk/samples/behaviors/native-drawing.htm demo that demonstarates native drawing behavior: /sdk/include/behaviors/behavior_drawing.cpp</li></ul>
           <li>[script] + <code>Object.keys(),</code> see : <a href="http://sciter.com/forums/topic/object-members-in-order">http://sciter.com/forums/topic/object-members-in-order/</a></li>
           <li>overflow:none; documented;</li>
           <li>[CSS] + @mixin feature, see: <a href="http://sciter.com/mixin-feature-in-sciters-css">http://sciter.com/mixin-feature-in-sciters-css/</a></li>
@@ -30,7 +49,7 @@
           <li>[script] Fix of <code>integer * length</code> expressions handling, see: <a href="http://sciter.com/forums/topic/4-10px-40000px">http://sciter.com/forums/topic/4-10px-40000px/</a></li>
           <li>[css, layout] <strong>fix of % (percentage) units calculations</strong>. % handling should be close to what is defined by the CSS spec;</li>
           <li>[css,layout] fix of horizontal-align implicit value on :rtl;</li>
-          <li>fixes of animated GIF and PNG rendering, see: <a href="http://sciter.com/forums/topic/animated-gifs">http://sciter.com/forums/topic/animated-gifs/</a> and other test cases. </li>
+          <li>fixes of animated GIF and PNG rendering, see: <a href="http://sciter.com/forums/topic/animated-gifs">http://sciter.com/forums/topic/animated-gifs/</a> and other test cases.</li>
           <li>[osx] isMaximizable fix.</li>
           <li>[samples] fix of color-chooser sample;</li>
           <li>[osx] fix of colour space handling of RGB/RGBA colors;</li>
@@ -40,11 +59,11 @@
           <li>More safe Behavior.detached() handling;</li>
           <li>[tiscript] fix of AV when namespace is set to undefined. Does not happen in normal circumstances but still;</li>
           <li>[+formation] fix, see: <a href="http://sciter.com/forums/topic/radiogroup-in-formation-is-broken">http://sciter.com/forums/topic/radiogroup-in-formation-is-broken/</a></li>
-          <li>[osx] fix of child NSView replacement. </li>
+          <li>[osx] fix of child NSView replacement.</li>
           <li>[sample] grid sample fix: sdk/samples/ideas/grid/grid.tis;</li>
           <li>[DOM, API] SciterSetElementText sets raw text, but not value;</li>
           <li>[css,layout] CSS fix of line-height in percents for large font sizes;</li>
-          <li>[osx] fix of blocking view.doEvent(#all); </li>
+          <li>[osx] fix of blocking view.doEvent(#all);</li>
           <li>[css] fix of negative lengths handling;</li>
           <li>[osx] ellipsis rendering fix;</li>
           <li>[osx] view / &quot;statechange&quot; event generation fix when window gets minimized;</li>

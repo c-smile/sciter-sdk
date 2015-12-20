@@ -3,7 +3,7 @@ include "settings.tis";
 
 function serve() {
 
-  const PORT = 0xDEB0;
+  const PORT = 0x0DEB;
  
   function driver(socket) 
   {
@@ -11,7 +11,7 @@ function serve() {
     return true; // we accept this connection
   }
  
-  var serverSocket = DataSocket.listen(driver,PORT);
+  var serverSocket = DataSocket.listen(driver,PORT,"0.0.0.0");
   if( !serverSocket ) {
     view.msgbox(#error, "Another instance of Inspector is running.");
     view.close();
