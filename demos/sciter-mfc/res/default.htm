@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+    html {
+      background: radial-gradient(75% 75%, circle farthest-side, white, orange, rgb(204,0,0));
+      color:#fff;
+    }
+    
+    html:rtl {
+      mapping: left-to-right(background);
+    }
+    
+    
+    body { 
+      size:*;
+      overflow:auto; 
+    }
+    
+    </style>
+    <script type="text/tiscript">
+     
+      self.select("button#open").on("click", function(){
+      
+        var fn = view.selectFile(#open,
+          "HTML Files (*.htm,*.html)|*.HTM;*.HTML|All Files (*.*)|*.*" , "html" );
+        if( fn )
+          view.load(fn);
+     
+      });
+    
+    </script>
+  </head>
+<body>
+
+  <h1>Minimal Sciter MFC Application</h1>
+
+  <button id="open">Open HTML file</button> 
+
+</body>
+</html>
