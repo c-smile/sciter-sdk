@@ -1,0 +1,36 @@
+<html>
+  <head>
+  <title></title>
+  <style> 
+    richtext { 
+      behavior:richtext; 
+      size:*; border:1px solid blue; 
+      overflow:auto;
+    }
+    ol { size:*; overflow:auto; }
+  </style>
+  <script type="text/tiscript">
+  
+   
+    $(richtext).onCommand = function(evt) {
+      if(evt.type == Event.COMMAND_EXEC)
+         $(ol).$append(<li>COMMAND_EXEC:{ evt.command }</li>);
+      else if(evt.type == Event.COMMAND_QUERY)
+         $(ol).$append(<li>COMMAND_QUERY:{ evt.command }</li>);
+    }
+    
+    // subscription to command
+    $(richtext).on("exec:edit:paste", function() {
+      view.msgbox(#information,"Paste");
+    });
+    
+    
+  </script>
+  </head>
+<body>
+  Richtext commands inspector. Type, paste, delete text to see.
+  <richtext src="test-doc.htm" />
+  <ol>
+  </ol>
+</body>
+</html>

@@ -20,6 +20,8 @@
 		49518A0318DF683800844B99 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 49518A0118DF683800844B99 /* Credits.rtf */; };
 		49518A0B18DF683800844B99 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49518A0A18DF683800844B99 /* Images.xcassets */; };
 		497E3CD3196222C900B2D35A /* window.mm in Sources */ = {isa = PBXBuildFile; fileRef = 497E3CD2196222C900B2D35A /* window.mm */; };
+		49ADAE961C16A149007BC462 /* behavior_drawing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49ADAE951C16A148007BC462 /* behavior_drawing.cpp */; };
+		49ADAE971C16A149007BC462 /* behavior_drawing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49ADAE951C16A148007BC462 /* behavior_drawing.cpp */; };
 		49D422211BA3473B005E6E36 /* behavior_tabs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49D422201BA3473B005E6E36 /* behavior_tabs.cpp */; };
 		49EC75711BACFB2C00BBCF44 /* behavior_video_generator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49EC75701BACFB2C00BBCF44 /* behavior_video_generator.cpp */; };
 /* End PBXBuildFile section */
@@ -62,6 +64,9 @@
 		49600DE318E8AD1C00B74219 /* value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = value.h; path = ../../include/value.h; sourceTree = "<group>"; };
 		497E3CD11962210600B2D35A /* window.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = window.h; sourceTree = "<group>"; };
 		497E3CD2196222C900B2D35A /* window.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = window.mm; sourceTree = "<group>"; };
+		49ADAE951C16A148007BC462 /* behavior_drawing.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = behavior_drawing.cpp; path = ../../include/behaviors/behavior_drawing.cpp; sourceTree = "<group>"; };
+		49ADAE981C16A1C4007BC462 /* sciter-x-graphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "sciter-x-graphics.h"; path = "../../include/sciter-x-graphics.h"; sourceTree = "<group>"; };
+		49ADAE991C16A1C4007BC462 /* sciter-x-graphics.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = "sciter-x-graphics.hpp"; path = "../../include/sciter-x-graphics.hpp"; sourceTree = "<group>"; };
 		49D38A8E1ADEF82A0088851F /* sciter-x-debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "sciter-x-debug.h"; path = "../../include/sciter-x-debug.h"; sourceTree = "<group>"; };
 		49D422201BA3473B005E6E36 /* behavior_tabs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = behavior_tabs.cpp; path = ../../include/behaviors/behavior_tabs.cpp; sourceTree = "<group>"; };
 		49D422221BA347BF005E6E36 /* stdafx.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stdafx.h; sourceTree = "<group>"; };
@@ -93,6 +98,8 @@
 		4907E81718F33697002CFB9B /* includes */ = {
 			isa = PBXGroup;
 			children = (
+				49ADAE981C16A1C4007BC462 /* sciter-x-graphics.h */,
+				49ADAE991C16A1C4007BC462 /* sciter-x-graphics.hpp */,
 				49EC75721BACFBC200BBCF44 /* sciter-x-video-api.h */,
 				490FA449191584C50093BCA0 /* sciter-x-api.h */,
 				490FA44A191584C50093BCA0 /* sciter-x-def.h */,
@@ -120,6 +127,7 @@
 		495189E618DF683800844B99 = {
 			isa = PBXGroup;
 			children = (
+				49ADAE951C16A148007BC462 /* behavior_drawing.cpp */,
 				49EC75701BACFB2C00BBCF44 /* behavior_video_generator.cpp */,
 				49D422221BA347BF005E6E36 /* stdafx.h */,
 				49D422201BA3473B005E6E36 /* behavior_tabs.cpp */,
@@ -299,6 +307,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49ADAE971C16A149007BC462 /* behavior_drawing.cpp in Sources */,
 				490E8B0D1951ED3A00850B46 /* main.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -311,6 +320,7 @@
 				49EC75711BACFB2C00BBCF44 /* behavior_video_generator.cpp in Sources */,
 				495189FF18DF683800844B99 /* main.mm in Sources */,
 				497E3CD3196222C900B2D35A /* window.mm in Sources */,
+				49ADAE961C16A149007BC462 /* behavior_drawing.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

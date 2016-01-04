@@ -71,6 +71,16 @@ namespace sciter
         return image( himg );
       return image(0);
     }
+    // create image from BGRA data. Size of pixmap is width*height*4 bytes. 
+    static image create( UINT width, UINT height, bool withAlpha, const BYTE* pixmap )
+    {
+      HIMG himg = 0;
+      GRAPHIN_RESULT r = gapi()->imageCreateFromPixmap(&himg, width, height, withAlpha, pixmap ); assert(r == GRAPHIN_OK); r;
+      if( himg ) 
+        return image( himg );
+      return image(0);
+    }
+
     static image load( aux::bytes data ) // loads image from png or jpeg enoded data
     {
       HIMG himg;

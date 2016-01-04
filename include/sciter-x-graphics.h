@@ -114,8 +114,10 @@ struct SciterGraphicsAPI
   GRAPHIN_RESULT
         SCFN(imageCreate)( HIMG* poutImg, UINT width, UINT height, BOOL withAlpha );
 
+  // construct image from B[n+0],G[n+1],R[n+2],A[n+3] data.
+  // Size of pixmap data is pixmapWidth*pixmapHeight*4
   GRAPHIN_RESULT
-        SCFN(imageCreateFromPixmap)( HIMG* poutImg, UINT pixmapWidth, UINT pixmapHeight, BOOL withAlpha, const COLOR* pixmapPixels );
+        SCFN(imageCreateFromPixmap)( HIMG* poutImg, UINT pixmapWidth, UINT pixmapHeight, BOOL withAlpha, const BYTE* pixmap );
 
   GRAPHIN_RESULT
         SCFN(imageAddRef)( HIMG himg );

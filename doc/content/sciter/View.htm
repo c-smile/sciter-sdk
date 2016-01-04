@@ -166,7 +166,8 @@ if( fn ) view.<strong>load</strong>(fn);
         <li><em>caption</em> - string, window caption;</li>
         <li><em>alignment</em> - integer, alignment of the window relative to the screen, -1 .. -9 - relative to the parent.</li>
         <li><em>screen</em> - integer, 0 .. View.screens - 1, if <em>alignment</em> is 1..9 then it determines screen/monitor where the window will appear, optional.</li></ul>
-      <p>If <em>x</em>,<em>y</em> and <em>alignment</em> provided then x,y defines reference point and the alignment defines relative position of the window against that point.</p></dd>
+      <p>If <em>x</em>,<em>y</em> and <em>alignment</em> provided then x,y defines reference point and the alignment defines relative position of the window against that point.</p>
+      <p>To open window in detached mode ( it will stay on screen even when its owner window is collapsed ) call the method as static one - using <code>View</code> class rather than <code>view</code> instance: <code>View.window(...)</code>.</p></dd>
     <dt>close</dt>
     <dd>
       <div><strong>( </strong>[<em>retval</em>: any]<strong> ) </strong>: undefined</div>

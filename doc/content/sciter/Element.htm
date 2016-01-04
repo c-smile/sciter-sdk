@@ -654,7 +654,7 @@ el.$content(This is item number <b>{ num }</b>);
         <li>&quot;<strong>contextmenu</strong>&quot; - context menu request (right button or property key click);</li>
         <li>&quot;<strong>animationstart</strong>&quot;, &quot;<strong>animationend</strong>&quot; - animation life cycle events;</li>
         <li>&quot;<strong>mousedown</strong>&quot;, &quot;<strong>mouseup</strong>&quot;, &quot;<strong>mousemove</strong>&quot;, &quot;<strong>mouseenter</strong>&quot;, &quot;<strong>mouseleave</strong>&quot; - &nbsp;mouse events;</li>
-        <li>&quot;<strong>mouseidle</strong>&quot; - mouse is inside the element and not moves for some time, by default the engine shows tooltip (if needed) while handling this event; </li>
+        <li>&quot;<strong>mouseidle</strong>&quot; - mouse is inside the element and not moves for some time, by default the engine shows tooltip (if needed) while handling this event;</li>
         <li>&quot;<strong>mousetick</strong>&quot; - mouse button is pressed inside the element, that's periodic event generated while left mouse button is pressed inside the element;</li>
         <li>&quot;<strong>focusin</strong>&quot;, &quot;<strong>focusout</strong>&quot; - bubbling focus change notification events;</li>
         <li>&quot;<strong>focus</strong>&quot;, &quot;<strong>blur</strong>&quot; - non-bubbling focus events - they are sent to elements themselves;</li>
@@ -712,6 +712,46 @@ el.$content(This is item number <b>{ num }</b>);
       <pre>function action(transaction) { ... }
 </pre>
       <p>Where the transaction is an instance of the <a href="Transact.htm" target="content">Transaction</a> interface - primitives used to modify state of the DOM. Any modification made through these function will be undone/redone properly when user will issue Undo/Redo commands in the editor.</p></dd>
+    <dt>execCommand</dt>
+    <dd>
+      <div>( <strong>command</strong>:string [, <strong>attributes</strong>:map] ) : <em>true</em> | <em>false</em></div>
+      <p>The execCommand method executes undoable editing command. The <em>command</em> string identifies command to execute.</p>
+      <p>Editing commands common to all editable elements ( &lt;input|text&gt;, &lt;textarea&gt;, &lt;plaintext&gt;, &lt;htmlarea&gt; ):</p>
+      <ul>
+        <li><code>&quot;edit:cut&quot;</code> - cut selection - copy selection to the clipboard and remove it;</li>
+        <li><code>&quot;edit:copy&quot;</code> - copy selection to the clipboard;</li>
+        <li><code>&quot;edit:paste&quot;</code> - paste content of the clipboard;</li>
+        <li><code>&quot;edit:selectall&quot;</code> - select whole content of the element;</li>
+        <li><code>&quot;edit:undo&quot;</code> - undo last editing operation;</li>
+        <li><code>&quot;edit:redo&quot;</code> - redo last operation that was undone;</li>
+        <li><code>&quot;edit:delete-next&quot;</code> - if there is a selection - delete selected content, otherwise delete next character;</li>
+        <li><code>&quot;edit:delete-prev&quot;</code> - if there is a selection - delete selected content, otherwise delete previous character;</li>
+        <li><code>&quot;edit:delete-word-next&quot;</code> - if there is a selection - delete selected content, otherwise delete next word;</li>
+        <li><code>&quot;edit:delete-word-prev&quot;</code> - if there is a selection - delete selected content, otherwise delete previous word;</li></ul>
+      <p>Editing commands supported by behavior richtext elements ( &lt;htmlarea&gt; ):</p>
+      <ul>
+        <li><code>&quot;edit:insert-break&quot;</code> - essentially this is &quot;ENTER&quot; (VK_RETURN) command, actual DOM modification depends on context;</li>
+        <li><code>&quot;edit:insert-soft-break&quot;</code> - &quot;SHIFT+ENTER&quot; command, inserts <code>&lt;br&gt;</code> separator but actual DOM modification depends on context;</li>
+        <li><code>&quot;format:apply-span:{tag-list}&quot;</code> - wrap selection into span element, if the selection contains one of tags they will be removed.</li>
+        <ul>
+          <li><code>{tag-list}</code> is a pipe (<code>|</code>) &nbsp;separated list of tag names. Example:<br/><code>execCommand(&quot;format:apply-span:b|strong&quot;)</code> - will wrap selection into <code>&lt;b&gt;...&lt;/b&gt;</code> while removing any other <code>&lt;b&gt;</code> and <code>&lt;strong&gt;</code> elements from the selection.</li>
+          <li>Additional map parameter may contain list of DOM attributes to add to wrapping element, Example:<br/><code>execCommand(&quot;format:apply-span:font&quot;,{color:&quot;#F00&quot;})</code> - will wrap selection into <code>&lt;font color=&quot;#F00&quot;&gt;...&lt;/font&gt;</code> element.</li></ul>
+        <li><code>&quot;format:toggle-span:{tag-list}&quot;</code> - if selection contains one of the tags - removes them, otherwise it does <code>&quot;format:apply-span:...&quot;</code> action.</li>
+        <li><code>&quot;format:toggle-list:{list-tag}&quot;</code> - converts paragraphs in selection into a list. If selection is already a list of that type then items of the list will be converted tp simple paragraphs;</li>
+        <ul>
+          <li><code>{list-tag}</code> can be either <code>ul</code>, <code>ol</code> or <code>dl</code>.</li></ul>
+        <li><code>&quot;format:toggle-pre&quot;</code> - converts selection to or from <code>&lt;pre&gt;</code> block.</li>
+        <li><code>&quot;format:indent&quot;</code> - &nbsp;wraps selected paragraphs into <code>&lt;blockquote&gt;</code> or sub-list.</li>
+        <li><code>&quot;format:unindent&quot;</code> - &nbsp;unwraps selected paragraphs from <code>&lt;blockquote&gt;</code> or moves sub-list to one level up.</li>
+        <li><code>&quot;format:morph-block:{to-tag}&quot;</code> - changes tags of selected block elements. This way current <code>&lt;blockquote&gt;</code> &nbsp;can be changed to <code>&lt;div&gt;</code> for example.</li></ul></dd>
+    <dt>queryCommand</dt>
+    <dd>
+      <div>( <strong>command</strong>:string [, <strong>attributes</strong>:map] ) : <em>integer</em></div>
+      <p>The queryCommand method reports state and allowance of particular command. The method accepts the same parameters as the execCommand(). Return value is an integer - combination of the following flags: </p>
+      <ul>
+        <li><code>0x01</code> - command is &quot;on&quot; state or &quot;selected&quot;. For example, <code>queryCommand(&quot;format:apply-span:b|strong&quot;)</code> will return 0x01 value if selected text &nbsp;contains either <code>&lt;b&gt;</code> or <code>&lt;strong&gt;</code> elements.</li>
+        <li><code>0x02</code> - command is &quot;disabled&quot; or is not available in current context. </li>
+        <ul></ul></ul></dd>
     <h2>Node specific methods</h2>
     <dt>insertNodeBefore</dt>
     <dd>
@@ -794,6 +834,12 @@ el.$content(This is item number <b>{ num }</b>);
     <h4>onGesture(event): true|false</h4>
     <dd>Gestures, DOM events, available on devcices with touch screen support.
       <p>See <strong>Gesture (touch screen) event codes</strong> in Event object definition.</p></dd>
+    <h4>onCommand(event): true|false</h4>
+    <p>Commands, actions to be executed by text editing elements like &lt;textarea&gt;, &lt;input|text&gt;, &lt;htmlarea&gt;, &lt;plaintext&gt;, etc. See: Element.execCommand().</p>
+    <dt>Event.COMMAND_EXEC</dt>
+    <dd>Execute command: event.command:string is a command to be executed, &nbsp;event.data - parameters.</dd>
+    <dt>Event.COMMAND_QUERY</dt>
+    <dd>Query state/allowance of command execution.</dd>
     <h3>Non-bubbling events</h3>
     <h4>onScroll(event) : true|false</h4>
     <dt>Event.SCROLL_HOME</dt>

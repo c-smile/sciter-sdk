@@ -33,6 +33,21 @@
         };
       }  
       
+      $(#frame-detached).onClick = function() {
+        other = View.window // note .window() methods is called as a static method of View class here
+        {                   // and so the window will be created in detached mode - will stay on screen even its owner is closed 
+          type:View.FRAME_WINDOW,
+          url: self.url("samples/sample-frame-window.htm"),
+          x:100,
+          y:100,
+          width : 480,
+          height : 320,
+          state: View.WINDOW_SHOWN,
+          alignment:3,
+        };
+      }  
+      
+      
     
      $(#custom-tool).onClick = function() {
         other = view.window{
@@ -138,6 +153,8 @@
   
   <button #tool-full-screen>tool + full screen</button>
   <button #tool-layered>tool + layered</button>
+  <hr>
+  <button #frame-detached>"Detached" frame window</button>
   
   <hr>
   <button #hide>hide last window</button>

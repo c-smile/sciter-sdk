@@ -1119,7 +1119,7 @@ namespace dom
     {
       HELEMENT hfound;
       find_first_callback():hfound(0) {}
-      inline bool on_element(HELEMENT he) { hfound = he; return true; /*stop enumeration*/ }
+      inline bool on_element(HELEMENT hfe) { hfound = hfe; return true; /*stop enumeration*/ }
     };
 
     static HELEMENT get_highlighted(HWINDOW hSciterWnd)

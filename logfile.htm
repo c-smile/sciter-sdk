@@ -11,6 +11,26 @@
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
     <tr>
+      <td valign="top" bgcolor="#FFFADA">3.3.1.2</td>
+      <td nowrap valign="top" align="center">03-01-2016</td>
+      <td>
+        <p>new features:</p>
+        <ul>
+          <li><strong>Spell checker</strong> support in &lt;textarea&gt; and &lt;htmlarea&gt; with misspeling highlighting. Spell checker works on OSes that have that feature built-in (W8, W10, OSX).</li>
+          <li>Basic MFC integration demo at sdk/demos/sciter-mfc/</li>
+          <li>View.window() - create &quot;detached&quot; windows.</li>
+          <li>Element.onCommand() + Element.on(&quot;exec:****&quot;) handlers to intercept actions like cut, copy, paste.</li>
+          <li>Element.execCommand() and Element.queryCommand() documented.</li>
+          <li>[gtk] view.selectFolder() implementation + /custom-inputs/folder-name.htm sample.</li></ul>
+        <p>fixes:</p>
+        <ul>
+          <li>[column-resizer] fix.</li>
+          <li>[+plus] fix of non-existent property handling.</li>
+          <li>[popups] better window destruction handling with open popups.</li>
+          <li>scintilla has been removed from SDK.</li>
+          <li>[win, richtext] fix of pasting image data from clipboard.</li></ul>Builds: win32, win64, osx64, linux/gtk64
+        <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
+    <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.1.1</td>
       <td nowrap valign="top" align="center">19-12-2015</td>
       <td>

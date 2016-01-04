@@ -1,0 +1,71 @@
+<html>
+  <head>
+    <title>Options</title>
+    <style>
+      @import url(../plus.css); /* the only thing needed to include Plus framework */
+      
+      html { font:system; }
+      
+      li.hidden { visibility:none; }
+      
+    </style>
+    
+    <script type="text/tiscript">
+  
+    include "../plus.tis"; // model below uses @observing decorator defined in plus.tis
+
+      namespace Options // our model
+      {  
+        var groups = 
+                    [
+                        {
+                            title: "Group 1",
+                            options:
+                                [
+                                    { title: "Option 1-1", checked: true},
+                                    { title: "Option 1-2", checked: false }
+                                ]
+                        },
+                        {
+                            title: "Group 2",
+                            options:
+                                [
+                                    { title: "Option 2-1", checked: false},
+                                    { title: "Option 2-2", checked: false}
+                                ]
+                        }
+                    ];
+                    
+
+        var search = "";
+
+        @observing "search"
+            function filter()
+            {
+                for( var group in groups ) {
+                   for( var option in group.options ) {
+                     option.hidden = search && (option.title.indexOf(search) < 0);
+                   }
+                }
+            }
+      }
+
+    </script>
+  </head>
+
+<body model="Options"> <!-- define data model we observe -->
+
+    <p>
+        <input|text(search) novalue="Search"/>
+    </p>
+    <ol each="group in groups">
+        <li>
+            <output|text(group.title)/>
+            <ol each="option in group.options">
+                <li class='{{hidden:option.hidden}}'><input|checkbox(option.checked)/> <output|text(option.title)/></li>
+            </ol>
+        </li>
+    </ol>
+
+</body>
+</html>

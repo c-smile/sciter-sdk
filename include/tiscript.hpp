@@ -376,7 +376,7 @@ namespace tiscript
 
     int   length() const { return argc; }
     value get(int pn) const { return ni()->get_arg_n(vm,pn); }
-    value operator[](int n) const { return get(n); }
+    value operator[](int i) const { return get(i); }
 
     args& operator >> (bool& v)   { if( opt && (n >= argc) ) return *this;  if(!ni()->get_bool_value(get(n),&v)) throw error(n,"boolean"); n++;  return *this; }
     args& operator >> (int& v)    { if( opt && (n >= argc) ) return *this;  if(!ni()->get_int_value(get(n),&v)) throw error(n,"integer"); n++; return *this; }

@@ -53,7 +53,7 @@ struct native_clock: public event_handler
 
       time_t rawtime;
       time (&rawtime);
-      struct tm * timeinfo = localtime (&rawtime);
+      struct tm timeinfo = *localtime (&rawtime);
 
       sciter::graphics gfx(params.gfx);
       gfx.state_save();
@@ -85,9 +85,9 @@ struct native_clock: public event_handler
         }
       gfx.state_restore();
 
-      int sec = timeinfo->tm_sec;
-      int min = timeinfo->tm_min;
-      int hr  = timeinfo->tm_hour;
+      int sec = timeinfo.tm_sec;
+      int min = timeinfo.tm_min;
+      int hr  = timeinfo.tm_hour;
       hr = hr >= 12 ? hr - 12 : hr;
   
       // draw Hours

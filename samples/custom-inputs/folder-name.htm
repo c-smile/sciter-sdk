@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <title>file name input</title>
+    <style>
+    
+    widget[type=folder-name] {
+      prototype: FolderName;
+      flow:horizontal;
+      width:20em;
+    }
+    widget[type=file-name] > input { width:*; }
+    
+    </style>
+    <script type="text/tiscript">
+    
+    class FolderName : Behavior {
+      function attached() {
+        this.$append( <input|text.path><button.selector>&#x2026;</button>);
+        
+        var path = this.path = this.$(.path);
+        
+        this.$(button.selector).onClick = function () {
+          var fn = view.selectFolder();
+          if( fn ) path.value = fn;
+          (this super).postEvent(Event.EDIT_VALUE_CHANGED);
+        };
+      }
+      
+      property value(v) {
+        get { return this.path.value; }
+        set { this.path.value = v; }
+      }
+    }
+    
+    $(widget).onValueChanged = function() {
+      stdout.println(this.value);
+    };
+
+    </script>
+  </head>
+<body>
+  Folder name:
+  
+  <widget|folder-name name=test />
+
+</body>
+</html>

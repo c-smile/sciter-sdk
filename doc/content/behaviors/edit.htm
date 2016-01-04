@@ -18,14 +18,15 @@
     <li><code>maxlength=integer</code> - maximum number of characters that this element can contain.</li>
     <li><code>filter=&quot;filter-expr&quot;</code> - limits set of characters allowed to input in the field. <code>filter-expr</code> string accepts single characters and character ranges. Example: &quot;.@0~9a~zA~Z&quot; - all alpha-numeric characters, '.' and '@'. If you just want to exclude some characters then you can prepend filter with '^' sign. So this <code>filter=&quot;^.,-&quot;</code> filter will allow to input any character except '.', ',' and '-'.</li>
     <li><code>novalue=&quot;text&quot;</code> - if textbox is empty then it shows text provided by the <em>novalue</em> attribute. You can style this state by using <code>:empty</code> CSS selector.</li>
-    <li><code>readonly</code> - &nbsp;declares that element is read only.</li></ul>
+    <li><code>readonly</code> - &nbsp;declares that element is read only.</li>
+    <li><code>spellcheck=&quot;yes&quot;</code> - enables spell checking in the element.</li></ul>
   <h2>Events</h2>
   <p>Together with the standard set of events (mouse, keyboard, focus) <em>behavior: button</em> generates:</p>
   <ul>
     <li>EDIT_VALUE_CHANGED event - value of the element was changed due to user actions. Posted (asynchronous) event.</li>
     <li>EDIT_VALUE_CHANGING event - is sent before making any change of value of the element. By handling this event you can filter characters before they get inserted into the editor. Synchronous event where:</li>
     <ul>
-      <li>event.reason is one of </li></ul>
+      <li>event.reason is one of</li></ul>
     <ul>
       <ul>
         <li>const BY_INS_CHAR = 3; // changing by typing single character.</li>

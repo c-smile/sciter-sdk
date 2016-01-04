@@ -163,12 +163,14 @@ const Plus = function() {
     var cname = parts[3];  // "cls1" if class="{{cls1:expr}}", A case, expr - boolean 
                            // "" if class="{{expr}}"         , B case, expr - string  
     var sname = null;      // class name set by B case expr  
-    //stdout.printf("ClassTerminal %V\n", parts); 
+    stdout.printf("ClassTerminal %V\n", parts); 
     
     function classUpdater(thing,v) {
       thing.post(function() {
-        if( cname )            // case A 
+        if( cname ) {           // case A 
+          stdout.println("ClassTerminal case A", cname, v || false); 
           thing.@.toggleClass(cname, v || false);  
+        }
         else if( sname != v )  // case B
           thing.@.removeClass(sname); thing.@.addClass(sname = v);  
       }, true);
