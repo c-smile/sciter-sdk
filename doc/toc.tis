@@ -1,3 +1,4 @@
+var last_tree;
 
 function makeToc( content, list )
 {
@@ -26,6 +27,8 @@ function makeToc( content, list )
   
   function showTree(tree)
   {
+	last_tree = tree;
+
     list.clear();
     for(var sect in tree)
     {
@@ -43,4 +46,24 @@ function makeToc( content, list )
     }
   }
   showTree(makeTree());
+}
+
+function goTocSection(section)
+{
+	for(var sect in last_tree)
+	{
+		if( !sect.items ) continue;
+
+		for(var obj_subsect in sect.items)
+		{
+			if(obj_subsect.caption==section)
+			{
+				self.timer(200, function() {
+					obj_subsect.target.attributes#highlighted = true;
+					obj_subsect.target.scrollToView(true);
+				});
+				return;
+			}
+		}
+	}
 }

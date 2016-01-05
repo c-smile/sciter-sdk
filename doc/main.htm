@@ -35,7 +35,13 @@
     contentFrame.onControlEvent = function(evt)
     {
       if( evt.type == Event.DOCUMENT_COMPLETE )
-        generateToc();
+	  {
+		  generateToc();
+		  if(afterTocEvent)
+			afterTocEvent();
+		  afterTocEvent = undefined;
+	  }
+        
       else if(evt.type == (Event.HYPERLINK_CLICK | Event.SINKING))
       {
         var url = evt.target.@["href"];
@@ -47,6 +53,16 @@
       }
     }
     
+	var afterTocEvent;
+	function GoToPage(pageurl, toc_entry)
+	{
+		contentFrame.load(pageurl);
+		afterTocEvent = function() {
+			goTocSection(toc_entry);
+		};
+	}
+	
+	View.SciterDocsGoToPage = GoToPage;
   </script>
   </head>
   <body>
