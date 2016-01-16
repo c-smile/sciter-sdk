@@ -56,10 +56,16 @@
 	var afterTocEvent;
 	function GoToPage(pageurl, toc_entry)
 	{
-		contentFrame.load(pageurl);
-		afterTocEvent = function() {
+		if(contentFrame[0].url().indexOf(pageurl)!=-1)
+		{
 			goTocSection(toc_entry);
-		};
+		} else {
+			contentFrame.load(pageurl);
+			
+			afterTocEvent = function() {
+				goTocSection(toc_entry);
+			};
+		}
 	}
 	
 	View.SciterDocsGoToPage = GoToPage;

@@ -58,10 +58,8 @@ function goTocSection(section)
 		{
 			if(obj_subsect.caption==section)
 			{
-				self.timer(200, function() {
-					obj_subsect.target.attributes#highlighted = true;
-					obj_subsect.target.scrollToView(true);
-				});
+				obj_subsect.target.attributes#highlighted = true;
+				obj_subsect.target.scrollToView(true);
 				return;
 			}
 		}
