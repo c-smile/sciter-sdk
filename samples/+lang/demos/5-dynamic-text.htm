@@ -1,0 +1,32 @@
+<html lang="en">
+  <head>
+    <title>Basic UI translation sample</title>
+    
+    <!-- these four links define two translation files for different languages. -->
+    <link href="lang/ru.tis" hreflang="ru" rel="translation" >
+    <link href="lang/en.tis" hreflang="en" rel="translation" >
+    <link href="lang/zh.tis" hreflang="zh" rel="translation" >
+    
+    <style>
+      @import url(../lang.css);
+    </style>
+    
+    <script type="text/tiscript">
+      include "../lang.tis";
+      include "../lang-tool.tis";
+    
+      $(select#lang).onValueChanged = function() { self.language = this.value; }
+      $(button#test).onClick = function() { this.text="Second test"; }
+    </script>
+    
+  </head>
+  <body>
+    <h2>Basic UI translation sample using Lang framework</h2>
+    <p>testing translatable Element.text property</p>
+    <fieldset>
+      <p><label>UI language</label><include src=lang-selector.htm /></p>
+      <hr>
+      <button.dfn #test>First test</button>
+    </fieldset>
+  </body>
+</html>

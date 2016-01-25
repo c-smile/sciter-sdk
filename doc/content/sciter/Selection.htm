@@ -40,15 +40,31 @@
       <p>Set's selection to the range or single caret position.</p></dd>
     <dt>advance</dt>
     <dd>
-      <div><strong>( what</strong>:symbol, <strong>direction</strong>:symbol [, <strong>units</strong>:symbol] <strong>)</strong> returns: <em>true | false</em>.</div>
-      <p>TBD.</p></dd>
+      <div><strong>( step</strong>:symbol [, <strong>target</strong>:symbol] <strong>)</strong> returns: <em>true | false</em>.</div>
+      <p>Advances <em>target</em> to new position by <em>step</em>. The <em>target</em> defines what end of selection to advance, can be one of:</p>
+      <ul>
+        <li><strong>#both</strong> - default, caret and anchor is moved to new position, collapses the selection;</li>
+        <li><strong>#caret</strong> - caret position, changes the selection;</li>
+        <li><strong>#anchor</strong> - anchor position, changes the selection;</li>
+        <li><strong>#start</strong> - start position (either anchor or caret), changes the selection;</li>
+        <li><strong>#end</strong> - end position (either anchor or caret), changes the selection</li></ul>
+      <p>The step is one of:</p>
+      <ul>
+        <li><strong>#next</strong> - next caret position;</li>
+        <li><strong>#prior</strong> - previous caret position;</li>
+        <li><strong>#wordStart</strong> - start of the word;</li>
+        <li><strong>#wordEnd</strong> - end of the word;</li>
+        <li><strong>#lineStart</strong> - start of the line;</li>
+        <li><strong>#lineEnd</strong> - end of the line;</li>
+        <li><strong>#first</strong> - first caret position of the element having the selection;</li>
+        <li><strong>#last</strong> - last caret position of the element having the selection.</li></ul></dd>
     <dt>applyMark</dt>
     <dd>(<strong>start</strong>: <em>bookmark</em>, <strong>end</strong>: <em>bookmark</em>, <strong>markName</strong>: string): returns: integer
-		<p>marks region of text from <em>start</em> to <em>end</em> by mark name that can be styled in CSS by <code>::mark(markName) { ... }</code> selector/rule.</p>
-		<p>The function returns number of changes made.</p></dd>
+      <p>marks region of text from <em>start</em> to <em>end</em> by mark name that can be styled in CSS by <code>::mark(markName) { ... }</code> selector/rule.</p>
+      <p>The function returns number of changes made.</p></dd>
     <dt>clearMark</dt>
     <dd>(<strong>start</strong>: <em>bookmark</em>, <strong>end</strong>: <em>bookmark</em>, <strong>markName</strong>: string): returns: integer
-		<p>clears mentioned mark from the region.<br/>The function returns number of changes made.</p></dd></dl>
+      <p>clears mentioned mark from the region.<br/>The function returns number of changes made.</p></dd></dl>
   <h3 name="bookmark">Bookmark</h3>
   <p>Some methods above use so called bookmark object that is a tuple (of length 3) having tag #bookmark. Usually you will get ready to use bookmarks from various properties or &nbsp;methods but if needed bookmarks can be constructed literally as:</p>
   <pre>var bm = [bookmark: node, index, after];
@@ -58,6 +74,5 @@
     <li><em>node</em> - Element or Node object.</li>
     <li><em>index</em> - index of the position inside the <em>node</em>. В for Element it is <em>nodeIndex</em> of its child node and for Nodes it is character index.</li>
     <li><em>after</em> - true | false, if true then this bookmark marks &quot;past edge&quot; of the entity marked by node/index pair.</li></ul>
-  <p></p>
 </body>
 </html>

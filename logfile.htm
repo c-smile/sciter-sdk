@@ -11,6 +11,54 @@
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
     <tr>
+      <td valign="top" bgcolor="#FFFADA">3.3.1.3</td>
+      <td nowrap valign="top" align="center">24-01-2016</td>
+      <td>
+        <p>new features:</p>
+        <ul>
+          <li>[windows, api] SC_GRAPHICS_CRITICAL_FAILURE notification, sciter::host::on_graphics_critical_failure() - notifies about critical error while drawing **layered** windows.</li>
+          <li>+ sample/test sdk/samples/zip/test-view-zip-load.htm</li>
+          <li>+ Smoke rendering demo: sdk/samples/ideas/smoke </li>
+          <li>+ Element.selection.advance() implementation and documentation.</li>
+          <li>sciter::value::call() throws sciter::script_error in case of scripting error. It is &quot;on&quot; by default, to suppress it #define SCITER_SUPPRESS_SCRIPT_ERROR_THROW.</li>
+          <li>[+lang] Element.text = &quot;new translatable text&quot; handling, see: http://sciter.com/forums/topic/lang-tis-cant-translate-an-elements-text-when-it-changed/ discussion.</li>
+          <li>+ GDI drawing demo using sciter::image and sciter::graphics. See: sdk/include/behaviors/behavior_drawing-gdi.cpp</li>
+          <li><code>input|hslider</code> and <code>input|vslider</code>, support of decimal values.</li></ul>
+        <p>fixes:</p>
+        <ul>
+          <li><code>&lt;select multiple=&quot;checkmark&quot;&gt;</code>, fix of doubled &quot;change&quot; event generation.</li>
+          <li><code>view.load()</code> fix of URL normalization.</li>
+          <li>[win] more responsive MOUSE_MOVE handling.</li>
+          <li>[tiscript,sciter] proper initialization of <code>this var</code>s (instance variables) before Behavior.attached() calls.</li>
+          <li>[gtk] fix of KEY_CHAR event generation.</li>
+          <li>[tiscript] Integer, division by zero throws exception. It used to return 0 so this <strong>can be a breaking change</strong>.</li>
+          <li>[gtk] transition:blend fix;</li>
+          <li>[gtk] view.aspectRatio attempt to fix (works somehow but far from perfect, GTK bug ?)</li>
+          <li>[gtk] MOUSE_DCLIK generation.</li>
+          <li>[gtk] context menu on right click.</li>
+          <li>Fix of bugs mentioned here: <a href="http://sciter.com/forums/topic/2-bugs">http://sciter.com/forums/topic/2-bugs/</a> </li>
+          <li>[gtk] POPUP_WINDOW focus issue fix</li>
+          <li>[richtext]</li>
+          <ul>
+            <li>fix of transaction.insertHtml() between inline blocks. </li>
+            <li>input elements handling inside richtext (they are disabled). </li></ul>
+          <li>[clipboard] input|text, textarea - fix of copy-to-clipboard handling (clearing clipboard). </li>
+          <li>adjustment of data:... base64 &nbsp;URL handling</li>
+          <li>fix of transparent popup menu handling.</li>
+          <li>[win,gdi] fix of &lt;img&gt; rendering artifacts while stretching.</li>
+          <li>Element/View.request, fix of zip files downloading.</li>
+          <li>image drawing, background-clip: content-box;</li>
+          <li>[api, headers] Fix of TISCRIPT_RETURN_3 and TISCRIPT_RETURN_4 multi returns. Courtesy of Malcolm McLean</li>
+          <li>[osx] view::set_frame_type() in runtime.</li>
+          <li>custom-frame, dynamic change.</li>
+          <li>img :busy :incomplete state setup fix.</li>
+          <li>[gtk] SciterSetupDebugOutput API implementation</li>
+          <li>[gtk] fix of input|calendar rendering;</li>
+          <li>[osx] new Image(renderer) fix</li>
+          <li>Object.observe() fixes.</li>
+          <li>[windows,d2d] fix of Graphics.Path continuation of operations after first draw.</li></ul>Builds: win32, win64, osx64, linux/gtk64
+        <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
+    <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.1.2</td>
       <td nowrap valign="top" align="center">03-01-2016</td>
       <td>

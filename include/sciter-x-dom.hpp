@@ -1,10 +1,10 @@
 /*
  * The Sciter Engine of Terra Informatica Software, Inc.
  * http://sciter.com
- * 
+ *
  * The code and information provided "as-is" without
  * warranty of any kind, either expressed or implied.
- * 
+ *
  * (C) 2003-2015, Terra Informatica Software, Inc.
  */
 
@@ -16,7 +16,7 @@
 #define __sciter_dom_hpp__
 
 #pragma warning(disable:4786) //identifier was truncated...
-#pragma warning(disable:4100) //unreferenced formal parameter 
+#pragma warning(disable:4100) //unreferenced formal parameter
 
 #include "tiscript.hpp"
 #include "sciter-x-dom.h"
@@ -26,13 +26,13 @@
 namespace sciter
 {
 /**dom namespace.*/
-namespace dom 
+namespace dom
 {
-    
+
 /**callback structure.
-  * Used with #sciter::dom::element::select() function. 
+  * Used with #sciter::dom::element::select() function.
   **/
-  struct callback 
+  struct callback
   {
   /**Is called for every element that match criteria specified when calling to #sciter::dom::element::select() function.*/
     virtual bool on_element(HELEMENT he) = 0;
@@ -55,7 +55,7 @@ namespace dom
   }
 
   class element;
-  
+
 /**DOM node - element, comment, text */
 
   class node
@@ -68,8 +68,8 @@ namespace dom
   public:
     node(): hn(0)       {}
     node(HNODE h)       { use(h); }
-    node(HELEMENT h); 
-    node(const element& el); 
+    node(HELEMENT h);
+    node(const element& el);
     node(const node& n) { use(n.hn); }
     ~node()             { unuse(); }
 
@@ -107,7 +107,7 @@ namespace dom
 
     // get/set characters of text/comment node
     sciter::string text() const; // get text as sciter::string (utf16)
-              void text(LPCWSTR text, UINT textLength) const; // set text 
+              void text(LPCWSTR text, UINT textLength) const; // set text
               void text(const sciter::string& s) { text(s.c_str(),UINT(s.length())); }
 
     void remove(); // remove it from the DOM and release reference
@@ -124,7 +124,7 @@ namespace dom
 
 
 /**DOM element.*/
-  
+
   class element
   {
 
@@ -144,7 +144,7 @@ namespace dom
     * \param h \b #HELEMENT
     **/
     element(HELEMENT h)       { use(h); }
-        
+
   /**Copy constructor;
     * \param e \b #element
     **/
@@ -154,10 +154,10 @@ namespace dom
     operator bool() const { return he != 0; }
 
     operator HELEMENT() const { return he; }
-    operator HNODE() const { 
+    operator HNODE() const {
       HNODE hn = 0;
       SciterNodeCastFromElement(he,&hn); // always succeedes
-      return hn; 
+      return hn;
     }
 
   /**Destructor.*/
@@ -176,14 +176,14 @@ namespace dom
     element& operator = (const element& e) { set(e.he); return *this; }
 
   /**Test equality of this and another \c #element's
-    * \param rs \b const \b #element 
+    * \param rs \b const \b #element
     * \return \b bool, true if elements are equal, false otherwise
     **/
     bool operator == (const element& rs ) const { return he == rs.he; }
     bool operator == (HELEMENT rs ) const { return he == rs; }
 
   /**Test equality of this and another \c #element's
-    * \param rs \b const \b #element 
+    * \param rs \b const \b #element
     * \return \b bool, true if elements are not equal, false otherwise
     **/
     bool operator != (const element& rs ) const { return he != rs.he; }
@@ -197,8 +197,8 @@ namespace dom
   /**Get number of child elements.
     * \return \b int, number of child elements
     **/
-    unsigned int children_count() const 
-    { 
+    unsigned int children_count() const
+    {
       UINT count = 0;
       SciterGetChildrenCount(he, &count);
       return count;
@@ -208,8 +208,8 @@ namespace dom
     * \param index \b unsigned \b int, number of the child element
     * \return \b #HELEMENT, child element handle
     **/
-    HELEMENT child( unsigned int index ) const 
-    { 
+    HELEMENT child( unsigned int index ) const
+    {
       HELEMENT child = 0;
       SciterGetNthChild(he, index, &child);
       return child;
@@ -218,8 +218,8 @@ namespace dom
   /**Get parent element.
     * \return \b #HELEMENT, handle of the parent element
     **/
-    HELEMENT parent( ) const 
-    { 
+    HELEMENT parent( ) const
+    {
       HELEMENT hparent = 0;
       SciterGetParentElement(he, &hparent);
       return hparent;
@@ -228,8 +228,8 @@ namespace dom
   /**Get index of this element in its parent collection.
     * \return \b unsigned \b int, index of this element in its parent collection
     **/
-    unsigned int index( ) const 
-    { 
+    unsigned int index( ) const
+    {
       UINT index = 0;
       SciterGetElementIndex(he, &index);
       return index;
@@ -238,8 +238,8 @@ namespace dom
   /**Get number of the attributes.
     * \return \b unsigned \b int, number of the attributes
     **/
-    unsigned int get_attribute_count( ) const 
-    { 
+    unsigned int get_attribute_count( ) const
+    {
       UINT n = 0;
       SciterGetAttributeCount(he, &n);
       return n;
@@ -249,8 +249,8 @@ namespace dom
     * \param n \b unsigned \b int, number of the attribute
     * \return \b const \b WCHAR*, value of the n-th attribute
     **/
-    sciter::string get_attribute( unsigned int n ) const 
-    { 
+    sciter::string get_attribute( unsigned int n ) const
+    {
       sciter::string s;
       SCDOM_RESULT r = SciterGetNthAttributeValueCB(he, n, &_LPCWSTR2STRING, &s);
       assert(r == SCDOM_OK); r;
@@ -261,8 +261,8 @@ namespace dom
     * \param n \b unsigned \b int, number of the attribute
     * \return \b const \b char*, name of the n-th attribute
     **/
-    sciter::astring get_attribute_name( unsigned int n ) const 
-    { 
+    sciter::astring get_attribute_name( unsigned int n ) const
+    {
       sciter::astring s;
       SCDOM_RESULT r = SciterGetNthAttributeNameCB(he, n, &_LPCSTR2ASTRING, &s);
       assert(r == SCDOM_OK); r;
@@ -273,8 +273,8 @@ namespace dom
     * \param name \b const \b char*, name of the attribute
     * \return \b const \b WCHAR*, value of the n-th attribute
     **/
-    sciter::string get_attribute( const char* name, const WCHAR* def_value = 0 ) const 
-    { 
+    sciter::string get_attribute( const char* name, const WCHAR* def_value = 0 ) const
+    {
       sciter::string s;
       SCDOM_RESULT r = SciterGetAttributeByNameCB(he, name, &_LPCWSTR2STRING, &s);
       if(r == SCDOM_OK_NOT_HANDLED && def_value)
@@ -287,7 +287,7 @@ namespace dom
     * \param value \b const \b WCHAR*, name of the attribute
     **/
   void set_attribute( const char* name, const WCHAR* value )
-    { 
+    {
       SciterSetAttributeByName(he, name, value);
     }
 
@@ -295,32 +295,32 @@ namespace dom
     * \param name \b const \b char*, name of the attribute
     * \return \b int , value of the attribute
     **/
-    int get_attribute_int( const char* name, int def_val = 0 ) const 
-    { 
+    int get_attribute_int( const char* name, int def_val = 0 ) const
+    {
       sciter::string txt = get_attribute(name);
       if(txt.length() == 0) return def_val;
       aux::wchars wc = aux::chars_of(txt);
       return aux::to_int(wc);
     }
 
-      
+
   /**Remove attribute.
     * \param name \b const \b char*, name of the attribute
     **/
-  void remove_attribute( const char* name ) 
-    { 
+  void remove_attribute( const char* name )
+    {
       SciterSetAttributeByName(he, name, 0);
     }
-      
+
 
   /**Get style attribute of the element by its name.
     * \param name \b const \b char*, name of the style attribute, e.g. "background-color"
     * \return \b const \b WCHAR*, value of the style attribute
     **/
-  sciter::string get_style_attribute( const char* name ) const 
-    { 
+  sciter::string get_style_attribute( const char* name ) const
+    {
       sciter::string s;
-      SciterGetStyleAttributeCB(he, name,&_LPCWSTR2STRING, &s); 
+      SciterGetStyleAttributeCB(he, name,&_LPCWSTR2STRING, &s);
       return s;
     }
 
@@ -331,8 +331,8 @@ namespace dom
     * \par Example:
     * \code e.set_style_attribute("background-color", L"red"); \endcode
     **/
-  void set_style_attribute( const char* name, const WCHAR* value ) const 
-    { 
+  void set_style_attribute( const char* name, const WCHAR* value ) const
+    {
       SciterSetStyleAttribute(he, name, value);
     }
 
@@ -361,7 +361,7 @@ namespace dom
       SciterGetFocusElement(hSciterWnd,&h);
       return h;
     }
-     
+
 
   /**Find DOM element of the Sciter document by coordinates.
     * \param hSciterWnd \b HWINDOW, Sciter window
@@ -375,7 +375,7 @@ namespace dom
       return h;
     }
 
-     
+
   /**Set mouse capture.
     * After call to this function all mouse events will be targeted to this element.
     * To remove mouse capture call #sciter::dom::element::release_capture().
@@ -393,14 +393,14 @@ namespace dom
       return (BOOL)pcall->on_element(he); // BOOL(true) - stop enumeration
     }
 
-    inline void select_elements( callback *pcall,  
+    inline void select_elements( callback *pcall,
                         const char* selectors // CSS selectors, comma separated list
                       ) const
     {
       SciterSelectElements( he, selectors, callback_func, pcall);
     }
 
- 
+
     /**Get element by id.
     * \param id \b char*, value of the "id" attribute.
     * \return \b #HELEMENT, handle of the first element with the "id" attribute equal to given.
@@ -417,31 +417,31 @@ namespace dom
       return find_first( "[id='%S']", id );
     }
 
- 
+
   /**Apply changes and refresh element area in its window.
     * \param[in] render_now \b bool, if true element will be redrawn immediately.
     **/
-    void update( bool render_now = false ) const 
-    { 
+    void update( bool render_now = false ) const
+    {
       SciterUpdateElement(he, (BOOL)render_now);
     }
 
-    void refresh( RECT rc ) const 
-    { 
-      SciterRefreshElementArea(he, rc); 
+    void refresh( RECT rc ) const
+    {
+      SciterRefreshElementArea(he, rc);
     }
 
-    void refresh( ) const 
-    { 
+    void refresh( ) const
+    {
       RECT rc = get_location(SELF_RELATIVE | CONTENT_BOX);
       refresh( rc );
     }
 
- 
+
   /**Get next sibling element.
     * \return \b #HELEMENT, handle of the next sibling element if it exists or 0 otherwise
     **/
-    HELEMENT next_sibling() const 
+    HELEMENT next_sibling() const
     {
       unsigned int idx = index() + 1;
       element pel = parent();
@@ -455,7 +455,7 @@ namespace dom
   /**Get previous sibling element.
     * \return \b #HELEMENT, handle of previous sibling element if it exists or 0 otherwise
     **/
-    HELEMENT prev_sibling() const 
+    HELEMENT prev_sibling() const
     {
       int idx = static_cast<int>(index()) - 1;
       element pel = parent();
@@ -469,7 +469,7 @@ namespace dom
   /**Get first sibling element.
     * \return \b #HELEMENT, handle of the first sibling element if it exists or 0 otherwise
     **/
-    HELEMENT first_sibling() const 
+    HELEMENT first_sibling() const
     {
       element pel = parent();
       if(!pel.is_valid())
@@ -480,7 +480,7 @@ namespace dom
   /**Get last sibling element.
     * \return \b #HELEMENT, handle of last sibling element if it exists or 0 otherwise
     **/
-    HELEMENT last_sibling() const 
+    HELEMENT last_sibling() const
     {
       element pel = parent();
       if(!pel.is_valid())
@@ -492,17 +492,17 @@ namespace dom
   /**Get root of the element
     * \return \b #HELEMENT, handle of document root element (html)
     **/
-    HELEMENT root() const 
+    HELEMENT root() const
     {
       element pel = parent();
-      if(pel.is_valid()) 
+      if(pel.is_valid())
         return pel.root();
       return he;
     }
 
   /**Get bounding rectangle of the element.
-    * \param root_relative \b bool, if true function returns location of the 
-    * element relative to Sciter window, otherwise the location is given 
+    * \param root_relative \b bool, if true function returns location of the
+    * element relative to Sciter window, otherwise the location is given
     * relative to first scrollable container.
     * \return \b RECT, bounding rectangle of the element.
     **/
@@ -514,7 +514,7 @@ namespace dom
     }
 
     /** Test if point is inside shape rectangle of the element.
-      client_pt - client rect relative point          
+      client_pt - client rect relative point
       **/
     bool is_inside( POINT client_pt ) const
     {
@@ -558,7 +558,7 @@ namespace dom
 
     /**Get element's tag name.
     * \return \b sciter::astring, tag name of the element
-    * 
+    *
       * \par Example:
       * For &lt;div&gt; tag function will return "div".
     **/
@@ -574,7 +574,7 @@ namespace dom
   /**Get HWINDOW of containing window.
     * \param root_window \b bool, handle of which window to get:
     * - true - Sciter window
-    * - false - nearest windowed parent element. 
+    * - false - nearest windowed parent element.
     * \return \b HWINDOW
     **/
     HWINDOW get_element_hwnd(bool root_window) const
@@ -589,7 +589,7 @@ namespace dom
       SCDOM_RESULT r = SciterAttachHwndToElement(he,child);
       assert( r == SCDOM_OK ); r = r;
     }
-          
+
 
   /**Get element UID - identifier suitable for storage.
     * \return \b UID
@@ -614,8 +614,8 @@ namespace dom
     }
 
   /**Combine given URL with URL of the document element belongs to.
-    * \param[in, out] inOutURL \b LPWSTR, at input this buffer contains 
-    * zero-terminated URL to be combined, after function call it contains 
+    * \param[in, out] inOutURL \b LPWSTR, at input this buffer contains
+    * zero-terminated URL to be combined, after function call it contains
     * zero-terminated combined URL
     * \param bufferSize \b UINT, size of the buffer pointed by \c inOutURL
       **/
@@ -644,7 +644,7 @@ namespace dom
     * - SIH_APPEND_AFTER_LAST - insert html after last child of the element
     **/
     void set_html( const unsigned char* html, size_t html_length, int where = SIH_REPLACE_CONTENT)
-    { 
+    {
       if(html == 0 || html_length == 0)
         clear();
       else
@@ -655,9 +655,9 @@ namespace dom
     }
 
     // html as utf8 bytes sequence
-    sciter::astring 
-        get_html( bool outer = true) const 
-    { 
+    sciter::astring
+        get_html( bool outer = true) const
+    {
       sciter::astring s;
       SCDOM_RESULT r = SciterGetElementHtmlCB(he, BOOL(outer), &_LPCBYTE2ASTRING,&s);
       assert(r == SCDOM_OK); r;
@@ -723,14 +723,14 @@ namespace dom
       va_start ( args, selector );
       vsnprintf( buffer, sizeof(buffer), selector, args );
       va_end ( args );
-        
+
       HELEMENT heFound = 0;
       SCDOM_RESULT r = SciterSelectParent(he, buffer, 0, &heFound);
       assert(r == SCDOM_OK); r;
       return heFound;
     }
 
-    // test this element against CSS selector(s) 
+    // test this element against CSS selector(s)
     bool test(const char* selector, ...) const
     {
       char buffer[2049]; buffer[0]=0;
@@ -745,7 +745,7 @@ namespace dom
     }
 
 
-  /**Get UI state bits of the element as set of ELEMENT_STATE_BITS 
+  /**Get UI state bits of the element as set of ELEMENT_STATE_BITS
     **/
     unsigned int get_state() const
     {
@@ -769,7 +769,7 @@ namespace dom
   /**Set UI state of the element with optional view update.
     **/
     void set_state(
-      /*ELEMENT_STATE_BITS*/ unsigned int bitsToSet, 
+      /*ELEMENT_STATE_BITS*/ unsigned int bitsToSet,
       /*ELEMENT_STATE_BITS*/ unsigned int bitsToClear = 0, bool update = true )
     {
       SCDOM_RESULT r = SciterSetElementState(he,bitsToSet,bitsToClear, BOOL(update));
@@ -777,7 +777,7 @@ namespace dom
     }
 
     /** "deeply enabled" **/
-    bool enabled() 
+    bool enabled()
     {
       BOOL b = false;
       SCDOM_RESULT r = SciterIsElementEnabled(he,&b);
@@ -786,7 +786,7 @@ namespace dom
     }
 
     /** "deeply visible" **/
-    bool visible() 
+    bool visible()
     {
       BOOL b = false;
       SCDOM_RESULT r = SciterIsElementVisible(he,&b);
@@ -819,7 +819,7 @@ namespace dom
     static element create(const char* tagname, const WCHAR* text = 0)
     {
         element e(0);
-        SCDOM_RESULT r = SciterCreateElement( tagname, text, &e.he ); // don't need 'use' here, as it is already "addrefed" 
+        SCDOM_RESULT r = SciterCreateElement( tagname, text, &e.he ); // don't need 'use' here, as it is already "addrefed"
         assert(r == SCDOM_OK); r;
         return e;
     }
@@ -836,7 +836,7 @@ namespace dom
     element clone()
     {
         element e(0);
-        SCDOM_RESULT r = SciterCloneElement( he, &e.he ); // don't need 'use' here, as it is already "addrefed" 
+        SCDOM_RESULT r = SciterCloneElement( he, &e.he ); // don't need 'use' here, as it is already "addrefed"
         assert(r == SCDOM_OK); r;
         return e;
     }
@@ -880,7 +880,7 @@ namespace dom
         assert(r == SCDOM_OK); r;
     }
 
-    /** traverse event - send it by sinking/bubbling on the 
+    /** traverse event - send it by sinking/bubbling on the
       * parent/child chain of this element
       **/
     bool send_event(unsigned int event_code, unsigned int reason = 0, HELEMENT heSource = 0)
@@ -891,7 +891,7 @@ namespace dom
       return handled != 0;
     }
 
-    /** post event - post it in the queue for later sinking/bubbling on the 
+    /** post event - post it in the queue for later sinking/bubbling on the
       * parent/child chain of this element.
       * method returns immediately
       **/
@@ -931,13 +931,13 @@ namespace dom
     }
 
 
-    struct comparator 
+    struct comparator
     {
       virtual int compare(const sciter::dom::element& e1, const sciter::dom::element& e2) = 0;
 
       static INT SC_CALLBACK scmp( HELEMENT he1, HELEMENT he2, LPVOID param )
       {
-        sciter::dom::element::comparator* self = 
+        sciter::dom::element::comparator* self =
           static_cast<sciter::dom::element::comparator*>(param);
 
         sciter::dom::element e1 = he1;
@@ -947,7 +947,7 @@ namespace dom
       }
     };
 
-    /** reorders children of the element using sorting order defined by cmp 
+    /** reorders children of the element using sorting order defined by cmp
       **/
     void sort( comparator& cmp, int start = 0, int end = -1 )
     {
@@ -958,28 +958,34 @@ namespace dom
       assert(r == SCDOM_OK); r;
     }
 
-    // "manually" attach event_handler proc to the DOM element 
+    // "manually" attach event_handler proc to the DOM element
     void attach_event_handler(event_handler* p_event_handler )
     {
       SciterAttachEventHandler(he, &event_handler::element_proc, p_event_handler);
     }
-  
+
     void detach_event_handler(event_handler* p_event_handler )
     {
       SciterDetachEventHandler(he, &event_handler::element_proc, p_event_handler);
     }
 
-    // call scripting method attached to the element (directly or through of scripting behavior)  
+    // call scripting method attached to the element (directly or through of scripting behavior)
     // Example, script:
     //   var elem = ...
     //   elem.foo = function() {...}
-    // Native code: 
+    // Native code:
     //   dom::element elem = ...
     //   elem.call_method("foo");
     SCITER_VALUE  call_method(LPCSTR name, UINT argc, SCITER_VALUE* argv )
     {
       SCITER_VALUE rv = SCITER_VALUE();
       SCDOM_RESULT r = SciterCallScriptingMethod(he, name, argv,argc, &rv);
+#if !defined(SCITER_SUPPRESS_SCRIPT_ERROR_THROW)
+      if( (r != SCDOM_OK) && rv.is_error_string()) {
+        aux::w2a reason(rv.get(WSTR("")));
+        throw sciter::script_error(reason.c_str());
+      }
+#endif
       assert(r == SCDOM_OK); r = r;
       return rv;
     }
@@ -1010,10 +1016,10 @@ namespace dom
       return call_method(name,4,argv);
     }
 
-    // call scripting function defined on global level   
+    // call scripting function defined on global level
     // Example, script:
     //   function foo() {...}
-    // Native code: 
+    // Native code:
     //   dom::element root = ... get root element of main document or some frame inside it
     //   root.call_function("foo"); // call the function
 
@@ -1021,6 +1027,12 @@ namespace dom
     {
       SCITER_VALUE rv;
       SCDOM_RESULT r = SciterCallScriptingFunction(he, name, argv,argc, &rv);
+#if !defined(SCITER_SUPPRESS_SCRIPT_ERROR_THROW)
+      if( (r != SCDOM_OK) && rv.is_error_string()) {
+        aux::w2a reason(rv.get(WSTR("")));
+        throw sciter::script_error(reason.c_str());
+      }
+#endif
       assert(r == SCDOM_OK); r;
       return rv;
     }
@@ -1053,7 +1065,7 @@ namespace dom
 
     // evaluate script in element context:
     // 'this' in script will be the element
-    // and in namespace of element's document. 
+    // and in namespace of element's document.
     SCITER_VALUE eval(const WCHAR* script, size_t script_length)
     {
       SCITER_VALUE rv;
@@ -1061,11 +1073,11 @@ namespace dom
       assert(r == SCDOM_OK); r;
       return rv;
     }
-    SCITER_VALUE eval(aux::wchars script) 
+    SCITER_VALUE eval(aux::wchars script)
     {
       return eval(script.start,script.length);
     }
-    
+
     CTL_TYPE get_ctl_type() const
     {
       UINT t = 0;
@@ -1113,9 +1125,9 @@ namespace dom
       assert(r == SCDOM_OK); r;
       return rv;
     }
-        
 
-    struct find_first_callback: callback 
+
+    struct find_first_callback: callback
     {
       HELEMENT hfound;
       find_first_callback():hfound(0) {}
@@ -1167,16 +1179,16 @@ namespace dom
     assert(hn);
   }
 
-  inline node& node::operator = (HELEMENT h) 
-  { 
-    set(element(h)); 
-    return *this; 
+  inline node& node::operator = (HELEMENT h)
+  {
+    set(element(h));
+    return *this;
   }
 
-  inline node& node::operator = (const element& n) 
-  { 
-    set(n); 
-    return *this; 
+  inline node& node::operator = (const element& n)
+  {
+    set(n);
+    return *this;
   }
 
   inline unsigned int node::children_count() const
@@ -1227,7 +1239,7 @@ namespace dom
     return he;
   }
 
-  inline HELEMENT node::parent( ) const 
+  inline HELEMENT node::parent( ) const
   {
     HELEMENT heParent = 0;
     SCDOM_RESULT r = SciterNodeParent(hn, &heParent);
@@ -1288,7 +1300,7 @@ namespace dom
 
   inline node node::make_text_node(LPCWSTR text, UINT textLength)
   {
-    node rn; 
+    node rn;
     SCDOM_RESULT r = SciterCreateTextNode(text,textLength,&rn.hn);
     assert(r == SCDOM_OK); r;
     return rn;
@@ -1296,7 +1308,7 @@ namespace dom
 
   inline node node::make_comment_node(LPCWSTR text, UINT textLength)
   {
-    node rn; 
+    node rn;
     SCDOM_RESULT r = SciterCreateCommentNode(text,textLength,&rn.hn);
     assert(r == SCDOM_OK); r;
     return rn;
@@ -1340,8 +1352,8 @@ namespace dom
     assert(r == SCDOM_OK); r;
   }
 
-      
-      
+
+
 
 } // dom namespace
 

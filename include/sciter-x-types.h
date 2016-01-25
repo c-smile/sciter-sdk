@@ -262,6 +262,7 @@
     typedef basic_string<WCHAR> ustring;
   }
 
+
   // Note: quote here is a string literal!
   #ifdef WINDOWS
     #define _WSTR(quote) L##quote

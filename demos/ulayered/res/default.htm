@@ -34,6 +34,8 @@
   body > footer { flow:vertical; margin-top:*; margin-bottom:20dip; }
   body > footer > button { display:block; background:transparent; margin:8dip *; border: 1px solid brown; border-radius:4dip; font-rendering-mode:sub-pixel; /*for better font scaling*/ }
   body > footer > button:hover { background-color:white; transition: background-color(linear,300ms);  }
+  body > footer > input { display:block; margin:8dip *; }
+  
 
 </style>
 <script type="text/tiscript">
@@ -80,6 +82,7 @@
 <body>
   <header><span #platform /> <span #arch />bit time</header>
   <footer>
+    <input|text value="test">
     <button #minimize>Minimize Window</button>
     <button #close>Close Window</button>
   </footer>

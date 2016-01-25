@@ -1,0 +1,19 @@
+<html>
+<head>
+    <style>
+         @import url(../plus.css);
+    </style>
+
+    <script type="text/tiscript">
+        namespace Data // our model
+        {
+          var val = 0.5; // observable variable
+        }
+    </script>
+</head>
+
+<body model="Data">
+    <input|decimal(val) max="1.0" step="0.01" />
+    <input|hslider(val) max="1.0" step="0.01" />
+</body>
+</html>

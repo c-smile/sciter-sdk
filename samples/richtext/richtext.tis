@@ -112,6 +112,8 @@ class Richtext: Behavior {
     this.bind("button.font-size li:nth-child(6)", "format:apply-span:font", {size:6});
     this.bind("button.font-size li:nth-child(7)", "format:apply-span:font", {size:7});
     
+    this.bind("button.picture", this.onInsertPicture);    
+    
     this.SetupTableSelector(this.toolbar.$(button.table));
   }
   
@@ -233,6 +235,36 @@ class Richtext: Behavior {
       return true;
     }
     this.htmlarea.transact(insertIt,"insert table"); // do the action inside undoable transaction.
+  }
+  
+  function insertPicture(url) {
+  
+    var html = String.$(<img src="{url}" >);
+    
+    function insertIt(transaction) {
+      // 'this' here is an htmlarea
+      var pos = transaction.removeRange();   // delete selection if any
+      var insertedNodes = transaction.insertHtml(pos, html);     // insert the html at pos
+      assert(insertedNodes && insertedNodes[0].tag == "img");
+      var img = insertedNodes[0];
+      
+      this.state.focus = true;
+      
+      var firstTextPos = img.firstCaretPos;
+      var lastTextPos = img.lastCaretPos;
+      this.selection.select(firstTextPos,lastTextPos);  // select whole image
+      return true;
+    }
+    this.htmlarea.transact(insertIt,"insert picture"); // do the action inside undoable transaction.    
+  }
+  
+  function onInsertPicture(cmd,param) {
+    
+    if(cmd == #exec) {
+      // choose and insert picture here
+      view.msgbox(#information,"for the demo purposes this will insert images/test.jpg");
+      this.insertPicture("images/test.jpg");
+    }
   }
     
   // helper methods:

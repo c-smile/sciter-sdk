@@ -29,7 +29,7 @@ function Carousel() {
   list.onSize = function() {
     (listWidth,listHeight) = this.box(#dimension);
     listContentWidth = this.box(#width,#content);
-    //stdout.println(listWidth,listHeight,listContentWidth);
+    stdout.println(listWidth,listHeight,listContentWidth);
     var npages = listContentWidth / listWidth + 1;
     if( npages != pages )
     {
@@ -71,5 +71,6 @@ function Carousel() {
     easeDrop: Animation.Ease.OutQuad
   };
 
+  this.post(::list.onSize());
 
 }

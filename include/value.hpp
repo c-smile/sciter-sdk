@@ -43,6 +43,8 @@
     // ascii or utf8 string
     typedef std::basic_string<char>  astring;
 
+    typedef std::runtime_error script_error;
+
     // value by key bidirectional proxy/accessor 
     class value_key_a;
     // value by index bidirectional proxy/accessor 

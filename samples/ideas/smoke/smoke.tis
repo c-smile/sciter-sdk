@@ -1,0 +1,103 @@
+function Smoke() 
+{
+
+  // Create an array to store our particles
+  var particles = [];
+
+  // The amount of particles to render
+  const particleCount = 30;
+
+  // The maximum velocity in each direction
+  const maxVelocity = 2;
+
+  // The target frames per second (how often do we want to update / redraw the scene)
+  const targetFPS = 16;
+  
+  const minOpacity = 25;
+  const maxOpacity = 100;
+
+  // Set the dimensions of the canvas as variables so they can be used.
+  var (width, height) = this.box(#dimension);
+
+  // Create an image object (only need one instance)
+  var particleImage = this.loadImage( self.url("smoke-particle.png") );
+  
+  function random( min, max ) { return rand( max - min ) + min; }
+  
+  function createParticle() {
+    return {
+      x : random(0, width),
+      y : random(0, height),
+      xVelocity: random(-maxVelocity, maxVelocity),
+      yVelocity: random(-maxVelocity, maxVelocity),
+      opacity: random(minOpacity, maxOpacity),
+      opacityDelta: random(-1, 1) || 1;
+    };
+  }
+  
+  function moveParticle(particle) 
+  {
+    // Update the position of the particle with the addition of the velocity.
+    particle.x += particle.xVelocity;
+    particle.y += particle.yVelocity;
+
+    // Check if has crossed the right edge
+    if (particle.x >= width) {
+        particle.xVelocity = -particle.xVelocity;
+        particle.x = width;
+    }
+    // Check if has crossed the left edge
+    else if (particle.x <= 0) {
+        particle.xVelocity = -particle.xVelocity;
+        particle.x = 0;
+    }
+
+    // Check if has crossed the bottom edge
+    if (particle.y >= height) {
+        particle.yVelocity = -particle.yVelocity;
+        particle.y = height;
+    }
+    
+    // check if has crossed the top edge
+    else if (particle.y <= 0) {
+        particle.yVelocity = -particle.yVelocity;
+        particle.y = 0;
+    }
+    
+    particle.opacity += particle.opacityDelta;
+    if( particle.opacity < minOpacity ) {
+      particle.opacity = minOpacity;
+      particle.opacityDelta = -particle.opacityDelta;
+    }
+    else if( particle.opacity > maxOpacity ) {
+      particle.opacity = maxOpacity;
+      particle.opacityDelta = -particle.opacityDelta;
+    }
+    
+  }
+  
+  function drawParticle(gfx,particle)
+  {
+    //stdout.println(particle.x, particleImage.width, particle.y, particleImage.height);
+    gfx.blendImage(particleImage, particle.x - particleImage.width/2, particle.y - particleImage.height/2, particle.opacity / 100.0);
+  }
+  
+  this.paintContent = function(gfx) {
+    for( var particle in particles )     
+      drawParticle(gfx,particle);
+  }
+  
+  this.animate( function() {
+    
+    for( var particle in particles )
+      moveParticle(particle);
+
+    self.refresh();    
+    return 1000 / targetFPS;
+  });
+
+  // Initialize the scene
+  for( var n in particleCount )
+    particles.push(createParticle());
+
+}

@@ -493,14 +493,14 @@ namespace tiscript
     return (rv2); }
 
 #define TISCRIPT_RETURN_3(c,rv1,rv2,rv3) \
-  { tiscript::ni()->set_nth_retval(vm,2,(rv1)); \
-    tiscript::ni()->set_nth_retval(vm,1,(rv2)); \
+  { tiscript::ni()->set_nth_retval(vm,1,(rv2)); \
+    tiscript::ni()->set_nth_retval(vm,2,(rv1)); \
     return (rv3); }
 
 #define TISCRIPT_RETURN_4(c,rv1,rv2,rv3,rv4) \
-  { tiscript::ni()->set_nth_retval(vm,3,(rv1)); \
+  { tiscript::ni()->set_nth_retval(vm,1,(rv3)); \
     tiscript::ni()->set_nth_retval(vm,2,(rv2)); \
-    tiscript::ni()->set_nth_retval(vm,1,(rv3)); \
+    tiscript::ni()->set_nth_retval(vm,3,(rv1)); \
     return (rv4); }
 
 #endif

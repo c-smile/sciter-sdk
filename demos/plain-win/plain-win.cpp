@@ -85,7 +85,13 @@ LRESULT CALLBACK window::wnd_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
     // testing sciter::host<window>::call_function() and so SciterCall ()
     window* self = ptr(hWnd);
     sciter::dom::element root = self->get_root();
-    sciter::value r = root.call_function("Test.add",sciter::value(2),sciter::value(2));
+
+    sciter::value r;
+    try {
+      r = root.call_function("Test.add",sciter::value(2),sciter::value(2));
+    } catch (sciter::script_error& err) {
+      std::cerr << err.what() << std::endl;
+    }
     //or sciter::value r = self->call_function("Test.add",sciter::value(2),sciter::value(2));
     assert(r.is_int() && r.get(0) == 4);
     return 0;

@@ -56,11 +56,30 @@ const Lang = function() {
   // static label updater, used by <dfn> or <xxx .dfn>
   function Label() {
     var key = this.text;
+    
+    function setText(tn) {
+      this.clear();
+      this.appendNode( Node.createText(tn) );
+    }
+    
     function update() {
       var text = xlation[key];
-      if( !text ) { if(notfound) notfound[key] = #text; (this super).text = key; }
-      else { this super.text = text; if(used) used[key] = true; }
+      if( !text ) { if(notfound) notfound[key] = #text; setText.call(this super, key); }
+      else { setText.call(this super,text); if(used) used[key] = true; }
     }
+    
+    this[#text] = property(v) {
+      get {
+        var tn = this.firstNode;
+        if( !tn ) return "";
+        return tn.text;
+      }
+      set {
+        key = v;
+        update.call(this);
+      }
+    }
+    
     this[ON_LANG_CHANGE] = update;
     update();
   }

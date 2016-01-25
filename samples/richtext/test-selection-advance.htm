@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <title></title>
+    <style></style>
+    <script type="text/tiscript">
+    
+    function self.ready() {
+      var form = $(form);
+      
+      var area = $(htmlarea);
+      
+      $(button#advance).on("click", function(){
+        var v = form.value;
+        area.selection.advance(symbol(v.step), symbol(v.target));
+        area.state.focus = true;
+      });
+      
+    }
+        
+    </script>
+  </head>
+<body>
+
+ <form>
+    <label>Target:</label> 
+    <div>
+      <button|radio(target) value="both" checked>Both</button>
+      <button|radio(target) value="caret">Caret</button>
+      <button|radio(target) value="anchor">Anchor</button>
+      <button|radio(target) value="start">Start</button>
+      <button|radio(target) value="end">End</button>
+    </div>
+    <label>Step:</label> 
+    <select(step)>
+      <option>next</option>
+      <option>prior</option>
+      <option>wordStart</option>
+      <option>wordEnd</option>
+      <option>lineStart</option>
+      <option>lineEnd</option>
+      <option>first</option>
+      <option>last</option>
+    </select>
+ </form>
+ <button#advance>advance</button>
+ <htmlarea>
+  <p>Lorem ipsum dolor sit amet, et brute nostrud percipit est, dicit latine ex vel, tantas putant vim ut. Quis luptatum ius ei, eos hinc salutatus te. Ut alterum facilis facilisis vis.</p>
+  <p>Has id iudico mentitum tractatos. Mei at inermis evertitur. Simul putent ei duo, mucius omnesque cotidieque et cum. Vix pertinacia vituperata in, ius omnium euismod consulatu in, no has enim consequat.</p>
+ </htmlarea>
+
+</body>
+</html>

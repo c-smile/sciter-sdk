@@ -129,6 +129,15 @@ enum
 #define SC_POSTED_NOTIFICATION 0x06
 
 
+/**This notification is sent when the engine encounters critical rendering error: e.g. DirectX gfx driver error.
+   Most probably bad gfx drivers.
+ 
+ * \param lParam #LPSCN_GRAPHICS_CRITICAL_FAILURE
+ *
+ **/
+#define SC_GRAPHICS_CRITICAL_FAILURE 0x07
+
+
 /**Notification callback structure.
  **/
 typedef struct SCITER_CALLBACK_NOTIFICATION
@@ -226,6 +235,17 @@ typedef struct SCN_POSTED_NOTIFICATION
 } SCN_POSTED_NOTIFICATION;
 
 typedef SCN_POSTED_NOTIFICATION* LPSCN_POSTED_NOTIFICATION;
+
+/**This structure is used by #SC_ENGINE_DESTROYED notification.
+ *\copydoc SCN_ENGINE_DESTROYED **/
+typedef struct SCN_GRAPHICS_CRITICAL_FAILURE
+{
+    UINT      code; /**< [in] one of the codes above.*/
+    HWINDOW   hwnd; /**< [in] HWINDOW of the window this callback was attached to.*/
+} SCN_GRAPHICS_CRITICAL_FAILURE;
+
+typedef SCN_POSTED_NOTIFICATION* LPSCN_POSTED_NOTIFICATION;
+
 
 #include "sciter-x-behavior.h"
 

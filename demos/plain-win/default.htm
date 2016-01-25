@@ -7,6 +7,7 @@
 
       namespace Test {
         function add(n1,n2) { return n1+n2; }
+        // function add(n1,n2) { return n / 0; } // error simulation, will throw sciter::script_error with .what() -> stack trace
       }
       
       $(#test).onClick = function() {

@@ -118,6 +118,7 @@ namespace sciter
           case SC_ATTACH_BEHAVIOR:    return static_cast<BASE*>(this)->on_attach_behavior((LPSCN_ATTACH_BEHAVIOR)pnm );
           case SC_ENGINE_DESTROYED:   return static_cast<BASE*>(this)->on_engine_destroyed();
           case SC_POSTED_NOTIFICATION: return static_cast<BASE*>(this)->on_posted_notification((LPSCN_POSTED_NOTIFICATION)pnm);
+          case SC_GRAPHICS_CRITICAL_FAILURE: static_cast<BASE*>(this)->on_graphics_critical_failure(); return 0;
         }
         return 0;
       }
@@ -147,6 +148,15 @@ namespace sciter
       LRESULT on_attach_behavior( LPSCN_ATTACH_BEHAVIOR lpab ) { return create_behavior(lpab); }
       LRESULT on_engine_destroyed( ) { return 0; }
       LRESULT on_posted_notification( LPSCN_POSTED_NOTIFICATION lpab ) { return 0; }
+
+      void on_graphics_critical_failure() 
+      {
+#ifdef WINDOWS
+        // Direct2D critical error (on layered window) - it rendered nothing. Most probably bad video driver. 
+        ::MessageBox(NULL,TEXT("Direct2D graphics critical error"), TEXT("Critical Error"), MB_OK | MB_ICONERROR);
+        exit(-1);
+#endif
+      }
       
       bool load_resource_data(LPCWSTR uri, LPCBYTE& pb, UINT& cb )
       {
@@ -176,6 +186,10 @@ namespace sciter
         HWINDOW hwnd = static_cast< BASE* >(this)->get_hwnd();
         SCITER_VALUE rv;
         BOOL r = SciterCall(hwnd, name, argc, argv, &rv);
+#if !defined(SCITER_SUPPRESS_SCRIPT_ERROR_THROW)
+      if( (r != SCDOM_OK) && rv.is_error_string())
+        throw sciter::script_error(aux::w2a(rv.get(WSTR(""))));
+#endif
         assert(r); r = r;
         return rv;
       }
