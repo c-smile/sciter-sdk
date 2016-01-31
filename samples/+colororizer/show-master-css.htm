@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+      @import url(colorizer.css);
+      
+      plaintext { size:* }
+      
+    </style>
+    <script type="text/tiscript">
+    
+      $(form).on("change",function() {
+        var resourceUrl = this.value.masterRes;
+				var str = this.request(0,#get,resourceUrl);
+				$(plaintext).value = str.toString();
+				str.close();
+      });
+    </script>
+  </head>
+<body>
+  <form>
+    <button|radio(masterRes) value="sciter:master-base.css">master-base.css</button>
+    <button|radio(masterRes) value="sciter:win-master.css">win-master.css</button>
+    <button|radio(masterRes) value="sciter:ux-master.css">ux-master.css</button>
+  </form>
+  <plaintext#source type="text/css" spaces-per-tab=2></plaintext>
+</body>
+</html>
