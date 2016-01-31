@@ -40,7 +40,6 @@ class VirtualTree : Behavior
   {
     if( evt.type == Event.ELEMENT_EXPANDED )  { this.expandOption(evt.target); this.optionExpanded(evt.target); return true; }
     else if( evt.type == Event.ELEMENT_COLLAPSED ) { this.collapseOption(evt.target); this.optionCollapsed(evt.target); return true; }
-    else if( evt.type == Event.SELECT_SELECTION_CHANGED ) { this.collapseOption(evt.target); this.selectionChanged(); return true; }
   }
   
   function appendRoot(caption, path, isFolder)
