@@ -1,0 +1,57 @@
+<html>
+    <head>
+       <style type="text/css">
+          body {
+            background: linear-gradient(top,white,gold);
+          }
+          div#container {
+            size : 785px 568px;
+            border:3px gold dashed;
+          }
+          </style>
+           <script type="text/tiscript">
+           
+           
+              function self.ready() 
+              {
+                const container = $(#container);
+                var clipMode = "normal";
+              
+                var baseImage = self.loadImage(self.url("last-diligence-from-gabriola.jpg"));
+                
+                var clip = new Graphics.Path(); 
+                    clip.moveTo(392.5,20).lineTo(785-20,568-20).lineTo(20,568-20).close(); // triangle
+                    
+                var inverseClip = new Graphics.Path();
+                // initial rectangle box
+                inverseClip.moveTo(0,0).lineTo(785,0).lineTo(785,568).lineTo(0,568).close(); 
+                // exclude clip from it
+                inverseClip = inverseClip.combine(#exclude,clip);
+              
+                // painting baseImage with on of the clips produced above
+                function paint(gfx) {
+                  gfx.pushLayer(clipMode == "normal" ? clip : inverseClip);
+                  gfx.drawImage(baseImage,0,0,baseImage.width,baseImage.height);
+                  gfx.popLayer();
+                  
+                }
+
+                container.paintContent = paint;
+                container.refresh();
+                
+                $(form).on("change",function(){
+                  clipMode = this.value.clipMode;
+                  container.refresh();
+                });
+            }
+          </script>
+        </head>
+        <body>
+          <p><code>gfx.pushLayer(path);</code> - clip by path and <code>path.combine(mode,otherPath);</code> demos.</p>
+          <form>
+            <button|radio(clipMode) value="normal" checked>Normal clip</button>
+            <button|radio(clipMode) value="inverse">Inverse clip</button>
+          </form>
+          <div id="container"></div>
+        </body>
+</html>

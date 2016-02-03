@@ -6,8 +6,10 @@ class TreeDataSource
   // call cb(caption,path,isFolder) for each root item
   function eachRoot(cb)
   {
-    if( System.PLATFORM == #Windows )
-      cb("Drive c:","c:", true);
+    if( System.PLATFORM == #Windows ) {
+      cb("Drive C:","c:", true);
+      cb("Drive D:","d:", true);
+    }
     else   
       cb("FS root","", true);
   }

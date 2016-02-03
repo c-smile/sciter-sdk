@@ -46,6 +46,13 @@
       treew.dataSource = new TreeDataSource();
     }   
     
+    treew.on("change", function() {
+      var current = this.$(option:current);
+      var currentFilename = current.attributes["filename"];
+      stdout.println(currentFilename, (current.state.collapsed || current.state.expanded) ? "folder" : "file");
+    });
+    
+    
     </script>
   </head>
 <body>

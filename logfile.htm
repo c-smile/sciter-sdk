@@ -11,6 +11,37 @@
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
     <tr>
+      <td valign="top" bgcolor="#FFFADA">3.3.1.4</td>
+      <td nowrap valign="top" align="center">02-02-2016</td>
+      <td>
+        <p>new features:</p>
+        <ul>
+          <li><strong>DirectX integration support</strong>. Sciter can be used to render UI on DirectX windows - on back and foreground layers together with 3D content. DirectX support is done by 3 functions:</li>
+          <ul>
+            <li><code>SciterCreateOnDirectXWindow(HWINDOW hwnd, IDXGISwapChain* pSwapChain);</code> - initializes Sciter instance of HWND controlled by DirectX.</li>
+            <li><code>SciterRenderOnDirectXWindow(HWINDOW hwnd, HELEMENT elementToRenderOrNull, BOOL frontLayer)</code> - renders whole document or separate layers on DirectX window.</li>
+            <li><code>SciterRenderOnDirectXTexture(HWINDOW hwnd, HELEMENT elementToRenderOrNull, IDXGISurface* surface);</code> - renders document or particular element on 2D DirectX texture.</li></ul>
+          <li>+ sdk/samples/dialogs+windows/window.closing.htm sample.</li>
+          <li>+ <code>Graphics.pushLayer(image,draw1alpha)</code> - sets <strong>clip mask by image</strong>. See: sdk/samples/graphics/test-layer-image-mask.htm</li></ul>
+        <p>fixes:</p>
+        <ul>
+          <li>Fix of degenerate GIF images handling (animated images having only one frame). See: <a href="http://sciter.com/forums/topic/a-gif-led-to-high-occupancy-rate-of-cpu">http://sciter.com/forums/topic/a-gif-led-to-high-occupancy-rate-of-cpu/</a></li>
+          <li><code>&lt;toolbar&gt;&lt;button|checkbox&gt;&lt;/toolbar&gt;</code> styling fix. </li>
+          <li>custom scrollbar rendering issue fix, see: <a href="http://sciter.com/forums/topic/scrollbar-customization-problem">http://sciter.com/forums/topic/scrollbar-customization-problem</a></li>
+          <li><code>&lt;input|slider&gt;</code> fix, setting focus on mouse down;</li>
+          <li>Fix of sdk/samples/ideas/virtual-tree/virtual-tree.tis for multiple roots.</li>
+          <li>Preventing &quot;pure virtual function call&quot; on async updates in some cases: <a href="http://sciter.com/forums/topic/runtime-error-r6025-pure-virtual-function-call">http://sciter.com/forums/topic/runtime-error-r6025-pure-virtual-function-call/</a></li>
+          <li>[gtk] fixes:</li>
+          <ul>
+            <li><code>CTRL+ZXCV</code> handling</li>
+            <li>better font handling and DPI;</li>
+            <li><code>self.on(closerequest,function(evt))</code> , <code>evt.reason</code> value fix;</li>
+            <li>graphics::fill(image) fix;</li>
+            <li>clipboard paste fix;</li>
+            <li><code>view.doEvent(#untilMouseUp)</code> fix for deatched elements;</li>
+            <li>mouse handling on detached elements;</li></ul></ul>Builds: win32, win64, osx64, linux/gtk64
+        <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
+    <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.1.3</td>
       <td nowrap valign="top" align="center">24-01-2016</td>
       <td>
@@ -18,7 +49,7 @@
         <ul>
           <li>[windows, api] SC_GRAPHICS_CRITICAL_FAILURE notification, sciter::host::on_graphics_critical_failure() - notifies about critical error while drawing **layered** windows.</li>
           <li>+ sample/test sdk/samples/zip/test-view-zip-load.htm</li>
-          <li>+ Smoke rendering demo: sdk/samples/ideas/smoke </li>
+          <li>+ Smoke rendering demo: sdk/samples/ideas/smoke</li>
           <li>+ Element.selection.advance() implementation and documentation.</li>
           <li>sciter::value::call() throws sciter::script_error in case of scripting error. It is &quot;on&quot; by default, to suppress it #define SCITER_SUPPRESS_SCRIPT_ERROR_THROW.</li>
           <li>[+lang] Element.text = &quot;new translatable text&quot; handling, see: http://sciter.com/forums/topic/lang-tis-cant-translate-an-elements-text-when-it-changed/ discussion.</li>
@@ -36,13 +67,13 @@
           <li>[gtk] view.aspectRatio attempt to fix (works somehow but far from perfect, GTK bug ?)</li>
           <li>[gtk] MOUSE_DCLIK generation.</li>
           <li>[gtk] context menu on right click.</li>
-          <li>Fix of bugs mentioned here: <a href="http://sciter.com/forums/topic/2-bugs">http://sciter.com/forums/topic/2-bugs/</a> </li>
+          <li>Fix of bugs mentioned here: <a href="http://sciter.com/forums/topic/2-bugs">http://sciter.com/forums/topic/2-bugs/</a></li>
           <li>[gtk] POPUP_WINDOW focus issue fix</li>
           <li>[richtext]</li>
           <ul>
-            <li>fix of transaction.insertHtml() between inline blocks. </li>
-            <li>input elements handling inside richtext (they are disabled). </li></ul>
-          <li>[clipboard] input|text, textarea - fix of copy-to-clipboard handling (clearing clipboard). </li>
+            <li>fix of transaction.insertHtml() between inline blocks.</li>
+            <li>input elements handling inside richtext (they are disabled).</li></ul>
+          <li>[clipboard] input|text, textarea - fix of copy-to-clipboard handling (clearing clipboard).</li>
           <li>adjustment of data:... base64 &nbsp;URL handling</li>
           <li>fix of transparent popup menu handling.</li>
           <li>[win,gdi] fix of &lt;img&gt; rendering artifacts while stretching.</li>

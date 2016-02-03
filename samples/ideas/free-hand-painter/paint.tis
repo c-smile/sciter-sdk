@@ -1,0 +1,58 @@
+class Path 
+{
+    function this (x,y,color, width) {
+        this.path = new Graphics.Path();
+        this.path.moveTo(x,y);
+        this.color = color;
+        this.width = width;
+    }
+    function draw(gfx) 
+    {
+      gfx.save()
+         .strokeCap(#round);
+         .lineWidth(this.width)
+         .lineColor(this.color)
+         .drawPath(this.path)
+      .restore();
+    }
+    function append(x,y) {
+      this.path.lineTo(x,y);
+    }
+};
+
+class PaintCanvas: Behavior {
+
+  this var bitmap = null;     // bitmap buffer
+  this var drawingOp = null;  // undoable drawing op
+
+  function attached() {
+    var (w,h) = this.box(#dimension);
+    //this.bitmap = new Image(w,h, color(255,255,255));
+    this.paintContent = this.render; // setup paint handler
+  }
+
+  function paint(gfx) {
+    // first draw "static" image buffer:
+    if(this.bitmap)
+      gfx.drawImage( this.bitmap, 0,0 );
+
+    // second, draw "current" object on top of it
+    if(drawingOp)
+      drawingOp.draw();
+  }
+
+  // commit drawing operation - draw/merge it with current bitmap
+  function commit() {
+    var (w,h) = this.box(#dimension);
+    var nBitmap = new Image(w,h, color(255,255,255), this.paint);
+    if(this.bitmap) this.bitmap.destroy();
+    this.bitmap = nBitmap;
+    this.drawingOp = null;
+  }
+
+  // undo "current drawing ops" list.
+  function undo( op ) {
+    this.drawingOp = null;
+    this.refresh();
+  }
+}

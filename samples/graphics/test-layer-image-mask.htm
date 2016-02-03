@@ -1,0 +1,57 @@
+<html>
+    <head>
+       <style type="text/css">
+       
+          body {
+            background: linear-gradient(top,white,gold);
+          }
+          div#container {
+            size : 785px 568px;
+            border:3px gold dashed;
+          }       
+          </style>
+           <script type="text/tiscript">
+              self.ready = function() 
+              {
+              
+                const container = $(#container);
+              
+                var clipMode = "normal";
+              
+                var baseImage = self.loadImage(self.url("last-diligence-from-gabriola.jpg"));
+                
+                // creating mask
+                // note: all transparent pixels on the mask will be cliped out.
+                function painter(gfx) 
+                {            
+                  gfx.fillColor( color(255,255,255) );
+                  gfx.star(392.5,284,100,284, -90deg, 5 );
+                }
+                var maskImage = new Image(785,568,painter /*, color(0,0,0,0.1)*/);
+              
+                // painting baseImage with the mask produced above
+                function paint(gfx) {
+                   gfx.pushLayer(maskImage, clipMode == "normal");
+                   gfx.drawImage(baseImage,0,0,baseImage.width,baseImage.height);
+                   gfx.popLayer();
+                }
+
+                container.paintContent = paint;
+                container.refresh();
+                
+                $(form).on("change",function(){
+                  clipMode = this.value.clipMode;
+                  container.refresh();
+                });
+              };
+          </script>
+        </head>
+        <body>
+          <p><code>gfx.pushLayer(image);</code> - clip by image mask demo.</p>
+          <form>
+            <button|radio(clipMode) value="normal" checked>alfa 0.0 invisible</button>
+            <button|radio(clipMode) value="inverse">alfa 1.0 invisible<</button>
+          </form>
+          <div id="container"></div>
+        </body>
+</html>
