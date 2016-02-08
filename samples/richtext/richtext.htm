@@ -9,19 +9,16 @@
     </style>
     <script type="text/tiscript">
     
-    !function() {
-    
+    function self.ready() {
       var richtext = $(richtext);
       var plaintext = $(plaintext);
-            
+
       richtext.on("change", function() {
-        plaintext.text = this.source;
+        plaintext.value = this.source;
       });
       
-    
-    }();
-    
-    
+    };
+   
     </script>
   </head>
 <body>

@@ -1,0 +1,25 @@
+﻿
+svg.chart {
+  vertical-align:bottom;
+  display:inline-block;
+}
+
+svg.chart.pie { 
+  aspect: MicroChart.Pie url(micro-chart.tis);
+  size:16dip;
+}
+
+svg.chart.donut { 
+  aspect: "MicroChart.Donut" url(micro-chart.tis);
+  size:16dip;
+}
+
+svg.chart.line { 
+  aspect: "MicroChart.Line" url(micro-chart.tis);
+  size:32dip 16dip;
+}
+
+svg.chart.bar { 
+  aspect: "MicroChart.Bar" url(micro-chart.tis);
+  size:40dip 16dip;
+}

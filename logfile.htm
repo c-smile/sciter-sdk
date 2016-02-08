@@ -11,6 +11,39 @@
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
     <tr>
+      <td valign="top" bgcolor="#FFFADA">3.3.1.6</td>
+      <td nowrap valign="top" align="center">07-02-2016</td>
+      <td>
+        <p>new features:</p>
+        <ul>
+          <li>+ [css,script] <strong>parametrized-aspect</strong> feature, declaration of aspect call parameters in CSS: 
+            <pre>div.foo {
+  aspect: Foo(bar:12, buz:#fff );
+}
+</pre>
+            <p>Foo gets called with params object <code>{ bar:12, buz: color(255,255,255) }</code>, check <u>sdk/samples/tests/test-aspect-parameters.htm</u></p></li>
+          <li><strong>+micro-charts</strong> in <u>sdk/samples/+micro-charts</u> - small SVG based charts implementation. That is deeply &quot;sciterized&quot; version of Peity charts (<a href="http://benpickles.github.io/peity">http://benpickles.github.io/peity</a>)<br/>See samples there and</li>
+          <ul>
+            <li>[+plus] sdk/samples/+plus/demos/G-two-inputs-same-variable.htm demo update with the charts binding demo.</li></ul>
+          <li>+ <strong>native request API</strong> in <u>sciter-x-request.h</u> and <u>sciter-x-request.hpp</u>. Handling all attributes of requests (GET/POST/PUT/DELETE) sent by Element/View.request() functions and other load requests.</li>
+          <li>[tiscript] <code>Object.extend([deep],object1,object2,...)</code> - native method, merges other objects into this one. Mimics functionality of jQuery.extend().</li>
+          <li>[tiscript] <code>Object.clone(deep)</code>, <code>Array.clone(deep)</code> implementation.</li>
+          <li>+ sample sdk/samples/tooltips++/custom-calltip.htm - demo of :</li>
+          <ol>
+            <li>aspect with parameters and </li>
+            <li>custom popup shape rendering.</li></ol>
+          <li>[css] Support of '.' (dots) in nmtokens in css values. This allows to define the following:<br/><code>div { aspect: Micro.Pie ; } </code>&nbsp;<br/>that previously has to be written only as a string:<br/><code>div { aspect: &quot;Micro.Pie&quot;; }</code></li></ul>
+        <p>fixes:</p>
+        <ul>
+          <li>[behavior:edit | textarea] fix of selectall functionality.</li>
+          <li>[+plus] update to support multiple aspects cooperation on the same element.</li>
+          <li>fix of <code>Graphics.rectangle(x,y,w,h)</code> - w,h is rendered one px wider/taller than requested.</li>
+          <li>fix of error handling in <code>Element.paint****</code> functions.</li>
+          <li>fix of <code>Element.url()</code> for paths containing non-ascii symbols , see: <a href="http://sciter.com/forums/topic/a-bug-of-test-layer-clip-path-htm">http://sciter.com/forums/topic/a-bug-of-test-layer-clip-path-htm/</a></li>
+          <li>[osx] fix of &quot;custom cursors mirrored issue&quot;.</li>
+          <li>[gtk] sciter-gtk-xxx.so file (the Sciter engine on Linux) has been renamed to libsciter-gtk-32/64.so for compatibility with Xamarin's Mono.</li></ul>Builds: win32, win64, osx64, linux/gtk64
+        <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
+    <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.1.5</td>
       <td nowrap valign="top" align="center">03-02-2016</td>
       <td>

@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "sciter.h"
 #include "sciter-x-dom.hpp"
+#include "sciter-x-request.hpp"
 #include <process.h>
 
 //#pragma comment(lib, "dwmapi.lib")

@@ -20,7 +20,7 @@
     }
     
     @click @on "#save" : {
-      var fn = view.selectFile(#save, HTML_FILES , "html" );
+      var fn = view.selectFile(#save, HTML_FILES , "html", "rtext.htm", "‘File name:");
       if( fn ) $(richtext).save(fn);
     }
     

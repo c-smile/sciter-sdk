@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      #aspect-with-params { aspect: AspectParams(foo:42); }
+      #aspect-no-params { aspect: AspectNoParams; }
+    
+    </style>
+    <script type="text/tiscript">
+    
+    function AspectParams(params) {
+      assert params;
+      assert params.foo == 42;
+      this.text = "AspectParams: passed"; 
+    }
+
+    function AspectNoParams(params = null) {
+      assert params === null;
+      this.text = "AspectNoParams: passed"; 
+    }
+    
+    </script>
+  </head>
+<body>
+
+  <div#aspect-with-params />
+  <div#aspect-no-params />
+
+</body>
+</html>

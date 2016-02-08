@@ -2,6 +2,12 @@
 <head>
     <style>
          @import url(../plus.css);
+         @import url(../../+micro-charts/micro-chart.css);
+         
+         div { flow: horizontal; }
+         div > * { display:block; margin: 1* 1em; }
+         div > svg.chart.donut { size: 20dip; }
+         
     </style>
 
     <script type="text/tiscript">
@@ -13,10 +19,14 @@
 </head>
 
 <body model="Data">
-<!--    <input|decimal(val) max="1.0" step="0.01" />
-    <input|hslider(val) max="1.0" step="0.01" />-->
+
+    <p>Two inputs and one svg.chart.donut are all bound to the same Data.val variable:</p>
+
+    <div>
+      <svg.chart.donut(val) value="0.0/1.0" />
+      <input|decimal(val) min="0" max="1.0" step="0.1" />
+      <input|hslider(val) min="0" max="1.0" step="0.1" />    
+    </div>
     
-    <input|decimal(val) />
-    <input|hslider(val) min="0" max="10000" step="1"/>    
 </body>
 </html>

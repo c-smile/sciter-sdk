@@ -484,7 +484,21 @@ function Object_test()
   
   var keylist = [#for, #while, #do, #delete, #return, #get,#set, #throw];
   assert kw.keys() == keylist: "Object.keys()";
+ 
+
+  var to1 = { a:1,b:[1,2] };
+  var to2 = { c:"test" };
+  var to3 = { a:1,b:[1,2],c:"test" };
   
+  var tor1 = {}.extend(to1,to2);
+  var tor2 = {}.extend(true,to1,to2);
+  
+  stdout.printf("deep:%V\n",tor2);
+  
+  assert to3 == tor1: "extend 1";
+  assert to3 == tor2: "extend 2, deep";
+
+ 
 }
 
 // test of Undefined Property Handler - a.k.a. Virtual Properties

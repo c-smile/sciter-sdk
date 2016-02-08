@@ -101,7 +101,7 @@ const Plus = function() {
           else setupModelChangeHandler( coll, key, function(val) { updater(thing, expr()); } ); 
         }
       }
-      updater(thing,expr());
+      thing.post(::updater(thing,expr()));
       return;
     }
      
@@ -124,7 +124,9 @@ const Plus = function() {
         thing.subscribe("change.plus",on_ui_change); // subscribe to the element value change event
       }
       setupModelChangeHandler( coll, key, function(val) { updater(thing,val); } );
-      updater(thing,coll[key]); // assign intial value to it;
+      //WRONG: updater(thing,coll[key]);
+      //we need to post this thing as it may have other aspects and behaviors
+      thing.post(::updater(thing,coll[key])); // assign intial value to it;
     }
   }
   
@@ -467,6 +469,7 @@ function @observing(func, paths..) {
 }
 
 
+/* NOTE: this method is implemented natively now
 // that is an equivalent of jQuery $.extend(deep) method:
 function Object.extend(objects..) 
 {
@@ -481,5 +484,5 @@ function Object.extend(objects..)
   }
   for( var obj in objects )
     extend1(this,obj);
-}
+}*/
 

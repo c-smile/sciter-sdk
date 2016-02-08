@@ -1,0 +1,190 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      @import url(micro-chart.css);
+      
+      #updating { width:64dip; }
+      
+      
+      svg.chart.custom1 { 
+        aspect: MicroChart.Donut( fill: red gold, thickness:0.2 )
+                url(micro-chart.tis);
+        size:64dip;
+      }
+      
+      svg.chart.custom2 { 
+        aspect: MicroChart.Donut( fill: red gold green, thickness:0.4 )
+                url(micro-chart.tis);
+        size:96dip;
+      }
+      
+      svg.chart.custom3 { 
+        aspect: MicroChart.Bar( fill: red gold green blue )
+                url(micro-chart.tis);
+        size:100dip 32dip;
+      }
+      
+      svg.chart.custom4 { 
+        aspect: MicroChart.Line( fill: gold, stroke: red, stroke-width:3px )
+                url(micro-chart.tis);
+        size:200dip 64dip;
+      }    
+    </style>
+    <script type="text/tiscript">
+    
+    $(#updating).timer(1s, function() {
+      var random = rand(10);
+      var values = this.value;
+      values.shift();
+      values.push(random);
+      this.value = values;
+      return true;
+    });
+    
+    
+    </script>
+  </head>
+<body>
+
+  <h1>Micro charts</h1>
+  
+  <p>Charts implemented as aspects that meant to be attached to &lt;svg&gt; elements</p>
+
+  <section>
+    <h2>Pie charts</h2>
+    
+    <pre>&lt;svg.chart.pie value="..." /&gt;</pre>
+    
+    <p>Attribute <code>value</code> formats:</p>
+    <ol>
+      <li><code>3/8</code> - a "/" delimiter is assumed to mean "three out of five" and only the first two values will be drawn;</li>
+      <li><code>3,6,8,9</code> - all of the values are included in the chart and the total is the sum of all values</li>
+    </ol>
+    
+    <p>Script: <code>elChart.value = [num1,num2,num3,...];</code> - array of values</p>
+    
+    <p>Samples:  
+      <svg.chart.pie value="0/8" />
+      <svg.chart.pie value="1/8" />
+      <svg.chart.pie value="3/8" />
+      <svg.chart.pie value="5/8" />
+      <svg.chart.pie value="7/8" />
+      <svg.chart.pie value="8/8" />
+    </p>
+    Markup:
+    <pre>      &lt;svg.chart.pie value="0/8" /&gt;
+      &lt;svg.chart.pie value="1/8" /&gt;
+      &lt;svg.chart.pie value="3/8" /&gt;
+      &lt;svg.chart.pie value="5/8" /&gt;
+      &lt;svg.chart.pie value="7/8" /&gt;
+      &lt;svg.chart.pie value="8/8" /&gt;</pre>
+  </section>
+  
+  <section>
+    <h2>Donut charts</h2>
+
+    <pre>&lt;svg.chart.donut value="..." /&gt;</pre>
+    
+    <p>Attribute <code>value</code> formats:</p>
+    <ol>
+      <li><code>3/8</code> - a "/" delimiter is assumed to mean "three out of five" and only the first two values will be drawn;</li>
+      <li><code>3,6,8,9</code> - all of the values are included in the chart and the total is the sum of all values</li>
+    </ol>
+    
+    <p>Script: <code>elChart.value = [num1,num2,num3,...];</code> - array of values</p>
+
+    <p>Samples:  
+      <svg.chart.donut value="0/8" />
+      <svg.chart.donut value="1/8" />
+      <svg.chart.donut value="3/8" />
+      <svg.chart.donut value="5/8" />
+      <svg.chart.donut value="7/8" />
+      <svg.chart.donut value="8/8" />
+    </p>
+    Markup:
+    <pre>      &lt;svg.chart.donut value="0/8" /&gt;
+      &lt;svg.chart.donut value="1/8" /&gt;
+      &lt;svg.chart.donut value="3/8" /&gt;
+      &lt;svg.chart.donut value="5/8" /&gt;
+      &lt;svg.chart.donut value="7/8" /&gt;
+      &lt;svg.chart.donut value="8/8" /&gt;</pre>
+  </section>
+  
+  <section>
+    <h2>Line charts</h2>
+
+    <pre>&lt;svg.chart.line value="..." /&gt;</pre>
+    
+    <p>Attribute <code>value</code> format: list of comma separated values.</p>
+    <p>Script: <code>elChart.value = [num1,num2,num3,...];</code> - array of values</p>
+  
+    <p>Samples:
+      <svg.chart.line value="5,3,9,6,5,9,7,3,5,2" />
+      <svg.chart.line value="5,3,2,-1,-3,-2,2,3,5,2" />
+      <svg.chart.line value="0,-3,-6,-4,-5,-4,-7,-3,-5,-2" />
+    </p>
+    Markup:
+    <pre>      &lt;svg.chart.line value="5,3,9,6,5,9,7,3,5,2" /&gt;
+      &lt;svg.chart.line value="5,3,2,-1,-3,-2,2,3,5,2" /&gt;
+      &lt;svg.chart.line value="0,-3,-6,-4,-5,-4,-7,-3,-5,-2" /&gt;</pre>
+  </section>
+
+  <section>
+    <h2>Bar charts</h2>
+
+    <pre>&lt;svg.chart.bar value="..." /&gt;</pre>
+    
+    <p>Attribute <code>value</code> format: list of comma separated values.</p>
+    <p>Script: <code>elChart.value = [num1,num2,num3,...];</code> - array of values</p>
+  
+    <p>Samples:
+      <svg.chart.bar value="5,3,9,6,5,9,7,3,5,2" />
+      <svg.chart.bar value="5,3,2,-1,-3,-2,2,3,5,2" />
+      <svg.chart.bar value="0,-3,-6,-4,-5,-4,-7,-3,-5,-2" />
+    </p>
+    Markup:
+    <pre>      &lt;svg.chart.bar value="5,3,9,6,5,9,7,3,5,2" /&gt;
+      &lt;svg.chart.bar value="5,3,2,-1,-3,-2,2,3,5,2" /&gt;
+      &lt;svg.chart.bar value="0,-3,-6,-4,-5,-4,-7,-3,-5,-2" /&gt;</pre>
+  </section>
+
+  <section>
+    <h2>Updating charts in runtime</h2>
+    <p>To update chart by new values simply assign new array to the <code>value</code> in script</p>
+    <p>
+    Sample: <svg.chart.line #updating value="5,3,9,6,5,9,7,3,5,2,5,3,9,6,5,9,7,3,5,2" />
+    </p>
+    This code updates the chart once per second:
+    <pre>  $(#updating).timer(1s, function() {
+    var random = rand(10);
+    var values = this.value;
+    values.shift();
+    values.push(random);
+    this.value = values;
+    return true;
+  });</pre>
+  </section>
+  
+  <section>
+  <h2>Custom Chart styling</h2>
+  
+  <p>Charts can be styled through by aspect parameters, for exemple last chart below:</p>
+  <pre>  svg.chart.custom4 { 
+    aspect: MicroChart.Line( fill: gold, stroke: red, stroke-width:3px )
+            url(micro-chart.tis);
+    size:200dip 64dip;
+  }</pre>
+  
+  <p>
+    Samples: 
+      <svg.chart.custom1 value="3/8" />
+      <svg.chart.custom2 value="3,4,6" />
+      <svg.chart.custom3 value="5,3,9,6,5,9,7,3,5,2" />
+      <svg.chart.custom4 value="5,3,9,6,5,9,7,3,5,2" />
+    </p>
+  <section>
+
+</body>
+</html>

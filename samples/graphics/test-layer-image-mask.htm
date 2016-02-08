@@ -31,12 +31,16 @@
               
                 // painting baseImage with the mask produced above
                 function paint(gfx) {
-                   gfx.pushLayer(maskImage, clipMode == "normal");
-                   gfx.drawImage(baseImage,0,0,baseImage.width,baseImage.height);
-                   gfx.popLayer();
+                  gfx.pushLayer(maskImage, clipMode == "normal");
+                  gfx.drawImage(baseImage,0,0,baseImage.width,baseImage.height);
+                  gfx.popLayer();
                 }
-
-                container.paintContent = paint;
+                
+                if( baseImage && maskImage)
+                  container.paintContent = paint;
+                else
+                  container.text = "ERROR:one of images is invalid";
+                  
                 container.refresh();
                 
                 $(form).on("change",function(){
