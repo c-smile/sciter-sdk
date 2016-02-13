@@ -46,7 +46,7 @@ button { style-set: md-button; }
                                            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3); }
   :root.raised[role="default-button"]    { background: @BUTTON-RAISED-BACK-COLOR; }
   :root.raised:hover                     { background: @BUTTON-RAISED-HOVER-BACK-COLOR;  
-                                           box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.4));
+                                           box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.4);
                                            transition: box-shadow(linear,400ms);  }
   :root.raised:focus                     { background: @BUTTON-RAISED-HOVER-BACK-COLOR; }
   :root.raised:active:not(:animating)    { background: @BUTTON-RAISED-ACTIVE-BACK-COLOR; }
