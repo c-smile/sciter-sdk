@@ -130,13 +130,13 @@ const MicroChart = function()
                   "L", x2, y2,
                   "A", innerRadius, innerRadius, 0, 1, 0, cx, y2
                 ].join(" ");
-            })
+            });
           } else {
             node = new Element("circle", {
               cx: cx,
               cy: cy,
               r: radius
-            })
+            });
           }
         } else {
           var cumulativePlusValue = cumulative + value;
@@ -146,14 +146,14 @@ const MicroChart = function()
             "A", radius, radius, 0, portion > 0.5 ? 1 : 0, 1,
             scale(cumulativePlusValue, radius),
             "L"
-          )
+          );
 
           if (innerRadius) {
             d = d.concat(
               scale(cumulativePlusValue, innerRadius),
               "A", innerRadius, innerRadius, 0, portion > 0.5 ? 1 : 0, 0,
               scale(cumulative, innerRadius)
-            )
+            );
           } else
             d.push(cx, cy);
 

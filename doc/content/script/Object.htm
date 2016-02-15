@@ -27,8 +27,11 @@ if( obj instanceof Object )
     <dd>( ) : value
       <p>Returns object itself.</p></dd>
     <dt>clone</dt>
-    <dd>( ) : value
-      <p>Makes copy of the object and returns it.</p></dd>
+    <dd>( [deep:true] ) : object
+      <p>Makes copy of the object and returns it. If <em>deep</em> === true then it does recursive, deep cloning.</p></dd>
+    <dt>extend</dt>
+    <dd>( [deep:true], object1, object2, ... &nbsp;) : this
+      <p>Extends the object by merging its properties from properties of object1, object2, etc.</p></dd>
     <dt>exists</dt>
     <dd>( <strong>tag</strong>: value, [<strong>deep</strong> = false] ) : true | false
       <p>Checks property by its tag for existence. If deep == true then does deep lookup - in objects itself and its chain of classes.</p></dd>

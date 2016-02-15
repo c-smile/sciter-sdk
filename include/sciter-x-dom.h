@@ -171,18 +171,6 @@ SCDOM_RESULT SCAPI SciterGetParentElement(HELEMENT he, HELEMENT* p_parent_he);
 
 /** Get html representation of the element.
  * \param[in] he \b #HELEMENT
- * \param[out] utf8bytes \b pointer to byte address receiving UTF8 encoded HTML
- * \param[in] outer \b BOOL, if TRUE will retunr outer HTML otherwise inner.
- * \return \b #SCDOM_RESULT SCAPI
- * OBSOLETE: use SciterGetElementHtmlCB instead
- */
-//OBSOLETE SCDOM_RESULT SCAPI SciterGetElementHtml(HELEMENT he, LPCBYTE* utf8bytes, BOOL outer);
-
-/**Callback function used with #SciterGetElementHtmlCB().*/
-typedef VOID SC_CALLBACK LPCBYTE_RECEIVER( LPCBYTE bytes, UINT num_bytes, LPVOID param );
-
-/** Get html representation of the element.
- * \param[in] he \b #HELEMENT
  * \param[in] outer \b BOOL, if TRUE will retunr outer HTML otherwise inner.
  * \param[in] rcv \b pointer to function receiving UTF8 encoded HTML.
  * \param[in] rcv_param \b parameter that passed to rcv as it is.
@@ -198,10 +186,6 @@ SCDOM_RESULT SCAPI SciterGetElementHtmlCB(HELEMENT he, BOOL outer, LPCBYTE_RECEI
  */
  //OBSOLETE SCDOM_RESULT SCAPI SciterGetElementText(HELEMENT he, LPWSTR* utf16);
 
-
- /**Callback function used with #SciterGetElementTextCB().*/
- typedef VOID SC_CALLBACK LPCWSTR_RECEIVER( LPCWSTR str, UINT str_length, LPVOID param );
- typedef VOID SC_CALLBACK LPCSTR_RECEIVER( LPCSTR str, UINT str_length, LPVOID param );
 
  /**Get inner text of the element as LPCWSTR (utf16 words).
  * \param[in] he \b #HELEMENT

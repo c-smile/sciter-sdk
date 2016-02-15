@@ -229,6 +229,10 @@
       <p>Sets clip region equal to the path object, with optional opacity.</p></dd>
     <dt>pushLayer</dt>
     <dd>
+      <div>( <strong>image</strong>: Image, mask1a: true | false, [, <strong>opacity</strong>: 0.0... 1.0] ) : Graphics</div>
+      <p>Sets clip mask from image. If <em>mask1a</em> is true then all pixels corresponding mask alpha == 0 will <strong>not</strong> be rendered. If <em>mask1a</em> is false then it is an inverse mask - all pixels corresponding mask alpha == 0 will be rendered </p></dd>
+    <dt>pushLayer</dt>
+    <dd>
       <div>( <strong>area</strong>: Symbol ) : Graphics</div>
       <p>Sets clip region equal to one of the following:</p>
       <ul>
@@ -286,12 +290,21 @@
       <p>closes current path/figure.</p></dd>
     <dt>fillEvenOdd</dt>
     <dd>
-      <div>( even: true|false ) : Graphics.Path</div>
+      <div>( <strong>even</strong>: true|false ) : Graphics.Path</div>
       <p>Set even/odd rule for polygon fills.</p></dd>
     <dt>isPointInside</dt>
     <dd>
-      <div>( x: float, y: float ) : true | false</div>
-      <p>Tests if point (x,y) is inside the path</p></dd></dl>
+      <div>( <strong>x</strong>: float, <strong>y</strong>: float ) : true | false</div>
+      <p>Tests if point (x,y) is inside the path</p></dd>
+    <dt>combine</dt>
+    <dd>
+      <div>( <strong>mode</strong> : symbol, <strong>other</strong> : Graphics.Path ) : Graphics.Path</div>
+      <p>combines <em>this</em> path with the <em>other</em>, returns new, combined path. The <em>mode</em> is one of:</p>
+      <ul>
+        <li><strong>#union</strong> - result path is a unioin of these two - contains areas presented in <em>this</em> <strong>or</strong> <em>other</em> paths;</li>
+        <li><strong>#intersect</strong> - result path is an intersection of these two - contains areas presented in <em>this</em> <strong>and</strong> <em>other</em> paths;</li>
+        <li><strong>#xor</strong> - result path is an xor of these two - contains areas presented <strong>only</strong> in <em>this</em> <strong>or</strong> <em>other</em> paths but not in both;</li>
+        <li><strong>#exclude</strong> - result path contains areas presented in <em>this</em> path with overlaping areas from <em>other</em> excluded.</li></ul></dd></dl>
   <h2>Graphics.Text object</h2>
   <p>Represents text layout object to be rendered on graphics.</p>
   <p>All length metrics of the Text are in DIPs - device independent pixels (1/96 of inch).</p>

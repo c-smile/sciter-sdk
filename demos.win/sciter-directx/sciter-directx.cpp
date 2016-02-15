@@ -610,7 +610,8 @@ LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam 
 {
 //SCITER +
   // mix-in Sciter functionality 
-  if( message != WM_CREATE ) // we create the engine instance later
+  if( message != WM_CREATE ) // we create the engine instance later,
+                             // by calling SciterCreateOnDirectXWindow(hWnd, pSwapChain);
   {
     BOOL handled = FALSE;
     LRESULT lr = SciterProcND(hWnd,message,wParam,lParam, &handled);
@@ -759,6 +760,8 @@ void Render()
     // 1. create engine instance on the window with the swap chain:
     BOOL r = SciterCreateOnDirectXWindow(hWnd, pSwapChain);
     if( !r ) return FALSE;
+
+    SciterSetOption(hWnd,SCITER_SET_DEBUG_MODE,TRUE);
 
     // 2. setup callback (resource loading, etc):
     SciterSetCallback(hWnd,SciterCallback, NULL);

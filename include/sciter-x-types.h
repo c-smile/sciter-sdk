@@ -223,10 +223,10 @@
 
   #ifdef __x86_64
     #define TARGET_64
-    #define SCITER_DLL_NAME "sciter-gtk-64.so"
+    #define SCITER_DLL_NAME "libsciter-gtk-64.so"
   #else
     #define TARGET_32
-    #define SCITER_DLL_NAME "sciter-gtk-32.so"
+    #define SCITER_DLL_NAME "libsciter-gtk-32.so"
   #endif
 
 
@@ -252,6 +252,11 @@
   typedef const BYTE* LPCBYTE;
 #endif
 
+/**callback function used with various get*** functions */
+typedef VOID SC_CALLBACK LPCWSTR_RECEIVER( LPCWSTR str, UINT str_length, LPVOID param );
+typedef VOID SC_CALLBACK LPCSTR_RECEIVER( LPCSTR str, UINT str_length, LPVOID param );
+typedef VOID SC_CALLBACK LPCBYTE_RECEIVER( LPCBYTE str, UINT num_bytes, LPVOID param );
+
 #define STDCALL __stdcall
 
 #ifdef __cplusplus
@@ -275,6 +280,7 @@
 #else
   #define EXTERN_C extern
 #endif /* __cplusplus **/
+
 
 
 #endif

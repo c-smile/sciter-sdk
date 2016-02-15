@@ -12,6 +12,7 @@
 #define __SCITER_X_DEF__
 
 #include "sciter-x-types.h"
+#include "sciter-x-request.h"
 #include "value.h"
 #ifdef __cplusplus
   #include "aux-cvt.h"
@@ -27,15 +28,6 @@
 /** Resource data type.
  *  Used by SciterDataReadyAsync() function.
  **/
-typedef enum SciterResourceType
-{
-  RT_DATA_HTML = 0,
-  RT_DATA_IMAGE = 1,
-  RT_DATA_STYLE = 2,
-  RT_DATA_CURSOR = 3,
-  RT_DATA_SCRIPT = 4,
-  RT_DATA_RAW = 5,
-} SciterResourceType;
 
 #define  HAS_TISCRIPT // in sciter
 
@@ -64,7 +56,10 @@ enum
   LOAD_DISCARD = 1, // discard request completely
   LOAD_DELAYED = 2, // data will be delivered later by the host application.
                     // Host application must call SciterDataReadyAsync(,,, requestId) on each LOAD_DELAYED request to avoid memory leaks.
+  LOAD_MYSELF  = 3, // you return LOAD_MYSELF result to indicate that your (the host) application took or will take care about HREQUEST in your code completely.
+                    // Use sciter-x-request.h[pp] API functions with SCN_LOAD_DATA::requestId handle .
 };
+
 
 /**Notifies that Sciter is about to download a referred resource.
  *
@@ -168,7 +163,7 @@ typedef struct SCN_LOAD_DATA
     UINT     outDataSize;      /**< [in,out] loaded data size to return.*/
     UINT     dataType;         /**< [in] SciterResourceType */
 
-    LPVOID   requestId;        /**< [in] request id that needs to be passed as is to the SciterDataReadyAsync call */
+    HREQUEST requestId;        /**< [in] request handle that can be used with sciter-x-request API */
 
     HELEMENT principal;
     HELEMENT initiator;
@@ -236,15 +231,15 @@ typedef struct SCN_POSTED_NOTIFICATION
 
 typedef SCN_POSTED_NOTIFICATION* LPSCN_POSTED_NOTIFICATION;
 
-/**This structure is used by #SC_ENGINE_DESTROYED notification.
- *\copydoc SCN_ENGINE_DESTROYED **/
+/**This structure is used by #SC_GRAPHICS_CRITICAL_FAILURE notification.
+ *\copydoc SCN_GRAPHICS_CRITICAL_FAILURE **/
 typedef struct SCN_GRAPHICS_CRITICAL_FAILURE
 {
-    UINT      code; /**< [in] one of the codes above.*/
+    UINT      code; /**< [in] = SC_GRAPHICS_CRITICAL_FAILURE */
     HWINDOW   hwnd; /**< [in] HWINDOW of the window this callback was attached to.*/
 } SCN_GRAPHICS_CRITICAL_FAILURE;
 
-typedef SCN_POSTED_NOTIFICATION* LPSCN_POSTED_NOTIFICATION;
+typedef SCN_GRAPHICS_CRITICAL_FAILURE* LPSCN_GRAPHICS_CRITICAL_FAILURE;
 
 
 #include "sciter-x-behavior.h"
@@ -502,6 +497,28 @@ typedef VOID SC_CALLBACK URL_DATA_RECEIVER( const URL_DATA* pUrlData, LPVOID par
 
 
 #ifdef WINDOWS
+
+/**Creates instance of Sciter Engine on window controlled by DirectX
+*
+* \param[in] hwnd \b HWINDOW, window handle to create Sciter on.
+* \param[in] IDXGISwapChain \b pSwapChain,  reference of IDXGISwapChain created on the window.
+* \return \b BOOL, \c TRUE if engine instance is created, FALSE otherwise.
+*
+**/
+
+BOOL SCAPI SciterCreateOnDirectXWindow(HWINDOW hwnd, IDXGISwapChain* pSwapChain);
+
+/**Renders content of the document loaded into the window
+* Optionally allows to render parts of document (separate DOM elements) as layers
+*
+* \param[in] hwnd \b HWINDOW, window handle to create Sciter on.
+* \param[in] HELEMENT \b elementToRenderOrNull,  html element to render. If NULL then the engine renders whole document.
+* \param[in] BOOL \b frontLayer,  TRUE if elementToRenderOrNull is not NULL and this is the topmost layer.
+* \return \b BOOL, \c TRUE if layer was rendered successfully.
+*
+**/
+BOOL SCAPI SciterRenderOnDirectXWindow(HWINDOW hwnd, HELEMENT elementToRenderOrNull = NULL, BOOL frontLayer = FALSE);
+
 
 /**Render document to ID2D1RenderTarget
  *
