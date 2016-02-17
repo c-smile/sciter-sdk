@@ -59,7 +59,7 @@ function colorize()
       "include" :true, "like"    :true, "class"     :true,"namespace":true,
       "this"    :true, "assert"  :true, "delete"    :true,"otherwise":true,
       "with"    :true, "__FILE__":true, "__LINE__"  :true,"__TRACE__":true,
-      "debug"   :true 
+      "debug"   :true, "await"   :true 
     };
       
     const LITERALS = { "true": true, "false": true, "null": true, "undefined": true };

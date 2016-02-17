@@ -11,12 +11,44 @@
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
     <tr>
+      <td valign="top" bgcolor="#FFFADA">3.3.1.7</td>
+      <td nowrap valign="top" align="center">16-02-2016</td>
+      <td>
+        <p>new features:</p>
+        <ul>
+          <li><strong>await</strong> statement support in script + <strong>promise()</strong> as an internal module. Check sdk/doc/content/sciter/promise.htm and sdk/samples/communication/await-for-request.htm. More samples are coming.</li>
+          <li>[directx] sample, enabling inspector;</li>
+          <li>[gtk] CSS:image-rendering support;</li></ul>
+        <p>fixes:</p>
+        <ul>
+          <li>Linux/GTK version</li>
+          <ul>
+            <li>Graphics.arcTo() fix;</li>
+            <li>Fix of AV on window destruction in some cases;</li>
+            <li>select|dropdown fixes;</li>
+            <li>layered windows configuration;</li>
+            <li>+ packfolder executable as part of SDK;</li>
+            <li>better idle processing, see: <a href="http://sciter.com/forums/topic/cpu-spinning-when-running-inspector">http://sciter.com/forums/topic/cpu-spinning-when-running-inspector/</a></li>
+            <li>better SW_POPUP/WINDOW_POPUP handling in view.window();</li>
+            <li>popup closing when mousedown outside of element;</li>
+            <li>fix of popup dismissal - popup window gets destroyed rather than 'closed';</li>
+            <li>better drawing of 9-sectioned images;</li></ul>
+          <li>[select|dropdown editable] fix of focus handling.</li>
+          <li>Fix of high CPU and memory consumption while handling markup like this: <code>&lt;div style='flow:&quot;1 2 3 4&quot;'&gt;</code> if to compare with equivalent <code>&lt;div style=&quot;flow:grid(1 2 3 4)&quot;&gt;</code>;</li>
+          <li>[css,rendering] fix of <code>::before</code> and <code>::after</code> pseudo-elements handling on dynamic updates.</li>
+          <li>incremental behavior assignment is back again. It fixes this: <a href="http://sciter.com/forums/topic/a-subtle-bug">http://sciter.com/forums/topic/a-subtle-bug/</a> </li>
+          <li>[osx] one more fix of flipped image;</li>
+          <li>[osx,gtk] popup, click out of popup handling;</li>
+          <li>[scrollbar] fix hit_test() on custom scrollbars without +1/-1 buttons;</li>
+          <li>fix of &quot;-1px scrollToView&quot; issue: <a href="http://sciter.com/forums/topic/scroll-to-bottom">http://sciter.com/forums/topic/scroll-to-bottom/</a> </li></ul>Builds: win32, win64, osx64, linux/gtk64
+        <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
+    <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.1.6</td>
       <td nowrap valign="top" align="center">07-02-2016</td>
       <td>
         <p>new features:</p>
         <ul>
-          <li>+ [css,script] <strong>parametrized-aspect</strong> feature, declaration of aspect call parameters in CSS: 
+          <li>+ [css,script] <strong>parametrized-aspect</strong> feature, declaration of aspect call parameters in CSS:
             <pre>div.foo {
   aspect: Foo(bar:12, buz:#fff );
 }
@@ -30,7 +62,7 @@
           <li>[tiscript] <code>Object.clone(deep)</code>, <code>Array.clone(deep)</code> implementation.</li>
           <li>+ sample sdk/samples/tooltips++/custom-calltip.htm - demo of :</li>
           <ol>
-            <li>aspect with parameters and </li>
+            <li>aspect with parameters and</li>
             <li>custom popup shape rendering.</li></ol>
           <li>[css] Support of '.' (dots) in nmtokens in css values. This allows to define the following:<br/><code>div { aspect: Micro.Pie ; } </code>&nbsp;<br/>that previously has to be written only as a string:<br/><code>div { aspect: &quot;Micro.Pie&quot;; }</code></li></ul>
         <p>fixes:</p>

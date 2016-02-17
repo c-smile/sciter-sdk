@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <title></title>
+    <style></style>
+    <script type="text/tiscript">
+    
+     function self.ready() {
+
+        function getRemoteTextTask(url) 
+        {
+          try {
+            var text = await view.request { url: url, output: #string };
+            $(pre#out).text = text;
+          } catch(e) {
+            $(pre#out).text = e.toString();
+          }
+        }
+        
+        $(button#getExisting).on("click", :: getRemoteTextTask("http://sciter.com/test/text.txt") );      
+        $(button#getNonExisting).on("click", :: getRemoteTextTask("http://sciter.com/test/unknown.txt") );
+  
+      }
+      
+    </script>
+  </head>
+<body>
+
+  <p>This example demonstrates use of <code>await</code> statement</p>
+ 
+  <button #getExisting>get existing remote text</button>
+  <button #getNonExisting>try to get non existing remote file</button>
+
+  <pre#out></out>
+
+</body>
+</html>

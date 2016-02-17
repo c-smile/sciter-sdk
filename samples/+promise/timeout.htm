@@ -4,9 +4,15 @@
     <style></style>
     <script type="text/tiscript">
     
-    include "promise.tis";
-   
     function self.ready() {
+    
+      // promisified timeout, returns promise
+      function timeout(ms,rv = null) {
+        var oath = promise();
+        self.timer( ms, function() { oath(true, [rv]);} ) // fulfill the promise with optional param
+        return oath;
+      }
+    
     
       const testEl = $(#test);
       

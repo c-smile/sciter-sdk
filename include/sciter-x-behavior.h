@@ -726,7 +726,7 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
             case HANDLE_DATA_ARRIVED:     { DATA_ARRIVED_PARAMS *p = (DATA_ARRIVED_PARAMS *)prms; return pThis->handle_data_arrived(he, *p ); }
             case HANDLE_SCROLL:     { SCROLL_PARAMS *p = (SCROLL_PARAMS *)prms; return pThis->handle_scroll(he, *p ); }
             case HANDLE_SIZE:  {  pThis->handle_size(he); return false; }
-            // call using json::value's (from CSSS!)
+            // call using sciter::value's (from CSSS!)
             case HANDLE_SCRIPTING_METHOD_CALL: { SCRIPTING_METHOD_PARAMS* p = (SCRIPTING_METHOD_PARAMS *)prms; return pThis->handle_scripting_call(he, *p ); }
             // call using tiscript::value's (from the script)
             case HANDLE_TISCRIPT_METHOD_CALL: { TISCRIPT_METHOD_PARAMS* p = (TISCRIPT_METHOD_PARAMS *)prms; return pThis->handle_scripting_call(he, *p ); }
@@ -794,7 +794,7 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
     }
 
 #define BEGIN_FUNCTION_MAP \
-    virtual bool on_script_call(HELEMENT he, LPCSTR name, UINT argc, json::value* argv, json::value& retval) \
+    virtual bool on_script_call(HELEMENT he, LPCSTR name, UINT argc, sciter::value* argv, sciter::value& retval) \
     { \
       aux::chars _name = aux::chars_of(name);
 

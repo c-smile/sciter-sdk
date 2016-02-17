@@ -1,0 +1,132 @@
+//|   
+//| Implementation of Promises/A+ specification: http://promises-aplus.github.io/promises-spec/
+//| 
+
+function promise() 
+{
+  var state = null;    // null = pending, true = fulfilled, false = rejected
+  var deferred = [];   // functions to call when _promise() is invoked
+  var values = [];     // an array of values as arguments for the then() handlers
+  
+  function _promise(newState, newValues) 
+  {
+    if (state === null) {
+      state = newState;
+      values = newValues;
+      self.post( function() { for (var d in deferred) d(); } );
+    }
+  }
+    
+  _promise.then = function(onFulfilled, onRejected = null) 
+  {
+    var newPromise = promise();
+    function notify() 
+    {
+      try {
+        var f = state ? onFulfilled : onRejected;
+        if (typeof f == #function) {
+          var r = f.apply(null, values);
+          if ( (typeof r  == #function || r instanceof Task) 
+            && (typeof r.then == #function)) // looks like it is a promise/thenable thing, chain them
+            r.then( function(args..){ newPromise(true,args) }, 
+                    function(args..){ newPromise(false,args) } );
+          else
+            newPromise(true, [r]);
+        }
+        else
+          newPromise(state, values);
+      }
+      catch (e) {
+        //stderr.println("promise failed", e); 
+        newPromise(false, [e]);
+      }
+    }
+    if (state !== null) 
+      self.post(notify); // already fullfilled/failed
+    else
+      deferred.push(notify);    		
+    return newPromise;
+  };
+  
+  _promise.prototype = promise;
+  return _promise;
+}
+
+promise.catch = function( onRejected ) { return this.then( null, onRejected); };
+promise.finally = function( onFinally ) { return this.then( onFinally, onFinally); };
+
+promise.when = function (args..) 
+{
+  if(args.length == 1) return args[0];
+
+  var oath = promise();
+  var n = args.length;
+  var res = [];
+  function done(i) { return function(v) { res[i] = v; if(--n == 0) oath(true,res); } }
+  function fail(v) { oath(false,v) }
+  for(var (i,ip) in args) 
+      ip.then(done(i), fail);
+  return oath;
+};
+
+
+(function(){
+
+// This makes first parameter of Element.request optional: 
+// Element.request( [callback: function | integer,] #get | #post | #post-data | #put-data | #post-json | #put-json | #delete, url: string [, params: object [, headers: object] ] ) : Object | Stream | Bytes | Error
+// If callback is omitted the method returns promise: 
+
+  var ElementRequest = Element.request;
+  // redefining Element.request function
+  Element.request = function(args..) {
+    if(typeof args[0] == #function || typeof args[0] == #integer)
+      return ElementRequest.apply(this,args); // standard call
+    // call without callback, send request and return the promise
+    var oath = promise();
+    ElementRequest.apply(this, function(data,status) { oath(status == 200, [data,status]); }, args );
+    return oath;
+  }
+  
+  var ViewRequest = View.request;
+  
+  View.request = function(params) {
+    // call without callback, send request and return the promise
+    var oath = promise();
+    var onSuccess = params.success;
+    var onError = params.error;
+    params.success = function(data,status) { oath(true, [data]); if( onSuccess ) onSuccess(data,status); };
+    params.error = function(error,status) { oath(false, [error]); if( onError ) onError(error,status); };
+    ViewRequest.call(this, params );
+    return oath;
+  }
+
+// This makes animate to return promise that is fulfilled then the animation will end 
+// el.animate(stepFun,1s).then( afterFun ) 
+//
+
+  var ElementAnimate = Element.animate;
+  // redefining Element.request function
+  Element.animate = function(args..) {
+    if(typeof args[0] == #function && args.length >= 2 && typeof args[1] == #function)
+      return ElementAnimate.apply(this,args); // standard call
+    // call without callback, send request and return the promise
+    var oath = promise();
+    function fulfill() { oath(true, []); }
+    if( args.length == 1 )
+      ElementAnimate.call(this, args[0], fulfill );
+    else if( args.length == 2 ) 
+      ElementAnimate.call(this, args[0], fulfill , args[1] );
+    else 
+      throw "animate: bad parameters";
+    return oath;
+  }
+  
+})();
+
+// promise-aware timeout
+function timeout(ms,rv = null) {
+  var oath = promise();
+  self.timer( ms, function() { oath(true, [rv]);} ) // fulfill the promise with optional param
+  return oath;
+}
+

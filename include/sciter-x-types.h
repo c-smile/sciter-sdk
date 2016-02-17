@@ -1,15 +1,15 @@
 /*
  * The Sciter Engine of Terra Informatica Software, Inc.
  * http://sciter.com
- * 
+ *
  * The code and information provided "as-is" without
  * warranty of any kind, either expressed or implied.
- * 
+ *
  * (C) 2003-2015, Terra Informatica Software, Inc.
  */
 
 /*
- * Sciter basic types, platform isolation declarations 
+ * Sciter basic types, platform isolation declarations
  */
 
 
