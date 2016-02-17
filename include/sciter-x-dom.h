@@ -313,12 +313,12 @@ SCDOM_RESULT SCAPI SciterSetStyleAttribute(HELEMENT he, LPCSTR name, LPCWSTR val
 
 enum ELEMENT_AREAS
 {
-  ROOT_RELATIVE = 0x01,       // - or this flag if you want to get HTMLayout window relative coordinates,
+  ROOT_RELATIVE = 0x01,       // - or this flag if you want to get Sciter window relative coordinates,
                               //   otherwise it will use nearest windowed container e.g. popup window.
   SELF_RELATIVE = 0x02,       // - "or" this flag if you want to get coordinates relative to the origin
                               //   of element iself.
   CONTAINER_RELATIVE = 0x03,  // - position inside immediate container.
-  VIEW_RELATIVE = 0x04,       // - position relative to view - HTMLayout window
+  VIEW_RELATIVE = 0x04,       // - position relative to view - Sciter window
 
   CONTENT_BOX = 0x00,   // content (inner)  box
   PADDING_BOX = 0x10,   // content + paddings
@@ -648,7 +648,7 @@ SCDOM_RESULT SCAPI SciterDeleteElement(HELEMENT he);
 SCDOM_RESULT SCAPI SciterSetTimer( HELEMENT he, UINT milliseconds, UINT_PTR timer_id );
 
 /** Attach/Detach ElementEventProc to the element
-    See htmlayout::event_handler.
+    See sciter::event_handler.
  **/
 SCDOM_RESULT SCAPI SciterDetachEventHandler( HELEMENT he, LPELEMENT_EVENT_PROC pep, LPVOID tag );
 /** Attach ElementEventProc to the element and subscribe it to events providede by subscription parameter
