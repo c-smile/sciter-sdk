@@ -30,11 +30,13 @@ function dialog(params)
     caption = body.@#caption || params.caption || "?";
     
   var buttons = params.buttons ||
-                [{ caption:"OK", role:#ok, value:true },
-                 { caption:"Cancel", role:#cancel, value:false }];
+                [{ caption:"OK", role:#ok, class:"ok", value:true },
+                 { caption:"Cancel", role:#cancel, class:"cancel", value:false }];
   var buttons_html = "";
-  for(var button_def in buttons) 
-      buttons_html += String.printf("<button>%s</button>", button_def.caption || "");
+  for(var button_def in buttons) {
+      var cls = button_def.class ? ("." + button_def.class) : ".";
+      buttons_html += String.printf("<button%s>%s</button>", cls, button_def.caption || "");
+  }
 
   
   var html = "<div#lightbox-shim>"
