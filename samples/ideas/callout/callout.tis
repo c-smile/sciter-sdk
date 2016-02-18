@@ -64,7 +64,44 @@ function ShowCallout( forElement, message, timeout = 1000 )
   y += CALLOUT_OFFSET_Y;
   balloon.move(x, y,#view); 
   forElement.timer(timeout,::balloon.move());
-  
 }
+
+function ValidationCallout( params )
+{
+  //forElement, message, timeout = 1000
+  const min = this.attributes["min"].toNumber();
+  const max = this.attributes["max"].toNumber();
+  const delay = params.delay || 400ms;
+  const shown = params.shown || 3s;
+  
+  var msg;
+  var show;
+    
+  function check() {
+    if( this.value < min ) {
+      msg = (params.isless || "<") + " " + min.toString() + "!";
+      this.timer(delay,show);
+    }
+    else if( this.value > max ) {
+      msg = (params.isgreater || ">") + " " + max.toString() + "!";
+      this.timer(delay,show);
+    } else 
+      msg = null;
+  }
+  
+  this.on("change", check );
+  
+  show = function() {
+    if( !msg ) return;
+    var (x,y,w,h) = this.box(#rectw,#border,#view);
+    var balloon = callout("validation");
+    balloon.value = msg;
+    y += h;
+    y += CALLOUT_OFFSET_Y;
+    balloon.move(x, y,#view); 
+    this.timer(shown,::balloon.move());
+  }
+}
+
 
 

@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      popup.callout { 
+        font:system;
+        display:block;
+        width:max-content; 
+        min-width:28dip;
+        text-align:center;
+        padding:12px 10px 10px 8px;
+        background:url(callout-back.png);
+        background-repeat: expand stretch-left stretch-right stretch-middle;
+        background-image-transformation: hue(0); /* to red */
+        background-position:16 10 10 10;
+      } 
+      
+      popup.callout.validation {
+        padding:15px 12px 12px 10px;
+      }
+    
+      input[min][max] {
+        aspect: ValidationCallout(
+                  delay: 500ms,
+                  shown: 6s ) url( callout.tis );
+      }
+    
+    
+    </style>
+    <script type="text/tiscript"></script>
+  </head>
+<body>
+  Try to input number &lt; 0 or &gt; 100:
+  <input|number min=0 max=100 step=10 style="width:100px">
+
+</body>
+</html>
