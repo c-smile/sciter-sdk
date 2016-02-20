@@ -430,8 +430,8 @@ namespace tiscript
 
   struct method_def: public tiscript_method_def
   {
-    method_def() { dispatch = 0; name = 0; handler = 0; tag = 0; }
-    method_def(const char *n, method_impl* h) { dispatch = 0, name = n; handler = h; tag = 0; }
+    method_def() { dispatch = 0; name = 0; handler = 0; tag = 0; payload = 0;}
+    method_def(const char *n, method_impl* h) { dispatch = 0, name = n; handler = h; tag = 0; payload = 0;}
   };
   struct prop_def: public tiscript_prop_def
   {

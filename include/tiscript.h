@@ -91,6 +91,7 @@ typedef struct tiscript_method_def
   const char*       name;
   tiscript_method*  handler;  // or tiscript_tagged_method if tag is not 0
   void*             tag;
+  tiscript_value    payload;  // must be zero
 } tiscript_method_def;
 
 typedef struct tiscript_prop_def
