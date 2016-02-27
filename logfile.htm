@@ -11,6 +11,41 @@
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
     <tr>
+      <td valign="top" bgcolor="#FFFADA">3.3.1.8</td>
+      <td nowrap valign="top" align="center">27-02-2016</td>
+      <td>
+        <p>new features:</p>
+        <ul>
+          <li>[tiscript] + generators - support of <strong>yield</strong> keyword. Check test-cases/yield. The function containing the yield keyword is a generator - can be used in for(var val in generator())</li>
+          <li>[css] enabling transition: ... on ::after and ::before elements. </li>
+          <li>[css-selectors] + '(' and ')' in selectors so input(foo) {color:red;} is exactly the same as input[name=&quot;foo&quot;] { color:red; }</li>
+          <li>[osx] + &nbsp;sciter-osx-32.dylib as part of distribution.</li>
+          <li>+ validation/callout demo sdk/samples/ideas/callout/validation.htm</li>
+          <li>[inspector] list/view SVG in images/section</li>
+          <li>sdk/samples/ideas/lightbox-dialog/lightbox-dialog.tis update, support of classes in buttons.</li>
+          <li>+ dynamic cursor demo: sdk/samples/graphics/test-dynamic-cursor.htm</li>
+          <li>[gtk] view.min/maxSize implementation</li>
+          <li>+ stock:disk, stock:circle images. </li>
+          <li>[css] enabling fill, stroke and stroke-width on stock:... images. See: sdk/samples/css++/stock-images-styling.htm</li></ul>
+        <p>fixes:</p>
+        <ul>
+          <li>[win,d2d] warp mode is not trying to create DX device.</li>
+          <li>[css] fix ::after and ::before appearance in flow:stack layout.</li>
+          <li>[win] view.doEvent(#untilMouseUp), more reliable.</li>
+          <li>[osx] view.doEvent(#all) - does not breaks the loop if window is hidden. To match Windows behavior.</li>
+          <li>[sciter::value::map] fix item deletion,see: &nbsp;<a href="http://sciter.com/forums/topic/erasing-sequence-elements-with-scitervalue">http://sciter.com/forums/topic/erasing-sequence-elements-with-scitervalue/</a></li>
+          <li>[image maps] fix of &quot;on dpi change&quot; handling. </li>
+          <li>fix of colorizer on &lt;pre&gt; </li>
+          <li>tiscript API fixes.</li>
+          <li>[gtk] proper MOUSE_WHEEL handling when horizontal SB is present</li>
+          <li>fix of Element.scrollTo(0,999999) &quot;overscrolls&quot; by 1 px.</li>
+          <li>+vlist , fix of division by zero in onSize.</li>
+          <li>sdk/samples/drag-n-drop-manager/ sample fixes.</li>
+          <li>3.3.1.7 regression fix - AV in GC in some cases.</li>
+          <li>[tiscript] 'await' outside function causes syntax error. </li>
+          <li>[osx,linux] fix of regex [:alnum:] to match non-ascii chars.</li></ul>Builds: win32, win64, osx64, linux/gtk64
+        <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
+    <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.1.7</td>
       <td nowrap valign="top" align="center">16-02-2016</td>
       <td>
@@ -36,11 +71,11 @@
           <li>[select|dropdown editable] fix of focus handling.</li>
           <li>Fix of high CPU and memory consumption while handling markup like this: <code>&lt;div style='flow:&quot;1 2 3 4&quot;'&gt;</code> if to compare with equivalent <code>&lt;div style=&quot;flow:grid(1 2 3 4)&quot;&gt;</code>;</li>
           <li>[css,rendering] fix of <code>::before</code> and <code>::after</code> pseudo-elements handling on dynamic updates.</li>
-          <li>incremental behavior assignment is back again. It fixes this: <a href="http://sciter.com/forums/topic/a-subtle-bug">http://sciter.com/forums/topic/a-subtle-bug/</a> </li>
+          <li>incremental behavior assignment is back again. It fixes this: <a href="http://sciter.com/forums/topic/a-subtle-bug">http://sciter.com/forums/topic/a-subtle-bug/</a></li>
           <li>[osx] one more fix of flipped image;</li>
           <li>[osx,gtk] popup, click out of popup handling;</li>
           <li>[scrollbar] fix hit_test() on custom scrollbars without +1/-1 buttons;</li>
-          <li>fix of &quot;-1px scrollToView&quot; issue: <a href="http://sciter.com/forums/topic/scroll-to-bottom">http://sciter.com/forums/topic/scroll-to-bottom/</a> </li></ul>Builds: win32, win64, osx64, linux/gtk64
+          <li>fix of &quot;-1px scrollToView&quot; issue: <a href="http://sciter.com/forums/topic/scroll-to-bottom">http://sciter.com/forums/topic/scroll-to-bottom/</a></li></ul>Builds: win32, win64, osx64, linux/gtk64
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.1.6</td>

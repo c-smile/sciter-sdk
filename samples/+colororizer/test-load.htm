@@ -1,0 +1,24 @@
+<html>
+<head>
+	<style>
+		@import url(colorizer.css);
+    
+    plaintext { min-height:400px; }
+    
+	</style>
+
+	<script type="text/tiscript">
+  
+    !function() {
+		  var str = await view.request { url:self.url("colorizer.tis"), output:#string };
+			$(pre).load(str, "tis");
+    }();
+			
+	</script>
+</head>
+
+<body>
+  The colorizer.tis itself:
+	<pre type />
+</body>
+</html>

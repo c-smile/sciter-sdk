@@ -182,6 +182,8 @@ function colorize()
   this.load = function(text,sourceType) 
   {
     this.attributes["type"] = sourceType;
+    if( !isEditor )
+      text = text.replace(/\r\n/g,"\n"); 
     this.state.value = text; 
     doIt();
   };

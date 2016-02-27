@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <title>Sciter ImGraphics</title>
+    <style>
+      div
+      {
+        size: 200px;
+        background:gold;
+        margin:1em;
+      }
+
+    </style>
+    <script type="text/tiscript">
+
+    function self.ready() {
+    
+      function painter(gfx) // generates 100 random lines on graphics
+      {            
+        for(var n = 0; n < 100; ++n) 
+        {
+          var x1 = rand(200);
+          var x2 = rand(200);
+          var y1 = rand(200);
+          var y2 = rand(200);
+          gfx.lineWidth(1 + rand(6)); // 1..7
+          gfx.lineColor(color(rand(256),rand(256),rand(256)));
+          gfx.line(x1,y1,x2,y2);
+        }
+      }
+      
+      // generate image 
+      var image = new Image(200,200,painter,color(255,255,255,0.0));
+
+      $(div.n1).style.cursor(image, 10 /*hotSpotX*/, 10 /*hotSpotY*/);
+      
+      var loadedImage = self.loadImage("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA"
+                                      "AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO"
+                                      "9TXL0Y4OHwAAAABJRU5ErkJggg==");
+                                      
+      $(div.n2).style.cursor(loadedImage, 2 /*hotSpotX*/, 2 /*hotSpotY*/);                                      
+    
+    } 
+      
+    </script>
+  </head>
+<body>
+  <div.n1>Custom drawn cursor, move mouse here to see</div>
+  <div.n2>Cursor, loaded from image</div>
+</body>
+</html>

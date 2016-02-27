@@ -4,12 +4,6 @@
     var dragging = false;
     var body = $(body);
       
-    function doDrag()
-    {
-      while( dragging )
-        view.doEvent();
-    }
-      
     function onMouseDown(evt)
     {
       //if( evt.target !== body )
@@ -18,7 +12,9 @@
       yoff = evt.y;
       dragging = true;
       //view.root.capture(true);
-      doDrag();
+      view.doEvent(#untilMouseUp);
+      //view.root.capture(false);
+      dragging = false;
       return true;
     }
       
@@ -49,7 +45,7 @@
     // hookup event handlers:
     view.root.on("mousedown",onMouseDown );
     view.root.on("~mouseup",onMouseUp ); // installing mouseup handler in sinking phase (before all children)
-    view.root.on("mousemove",onMouseMove );
+    view.root.on("~mousemove",onMouseMove );
     view.root.on("keydown", onKeyDown );
     return false;
   }

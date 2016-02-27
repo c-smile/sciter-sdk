@@ -3,10 +3,10 @@
   <style>
     html { background-color: scrollbar; }
     div#tabs { flow:horizontal;}
-    div#tabs > legend 
+    div#tabs > label 
     {
-      width: max-intrinsic;
-      max-width: 100%;
+      display:block;
+      width: max-content;
       color:black;
       border: 1px solid #777;
       border-bottom: none;
@@ -17,28 +17,28 @@
       behavior:switch; /* so only one has :checked state */
     }
     
-    div#tabs > legend:first-child
+    div#tabs > label:first-child
     {
       margin-left:0;
     }
-    div#tabs > legend:last-child
+    div#tabs > label:last-child
     {
       margin-right:0;
     }
     
-    div#tabs > legend.placeholder
+    div#tabs > label.placeholder
     {
       visibility:hidden;
     }
     
-    div#tabs > legend.t1 { background-color:#FFE4E1; }
-    div#tabs > legend.t2 { background-color:#FFFACD; }
-    div#tabs > legend.t3 { background-color:#FFEFD5; }    
-    div#tabs > legend.t4 { background-color:#E6E6FA; }    
-    div#tabs > legend.t5 { background-color:#CFFFE1; }    
+    div#tabs > label.t1 { background-color:#FFE4E1; }
+    div#tabs > label.t2 { background-color:#FFFACD; }
+    div#tabs > label.t3 { background-color:#FFEFD5; }    
+    div#tabs > label.t4 { background-color:#E6E6FA; }    
+    div#tabs > label.t5 { background-color:#CFFFE1; }    
     
     
-    div#tabs > legend:checked 
+    div#tabs > label:checked 
     {
       //background-color-bottom-right:white;
       //background-color-bottom-left:white;
@@ -64,7 +64,7 @@
     
     DragDrop
     {
-      what      : "div#tabs > legend",
+      what      : "div#tabs > label",
       where     : "div#tabs",
       container : "div#tabs",
       easeDrop  : Animation.Ease.OutQuad
@@ -75,11 +75,11 @@
 <body>
   <p>Tabs with reordering</p>
   <div #tabs>
-    <legend checked .t1>First</legend>
-    <legend .t2>Second</legend>
-    <legend .t3>Third</legend>
-    <legend .t4>Fourth</legend>
-    <legend .t5>Fifth</legend>
+    <label checked .t1>First</label>
+    <label .t2>Second</label>
+    <label .t3>Third</label>
+    <label .t4>Fourth</label>
+    <label .t5>Fifth</label>
   </div>
   <div #panels>
   </div>

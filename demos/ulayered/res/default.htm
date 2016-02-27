@@ -61,17 +61,17 @@
   }
 
   // <button #close> click handler 
-  $(#close).onClick = function()
+  $(#close).on("click",function()
   {
     body.onAnimationEnd = function() { view.close(); };
     body.attributes.removeClass("shown");
-  }
+  });
 
   // <button #minimize> click handler
-  $(#minimize).onClick = function()
+  $(#minimize).on("click",function()
   {
     view.state = View.WINDOW_MINIMIZED;
-  }
+  });
  
   // setup movable window handler:
   movableView();

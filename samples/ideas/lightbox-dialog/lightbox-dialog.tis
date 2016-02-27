@@ -34,7 +34,7 @@ function dialog(params)
                  { caption:"Cancel", role:#cancel, class:"cancel", value:false }];
   var buttons_html = "";
   for(var button_def in buttons) {
-      var cls = button_def.class ? ("." + button_def.class) : ".";
+      var cls = button_def.class ? ("." + button_def.class) : "";
       buttons_html += String.printf("<button%s>%s</button>", cls, button_def.caption || "");
   }
 

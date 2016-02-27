@@ -1,0 +1,64 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      tiles { 
+        display:block;
+        border-spacing:6dip;
+        flow: grid(1 2,
+                   3 3,
+                   4 5,
+                   4 6);
+        width: max-content;
+      }
+    
+      tiles > tile 
+      {
+        display:block;
+        size:96dip;
+        background-color:gold;
+        opacity:0;
+        transform:scale(0);
+      }
+      
+      tiles > tile.ready
+      {
+        opacity:1.0;
+        transform:scale(1.0);
+        transition: opacity(linear,600ms)
+                    transform(cubic-out,600ms);
+      }
+ 
+    
+    
+    </style>
+    <script type="text/tiscript">
+    
+    function sequencer(duration,elements,trigger)
+    {
+      var stepDuration = duration / elements.length;
+      var idx = 0;
+      self.timer(stepDuration, function() {
+        trigger(elements[idx]);
+        ++idx;
+        return idx < elements.length; // keep going until the end
+      });
+    }
+    
+    function self.ready() {
+      sequencer( 600ms, $$(tile), :el: el.attributes.addClass("ready") );
+    }
+    </script>
+  </head>
+<body>
+  <tiles>
+    <tile>1</tile>
+    <tile>2</tile>
+    <tile>3</tile>
+    <tile>4</tile>
+    <tile>5</tile>
+    <tile>6</tile>
+  </tiles>
+</body>
+</html>

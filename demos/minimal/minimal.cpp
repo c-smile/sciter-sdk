@@ -83,6 +83,11 @@ int CALLBACK WinMain(HINSTANCE hInstance,
 	::SciterLoadFile(wnd, GetUrl());
 	::ShowWindow(wnd, SW_SHOWNORMAL);
 
+/*  sciter::value undefined, map = sciter::value::from_string(aux::chars_of(L"{'0': 0, '1': 1, '2': 2, '3': 3}"), CVT_JSON_LITERAL);
+  map.set_item(L"1", undefined);
+  map.set_item(L"3", undefined);
+  sciter::string s = map.to_string(CVT_JSON_LITERAL);
+  s = s; */
 	MSG msg;
   while( ::IsWindow(wnd) && GetMessage(&msg, 0, 0, 0) )
 	{
