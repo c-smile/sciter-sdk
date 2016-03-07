@@ -25,9 +25,19 @@
     var vlist = $(table);
     vlist.value = records;
     
-    vlist.on("change","tr", function() { // some change inside tr 
+    const selectAll = vlist.$(input#select-all);
+    
+    vlist.on("change","tbody > tr", function() { // some change inside tr 
       // note: each row (this) is a form here so its value is structure: 
       this.data.selected = this.value.selected; // input(selected).value to record.selected in this case
+      if( !this.data.selected )
+        selectAll.value = false;
+    });
+    
+    vlist.on("change","#select-all", function() { // select/deselect all
+      var selected = this.value;
+      for( var record in records )
+        record.selected = selected; 
     });
     
     $(#test).on("click", function () {
@@ -36,7 +46,6 @@
 
   }
   
-  
   </script>
   </head>
 <body>
@@ -44,7 +53,7 @@
 
   <table resizeable>
     <thead>
-      <tr><th(selected)></th><th(index)>index</th><th(caption)>caption</th><th(status)>status</th></tr>
+      <tr><th><input#select-all|checkbox /></th><th(index)>index</th><th(caption)>caption</th><th(status)>status</th></tr>
     </thead>
     <tbody>
       <tr><td><input(selected)|checkbox /></td><td(index)></td><td(caption)></td><td(status)></td></tr>

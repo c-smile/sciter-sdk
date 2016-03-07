@@ -30,6 +30,9 @@
     
     // feed it by these records
     vlist.value = records;
+
+    // setting first item as current:    
+    vlist.tbody.currentIndex = 0;
     
     $(#mutate).onClick = function() {
     
@@ -85,6 +88,24 @@
     
     }
     
+    $(#addone).onClick = function()
+    {
+	    records.push {index: records.length, caption:"New item", status:"" };
+	    vlist.tbody.scrollTo(0, 9999999, true, true);
+    }
+    $(#copy).onClick = function() 
+    {
+      view.clipboard(#put,records[vlist.tbody.currentIndex].data);
+    }
+    $(#deleteall).onClick = function() 
+    {
+      records.length = 0;
+    }
+    $(#delete).onClick = function() 
+    {
+      records.splice(vlist.tbody.currentIndex,1);
+    }    
+    
   }
   
   </script>
@@ -97,6 +118,11 @@
 
   <button #populate>Simulate gradual population</button>
   <button #mutate>Start random updates</button>
+  
+  <button #addone>add one</button>
+  <button #copy>copy</button>
+  <button #deleteall>deleteall</button>
+  <button #delete>delete</button>
 
   <table resizeable>
     <thead>

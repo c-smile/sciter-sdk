@@ -2,13 +2,9 @@
 const MicroChart = function()
 {
   
-  function prepare(svg, width, height) {
+  function prepare(svg) {
     if( svg.length )
       svg.clear();
-    else {
-      svg.attributes#height = height.toString();
-      svg.attributes#width = width.toString();
-    }
     return svg;
   }
   
@@ -88,7 +84,7 @@ const MicroChart = function()
       
       var diameter = Float.min(width,height);
             
-      prepare( svg, width, height );
+      prepare( svg );
       
       var cx = width / 2, cy = height / 2;
       
@@ -201,7 +197,7 @@ const MicroChart = function()
 
       var (width,height) = dimension(svg);
 
-      prepare(svg,width,height);
+      prepare(svg);
       var strokeWidth = opts.strokeWidth || opts#stroke-width;
       height = height - strokeWidth;
       var diff = max - min;
@@ -268,7 +264,7 @@ const MicroChart = function()
 
       var (width,height) = dimension(svg);
 
-      prepare(svg, width, height);
+      prepare(svg);
       
       var diff = (max - min) * 1.001;
       var padding = opts.padding || 0.0;

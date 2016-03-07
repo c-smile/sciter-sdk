@@ -59,12 +59,23 @@
       var el = plaintext;
     };
     
+    $(#saveToFile).on("click", function() {
+    
+        var fileName = this.url("content.txt");
+        var stream = Stream.openFile(fileName, "uw");
+        for (var line in plaintext)
+          stream.println(line.text.replace("\n",""));
+        stream.close();    
+    
+    });
+    
     
     </script>
   </head>
 <body>
 
 <button #set1000>Set 1000</button>
+<button #saveToFile>Save</button>
 <p>Note tab-size=4:</p>
 <plaintext tab-size=4>
 Line 1

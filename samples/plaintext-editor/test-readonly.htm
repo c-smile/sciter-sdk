@@ -1,0 +1,81 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+    plaintext {
+      padding:0;
+      flow:vertical;
+      behavior:plaintext;
+      background:#333; border:1px solid #333;
+      color:white;
+      overflow:auto;
+      font-rendering-mode:snap-pixel;
+      size:*; 
+      tab-size: 4;
+    }
+    plaintext > text {
+      font-family:monospace;
+      white-space: pre-wrap;
+      background:white;
+      color:black;
+      margin-left: 3em;
+      padding-left: 4dip;
+      cursor:text;
+      display:list-item;
+      list-style-type: index;
+      list-marker-color:#aaa;
+    }
+    plaintext > text:last-child {
+      padding-bottom:*;
+    }    
+    
+    plaintext > text:nth-child(10n) {
+      list-marker-color:#fff;
+    }
+    
+    
+    </style>
+    <script type="text/tiscript">
+    
+    var plaintext = $(plaintext);
+    
+    $(#set1000).onClick = function() {
+
+      var temp =     
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do\r\n"
+        "eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim\r\n" 
+        "ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut\r\n" 
+        "aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit\r\n"
+        "in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\r\n"
+        "Excepteur sint occaecat cupidatat non proident,\r\n"
+        "sunt in culpa qui officia deserunt mollit anim id est laborum.\r\n";
+        
+      var out = Stream.openString();
+      for(var n in 1007/7) 
+        out << temp;
+      plaintext.value = out.toString();
+      out.close();
+      var el = plaintext;
+    };
+    
+    // to discard mouse dragging completely:
+    //plaintext.on("~mousedragrequest", function() { return true; });
+    
+    
+    </script>
+  </head>
+<body>
+
+<button #set1000>Set 1000</button>
+<p>Note tab-size=4:</p>
+<plaintext tab-size=4 readonly>
+Line 1
+Line 2
+Line 3
+	Line 4	<tab here
+</plaintext>
+
+
+</body>
+</html>
