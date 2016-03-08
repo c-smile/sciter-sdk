@@ -7,7 +7,7 @@
     }
     form 
     { 
-      width: max-intrinsic;  
+      width: max-content;  
       border: 1px solid;
       padding:4px;
       margin:4px;
@@ -52,7 +52,7 @@
       border-bottom: 1px solid black;
       background: #DDD;
     }
-    form button.show { margin-left:*;}
+    form button.show { margin-left:*; display:block;}
     h1 { font: 12pt; clear: both; }
     h2 { font: 10pt; clear: both; }
     text.comment { font: 8.5pt; clear: both; }
@@ -124,30 +124,30 @@
   </script>  
 </head>
 <body>
-<!--  <h1>Masked input modes</h1>
+ <h1>Masked input modes</h1>
   <h2>Phone inputs</h2>
   <form>
     <caption>Simple</caption>
-    Phone:<input type="masked" name="phone" mask="(###) ### ####" /><br/>
+    Phone:<input type="masked" name="phone" mask="(###) ### ####" />
     <button .show>Show Values</button>
   </form>
   <form>
     <caption>Masked input with enumeration</caption>
     Phone in British Columbia, Canada.<br/> 
     Area codes here: 604,778,250:<br/>  
-    <input type="phone" name="bcphone" area-codes="604,778,250" /><br/>
+    <input type="phone" name="bcphone" area-codes="604,778,250" />
     <button .show>Show Values</button>  
   </form>
   <h2>IP address inputs</h2>  
   <text.comment>(class IPAddress sets mask groups by code therefore the value of the input is an array of values - components of the mask)</text>
   <form>
     <caption>No initial value</caption>
-    IP: <input type="ip" name="ipaddr" /><br/>
+    IP: <input type="ip" name="ipaddr" />
     <button .show>Show Values</button>
-  </form> -->
+  </form> 
   <form>
     <caption>Initial value: 96.49.23.16</caption>
-    IP: <input type="ip" name="ipaddr" value="96.49.23.16" /><br/>
+    IP: <input type="ip" name="ipaddr" value="96.49.23.16" />
     <button .show>Show Values</button>
   </form>
   <pre #out />

@@ -110,13 +110,13 @@ section.collapsible > header
   foreground-image:url(stock:arrow-right); /* that arrow */
   foreground-repeat: no-repeat;
   foreground-position: 5dip 50%;
-  foreground-size: 9dip;
+  foreground-size: 5dip 9dip;
   padding-left:20dip;
   background: @PANEL-HEADER-BACK-COLOR;
   line-height: 1.6em; 
   cursor:pointer;
 }
-section.collapsible:expanded > header     { foreground-image:url(stock:arrow-down); /* that arrow */; background: @PANEL-HEADER-BACK-COLOR-EXPANDED;  }
+section.collapsible:expanded > header     { foreground-size: 9dip 5dip; foreground-image:url(stock:arrow-down); /* that arrow */; background: @PANEL-HEADER-BACK-COLOR-EXPANDED;  }
 section.collapsible > text.no-items      
 { 
   visibility:none; 
