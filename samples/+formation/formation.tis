@@ -1,4 +1,4 @@
-  
+   
 namespace formation {
   
   class Formation 
@@ -42,7 +42,8 @@ namespace formation {
     function add(el) { this.group.push(el); }
   }
 
-  // the formation constructor  function this( container ) {
+  // the formation constructor
+  function this( container ) {
      
     var f = null; if( container ) f = container.formation;
     if(f) return f; // already established
