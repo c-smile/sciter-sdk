@@ -55,7 +55,7 @@
   };
 
 /**Element callback function for all types of events. Similar to WndProc
- * \param tag \b LPVOID, tag assigned by HTMLayoutAttachElementProc function (like GWL_USERDATA)
+ * \param tag \b LPVOID, tag assigned by SciterAttachEventHandler function (like GWL_USERDATA)
  * \param he \b HELEMENT, this element handle (like HWINDOW)
  * \param evtg \b UINT, group identifier of the event, value is one of EVENT_GROUPS
  * \param prms \b LPVOID, pointer to group specific parameters structure.
@@ -360,7 +360,7 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
                                      // used for example by accesskeys behaviors to send activation request, e.g. tab on behavior:tabs.
 
       //DO_SWITCH_TAB = ACTIVATE_CHILD,// command to switch tab programmatically, handled by behavior:tabs
-      //                               // use it as HTMLayoutPostEvent(tabsElementOrItsChild, DO_SWITCH_TAB, tabElementToShow, 0);
+      //                               // use it as SciterPostEvent(tabsElementOrItsChild, DO_SWITCH_TAB, tabElementToShow, 0);
 
       INIT_DATA_VIEW,                // request to virtual grid to initialize its view
       
@@ -415,10 +415,10 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
       FIRST_APPLICATION_EVENT_CODE = 0x100
       // all custom event codes shall be greater
       // than this number. All codes below this will be used
-      // solely by application - HTMLayout will not intrepret it
+      // solely by application - Sciter will not intrepret it
       // and will do just dispatching.
       // To send event notifications with  these codes use
-      // HTMLayoutSend/PostEvent API.
+      // SciterSend/PostEvent API.
 
   };
 
@@ -452,13 +452,13 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
 
   typedef struct TIMER_PARAMS
   {
-      UINT_PTR timerId;    // timerId that was used to create timer by using HTMLayoutSetTimerEx
+      UINT_PTR timerId;    // timerId that was used to create timer by using SciterSetTimer
   } TIMER_PARAMS;
 
 
 
   // identifiers of methods currently supported by intrinsic behaviors,
-  // see function HTMLayoutCallMethod
+  // see function SciterCallBehaviorMethod
 
   enum BEHAVIOR_METHOD_IDENTIFIERS
   {
@@ -534,10 +534,10 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
 
   typedef struct DATA_ARRIVED_PARAMS
   {
-      HELEMENT  initiator;    // element intiator of HTMLayoutRequestElementData request,
+      HELEMENT  initiator;    // element intiator of SciterRequestElementData request,
       LPCBYTE   data;         // data buffer
       UINT      dataSize;     // size of data
-      UINT      dataType;     // data type passed "as is" from HTMLayoutRequestElementData
+      UINT      dataType;     // data type passed "as is" from SciterRequestElementData
       UINT      status;       // status = 0 (dataSize == 0) - unknown error. 
                               // status = 100..505 - http response status, Note: 200 - OK! 
                               // status > 12000 - wininet error code, see ERROR_INTERNET_*** in wininet.h
@@ -644,7 +644,7 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
           return on_event(he, params.heTarget, (BEHAVIOR_EVENTS)params.cmd, params.reason );
         }
 
-      // notification event: data requested by HTMLayoutRequestData just delivered
+      // notification event: data requested by SciterRequestElementData just delivered
       virtual bool handle_data_arrived (HELEMENT he, DATA_ARRIVED_PARAMS& params )
         {
           return on_data_arrived(he, params.initiator, params.data, params.dataSize, params.dataType );
@@ -691,7 +691,7 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
       // see enum BEHAVIOR_EVENTS
       virtual bool on_event (HELEMENT he, HELEMENT target, BEHAVIOR_EVENTS type, UINT_PTR reason ) { return false; }
 
-      // notification event: data requested by HTMLayoutRequestData just delivered
+      // notification event: data requested by SciterRequestElementData just delivered
       virtual bool on_data_arrived (HELEMENT he, HELEMENT initiator, LPCBYTE data, UINT dataSize, UINT dataType ) { return false; }
 
       virtual bool on_scroll( HELEMENT he, HELEMENT target, SCROLL_EVENTS cmd, INT pos, BOOL isVertical ) { return false; }
