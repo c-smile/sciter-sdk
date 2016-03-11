@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <title>Plus: function binding</title>
+    <style>
+      @import url(../plus.css); 
+      @import url(../../note.css); 
+      
+      output { display: inline-block; border: 1px gray dotted; }
+    </style>
+    
+    <script type="text/tiscript">
+    
+      include "../plus.tis"; // model below uses @observing decorator defined in plus.tis
+  
+      namespace Data // our model
+      {  
+        var obj = { a:0, b:32 };
+        var sum = 0;
+        var src = "?";
+        
+        // this function is observing any property change in obj
+        @observing #changes "obj.*"
+          function calcSum(path /*changed path*/) { 
+            sum = obj.a + obj.b;
+            src = path; // report source of the change
+          }
+
+          
+      }    
+    
+    </script>
+  </head>
+
+<body model="Data"> <!-- define data model we observe -->
+
+  <note>Two inputs below are bound with <code>obj.a</code> and <code>obj.b</code> variables.
+  calcSum() function is bound with both of them calculating their sum.
+  </note>
+
+  <p><input|number(obj.a) > + <input|number(obj.b)> = <output(sum)/>, source of change: <output(src)/> </p>
+
+</body>
+</html>

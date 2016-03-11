@@ -442,12 +442,13 @@ function @observing(func, paths..) {
       Object.addObserver.call(obj,subs);
     };
     
+    function notifier(func,path) { return :: func(path); }
+    
     observeChanges.list = [];
     observeChanges.purolator = function(obj,changedef,path) {
-      for( var cb in observeChanges.list ) { 
-	      //stdout.println(path, cb.path);
-        if( path like cb.path ) self.post(cb.func, true);
-      }
+      for( var cb in observeChanges.list ) 
+        if( path like cb.path )
+           self.post( notifier(func,path), true);
     }
     this[#$observeChanges] = observeChanges;
     // setup observer on the namespace
