@@ -9,11 +9,12 @@
     font:system;
     border:1px solid #bdbccc; 
     flow:table-fixed;
-    width:100%%;
-    height:100%%;
+    width:*;
+    height:*;
     padding:0;
     prototype:Grid url(grid.tis);
     border-spacing:0;
+    overflow-x: auto;
   }
 
   table > thead {
@@ -74,15 +75,15 @@
     padding:2px; 
   }
   
-  table td:nth-child(1) { font-weight:bold; text-align:center; width:10%%; } /* first column */
-  table td:nth-child(2) { border-left:1px solid #bdbccc; color:#8380A0; width:10%%; } /* second column */
+  table td:nth-child(1) { font-weight:bold; text-align:center; width:0.1*; } /* first column */
+  table td:nth-child(2) { border-left:1px solid #bdbccc; color:#8380A0; width:0.1*; } /* second column */
   table td:nth-child(3) /* last column */
   { 
      text-align:left;
      overflow:hidden;        /* three line below - ellipsis */
      text-overflow:ellipsis;
      white-space:nowrap;
-     width:80%;
+     width:0.8*;
      border-left:1px solid #bdbccc;
   } 
     

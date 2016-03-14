@@ -1,0 +1,74 @@
+<html>
+  <head>
+      <style type="text/css">
+        html { background: transparent; }
+        picture { size : 226px 218px; foreground-repeat:no-repeat; }
+        section#original { flow:grid(1 1,2 3); }
+        section#original > picture { border:1px solid blue; size:auto; display:inline-block; }
+        section#original > p { padding: 0.5em 1em; background: white; margin:0; }
+        
+        section#results { flow: horizontal-wrap; border-spacing: 0.5em; margin:0.5em; }
+        section#results > div > caption { padding: 0.5em 1em; background: white; }
+        section#results > div > picture { size : 226px 218px; foreground-repeat:no-repeat; }
+        
+        div#src-over > picture { foreground-image: url(in-memory:src-over); }
+        div#dst-over > picture { foreground-image: url(in-memory:dst-over); }
+        div#src-in > picture { foreground-image: url(in-memory:src-in); }
+        div#dst-in > picture { foreground-image: url(in-memory:dst-in); }
+        div#src-out > picture { foreground-image: url(in-memory:src-out); }
+        div#dst-out > picture { foreground-image: url(in-memory:dst-out); }
+        div#src-atop > picture { foreground-image: url(in-memory:src-atop); }
+        div#dst-atop > picture { foreground-image: url(in-memory:dst-atop); }
+        div#copy > picture { foreground-image: url(in-memory:copy); }
+        div#xor > picture { foreground-image: url(in-memory:xor); }
+        
+      </style>
+      <script type="text/tiscript">
+           
+        (function() {
+
+          function generate(op) {
+            var dstImage = self.loadImage(self.url("compose-dst-a.png"));
+            var srcImage = self.loadImage(self.url("compose-src-a.png"));
+          
+            dstImage.compose( srcImage, op );
+        
+            self.bindImage("in-memory:" + op.toString(), dstImage);
+          }
+          
+          generate(#src-over);
+          generate(#dst-over);
+          generate(#src-in);
+          generate(#dst-in);
+          generate(#src-out);
+          generate(#dst-out);
+          generate(#src-atop);
+          generate(#dst-atop);
+          generate(#copy);
+          generate(#xor);
+          
+        })();      
+        
+      </script>
+  </head>
+    <body>
+      <section #original>
+        <p>original images: dst and src</p>
+        <picture src="compose-src-a.png"/>
+        <picture src="compose-dst-a.png"/>
+      </section>
+      
+      <section #results>
+        <div #src-over><caption>src-over</caption><picture /></div>
+        <div #dst-over><caption>dst-over</caption><picture /></div>
+        <div #src-in><caption>src-in</caption><picture /></div>
+        <div #dst-in><caption>dst-in</caption><picture /></div>
+        <div #src-out><caption>src-out</caption><picture /></div>
+        <div #dst-out><caption>dst-out</caption><picture /></div>
+        <div #src-atop><caption>src-atop</caption><picture /></div>
+        <div #dst-atop><caption>dst-atop</caption><picture /></div>
+        <div #copy><caption>copy</caption><picture /></div>
+        <div #xor><caption>xor</caption><picture /></div>
+      <section>
+   </body>
+</html>

@@ -97,7 +97,8 @@
     
     container.subscribe("keydown", function(evt)
     {
-      if( evt.ctrlKey && evt.keyCode == 'C' )
+      stdout.println(evt.keyCode,Event.VK_C);
+      if( evt.ctrlKey && (evt.keyCode == Event.VK_C) )
           return selection2clipboard();
     });
    

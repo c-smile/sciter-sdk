@@ -1,3 +1,4 @@
+
 tabs 
 {
   font:system;
@@ -22,40 +23,25 @@ tabs > div.strip > label /* all tab labels, passive by default */
   margin-bottom:1px;
   height:*;
   max-width: auto; /* not wider than max-intrinsic  */
-  background-image:url(theme:tab-item-normal);
-  background-repeat:stretch;
 }
 tabs > div.strip > label:hover /* passive tab */
 {
-  background-image:url(theme:tab-item-hover);
   color: highlight;
 }
 tabs > div.strip > label:current /*active tab*/
 {
-  background-image:url(theme:tab-item-selected);
   margin:-2px -2px -1px -2px;
   padding: 4px 10px 5px 10px; 
   position:relative;
-}
-tabs > div.strip > label:current:hover /*active tab*/
-{
-  background-image:url(theme:tab-item-selected);
 }
 
 tabs:tab-focus > div.strip > label:current  {
   outline: 1px dotted -4px;
 }
 
-
-tabs > div.strip > label:current:first-child,
-tabs > div.strip > label:current:hover:first-child
-{
-  background-image:url(theme:tab-item-leftmost-selected);
-}
-
 tabs:tab-focus > div.strip > label:current > * /* outline active tab content if we've gotten focus by tab*/
 {
-  outline: 1px dotted invert;
+  outline: 1px dotted #fff;
 }
 
 /* tab containers, MUST have 'name' attribute defined */
@@ -63,12 +49,76 @@ tabs > [name] { display:none; }
 
 tabs > [name]:expanded 
 { 
-  background-image:url(theme:tab-panel);
-  background-repeat:stretch;
   padding:4px;
   display:block; 
   height:*;
 }
+
+@media uses-platform-themes {
+  /* Windows uxthemes dll available */
+  tabs > div.strip > label /* all tab labels, passive by default */
+  {
+    background-image:url(theme:tab-item-normal);
+    background-repeat:stretch;
+  }
+  tabs > div.strip > label:hover /* passive tab */
+  {
+    background-image:url(theme:tab-item-hover);
+    color: highlight;
+  }
+  tabs > div.strip > label:current /*active tab*/
+  {
+    background-image:url(theme:tab-item-selected);
+  }
+  tabs > div.strip > label:current:hover /*active tab*/
+  {
+    background-image:url(theme:tab-item-selected);
+  }
+  
+  tabs > div.strip > label:current:first-child,
+  tabs > div.strip > label:current:hover:first-child
+  {
+    background-image:url(theme:tab-item-leftmost-selected);
+  }
+
+  tabs > [name]:expanded 
+  { 
+    background-image:url(theme:tab-panel);
+    background-repeat:stretch;
+  }
+
+}
+@media !uses-platform-themes {
+
+  tabs > div.strip > label /* all tab labels, passive by default */
+  {
+    background: #f0f0f0;
+    color: #000;
+    border:1dip solid #ABADB3;
+    //border-radius: 3dip 3dip 0 0;
+    border-bottom:none;
+    margin-left:-1px;
+  }
+  tabs > div.strip > label:hover /* passive tab */
+  {
+    background: @THREEDHOVER;
+    color: @HIGHLIGHT;
+  }
+  tabs > div.strip > label:current /*active tab*/
+  {
+    background: #fff;
+    margin:-2px -2px 0px -2px;
+  }
+
+  tabs > [name]:expanded 
+  { 
+    //background-image:url(theme:tab-panel);
+    //background-repeat:stretch;
+    background: #fff;
+    border:1dip solid #ABADB3;
+  }
+
+} 
 
 
 /* tabs at bottom */

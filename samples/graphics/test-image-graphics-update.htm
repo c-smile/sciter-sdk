@@ -1,0 +1,56 @@
+<html>
+  <head>
+    <title>Sciter ImGraphics</title>
+    <style>
+      @import url(../note.css);
+      html { background: transparent; }
+      widget#canvas
+      {
+        background-image: url(in-memory:image);
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+        size:*;
+      }
+      
+    </style>
+    <script type="text/tiscript">
+
+
+      function self.ready() {
+        const canvas = $(widget#canvas);
+        
+        function paintLines(gfx) // generates 10 random lines on graphics
+        {            
+          for(var n = 0; n < 10; ++n) 
+          {
+            var x1 = rand(500);
+            var x2 = rand(500);
+            var y1 = rand(500);
+            var y2 = rand(500);
+            gfx.lineWidth(1 + rand(6)); // 1..7
+            gfx.lineColor(color(rand(256),rand(256),rand(256)));
+            gfx.line(x1,y1,x2,y2);
+          }
+        }
+        
+        const image = new Image(500,500,paintLines);
+        
+        self.bindImage("in-memory:image", image);
+        
+        $(button#add-more).on("click",function() {
+          image.update(paintLines);
+          canvas.refresh();
+        })
+      
+      }    
+      
+    </script>
+  </head>
+<body>
+  <note>
+    <p>This sample demonstrates incremental image update</p>
+    <button #add-more>Add more lines</button>
+  </note>
+  <widget#canvas></widget>
+</body>
+</html>

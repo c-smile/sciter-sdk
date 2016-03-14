@@ -11,11 +11,41 @@
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
     <tr>
+      <td valign="top" bgcolor="#FFFADA">3.3.1.11</td>
+      <td nowrap valign="top" align="center">13-03-2016</td>
+      <td>
+        <p>new:</p>
+        <ul>
+          <li>[css] <strong>width(%)</strong> and <strong>height(%)</strong> pseudo-functions, in particular: &lt;input|text&gt; -&gt; { height:1.4em; line-height:height(100%); }</li>
+          <li>sample of view.mediaVars() : /sdk/samples/media/media-vars.htm</li>
+          <li>SHIFT-CLICK handling on scrollbars.</li>
+          <li>[+plus] update, support of 'changed path' parameter, see: +plus/demos/H-function-path-binding.htm</li>
+          <li>[tiscript] [Task] <strong>Generator.next</strong>(val) method to match JS yield specification. See: sdk/samples/tests/tiscript/tiscript-generator.htm</li>
+          <li><strong>Image.update</strong>(function(gfx){}) - incremental image update/rendering, see: sdk/samples/graphics/test-image-graphics-update.htm</li>
+          <li><strong>Image.compose</strong>(srcImage,#op[,dstx,dsty,srcx,srcy,srcw,srch]); see: sdk/samples/graphics/test-image-compose.htm , <a href="http://ssp.impulsetrain.com/porterduff.html">Porter-Duff operations</a></li>
+          <li>Task (coroutine) object documented.</li></ul>
+        <p>fixes:</p>
+        <ul>
+          <li>Better &lt;br&gt; handling. See: <a href="http://sciter.com/forums/topic/maybe-handling-bug">http://sciter.com/forums/topic/maybe-handling-bug/</a></li>
+          <li>&lt;widget|checkbox&gt; styling</li>
+          <li>[gtk] initial window dimensions when size are not specified</li>
+          <li>Image.colorAt() for animated images.</li>
+          <li>[tiscript][await] fix of GC issue when active corroutines are present. </li>
+          <li>better &lt;select|dropdown tooltip=&quot;text&quot;&gt; handling.</li>
+          <li>[osx][gtk] SC_ENGINE_DESTROYED notification.</li>
+          <li>[osx] fix of view.msgbox borderless appearance.</li>
+          <li>[gtk]modal dialog window z-order position.</li>
+          <li>fix of paste and drop operations in &lt;input|text readonly&gt;</li>
+          <li>Event.MOUSE_DARG_REQUEST documented.</li></ul>Builds: win32, win64, osx64, linux/gtk64
+        <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
+    <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.1.10</td>
       <td nowrap valign="top" align="center">07-03-2016</td>
       <td>
         <p>fixes:</p>
         <ul>
+          <li>[gtk] better keydown/keyup event generation.</li>
+          <li>fix of window destruction sequence sdk/include/sciter-x-window.hpp</li>
           <li>CRITICAL: fixes of issues in Value**** functions introduced in 3.3.1.9</li>
           <li>fix of initial scroll position in <code>&lt;input|text&gt;</code> and <code>&lt;textarea&gt;</code></li></ul>Builds: win32, win64, osx64, linux/gtk64
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>

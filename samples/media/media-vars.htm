@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      dl { flow: row(dt,dd); white-space:nowrap; }
+      
+    </style>
+    <script type="text/tiscript">
+    
+    function self.ready() {
+      var ul = $(dl);
+      var mediaVars = view.mediaVars();
+      for( var (k,v) in mediaVars )
+        ul.$append(<dt>{k}</dt><dd>{v}</dd>);
+    }
+   
+    </script>
+  </head>
+<body>
+  <p>media variables:</p>
+  <dl></dl>
+</body>
+</html>
