@@ -42,8 +42,10 @@ class Log: Behavior
       // check for duplicates
       if(lastSub == sub && lastSev == sev && lastMsg == msg && this.last) 
       {
-        this[insp].remove();
-        --insp;
+        if(this.length > 1) {
+          this[insp].remove();
+          --insp;
+        }
         msg = String.printf("<option class='%s %s %s' msg='%s'><var>%d</var>%s</option>", SUBSYSTEM[sub],SEVERITY[sev], (cvid == vid ? "current-view" : ""), msg.htmlEscape(),++repeats, text);
       }
       else {
