@@ -2,6 +2,7 @@
 #include "sciter-x-dom.hpp"
 #include "sciter-x-behavior.h"
 
+#if FALSE // change it to TRUE to enable camera functionality
 
 #include "camera/camera-capture.h"
 #include "camera/camera-capture.cpp"
@@ -90,3 +91,5 @@ camera_stream_factory camera_stream_factory_instance;
 
 
 }
+
+#endif

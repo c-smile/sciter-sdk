@@ -20,7 +20,7 @@
     <dd>
       <div><strong>( elementWidth</strong>:<em>integer</em>, <strong>elementHeight</strong>:<em>integer,</em><strong> [imageWidth</strong>:<em>integer</em>, <strong>imageHeight</strong>:<em>integer</em>] [, <strong>clearBy</strong>: color], <strong>elem</strong>: Element<strong> &nbsp;)</strong> &nbsp;or</div>
       <div><strong>( imageWidth</strong>:<em>integer</em>, <strong>imageHeight</strong>:<em>integer</em> [, <strong>clearBy</strong>: color], <strong>renderer</strong>: function<strong> &nbsp;)</strong></div>
-      <p>First form constructs new Image object and renders element on it as if element is given elementWidth/Height. If imageWidth/Height is provided then the function will try to scale/inscribe the element into that box. </p>
+      <p>First form constructs new Image object and renders element on it as if element is given elementWidth/Height. If imageWidth/Height is provided then the function will try to scale/inscribe the element into that box.</p>
       <p>Second form constructs new Image object and calls <code>function renderer(gfx:</code><a href="Graphics.htm"><code>Graphics</code></a><code>)</code> passing image bound graphics object as a parameter.</p>
       <p>Optional <strong>clearBy</strong> defines color the bitmap will be initialized with. By default image is initilized by argb(0,0,0,0) color.</p></dd>
     <dt>destroy</dt>
@@ -43,6 +43,15 @@
     <dt>alphaMask</dt>
     <dd>
       <div>( <strong>mask</strong>: Image [, <strong>#luminance</strong> | <strong>#r</strong> | <strong>#g</strong> | <strong>#b</strong> | <strong>#a</strong> ] )</div>
-      <p>This method allows to set alpha channel of the image from other image. By default, if second parameter is not provided, the method uses luminance of pixel in mask image as alpha value of corresponding pixel of this image. #r, #g, #b or #a - &nbsp;use mask's red, green, blue or alpha channels as alpha values.</p></dd></dl>
+      <p>This method allows to set alpha channel of the image from other image. By default, if second parameter is not provided, the method uses luminance of pixel in mask image as alpha value of corresponding pixel of this image. #r, #g, #b or #a - &nbsp;use mask's red, green, blue or alpha channels as alpha values.</p></dd>
+    <dt>compose</dt>
+    <dd>
+      <div>( <strong>src</strong>: Image , compositionOp, [dstX,dstY, [srcX,srcY,srcW, srcH ]]] ) : this image</div>
+      <p>This method allows to compose two images: this (dst) with the src Image. </p>
+      <p>compositionOp is one of composition opeatrions: #src-over, #dst-over, #src-in, #dst-in, #src-out, #dst-out, #src-atop, #dst-atop, #xor, #copy.</p></dd>
+    <dt>update</dt>
+    <dd>
+      <div>( <strong>renderer</strong>: function )</div>
+      <p>This method allows to render on existing image by calling <code>function renderer(gfx:</code><a href="Graphics.htm"><code>Graphics</code></a><code>)</code> passing image bound graphics object as a parameter.</p></dd></dl>
 </body>
 </html>

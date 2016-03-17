@@ -1,17 +1,17 @@
 /*
  * The Sciter Engine of Terra Informatica Software, Inc.
  * http://sciter.com
- * 
+ *
  * The code and information provided "as-is" without
  * warranty of any kind, either expressed or implied.
- * 
+ *
  * (C) 2003-2015, Terra Informatica Software, Inc.
  */
 
 /*
  * sciter::window and sciter::application - high level window wrapper
- * Use these if you just need to create basic Sciter windows. 
- * Check /demos/uminimal and /demos/usciter samples. 
+ * Use these if you just need to create basic Sciter windows.
+ * Check /demos/uminimal and /demos/usciter samples.
  */
 
 #pragma once
@@ -43,15 +43,15 @@ int uimain( std::function<int()> run );
 namespace sciter
 {
 
-  namespace application 
+  namespace application
   {
-    const std::vector<sciter::string>& argv(); 
+    const std::vector<sciter::string>& argv();
     HINSTANCE                          hinstance();
   }
-  
+
   class window : public aux::asset
                , public sciter::host<window>
-               , public sciter::event_handler 
+               , public sciter::event_handler
   {
   public:
     window( UINT creationFlags, RECT frame = RECT() );
@@ -71,7 +71,11 @@ namespace sciter
     HINSTANCE get_resource_instance() { return application::hinstance(); }
 
   protected:
-    virtual void detached() { _hwnd = 0; asset::release(); } // HWINDOW closed/destroyed
+    virtual void detached  (HELEMENT /*he*/ ) override /*sciter::event_handler*/
+    {
+      // this happens when HWINDOW gets destroyed
+      _hwnd = 0; asset::release();
+    }
 
 #if defined(WINDOWS)
     virtual LRESULT on_message( HWINDOW hwnd, UINT msg, WPARAM wParam, LPARAM lParam, BOOL& handled );

@@ -83,7 +83,7 @@ namespace sciter {
   LRESULT window::on_message( HWINDOW hwnd, UINT msg, WPARAM wParam, LPARAM lParam, BOOL& pHandled )
   {
      //switch(msg) {
-     //  case WM_SIZE: on_szie(); break; 
+     //  case WM_SIZE: on_size(); break; 
      //  case WM_MOVE: on_move(); break; 
      //}
      return 0;
@@ -92,12 +92,9 @@ namespace sciter {
   LRESULT SC_CALLBACK window::msg_delegate(HWINDOW hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LPVOID pParam, BOOL* pHandled)
   {
     window* win = static_cast<window*>( pParam );
-    LRESULT lr = win->on_message( hwnd, msg, wParam, lParam,*pHandled);
-    if( msg == WM_DESTROY )
-      win->detached(); // NOTE: this will cause it to be "delete self" if not add_ref'ed outside.
-    return lr;
+    return win->on_message( hwnd, msg, wParam, lParam,*pHandled);
   }
-
+    
   void window::collapse() { 
     if(_hwnd) ::ShowWindow(_hwnd, SW_MINIMIZE ); 
   }

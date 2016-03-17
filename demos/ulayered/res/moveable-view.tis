@@ -1,6 +1,7 @@
   function movableView() // install movable window handler
   {
     var xoff,yoff;
+    var width, height;
     var dragging = false;
     var body = $(body);
       
@@ -10,6 +11,7 @@
       //  return false;
       xoff = evt.x;
       yoff = evt.y;
+      (width,height) = view.box(#dimension,#client);
       dragging = true;
       //view.root.capture(true);
       view.doEvent(#untilMouseUp);
@@ -22,7 +24,7 @@
     {
       if( dragging )
       {
-        view.move( evt.xScreen - xoff, evt.yScreen - yoff, true); // true - x,y are coordinates of the client area on the screen
+        view.move( evt.xScreen - xoff, evt.yScreen - yoff, width, height, true); // true - x,y are coordinates of the client area on the screen
         return true;
       }
       return true;

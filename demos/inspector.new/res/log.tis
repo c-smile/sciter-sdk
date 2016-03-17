@@ -57,14 +57,6 @@ class Log: Behavior
       if( !this.state.focus )
         this.post( :: this.scrollTo(sx,10000) );
     }
-    
-    this.clearMsgs = function() {
-      var ed = this.last; 
-      this.clear(); 
-      this.append(ed);
-      lastMsg = null;
-    }
-    
     // called by current view driver to highlight this view log messages
     this.setCurrentView = function(vid) {
       for( var el in this )
@@ -97,7 +89,7 @@ class Log: Behavior
   }
 
   @click @on "menu#for-log-list>li[command='edit:copy']"  : { this.selection2clipboard(); return true; }
-  @click @on "menu#for-log-list>li[command='edit:clear']" : { this.clearMsgs(); return true; }
+  @click @on "menu#for-log-list>li[command='edit:clear']" : { var ed = this.last; this.clear(); this.append(ed); return true; }
   
   
   @when Event.CONTEXT_MENU_SETUP @on "menu#for-log-list" :evt {
