@@ -2,7 +2,7 @@
 #include "sciter-x-dom.hpp"
 #include "sciter-x-behavior.h"
 
-#if FALSE // change it to TRUE to enable camera functionality
+#if TRUE // change it to FALSE to disable camera functionality
 
 #include "camera/camera-capture.h"
 #include "camera/camera-capture.cpp"

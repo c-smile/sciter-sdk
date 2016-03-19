@@ -1,0 +1,50 @@
+﻿<html>
+  <head>
+    <style></style>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>Inline vector images (paths) in Sciter</h1>
+  <p>The path is an url with custom <code>path:{commands}</code> schema that directly contains <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths">SVG's path commands</a> ) used by <code>&lt;path d=&quot;{commands}&quot; /&gt;</code></p>
+  <p>Therefore exisiting SVG WYSIWYG editing tools and collections of icons can be used pretty much as they are - by copying content of <code>d</code> attribute from SVG into CSS or HTML (to src attribute of an <code>&lt;img&gt;</code> or a <code>&lt;picture&gt;</code>).</p>
+  <p>Sciter supports full set of &quot;d comands&quot; : MmLlHhVvCcSsQqTtAaZz.</p>
+  <p>Example, this style:</p>
+  <pre>div {
+  background-image: url( path:M0,0 L50,100 L100,0z );
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  fill: red;
+  stroke: blue;
+}
+</pre>
+  <p>will show at the element's background triangle with apexes at (0,0), (50,100) and (100,0).</p>
+  <h2>CSS properties used for drawing</h2>
+  <p>For drawing paths Sciter uses following properties: </p>
+  <ul>
+    <li><strong>stroke</strong> : &lt;color&gt;</li>
+    <li><strong>stroke-width</strong> : &lt;length&gt;</li>
+    <li><strong>stroke-linecap</strong> : &nbsp;<strong>butt</strong> | round | square</li>
+    <li><strong>stroke-linejoin</strong> : &nbsp;<strong>miter</strong> | round | bevel </li>
+    <li><strong>storke-dasharray</strong>: &lt;length&gt;*</li>
+    <li><strong>storke-dashoffset</strong>: &lt;length&gt;</li>
+    <li><strong>fill</strong>: &lt;color&gt;</li></ul>
+  <p>These properties are shared with SVG and used for exactly same purpose. </p>
+  <h2>Expandable iv-images</h2>
+  <p>Sometimes there is need to have expandable vector images that can be adjusted to given size.</p>
+  <p>In order to support such images d-commands were expanded by the following.</p>
+  <h3>right / bottom anchored coordinates</h3>
+  <p>Uppercase d-commands ( MLHVCSQTA ) that expect absolute coordinates may use negative coordinates including negative zero.</p>
+  <p>Negative coordinate in this case is treated as offset from right or bottom of image rectangle. Therefore this:</p>
+  <pre> background-image: url( path:M0,0 L-0,-0 );
+ stroke: blue;<br/> stroke-width: 3px;
+</pre>
+  <p>will draw single diagonal 3px thick line from left/top to right/bottom corners of element's background area.</p>
+  <h3>proportional coordinates</h3>
+  <p>You can also define coordinates as proportions of image rendering site. &nbsp;Proportional coordinate is a number 0.0 ... 1.0 followed by '*' (astersisk) sign. This:</p>
+  <pre>background-image: url( path:M0,0 L1*,1* ); 
+stroke: red;<br/>stroke-width: 3px;
+</pre>
+  <p>will also draw single diagonal 3px thick line from left/top to right/bottom corners of element's background area.</p>
+  <p>Proportional coordinates can also be negative - anchored to right / bottom rendering box of the image.</p>
+</body>
+</html>

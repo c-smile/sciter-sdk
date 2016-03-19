@@ -50,7 +50,15 @@
             case 3: x -= dx; y += dy; break;
           }
           
-          gfx.blendImage(this.image,x, y,iw,ih,this.scale);
+          gfx.blendImage(this.image,x,y,iw,ih,this.scale);
+          /* example of rendering mirrored image
+          gfx.save();
+          gfx.translate(x + iw, y);
+          gfx.scale(-1, 1);
+          gfx.blendImage(this.image,0,0,iw,ih,this.scale);
+          gfx.restore();
+          */
+          
         }
         
         function animationStep()

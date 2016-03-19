@@ -11,6 +11,38 @@
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
     <tr>
+      <td valign="top" bgcolor="#FFFADA">3.3.2.0</td>
+      <td nowrap valign="top" align="center">19-03-2016</td>
+      <td>
+        <p>new: </p>
+        <ul>
+          <li><strong>inline vector images</strong>: <code>background-image; url( path: M0,0 L50,100 L100,0z );</code> - will draw filled triangle on background. <br/>See: sdk/samples/css++inline-vector-images/ and documentation sdk/samples/css++inline-vector-images/path-images-doc.htm</li>
+          <li>[html,parser] support of <strong>&quot;bound&quot; attributes</strong> using &quot;@name&quot; notation:</li>
+          <ul>
+            <li>[css] :has-bound-attributes pseudo class that matches element having at least one bound attribute.</li>
+            <li>[+plus] support of universal bound attributes - any attribute can be prepended by '@' with its value containing bound expression. So <code>&lt;img @src=&quot;item.imageUrl&quot;&gt;</code> will get into the DOM as <code>&lt;img src=&quot;concrete url&quot;&gt;</code></li></ul>
+          <li>[+plus] sdk/samples/+plus/readme.htm contains basic documentation.</li>
+          <li>[+plus] + radio group demo : sdk/samples/+plus/demos/J-radio-group.htm</li>
+          <li>[svg] support of &lt;use&gt; element and stroke-dasharray attribute.</li>
+          <ul>
+            <li>+ sample /sdk/samples/svg/svg-chart.htm</li></ul>
+          <li>[i18n] more samples in /sdk/samples/i18n/</li>
+          <li>+ stock:chevron-left/right/up/down</li></ul>
+        <p>fixes:</p>
+        <ul>
+          <li>[osx] fix of default line spacing.</li>
+          <li>[svg] correct computation of auto dimensions.</li>
+          <li>[script] <code>Float.toString()</code> truncation fix.</li>
+          <li>&lt;select&gt; hit test fix.</li>
+          <li>&lt;textarea spellcheck=&quot;no&quot;&gt; support.</li>
+          <li>[sciter.exe] delay load MF.DLL &amp; friends.</li>
+          <li>All updates are queuing rather than executing directly. This may solve some corner cases with broken DOM updates.</li>
+          <li>[win] fix of WSAStartup issue: http://sciter.com/forums/topic/sciter-dll-deadlock/ by calling WSAStartup on demand only.</li>
+          <li>[svg] proper fill=&quot;none&quot; handling.</li>
+          <li>fix of inspector's log output : <a href="http://sciter.com/forums/topic/inspector-log">http://sciter.com/forums/topic/inspector-log/</a></li>
+          <li>fix of &amp;emsp; and &amp;ensp; rendering : <a href="http://sciter.com/forums/topic/emsp-rendered-width-looks-wrong">http://sciter.com/forums/topic/emsp-rendered-width-looks-wrong/</a></li></ul>Builds: win32, win64, osx64, linux/gtk64
+        <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
+    <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.1.11</td>
       <td nowrap valign="top" align="center">13-03-2016</td>
       <td>
@@ -30,7 +62,7 @@
           <li>&lt;widget|checkbox&gt; styling</li>
           <li>[gtk] initial window dimensions when size are not specified</li>
           <li>Image.colorAt() for animated images.</li>
-          <li>[tiscript][await] fix of GC issue when active corroutines are present. </li>
+          <li>[tiscript][await] fix of GC issue when active corroutines are present.</li>
           <li>better &lt;select|dropdown tooltip=&quot;text&quot;&gt; handling.</li>
           <li>[osx][gtk] SC_ENGINE_DESTROYED notification.</li>
           <li>[osx] fix of view.msgbox borderless appearance.</li>

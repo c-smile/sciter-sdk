@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      picture,
+      img { fill:red; outline:1px dashed blue; }
+      
+      section { flow: horizontal; }
+      section > div {
+        background-image: url(path:M0,-0 C10,-0,10,0,20,0 L-20,0 C-10,0,-10,-0,-0,-0);
+        background-repeat:no-repeat;
+        background-size:100% 100%;
+        fill:gold;
+        stroke:#444;
+        stroke-width:0.5px;
+        width:max-content;
+        padding:4px 25px;
+        margin:5px;
+        outline:1px dashed #aaa;
+      } 
+      section > div:hover {
+        fill:yellow;
+      }
+      
+    </style>
+    <script type="text/tiscript"></script>
+  </head>
+<body>
+
+    <h2>Demonstration of expandable inline vector images</h2>
+
+    <!--flexible image , uses 0.5* - 50% of width -->
+    <picture src="path:M0,0 L0.5*,-0 L-0,0z" style="width:*; height:*; fill:green" />
+ 
+    <img src="path:M0,0 L50,100 L-0,0z" style="width:100px; height:100px;" >
+    <!--diagonal lines -->
+    <img src="path:M0,0 L-0,-0 M0,-0 L-0,0" style="width:200px; height:100px; stroke-width:8px; stroke-linecap:round" >
+    
+    
+    <p>Eexpandable vector images used as a background-image in CSS:</p>
+    
+    <section>
+      <div src="path:M0,-0 C25,-0,25,0,50,0 L-50,0 C-25,0,-25,-0,-0,-0 ">
+        first
+      </div>
+      <div src="path:M0,-0 C25,-0,25,0,50,0 L-50,0 C-25,0,-25,-0,-0,-0 ">
+        second 
+      </div>
+      <div src="path:M0,-0 C25,-0,25,0,50,0 L-50,0 C-25,0,-25,-0,-0,-0 ">
+        third 
+      </div>
+      <div src="path:M0,-0 C25,-0,25,0,50,0 L-50,0 C-25,0,-25,-0,-0,-0 ">
+        quite-long-long-item 
+      </div>
+   
+        
+  </section>      
+
+
+</body>
+</html>

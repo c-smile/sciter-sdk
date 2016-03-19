@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <title>Plus: very basic sample</title>
+    <style>
+      @import url(../plus.css); /* the only thing needed to include Plus framework */
+      @import url(../../note.css); 
+      
+      output { display: inline-block; border: 1px gray dotted; }
+    </style>
+    
+    <script type="text/tiscript">
+  
+      namespace Data // our model
+      {  
+        var at = "two";
+      }    
+    
+    </script>
+  </head>
+
+<body model="Data"> <!-- define data model we observe -->
+  <note>Radio group here is bound with single <code>Data.at</code> variable. Note: in order this to work each radio button has to have its own unique value defined.
+  <br>Changes of group value are reflected in output:
+  </note>
+
+  <div>
+      <button|radio(at) value="one">First</button>
+      <button|radio(at) value="two">Second</button>
+  </div>
+  <p>Result: <output(at) /></p>
+</body>
+</html>

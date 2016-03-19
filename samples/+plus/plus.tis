@@ -202,6 +202,30 @@ const Plus = function() {
     setupTerminalBinding(model,thing,expr,false,attrUpdater); 
   }
   
+  function boundAttributesTerminal() {
+    var model = this.$model || parentModel(this);
+    var thing = this; // the DOM thing
+    assert model : "model shall exist" ;
+
+    function bind(expr, attr) { 
+      assert expr : "it should not be empty";
+      function attrUpdater(thing,v) {
+        thing.post(function() {
+          thing.@[attr] = v;  
+        }, true);
+      }
+      setupTerminalBinding(model,thing,expr,false,attrUpdater); 
+    }
+    
+    for( var attr in this.attributes ) // scan all attributes for "@..." ones:
+    {
+      if( attr !like "@*" ) continue;
+      var expr = this.attributes[attr];
+      attr = attr.substr(1); // attribute name without '@'
+      bind(expr,attr);
+    }
+  }
+  
   function crackEachExpression(text) // parse iterator expression: each="[index,]item in collection[|extra]"
   {
     const RE = /(([a-z0-9]+)?\,?([a-z0-9]+)?) in ([^|]+)(\|(.+))?/i;  
@@ -223,7 +247,6 @@ const Plus = function() {
   }
   
   function eachRecord(rec,filter) { return true; }
-  
 
   function functionFilter(rec,idx,filter) {
     if( filter(rec, idx) ) 
@@ -379,6 +402,7 @@ const Plus = function() {
     valAttrTerminal: function() { AttrTerminal.call(this,"value"); },
     hrefAttrTerminal: function() { AttrTerminal.call(this,"href"); },
     srcAttrTerminal: function() { AttrTerminal.call(this,"src"); },
+    boundAttributesTerminal: boundAttributesTerminal,
     Repeater:Repeater,
     Click:Click,
     DblClick:DblClick,

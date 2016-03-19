@@ -20,7 +20,8 @@
         const canvas = $(widget#canvas);
         
         function paintLines(gfx) // generates 10 random lines on graphics
-        {            
+        {        
+          gfx.strokeCap(#round);
           for(var n = 0; n < 10; ++n) 
           {
             var x1 = rand(500);

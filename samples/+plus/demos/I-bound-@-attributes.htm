@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <title>Plus: very basic sample</title>
+    <style>
+      @import url(../plus.css); /* the only thing needed to include Plus framework */
+      @import url(../../note.css); 
+      
+      ol { width:*; }
+      ol > li { flow:horizontal; border-bottom:1px solid dotted;}
+      ol > li > picture { size: 200dip 100dip; foreground-size: contain; }
+      ol > li > output { display:block; }
+    </style>
+    
+    <script type="text/tiscript">
+  
+      namespace Data // our model
+      {  
+        var someCustomers = [{name:"Symantec", image:"http://sciter.com/screenshots/slide-norton360.png" },
+                             {name:"ESET", image:"http://sciter.com/screenshots/slide-eset.png"},
+                             {name:"Avast", image:"http://sciter.com/screenshots/slide-avast.png"},
+                             {name:"BitDefender", image:"http://sciter.com/screenshots/slide-bitdefender.png"},
+                             {name:"Comodo", image:"http://sciter.com/screenshots/slide-comodo.png"} ];
+      }    
+      
+    </script>
+  </head>
+
+<body model="Data"> <!-- define data model we observe -->
+
+  <note><p>List below is bound with <code>Data.someCustomers</code> array and so it reflects list items in that array.</p>
+        <p>Pictures are using "bound" attributes notation: <code>&lt;picture @src="customer.image" /&gt;</code></p>
+  </note>
+
+  <!-- the repeateable section -->
+  <ol each="customer in someCustomers">
+      <li><picture @src="customer.image" /> <output(customer.name)/></li>
+  </ol>
+  
+</body>
+</html>

@@ -8,6 +8,9 @@
 [model] [href*='{{'] { aspect:"Plus.hrefAttrTerminal"; }
 [model] [src*='{{'] { aspect:"Plus.srcAttrTerminal"; }
 
+/* any attribute with the name starting from '@' is considered as bound: */ 
+[model] *:has-bound-attributes { aspect:"Plus.boundAttributesTerminal"; }
+
 /* auxiliary event handlers */
 [model] [click] { aspect:"Plus.Click"; }
 [model] [dblclick] { aspect:"Plus.DblClick"; }

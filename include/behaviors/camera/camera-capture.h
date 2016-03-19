@@ -17,13 +17,19 @@
 #include "sciter-x-video-api.h"
 #include "aux-asset.h"
 
+// note mf.dll & friends does not exist on all Windows versions by default 
 
-
+#pragma comment (lib, "delayimp")
 #pragma comment (lib, "mfplat.lib")
 #pragma comment (lib, "mf.lib")
 #pragma comment (lib, "mfreadwrite.lib")
 #pragma comment (lib, "mfuuid.lib")
 #pragma comment (lib, "shlwapi.lib")
+
+//#pragma comment (linker, "/delayload:mf.dll")
+//#pragma comment (linker, "/delayload:mfplat.dll")
+//#pragma comment (linker, "/delayload:mfreadwrite.dll")
+//#pragma comment (linker, "/delayload:shlwapi.dll")
 
 namespace camera {
 
