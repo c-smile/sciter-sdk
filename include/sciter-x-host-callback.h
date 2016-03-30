@@ -171,10 +171,10 @@ namespace sciter
         return SciterLoadHtml(static_cast< BASE* >(this)->get_hwnd(),pb,cb, uri) != 0;
       }
 
-      HELEMENT root() 
+      HELEMENT root() const
       {
         HELEMENT re = 0;
-        SCDOM_RESULT r = SciterGetRootElement(static_cast< BASE* >(this)->get_hwnd(),&re);
+        SCDOM_RESULT r = SciterGetRootElement(static_cast< const BASE* >(this)->get_hwnd(),&re);
         assert(r == SCDOM_OK); r = r;
         return re;
       }
@@ -218,9 +218,9 @@ namespace sciter
         return call_function(name,4,argv);
       }
 
-      HELEMENT get_root()
+      HELEMENT get_root() const
       {
-        HWINDOW hwnd = static_cast< BASE* >(this)->get_hwnd();
+        HWINDOW hwnd = static_cast< const BASE* >(this)->get_hwnd();
         HELEMENT he = 0; 
         /*SCDOM_RESULT r =*/ ::SciterGetRootElement(hwnd,&he);
         /*assert(r == SCDOM_OK); r = r;*/
