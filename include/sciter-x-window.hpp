@@ -67,8 +67,8 @@ namespace sciter
     bool load( const WCHAR* url );
 
   // sciter::host traits:
-    HWINDOW   get_hwnd() { return _hwnd; }
-    HINSTANCE get_resource_instance() { return application::hinstance(); }
+    HWINDOW   get_hwnd() const { return _hwnd; }
+    HINSTANCE get_resource_instance() const { return application::hinstance(); }
 
   protected:
     virtual void detached  (HELEMENT /*he*/ ) override /*sciter::event_handler*/
