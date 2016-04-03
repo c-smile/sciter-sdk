@@ -420,7 +420,7 @@ function DragDrop(def)
   {
     assert dd_source && dd_target;
     var dst = dd_placeholder_dst || dd_placeholder_src;
-    if(!def.acceptDrop || def.acceptDrop( dd_target, el, dst.index ))
+    if(!def.acceptDrop || def.acceptDrop( dd_source, dd_target, dst.index ))
     {
       // OK to drop it here, do it:
       moveIt(dd_source, dst, function()
