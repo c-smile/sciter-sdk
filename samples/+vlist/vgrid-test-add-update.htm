@@ -1,0 +1,57 @@
+<html>
+  <head>
+  <title></title>
+  <style>
+    
+    @import url(vgrid.css);
+    
+    table { style-set: vgrid; // see vgrid.css
+            width:*;
+            height:*; } 
+    
+    table th:nth-child(2) { width:*; }
+
+    table th:last-child { width:8em; }
+      
+  </style>
+  <script type="text/tiscript">
+  
+  var records = new Array();
+  var vlist = $(table);
+  
+  function self.ready() {
+  
+    vlist.value = records;  
+    vlist.tbody.currentIndex = 0;
+    
+    var gen = 0;
+       
+    $(#btnTest).onClick = function()
+    {
+		records.push {index: records.length, caption:"New item 0" };		
+    records[0] = {index:0, caption : "Replaced " + gen };
+		records.push {index: records.length, caption:"New item 1" };
+    records[1] = {index:1, caption : "Replaced " + gen };
+		records.push {index: records.length, caption:"New item 2" };
+    records[2] = {index:2, caption : "Replaced " + gen };
+    ++gen;
+    }
+  }
+  
+  </script>
+  </head>
+<body>
+
+  <button id="btnTest">Test</button>
+
+  <table resizeable>
+    <thead>
+      <tr><th(index)>index</th><th(caption)>caption</th><th(status)>status</th></tr>
+    </thead>
+    <tbody>
+      <tr><td(index)></td><td(caption)></td><td(status)></td></tr>
+    </tbody>
+  </table>
+ 
+</body>
+</html>

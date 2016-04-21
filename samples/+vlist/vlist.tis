@@ -187,7 +187,7 @@ function VirtualList(params) {
     };
     
     function resetView() { 
-      
+    
       var sy = list.scroll(#top);
       
       if(list.first) {
@@ -212,38 +212,25 @@ function VirtualList(params) {
         
       var nend = buffer_start + BUFFER_SIZE;
       
-      var n = 0, i = 0;
+      var i = 0;
 
-      var recsInWindow = records.slice(buffer_start, buffer_start + BUFFER_SIZE);
-      
       // remove unused:
       for( i = list.length - 1; i >= 0; --i)
       {
         var el = list[i];
-        if( recsInWindow.indexOf(el.data) < 0 )
-          removeRecViewer(el);
+        removeRecViewer(el);
       }
       
       // populate existing
-      for( i = buffer_start; i < nend; ++i, ++n)
+      for( i = buffer_start; i < nend; ++i)
       {
         if( i >= records.length )
           break;
-          
         var rec = recordAt(i);
-        var (t, isNew) = findElementFor(rec);
-        if( isNew ) {
-          list.insert(t, n);
-          setupRecordObserver(rec,t);
-          showRecord(i,rec,t);
-        //} else if( n != t.index ) // existing, adjust its position if needed
-        //  t.swap( list[n] );
-        } else if( n != t.index ) {// existing, adjust its position if needed
-          if( n < list.length )
-            t.swap( list[n] );
-          else
-            list.insert(t);
-        }          
+        var t = createRecViewer(rec);          
+        list.append(t);
+        setupRecordObserver(rec,t);
+        showRecord(i,rec,t);
       }
       
       if(list.first) {
@@ -400,7 +387,7 @@ function VirtualList(params) {
       if(setupRecord) setupRecord(i,r,el);
     };
         
-    function setCurrent(index) {
+    function setCurrent(index, generateEvent = true) {
       if( var old = list.$(>li:current,>tr:current) ) {
         if(old.index + buffer_start == index) return; // already set
         old.state.current = false;
@@ -433,6 +420,8 @@ function VirtualList(params) {
           return;
         //onScrollTo(list.scroll(#top) / item_height);
       }
+      if(generateEvent)
+        list.postEvent("change");
     }
                 
     list.onMouse = function(evt) {
@@ -461,13 +450,13 @@ function VirtualList(params) {
     list.currentIndex = property(v) 
     {
       get return records.indexOf(current_record);
-      set { setCurrent(v); }
+      set { setCurrent(v,false); }
     } 
     
     list.current = property(v) 
     {
       get return records.indexOf(current_record) >= 0? current_record : null;
-      set { setCurrent(records.indexOf(v)); }
+      set { setCurrent(records.indexOf(v),false); }
     } 
     
     // returns "record view" - DOM element that represents nth record.
