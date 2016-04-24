@@ -89,9 +89,9 @@
 #endif
           
       static value currency( INT64 v )  { value t; ValueInt64DataSet(&t, v, T_CURRENCY, 0); return t;}
-      static value date( INT64 v )      { value t; ValueInt64DataSet(&t, v, T_DATE, 0);  return t;}
+      static value date( INT64 v, bool is_utc = true /* true if ft is UTC*/ )      { value t; ValueInt64DataSet(&t, v, T_DATE, is_utc);  return t;}
 #ifdef WIN32
-      static value date( FILETIME ft )  { value t; ValueInt64DataSet(&t, *((INT64*)&ft), T_DATE, 0); return t;} 
+      static value date( FILETIME ft, bool is_utc = true /* true if ft is UTC*/ )  { value t; ValueInt64DataSet(&t, *((INT64*)&ft), T_DATE, is_utc); return t;} 
 #endif
       static value symbol( aux::wchars wc ) { value t; ValueInit(&t); ValueStringDataSet(&t, LPCWSTR(wc.start), wc.length , 0xFFFF); return t; }
 

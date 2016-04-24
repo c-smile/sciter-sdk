@@ -47,7 +47,7 @@ namespace sciter
     json::string get_title();
     void         set_title(const json::string& title);
 
-    void         enable_debugger(bool onoff) { SciterSetOption(get_hwnd(),SCITER_SET_DEBUG_MODE,onoff?TRUE:FALSE); }
+    void         enable_debugger(bool onoff) { SciterSetOption(NULL,SCITER_SET_DEBUG_MODE,onoff?TRUE:FALSE); }
 
     json::value  debug(unsigned argc, const json::value* arg);
     

@@ -102,6 +102,19 @@ LRESULT CALLBACK window::wnd_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
     self->load_file(L"http://terrainformatica.com/tests/test.htm");
     return 0;
   }
+  else if( message == WM_KEYDOWN && wParam == VK_F8 )
+  {
+    window* self = ptr(hWnd);
+    sciter::dom::element root = self->get_root();
+    sciter::dom::element el_time = root.find_first("input#time");
+    ULARGE_INTEGER ft; GetSystemTimeAsFileTime((FILETIME*)&ft);
+    el_time.set_value( sciter::value::date(ft.QuadPart) );
+
+    return 0;
+  }
+
+
+  //date_time::DT_UTC | date_time::DT_HAS_DATE | date_time::DT_HAS_TIME | date_time::DT_HAS_SECONDS
 
 
 //SCITER integration starts

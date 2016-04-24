@@ -519,6 +519,17 @@ BOOL SCAPI SciterCreateOnDirectXWindow(HWINDOW hwnd, IDXGISwapChain* pSwapChain)
 **/
 BOOL SCAPI SciterRenderOnDirectXWindow(HWINDOW hwnd, HELEMENT elementToRenderOrNull = NULL, BOOL frontLayer = FALSE);
 
+/**Renders content of the document loaded to DXGI texture
+* Optionally allows to render parts of document (separate DOM elements) as layers
+*
+* \param[in] HWINDOW \b hwnd, window handle to create Sciter on.
+* \param[in] HELEMENT \b elementToRenderOrNull,  html element to render. If NULL then the engine renders whole document.
+* \param[in] IDXGISurface \b surface, DirectX 2D texture to render in.
+* \return \b BOOL, \c TRUE if layer was rendered successfully.
+*
+**/
+BOOL SCAPI SciterRenderOnDirectXTexture(HWINDOW hwnd, HELEMENT elementToRenderOrNull, IDXGISurface* surface);
+
 
 /**Render document to ID2D1RenderTarget
  *
@@ -554,6 +565,8 @@ BOOL SCAPI SciterRenderOnDirectXWindow(HWINDOW hwnd, HELEMENT elementToRenderOrN
 
  BOOL SCAPI     SciterDWFactory(IDWriteFactory ** ppf);
 
+#endif
+
 /** Get graphics capabilities of the system
  *
  * \pcaps[in] LPUINT \b pcaps, address of variable receiving:
@@ -563,8 +576,6 @@ BOOL SCAPI SciterRenderOnDirectXWindow(HWINDOW hwnd, HELEMENT elementToRenderOrN
  * \return \b BOOL, \c TRUE if pcaps is valid pointer.
  *
  **/
-
-#endif
 
  BOOL SCAPI     SciterGraphicsCaps(LPUINT pcaps);
 

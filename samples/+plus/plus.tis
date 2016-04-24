@@ -472,7 +472,7 @@ function @observing(func, paths..) {
     observeChanges.purolator = function(obj,changedef,path) {
       for( var cb in observeChanges.list ) 
         if( path like cb.path )
-           self.post( notifier(func,path), true);
+           self.post( notifier(cb.func,path), true);
     }
     this[#$observeChanges] = observeChanges;
     // setup observer on the namespace

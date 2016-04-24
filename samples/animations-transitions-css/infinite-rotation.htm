@@ -1,0 +1,61 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      .spin { aspect: Spin; }
+      
+      div.spin 
+      { 
+        size:100px;
+        background:gold;
+        border:2px solid;
+        margin:*;
+      }
+    
+    </style>
+    <script type="text/tiscript">
+    
+    function Spin() {
+    
+      var angle = 0;
+      var paused = false;
+      
+      function run() {
+        this.animate( function() 
+        {
+          if( paused ) 
+            return false;
+          ++angle;
+          this.style["transform"] = [rotate: angle * 1grad];
+          return true;
+        });
+      }
+      
+      this.pause = function(onOff) {
+        paused = onOff;
+        if(!paused)
+          run.call(this);
+      };
+      
+      run.call(this);
+    }
+    
+    $(#pause).on("click", function() {
+      $(div.spin).pause(this.value);
+    });
+    
+    
+    </script>
+  </head>
+<body>
+  <button|checkbox #pause>Pause</button>
+
+  <div.spin>
+    Voulez-Vous Danser?
+  </div>
+  
+  
+
+</body>
+</html>

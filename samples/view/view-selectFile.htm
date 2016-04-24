@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <title></title>
+    <style></style>
+    <script type="text/tiscript">
+    
+      var out = $(pre#out);
+    
+      self.on("click","#open",function(){
+      
+        const filter = "HTML Files (*.htm,*.html)|*.htm;*.html|All Files (*.*)|*.*";
+        const defaultExt = "html";
+        const initialPath = System.path(#USER_DOCUMENTS);
+        const caption = "Select file to open";
+      
+        var fn = view.selectFile(#open, filter, defaultExt, initialPath, caption );
+        out.text = fn || "{rejected}";
+      });
+      
+      self.on("click","#save",function(){
+      
+        const filter = "HTML Files (*.htm,*.html)|*.htm;*.html|All Files (*.*)|*.*";
+        const defaultExt = "html";
+        const initialPath = System.path(#USER_DOCUMENTS,"newdoc");
+        const caption = "Select file to save";
+      
+        var fn = view.selectFile(#save, filter, defaultExt, initialPath, caption );
+        out.text = fn || "{rejected}";
+      });
+      
+      
+    </script>
+  </head>
+<body>
+  <h2>view.selectFile() demo</h2>
+  <button #open>Open</button>
+  <button #save>Save</button>
+  <pre#out>
+  </pre>
+
+</body>
+</html>

@@ -89,8 +89,8 @@ namespace sciter
     if(root_el)
     {
       init_instance(root_el);
-      dom::element title_el = root_el.find_first(":root>head>title");
-      set_title(title_el.text());
+      if(dom::element title_el = root_el.find_first(":root>head>title"))
+        set_title(title_el.text());
     }     
     
     ShowWindow(_hwnd, SW_SHOW);
@@ -124,7 +124,8 @@ namespace sciter
     for(unsigned n = 0; n < argc; ++n)
     {
       if(n) OutputDebugStringW(L",");
-      OutputDebugStringW(argv[n].to_string(CVT_JSON_LITERAL).c_str());
+      auto s = argv[n].to_string(CVT_JSON_LITERAL);
+      OutputDebugStringW(s.c_str());
     }
     OutputDebugStringW(L"\n");
     return json::value();

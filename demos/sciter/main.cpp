@@ -2,7 +2,7 @@
 #include <shellapi.h>
 #include "sciter.h"
 #include "sciter-x-dom.hpp"
-
+#include "sciter-x-debug.h"
 
 HINSTANCE ghInstance = 0;
 
@@ -52,10 +52,11 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
   ghInstance = hInstance;
 
   SciterClassName();
+  sciter::debug_output debug;
 
   // SciterAppendMasterCSS test, adding <checkbox>text</checkbox> element.
-  const char* def = "checkbox { display:inline-block; display-model:inline-inside; style-set: \"std-checkbox\"; }";
-  SciterAppendMasterCSS((const byte*)def,UINT(strlen(def))); 
+  //const char* def = "checkbox { display:inline-block; display-model:inline-inside; style-set: \"std-checkbox\"; }";
+  //SciterAppendMasterCSS((const byte*)def,UINT(strlen(def))); 
     
   std::wstring file_name = L"res:default.htm";
   

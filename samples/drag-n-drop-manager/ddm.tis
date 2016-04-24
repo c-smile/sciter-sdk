@@ -126,6 +126,9 @@ function DragDrop(def)
     dd_placeholder_src.@.addClass("placeholder","src");
   // 3.a) append placeholder to the end of dd_source.parent:
     dd_source.parent.insert(dd_placeholder_src); 
+    
+    dd_placeholder_src.style.set { width:px(dd_width), height:px(dd_height) };
+    
   // 3.b) exchange positions of dd_source and dd_placeholder_src so dd_source 
   //      that we move will always be at the end so it will not conflict with findByPos
     dd_source.swap(dd_placeholder_src); 
@@ -134,8 +137,6 @@ function DragDrop(def)
     if (def.setupPlaceholder)
     	def.setupPlaceholder(dd_placeholder_src);
     
-    dd_placeholder_src.style.set { width:px(dd_width), height:px(dd_height) };
-  
   // 4) mark the draggable and take it off: 
   
     dd_source.state[ dd_op ] = true;

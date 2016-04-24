@@ -46,8 +46,7 @@ class ColorChooser: Behavior
       img.style["background-color"] = strColor;
       this.onValueChanged(this);
     }
-    get
-      return img.style["background-color"];
+    return img.style["background-color"];
   }
   
   function showPopup()

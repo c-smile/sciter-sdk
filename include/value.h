@@ -218,7 +218,7 @@ typedef BOOL SC_CALLBACK KeyValueCallback( LPVOID param, const VALUE* pkey, cons
  */
 UINT SCAPI ValueNthElementKey( const VALUE* pval, INT n, VALUE* pretval);
 
-UINT SCAPI ValueEnumElements( VALUE* pval, KeyValueCallback* penum, LPVOID param);
+UINT SCAPI ValueEnumElements( const VALUE* pval, KeyValueCallback* penum, LPVOID param);
 
 /**
  * ValueSetValueToKey - sets value of sub-element by key:
@@ -279,7 +279,7 @@ UINT SCAPI ValueFromString( VALUE* pval, LPCWSTR str, UINT strLength, /*VALUE_ST
  * Returns:
  *   HV_OK, HV_BAD_PARAMETER or HV_INCOMPATIBLE_TYPE
  */
-UINT SCAPI ValueInvoke( VALUE* pval, VALUE* pthis, UINT argc, const VALUE* argv, VALUE* pretval, LPCWSTR url);
+UINT SCAPI ValueInvoke( const VALUE* pval, VALUE* pthis, UINT argc, const VALUE* argv, VALUE* pretval, LPCWSTR url);
 
 /**
  * ValueNativeFunctorSet - set reference to native function

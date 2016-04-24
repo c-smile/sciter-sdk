@@ -7,7 +7,7 @@
   <p>Represents window where this script is runnung.</p>
   <p><strong>view</strong> - current view object (of the running script) is accessible through gloabal <em>view</em> variable.</p>
   <dl>
-    <dt>WINDOW_MINIMIZED<br/>WINDOW_MAXIMIZED<br/>WINDOW_HIDDEN</dt>
+    <dt>WINDOW_MINIMIZED<br/>WINDOW_MAXIMIZED<br/>WINDOW_HIDDEN<br/>WINDOW_SHOWN<br/>WINDOW_FULL_SCREEN</dt>
     <dd>Values of <em>view.state</em> property.</dd>
     <h2>Properties</h2>
     <dt>root</dt>
@@ -256,9 +256,10 @@ if( fn ) view.<strong>load</strong>(fn);
         <li><strong>success</strong> - <em>function(data,status)</em>, callback function to be called on successful completion.</li>
         <li><strong>error</strong> - <em>function(err,status)</em>, callback function to be called on request failure.</li>
         <li><strong>complete</strong> - <em>function(data or err,status)</em>, callback function to be called on request competion (either success or error).</li>
+        <li><strong>progress</strong> - <em>function(bytesReceived, totalBytes)</em>, callback function to be called on each chunk of data received. <em>bytesReceived</em> is an integer - number of bytes received so far and <em>totalBytes</em> is an integer - total bytes as reported by server in HTTP's &quot;content-length&quot; field. <em>totalBytes</em> can be <em>undefined</em> if server does not report it.</li>
         <li><strong>toFile - </strong><em>string</em>, if provided shall contain path of the file where to store the response. Used in file download scenarios.</li>
         <li><strong>proxyHost</strong>, <strong>proxyPort</strong> - <em>string</em>, <em>integer</em>. If these two are provided then the request will go through that proxy host.</li>
-        <li><strong>output</strong> - symbol, one of #string | #stream | #bytes | #json. If provided forces <em>data</em> to be reported as instance of String, Stream, Bytes or any value of parsed JSON.</li></ul>
+        <li><strong>output</strong> - symbol, one of <strong>#string</strong> | <strong>#stream</strong> | <strong>#bytes</strong> | <strong>#json</strong>. If provided forces <em>data</em> to be reported as instance of String, Stream, Bytes or a value - result of JSON parsing.</li></ul>
       <div>Sample: <u>sdk/samples/communication/file-download.htm</u> and <u>sdk/samples/communication/http.tis</u></div></dd></dl>
   <h2>View events</h2>
   <p>To subscribe to view events use <code>view.on(eventname, handler)</code> method of the view object providing:</p>

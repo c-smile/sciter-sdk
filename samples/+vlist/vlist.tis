@@ -402,11 +402,9 @@ function VirtualList(params) {
       
       if( index < buffer_start ) {
         list.scrollTo(0, y, true); 
-        //onScrollTo(list.scroll(#top) / item_height);
       }
       else if( index >= buffer_start + list.length ) {
         list.scrollTo(0, y - list.scroll(#height) + item_height,true); 
-        //onScrollTo(list.scroll(#top) / item_height);
       }
       else {
         var el = list[index - buffer_start];
@@ -416,9 +414,6 @@ function VirtualList(params) {
           list.scrollTo(0, y,true); 
         else if( y + item_height > sy + list.scroll(#height) )
           list.scrollTo(0, y - list.scroll(#height) + item_height ,true); 
-        else 
-          return;
-        //onScrollTo(list.scroll(#top) / item_height);
       }
       if(generateEvent)
         list.postEvent("change");

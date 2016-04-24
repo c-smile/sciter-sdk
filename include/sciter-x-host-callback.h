@@ -1,15 +1,15 @@
 /*
  * The Sciter Engine of Terra Informatica Software, Inc.
  * http://sciter.com
- * 
+ *
  * The code and information provided "as-is" without
  * warranty of any kind, either expressed or implied.
- * 
+ *
  * (C) 2003-2015, Terra Informatica Software, Inc.
  */
 
 /*
- * Sciter host application helpers 
+ * Sciter host application helpers
  */
 
 
@@ -20,7 +20,7 @@
 #include <assert.h>
 
 #pragma warning(disable:4786) //identifier was truncated...
-#pragma warning(disable:4100) //unreferenced formal parameter 
+#pragma warning(disable:4100) //unreferenced formal parameter
 
 #pragma once
 
@@ -40,14 +40,14 @@ namespace sciter
     bool open( aux::bytes data ) { return open( data.start, data.length ); }
     void close() { if(har) SAPI()->SciterCloseArchive(har); har = 0; }
     // get archive item:
-    aux::bytes get( LPCWSTR path ) { 
-      LPCBYTE pb = 0; UINT blen = 0; 
+    aux::bytes get( LPCWSTR path ) {
+      LPCBYTE pb = 0; UINT blen = 0;
       if( aux::chars_of(path).like(WSTR("//*")))
         path += 2;
-      SAPI()->SciterGetArchiveItem(har,path,&pb,&blen); return aux::bytes(pb,blen); 
+      SAPI()->SciterGetArchiveItem(har,path,&pb,&blen); return aux::bytes(pb,blen);
     }
 
-    static archive& instance() 
+    static archive& instance()
     {
       static archive sar;
       return sar;
@@ -78,9 +78,9 @@ namespace sciter
  *  Supposed to be used as a C++ mixin, see: <a href="http://en.wikipedia.org/wiki/Curiously_Recurring_Template_Pattern">CRTP</a>
  **/
 
-  //Base shall have two methods defined: 
-  //  HWINDOW   get_hwnd() 
-  //  HINSTANCE get_resource_instance() 
+  //Base shall have two methods defined:
+  //  HWINDOW   get_hwnd()
+  //  HINSTANCE get_resource_instance()
 
 
   template <typename BASE>
@@ -108,9 +108,9 @@ namespace sciter
       LRESULT handle_notification(LPSCITER_CALLBACK_NOTIFICATION pnm)
       {
         // Crack and call appropriate method
-    
+
         // here are all notifiactions
-        switch(pnm->code) 
+        switch(pnm->code)
         {
           case SC_LOAD_DATA:          return static_cast<BASE*>(this)->on_load_data((LPSCN_LOAD_DATA) pnm);
           case SC_DATA_LOADED:        return static_cast<BASE*>(this)->on_data_loaded((LPSCN_DATA_LOADED)pnm);
@@ -123,8 +123,8 @@ namespace sciter
         return 0;
       }
 
-      // Overridables 
-      
+      // Overridables
+
       LRESULT on_load_data(LPSCN_LOAD_DATA pnmld)
       {
         LPCBYTE pb = 0; UINT cb = 0;
@@ -149,14 +149,14 @@ namespace sciter
       LRESULT on_engine_destroyed( ) { return 0; }
       LRESULT on_posted_notification( LPSCN_POSTED_NOTIFICATION lpab ) { return 0; }
 
-      void on_graphics_critical_failure() 
+      void on_graphics_critical_failure()
       {
 #if defined(WINDOWS) && defined(_DEBUG)
-        // Direct2D critical error (on layered window) - it rendered nothing. Most probably bad video driver. 
+        // Direct2D critical error (on layered window) - it rendered nothing. Most probably bad video driver.
         ::MessageBox(NULL,TEXT("Direct2D graphics critical error"), TEXT("Critical Error"), MB_OK | MB_ICONERROR);
 #endif
       }
-      
+
       bool load_resource_data(LPCWSTR uri, LPCBYTE& pb, UINT& cb )
       {
          return sciter::load_resource_data(static_cast< BASE* >(this)-> get_resource_instance(), uri, pb, cb );
@@ -171,7 +171,7 @@ namespace sciter
         return SciterLoadHtml(static_cast< BASE* >(this)->get_hwnd(),pb,cb, uri) != 0;
       }
 
-      HELEMENT root() 
+      HELEMENT root()
       {
         HELEMENT re = 0;
         SCDOM_RESULT r = SciterGetRootElement(static_cast< BASE* >(this)->get_hwnd(),&re);
@@ -186,8 +186,10 @@ namespace sciter
         SCITER_VALUE rv;
         BOOL r = SciterCall(hwnd, name, argc, argv, &rv);
 #if !defined(SCITER_SUPPRESS_SCRIPT_ERROR_THROW)
-      if( (r != SCDOM_OK) && rv.is_error_string())
-        throw sciter::script_error(aux::w2a(rv.get(WSTR(""))));
+        if( (r != SCDOM_OK) && rv.is_error_string()) {
+          aux::w2a u8 (rv.get(WSTR("")));
+          throw sciter::script_error(u8.c_str());
+        }
 #endif
         assert(r); r = r;
         return rv;
@@ -221,7 +223,7 @@ namespace sciter
       HELEMENT get_root()
       {
         HWINDOW hwnd = static_cast< BASE* >(this)->get_hwnd();
-        HELEMENT he = 0; 
+        HELEMENT he = 0;
         /*SCDOM_RESULT r =*/ ::SciterGetRootElement(hwnd,&he);
         /*assert(r == SCDOM_OK); r = r;*/
         return he;
@@ -249,9 +251,9 @@ namespace sciter
   inline bool load_resource_data(HINSTANCE hinst,  LPCWSTR uri, LPCBYTE& pb, UINT& cb )
   {
 
-    if (!uri || !uri[0]) 
+    if (!uri || !uri[0])
       return false;
-    // Retrieve url specification into a local storage since FindResource() expects 
+    // Retrieve url specification into a local storage since FindResource() expects
     // to find its parameters on stack rather then on the heap under Win9x/Me
 
     if(wcsncmp(uri,L"res:",4) == 0)
@@ -261,14 +263,14 @@ namespace sciter
       uri += 2;
 
     WCHAR achURL[MAX_PATH]; wcsncpy(achURL, uri, MAX_PATH);
-  
+
     LPWSTR pszName = achURL;
 
     // Separate extension if any
     LPWSTR pszExt = wcsrchr(pszName, '.'); if (pszExt) *pszExt++ = '\0';
 
     // Find specified resource and leave if failed. Note that we use extension
-    // as the custom resource type specification or assume standard HTML resource 
+    // as the custom resource type specification or assume standard HTML resource
     // if no extension is specified
 
     HRSRC hrsrc = 0;
@@ -281,7 +283,7 @@ namespace sciter
     else
       hrsrc = ::FindResourceW(hinst, pszName, pszExt);
 
-    if (!hrsrc) 
+    if (!hrsrc)
       return false; // resource not found here - proceed with default loader
 
     // Load specified resource and check if ok
@@ -295,10 +297,10 @@ namespace sciter
     cb = ::SizeofResource(hinst, hrsrc); if (!cb) return FALSE;
 
     // Report data ready
-    
+
     return true;
   }
-#else 
+#else
 
   inline bool load_resource_data(HINSTANCE hinst,  LPCWSTR uri, LPCBYTE& pb, UINT& cb ) { return false; }
 

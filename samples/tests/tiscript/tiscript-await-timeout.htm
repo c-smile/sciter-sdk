@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <title></title>
+    <style></style>
+    <script type="text/tiscript">
+    
+      // promisified timeout, returns promise
+      function timeout(ms,rv = null) {
+        var oath = promise();
+        self.timer( ms, function() { oath(true, [rv]);} ) // fulfill the promise with optional param
+        return oath;
+      }
+    
+      function do_async_stuff()
+      {
+          var result = await timeout(1s, 42); 
+          stdout.println("A",result); //prints '42' 1 second after 'timeout' is invoked (as expected)
+          return result;
+      }
+
+      self.on("click", "#test", function() 
+      {   
+          var task = do_async_stuff();
+          task.then(function(result) {
+              stdout.println("B",result);
+          });
+      });
+    
+    </script>
+  </head>
+<body>
+  <button#test>test</button>
+  <p>After click on test, in 1 second, the following shall be printed:</p>
+  <pre>    A 42
+    B 42
+  </pre>
+</body>
+</html>

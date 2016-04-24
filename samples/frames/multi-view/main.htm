@@ -1,0 +1,64 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      div#tabs { flow:horizontal; border-spacing:1em; }
+      div#tabs > label { display:block; width:max-content; border:1px solid; behavior:check; }
+      div#tabs > label:checked { background:gold; }
+      
+      
+      html[state="view-1"] { background: #eaffff; }
+      html[state="view-2"] { background: #f3ffd6; }
+    
+    </style>
+    <script type="text/tiscript">
+    
+      const tabs = $(div#tabs);
+      const frameContent = $(frame#content);
+      const footer = $(footer);
+      
+      var currentViewId = null;
+      var currentViewDoc = null;
+      var currentLabel = null;
+    
+      function selectView(viewId) {
+        if( currentLabel )
+          currentLabel.state.checked = false; // deselect previous
+          
+        frameContent.load(viewId + ".htm");
+        currentLabel = $(#tabs > label#{viewId});
+        currentLabel.state.checked = true;
+        currentViewId = viewId;
+        // getting reference to document loaded into the view
+        currentViewDoc = frameContent[0]; 
+        // calling setup() function declared in the document
+        currentViewDoc.ns.setup();
+        footer.text = viewId;
+        // setting <html state="..."> attribute 
+        // so host view can be styled differently for each view (if needed)
+        self.attributes["state"] = viewId;
+      }
+      
+      self.on("click", "#tabs>label", function() {
+        var viewId = this.attributes["id"];
+        selectView(viewId);
+      })
+    
+    </script>
+  </head>
+<body>
+
+  <div#tabs>
+    <label#view-1>First view</label>
+    <label#view-2>Second view</label>
+  </div>
+
+  <frame#content>
+    <p>This sample demonstrates multi-view functionality.</p>
+    <p>Each view is a separate [sub-]document loaded into this frame.</p>
+    <p><code>selectView(viewId)</code> function loads the view and calls <code>setup()</code> method declared inside each sub-document.</p>
+  </frame>
+  <footer>.</footer>
+</body>
+</html>
