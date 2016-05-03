@@ -1,0 +1,10 @@
+@unittest "Plus function" :
+{
+  assert plus(1,2) == 3;  
+  assert plus(2,2) == 4;
+}
+
+@unittest "Plus function (must fail)" :
+{
+  assert plus(2,3) == 4;
+}

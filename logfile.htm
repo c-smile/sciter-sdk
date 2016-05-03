@@ -11,6 +11,29 @@
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
     <tr>
+      <td valign="top" bgcolor="#FFFADA">3.3.2.3</td>
+      <td nowrap valign="top" align="center">03-05-2016</td>
+      <td>
+        <p>new:</p>
+        <ul>
+          <li>[+unit-test] simple UnitTest framework, initial implementation. See: sdk/samples/+unit-test/demos/</li>
+          <li>[+plus] + sample of binding fileds containing literal HTML: sdk/samples/+plus/demos/K-bound-markup.htm</li></ul>
+        <p>fixes:</p>
+        <ul>
+          <li>view.dialog / view.window - window state is set to WINDOW_SHOWN by default.</li>
+          <li>behavior:textarea, fix of text insertion at last position: <a href="http://sciter.com/forums/topic/textarea-cursor">http://sciter.com/forums/topic/textarea-cursor/</a></li>
+          <li>[rtl][master-css] input { text-align:start; } by default</li>
+          <li>[rtl] horizontal-align: start; by default</li>
+          <li>[tiscript,await] support of native functors.</li>
+          <li>fix of potential AV on erroneous markup.</li>
+          <li>dyn update fix on display:inline elements.</li>
+          <li>Fix of inline-block/float and inline-block/absolute handling: <a href="http://sciter.com/forums/topic/behavior-clickable-with-inline-block">http://sciter.com/forums/topic/behavior-clickable-with-inline-block/</a> and <a href="http://sciter.com/forums/topic/absolute-positioned-input-not-showing-up-in-div">http://sciter.com/forums/topic/absolute-positioned-input-not-showing-up-in-div/</a></li>
+          <li>[osx] fix for child NSViews on moved/popup elements.</li>
+          <li>[win][d2d] bitmap dimension cap limit</li>
+          <li>behavior:textarea|edit, shift-MouseDown handling.</li>
+          <li>[layout, update] fix of Element.text update in some cases: <a href="http://sciter.com/forums/topic/button-caption">http://sciter.com/forums/topic/button-caption/</a></li></ul>Builds: win32, win64, osx32, osx64, linux/gtk64
+        <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
+    <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.2.2</td>
       <td nowrap valign="top" align="center">25-04-2016</td>
       <td>

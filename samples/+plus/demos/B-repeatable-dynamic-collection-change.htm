@@ -39,7 +39,8 @@
         @observing "currentSet" // set `items` by name of variable 
           function switchSets() 
           {
-            items = eval(currentSet,Data); // eval name in Data context, it will get us either items1 or items2 arrays
+            items = //eval(currentSet,Data); // eval name in Data context, it will get us either items1 or items2 arrays
+                    Data[currentSet];
           }
           
           

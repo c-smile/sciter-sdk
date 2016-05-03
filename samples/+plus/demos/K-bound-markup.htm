@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <title>Plus: very basic sample</title>
+    <style>
+      @import url(../plus.css); /* the only thing needed to include Plus framework */
+      @import url(../../note.css); 
+      
+      ol { width:*; }
+      ol > li { flow:horizontal; border-bottom:1px solid dotted;}
+      ol > li > label { display:inline-block;  }
+      
+      .markup { prototype: Markup; }
+    </style>
+    
+    <script type="text/tiscript">
+    
+    
+      // this behavior redefines Element's value property.
+      // value of such an element is its inner html 
+      // Markup element can be bound with +plus variables and fields containing html markup
+      class Markup: Behavior 
+      {
+        property value(v) {
+          get return this.html;
+          set this.html = v;
+        }
+      }
+      
+  
+      namespace Data // our model
+      {  
+        var someCustomers = [{name:"Symantec", motto:"Stay ahead of <b>tomorrow’s</b> threats."   },
+                             {name:"ESET", motto:"The <b>best</b> security money can buy"   },
+                             {name:"Comodo", motto:"Real time cloud protection when you are <i>online</i>. Containment protection when you are <i>offline<i/>"} ];
+      }    
+      
+    </script>
+  </head>
+
+<body model="Data"> <!-- define data model we observe -->
+
+  <note><p>List below is bound with <code>Data.someCustomers</code> array and so it reflects list items in that array.</p>
+        <p><code>span.markup</code> field is bound with <code>customer.motto</code> field containing HTML</p>
+  </note>
+
+  <!-- the repeateable section -->
+  <ol each="customer in someCustomers">
+      <li><label(customer.name)/>:<span.markup(customer.motto)/></li>
+  </ol>
+  
+</body>
+</html>

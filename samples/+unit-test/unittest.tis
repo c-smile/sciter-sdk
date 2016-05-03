@@ -1,0 +1,129 @@
+function @unittest(func, name) { UnitTest.add(func, name, this); }
+
+namespace UnitTest 
+{
+  var list = [];
+    
+  function add(func, name, ns) 
+  { 
+    list.push { name:name, run: func, ns: ns }; 
+  }    
+  
+  function run(testIndexes, cbStart, cbEnd, cbFinished) 
+  {
+  
+    var fail = 0;
+    var succ = 0; 
+    
+    var currentTestIndex = 0;
+    
+    function runOne() {
+    
+      if(currentTestIndex >= testIndexes.length) {
+        cbFinished(succ,fail);
+        return;
+      }
+      var i = testIndexes[currentTestIndex];
+      var t = list[i];
+      ++currentTestIndex;
+      try {
+          cbStart(t,i,succ,fail,testIndexes.length);
+          await t.run();
+          ++succ;
+          cbEnd(true,t,i,succ,fail,testIndexes.length);
+        } catch(e) {
+          ++fail;
+          stderr.println(e.toString().trim());
+          cbEnd(false,t,i,succ,fail,testIndexes.length);
+        }
+      self.post(runOne); // run next
+    }
+    // run first
+    runOne();
+  }    
+  
+  function present() 
+  {
+    const folder = __FILE__ /~ "/";
+  
+    var wnd = view.window {
+      type  : View.TOOL_WINDOW,
+      url   : folder + "/unittest-window.htm",
+      state : View.WINDOW_SHOWN,
+      alignment: 9,
+      width : 400,
+      height: 600,
+      parameters: {
+        testNs:   UnitTest,
+        testList: list
+      }
+    };
+  }    
+  
+  // aspect function
+  function link() {
+    // 'this' is the link
+    
+    var testUrl = this.attributes["href"];
+    if( !testUrl ) return;
+    
+    function loadTest(data,status) {
+      eval(data,self.ns);
+    }
+    function reportLoadTestError(err) {
+      stderr.println(err);
+    }
+    
+    view.request {
+      type:#get,
+      url: self.url(testUrl),
+      output: #string,
+      success: loadTest,
+      error: reportLoadTestError
+    };
+  }
+  
+  // promisified timeout, returns promise
+  function delay(ms) {
+    var oath = promise();
+    self.timer( ms, function() { oath(true, []);} ) // fulfill the promise 
+    return oath;
+  }
+  
+  // promisified timeout with condition, returns promise
+  // the promise gets resolved either on:
+  // - 'ms' timeout passed - returns false;
+  // - 'cond' returns true - returns true;
+  function until(ms, cond) 
+  {
+    var oath = promise();
+    var timeout = false;
+    
+    self.timer( 20ms, function() { 
+      if( timeout ) return;
+      if( cond() )
+        oath(true, [true]);  // fulfill the promise with true
+      else 
+        return true; // keep asking
+    });
+    
+    self.timer( ms, 
+      function() { 
+        timeout = true;
+        oath(true, [false]); // fulfill the promise with false, timeout passed
+      }); 
+      
+    return oath;
+  }
+  
+  
+}
+
+self.on("keydown", function(evt) {
+  if( evt.ctrlKey && evt.shiftKey && evt.keyCode == Event.VK_F5 )
+  {
+    UnitTest.present();
+    return true;
+  }
+});
+
