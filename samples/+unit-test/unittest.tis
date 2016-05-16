@@ -1,40 +1,69 @@
 function @unittest(func, name) { UnitTest.add(func, name, this); }
 
+function @unittestGroup(func, name) { UnitTest.addGroup(func, name); }
+
 namespace UnitTest 
 {
-  var list = [];
+  var root = { name: "All", list:[] };
+  var parent = root;
+  var counter = 0;
     
   function add(func, name, ns) 
   { 
-    list.push { name:name, run: func, ns: ns }; 
+    stdout.println( name);
+    //list.push { name:name, run: func, ns: ns, group: groupStack }; 
+    parent.list.push { name:name, run: func, ns: ns, id: "t" + (++counter) }; 
   }    
   
-  function run(testIndexes, cbStart, cbEnd, cbFinished) 
+  function addGroup(func, name) 
+  { 
+    // group is a function that contains other @unittest function declarations 
+    var prevParent = parent;
+    parent = { name:name, list: [] };
+    prevParent.list.push(parent);
+    func();
+    parent = prevParent;
+  }    
+  
+  function run(testIds, cbStart, cbEnd, cbFinished) 
   {
+    function findTestById(id, parent = null) 
+    {
+      if(!parent) parent = root;
+      for( var item in parent.list ) {
+        if( item.id == id )  
+          return item;
+        if( item.list ) {
+          var child = findTestById(id, item);
+          if( child ) return child;
+        }
+      }
+    }
   
     var fail = 0;
     var succ = 0; 
     
     var currentTestIndex = 0;
     
-    function runOne() {
-    
-      if(currentTestIndex >= testIndexes.length) {
+    function runOne() 
+    {
+      if(currentTestIndex >= testIds.length) {
         cbFinished(succ,fail);
         return;
       }
-      var i = testIndexes[currentTestIndex];
-      var t = list[i];
+      var testId = testIds[currentTestIndex];
+      var t = findTestById(testId);
+      assert t : "shall always find something";
       ++currentTestIndex;
       try {
-          cbStart(t,i,succ,fail,testIndexes.length);
+          cbStart(t,succ,fail,testIds.length);
           await t.run();
           ++succ;
-          cbEnd(true,t,i,succ,fail,testIndexes.length);
+          cbEnd(true,t,succ,fail,testIds.length);
         } catch(e) {
           ++fail;
           stderr.println(e.toString().trim());
-          cbEnd(false,t,i,succ,fail,testIndexes.length);
+          cbEnd(false,t,succ,fail,testIds.length);
         }
       self.post(runOne); // run next
     }
@@ -55,7 +84,7 @@ namespace UnitTest
       height: 600,
       parameters: {
         testNs:   UnitTest,
-        testList: list
+        testRoot: root
       }
     };
   }    
@@ -120,7 +149,7 @@ namespace UnitTest
 }
 
 self.on("keydown", function(evt) {
-  if( evt.ctrlKey && evt.shiftKey && evt.keyCode == Event.VK_F5 )
+  if( evt.ctrlKey && evt.shiftKey && (evt.keyCode == Event.VK_F5 || evt.keyCode == Event.VK_T) )
   {
     UnitTest.present();
     return true;

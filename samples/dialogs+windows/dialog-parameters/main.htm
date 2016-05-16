@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <title></title>
+    <style></style>
+    <script type="text/tiscript">
+    
+    
+    function showDialogWithParameters() {
+    
+      var out = $(pre#out);
+    
+      function update(data) {
+        out.text = JSON.stringify(data);
+      }
+      
+      function foo() {
+        return "Main here!";
+      }
+    
+      // parameters to be passed to the dialog as its view.parameters object:
+      var dialogParameters = {
+        mainData: 42,          // data to be passed
+        mainUpdate: update,    // function to be passed to dialog
+        mainFoo: foo,          // ditto 
+      };
+      
+      // showing modal dialog with the parameters:
+      var dialogRetVal = view.dialog {
+        url: self.url("dialog.htm"), 
+        parameters: dialogParameters 
+      };
+      
+      // show data returned by the dialog:
+      update(dialogRetVal);
+      
+    }
+    
+    
+    $(button#show-dialog).on("click",showDialogWithParameters);
+    
+    </script>
+  </head>
+<body>
+
+<p>This demonstrates use of view.dialog() function.</p>
+<p><code>view.dialog {parameters:...}</code> object allows to pass arbitrary data and functions to the dialog.</p>
+<p>Dialog scripts can access passed parameters through <code>view.parameters</code> property.</p>
+
+<button #show-dialog>Show dialog</button>
+
+<pre#out>
+</pre>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+    @media print
+    {
+      @const MAIN_COLOR:#000;
+    }
+    @media screen
+    {
+      @const MAIN_COLOR:#f00;
+    }
+    
+    // fallback for the case if none of @media conditions above is true
+    @const MAIN_COLOR:#00f;
+   
+    p { color: @MAIN_COLOR; }
+    
+    
+    </style>
+  </head>
+<body>
+  <p>This text must be red on screen and black on print.</p>
+</body>
+</html>

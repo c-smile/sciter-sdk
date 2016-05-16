@@ -30,7 +30,7 @@
       function self.ready() {
       
         const UnitTest = view.parameters.testNs;
-        const TestList = view.parameters.testList;
+        const rootTest = view.parameters.testRoot;
         
         const Body = $(body);
         const TestListView = $(select#list);
@@ -38,21 +38,31 @@
         const FormResults = $(form);
         
         TestListView.clear();
-        var root = TestListView.$append(<option expanded option value="-1"><caption>All</caption></option>);
-        for(var (i,item) in TestList) {
-          root.$append(<option value={i}><caption>{item.name}</caption></option>);
+        var rootOption = TestListView.$append(<option expanded><caption>{rootTest.name}</caption></option>);
+        
+        function addChildren(parentOption, parentItem) {
+          for(var (i,item) in parentItem.list) {
+            if( item.run ) // this is a leaf 
+              parentOption.$append(<option value={item.id}><caption>{item.name}</caption></option>);
+            else {
+              var node = parentOption.$append(<option expanded><caption>{item.name}</caption></option>);
+              addChildren(node,item);
+            }
+          }
         }
         
-        function onTestStart ( test, index, nSucc, nFail, nTests )
+        addChildren(rootOption,rootTest);
+        
+        function onTestStart ( test, nSucc, nFail, nTests )
         {
-          var opt = TestListView.$(option[value={index}]);
+          var opt = TestListView.$(option[value={test.id}]);
           assert opt;
           opt.attributes["state"] = "running";
         }
         
-        function onTestEnd ( result, test, index, nSucc, nFail, nTests )
+        function onTestEnd ( result, test, nSucc, nFail, nTests )
         {
-          var opt = TestListView.$(option[value={index}]);
+          var opt = TestListView.$(option[value={test.id}]);
           assert opt;
           opt.attributes["state"] = result ? "ok" : "failure";
         }

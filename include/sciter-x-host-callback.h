@@ -178,6 +178,8 @@ namespace sciter
         assert(r == SCDOM_OK); r = r;
         return re;
       }
+      HELEMENT get_root() { return root(); }
+
 
       // call scripting function defined in the global namespace
       SCITER_VALUE  call_function(LPCSTR name, UINT argc, SCITER_VALUE* argv )
@@ -220,14 +222,6 @@ namespace sciter
         return call_function(name,4,argv);
       }
 
-      HELEMENT get_root()
-      {
-        HWINDOW hwnd = static_cast< BASE* >(this)->get_hwnd();
-        HELEMENT he = 0;
-        /*SCDOM_RESULT r =*/ ::SciterGetRootElement(hwnd,&he);
-        /*assert(r == SCDOM_OK); r = r;*/
-        return he;
-      }
 
   };
 

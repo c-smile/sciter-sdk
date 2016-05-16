@@ -1,0 +1,61 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+   
+    @media screen 
+    {
+      @mixin LIKE-BUTTON 
+      {
+        behavior:button;
+        background: linear-gradient(top, #3498db, #2980b9);
+        border-radius: 28dip;
+        color: #ffffff;
+        font-size: 20dip;
+        padding: 10dip 20dip 10dip 20dip;
+        text-decoration: none;
+      }
+      
+      @mixin LIKE-BUTTON-HOVER {
+        background: linear-gradient(top, #3cb0fd, #3498db);
+        color: #fffaf0;
+      }
+    }
+   
+    @media print 
+    {
+      @mixin LIKE-BUTTON 
+      {
+        background: #ccc;
+        border-radius: 28dip;
+        color: #000;
+        font-size: 20dip;
+        padding: 10dip 20dip 10dip 20dip;
+        text-decoration: none;
+      }
+      @mixin LIKE-BUTTON-HOVER {}
+    }
+   
+   
+    div { @LIKE-BUTTON; margin:1em; width:max-content; }
+    div:hover { @LIKE-BUTTON-HOVER; }
+    
+    a { @LIKE-BUTTON; display:inline-block; }
+    a:hover { @LIKE-BUTTON-HOVER; }
+
+
+    </style>
+    <script type="text/tiscript"></script>
+  </head>
+<body>
+
+  <h2>Demo of Sciter's @mixin CSS feature</h2>
+  
+  <p>"buttons" below shall have gradient background on screen. On print they will have solid gray background.</p>
+
+  <div>test</div>
+  
+  And <a>&lt;a&gt; based</a> button;
+
+</body>
+</html>

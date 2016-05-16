@@ -16,8 +16,8 @@ class window: public sciter::host<window>
   static bool init_class();
 public:
   // notification_handler traits:
-  HWND      get_hwnd() { return _hwnd; }
-  HINSTANCE get_resource_instance() { return ghInstance; }
+  HWND      get_hwnd() const { return _hwnd; }
+  HINSTANCE get_resource_instance() const{ return ghInstance; }
 
   /* sciter::request / LOAD_MYSELF testing
   LRESULT on_load_data(LPSCN_LOAD_DATA pnmld) {

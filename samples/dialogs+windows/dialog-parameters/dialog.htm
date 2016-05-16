@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <title>Sciter's Dialog</title>
+    <style>
+      html { width:600dip; height:480dip; }
+      textarea { display:block; size:*; }
+    </style>
+    <script type="text/tiscript">
+    
+    function self.ready() {
+      // getting data passed by the caller and showing it here:
+      $(output#mainData).value = view.parameters.mainData;
+    }
+    
+    $(#call-foo).on("click", function() {
+      // calling callback function supplied by main window:
+      var d = view.parameters.mainFoo();
+      // showing it here:
+      $(textarea).value = d;
+    });
+    
+    
+    $(textarea).on("change", function() {
+      var text = this.value;
+      // calling callback function supplied by main window:
+      view.parameters.mainUpdate(text);
+    });
+    
+    $(#close).on("click", function() {
+      var dataToReturn = {
+        text: $(textarea).value,
+        author: "Dialog!"
+      };
+      view.close(dataToReturn);
+    });
+    
+    
+    </script>
+  </head>
+<body>
+  <p>mainData: <output id="mainData" /></p>
+  
+  <p>call <code>mainFoo()</code> to get data from main.htm : <button id="call-foo">call</button></p>
+  
+  <p>Textarea, on each change will call mainUpdate() provided by main window:</p>
+
+  <textarea>Type something here</textarea>
+  
+  <button id="close">Close dialog and return data<button>
+
+</body>
+</html>

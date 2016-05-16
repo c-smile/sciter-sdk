@@ -11,6 +11,34 @@
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
     <tr>
+      <td valign="top" bgcolor="#FFFADA">3.3.2.4</td>
+      <td nowrap valign="top" align="center">15-05-2016</td>
+      <td>
+        <p>new:</p>
+        <ul>
+          <li>+ sample sdk/samples/dialogs+windows/dialog-parameters : passing data and callback function to dialog.</li>
+          <li>[html, &lt;img&gt;,&lt;picture&gt;] image cache handling for the case: img.attributes[&quot;src&quot;] = &quot;new url&quot;; In this case previous image (img.attributes[&quot;src&quot;]) gets destroyed and memory is freed. This is about cases when &lt;picture&gt; is used as image viewer.</li>
+          <li>[+unit-test] </li>
+          <ul>
+            <li>+ @unittestGroup - groups pf unit tests , see: +unit-test/demos/</li>
+            <li>CTRL+SHIFT+T as a primary test shortcut.</li></ul>
+          <li>[css] conditional @const and @mixin are back. See: sdk/samples/css++/conditional-@const.htm and sdk/samples/css++/conditional-@mixin.htm</li>
+          <li>[tiscript, syntax] support of 1vw, 1vh, 1vmin and 1vmax length literals. </li></ul>
+        <p>fixes:</p>
+        <ul>
+          <li>[win, d2d, high-dpi] fix of novalue rendering</li>
+          <li>[osx] fix of &quot;sleepy&quot; image and scroll animation issues.</li>
+          <li>[layout] &lt;img&gt; and &lt;picture&gt; intrinsic size calculation fix.</li>
+          <li>[tiscript] native functors in promises.</li>
+          <li>[win, security] LoadLibrary calls replaced by LoadLibraryEx.</li>
+          <li>better out-of-memory handling.</li>
+          <li>[osx] multiline novalue rendering fix.</li>
+          <li>[gtk] view.move() fix</li>
+          <li>[api] SciterValueVisit fix.</li>
+          <li>[request API] fix of RequestGetNthRqHeaderName() function.</li>
+          <li>[win, lang=ja] &quot;Yu Gothic UI&quot; font is added to font substitution table.</li></ul>Builds: win32, win64, osx64, linux/gtk64
+        <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
+    <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.2.3</td>
       <td nowrap valign="top" align="center">03-05-2016</td>
       <td>

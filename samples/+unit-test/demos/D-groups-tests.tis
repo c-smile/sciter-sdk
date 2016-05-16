@@ -1,0 +1,32 @@
+@unittestGroup "Shall Succeed" : {
+
+  @unittest "initial state: expanded" :
+  {
+    var section = $(section.collapsible);
+    assert !section.state.collapsed; 
+  }
+
+  @unittest "click, toggle test" :
+  {
+    var section = $(section.collapsible);
+    var sectionCaption = section.$(caption);
+    var sectionContent = section.$(div);
+
+    sectionCaption.postEvent("click");
+    assert await UnitTest.until(400ms, :: !sectionContent.isVisible);
+
+    sectionCaption.postEvent("click");
+    assert await UnitTest.until(400ms, :: sectionContent.isVisible);
+  }
+}
+
+@unittestGroup "Shall Fail" : {
+
+  @unittest "UnitTest.until" :
+  {
+    var section = $(section.collapsible);
+    // asking for unknown property, shall fail when timeout expired
+    assert await UnitTest.until(400ms, :: section.unknown ); 
+  }
+
+}

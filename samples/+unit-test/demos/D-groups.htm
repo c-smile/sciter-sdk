@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <title></title>
+    
+    <style>
+    
+      @import url(../unittest.css);
+      @import url(../../note.css);
+      
+      section.collapsible { aspect: collapsible; }
+      section.collapsible > caption { behavior: clickable;  }
+      section.collapsible > div { size:200px; background:gold;}
+      section.collapsible:collapsed > div { visibility:none; }
+    
+    </style>
+    
+    <link rel="unittest" href="D-groups-tests.tis" />
+    
+    <script type="text/tiscript">
+    
+      function collapsible() {
+        var me = this;
+        if( me.attributes.exists("collapsed") )
+          me.state.collapsed = true;
+        else if( me.attributes.exists("expanded") )
+          me.state.expanded = true;
+        this.$(caption).on("click", function() {
+          me.state.collapsed = !me.state.collapsed;
+        });
+      }
+    
+    </script>
+  </head>
+<body>
+  <note>Click SHIFT+CTRL+T to reveal test list</note>
+  <section.collapsible>
+    <caption>Clickable caption</caption>
+    <div>
+      Content
+    </div>
+  </section>
+  
+</body>
+</html>
