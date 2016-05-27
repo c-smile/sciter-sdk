@@ -144,7 +144,7 @@ if( fn ) view.<strong>load</strong>(fn);
           <li>one of the symbols: <strong>#ok</strong>, <strong>#cancel</strong>, <strong>#abort</strong>, <strong>#ignore</strong>, <strong>#yes</strong>, <strong>#no</strong> or <strong>#close</strong>, or</li>
           <li>object with the structure <font face="Courier New">{ id:#somesymbol, text:&quot;Some Text&quot; }</font> or</li>
           <li>array of symbols or objects above;</li></ul>
-        <li><em>onClose</em> - function with the signature <code>function(id, root)</code> returning <em>true</em>|<em>false.</em> This function will be called on attempt to close dialog with parameters <em>id</em> - id of the button pressed and <em>root</em> - root node of the HTML document of the dialog. Function shall return true if dialog can be closed at the moment.</li>
+        <li><em>onClose</em> - function with the signature <code>function(root, id)</code> returning <em>true</em>|<em>false.</em> This function will be called on attempt to close dialog with parameters <em>id</em> - id of the button pressed and <em>root</em> - root node of the HTML document of the dialog. Function shall return true if dialog can be closed at the moment.</li>
         <li><em>onLoad</em> - function with the signature <code>function(root)</code><em>.</em> This function will be called after creating dialog window. Use it if you need to do some initialization, e.g. fill data of input fields if <em>text</em> is an html containing &lt;input&gt;s.</li></ul>
       <div>Samples:</div>
       <ol>
