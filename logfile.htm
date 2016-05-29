@@ -11,6 +11,28 @@
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
     <tr>
+      <td valign="top" bgcolor="#FFFADA">3.3.2.5</td>
+      <td nowrap valign="top" align="center">28-05-2016</td>
+      <td>
+        <p>new:</p>
+        <ul>
+          <li>+ Google Maps sample: samples/maps/google-maps.htm</li>
+          <li>[video,css] video frame rendering is governed by foreground-*** CSS properties now.</li>
+          <li>[css] support of transition: box-shadow(...)</li>
+          <li>[htmlarea,richtext,plaintext] adding SHIFT + mouse-click handling.</li></ul>
+        <p>fixes:</p>
+        <ul>
+          <li>:busy state generation for images sharing the same URL. </li>
+          <li>fix of :busy and :incomplete state update for resources that use SC_LOAD_DATA/LOAD_DELAYED and SciterDataReadyAsync.</li>
+          <li>[gdi] missed characters in some cases.</li>
+          <li>[tiscript] error propagation when loading compiled bytecodes.</li>
+          <li>Fix of sciter::debug_output_console setup in release builds.</li>
+          <li>[svg] fix of AV in svg rendering when it is used in back/foreground-image of parent document.</li>
+          <li>[printing] Fix of AV in new Graphics.Text();</li>
+          <li>[foreground-image-cursor] fix of background-size:contain case. </li>
+          <li>&lt;plaintext&gt; fix of blank lines handling, see: http://sciter.com/forums/topic/bug-2/</li></ul>Builds: win32, win64, osx64, linux/gtk64
+        <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
+    <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.2.4</td>
       <td nowrap valign="top" align="center">15-05-2016</td>
       <td>
@@ -18,12 +40,12 @@
         <ul>
           <li>+ sample sdk/samples/dialogs+windows/dialog-parameters : passing data and callback function to dialog.</li>
           <li>[html, &lt;img&gt;,&lt;picture&gt;] image cache handling for the case: img.attributes[&quot;src&quot;] = &quot;new url&quot;; In this case previous image (img.attributes[&quot;src&quot;]) gets destroyed and memory is freed. This is about cases when &lt;picture&gt; is used as image viewer.</li>
-          <li>[+unit-test] </li>
+          <li>[+unit-test]</li>
           <ul>
             <li>+ @unittestGroup - groups pf unit tests , see: +unit-test/demos/</li>
             <li>CTRL+SHIFT+T as a primary test shortcut.</li></ul>
           <li>[css] conditional @const and @mixin are back. See: sdk/samples/css++/conditional-@const.htm and sdk/samples/css++/conditional-@mixin.htm</li>
-          <li>[tiscript, syntax] support of 1vw, 1vh, 1vmin and 1vmax length literals. </li></ul>
+          <li>[tiscript, syntax] support of 1vw, 1vh, 1vmin and 1vmax length literals.</li></ul>
         <p>fixes:</p>
         <ul>
           <li>[win, d2d, high-dpi] fix of novalue rendering</li>

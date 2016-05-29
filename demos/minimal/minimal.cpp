@@ -69,6 +69,9 @@ int CALLBACK WinMain(HINSTANCE hInstance,
   ghInstance = hInstance;
   OleInitialize(NULL); // for shell interaction: drag-n-drop, etc.
 
+  // un-comment the following to see console output: 
+  //sciter::debug_output_console _;
+
 	HWND wnd = ::CreateWindowEx(
 		0, /*WS_EX_LAYOUTRTL,*/
 		::SciterClassName(),

@@ -50,21 +50,21 @@ LPCWSTR SCAPI SciterClassName();
  **/
  UINT  SCAPI SciterVersion(BOOL major);
 
-enum
+/** #SC_LOAD_DATA notification return codes */
+enum SC_LOAD_DATA_RETURN_CODES
 {
-  LOAD_OK = 0,      // do default loading if data not set
-  LOAD_DISCARD = 1, // discard request completely
-  LOAD_DELAYED = 2, // data will be delivered later by the host application.
-                    // Host application must call SciterDataReadyAsync(,,, requestId) on each LOAD_DELAYED request to avoid memory leaks.
-  LOAD_MYSELF  = 3, // you return LOAD_MYSELF result to indicate that your (the host) application took or will take care about HREQUEST in your code completely.
-                    // Use sciter-x-request.h[pp] API functions with SCN_LOAD_DATA::requestId handle .
+  LOAD_OK = 0,      /**< do default loading if data not set */
+  LOAD_DISCARD = 1, /**< discard request completely */
+  LOAD_DELAYED = 2, /**< data will be delivered later by the host application.
+                         Host application must call SciterDataReadyAsync(,,, requestId) on each LOAD_DELAYED request to avoid memory leaks. */
+  LOAD_MYSELF  = 3, /**< you return LOAD_MYSELF result to indicate that your (the host) application took or will take care about HREQUEST in your code completely.
+                         Use sciter-x-request.h[pp] API functions with SCN_LOAD_DATA::requestId handle . */
 };
-
 
 /**Notifies that Sciter is about to download a referred resource.
  *
  * \param lParam #LPSCN_LOAD_DATA.
- * \return #LOAD_OK or #LOAD_DISCARD
+ * \return #SC_LOAD_DATA_RETURN_CODES
  *
  * This notification gives application a chance to override built-in loader and
  * implement loading of resources in its own way (for example images can be loaded from
@@ -148,14 +148,14 @@ typedef UINT SC_CALLBACK SciterHostCallback( LPSCITER_CALLBACK_NOTIFICATION pns,
 typedef SciterHostCallback * LPSciterHostCallback;
 
 
-/**This structure is used by #SCN_LOAD_DATA notification.
- *\copydoc SCN_LOAD_DATA
+/**This structure is used by #SC_LOAD_DATA notification.
+ *\copydoc SC_LOAD_DATA
  **/
 
 typedef struct SCN_LOAD_DATA
 {
-    UINT code; /**< [in] one of the codes above.*/
-    HWINDOW hwnd; /**< [in] HWINDOW of the window this callback was attached to.*/
+    UINT code;                 /**< [in] one of the codes above.*/
+    HWINDOW hwnd;              /**< [in] HWINDOW of the window this callback was attached to.*/
 
     LPCWSTR  uri;              /**< [in] Zero terminated string, fully qualified uri, for example "http://server/folder/file.ext".*/
 
@@ -171,17 +171,17 @@ typedef struct SCN_LOAD_DATA
 
 typedef SCN_LOAD_DATA*  LPSCN_LOAD_DATA;
 
-/**This structure is used by #SCN_DATA_LOADED notification.
- *\copydoc SCN_DATA_LOADED
+/**This structure is used by #SC_DATA_LOADED notification.
+ *\copydoc SC_DATA_LOADED
  **/
 typedef struct SCN_DATA_LOADED
 {
-    UINT code; /**< [in] one of the codes above.*/
-    HWINDOW hwnd; /**< [in] HWINDOW of the window this callback was attached to.*/
+    UINT code;                 /**< [in] one of the codes above.*/
+    HWINDOW hwnd;              /**< [in] HWINDOW of the window this callback was attached to.*/
 
     LPCWSTR  uri;              /**< [in] zero terminated string, fully qualified uri, for example "http://server/folder/file.ext".*/
     LPCBYTE  data;             /**< [in] pointer to loaded data.*/
-    UINT    dataSize;         /**< [in] loaded data size (in bytes).*/
+    UINT     dataSize;         /**< [in] loaded data size (in bytes).*/
     UINT     dataType;         /**< [in] SciterResourceType */
     UINT     status;           /**< [in]
                                          status = 0 (dataSize == 0) - unknown error.
@@ -192,15 +192,15 @@ typedef struct SCN_DATA_LOADED
 
 typedef SCN_DATA_LOADED * LPSCN_DATA_LOADED;
 
-/**This structure is used by #SCN_ATTACH_BEHAVIOR notification.
- *\copydoc SCN_ATTACH_BEHAVIOR **/
+/**This structure is used by #SC_ATTACH_BEHAVIOR notification.
+ *\copydoc SC_ATTACH_BEHAVIOR **/
 typedef struct SCN_ATTACH_BEHAVIOR
 {
-    UINT code; /**< [in] one of the codes above.*/
-    HWINDOW hwnd; /**< [in] HWINDOW of the window this callback was attached to.*/
+    UINT code;                        /**< [in] one of the codes above.*/
+    HWINDOW hwnd;                     /**< [in] HWINDOW of the window this callback was attached to.*/
 
-    HELEMENT element;          /**< [in] target DOM element handle*/
-    LPCSTR   behaviorName;     /**< [in] zero terminated string, string appears as value of CSS behavior:"???" attribute.*/
+    HELEMENT element;                 /**< [in] target DOM element handle*/
+    LPCSTR   behaviorName;            /**< [in] zero terminated string, string appears as value of CSS behavior:"???" attribute.*/
 
     ElementEventProc* elementProc;    /**< [out] pointer to ElementEventProc function.*/
     LPVOID            elementTag;     /**< [out] tag value, passed as is into pointer ElementEventProc function.*/
@@ -209,7 +209,7 @@ typedef struct SCN_ATTACH_BEHAVIOR
 typedef SCN_ATTACH_BEHAVIOR* LPSCN_ATTACH_BEHAVIOR;
 
 /**This structure is used by #SC_ENGINE_DESTROYED notification.
- *\copydoc SCN_ENGINE_DESTROYED **/
+ *\copydoc SC_ENGINE_DESTROYED **/
 typedef struct SCN_ENGINE_DESTROYED
 {
     UINT code; /**< [in] one of the codes above.*/
@@ -219,7 +219,7 @@ typedef struct SCN_ENGINE_DESTROYED
 typedef SCN_ENGINE_DESTROYED* LPSCN_ENGINE_DESTROYED;
 
 /**This structure is used by #SC_ENGINE_DESTROYED notification.
- *\copydoc SCN_ENGINE_DESTROYED **/
+ *\copydoc SC_ENGINE_DESTROYED **/
 typedef struct SCN_POSTED_NOTIFICATION
 {
     UINT      code; /**< [in] one of the codes above.*/
@@ -232,7 +232,7 @@ typedef struct SCN_POSTED_NOTIFICATION
 typedef SCN_POSTED_NOTIFICATION* LPSCN_POSTED_NOTIFICATION;
 
 /**This structure is used by #SC_GRAPHICS_CRITICAL_FAILURE notification.
- *\copydoc SCN_GRAPHICS_CRITICAL_FAILURE **/
+ *\copydoc SC_GRAPHICS_CRITICAL_FAILURE **/
 typedef struct SCN_GRAPHICS_CRITICAL_FAILURE
 {
     UINT      code; /**< [in] = SC_GRAPHICS_CRITICAL_FAILURE */
@@ -266,7 +266,7 @@ typedef SCN_GRAPHICS_CRITICAL_FAILURE* LPSCN_GRAPHICS_CRITICAL_FAILURE;
  * \param[in] uri \b LPCWSTR, URI of the data requested by Sciter.
  * \param[in] data \b LPBYTE, pointer to data buffer.
  * \param[in] dataLength \b UINT, length of the data in bytes.
- * \param[in] requestId \b LPVOID, SCN_LOAD_DATA requestId.
+ * \param[in] requestId \b LPVOID, SCN_LOAD_DATA requestId, can ne NULL.
  * \return \b BOOL, TRUE if Sciter accepts the data or \c FALSE if error occured
  **/
 

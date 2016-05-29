@@ -46,6 +46,7 @@
           
           //gfx.scale(0.5,0.5, w/2,h/2);
           
+          
           gfx.lineWidth(2)
              .lineLinearGradient(x1,y1,x1,y2,color(0xFF,0,0),color(0,0,0xFF) )
              .fillLinearGradient(x1,y1,x1,y2,color(0xFF,0x7F,0x7F,0.3),color(0x7F,0x7F,0xFF,0.6) )
@@ -69,11 +70,19 @@
              .lineColor(color(0,0xFF,0))
              .fillColor(color(0,0x7F,0,0.5))
              .polygon( 0,0, 40,40, 40, 0, 0, 40);
+             
+          var txt = new Graphics.Text("Hello world",this);
+              //txt.font("Segoe UI", 24);
+          
+          gfx.noLine()
+             .fillColor(color(0,0,0))
+             .drawText(txt, (x2+x1)/2, (y2+y1)/2, 5 );
 
           gfx.translate(w-40,h-40)
              .lineWidth(2)
              .lineColor(color(0xFF,0,0))
              .polyline( 0,0, 40,40, 40, 0, 0, 40);
+             
              
           //var (x,y) = gfx.worldToScreen(10,10);
           //stdout.printf("%f,%f\n",x,y);

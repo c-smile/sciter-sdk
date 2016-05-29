@@ -1,0 +1,61 @@
+<h2 id="cssattributes">CSS attributes</h2>
+
+<h3 id="fontandparagraphproperties">Font and paragraph properties</h3>
+<section property >
+
+<h4 id="font-family">font-family</h4>
+
+<p>specifies one of the following values as comma separated list:</p>
+
+<dl>
+<dt>family-name</dt>
+<dd>Any of the available font families installed in the system.
+ For example, Times, Helvetica, Zapf-Chancery, Western, or Courier.</dd>
+
+<dt>generic-name</dt>
+<dd>Any of the following font families: serif, sans-serif, cursive, fantasy, or monospace.</dd>
+</dl>
+
+<p>Example:</p>
+
+<pre><code class="css">body {
+  font-family: &quot;Gill Sans Extrabold&quot;, Helvetica, sans-serif;
+}
+</code></pre>
+</section>
+<section property >
+
+<h4 id="font-size">font-size</h4>
+
+<p>Size of the font, specifies one of the following values:</p>
+
+<dl>
+<dt>named-font-size</dt>
+<dd>Set of keywords that indicate predefined font sizes. Scale according to the user&#8217;s font setting preferences.
+ Possible values include the following: <em>xx-small</em>, <em>x-small</em>, <em>small</em>, <em>medium</em>, <em>large</em>, <em>x-large</em>, <em>xx-large</em>;</dd>
+
+<dt>relative-size</dt>
+<dd>Set of keywords that are interpreted as relative to the font size of the parent object.
+ Possible values include the following: <em>larger</em>, <em>smaller</em>;</dd>
+
+<dt>length</dt>
+<dd><a href="#lengthunits">Length Units</a> value;</dd>
+
+<dt>percentage</dt>
+<dd>Integer, followed by a percent (%). The value is a percentage of the parent object&#8217;s font size;</dd>
+</dl>
+
+<p>Example:</p>
+
+<pre><code class="css">/* &lt;length&gt; values */
+font-size: 12px;
+font-size: 0.8em;
+
+/* &lt;percentage&gt; values */
+font-size: 80%;
+</code></pre>
+</section>
+
+<h2 id="lengthunits">Length Units</h2>
+
+<p>Floating-point number, followed by an absolute units designator (cm, mm, in, pt, pc, or px) or a relative units designator (em or ex). For more information about the supported length units, see the CSS Length Units Reference.</p>

@@ -1,54 +1,54 @@
 ﻿<html>
   <head>
-    <title>+HTMLayout CSS support map</title>
+    <title>Sciter CSS support map</title>
     <style>
-      body,td { font: 10pt sans-serif; }
+      body { font: 10pt sans-serif; }
+      td { font: 10pt sans-serif; vertical-align:top;}
     </style>
     <meta name="generator" content="h-smile:richtext"/>
   </head>
 <body>
-  <p align="left">CSS level support in h-smile core should be considered as 'essential'. We have no intention to cover full CSS1/CSS2 attibute map.</p>
-  <p align="left">Features specific to Sciter:</p>
+  <p >Features specific to Sciter:</p>
   <ul>
     <li>
-      <div align="left">Gradient backgrounds, see <a href="#background-color-attribute">background-color</a> attribute definition.</div></li>
+      <div >Gradient backgrounds, see <a href="#background-color-attribute">background-color</a> attribute definition.</div></li>
     <li>
-      <div align="left">Extended image fill, see <a href="#background-position-attribute">background-position</a> and background-repeat attribute definitions.</div></li>
+      <div >Extended image fill, see <a href="#background-position-attribute">background-position</a> and background-repeat attribute definitions.</div></li>
     <li>
-      <div align="left"><a href="fspu.whtm">%% length units</a> - &quot;percents from free space&quot;.</div></li>
+      <div ><a href="fspu.whtm">%% length units</a> - &quot;percents from free space&quot;.</div></li>
     <li>
-      <div align="left"><a href="#flow-attribute">flow attribute</a>.</div></li>
+      <div ><a href="#flow-attribute">flow attribute</a>.</div></li>
     <li>
-      <div align="left"><a href="#foreground-position-attribute">Foreground images</a>.</div></li>
+      <div ><a href="#foreground-position-attribute">Foreground images</a>.</div></li>
     <li>
-      <div align="left"><a href="#hit-margin">hit-margin</a> attribute.</div></li>
+      <div ><a href="#hit-margin">hit-margin</a> attribute.</div></li>
     <li>
-      <div align="left"><code>@include &quot;mime-type&quot; url(...) [media types list];</code> - inclusion of scripts from CSS. <br/>Example, this: <code>&lt;style&gt; @include &quot;text/tiscript&quot; url(script.tis) screen; &lt;/style&gt;</code><font face="Courier New"><br/></font>is an equivalent of <code>&lt;script type=&quot;text/tiscript&quot; src=&quot;script.tis&quot; /&gt;</code> except of media type condition.</div></li></ul>
-  <p align="left">Cascading: Sciter supports all CSS1 <a href="http://www.w3.org/TR/CSS1#basic-concepts">Basic concepts</a> and <a href="http://www.w3.org/TR/CSS1#cascading-order">Cascading orders</a>. HTMLayout also supports CSS 2.1 <a href="http://www.w3.org/TR/CSS21/selector.html#attribute-selectors">attribute selectors</a> and some essential selectors from CSS3 selector module.</p>
-  <h3 align="left">Custom CSS attributes</h3>
-  <p align="left">Sciter (h-smile core) supports custom CSS attributes. All attributes with names starting with '-' are considered as custom attributes. Custom attributes are not inhereted from parent to child. Example of custom attribute declaration:</p>
-  <p align="left">p { border: 1px solid red; <strong>-custom: &quot;value&quot;;</strong> &nbsp;&nbsp;}</p>
-  <p align="left">After such a declaration all <strong>&lt;p&gt;</strong> elements will have style attribute <strong>-custom</strong> equals to &quot;value&quot;.</p>
-  <p align="left">Value of custom attribute can be either:</p>
+      <div ><code>@include &quot;mime-type&quot; url(...) [media types list];</code> - inclusion of scripts from CSS. <br/>Example, this: <code>&lt;style&gt; @include &quot;text/tiscript&quot; url(script.tis) screen; &lt;/style&gt;</code><font face="Courier New"><br/></font>is an equivalent of <code>&lt;script type=&quot;text/tiscript&quot; src=&quot;script.tis&quot; /&gt;</code> except of media type condition.</div></li></ul>
+  <p >Cascading: Sciter supports all CSS1 <a href="http://www.w3.org/TR/CSS1#basic-concepts">Basic concepts</a> and <a href="http://www.w3.org/TR/CSS1#cascading-order">Cascading orders</a>. HTMLayout also supports CSS 2.1 <a href="http://www.w3.org/TR/CSS21/selector.html#attribute-selectors">attribute selectors</a> and some essential selectors from CSS3 selector module.</p>
+  <h3 >Custom CSS attributes</h3>
+  <p >Sciter (h-smile core) supports custom CSS attributes. All attributes with names starting with '-' are considered as custom attributes. Custom attributes are not inhereted from parent to child. Example of custom attribute declaration:</p>
+  <p >p { border: 1px solid red; <strong>-custom: &quot;value&quot;;</strong> &nbsp;&nbsp;}</p>
+  <p >After such a declaration all <strong>&lt;p&gt;</strong> elements will have style attribute <strong>-custom</strong> equals to &quot;value&quot;.</p>
+  <p >Value of custom attribute can be either:</p>
   <ul>
     <li>
-      <div align="left">string (enclosed in &quot;&quot;), example: <em>&quot;string&quot;</em> ;</div></li>
+      <div >string (enclosed in &quot;&quot;), example: <em>&quot;string&quot;</em> ;</div></li>
     <li>
-      <div align="left">nmtoken, example: <em>some-token</em> ;</div></li>
+      <div >nmtoken, example: <em>some-token</em> ;</div></li>
     <li>
-      <div align="left">numeric value, example: <em>3.1415</em> ;</div></li>
+      <div >numeric value, example: <em>3.1415</em> ;</div></li>
     <li>
-      <div align="left">url, example: <em>url(http://something.com)</em>; &nbsp;</div></li>
+      <div >url, example: <em>url(http://something.com)</em>; &nbsp;</div></li>
     <li>
-      <div align="left">CSS selector, example: <em>selector(#id &gt; .cls)</em>;</div></li></ul>
-  <div align="left">Host application can use custom attributes for any purpose, engine does not interpret such attributes internally.</div>
-  <h3 align="left">Standard CSS attributes</h3>
-  <p align="left">List of CSS attributes supported by h-smile core:</p>
-  <div align="left">
+      <div >CSS selector, example: <em>selector(#id &gt; .cls)</em>;</div></li></ul>
+  <div >Host application can use custom attributes for any purpose, engine does not interpret such attributes internally.</div>
+  <h3 >Standard CSS attributes</h3>
+  <p >List of CSS attributes supported by h-smile core:</p>
+  <div >
     <table border="1" bordercolor="#fff2cc" cellspacing="0">
       <tr>
         <td rowspan="18" valign="top"><strong>Font and pragraph properties</strong></td>
-        <td nowrap valign="top" align="right"><strong>font</strong></td>
+        <td nowrap align="right"><strong>font</strong></td>
         <td>
           <div>specifies up to six of the following space-delimited property values. Alternatively, sets or retrieves the six listed text fonts.</div>
           <div>See: <a href="http://www.w3.org/TR/CSS1#font">Cascading Style Sheets, level 1</a></div>
@@ -61,7 +61,7 @@
             <li><font face="Courier New">system-status</font> - statusbar and tooltip system font.</li></ul>
           <div>Note: To be in effect these font names can be used only in the <em>font</em> attribute - in font-family such names are ignored. Rationale of this is simple, declaration <font face="Courier New">font:system-menu;</font> for example is a shortcut of four attributes of the font - font-family, font-size, font-weight and font-variant.</div></td></tr>
       <tr>
-        <td nowrap valign="top" align="right"><strong>font-family</strong></td>
+        <td nowrap align="right"><strong>font-family</strong></td>
         <td>
           <div>specifies one of the following values.</div>
           <table>
@@ -73,7 +73,7 @@
               <td>Any of the following font families: serif, sans-serif, cursive, fantasy, or monospace.</td></tr></table>
           <div>See: <a href="http://www.w3.org/TR/CSS1#font-family">Cascading Style Sheets, level 1</a></div></td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>font-size</strong></td>
+              <td nowrap align="right"><strong>font-size</strong></td>
               <td>
           <div>specifies one of the following values.</div>
           <table>
@@ -91,7 +91,7 @@
               <td>Integer, followed by a percent (%). The value is a percentage of the parent object's font size. In Internet Explorer 3.0, the value is calculated as a percentage of the default font size.</td></tr></table>
           <div>See: <a href="http://www.w3.org/TR/CSS1#font-size">Cascading Style Sheets, level 1</a></div></td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>font-style</strong></td>
+              <td nowrap align="right"><strong>font-style</strong></td>
               <td>
           <div>specifies one of the following values.</div>
           <table>
@@ -106,7 +106,7 @@
               <td>Font is italic.</td></tr></table>
           <div>See: <a href="http://www.w3.org/TR/CSS1#font-style">Cascading Style Sheets, level 1</a></div></td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>font-weight</strong></td>
+              <td nowrap align="right"><strong>font-weight</strong></td>
               <td>
           <div>specifies one of the following values.</div>
           <table>
@@ -151,10 +151,10 @@
               <td>Font is at least as bold as the 800 weight.</td></tr></table>
           <div>See: <a href="http://www.w3.org/TR/CSS1#font-variant">Cascading Style Sheets, level 1</a></div></td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>letter-spacing</strong></td>
+              <td nowrap align="right"><strong>letter-spacing</strong></td>
               <td>N/A</td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>line-height</strong></td>
+              <td nowrap align="right"><strong>line-height</strong></td>
               <td>
           <div><strong>specifies</strong> one of the following values:</div>
           <table>
@@ -172,7 +172,7 @@
               <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></table>
           <div>See: <a href="http://www.w3.org/TR/CSS1#line-height">Cascading Style Sheets, level 1</a></div></td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>text-align</strong></td>
+              <td nowrap align="right"><strong>text-align</strong></td>
               <td>
           <div><strong>specifies</strong> one of the following values:</div>
           <table>
@@ -190,7 +190,7 @@
               <td>Text is justified.</td></tr></table>
           <div>See: <a href="http://www.w3.org/TR/CSS1#text-align">Cascading Style Sheets, level 1</a></div></td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>text-decoration</strong></td>
+              <td nowrap align="right"><strong>text-decoration</strong></td>
               <td>
           <div><strong>specifies</strong> one of the following values.</div>
           <table>
@@ -211,7 +211,7 @@
               <td>Not implemented.</td></tr></table>
           <div>See: <a href="http://www.w3.org/TR/CSS1#text-decoration">Cascading Style Sheets, level 1</a></div></td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>text-indent</strong></td>
+              <td nowrap align="right"><strong>text-indent</strong></td>
               <td>
           <div>indentation of the first line of text in the object.</div>
           <table>
@@ -223,7 +223,7 @@
               <td>Integer, followed by a percent sign (%). This value is a percentage of the width of the parent object.</td></tr></table>
           <div>See: <a href="http://www.w3.org/TR/CSS1#text-indent">Cascading Style Sheets, level 1</a></div></td></tr>
             <tr>
-              <td nowrap bgcolor="#ffffdd" valign="top" align="right"><strong>text-overflow</strong></td>
+              <td nowrap bgcolor="#ffffdd" align="right"><strong>text-overflow</strong></td>
               <td bgcolor="#ffffdd">
           <div>specifies a value that indicates whether ellipses(...) display when text content has overflowed its given layout area.</div>
           <table>
@@ -234,14 +234,14 @@
               <td>clip</td>
               <td>Default. Simply clip the content and do not display ellipses for text overflow.</td></tr></table></td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>text-transform</strong></td>
+              <td nowrap align="right"><strong>text-transform</strong></td>
               <td>
           <div>trivial text transformations. Accepts values:</div>
           <blockquote>
             <div>none | uppercase | lowercase | capitalize</div></blockquote>
           <div>default value: none.</div></td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>vertical-align</strong></td>
+              <td nowrap align="right"><strong>vertical-align</strong></td>
               <td>
           <div>specifies one of the following values.</div>
           <table>
@@ -271,7 +271,7 @@
               <td>Vertically aligns the text of an object supporting <strong>VALIGN</strong> to the bottom of the object.</td></tr></table>
           <div>See: <a href="http://www.w3.org/TR/CSS1#vertical-align">Cascading Style Sheets, level 1</a></div></td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>white-space</strong></td>
+              <td nowrap align="right"><strong>white-space</strong></td>
               <td>
           <div>specifies one of the following values:</div>
           <table>
@@ -289,7 +289,7 @@
               <td bgcolor="#ffffdd" valign="top">Line breaks and other whitespace are preserved. Content may wrap to the next line if needed. This is the same mode &lt;textarea&gt; uses when it has wrap=&quot;on&quot; attribute defined. Non-standard.</td></tr></table>
           <div>See: <a href="http://www.w3.org/TR/CSS1#white-space">Cascading Style Sheets, level 1</a></div></td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>text-wrap</strong></td>
+              <td nowrap align="right"><strong>text-wrap</strong></td>
               <td>
           <div>specifies one of the following values:</div>
           <table>
@@ -304,13 +304,13 @@
               <td>Lines may break between any two characters.</td></tr></table>
           <div>See: <a href="http://www.w3.org/TR/css3-text/#text-wrap">Cascading Style Sheets, level 3</a></div></td></tr>
             <tr>
-              <td nowrap bgcolor="#ffffdd" valign="top" align="right"><strong>text-selection-color</strong></td>
+              <td nowrap bgcolor="#ffffdd" align="right"><strong>text-selection-color</strong></td>
               <td bgcolor="#ffffdd">specifies color of selected text (in inputs and elements under behavior:htmlarea). Non-standard. Inheritable property.</td></tr>
             <tr>
-              <td nowrap bgcolor="#ffffdd" valign="top" align="right"><strong>text-selection-background-color</strong></td>
+              <td nowrap bgcolor="#ffffdd" align="right"><strong>text-selection-background-color</strong></td>
               <td bgcolor="#ffffdd">specifies background color of text selection (in inputs and elements under behavior:htmlarea). Non-standard. Inheritable property.</td></tr>
             <tr>
-              <td nowrap bgcolor="#ffffdd" valign="top" align="right"><strong>text-selection</strong></td>
+              <td nowrap bgcolor="#ffffdd" align="right"><strong>text-selection</strong></td>
               <td bgcolor="#ffffdd">
           <div>&lt;text-color&gt; &lt;background-text-color&gt;</div>
           <div>specifies colors of text selection, shortcut of two properties above. Non-standard.</div></td></tr>
@@ -320,12 +320,12 @@
           <div></div>
           <div></div>
           <div></div></td>
-              <td nowrap valign="top" align="right"><strong>background</strong></td>
+              <td nowrap align="right"><strong>background</strong></td>
               <td>
           <div><strong>specifies</strong> up to five of the following space-delimited values, in any order.</div>
           <div>See: <a href="http://www.w3.org/TR/CSS1#background">Cascading Style Sheets, level 1</a></div></td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>background-attachment</strong></td>
+              <td nowrap align="right"><strong>background-attachment</strong></td>
               <td>
           <div><strong>specifies</strong> one of the following values.</div>
           <table>
@@ -336,7 +336,7 @@
               <td>fixed</td>
               <td>Background image stays fixed within the viewable area of the object.</td></tr></table></td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><a name="background-color-attribute"><strong>background-color</strong></a></td>
+              <td nowrap align="right"><a name="background-color-attribute"><strong>background-color</strong></a></td>
               <td>
           <div><strong>specifies</strong> one of the following values.</div>
           <table>
@@ -350,7 +350,7 @@
               <td nowrap bgcolor="#ffffdd" valign="middle">color-left-top,<br/>color-right-top,<br/>color-right-bottom,<br/>color-left-bottom</td>
               <td bgcolor="#ffffdd" valign="middle"><strong><font color="#ff0000">Gradient fill</font></strong>. Four corner colors for gradient background fill. Non standard. HTMLayout specific.</td></tr></table></td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>background-image</strong></td>
+              <td nowrap align="right"><strong>background-image</strong></td>
               <td>
           <div><strong>specifies</strong> one of the following values.</div>
           <table>
@@ -361,13 +361,13 @@
               <td>url(sUrl)</td>
               <td>Location of the background image, where sUrl is an absolute or relative URL.</td></tr></table></td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>background-image-frame</strong></td>
+              <td nowrap align="right"><strong>background-image-frame</strong></td>
               <td>
           <div>integer, for animated images (aPNG, GIF) that are collections of frames specifies number of frame to show.</div>
           <div>This effectively freezes animation of the image at particular frame.</div>
           <div>This property can be used in transition property to animate image from start to end frame.</div></td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><a name="background-position-attribute"><strong>background-position</strong></a></td>
+              <td nowrap align="right"><a name="background-position-attribute"><strong>background-position</strong></a></td>
               <td>
           <div><strong>specifies</strong> one or two of the following values:</div>
           <table>
@@ -415,13 +415,12 @@
                   <tr>
                     <td>calc(...)</td>
                     <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></table>
-          <div><font face="monospace">.style1 { background-position:top center }</font></div>
-          <div><font face="monospace">.style2 { background-position:0 0 }</font></div></td></tr>
+                    </td></tr>
                   <tr>
-                    <td nowrap valign="top" align="right"><a name="background-position-attribute"><strong>background-position</strong></a><strong>-left<br/><a name="background-position-attribute">background-position</a>-right<br/><a name="background-position-attribute">background-position</a>-top<br/><a name="background-position-attribute">background-position</a>-bottom</strong></td>
+                    <td nowrap align="right"><a name="background-position-attribute"><strong>background-position</strong></a><strong>-left<br/><a name="background-position-attribute">background-position</a>-right<br/><a name="background-position-attribute">background-position</a>-top<br/><a name="background-position-attribute">background-position</a>-bottom</strong></td>
                     <td>Used in <em>expand</em>, <em>stretch</em> and <em>no-repeat</em> modes. &nbsp;</td></tr>
                   <tr>
-                    <td nowrap valign="top" align="right"><strong>background-repeat</strong></td>
+                    <td nowrap align="right"><strong>background-repeat</strong></td>
                     <td>
           <div><strong>specifies</strong> one of the following values:</div>
           <table>
@@ -444,10 +443,10 @@
               <td nowrap valign="top"><strong><em>stretch </em></strong>[<em>keep-ratio</em>]</td>
               <td bgcolor="#ffffdd" valign="top">Image is stretched to fill background in full. This is the same mode as rendering of image in &lt;IMG&gt; element. If stretch is combined with <em>keep-ratio</em> then images is resized with preservation of aspect ratio. To position such an image use background-position attribute.</td></tr></table></td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>color</strong></td>
+              <td nowrap align="right"><strong>color</strong></td>
               <td>Sets the color of the text of the object.</td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>image-rendering</strong></td>
+              <td nowrap align="right"><strong>image-rendering</strong></td>
               <td>The image-rendering property provides a hint about the algorithm it should use to scale images. Supports one of the following values:
           <table>
             <tr>
@@ -481,16 +480,16 @@
           <p><font size="1">1. background<br/>2. borders<br/>3. content<br/>4. outline<br/>5. foreground</font></p>
           <div></div>
           <div></div></td>
-              <td nowrap bgcolor="#ffffdd" valign="top" align="right"><strong>foreground</strong></td>
+              <td nowrap bgcolor="#ffffdd" align="right"><strong>foreground</strong></td>
               <td bgcolor="#ffffdd">
           <div>specifies up to four of the following space-delimited values, in any order.</div>
           <div>&lt;foreground-image url&gt; || &lt;foreground-repeat&gt; || &lt;foreground-attachment&gt; || &lt;foreground-position&gt; || &lt;foreground-color&gt; || &lt;foreground-gradient&gt;</div></td></tr>
             <tr>
-              <td nowrap bgcolor="#ffffdd" valign="top" align="right"><strong>foreground-color</strong></td>
+              <td nowrap bgcolor="#ffffdd" align="right"><strong>foreground-color</strong></td>
               <td bgcolor="#ffffdd">color of the foreground layer. Essentially this is the same as background-color but it is drawn on top of everything. So the only reasonable color values are the ones defined by rgba() - semi-transparent colors.
           <p><strong><font color="#ff0000">ATTN</font></strong>: solid colors on foreground will hide everything underneath them.</p></td></tr>
             <tr>
-              <td nowrap bgcolor="#ffffdd" valign="top" align="right"><strong>foreground-attachment</strong></td>
+              <td nowrap bgcolor="#ffffdd" align="right"><strong>foreground-attachment</strong></td>
               <td bgcolor="#ffffdd">
           <div>specifies one of the following values.</div>
           <table>
@@ -501,7 +500,7 @@
               <td>fixed</td>
               <td>Foreground image stays fixed within the viewable area of the object.</td></tr></table></td></tr>
             <tr>
-              <td nowrap bgcolor="#ffffdd" valign="top" align="right"><strong>foreground-image</strong></td>
+              <td nowrap bgcolor="#ffffdd" align="right"><strong>foreground-image</strong></td>
               <td bgcolor="#ffffdd">
           <div>specifies one of the following values.</div>
           <table>
@@ -512,12 +511,12 @@
               <td>url(sUrl)</td>
               <td>Location of the background image, where sUrl is an absolute or relative URL.</td></tr></table></td></tr>
             <tr>
-              <td nowrap bgcolor="#ffffdd" valign="top" align="right"><strong>foreground-image-frame</strong></td>
+              <td nowrap bgcolor="#ffffdd" align="right"><strong>foreground-image-frame</strong></td>
               <td bgcolor="#ffffdd">integer, for animated images (aPNG, GIF) that are collections of frames this property specifies number of frame to show.
           <div>This effectively freezes animation of the image at particular frame.</div>
           <div>This property can be used in transition property to animate image from start to end frame.</div></td></tr>
             <tr>
-              <td nowrap bgcolor="#ffffdd" valign="top" align="right"><a name="foreground-position-attribute"><strong>foreground-position</strong></a></td>
+              <td nowrap bgcolor="#ffffdd" align="right"><a name="foreground-position-attribute"><strong>foreground-position</strong></a></td>
               <td bgcolor="#ffffdd">
           <div><strong>specifies</strong> following values.</div>
           <table>
@@ -568,10 +567,10 @@
           <div><font face="monospace">.style1 { background-position:top center }</font></div>
           <div><font face="monospace">.style2 { background-position:0 0 }</font></div></td></tr>
                   <tr>
-                    <td nowrap bgcolor="#ffffdd" valign="top" align="right"><strong>foreground-position-left<br/>foreground-position-right<br/>foreground-position-top<br/>foreground-position-bottom</strong></td>
+                    <td nowrap bgcolor="#ffffdd" align="right"><strong>foreground-position-left<br/>foreground-position-right<br/>foreground-position-top<br/>foreground-position-bottom</strong></td>
                     <td bgcolor="#ffffdd">Used in <em>expand</em>, <em>stretch</em> and <em>no-repeat</em> modes. See <a href="css-images-plus.htm">css-images-plus</a> for more details.</td></tr>
                   <tr>
-                    <td nowrap bgcolor="#ffffdd" valign="top" align="right"><strong>foreground-repeat</strong></td>
+                    <td nowrap bgcolor="#ffffdd" align="right"><strong>foreground-repeat</strong></td>
                     <td bgcolor="#ffffdd">
           <div><strong>specifies</strong> one of the following values.</div>
           <table>
@@ -595,26 +594,26 @@
               <td bgcolor="#ffffdd" valign="middle">Image is stretched to fill background in full. This is the same mode as rendering of image in &lt;IMG&gt; element. If stretch is combined with <em>keep-ratio</em> then images is resized with preservation of aspect ratio. To position such an image use foreground-position attribute.</td></tr></table>
           <div>See <a href="css-images-plus.htm">css-images-plus</a> for more details.</div></td></tr>
             <tr>
-              <td nowrap bgcolor="#ffffdd" valign="top" align="right"><strong>foreground-image-cursor</strong></td>
+              <td nowrap bgcolor="#ffffdd" align="right"><strong>foreground-image-cursor</strong></td>
               <td bgcolor="#ffffdd">
           <div>Used when <em>foreground-repeat</em> has <em>no-repeat</em> value to define when mouse hovers foreground-image area.</div>
           <div>Values: <em>auto | crosshair | default | pointer | move | e-resize | ne-resize | nw-resize | n-resize | se-resize | sw-resize | s-resize | w-resize | text | wait | help | progress</em> or url of .cur or .ani file.</div></td></tr>
             <tr>
               <td rowspan="33" valign="top"><strong>Layout properties</strong></td>
-              <td nowrap valign="top" align="right"><strong>border</strong></td>
+              <td nowrap align="right"><strong>border</strong></td>
               <td>
           <div><strong>specifies</strong> one or more of the following space-delimited values: width, style, color.</div>
           <div>See: <a href="http://www.w3.org/TR/CSS1#border">Cascading Style Sheets, level 1</a></div></td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>border-bottom</strong></td>
+              <td nowrap align="right"><strong>border-bottom</strong></td>
               <td>
           <div><strong>specifies</strong> one or more of the following space-delimited values: width, style, color.</div>
           <div>See: <a href="http://www.w3.org/TR/CSS1#border-bottom">Cascading Style Sheets, level 1</a></div></td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>border-bottom-color</strong></td>
+              <td nowrap align="right"><strong>border-bottom-color</strong></td>
               <td>specifies one of the color names or RGB values in the <a href="http://msdn.microsoft.com/workshop/author/dhtml/reference/colors/colors.asp">Color Table</a>.</td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>border-bottom-style</strong></td>
+              <td nowrap align="right"><strong>border-bottom-style</strong></td>
               <td>
           <div><strong>specifies</strong> one of the following values.</div>
           <table>
@@ -646,7 +645,7 @@
               <td>outset</td>
               <td>3-D outset is drawn in colors based on the value.</td></tr></table></td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>border-bottom-width</strong></td>
+              <td nowrap align="right"><strong>border-bottom-width</strong></td>
               <td>
           <div>specifies one of the following values.</div>
           <table>
@@ -669,58 +668,58 @@
               <td>calc(...)</td>
               <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></table></td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>border-collapse*</strong></td>
+              <td nowrap align="right"><strong>border-collapse*</strong></td>
               <td>as per CSS</td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>border-color</strong></td>
+              <td nowrap align="right"><strong>border-color</strong></td>
               <td>as per CSS</td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>border-left</strong></td>
+              <td nowrap align="right"><strong>border-left</strong></td>
               <td>as per CSS</td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>border-left-color</strong></td>
+              <td nowrap align="right"><strong>border-left-color</strong></td>
               <td>as per CSS</td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>border-left-style</strong></td>
+              <td nowrap align="right"><strong>border-left-style</strong></td>
               <td>as per CSS</td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>border-left-width</strong></td>
+              <td nowrap align="right"><strong>border-left-width</strong></td>
               <td>as per CSS</td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>border-right</strong></td>
+              <td nowrap align="right"><strong>border-right</strong></td>
               <td>as per CSS</td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>border-right-color</strong></td>
+              <td nowrap align="right"><strong>border-right-color</strong></td>
               <td>as per CSS</td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>border-right-style</strong></td>
+              <td nowrap align="right"><strong>border-right-style</strong></td>
               <td>as per CSS</td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>border-right-width</strong></td>
+              <td nowrap align="right"><strong>border-right-width</strong></td>
               <td>as per CSS</td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>border-style</strong></td>
+              <td nowrap align="right"><strong>border-style</strong></td>
               <td>as per CSS</td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>border-top</strong></td>
+              <td nowrap align="right"><strong>border-top</strong></td>
               <td>as per CSS</td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>border-top-color</strong></td>
+              <td nowrap align="right"><strong>border-top-color</strong></td>
               <td>as per CSS</td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>border-top-style</strong></td>
+              <td nowrap align="right"><strong>border-top-style</strong></td>
               <td>as per CSS</td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>border-top-width</strong></td>
+              <td nowrap align="right"><strong>border-top-width</strong></td>
               <td>as per CSS</td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>border-width</strong></td>
+              <td nowrap align="right"><strong>border-width</strong></td>
               <td>as per CSS</td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>clear</strong></td>
+              <td nowrap align="right"><strong>clear</strong></td>
               <td>as per CSS</td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>float</strong></td>
+              <td nowrap align="right"><strong>float</strong></td>
               <td>
           <div>specifies one of the following values.</div>
           <table>
@@ -734,12 +733,12 @@
               <td>right</td>
               <td>Text flows to the left of the object.</td></tr></table></td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>margin</strong></td>
+              <td nowrap align="right"><strong>margin</strong></td>
               <td>
           <div>specifies up to four of the following space-delimited values.</div>
           <div>See: <a href="http://www.w3.org/TR/CSS1#margin">Cascading Style Sheets, level 1</a></div></td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>margin-bottom</strong></td>
+              <td nowrap align="right"><strong>margin-bottom</strong></td>
               <td>
           <div>specifies one of the following values.</div>
           <table>
@@ -759,16 +758,16 @@
               <td>calc(...)</td>
               <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></table></td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>margin-left</strong></td>
+              <td nowrap align="right"><strong>margin-left</strong></td>
               <td><strong>--&quot;--</strong></td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>margin-right</strong></td>
+              <td nowrap align="right"><strong>margin-right</strong></td>
               <td>--&quot;--</td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>margin-top</strong></td>
+              <td nowrap align="right"><strong>margin-top</strong></td>
               <td>--&quot;--</td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>padding</strong></td>
+              <td nowrap align="right"><strong>padding</strong></td>
               <td>
           <div>Sets or retrieves the amount of space to insert between the object and its margin or, if there is a border, between the object and its border.</div>
           <div>specifies one of the following values.</div>
@@ -786,27 +785,27 @@
               <td>calc(...)</td>
               <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></table></td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>padding-bottom</strong></td>
+              <td nowrap align="right"><strong>padding-bottom</strong></td>
               <td>--&quot;--</td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>padding-left</strong></td>
+              <td nowrap align="right"><strong>padding-left</strong></td>
               <td>--&quot;--</td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>padding-right</strong></td>
+              <td nowrap align="right"><strong>padding-right</strong></td>
               <td>--&quot;--</td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>padding-top</strong></td>
+              <td nowrap align="right"><strong>padding-top</strong></td>
               <td>--&quot;--</td></tr>
             <tr>
               <td rowspan="7" valign="top">
           <div><strong>Classification properties</strong></div>
           <div></div></td>
-              <td nowrap valign="top" align="right"><strong>list-style</strong></td>
+              <td nowrap align="right"><strong>list-style</strong></td>
               <td>
           <div><strong>specifies</strong> up to three of the following values, in any order: type, position, image.</div>
           <div>See: <a href="http://www.w3.org/TR/CSS1#list-style">Cascading Style Sheets, level 1</a></div></td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>list-style-image</strong></td>
+              <td nowrap align="right"><strong>list-style-image</strong></td>
               <td>
           <div><strong>specifies</strong> one of the following values.</div>
           <table>
@@ -817,7 +816,7 @@
               <td>url(sURL)</td>
               <td>Location of the image, where sURL is an absolute or relative URL.</td></tr></table></td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>list-style-position</strong></td>
+              <td nowrap align="right"><strong>list-style-position</strong></td>
               <td>
           <div><strong>specifies</strong> one of the following values.</div>
           <table>
@@ -828,7 +827,7 @@
               <td>inside</td>
               <td>Marker is placed inside the text, and any wrapping text is aligned under the marker.</td></tr></table></td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>list-style-type</strong></td>
+              <td nowrap align="right"><strong>list-style-type</strong></td>
               <td>
           <div><strong>specifies</strong> one of the following values.</div>
           <table>
@@ -863,13 +862,13 @@
               <td nowrap valign="middle">none</td>
               <td>No marker is shown.</td></tr></table></td></tr>
             <tr>
-              <td nowrap bgcolor="#ffe4ca" valign="top" align="right"><strong>list-marker-color</strong></td>
+              <td nowrap bgcolor="#ffe4ca" align="right"><strong>list-marker-color</strong></td>
               <td bgcolor="#ffe4ca">Sets the color of the list marker (bullet, number or tree line)</td></tr>
             <tr>
-              <td nowrap bgcolor="#ffe4ca" valign="top" align="right"><strong>list-marker-size</strong></td>
+              <td nowrap bgcolor="#ffe4ca" align="right"><strong>list-marker-size</strong></td>
               <td bgcolor="#ffe4ca">Sets size of font used for drawing bullets and numbers. For list-style-type:tree-line this attribute defines width of tree line.</td></tr>
             <tr>
-              <td nowrap bgcolor="#ffe4ca" valign="top" align="right"><strong>list-marker-style</strong></td>
+              <td nowrap bgcolor="#ffe4ca" align="right"><strong>list-marker-style</strong></td>
               <td bgcolor="#ffe4ca">
           <div>For list-style-type:tree-line this attribute defines style of the tree line:</div>
           <table>
@@ -889,10 +888,10 @@
               <td rowspan="19" valign="top">
           <div><strong>Positioning and dimensional properties</strong></div>
           <div></div></td>
-              <td nowrap valign="top" align="right"><strong>position</strong></td>
+              <td nowrap align="right"><strong>position</strong></td>
               <td>static | relative | absolute | fixed<br/>As per <a href="http://www.w3.org/TR/REC-CSS2/visuren.html#positioning-scheme">CSS2 recommendation</a>.</td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>left</strong></td>
+              <td nowrap align="right"><strong>left</strong></td>
               <td rowspan="4">
           <div>As per <a href="http://www.w3.org/TR/REC-CSS2/visuren.html#positioning-scheme">CSS2 recommendation</a>.</div>
           <div><strong>Value</strong> that specifies one of the following values.</div>
@@ -910,13 +909,13 @@
               <td>calc(...)</td>
               <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></table></td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>right</strong></td></tr>
+              <td nowrap align="right"><strong>right</strong></td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>top</strong></td></tr>
+              <td nowrap align="right"><strong>top</strong></td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>bottom</strong></td></tr>
+              <td nowrap align="right"><strong>bottom</strong></td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>height</strong></td>
+              <td nowrap align="right"><strong>height</strong></td>
               <td>
           <div><strong>Value</strong> that specifies one of the following values.</div>
           <table>
@@ -939,10 +938,10 @@
               <td>calc(...)</td>
               <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></table></td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>z-index</strong></td>
+              <td nowrap align="right"><strong>z-index</strong></td>
               <td>As per <a href="http://www.w3.org/TR/REC-CSS2/visuren.html#z-index">CSS2</a>.</td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>overflow</strong></td>
+              <td nowrap align="right"><strong>overflow</strong></td>
               <td valign="middle">
           <div>overflow-type [scroll-manner]. First overflow-type value specifies one of the following values. Shortcut attribute of overflow-x and overflow-y</div>
           <table>
@@ -969,7 +968,7 @@
               <td bgcolor="#ffe4ca" valign="middle">That's an equivalent of defining <code>{ overflow:visible; min-width:min-content; min-height:min-content; }</code></td></tr></table>
           <div>Second (optional) parameter is a definition of the scroll-manner() function, see defintion of the scroll-manner below.</div></td></tr>
             <tr>
-              <td valign="top" align="right"><strong>overflow-x<br/>overflow-y</strong></td>
+              <td align="right"><strong>overflow-x<br/>overflow-y</strong></td>
               <td>
           <div>overflow-type [scroll-manner]. First overflow-type value specifies one of the following values:</div>
           <table>
@@ -996,7 +995,7 @@
               <td bgcolor="#ffe4ca" valign="middle">That's an equivalent of defining <code>{ overflow:visible; min-width:min-content; }</code> or<br/><code>{ overflow:visible; min-height:min-content; }</code>.</td></tr></table>
           <div>Second (optional) parameter is a definition of the scroll-manner() function, see defintion of the scroll-manner below.</div></td></tr>
             <tr>
-              <td bgcolor="#ffe4ca" valign="top" align="right">
+              <td bgcolor="#ffe4ca" align="right">
           <div><strong>scroll-manner</strong></div>
           <div><strong>scroll-manner-x</strong></div>
           <div><strong>scroll-manner-y</strong></div></td>
@@ -1039,7 +1038,7 @@
           <div><font face="Courier New">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;step:auto );</font></div>
           <div><font face="Courier New">}</font></div></td></tr>
             <tr>
-              <td valign="top" align="right"><strong>width</strong></td>
+              <td align="right"><strong>width</strong></td>
               <td>
           <div>specifies one of the following values.</div>
           <table>
@@ -1059,7 +1058,7 @@
               <td>calc(...)</td>
               <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></table></td></tr>
             <tr>
-              <td valign="top" align="right"><strong>min-height</strong></td>
+              <td align="right"><strong>min-height</strong></td>
               <td>
           <div>specifies the minimum height for an element.</div>
           <table>
@@ -1076,7 +1075,7 @@
               <td>calc(...)</td>
               <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></table></td></tr>
             <tr>
-              <td valign="top" align="right"><strong>min-width</strong></td>
+              <td align="right"><strong>min-width</strong></td>
               <td>
           <div>specifies the minimum width for an element.</div>
           <table>
@@ -1097,7 +1096,7 @@
               <td>calc(...)</td>
               <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></table></td></tr>
             <tr>
-              <td valign="top" align="right"><strong>max-height</strong></td>
+              <td align="right"><strong>max-height</strong></td>
               <td>
           <div>specifies the maximum height for an element.</div>
           <table>
@@ -1116,7 +1115,7 @@
               <td>calc(...)</td>
               <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></table></td></tr>
             <tr>
-              <td valign="top" align="right"><strong>max-width</strong></td>
+              <td align="right"><strong>max-width</strong></td>
               <td>
           <div>specifies the maximum width for an element.</div>
           <table>
@@ -1142,7 +1141,7 @@
                     <td>calc(...)</td>
                     <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></table></td></tr>
                   <tr>
-                    <td bgcolor="#ffe4ca" valign="top" align="right"><a name="flow-attribute"><strong>flow</strong></a></td>
+                    <td bgcolor="#ffe4ca" align="right"><a name="flow-attribute"><strong>flow</strong></a></td>
                     <td bgcolor="#ffe4ca" valign="middle">
           <div>Flow direction of child elements in block containers (e.g. DIVs). This attribute defines type of <em>layout manager</em> (LM) used by the block container.</div>
           <table>
@@ -1163,14 +1162,14 @@
               <td></td></tr></table>
           <div>See <a href="http://www.terrainformatica.com/w3/flex-layout/flex-layout.htm">Flow and Flex Units</a> document for more information.</div></td></tr>
             <tr>
-              <td bgcolor="#ffe4ca" valign="top" align="right"><a name="hit-margin"><strong>hit-margin</strong></a></td>
+              <td bgcolor="#ffe4ca" align="right"><a name="hit-margin"><strong>hit-margin</strong></a></td>
               <td bgcolor="#ffe4ca" valign="middle">specifies up to four of the following space-delimited values. Notation is the same as for the <em>margin</em> attribute. hit-margin defines &quot;hover area&quot; of the element. Positive values increase hover area and negative values decrease it. Hit margins are calculated from border box of the element.</td></tr>
             <tr>
-              <td bgcolor="#ffe4ca" valign="top" align="right"><strong>size</strong></td>
+              <td bgcolor="#ffe4ca" align="right"><strong>size</strong></td>
               <td bgcolor="#ffe4ca" valign="middle">length [ length]
           <div>This is a shortcut property for width and height properties. If only one length value is provided then both width and height will get that length value. If there are two values then first one will go to width and second to height properties.</div></td></tr>
             <tr>
-              <td bgcolor="#ffe4ca" valign="top" align="right"><strong>mapping</strong></td>
+              <td bgcolor="#ffe4ca" align="right"><strong>mapping</strong></td>
               <td bgcolor="#ffe4ca" valign="middle"><em>inherit</em> | <em>none</em> | <em>left-to-right</em> | <em>top-to-right</em> |<br/><em>inherit( &lt;part-list&gt; )</em> | <em>none( &lt;part-list&gt; )</em> | <em>left-to-right( &lt;part-list&gt; )</em> | <em>top-to-right( &lt;part-list&gt; )</em>
           <p>Where <font face="monospace" size="2">&lt;part-list&gt;</font> is a comma separated list that contains one or many of following literals: <font face="monospace" size="2">border</font>, <font face="monospace" size="2">padding</font>, <font face="monospace" size="2">margin</font>, <font face="monospace" size="2">background</font>, <font face="monospace" size="2">foreground</font>, <font face="monospace" size="2">layout</font> .</p>
           <p>The property defines mapping of directional related properties. For example this declaration:</p>
@@ -1190,12 +1189,12 @@
           <p><font size="1">Outlines similar to borders but differ from them in the following ways:</font></p>
           <div><font size="1">1. Outlines do not take up space.</font></div>
           <div><font size="1">2. All sides of outline rectangle has equal property values.</font></div></td>
-              <td valign="top" align="right"><strong>outline</strong></td>
+              <td align="right"><strong>outline</strong></td>
               <td nowrap valign="top">
           <div>shortcut attribute, accepts up to four values:</div>
           <div>[ &lt;'outline-color'&gt; || &lt;'outline-style'&gt; || [&lt;'outline-width'&gt; [ &lt;'outline-offset'&gt; ] ]</div></td></tr>
             <tr>
-              <td valign="top" align="right"><strong>outline-width</strong></td>
+              <td align="right"><strong>outline-width</strong></td>
               <td nowrap valign="top">
           <div>Width of outline:</div>
           <table>
@@ -1215,7 +1214,7 @@
               <td>calc(...)</td>
               <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></table></td></tr>
             <tr>
-              <td valign="top" align="right"><strong>outline-style</strong></td>
+              <td align="right"><strong>outline-style</strong></td>
               <td nowrap valign="top">
           <div>specifies one of the following values.</div>
           <table>
@@ -1232,22 +1231,22 @@
               <td align="right"><em>solid</em></td>
               <td>outline is a solid line.</td></tr></table></td></tr>
             <tr>
-              <td valign="top" align="right"><strong>outline-color</strong></td>
+              <td align="right"><strong>outline-color</strong></td>
               <td nowrap valign="top">color of the outline.</td></tr>
             <tr>
-              <td valign="top" align="right"><strong>outline-offset</strong></td>
+              <td align="right"><strong>outline-offset</strong></td>
               <td valign="top">Length units, offset of outline. Positive values - offset outwards, negative values - offset inwards. CSS3 attribute.</td></tr>
             <tr>
               <td rowspan="5" valign="top">
           <div><strong>Pseudo-classes and other properties</strong></div>
           <div></div></td>
-              <td nowrap valign="top" align="right"><strong>cursor</strong></td>
+              <td nowrap align="right"><strong>cursor</strong></td>
               <td><em>auto | crosshair | default | pointer | move | e-resize | ne-resize | nw-resize | n-resize | se-resize | sw-resize | s-resize | w-resize | text | wait | help | progress</em> values or url of .cur or .ani file.</td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>display</strong></td>
+              <td nowrap align="right"><strong>display</strong></td>
               <td>As per CSS1.</td></tr>
             <tr>
-              <td nowrap valign="top" align="right"><strong>visibility</strong></td>
+              <td nowrap align="right"><strong>visibility</strong></td>
               <td>
           <table>
             <tr>
@@ -1265,7 +1264,7 @@
           <p><font color="#990033">ATTN: meaning of <em>collapse</em> is extended to support of not only rows in tables as per standard CSS but it is applicable for all other elements. <em>visibility: collapse</em> is an equivalent of <em>display:none</em> but collapsed elements participate in computation of intrinsic widths of containers thus dynamic change of visibility:visible to visibility:collapse will not change computed width of container element.</font></p>
           <p><font color="#990033">Changing of visibility:visible/collapse is recommended for dynamic hide/show effects. It is easy to hide element by setting display:none to reenable its appearance is difficult - there many display values to choose from: block, inline-block, list-item, etc.</font></p></td></tr>
             <tr>
-              <td bgcolor="#ffffdd" valign="top" align="right"><strong>direction</strong></td>
+              <td bgcolor="#ffffdd" align="right"><strong>direction</strong></td>
               <td bgcolor="#ffffdd">
           <div>specifies one of the following values.</div>
           <table>
@@ -1279,7 +1278,7 @@
               <td>inherit</td>
               <td>Content flow is inherited.</td></tr></table></td></tr>
             <tr>
-              <td bgcolor="#ffffdd" valign="top" align="right"><strong>transition</strong></td>
+              <td bgcolor="#ffffdd" align="right"><strong>transition</strong></td>
               <td bgcolor="#ffffdd">
           <div>none | blend | slide | image</div>
           <div>Defines transition effect of changing of element state. For example:</div>
@@ -1289,7 +1288,7 @@
             <tr>
               <td rowspan="2" valign="top">
           <div><strong>Paged media (printing)</strong></div></td>
-              <td valign="top" align="right"><strong>page-break-before</strong></td>
+              <td align="right"><strong>page-break-before</strong></td>
               <td nowrap valign="top">
           <div>Value that specifies one of the following values:</div>
           <table>
@@ -1303,7 +1302,7 @@
               <td bgcolor="#ffe4ca" valign="middle">percentage</td>
               <td bgcolor="#ffe4ca" valign="middle">- integer followed by a percent sign (%). <strong>Conditional page break</strong>. The value is a percentage of the height of the page. Engine will insert page break only if position of the element on the page is greater than this value.</td></tr></table></td></tr>
             <tr>
-              <td valign="top" align="right"><strong>page-break-after</strong></td>
+              <td align="right"><strong>page-break-after</strong></td>
               <td nowrap valign="top">
           <div>Value that specifies one of the following values:</div>
           <table>
@@ -1318,7 +1317,7 @@
               <td bgcolor="#ffe4ca" valign="middle">- integer followed by a percent sign (%). <strong>Conditional page break</strong>. The value is a percentage of the height of the page. Engine will insert page break after this element only if bottom position of the element on the page is greater than this value.</td></tr></table></td></tr>
             <tr>
               <td rowspan="3" bgcolor="#ffe4ca" valign="top"><strong>Behavioral &nbsp;attributes</strong></td>
-              <td nowrap bgcolor="#ffe4ca" valign="top" align="right"><strong>behavior</strong></td>
+              <td nowrap bgcolor="#ffe4ca" align="right"><strong>behavior</strong></td>
               <td bgcolor="#ffe4ca">
           <div>list of whitespace delimeted <a href="http://www.w3.org/TR/REC-xml/#NT-Nmtoken">nmtoken</a>s - names of behaviors applied to this element.</div>
           <div>List may contain '~' symbol in front or at the end of the list:</div>
@@ -1327,14 +1326,14 @@
             <li><em>behavior: new-behavior <strong>~</strong>;</em> will insert new-behavior in front of behaviors defined before for the element.</li></ul>
           <p>Behavior is the name of builtin or application defined class of behavior. List of standard (builtin) behaviors is <a href="http://www.terrainformatica.com/htmlayout/behaviors.whtm">here</a>.</p></td></tr>
             <tr>
-              <td nowrap bgcolor="#ffe4ca" valign="top" align="right"><strong>prototype</strong></td>
+              <td nowrap bgcolor="#ffe4ca" align="right"><strong>prototype</strong></td>
               <td bgcolor="#ffe4ca">
           <div><em>name</em> [ <em>url(...)</em> ]</div>
           <p><font color="#ff0000">Only in Sciter!</font></p>
           <div>Name of the class in the script - prototype scripting object (class) of this element. Such a class can define methods, properties and event handling methods of the whole class of elements this style applies to. To use compound names like <em>namespace.class</em> enclose them into quotes: <font face="Courier New">prototype: &quot;Module.CoolWidget&quot;;</font></div>
           <p>If <em>url</em> part is provided then the engine will make an attempt to load that script file before trying to find behavior class &nbsp;(if the file was not loaded already). &nbsp;</p></td></tr>
             <tr>
-              <td nowrap bgcolor="#ffe4ca" valign="top" align="right"><strong>aspect</strong></td>
+              <td nowrap bgcolor="#ffe4ca" align="right"><strong>aspect</strong></td>
               <td bgcolor="#ffe4ca">
           <div><strong>(</strong> <font color="#ff0000">&quot;functionName&quot;</font> [ <em>url(...)</em> ] <strong>) +</strong></div>
           <p><font color="#ff0000">Only in Sciter!</font></p>
@@ -1348,7 +1347,7 @@ input[focus] { aspect: handleFocusAttribute; }
           <p>will cause both handleClickAttribute() <strong>and</strong> handleFocusAttribute() to be called for the element. The <em>this</em> environment value in both calls will be that element.</p></td></tr>
             <tr>
               <td rowspan="5" bgcolor="#ffe4ca" valign="top"><strong>Other attributes</strong></td>
-              <td nowrap bgcolor="#ffe4ca" valign="top" align="right"><strong>content</strong></td>
+              <td nowrap bgcolor="#ffe4ca" align="right"><strong>content</strong></td>
               <td bgcolor="#ffe4ca">
           <div><code>&quot;string&quot; | attr(attrname)</code></div>
           <p>Allows to redefine textual content of the element in style. In h-smile <em>content</em> is can be applied to the element itself.</p>
@@ -1361,13 +1360,13 @@ input[focus] { aspect: handleFocusAttribute; }
               <div><font face="Courier New">p.status[state=&quot;warning&quot;] { content: &quot;Warning!&quot;; foreground-image:...; }</font></div></blockquote></blockquote>
           <div><em>content</em> is applicable only to elements that allowed to have textual content. E.g. it will work for P, SPAN, etc. but not for DIV.</div></td></tr>
             <tr>
-              <td nowrap bgcolor="#ffe4ca" valign="top" align="right"><strong>vertical-scrollbar</strong></td>
+              <td nowrap bgcolor="#ffe4ca" align="right"><strong>vertical-scrollbar</strong></td>
               <td bgcolor="#ffe4ca"><font color="#ff0000">&quot;style-set-name&quot;</font> - style set name that defines styles of vertical scrollbar.</td></tr>
             <tr>
-              <td nowrap bgcolor="#ffe4ca" valign="top" align="right"><strong>horizontal-scrollbar</strong></td>
+              <td nowrap bgcolor="#ffe4ca" align="right"><strong>horizontal-scrollbar</strong></td>
               <td bgcolor="#ffe4ca"><font color="#ff0000">&quot;style-set-name&quot;</font> - style set name that defines styles of horizontal scrollbar. See: html_samples/css-plus/scrollbar-styling.htm of how is should be defined.</td></tr>
             <tr>
-              <td nowrap bgcolor="#ffe4ca" valign="top" align="right"><strong>popup-position</strong></td>
+              <td nowrap bgcolor="#ffe4ca" align="right"><strong>popup-position</strong></td>
               <td bgcolor="#ffe4ca"><em>popup-reference-point</em> <em>anchor-reference-point</em> | <em>advisory-position</em>
           <p>Defines either:</p>
           <ul>
@@ -1384,11 +1383,11 @@ input[focus] { aspect: handleFocusAttribute; }
 </pre>
           <p>will cause select's popup to appear on the right side of the popup, rather than underneath it. See: samples/popup/select-popup-positioning.htm</p></td></tr>
             <tr>
-              <td nowrap bgcolor="#ffe4ca" valign="top" align="right"><strong>popup-anchor-reference-point</strong><br/><strong>popup-reference-point</strong></td>
+              <td nowrap bgcolor="#ffe4ca" align="right"><strong>popup-anchor-reference-point</strong><br/><strong>popup-reference-point</strong></td>
               <td bgcolor="#ffe4ca"><em>default</em> | <em>top-left |</em> <em>top-center |</em> <em>top-right</em> | <em>middle-left |</em> <em>middle-center</em> | <em>middle-right |</em> <em>bottom-left</em> | <em>bottom-center</em> | <em>bottom-right</em><br/><em>default</em> | <em>top-left |</em> <em>top-center |</em> <em>top-right</em> | <em>middle-left |</em> <em>middle-center</em> | <em>middle-right |</em> <em>bottom-left</em> | <em>bottom-center</em> | <em>bottom-right</em>
           <p>Individual parts of <strong>popup-position</strong> above.</p></td></tr></table></div>
-  <h3 align="left">Length units</h3>
-  <p align="left">The engine supports following length units:</p>
+  <h3 >Length units</h3>
+  <p >The engine supports following length units:</p>
   <ul>
     <li><strong>px</strong> - pixels, relative to the viewing device. <font color="#990033">On screen 1px is exactly one device pixel. On printer 1px is equal to 1/96 of inch.</font></li>
     <li><strong>em</strong> - the <em>font-size</em> of the relevant font;</li>
@@ -1399,19 +1398,26 @@ input[focus] { aspect: handleFocusAttribute; }
     <li><strong>pt</strong> - points — the points used by CSS 2.1 are equal to 1/72nd of an inch;</li>
     <li><strong>pc</strong> - picas — 1 pica is equal to 12 points;</li>
     <li><strong>%</strong> - percent — usually equals to precentage value of correspondent metric of parent element. But not always, see CSS specification.</li>
-    <li><strong><font color="#990033">%%</font></strong><font color="#990033"> - flex (&quot;weight&quot;) — see <a href="http://www.terrainformatica.com/htmlayout/fspu.whtm">h-smile flex units</a>.</font></li>
+    <li><strong>vw</strong> - 1/100th of view (window) width;</li>
+    <li><strong>vh</strong> - 1/100th of view (window) height;</li>
+    <li><strong>vmin</strong> - 1/100th of view's smallest side;</li>
+    <li><strong>vmax</strong> - 1/100th of view's largest view(window) size.</li>
+    
+    <li><strong><font color="#990033">%%</font></strong><font color="#990033"> - flex (&quot;weight&quot;) — see <a href="http://sciter.com/docs/flex-flow/flex-layout.htm">h-smile flex units</a>.</font></li>
     <li><strong><font color="#990033">*</font></strong><font color="#990033"> - flex (&quot;weight&quot;) — 1* is equal to 100%%;</font></li>
     <li><strong><font color="#990033">dip - d</font></strong><font color="#990033">evice <strong>i</strong>ndependent <strong>p</strong>ixels - logical units. 1dip = 1/96 of inch therefore on 96DPI display this will be one pixel. On high-dpi screens it will be resolved to larger number of physical pixels. For example: 2dip will take 3px on 120DPI screen. On printer 'dip' and 'px' units are equivalent.</font></li></ul>
   <h3>Colors</h3>
   <p>Engine supports following forms of defining color constants:</p>
   <ul>
-    <li><font face="monospace">color: <strong>#f00</strong>; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- #rgb form.</font></li>
-    <li><font face="monospace">color: <strong>#ff0000</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- #rrggbb form.</font></li>
-    <li><font face="monospace">color: <strong>rgb</strong>(255,0,0) &nbsp;&nbsp;&nbsp;- rgb(0..255,0..255,0..255) form.</font></li>
-    <li><font face="monospace">color: <strong>rgb</strong>(100%,0%,0%) - rgb(0..100%,0..100%,0..100%) form.</font></li>
-    <li><font face="monospace">color: <strong>hsl</strong>(300,0%,0%) &nbsp;- hsl(0..360,0..100%,0..100%) form - HSL color space.</font></li>
-    <li><font face="monospace" color="#990033">color: <strong>tint</strong>(@base-color, 50%, 0%) - tint(base-color, -1.0..1.0 [, -1.0..1.0]) form.</font></li></ul>
-  <div><font face="monospace">tint(src-color, luminance-delta, saturation-delta)</font> function allows to define colors linked with some base color. Parameters:</div>
+    <li><code>color: <strong>#f00</strong>; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- #rgb form.</code></li>
+    <li><code>color: <strong>#ff0000</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- #rrggbb form.</code></li>
+    <li><code>color: <strong>rgb</strong>(255,0,0) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- rgb(0..255,0..255,0..255) form.</code></li>
+    <li><code>color: <strong>rgb</strong>(100%,0%,0%) &nbsp;&nbsp;- rgb(0..100%,0..100%,0..100%) form.</code></li>
+    <li><code>color: <strong>rgba</strong>(255,0,0,0.5) - rgba(0..255,0..255,0..255,0..1) form.</code></li>    
+    <li><code>color: <strong>hsl</strong>(300,0%,0%) &nbsp;&nbsp;&nbsp;- hsl(0..360,0..100%,0..100%) form - HSL color space.</code></li>
+    <li><code>color: <strong>tint</strong>(@base-color, 50%, 0%) - tint(base-color, -1.0..1.0 [, -1.0..1.0]) form.</code></li></ul>
+    
+    <div><font face="monospace">tint(src-color, luminance-delta, saturation-delta)</font> function allows to define colors linked with some base color. Parameters:</div>
   <ol>
     <li><font face="monospace">src-color</font> is a literal color value or some color @constant defined before.</li>
     <li><font face="monospace">luminance-delta</font> is a float value in range -1.0 .. +1.0 - relative increment of luminance value of original color:<br/><u><font face="monospace">if</font></u><font face="monospace"> luminance-delta &lt; 0 <u>then</u> final-luminance = src-luminance * abs(luminance-delta)<br/><u>if</u> luminance-delta &gt; 0 <u>then</u> final-luminance = (1.0 - src-luminance) * luminance-delta</font></li>

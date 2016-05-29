@@ -4,8 +4,11 @@
     <style>
     
     div#pie-chart {
-      size:200px;
+      size:200dip;
+      font-size:30dip;
       border:1px dotted #aaa;
+      vertical-align:middle;
+      text-align:center;
     }
     
     </style>
@@ -18,7 +21,7 @@
         const circleColor = color(230,230,230); // gray
       
         var start = 0; 
-        var value = 0.25; 
+        var value = 0.0; 
       
         function render(gfx) 
         {
@@ -35,14 +38,33 @@
         
         element.paintContent = render;
         
+        // redefining property 'value' on that element
+        element["value"] = property(v) {
+          get return value;
+          set {
+            value = v;
+            element.text = String.$({(value * 100).toInteger() }%) ;
+            element.refresh();
+          }
+        };
       }
       
-      PieChartOn( $(#pie-chart) );
+      var chart = $(#pie-chart);
+      
+      PieChartOn( chart );
+      
+      chart.value = 0.25;
+      
+      $(input).on("change", function() {
+        chart.value = this.value;
+      });
       
     
     </script>
   </head>
 <body>
+
+  value: <input|hslider min=0.0 max=1.0 value=0.25 >
 
   <div #pie-chart />
 

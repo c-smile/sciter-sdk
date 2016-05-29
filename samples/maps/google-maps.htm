@@ -1,0 +1,61 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      picture#map {
+        size: 600dip 300dip; 
+        background:#eee;
+        box-shadow: 5dip 5dip 5dip #777;
+        margin: 1em 0;
+      }
+      
+          
+    </style>
+    <script type="text/tiscript">
+      
+      function showMapFor(place,zoom) {
+        const appkey = "AIzaSyA3tz3DnjjlSQ_tAcc_Sh20hpetTEyG3z4";
+        place = place.toUrlString();
+        var url = String.$(https://maps.googleapis.com/maps/api/staticmap?center={place}&zoom={zoom}&size=600x300&maptype=roadmap&key={appkey});
+        $(picture#map).attributes["src"] = url;
+      }
+      
+      $(form).on("change", function() {
+        var v = this.value;
+        this.post ( :: showMapFor(v.location,v.zoom) );
+      });
+      
+      $(select[name=location]).on("change", function() {
+        $(input[name=zoom]).state.disabled = false;
+      });
+      
+      self.on("click","a[href^=http]", function() {
+        Sciter.launch(this.attributes["href"]);
+        return true;
+      });
+    
+    </script>
+  </head>
+<body>
+
+  <form>
+    <select(location) novalue="select location">
+      <option>Brooklyn Bridge,New York,NY</option>
+      <option>Stanley Park,Vancouver,BC,Canada</option>
+      <option>Red Square,Moscow,Russia</option>
+    </select>
+    Zoom level: 
+    <input|hslider(zoom) min=8 max=20 value=13 disabled>
+  </form>
+
+  <picture#map>
+
+  Google Maps 
+
+  </picture>
+  
+  Note: This demo uses <a href="https://developers.google.com/maps/documentation/static-maps/intro">Google Static Maps</a>
+  
+</body>
+</html>

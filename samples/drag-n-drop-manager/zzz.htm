@@ -1,0 +1,46 @@
+<html>
+<head>
+<style>
+	widget#mytree{
+		size:300px *;
+		overflow-x:hidden;
+		border:1px solid gold;
+	}
+
+	option {
+		visibility: visible;
+	}
+</style>
+<script type="text/tiscript">
+	include "ddm2.tis";
+
+	function self.ready(){
+      DragDrop2
+      {
+        what      : "option",
+        where     : "widget,option",
+        container : "widget",
+      };
+	}
+</script>
+</head>
+<body>
+<widget type=tree #mytree>
+	<option #o1>1
+		<option #o11>11
+			<option #o111>111</option>
+			<option #o112>112</option>
+		</option>
+	</option>
+	<option #o2>2
+		<option #o21>21
+			<option #o211>211</option>
+		</option>
+		<option #o22>22
+			<option #o221>221</option>
+			<option #o222>222</option>
+		</option>
+	</option>
+</widget>
+</body>
+</html>

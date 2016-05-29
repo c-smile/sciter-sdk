@@ -15,36 +15,43 @@ set(SCITEREXE_HEADERS
     targetver.h
 	Resource.h
 	sciter.h
-	../../include/sciter-x.h
+	../../include/aux-asset.h
+	../../include/aux-cvt.h
+	../../include/aux-platform.h
+	../../include/aux-slice.h
+	../../include/sciter-x-api.h
+	../../include/sciter-x-behavior.h
+	../../include/sciter-x-debug.h
+	../../include/sciter-x-def.h
 	../../include/sciter-x-dom.h
 	../../include/sciter-x-dom.hpp
+	../../include/sciter-x-graphics.h
+	../../include/sciter-x-graphics.hpp
 	../../include/sciter-x-host-callback.h
-	../../include/aux-slice.h
-	../../include/sciter-x-behavior.h
-	../../include/aux-cvt.h
-	../../include/sciter-x-threads.h
-	../../include/aux-asset.h
-	../../include/sciter-x-value.h
-	../../include/value.h
-	../../include/aux-platform.h
-	../../include/tiscript.hpp
-	../../include/tiscript.h
-	../../include/value.hpp
-	../../include/sciter-x-types.h
-	../../include/sciter-x-api.h
-	../../include/sciter-x-def.h
-	../../include/sciter-x-debug.h
-	../../include/sciter-x-video-api.h
 	../../include/sciter-x-lite.hpp
+	../../include/sciter-x-request.h
+	../../include/sciter-x-request.hpp
+	../../include/sciter-x-threads.h
+	../../include/sciter-x-types.h
+	../../include/sciter-x-value.h
+	../../include/sciter-x-video-api.h
+	../../include/sciter-x.h
+	../../include/tiscript.h
+	../../include/tiscript.hpp
+	../../include/value.h
+	../../include/value.hpp
 )
 
 set(SCITEREXE_SOURCES_PRECOMP stdafx.cpp)
 
 set(SCITEREXE_SOURCES
-    sciter.cpp
+	sciter.cpp
 	main.cpp
-	../../include/behaviors/behavior_tabs.cpp
 	../../include/behaviors/behavior_camera_capture.cpp
+	../../include/behaviors/behavior_drawing-gdi.cpp
+	../../include/behaviors/behavior_drawing.cpp
+	../../include/behaviors/behavior_tabs.cpp
+	../../include/behaviors/behavior_video_generator.cpp
 	sciter.rc
 )
 
@@ -57,6 +64,9 @@ add_definitions(-D_WINDOWS)
 include_directories(./)
 include_directories(${SC_SOURCE_DIR})
 include_directories(${SC_SOURCE_DIR}/sdk/include)
+
+#Delay load
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /DELAYLOAD:\"MF.DLL\" /DELAYLOAD:\"MFPLAT.DLL\" /DELAYLOAD:\"MFREADWRITE.DLL\" /DELAYLOAD:\"shlwapi.dll\" ")
 
 #Tweak for Resource Compiler
 if (WIN32)
@@ -93,6 +103,8 @@ IF (MSVC)
 		COMMENT "Adding display aware manifest..." 
 	)
 ENDIF(MSVC)
+
+target_link_libraries(sciter-exe delayimp.lib)
 
 #
 # INSTALL BINARIES
