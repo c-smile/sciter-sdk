@@ -9,6 +9,10 @@
       ol > li { flow:horizontal; border-bottom:1px solid dotted;}
       ol > li > picture { size: 200dip 100dip; foreground-size: contain; }
       ol > li > output { display:block; }
+      
+      div.test { visibility:none; background: gold; width: max-content; }
+      div.test:expanded { visibility:visible; }
+      
     </style>
     
     <script type="text/tiscript">
@@ -20,6 +24,11 @@
                              {name:"Avast", image:"http://sciter.com/screenshots/slide-avast.png"},
                              {name:"BitDefender", image:"http://sciter.com/screenshots/slide-bitdefender.png"},
                              {name:"Comodo", image:"http://sciter.com/screenshots/slide-comodo.png"} ];
+                             
+        var isButtonEnabled = true;
+        
+        var isSectionExpanded = true;
+        
       }    
       
     </script>
@@ -31,10 +40,23 @@
         <p>Pictures are using "bound" attributes notation: <code>&lt;picture @src="customer.image" /&gt;</code></p>
   </note>
 
+  <h3>@src attribute demo</h3> 
+
   <!-- the repeateable section -->
   <ol each="customer in someCustomers">
       <li><picture @src="customer.image" /> <output(customer.name)/></li>
   </ol>
+  
+  <h3>@enabled attribute demo</h3> 
+  <form>
+    <button @enabled="isButtonEnabled">this button</button> <button|checkbox(isButtonEnabled)>is enabled</button> 
+  </form>
+  
+  <h3>@expanded attribute demo</h3> 
+  
+  <button|checkbox(isSectionExpanded)>Show/hide next block</button>:
+  <div.test @expanded="isSectionExpanded">block to be shown/hidden</div> 
+    
   
 </body>
 </html>

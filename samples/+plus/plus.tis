@@ -211,7 +211,18 @@ const Plus = function() {
       assert expr : "it should not be empty";
       function attrUpdater(thing,v) {
         thing.post(function() {
-          thing.@[attr] = v;  
+          switch(attr) {
+            case "expanded":
+              thing.state.expanded = !!v; break;
+            case "collapsed":
+              thing.state.collapsed = !!v; break;
+            case "disabled":
+              thing.state.disabled = !!v; break;
+            case "enabled":
+              thing.state.disabled = !v; break;
+            default:
+              thing.@[attr] = v;  
+          }
         }, true);
       }
       setupTerminalBinding(model,thing,expr,false,attrUpdater); 

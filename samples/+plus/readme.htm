@@ -20,17 +20,23 @@
   <p>then content of the body element (in this case) can be linked (bound) with the data in MyDataNamespace.</p>
   <h2>Bound elements</h2>
   <p>Element's value can be bound with some variable in the model. +plus framework uses attribute <em>name</em> that shall contain name or expression to bind with.</p>
-  <pre>&lt;body model=&quot;Data&quot;&gt; 
+  <pre>&lt;body model=&quot;Data&quot;&gt;
   &lt;p&gt;Whom to greet: &lt;input|text(greeting) /&gt;&lt;/p&gt;
   &lt;p&gt;Greeting: Hello &lt;output(greeting) /&gt;!&lt;/p&gt;
 &lt;/body&gt;
 </pre>
   <p>Two elements above are bound with the same variable <code>Data.greeting</code> in the model. Changes in the &lt;input&gt; element are reflected in the &lt;output&gt; element.</p>
-  <h2>Bound attributes </h2>
-  <p>Sciter also suppports attribute value binding with variables and object properties. To define bound attribute simply add '@' character in front of its name and provide variable name or expression as a value of the attribute: </p>
+  <h2>Bound attributes</h2>
+  <p>Sciter also suppports attribute value binding with variables and object properties. To define bound attribute simply add '@' character in front of its name and provide variable name or expression as a value of the attribute:</p>
   <pre>&lt;li&gt;&lt;picture @src=&quot;customer.image&quot; /&gt; &lt;output(customer.name)/&gt;&lt;/li&gt;
 </pre>
   <p>Here <code>src</code> attribute will be bound with <code>customer.image</code> variable and the ouput will contain value of <code>customer.name</code> variable.</p>
+  <p>There are bound attributes that are mapped to state flags:</p>
+  <ul>
+    <li><code>@enabled=&quot;expression&quot;</code> - boolean expression is bound as element.state.disabled = !expression;</li>
+    <li><code>@disabled=&quot;expression&quot;</code> - boolean expression is bound to element.state.disabled = expression;</li>
+    <li><code>@expanded=&quot;expression&quot;</code> - boolean expression is bound as element.state.expanded = expression;</li>
+    <li><code>@collapsed=&quot;expression&quot;</code> - boolean expression is bound as element.state.collapsed = expression;</li></ul>
   <h2>Repeatables</h2>
   <p>Any container may have attribute each=&quot;<em>item</em> in <em>items</em>&quot; defined. In this case initial content of the container is used as a template markup that will be repeated for each element in items collection. Format of the <em>each</em> attribute:</p>
   <pre>{item} <strong>in</strong> {items-expression} [ <strong>|</strong> {filter-expression}
@@ -51,7 +57,7 @@
   &lt;/ol&gt;
 </pre>
   <h2>Basic event handlers</h2>
-  <p>Elements may contain one of event attributes defining function to be executed on corresponding action. The handler function is called with <code>this</code> set to the DOM element and first parameter set to bound object. </p>
+  <p>Elements may contain one of event attributes defining function to be executed on corresponding action. The handler function is called with <code>this</code> set to the DOM element and first parameter set to bound object.</p>
   <p>List of event attributes: &quot;click&quot;, &quot;dblclick&quot;, &quot;change&quot;, &quot;enter&quot;, &quot;escape&quot;, &quot;focusin&quot;, &quot;focusout&quot;.</p>
   <p>Example:</p>
   <pre>  &lt;b click=&quot;items.removeByValue(item)&quot;&gt;x&lt;/b&gt;
