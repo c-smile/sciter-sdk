@@ -1,0 +1,46 @@
+
+
+class Rolodex : Behavior 
+{
+  const SLIDE_DURATION = 800ms;
+  const PAUSE_DURATION = 4s;
+
+  function attached() {
+    this.slideNo = 0;
+    this[0].style["visibility"] = "visible";
+    this.timer(PAUSE_DURATION, this.nextSlide );
+  }
+ 
+  function nextSlide() {
+  
+    var idx1 = this.slideNo;
+    this.slideNo = (this.slideNo + 1) % this.length;
+    var idx0 = this.slideNo;
+        
+    var prev = this[idx1];
+    var curr = this[idx0];
+    
+    function quadOut( t, b = 0.0, c = 1.0, d = 1.0)     { return -c *(t/=d)*(t-2) + b; }
+    //function cubicOut( t, b = 0.0, c = 1.0, d = 1.0)    { return c*((t=t/d-1)*t*t + 1) + b; }
+    
+    prev.style["visibility"] = "visible";
+    curr.style["visibility"] = "visible";
+    
+    function step(progress) {
+      progress = quadOut(progress);
+      prev.style["transform"] = [translate: pr( (0.0 - progress) * 100 ), pr(0) ];
+      curr.style["transform"] = [translate: pr( (1.0 - progress) * 100 ), pr(0) ];
+      return true;
+    }
+    
+    function end() {
+      prev.style["visibility"] = "hidden";
+      this.timer(PAUSE_DURATION, this.nextSlide );
+      return false;
+    }
+    
+    this.animate( step, end, SLIDE_DURATION );
+  }
+  
+  
+}

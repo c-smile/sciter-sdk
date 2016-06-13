@@ -72,6 +72,9 @@ int CALLBACK WinMain(HINSTANCE hInstance,
   // un-comment the following to see console output: 
   //sciter::debug_output_console _;
 
+  // un-comment the following to enable inspector in this application 
+  // SciterSetOption(NULL, SCITER_SET_DEBUG_MODE, TRUE);
+
 	HWND wnd = ::CreateWindowEx(
 		0, /*WS_EX_LAYOUTRTL,*/
 		::SciterClassName(),

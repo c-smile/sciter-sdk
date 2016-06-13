@@ -112,6 +112,27 @@
         return value( aux::chars_of(s) );
       }
 
+      /** Creates an array of values packaged into the value 
+          Creates an empty array if called with length == 0 */
+      static value make_array( unsigned int length = 0, const value* elements = nullptr )
+      {
+        value v;
+        ValueIntDataSet(&v, INT(length), T_ARRAY, 0);
+        if( elements ) 
+          for( unsigned int i = 0; i < length; ++i ) 
+           v.set_item(INT(i),elements[i]);
+        return v;
+      }
+
+      /** Creates an empty json key/value map (object in JS terms) 
+          The map can be populated by map.set_item(key,val); */
+      static value make_map(  )
+      {
+        value v;
+        ValueIntDataSet(&v, INT(0), T_MAP, 0);
+        return v;
+      }
+      
       static value secure_string(const WCHAR* s, size_t slen)
       {
         value v;
@@ -347,13 +368,24 @@
         ValueSetValueToKey( this,&key,&v );
       }
 
-      const value get_item(const value& key) const
+      /** get value by key value
+          \return \b #value under that key if this value is a map/object containing that key, otherwise undefined value */
+      value get_item(const value& key) const
       {
         value r;
         ValueGetValueOfKey( this, &key, &r);
         return r;
       }
 
+      /** get value by name 
+          \return \b #value under that key if this value is a map/object containing that key, otherwise undefined value */
+      value get_item(const char* name) const
+      {
+        value key(name);
+        value r;
+        ValueGetValueOfKey( this, &key, &r);
+        return r;
+      }
       
       // T_OBJECT and T_DOM_OBJECT only, get value of object's data slot
       void* get_object_data() const
@@ -406,6 +438,7 @@
       value call( const value& p1, const value& p2, const value& p3 ) const { value args[3] = { p1,p2,p3 };  return call(3,args); }
       value call( const value& p1, const value& p2, const value& p3, const value& p4 )  const { value args[4] = { p1,p2,p3,p4 };  return call(4,args); }
 
+      /** converts T_OBJECT/UT_OBJECT_*** values into plain map of key/value pairs */
       void isolate()
       {
         ValueIsolate(this);

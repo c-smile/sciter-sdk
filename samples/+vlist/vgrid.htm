@@ -107,6 +107,10 @@
       records.splice(vlist.tbody.currentIndex,1);
     }    
     
+    vlist.on("change",function(evt) {
+      stdout.println("change", vlist.tbody.currentIndex)
+    });
+    
   }
   
   </script>

@@ -331,7 +331,7 @@ some.selectParent(printel, &quot;div&quot;);
       <p>returns the length value converted to the number of device pixels. Conversion is made in context of current element style so <code>el.toPixels( em(1.4) )</code> will number of pixel correspond to 1.4em that us dependent on current font size of the element.</p>
       <p>length is a string or symbol then this string is treated as a CSS length literal so it is possible to get values like: <code>el.toPixels(#xx-small)</code> В or <code>el.toPixels(#system-scrollbar-width)</code>,</p>
       <p>Second symbol parameter is used with the conversion from perecentage lengths:<br/><code>var h50p = el.toPixels( pr(50.0), #height );</code> - will calculate the same value as the following CSS declaration: <code>height:50%</code>.</p></dd>
-    <dt>scroll</dt>
+    <dt id="method-scroll">scroll</dt>
     <dd><img src="images/scroll.gif" align="right"/><strong>(part) </strong>returns: integer, device pixels
       <p>Returns various scrolling related positions of the element. Parameters:</p>
       <p><strong>part</strong> - one of symbolic constants:</p>
@@ -341,7 +341,8 @@ some.selectParent(printel, &quot;div&quot;);
         <li><strong>#right</strong> - offset of right edge of the view from right edge of В the content box,</li>
         <li><strong>#bottom </strong>- offset of bottom edge of the view from bottom edge of the content box,</li>
         <li><strong>#width </strong>- width of scrollable area,</li>
-        <li><strong>#height</strong> - height of scrollable area.</li></ul></dd>
+        <li><strong>#height</strong> - height of scrollable area.</li>
+        <li><strong>#rect</strong> - returns left,top,right,bottom positions as four integers.</li></ul></dd>
     <dt>scrollTo</dt>
     <dd>
       <div>( <strong>x</strong>:int, <strong>y</strong>:int [, <strong>smooth</strong>:bool [, <strong>unrestricted</strong> : bool] ] &nbsp;) : void</div>

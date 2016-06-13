@@ -11,6 +11,30 @@
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
     <tr>
+      <td valign="top" bgcolor="#FFFADA">3.3.2.6</td>
+      <td nowrap valign="top" align="center">12-06-2016</td>
+      <td>
+        <p>new:</p>
+        <ul>
+          <li>[css] + word-break:break-all; support. See: test-cases/text-flow/text-wrap-word-break.htm</li>
+          <li>[inline vector images] expandable images shall start from 'E' command. Note: could breaking change if you use inline vector images.</li>
+          <li>[+plus] @enabled, @disabled, @expanded, @collapsed bound attributes treatment. See: sdk/samples/+plus/demos/I-bound-@-attributes.htm and sdk/samples/+plus/readme.htm</li>
+          <li>[api] sciter::value::make_array() - allows to create empty arrays. </li>
+          <li>[api] sciter::value::make_map() - allows to create empty key/value maps (objects in JS terms). </li>
+          <li>[css,svg] stroke-dashoffset support. See sdk/samples/svg/svg-dashoffset.htm</li></ul>
+        <p>fixes:</p>
+        <ul>
+          <li>[css] fix of list-item-style:tree-line rendering.</li>
+          <li>handling possible pileups of posted items. Windows only for a while.</li>
+          <li>[osx] MOUSE_IDLE to match Windows behaviour.</li>
+          <li>[gtk] fix of thread safe API issue.</li>
+          <li>[tiscript] fix of shebang handling side effects.</li>
+          <li>[plaintext] fix of empty lines removal;</li>
+          <li>[plaintext] fix of clipboard copy() operation.</li>
+          <li>[script] fix of view.msgbox() effect inside promise callbacks: <a href="http://sciter.com/forums/topic/promise-finally-bug">http://sciter.com/forums/topic/promise-finally-bug</a></li>
+          <li>&lt;frameset&gt; / behavior:frameset, alternative algorithm of panel resizing.</li></ul>Builds: win32, win64, osx64, linux/gtk64
+        <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
+    <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.2.5</td>
       <td nowrap valign="top" align="center">28-05-2016</td>
       <td>
@@ -22,14 +46,14 @@
           <li>[htmlarea,richtext,plaintext] adding SHIFT + mouse-click handling.</li></ul>
         <p>fixes:</p>
         <ul>
-          <li>:busy state generation for images sharing the same URL. </li>
+          <li>:busy state generation for images sharing the same URL.</li>
           <li>fix of :busy and :incomplete state update for resources that use SC_LOAD_DATA/LOAD_DELAYED and SciterDataReadyAsync.</li>
           <li>[gdi] missed characters in some cases.</li>
           <li>[tiscript] error propagation when loading compiled bytecodes.</li>
           <li>Fix of sciter::debug_output_console setup in release builds.</li>
           <li>[svg] fix of AV in svg rendering when it is used in back/foreground-image of parent document.</li>
           <li>[printing] Fix of AV in new Graphics.Text();</li>
-          <li>[foreground-image-cursor] fix of background-size:contain case. </li>
+          <li>[foreground-image-cursor] fix of background-size:contain case.</li>
           <li>&lt;plaintext&gt; fix of blank lines handling, see: http://sciter.com/forums/topic/bug-2/</li></ul>Builds: win32, win64, osx64, linux/gtk64
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>

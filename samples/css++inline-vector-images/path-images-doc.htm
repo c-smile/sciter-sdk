@@ -19,29 +19,31 @@
 </pre>
   <p>will show at the element's background triangle with apexes at (0,0), (50,100) and (100,0).</p>
   <h2>CSS properties used for drawing</h2>
-  <p>For drawing paths Sciter uses following properties: </p>
+  <p>For drawing paths Sciter uses following properties:</p>
   <ul>
     <li><strong>stroke</strong> : &lt;color&gt;</li>
     <li><strong>stroke-width</strong> : &lt;length&gt;</li>
     <li><strong>stroke-linecap</strong> : &nbsp;<strong>butt</strong> | round | square</li>
-    <li><strong>stroke-linejoin</strong> : &nbsp;<strong>miter</strong> | round | bevel </li>
+    <li><strong>stroke-linejoin</strong> : &nbsp;<strong>miter</strong> | round | bevel</li>
     <li><strong>storke-dasharray</strong>: &lt;length&gt;*</li>
     <li><strong>storke-dashoffset</strong>: &lt;length&gt;</li>
     <li><strong>fill</strong>: &lt;color&gt;</li></ul>
-  <p>These properties are shared with SVG and used for exactly same purpose. </p>
+  <p>These properties are shared with SVG and used for exactly same purpose.</p>
   <h2>Expandable iv-images</h2>
   <p>Sometimes there is need to have expandable vector images that can be adjusted to given size.</p>
   <p>In order to support such images d-commands were expanded by the following.</p>
+  <h3>'E' command</h3>
+  <p>Expandable image command sequence shall start from 'E'.</p>
   <h3>right / bottom anchored coordinates</h3>
   <p>Uppercase d-commands ( MLHVCSQTA ) that expect absolute coordinates may use negative coordinates including negative zero.</p>
   <p>Negative coordinate in this case is treated as offset from right or bottom of image rectangle. Therefore this:</p>
-  <pre> background-image: url( path:M0,0 L-0,-0 );
+  <pre> background-image: url( path:E M0,0 L-0,-0 );
  stroke: blue;<br/> stroke-width: 3px;
 </pre>
   <p>will draw single diagonal 3px thick line from left/top to right/bottom corners of element's background area.</p>
   <h3>proportional coordinates</h3>
   <p>You can also define coordinates as proportions of image rendering site. &nbsp;Proportional coordinate is a number 0.0 ... 1.0 followed by '*' (astersisk) sign. This:</p>
-  <pre>background-image: url( path:M0,0 L1*,1* ); 
+  <pre>background-image: url( path:E M0,0 L1*,1* );
 stroke: red;<br/>stroke-width: 3px;
 </pre>
   <p>will also draw single diagonal 3px thick line from left/top to right/bottom corners of element's background area.</p>

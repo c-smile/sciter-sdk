@@ -539,8 +539,10 @@ namespace aux
       utf8::fromwcs(str.start,str.length,buffer);
     }
     ~w2utf() {}
-    operator const BYTE*() { return buffer.data(); }
-    operator const char*() { return (const char*)buffer.data(); }
+    operator const BYTE*() const { return buffer.data(); }
+    operator const char*() const { return (const char*)buffer.data(); }
+    //operator std::string() const { return std::string(c_str(),length()); }
+
     const char*  c_str() const { return (const char*)buffer.data(); }
     chars operator()() const { return chars(c_str(),length()); }
 

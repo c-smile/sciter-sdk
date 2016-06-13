@@ -30,28 +30,28 @@
        **/
   enum EVENT_GROUPS
   {
-      HANDLE_INITIALIZATION = 0x0000, /** attached/detached */
-      HANDLE_MOUSE = 0x0001,          /** mouse events */
-      HANDLE_KEY = 0x0002,            /** key events */
-      HANDLE_FOCUS = 0x0004,          /** focus events, if this flag is set it also means that element it attached to is focusable */
-      HANDLE_SCROLL = 0x0008,         /** scroll events */
-      HANDLE_TIMER = 0x0010,          /** timer event */
-      HANDLE_SIZE = 0x0020,           /** size changed event */
-      HANDLE_DRAW = 0x0040,           /** drawing request (event) */
-      HANDLE_DATA_ARRIVED = 0x080,    /** requested data () has been delivered */
-      HANDLE_BEHAVIOR_EVENT        = 0x0100, /** logical, synthetic events:
+      HANDLE_INITIALIZATION = 0x0000, /**< attached/detached */
+      HANDLE_MOUSE = 0x0001,          /**< mouse events */
+      HANDLE_KEY = 0x0002,            /**< key events */
+      HANDLE_FOCUS = 0x0004,          /**< focus events, if this flag is set it also means that element it attached to is focusable */
+      HANDLE_SCROLL = 0x0008,         /**< scroll events */
+      HANDLE_TIMER = 0x0010,          /**< timer event */
+      HANDLE_SIZE = 0x0020,           /**< size changed event */
+      HANDLE_DRAW = 0x0040,           /**< drawing request (event) */
+      HANDLE_DATA_ARRIVED = 0x080,    /**< requested data () has been delivered */
+      HANDLE_BEHAVIOR_EVENT        = 0x0100, /**< logical, synthetic events:
                                                  BUTTON_CLICK, HYPERLINK_CLICK, etc.,
                                                  a.k.a. notifications from intrinsic behaviors */
-      HANDLE_METHOD_CALL           = 0x0200, /** behavior specific methods */
-      HANDLE_SCRIPTING_METHOD_CALL = 0x0400, /** behavior specific methods */
-      HANDLE_TISCRIPT_METHOD_CALL  = 0x0800, /** behavior specific methods using direct tiscript::value's */
+      HANDLE_METHOD_CALL           = 0x0200, /**< behavior specific methods */
+      HANDLE_SCRIPTING_METHOD_CALL = 0x0400, /**< behavior specific methods */
+      HANDLE_TISCRIPT_METHOD_CALL  = 0x0800, /**< behavior specific methods using direct tiscript::value's */
 
-      HANDLE_EXCHANGE              = 0x1000, /** system drag-n-drop */
-      HANDLE_GESTURE               = 0x2000, /** touch input events */
+      HANDLE_EXCHANGE              = 0x1000, /**< system drag-n-drop */
+      HANDLE_GESTURE               = 0x2000, /**< touch input events */
 
-      HANDLE_ALL                   = 0xFFFF, /* all of them */
+      HANDLE_ALL                   = 0xFFFF, /*< all of them */
 
-      SUBSCRIPTIONS_REQUEST        = 0xFFFFFFFF, /** special value for getting subscription flags */
+      SUBSCRIPTIONS_REQUEST        = 0xFFFFFFFF, /**< special value for getting subscription flags */
   };
 
 /**Element callback function for all types of events. Similar to WndProc
@@ -189,23 +189,25 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
       UINT      alt_state;    // KEYBOARD_STATES
   };
 
-// parameters of evtg == HANDLE_FOCUS
 
+  /** #HANDLE_FOCUS commands */
   enum FOCUS_EVENTS
   {
-      FOCUS_LOST = 0, // non-bubbling event, target is new focus element
-      FOCUS_GOT = 1,  // non-bubbling event, target is old focus element
-      FOCUS_IN = 2,   // bubbling event/notification, target is an element that got focus
-      FOCUS_OUT = 3,  // bubbling event/notification, target is an element that lost focus
+      FOCUS_LOST = 0,           /**< non-bubbling event, target is new focus element */
+      FOCUS_GOT = 1,            /**< non-bubbling event, target is old focus element */
+      FOCUS_IN = 2,             /**< bubbling event/notification, target is an element that got focus */
+      FOCUS_OUT = 3,            /**< bubbling event/notification, target is an element that lost focus */
+      FOCUS_REQUEST = 4,        /**< bubbling event/request, gets sent on child-parent chain to accept/reject focus to be set on the child (target) */
   };
 
+  /** #HANDLE_FOCUS params */
   struct FOCUS_PARAMS
   {
-      UINT      cmd;          // FOCUS_EVENTS
-      HELEMENT  target;       // target element, for FOCUS_LOST it is a handle of new focus element
-                                //    and for FOCUS_GOT it is a handle of old focus element, can be NULL
-      BOOL      by_mouse_click; // true if focus is being set by mouse click
-      BOOL      cancel;         // in FOCUS_LOST phase setting this field to true will cancel transfer focus from old element to the new one.
+      UINT      cmd;            /**< #FOCUS_EVENTS */
+      HELEMENT  target;         /**< target element, for #FOCUS_LOST it is a handle of new focus element
+                                     and for #FOCUS_GOT it is a handle of old focus element, can be NULL */
+      BOOL      by_mouse_click; /**< true if focus is being set by mouse click */
+      BOOL      cancel;         /**< in #FOCUS_REQUEST and #FOCUS_LOST phase setting this field to true will cancel transfer focus from old element to the new one. */
   };
 
 // parameters of evtg == HANDLE_SCROLL

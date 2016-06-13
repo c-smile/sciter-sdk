@@ -110,16 +110,16 @@ class TapeV: Behavior
     }
     this.stopAnimation = false;*/
     this.velocity = v + scrollDelta;
-    this.doScrollAnumation();
+    this.doScrollAnimation();
   }
   function scrollUpKinetic(scrollDelta = SCROLL_KINETIC_DELTA)
   {
     var v = (this.velocity || 0.0);
     this.velocity = v - scrollDelta;
-    this.doScrollAnumation();
+    this.doScrollAnimation();
   }
   
-  function doScrollAnumation()
+  function doScrollAnimation()
   {
     if( this.state.animating ) return;
     function animationStep()
