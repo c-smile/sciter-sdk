@@ -26,6 +26,7 @@
 &lt;/body&gt;
 </pre>
   <p>Two elements above are bound with the same variable <code>Data.greeting</code> in the model. Changes in the &lt;input&gt; element are reflected in the &lt;output&gt; element.</p>
+  <p>Normally data variable is bound with the <code>value</code> property of linked element directly. But if the element has <code>setBoundValue(newVal)</code> defined (on it or its behavior class) then the function will be called to set the value.</p>
   <h2>Bound attributes</h2>
   <p>Sciter also suppports attribute value binding with variables and object properties. To define bound attribute simply add '@' character in front of its name and provide variable name or expression as a value of the attribute:</p>
   <pre>&lt;li&gt;&lt;picture @src=&quot;customer.image&quot; /&gt; &lt;output(customer.name)/&gt;&lt;/li&gt;

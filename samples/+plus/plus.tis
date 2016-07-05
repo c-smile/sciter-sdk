@@ -120,7 +120,7 @@ const Plus = function() {
     } 
     else { // subscribe to model change notifications:
       if( isInput ) { // setup DOM change event handler 
-        function on_ui_change() { coll[key] = thing.value; return false; } 
+        function on_ui_change(evt) { if(evt.target === this) coll[key] = thing.value; return false; } 
         thing.subscribe("change.plus",on_ui_change); // subscribe to the element value change event
       }
       setupModelChangeHandler( coll, key, function(val) { updater(thing,val); } );
@@ -130,10 +130,36 @@ const Plus = function() {
     }
   }
   
-  function valueUpdater(thing,v) { 
-    //if(!thing.state.focus && v !== undefined) thing.value = v; -- v !== undefined condition breaks 2-basic-repeatable.htm case
-    // when the element is in focus we are not updating it from the model - user is editing it!
-    if(!thing.state.focus) thing.value = v; 
+  var rebindSubtree; // forward ref
+  
+  function valueUpdater(thing,v) 
+  { 
+// if it is object then we need to rebind its subtree of observables
+    if( typeof v == #object ) {
+      rebindSubtree(thing, thing.attributes["name"]);
+      return;
+    }
+// if element has custom setBoundValue(val) defined on it - use it
+    var customSetter = thing.setBoundValue;
+    if (typeof customSetter == #function )
+      customSetter.call(thing,v);
+// otherwise use normal thing.value = v assignment.
+// But when the element is in focus we are not updating 
+// it from the model - user is editing it!          
+    else if(!thing.state.focus) 
+      thing.value = v; 
+  }
+  
+  rebindSubtree = function(parent, parentPath)
+  {
+    parentPath += ".";
+    var model = parentModel(parent);
+    var boundUiElements = parent.$$([name]);
+    for(var element in boundUiElements) {
+      element.off(".plus");
+      var path = parentPath + element.@["name"];
+      setupTerminalBinding(model,element,path,element.tag != #output, valueUpdater);
+    }
   }
   
   // setup terminal binding on 'this'
@@ -143,6 +169,7 @@ const Plus = function() {
     var model = /*this.$model ||*/ parentModel(thing);
     setupTerminalBinding(model,thing,path,thing.tag != #output, valueUpdater ); 
   }
+  
   
   const CLASS_RE = /(.*)\{\{(([-_a-z0-9]+) *\:)? *(.+)\}\}(.*)/i;
   //const CLASS_RE = /(.*)\{\{([-_a-z0-9]+)(\:)+(.+)\}\}(.*)/i;  

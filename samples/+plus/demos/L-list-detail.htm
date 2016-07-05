@@ -1,0 +1,64 @@
+<html>
+  <head>
+    <title>Plus: very basic sample</title>
+    <style>
+      @import url(../plus.css); /* the only thing needed to include Plus framework */
+      @import url(../../note.css); 
+      
+      ol { width:*; }
+      ol > li { flow:horizontal; border-bottom:1px solid dotted;}
+      ol > li > label { display:inline-block;  }
+      
+      textarea { width:*; display:block; }
+      
+      div#details {
+        flow:row(label,input textarea);
+      }
+      
+
+    </style>
+    
+    <script type="text/tiscript">
+      
+  
+      namespace Data // our model
+      {  
+        var someCustomers = [{name:"Symantec", motto:"Stay ahead of tomorrow’s threats."   },
+                             {name:"ESET", motto:"The best security money can buy"   },
+                             {name:"Comodo", motto:"Real time cloud protection when you are online. Containment protection when you are offline"} ,
+                             {name:"BitDefender", motto:"Protect & optimize!"}];
+        
+        var currentCustomer = {};
+        
+        // select current customer
+        function selectCustomer(object) { currentCustomer = object; }
+        
+      }    
+      
+    </script>
+  </head>
+
+<body model="Data"> <!-- define data model we observe -->
+
+  <note><p>List below is bound with <code>Data.someCustomers</code> array and so it reflects list items in that array.</p>
+        <p>"Current record" below is bound with the currentCustomer variable</p>
+        <p>The currentCustomer variable gets set by @click handler</p>
+  </note>
+
+  <!-- the repeateable section -->
+  <ol each="customer in someCustomers">
+      <li><button(customer.name) click="selectCustomer(customer)"/>: 
+          <output(customer.motto)</li>
+  </ol>
+  
+  <!-- current record -->
+  <div(currentCustomer)>
+    <header>Details of <output(name)/>:</header>  
+    <div#details>
+      <label>name</label><input(name)/>
+      <label>motto</label><textarea(motto) />   
+    </div>
+  </div>
+  
+</body>
+</html>
