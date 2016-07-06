@@ -9,14 +9,6 @@ const Plus = function() {
     return null;
   }
 
-  // setup model namespace binding, 'this' is the element
-  function Model() 
-  {
-    var me = this;
-    var mo = this.@["model"];
-    this.$model = mo? eval(mo) : self.ns; 
-    if(!this.$model) throw "Model {" + mo + "} not found!";
-  }
 
   const reIsExpression=/ *[-()+*&:?|=!^"'\[\]]+ */;
   const reVarName = /[a-zA-Z_][a-zA-Z0-9_]*/;
@@ -130,15 +122,8 @@ const Plus = function() {
     }
   }
   
-  var rebindSubtree; // forward ref
-  
   function valueUpdater(thing,v) 
   { 
-// if it is object then we need to rebind its subtree of observables
-    if( typeof v == #object ) {
-      rebindSubtree(thing, thing.attributes["name"]);
-      return;
-    }
 // if element has custom setBoundValue(val) defined on it - use it
     var customSetter = thing.setBoundValue;
     if (typeof customSetter == #function )
@@ -150,17 +135,6 @@ const Plus = function() {
       thing.value = v; 
   }
   
-  rebindSubtree = function(parent, parentPath)
-  {
-    parentPath += ".";
-    var model = parentModel(parent);
-    var boundUiElements = parent.$$([name]);
-    for(var element in boundUiElements) {
-      element.off(".plus");
-      var path = parentPath + element.@["name"];
-      setupTerminalBinding(model,element,path,element.tag != #output, valueUpdater);
-    }
-  }
   
   // setup terminal binding on 'this'
   function Terminal() {
@@ -170,6 +144,38 @@ const Plus = function() {
     setupTerminalBinding(model,thing,path,thing.tag != #output, valueUpdater ); 
   }
   
+  function rebindSubtree(container, model)
+  {
+    var boundUiElements = container.$$([name]);
+    for(var element in boundUiElements) {
+      element.off(".plus");
+      var path = element.@["name"];
+      setupTerminalBinding(model,element,path,element.tag != #output, valueUpdater);
+    }
+  }
+
+  // setup model namespace binding, 'this' is the element
+  function Model() 
+  {
+    var me = this;
+    var mo = this.@["model"];
+    var pmo = parentModel(this); // parent model
+    if( pmo ) // model inside model
+    {
+      var (coll,key) = Object.referenceOf(pmo, mo);
+      this.$model = coll[key];
+      setupModelChangeHandler( coll, key, function(val) { 
+        assert typeof val == #object : "data model must be an object ";
+        this.$model = val; 
+        rebindSubtree(this,val);
+      });      
+    }
+    else
+      this.$model = mo? eval(mo) : self.ns; 
+
+    if(!this.$model) throw "Model {" + mo + "} not found!";
+  }
+
   
   const CLASS_RE = /(.*)\{\{(([-_a-z0-9]+) *\:)? *(.+)\}\}(.*)/i;
   //const CLASS_RE = /(.*)\{\{([-_a-z0-9]+)(\:)+(.+)\}\}(.*)/i;  

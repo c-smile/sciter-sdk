@@ -18,6 +18,7 @@
 }
 </pre>
   <p>then content of the body element (in this case) can be linked (bound) with the data in MyDataNamespace.</p>
+  <p>Topmost element that has such model attribute is known as a <em>data model view</em> - elements bound with the model data namespace / object reflect state of the data.</p>
   <h2>Bound elements</h2>
   <p>Element's value can be bound with some variable in the model. +plus framework uses attribute <em>name</em> that shall contain name or expression to bind with.</p>
   <pre>&lt;body model=&quot;Data&quot;&gt;
@@ -64,5 +65,33 @@
   <pre>  &lt;b click=&quot;items.removeByValue(item)&quot;&gt;x&lt;/b&gt;
 </pre>
   <p>Click on such <code>&lt;b&gt;</code> element will call <code>items.removeByValue()</code> function passing it current item object.</p>
+  <h2>Sub-models</h2>
+  <p>Main data model view element may have inner elements with <em>model</em> attribute - sub-views that are looking on parts of data tree.</p>
+  <pre>namespace MyDataNamespace
+{
+  var records = [ {name: &quot;first&quot;, ...},<br/>                  {name: &quot;second&quot;, ...},
+                  {name: &quot;third&quot;, ...} ];
+
+  var <u>currentRecord</u> = {}; // used as sub-model;
+
+  // function to set current record
+  function setCurrentRecord(index) { currentRecord = records[index]; }
+}
+</pre>
+  <p>Having such a model we can define sub-view element looking on sub-object or namespace inside the model ():</p>
+  <pre>&lt;body model=&quot;MyDataNamespace&quot;&gt;
+   &lt;!-- records list --&gt;
+   &lt;ol each=&quot;index,record in records&quot;&gt;
+      &lt;li&gt;&lt;output(record.name) click=&quot;setCurrentRecord(index)&quot; /&gt;&lt;/li&gt;
+   &lt;/ol&gt;
+   &lt;!-- current record view --&gt;
+   &lt;section #record-details-view <u>model=&quot;currentRecord&quot;</u>&gt;
+      &lt;input(name) /&gt;
+      ...
+   &lt;/section&gt;
+&lt;/body&gt;
+</pre>
+  <p>Sub-view elements are observing change of [sub-] model variable, therefore as soon as the variable changes all observing elements get rebound with new data.</p>
+  <p>In the example above click on the <em>output(name)</em> element in the list will cause currentRecord to be set to new object by calling &nbsp;<code>setCurrentRecord()</code> on click. See demos/L-list-detail.htm example.</p>
 </body>
 </html>
