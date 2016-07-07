@@ -157,7 +157,6 @@ const Plus = function() {
   // setup model namespace binding, 'this' is the element
   function Model() 
   {
-    var me = this;
     var mo = this.@["model"];
     var pmo = parentModel(this); // parent model
     if( pmo ) // model inside model
@@ -166,8 +165,8 @@ const Plus = function() {
       this.$model = coll[key];
       setupModelChangeHandler( coll, key, function(val) { 
         assert typeof val == #object : "data model must be an object ";
-        this.$model = val; 
-        rebindSubtree(this,val);
+        this super.$model = val; 
+        rebindSubtree(this super,val);
       });      
     }
     else
