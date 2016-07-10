@@ -26,7 +26,6 @@
   #include <string>
 #endif
 
-
 #if defined(_WIN32) || defined(_WIN64)
 
   #define WINDOWS
@@ -119,7 +118,7 @@
   typedef int INT64;
 
   typedef unsigned char BYTE;
-  typedef uint16_t WCHAR;
+  typedef char16_t WCHAR;
   typedef const WCHAR* LPCWSTR;
   typedef WCHAR* LPWSTR;
   typedef char CHAR;
@@ -129,10 +128,10 @@
   typedef void* LPVOID;
   typedef const void* LPCVOID;
 
-  #define SCAPI  __cdecl
-  #define SCFN(name) (__cdecl *name)
-  #define SC_CALLBACK  __cdecl
-  #define CALLBACK __cdecl
+  #define SCAPI  
+  #define SCFN(name) (*name)
+  #define SC_CALLBACK 
+  #define CALLBACK 
 
   typedef struct tagRECT
   {
