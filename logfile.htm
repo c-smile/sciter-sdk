@@ -11,6 +11,43 @@
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
     <tr>
+      <td valign="top" bgcolor="#FFFADA">3.3.2.7</td>
+      <td nowrap valign="top" align="center">13-07-2016</td>
+      <td>
+        <p>new:</p>
+        <ul>
+          <li>+ [css] sample of content:attr(name); function, see sdk/samples/css3/content-attr.htm</li>
+          <li>+ <code>Math.round(float)</code> function.</li>
+          <li>[+plus] use of optional element.setBoundValue() while setting bound DOM element's value. </li>
+          <li>[+plus] support of record list / current record idiom. See: sdk/samples/+plus/demos/L-list-detail.htm</li>
+          <li>[cssom] + sample of dynamic stylesheet update : sdk/samples/cssom/update-style-sheet.htm</li>
+          <li>Element.loadImage(,,useCache: true | false), check documentation.</li>
+          <li>[tiscript] Error.id property added.</li></ul>
+        <p>fixes:</p>
+        <ul>
+          <li>Initial input:empty handling.</li>
+          <li>view.request{} handling data URIs</li>
+          <li>HANDLE_GESTURE ext api fix, Event.flags field is read/write now too.</li>
+          <li>[API headers] Some plain C compatibility fixes.</li>
+          <li>[layout] fix of padding and borders handling on &lt;tbody&gt;.</li>
+          <li>[doc] Image.fromBytes() documented.</li>
+          <li>Fix of <a href="https://github.com/c-smile/sciter-sdk/issues/40">https://github.com/c-smile/sciter-sdk/issues/40</a> ( starting new animation at the end() callback )</li>
+          <li>[css,drawing] fix of wrong border-radius inherit color handling: <a href="http://sciter.com/forums/topic/border-radius-breaks-color">http://sciter.com/forums/topic/border-radius-breaks-color/</a></li>
+          <li>[+plus] fix of indirect model issue http://sciter.com/forums/topic/about-plus-tis/ </li>
+          <li>[clipboard] fix of 0xFFFF cap on text retrieval.</li>
+          <li>[tiscript] fix of Object.referenceOf() for non-existent paths.</li>
+          <li>preventing view.dialog() and view.msgbox() calls while view closing. Use function self.closing(reason) { .... } to place any modal dialogs when you need them.</li>
+          <li>rejecting view.doEvent based modal loops in view dismissing code paths.</li>
+          <li>[+lib] fix of Function.debounce() </li>
+          <li>fix of sdk/samples/ideas/tray-notifications/ popup position ( isolating collapsing margins side effect ).</li>
+          <li>[doc] Graphics documentation fixes</li>
+          <li>[frames] fixing &quot;closerequest&quot; -&gt; event.cancel = true; handling for discarding document unload. </li>
+          <li>Fix of element.on(&quot;~click&quot;, ...) subscriptions handling (click in sinking phase)</li>
+          <li>[gtk] graphics::do_draw fix (double deletion in some cases)</li>
+          <li>Image.colorAt(x,y,newColor) fix for existing images.</li>
+          <li>view.msgbox opens hyperlinks in browser rather that in place.</li></ul>Builds: win32, win64, osx32/osx64, linux/gtk64
+        <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
+    <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.2.6</td>
       <td nowrap valign="top" align="center">12-06-2016</td>
       <td>
@@ -19,8 +56,8 @@
           <li>[css] + word-break:break-all; support. See: test-cases/text-flow/text-wrap-word-break.htm</li>
           <li>[inline vector images] expandable images shall start from 'E' command. Note: could breaking change if you use inline vector images.</li>
           <li>[+plus] @enabled, @disabled, @expanded, @collapsed bound attributes treatment. See: sdk/samples/+plus/demos/I-bound-@-attributes.htm and sdk/samples/+plus/readme.htm</li>
-          <li>[api] sciter::value::make_array() - allows to create empty arrays. </li>
-          <li>[api] sciter::value::make_map() - allows to create empty key/value maps (objects in JS terms). </li>
+          <li>[api] sciter::value::make_array() - allows to create empty arrays.</li>
+          <li>[api] sciter::value::make_map() - allows to create empty key/value maps (objects in JS terms).</li>
           <li>[css,svg] stroke-dashoffset support. See sdk/samples/svg/svg-dashoffset.htm</li></ul>
         <p>fixes:</p>
         <ul>

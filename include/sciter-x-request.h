@@ -20,11 +20,11 @@
 #include "sciter-x-types.h"
 
 #if defined(__cplusplus) 
-namespace html
-{
-  struct request;
-}
-typedef html::request* HREQUEST;
+  namespace html
+  {
+    struct request;
+  }
+  typedef html::request* HREQUEST;
 #else
   typedef void*  HREQUEST;
 #endif

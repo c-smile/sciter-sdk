@@ -121,7 +121,7 @@ const Plus = function() {
       thing.post(::updater(thing,coll[key])); // assign intial value to it;
     }
   }
-  
+
   function valueUpdater(thing,v) 
   { 
 // if element has custom setBoundValue(val) defined on it - use it
@@ -135,7 +135,7 @@ const Plus = function() {
       thing.value = v; 
   }
   
-  
+ 
   // setup terminal binding on 'this'
   function Terminal() {
     var path = this.@["name"];
@@ -164,7 +164,9 @@ const Plus = function() {
       var (coll,key) = Object.referenceOf(pmo, mo);
       this.$model = coll[key];
       setupModelChangeHandler( coll, key, function(val) { 
-        assert typeof val == #object : "data model must be an object ";
+        assert typeof val == #object || 
+               typeof val == #class  ||
+               typeof val == #namespace : "data model must be an object ";
         this super.$model = val; 
         rebindSubtree(this super,val);
       });      
@@ -175,7 +177,7 @@ const Plus = function() {
     if(!this.$model) throw "Model {" + mo + "} not found!";
   }
 
-  
+    
   const CLASS_RE = /(.*)\{\{(([-_a-z0-9]+) *\:)? *(.+)\}\}(.*)/i;
   //const CLASS_RE = /(.*)\{\{([-_a-z0-9]+)(\:)+(.+)\}\}(.*)/i;  
   

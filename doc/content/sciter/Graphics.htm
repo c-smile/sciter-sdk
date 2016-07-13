@@ -16,8 +16,6 @@
     <dd>Line cap type, values of <em>lineCap</em> property</dd>
     <dt>ALIGN_DEFAULT<br/>ALIGN_START<br/>ALIGN_END<br/>ALIGN_CENTER</dt>
     <dd>text alignment type, parameter values of <em>Text.Alignment</em> function</dd>
-    <dt>FILL_ONLY<br/>STROKE_ONLY<br/>STROKE_AND_FILL<br/>FILL_BY_LINE_COLOR</dt>
-    <dd><em>drawPath</em> flags.</dd>
     <h3>Properties</h3>
     <dt>lineJoin</dt>
     <dd>rw - <em>integer</em>, one of JOIN_xxx constants. Type of line join.</dd>
@@ -230,7 +228,7 @@
     <dt>pushLayer</dt>
     <dd>
       <div>( <strong>image</strong>: Image, mask1a: true | false, [, <strong>opacity</strong>: 0.0... 1.0] ) : Graphics</div>
-      <p>Sets clip mask from image. If <em>mask1a</em> is true then all pixels corresponding mask alpha == 0 will <strong>not</strong> be rendered. If <em>mask1a</em> is false then it is an inverse mask - all pixels corresponding mask alpha == 0 will be rendered </p></dd>
+      <p>Sets clip mask from image. If <em>mask1a</em> is true then all pixels corresponding mask alpha == 0 will <strong>not</strong> be rendered. If <em>mask1a</em> is false then it is an inverse mask - all pixels corresponding mask alpha == 0 will be rendered</p></dd>
     <dt>pushLayer</dt>
     <dd>
       <div>( <strong>area</strong>: Symbol ) : Graphics</div>
@@ -271,10 +269,6 @@
     <dt>arcTo</dt>
     <dd>
       <div>( x:<em>float</em>, y:<em>float,</em> angle:<em>float, </em>rx:<em>float</em>, ry:<em>float, </em>largeArc:<em>bool, </em>sweep: <em>bool </em>[, relative <em>= false</em> ] ) : Graphics.Path</div>
-      <p>(tbd)</p></dd>
-    <dt>ellipseTo</dt>
-    <dd>
-      <div>( x:<em>float</em>, y:<em>float, </em>rx:<em>float</em>, ry:<em>float, </em>[, clockwise <em>= true</em> ] ) : Graphics.Path</div>
       <p>(tbd)</p></dd>
     <dt>quadraticCurveTo</dt>
     <dd>

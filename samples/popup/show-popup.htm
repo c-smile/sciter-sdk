@@ -43,6 +43,13 @@
           this.popup( $(popup#test), (popupPoint << 16) | anchorPoint);
         }
       }); 
+      
+      // close popup on mouseup inside it
+      self.on("~mouseup", "popup", function() {
+        this.state.popup = false;
+      });
+      
+      
     </script>
   
 </head>

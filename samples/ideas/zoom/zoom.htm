@@ -1,0 +1,73 @@
+<html>
+<head>
+
+<style type="text/css">
+
+body { margin:0 }
+
+.wrapper {
+  size:*;
+  background: #f1f1f1;
+  overflow:auto;
+}
+
+.container {
+  transform-origin: center top;
+  margin:0 *;
+  width:max-content;
+  horizontal-align:center;
+}
+
+.page {
+  border: 1px silver solid;
+  display: block;
+  margin: 30dip * 30dip *;
+  background: rgb(255, 255, 255);
+}
+
+.page.a5 {
+  width: 154mm;
+  height: 210mm;
+}
+
+.page.a4 {
+  width: 210mm;
+  height: 297mm;
+}
+
+</style>
+
+<script type="text/tiscript">
+  $(#zoom).on("change",function() {
+  
+    var zoom = this.value / 100.0;
+  
+    const container = $(div.container);
+    var (w,h) = container.box(#dimension,#content);
+    h = container.intrinsicHeight(w);
+    
+    container.style.set {
+      width : px( w *  zoom ),
+      height : px( h *  zoom ),
+      transform : [scale: zoom]
+    };
+    
+    
+  });
+</script>
+
+</head>
+<body>
+
+  Zoom: <input|hslider #zoom min=25 max=200 value=100 />
+
+  <div class="wrapper">
+    <div class="container">
+        <div class="page a5">A5</div>
+        <div class="page a4">A4</div>
+        <div class="page a5">A5</div>
+    </div>
+  </div>
+
+</body>
+</html>

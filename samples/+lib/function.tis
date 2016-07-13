@@ -47,7 +47,7 @@ function Function.partial(pargs..) {
 //| and then calls it with the arguments supplied.
 //|
 function Function.delay(milliseconds, args..) {
-  self.timer(milliseconds, :: (this super).apply(null, args) );
+  self.timer(milliseconds, :: (this super).apply(null, args), true );
 }
 
 //|
@@ -85,13 +85,13 @@ function Function.throttle(milliseconds, options = {}) {
       context = this;
       args = arguments;
       if (remaining <= 0) {
-        self.timer(0,later);
+        self.timer(0,later,true);
         running = false;
         previous = now;
         result = func.apply(context, args);
       } else if (!running && options.trailing !== false) {
         running = true;
-        self.timer(remaining, later);
+        self.timer(remaining, later,true);
       }
       return result;
     };
@@ -118,7 +118,7 @@ function Function.throttle(milliseconds, options = {}) {
         var last = Date.ticks() - timestamp;
         if (last < milliseconds) {
           running = true;
-          self.timer(milliseconds - last, later);
+          self.timer(milliseconds - last, later, true);
         } else {
           running = false;
           if (!immediate) result = func.apply(context, args);
@@ -127,7 +127,7 @@ function Function.throttle(milliseconds, options = {}) {
       var callNow = immediate && !running;
       if (!running) {
         running = true;
-        self.timer(milliseconds, later);
+        self.timer(milliseconds, later, true);
       }
       if (callNow) result = func.apply(context, args);
       return result;

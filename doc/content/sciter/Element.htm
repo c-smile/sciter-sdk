@@ -429,9 +429,10 @@ el.$content(This is item number <b>{ num }</b>);
       <p>Loads the <em>html</em> document from string as a content of this element. For elements having <em>behavior:frame</em> assigned it loads html, styles and executes scripts refered by the the html content. For any other elements it loads only content of body portion of the document, no style loading or script execution happens in this case.</p></dd>
     <dt>loadImage</dt>
     <dd>
-      <div><strong>( url</strong>: string [, <strong>callback</strong>: function <strong>) </strong>returns: <em>Image | null</em></div>
+      <div><strong>( url</strong>: string [, <strong>callback</strong>: function [, useCache: true|<em>false</em> ] ] &nbsp;<strong>) </strong>returns: <em>Image | null</em></div>
       <p>Loads image from the url.<em> </em>If <em>callback</em> is ommited then the engine will try to load image sycnhronously otherwise (if <em>callback</em> is a function) engine will issue asynchronous request and will call this function upon arrival.</p>
-      <p>Signature of the callback function is <font face="Courier New">function callback(image)</font> where <em>image</em> is an object of class Image or null in case of error.</p></dd>
+      <p>If <em>useCache</em> is not false then the method will try to use image cache to get the image and on successful download the image will go to the cache too. By default useCache is <em>false</em>.</p>
+      <p>Signature of the callback function is <font face="Courier New">function callback(image, status)</font> where <em>image</em> is an object of class Image or null in case of error, <em>status</em> is http status (200,404,etc).</p></dd>
     <dt>bindImage</dt>
     <dd>
       <div><strong>( url</strong>: string , <strong>img</strong>: Image <strong>) </strong>returns: <em>true</em> | <em>false</em></div>
@@ -651,8 +652,8 @@ el.$content(This is item number <b>{ num }</b>);
       <p>Note: this method mimics jQuery's <code>.on()</code> method and has the same semantics.</p></dd>
     <dt id="on-by-name">on</dt>
     <dd>
-    <div>( <strong>event</strong>: string [, <strong>selector</strong>: string] , <strong>handler</strong>: function ) : &lt;this element&gt;</div>
-    <p>Alias of <strong>subscribe</strong>(<strong>event</strong>: string [, <strong>selector</strong>: string] , <strong>handler</strong>: function) above.</dd></p>
+      <div>( <strong>event</strong>: string [, <strong>selector</strong>: string] , <strong>handler</strong>: function ) : &lt;this element&gt;</div>
+      <p>Alias of <strong>subscribe</strong>(<strong>event</strong>: string [, <strong>selector</strong>: string] , <strong>handler</strong>: function) above.</p></dd>
     <dt>unsubscribe</dt>
     <dd>
       <div>(<strong>handler</strong>: function ) or</div>
@@ -727,10 +728,10 @@ el.$content(This is item number <b>{ num }</b>);
     <dt>queryCommand</dt>
     <dd>
       <div>( <strong>command</strong>:string [, <strong>attributes</strong>:map] ) : <em>integer</em></div>
-      <p>The queryCommand method reports state and allowance of particular command. The method accepts the same parameters as the execCommand(). Return value is an integer - combination of the following flags: </p>
+      <p>The queryCommand method reports state and allowance of particular command. The method accepts the same parameters as the execCommand(). Return value is an integer - combination of the following flags:</p>
       <ul>
         <li><code>0x01</code> - command is &quot;on&quot; state or &quot;selected&quot;. For example, <code>queryCommand(&quot;format:apply-span:b|strong&quot;)</code> will return 0x01 value if selected text &nbsp;contains either <code>&lt;b&gt;</code> or <code>&lt;strong&gt;</code> elements.</li>
-        <li><code>0x02</code> - command is &quot;disabled&quot; or is not available in current context. </li>
+        <li><code>0x02</code> - command is &quot;disabled&quot; or is not available in current context.</li>
         <ul></ul></ul></dd>
     <h2>Node specific methods</h2>
     <dt>insertNodeBefore</dt>

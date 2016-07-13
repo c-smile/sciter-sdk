@@ -42,18 +42,20 @@ class Notification : Behavior
       });
     }
 
-    // getting this monitor's box
+    // getting this monitor's workarea box
     var (screenX1,screenY1,screenX2,screenY2) = view.screenBox(#workarea, #rect );
 
     // set initial "off stage" state 
     msg.attributes["state"] = "initial";
     
     // measure its real sizes
-    var (w,h) = msg.box(#dimension,#margin);
-    var (oleft,otop,oright,obottom) = msg.box(#rect,#margin,#inner);
-    //stdout.println(oleft,otop,oright,obottom);
+    var (w,h) = msg.box(#dimension,#border);
     
-    // position it at bottom / right corner
+    // getting **declared** margins widths, note: they can be different from computed ones due to margin collapsing
+    w += msg.toPixels(msg.style#margin-right,#width);
+    h += msg.toPixels(msg.style#margin-bottom,#height);
+    
+    // position its border box at bottom / right corner of the screen
 		msg.move( screenX2 - w, 
               screenY2 - h, 
               #screen, 

@@ -32,6 +32,10 @@
       <div>( [<strong>compressionLevel</strong>:integer] &nbsp;) : <a href="../script/Bytes.htm">Bytes</a></div>
       <p>Saves content of the image as a byte vector that can be used e.g. for uploading on the server.</p>
       <p><em>compressionLevel</em> is a number in the range 10..100 - JPEG compression level. If it is omitted or zero then the image is saved using PNG encoding.</p></dd>
+    <dt>fromBytes</dt>
+    <dd>
+      <div>( &nbsp;bytes : <a href="../script/Bytes.htm">Bytes</a> &nbsp;) : Image</div>
+      <p>Static method, constructs image from bytes. The data bytes can contain any supported image packaging format : PNG, JPEG, etc.</p></dd>
     <dt>size</dt>
     <dd>
       <div>( )</div>
@@ -47,7 +51,7 @@
     <dt>compose</dt>
     <dd>
       <div>( <strong>src</strong>: Image , compositionOp, [dstX,dstY, [srcX,srcY,srcW, srcH ]]] ) : this image</div>
-      <p>This method allows to compose two images: this (dst) with the src Image. </p>
+      <p>This method allows to compose two images: this (dst) with the src Image.</p>
       <p>compositionOp is one of composition opeatrions: #src-over, #dst-over, #src-in, #dst-in, #src-out, #dst-out, #src-atop, #dst-atop, #xor, #copy.</p></dd>
     <dt>update</dt>
     <dd>
