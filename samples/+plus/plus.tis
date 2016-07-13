@@ -119,6 +119,7 @@ const Plus = function() {
       //WRONG: updater(thing,coll[key]);
       //we need to post this thing as it may have other aspects and behaviors
       thing.post(::updater(thing,coll[key])); // assign intial value to it;
+      thing.plusSetValueFromModel = function() { this.state.value = coll[key]; } 
     }
   }
 
@@ -382,7 +383,7 @@ const Plus = function() {
           Object.removeObserver.call(elval, rqRenderList);
         }
         if(isSelect) // after rendering <select> items we need to reset value to match new options
-          that.value = that.value;
+          that.timer(1, that.plusSetValueFromModel);
       }
       
       if( filter ) {
