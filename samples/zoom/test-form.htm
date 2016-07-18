@@ -1,0 +1,43 @@
+<form.table>
+    <label>dropdownSelect</label>
+      <select(dropdownSelect) title="numbers">
+        <option>One</option>
+        <option>Two</option>
+        <option>Three</option>
+        <option selected>Four</option>
+        <option>Five</option>
+        <option>Six</option>
+        <option>Seven</option>
+        <option>Eight</option>
+        <option>Nine</option>
+        <option>Ten</option>
+        <option>Eleven</option>
+        <option>Twelve</option>
+      </select>
+    
+    <label>textarea</label>
+      <textarea(textArea) cols=40 rows=4>Sample</textarea>
+      
+    <label for=textEdit>textEdit</label>
+      <input|text(textEdit) value="sample" />
+      
+    <label>password</label>
+      <input|password(passWord) />
+      
+    <label for=checkboxButton>checkboxButton</label>
+      <button|checkbox(checkboxButton) #test value=true>Checkbox</button>
+  
+    <label>radioGroup</label>
+      <div>
+         <button|radio(radioGroup) value="1" checked>Option 1</button>
+         <button|radio(radioGroup) value="2">Option 2</button>
+         <button|radio(radioGroup) value="3">Option 3</button>
+      </div>
+      
+    <label>names (sub-group)</label>
+    <div.table (names) style="background:#FFD; padding:6px">
+      <label>First:</label><input|text(first) value="My">
+      <label>Last:</label><input|text(last) value="Name">
+    </div>
+    
+  </form>

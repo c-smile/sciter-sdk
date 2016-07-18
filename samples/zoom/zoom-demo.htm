@@ -1,0 +1,60 @@
+<html>
+<head>
+
+<style type="text/css">
+
+body { margin:0 }
+
+.wrapper {
+  size:*;
+  background: #f1f1f1;
+  overflow:auto;
+}
+
+.page {
+  border: 1px silver solid;
+  display: block;
+  margin: 30dip * 30dip *;
+  background: rgb(255, 255, 255);
+}
+
+.page.a5 {
+  width: 154mm;
+  height: 210mm;
+}
+
+.page.a4 {
+  width: 210mm;
+  height: 297mm;
+}
+
+.table { padding:8dip; 
+         flow: row(label, select input div textarea button); border-spacing: 6dip;}
+.table > label { padding:4dip; white-space:nowrap; horizontal-align:right; }
+
+button#test { background-size:13dip 13dip; }
+
+</style>
+
+<script type="text/tiscript">
+  $(#zoom).on("change",function() {
+    const wrapper = $(div.wrapper);
+    wrapper.style["zoom"] = pr(this.value);
+  });
+</script>
+
+</head>
+<body>
+
+  Zoom: <input|hslider #zoom min=25 max=200 value=100 step=25 buddy="zoomv" /> <span #zoomv></span>%
+
+  <div class="wrapper">
+    <div class="page a5">A5
+      <include src="test-form.htm" />
+    </div>
+    <div class="page a4">A4</div>
+    <div class="page a5">A5</div>
+  </div>
+
+</body>
+</html>

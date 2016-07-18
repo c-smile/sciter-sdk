@@ -1,8 +1,8 @@
 
 /* principal handlers */
 [model] { aspect:"Plus.Model" url(plus.tis); }
-[model] [name] { aspect:"Plus.Terminal"; }
 [model] [each] { aspect:"Plus.Repeater"; } /* note repeater shall come first before [model] [name] for <select each="..." name="var"> */
+[model] [name] { aspect:"Plus.Terminal"; }
 [model] [class*='{{'] { aspect:"Plus.ClassTerminal"; }
 [model] [value*='{{'] { aspect:"Plus.valAttrTerminal"; }
 [model] [href*='{{'] { aspect:"Plus.hrefAttrTerminal"; }

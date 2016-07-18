@@ -11,6 +11,23 @@
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
     <tr>
+      <td valign="top" bgcolor="#FFFADA">3.3.2.8</td>
+      <td nowrap valign="top" align="center">17-07-2016</td>
+      <td>
+        <p>new:</p>
+        <ul>
+          <li>[css] + zoom property - close to IE's zoom but with differences, see sdk/doc/core/cssmap.html and sample sdk/samples/zoom/zoom-demo.htm</li>
+          <li>[win] virtual keyboard support on tablets.</li></ul>
+        <p>fixes:</p>
+        <ul>
+          <li>[CSS] background-clip handling on custom scrollbar parts.</li>
+          <li>[css] stroke-miterlimit: sigma handling.</li>
+          <li>&lt;select&gt; preventing &quot;change&quot; event generation while select.value = ... assignment. Among other problems it caused problmes in +plus: <a href="http://rsdn.ru/forum/htmlayout/6506282.1">http://rsdn.ru/forum/htmlayout/6506282.1</a></li>
+          <li>Fixes in Element.onGesture() handling. See: samples/gestures/touch-events.htm &nbsp;demo.</li>
+          <li>Element.loadImage() - one more attempt to make it.</li>
+          <li>[+vlist] current [record] clearance on recordset change.</li></ul>Builds: win32/win64, osx32/osx64, linux/gtk64
+        <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
+    <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.2.7</td>
       <td nowrap valign="top" align="center">13-07-2016</td>
       <td>
@@ -18,7 +35,7 @@
         <ul>
           <li>+ [css] sample of content:attr(name); function, see sdk/samples/css3/content-attr.htm</li>
           <li>+ <code>Math.round(float)</code> function.</li>
-          <li>[+plus] use of optional element.setBoundValue() while setting bound DOM element's value. </li>
+          <li>[+plus] use of optional element.setBoundValue() while setting bound DOM element's value.</li>
           <li>[+plus] support of record list / current record idiom. See: sdk/samples/+plus/demos/L-list-detail.htm</li>
           <li>[cssom] + sample of dynamic stylesheet update : sdk/samples/cssom/update-style-sheet.htm</li>
           <li>Element.loadImage(,,useCache: true | false), check documentation.</li>
@@ -33,15 +50,15 @@
           <li>[doc] Image.fromBytes() documented.</li>
           <li>Fix of <a href="https://github.com/c-smile/sciter-sdk/issues/40">https://github.com/c-smile/sciter-sdk/issues/40</a> ( starting new animation at the end() callback )</li>
           <li>[css,drawing] fix of wrong border-radius inherit color handling: <a href="http://sciter.com/forums/topic/border-radius-breaks-color">http://sciter.com/forums/topic/border-radius-breaks-color/</a></li>
-          <li>[+plus] fix of indirect model issue http://sciter.com/forums/topic/about-plus-tis/ </li>
+          <li>[+plus] fix of indirect model issue http://sciter.com/forums/topic/about-plus-tis/</li>
           <li>[clipboard] fix of 0xFFFF cap on text retrieval.</li>
           <li>[tiscript] fix of Object.referenceOf() for non-existent paths.</li>
           <li>preventing view.dialog() and view.msgbox() calls while view closing. Use function self.closing(reason) { .... } to place any modal dialogs when you need them.</li>
           <li>rejecting view.doEvent based modal loops in view dismissing code paths.</li>
-          <li>[+lib] fix of Function.debounce() </li>
+          <li>[+lib] fix of Function.debounce()</li>
           <li>fix of sdk/samples/ideas/tray-notifications/ popup position ( isolating collapsing margins side effect ).</li>
           <li>[doc] Graphics documentation fixes</li>
-          <li>[frames] fixing &quot;closerequest&quot; -&gt; event.cancel = true; handling for discarding document unload. </li>
+          <li>[frames] fixing &quot;closerequest&quot; -&gt; event.cancel = true; handling for discarding document unload.</li>
           <li>Fix of element.on(&quot;~click&quot;, ...) subscriptions handling (click in sinking phase)</li>
           <li>[gtk] graphics::do_draw fix (double deletion in some cases)</li>
           <li>Image.colorAt(x,y,newColor) fix for existing images.</li>

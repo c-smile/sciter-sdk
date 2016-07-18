@@ -352,6 +352,7 @@ function VirtualList(params) {
         records.eachObserver( cmp );
         if(thisObserver)
           Object.removeObserver.call(records,thisObserver); // unsubscribe
+        current_record = null;
       }
     }
  

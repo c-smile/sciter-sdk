@@ -1352,7 +1352,7 @@ input[focus] { aspect: handleFocusAttribute; }
           <p>for the DOM element <code>&lt;input type=text click=&quot;...&quot; focus=&quot;...&quot;&gt;</code></p>
           <p>will cause both handleClickAttribute() <strong>and</strong> handleFocusAttribute() to be called for the element. The <em>this</em> environment value in both calls will be that element.</p></td></tr>
             <tr>
-              <td rowspan="5" bgcolor="#ffe4ca" valign="top"><strong>Other attributes</strong></td>
+              <td rowspan="6" bgcolor="#ffe4ca" valign="top"><strong>Other attributes</strong></td>
               <td nowrap bgcolor="#ffe4ca" align="right"><strong>content</strong></td>
               <td bgcolor="#ffe4ca">
           <div><code>&quot;string&quot; | attr(attrname)</code></div>
@@ -1391,7 +1391,14 @@ input[focus] { aspect: handleFocusAttribute; }
             <tr>
               <td nowrap bgcolor="#ffe4ca" align="right"><strong>popup-anchor-reference-point</strong><br/><strong>popup-reference-point</strong></td>
               <td bgcolor="#ffe4ca"><em>default</em> | <em>top-left |</em> <em>top-center |</em> <em>top-right</em> | <em>middle-left |</em> <em>middle-center</em> | <em>middle-right |</em> <em>bottom-left</em> | <em>bottom-center</em> | <em>bottom-right</em><br/><em>default</em> | <em>top-left |</em> <em>top-center |</em> <em>top-right</em> | <em>middle-left |</em> <em>middle-center</em> | <em>middle-right |</em> <em>bottom-left</em> | <em>bottom-center</em> | <em>bottom-right</em>
-          <p>Individual parts of <strong>popup-position</strong> above.</p></td></tr></table></div>
+          <p>Individual parts of <strong>popup-position</strong> above.</p></td></tr>
+            <tr>
+              <td nowrap bgcolor="#ffe4ca" align="right"><strong>zoom</strong></td>
+              <td bgcolor="#ffe4ca">% or float- zoom factor of element's <strong>content</strong>. 100% or 1.0 values designate no zoom.
+          <p>NOTE: zoom in Sciter is close to IE's zoom but is different in two aspects:</p>
+          <ol>
+            <li><em>zoom</em> in sciter defines multiplication factor for all length values expressed in any units <strong>but not px</strong>. px units are always resolved to physical pixels.</li>
+            <li>zoom defines scale of children of the element - but not element itself.</li></ol></td></tr></table></div>
   <h3>Length units</h3>
   <p>The engine supports following length units:</p>
   <ul>
