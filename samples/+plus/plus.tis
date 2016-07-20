@@ -145,6 +145,39 @@ const Plus = function() {
     setupTerminalBinding(model,thing,path,thing.tag != #output, valueUpdater ); 
   }
   
+  function bindAttributes(model,thing) {
+    assert model : "model shall exist" ;
+
+    function bind(expr, attr) { 
+      assert expr : "it should not be empty";
+      function attrUpdater(thing,v) {
+        thing.post(function() {
+          switch(attr) {
+            case "expanded":
+              thing.state.expanded = !!v; break;
+            case "collapsed":
+              thing.state.collapsed = !!v; break;
+            case "disabled":
+              thing.state.disabled = !!v; break;
+            case "enabled":
+              thing.state.disabled = !v; break;
+            default:
+              thing.@[attr] = v;  
+          }
+        }, true);
+      }
+      setupTerminalBinding(model,thing,expr,false,attrUpdater); 
+    }
+    for( var attr in thing.attributes ) // scan all attributes for "@..." ones:
+    {
+      if( attr !like "@*" ) continue;
+      var expr = thing.attributes[attr];
+      attr = attr.substr(1); // attribute name without '@'
+      bind(expr,attr);
+    }
+  }
+  
+  
   function rebindSubtree(container, model)
   {
     var boundUiElements = container.$$([name]);
@@ -153,6 +186,10 @@ const Plus = function() {
       var path = element.@["name"];
       setupTerminalBinding(model,element,path,element.tag != #output, valueUpdater);
     }
+    boundUiElements = container.$$(:has-bound-attributes);
+    for(var element in boundUiElements) {
+      bindAttributes(model,element);
+    }    
   }
 
   // setup model namespace binding, 'this' is the element
@@ -240,36 +277,7 @@ const Plus = function() {
   function boundAttributesTerminal() {
     var model = this.$model || parentModel(this);
     var thing = this; // the DOM thing
-    assert model : "model shall exist" ;
-
-    function bind(expr, attr) { 
-      assert expr : "it should not be empty";
-      function attrUpdater(thing,v) {
-        thing.post(function() {
-          switch(attr) {
-            case "expanded":
-              thing.state.expanded = !!v; break;
-            case "collapsed":
-              thing.state.collapsed = !!v; break;
-            case "disabled":
-              thing.state.disabled = !!v; break;
-            case "enabled":
-              thing.state.disabled = !v; break;
-            default:
-              thing.@[attr] = v;  
-          }
-        }, true);
-      }
-      setupTerminalBinding(model,thing,expr,false,attrUpdater); 
-    }
-    
-    for( var attr in this.attributes ) // scan all attributes for "@..." ones:
-    {
-      if( attr !like "@*" ) continue;
-      var expr = this.attributes[attr];
-      attr = attr.substr(1); // attribute name without '@'
-      bind(expr,attr);
-    }
+    bindAttributes(model,thing);
   }
   
   function crackEachExpression(text) // parse iterator expression: each="[index,]item in collection[|extra]"
