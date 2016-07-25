@@ -38,8 +38,8 @@
           // on bound tree as 'obj.baz' will be replaced by unbound objects.
           //
           // In order to update deep hierarchies and keeping them bound use 
-          // Object.extend method (defined in +plus.tis):
-          obj.baz.extend { abc:"changed", def:"changed" };        
+          // Object.merge() method (defined in +plus.tis):
+          obj.baz.merge { abc:"changed", def:"changed" };        
         }
         
       }    

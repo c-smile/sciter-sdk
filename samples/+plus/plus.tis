@@ -1,8 +1,8 @@
 
 const Plus = function() {
                         
-  function parentModel(el) {
-    for(var p = el.parent; p; p = p.parent) {
+  function thisModel(el) {
+    for(var p = el; p; p = p.parent) {
       //p.style.display;
       if(var dr = p.$model) return dr;
     }
@@ -78,8 +78,12 @@ const Plus = function() {
   function setupTerminalBinding(model,thing,path,isInput,updater) 
   {
     //stdout.printf("STB %s %V\n", path, path.match( reIsExpression ) );
+    stdout.println("STB", thing, path);
     if( typeof model != #object  && typeof model != #namespace)
+    {
+      stdout.println("!!!!!! STB", thing, path, typeof model);
       return;      
+    }
 
     if(reIsExpression.test(path)) { // looks like an expression, setup it as data observer
       var parts = path.split(reIsExpression);
@@ -119,7 +123,8 @@ const Plus = function() {
       //WRONG: updater(thing,coll[key]);
       //we need to post this thing as it may have other aspects and behaviors
       thing.post(::updater(thing,coll[key])); // assign intial value to it;
-      thing.plusSetValueFromModel = function() { this.value = coll[key]; } 
+      if(thing.tag == "select")
+        thing.plusSetValueFromModel = function() { this.value = coll[key]; return false; } 
     }
   }
 
@@ -141,7 +146,7 @@ const Plus = function() {
   function Terminal() {
     var path = this.@["name"];
     var thing = this; // the DOM thing
-    var model = /*this.$model ||*/ parentModel(thing);
+    var model = /*this.$model ||*/ thisModel(thing);
     setupTerminalBinding(model,thing,path,thing.tag != #output, valueUpdater ); 
   }
   
@@ -196,7 +201,7 @@ const Plus = function() {
   function Model() 
   {
     var mo = this.@["model"];
-    var pmo = parentModel(this); // parent model
+    var pmo = thisModel(this.parent); // parent model
     if( pmo ) // model inside model
     {
       var (coll,key) = Object.referenceOf(pmo, mo);
@@ -220,7 +225,7 @@ const Plus = function() {
   //const CLASS_RE = /(.*)\{\{([-_a-z0-9]+)(\:)+(.+)\}\}(.*)/i;  
   
   function ClassTerminal() {
-    var model = this.$model || parentModel(this);
+    var model = this.$model || thisModel(this);
     var thing = this; // the DOM thing
     var classattr = this.@["class"];
     assert model : "model shall exist" ;
@@ -254,7 +259,7 @@ const Plus = function() {
   }
   
   function AttrTerminal(attrname) {
-    var model = this.$model || parentModel(this);
+    var model = this.$model || thisModel(this);
     var thing = this; // the DOM thing
     var attrval = this.@[attrname];
     assert model : "model shall exist" ;
@@ -275,7 +280,7 @@ const Plus = function() {
   }
   
   function boundAttributesTerminal() {
-    var model = this.$model || parentModel(this);
+    var model = this.$model || thisModel(this);
     var thing = this; // the DOM thing
     bindAttributes(model,thing);
   }
@@ -327,7 +332,7 @@ const Plus = function() {
   
   function Repeater() {
       var (ncoll, nitem, nindex, filter) = crackEachExpression(this.@["each"]);
-      var root = parentModel(this); 
+      var root = thisModel(this); 
       assert root;
       var isSelect = this.tag == "select";
       var that = this; 
@@ -375,7 +380,7 @@ const Plus = function() {
                  //eval(ncoll,root);
       assert(coll);
       
-      this.$model = coll;
+      //WRONG: this.$model = coll; why do we need repeateble to have distinct $model ?
      
       renderList = function () {
         //debug stacktrace;
@@ -418,7 +423,7 @@ const Plus = function() {
   }
   
   function handleEvent(target,name, evt) {
-    var model = target.$model || parentModel(target);
+    var model = target.$model || thisModel(target);
     var action = target.attributes[name];
     return eval.call(target,action,model);
   }
@@ -431,7 +436,7 @@ const Plus = function() {
     }
     if( evt.keyCode != code ) 
       return false;
-    var model = target.$model || parentModel(target);
+    var model = target.$model || thisModel(target);
     var action = target.attributes[name];
     eval.call(target,action,model);
     return true;
@@ -548,20 +553,26 @@ function @observing(func, paths..) {
 }
 
 
-/* NOTE: this method is implemented natively now
-// that is an equivalent of jQuery $.extend(deep) method:
-function Object.extend(objects..) 
+// that is an equivalent of jQuery $.extend(deep) method.
+// it merges tree of objects and arrays without recreating exisiting objects
+function Object.merge(objects..) 
 {
-  const extend1 = function(reciever,source) {
+  function merge1(reciever,source) {
     var rv;
-    for( var (k,v) in source ) {
-      if( typeof v == #object && typeof (rv = reciever[k]) == #object )
-        extend1(rv,v);
+    for( var (k,v) in source ) 
+    {
+      rv = reciever[k];
+      if( typeof v == #object && typeof rv == #object )
+        merge1(rv,v);
+      if( typeof v == #array && typeof rv == #array ) {
+        rv.length = v.length;
+        merge1(rv,v);
+      }
       else
         reciever[k] = v;
     }
   }
   for( var obj in objects )
-    extend1(this,obj);
-}*/
+    merge1(this,obj);
+}
 

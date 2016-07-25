@@ -7,6 +7,7 @@
       
       ol { width:*; }
       ol > li { flow:horizontal; border-bottom:1px solid dotted;}
+      ol > li:hover { color:red; cursor:pointer; }
       ol > li > label { display:inline-block;  }
       
       textarea { width:*; display:block; }
@@ -46,7 +47,7 @@
 
   <!-- the repeateable section -->
   <ol each="customer in someCustomers">
-      <li><button(customer.name) click="selectCustomer(customer)"/>: 
+      <li click="selectCustomer(customer)"><output(customer.name)/>: 
           <output(customer.motto)</li>
   </ol>
   

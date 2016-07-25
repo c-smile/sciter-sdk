@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <title>Plus: very basic sample</title>
+    <style>
+      @import url(../plus.css); /* the only thing needed to include Plus framework */
+      @import url(../../note.css); 
+      
+      span { display:inline-block; border:1dip solid; margin: 4dip; }
+
+    </style>
+    
+    <script type="text/tiscript">
+      
+  
+      namespace Data // our model
+      {  
+        var objects =
+        [
+          {
+            nestedObjects: [  { id: 1, name:"aaa" },
+                              { id: 2, name:"bbb" } ]
+          },
+          {
+            nestedObjects: [  { id: 3, name:"ccc" },
+                              { id: 4, name:"ddd" },
+                              { id: 5, name:"eee" } ]
+          }
+        ];
+      }
+      
+    </script>
+  </head>
+
+<body model="Data"> <!-- define data model we observe -->
+
+  <note><p>Repeatable hosting other ( nested ) repeatable.</p></note>
+
+  <!-- the repeateable section -->
+  <div each="object in objects">
+    <!-- nested repeatable -->
+    <div each="nestedObject in object.nestedObjects">
+        <span(nestedObject.name)/>
+    </div>
+  </div>  
+  
+</body>
+</html>

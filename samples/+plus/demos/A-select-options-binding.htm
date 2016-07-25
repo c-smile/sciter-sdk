@@ -35,7 +35,7 @@
     <select>
       <option>ALL</option>
       <optgroup each="item in items">
-        <option value="{{item.value}}"><output(item.name)/></option>
+        <option(item.name) @value="item.value" />
       </optgroup>
     </select>
   </div>
@@ -44,13 +44,13 @@
   <div>
     Dropdown &lt;select&gt; with bound &lt;option&gt;s
     <select each="item in items" (currentVal)>
-      <option value="{{item.value}}"><output(item.name)/></option>
+      <option(item.name) @value="item.value" />
     </select> 
   </div>
   <div>
     &lt;select&gt; with bound &lt;option&gt;s
     <select size=3 each="item in items" (currentVal)>
-      <option value="{{item.value}}"><output(item.name)/></option>
+      <option @value="item.value"><output(item.name)/></option>
     </select>
   </div>
 
