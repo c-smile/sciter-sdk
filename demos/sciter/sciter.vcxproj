@@ -163,6 +163,9 @@
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <DelayLoadDLLs>MF.DLL; MFPLAT.DLL; MFREADWRITE.DLL; shlwapi.dll</DelayLoadDLLs>
     </Link>
+    <Manifest>
+      <AdditionalManifestFiles>$(ProjectDir)res\dpi-aware.manifest %(AdditionalManifestFiles)</AdditionalManifestFiles>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />

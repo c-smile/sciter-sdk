@@ -6,7 +6,7 @@ class Notification : Behavior
 	 var msg; // singleton, one message at the same time
      
 	 function cancel() { // call if you want to cancel it
-		 if( msg.shown ) {
+		 if( msg.attributes["state"] == "shown" ) {
       msg.off(".notification");
 			msg.attributes["state"] = undefined;
 			msg.move();

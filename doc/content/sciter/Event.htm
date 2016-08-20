@@ -261,7 +261,19 @@ VK_F20      VK_F21      VK_F22      VK_F23      VK_F24
   <dl>
     <dt>match</dt>
     <dd>(<strong>eventName</strong>:string [,<strong>selector</strong>:string]) : true | false
-      <p>Returns <em>true</em> if the event has symbolic name of <em>eventName</em> and its target matches the <em>selector</em>. The <em>eventName</em> can accept <a href="#symbolic-event-names">following symbolic names</a>:</p></dd></dl>
+      <p>Returns <em>true</em> if the event has symbolic name of <em>eventName</em> and its target matches the <em>selector</em>. The <em>eventName</em> can accept <a href="#symbolic-event-names">following symbolic names</a>:</p></dd>
+    <dt>exchangeData</dt>
+    <dd>() : array of symbols.
+      <p>Retuns list of data items types associated with exchange oeration. The list is an array containing <code>#text</code>, <code>#html</code>, <code>#url</code>, <code>#file</code>, <code>#picture</code> or <code>#json</code>.</p></dd>
+    <dt>exchangeData</dt>
+    <dd>(<strong>dataType</strong>:symbol) : value
+      <p>The method allows to get data of particular data type:</p>
+      <p><code>#text</code> - returns string - dragged text;</p>
+      <p><code>#html</code> - returns (url,html) pair - url of dragged HTML fragment and the HTML itself;</p>
+      <p><code>#url</code> - returns (caption,url) pair - caption and the url itself;</p>
+      <p><code>#file</code> - returns filenames array - list of dragged file paths;</p>
+      <p><code>#picture</code> - returns Image object if dragged data contains an image;</p>
+      <p><code>#json</code> - returns value - json value.</p></dd></dl>
   <h2 id="symbolic-event-names">Symbolic event names</h2>
   <p>Symbolic event names are used by <code>Element.subscribe(&quot;name&quot;, ...)</code>, <code>Element.on(&quot;name&quot;, ...)</code> and <code>Event.match(&quot;name&quot;, ...)</code>.</p>
   <dl>

@@ -5,12 +5,44 @@
 
 HINSTANCE ghInstance = 0;
 
+// generate BGRA image
+// check http://sciter.com/forums/topic/how-to-render-memory-image-in-sciter-page/
+void GenerateBGRATestsImage(HWND hSciter) {
+  BYTE packedData[4 + 4 + 4 + 10 * 10 * 4]; 
+  memset(packedData,0,sizeof(packedData));
+
+  // signature
+  packedData[0] = 'B';
+	packedData[1] = 'G';
+	packedData[2] = 'R';
+  packedData[3] = 'A';
+
+  // width/height
+  packedData[7] = 10;
+  packedData[11] = 10;
+
+  // image data
+  for ( int i = 0; i < 10 * 10 * 4; i += 4)
+  {
+			packedData[4 + 4 + 4 + i] = i / 4;
+      packedData[4 + 4 + 4 + i + 1] = 255 - i / 4;
+      packedData[4 + 4 + 4 + i + 2] = 255;
+      packedData[4 + 4 + 4 + i + 3] = 255;
+  }
+  ::SciterDataReady( hSciter, WSTR("in-memory:test"), packedData,  sizeof(packedData));
+}
+
 // handle SC_LOAD_DATA requests - get data from resources of this application
 UINT DoLoadData(LPSCN_LOAD_DATA pnmld)
 {
   LPCBYTE pb = 0; UINT cb = 0;
   aux::wchars wu = aux::chars_of(pnmld->uri);
-  if(wu.like(WSTR("res:*")))
+
+  if(wu == const_wchars("in-memory:test"))
+  {
+    GenerateBGRATestsImage(pnmld->hwnd);
+  }
+  else if(wu.like(WSTR("res:*")))
   {
     // then by calling possibly overloaded load_resource_data method
     if(sciter::load_resource_data(ghInstance,wu.start+4, pb, cb))

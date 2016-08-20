@@ -39,8 +39,7 @@
           ddn: undefined // nullable
         };
         $(form).value = v;
-        assert $(form).value == v;
-        $(#out).value = String.printf("%V",v);
+        $(#out).value = String.printf("%V",$(form).value);
       }
     
     

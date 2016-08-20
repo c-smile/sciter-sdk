@@ -11,6 +11,9 @@
     $(button#test).onClick = function() {
       Notification.show("Are you still with me, my friend?");     
     }
+    $(button#cancel).onClick = function() {
+      Notification.cancel();     
+    }
     
     </script>
   </head>
@@ -22,6 +25,7 @@
 </select>
 
 <button#test>Show notification</button>
+<button#cancel>Cancel notification</button>
 
 <popup#notification>
   <header>Question:</header>

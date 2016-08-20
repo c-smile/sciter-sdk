@@ -527,9 +527,12 @@ namespace dom
 
     /**Scroll this element to view.
       **/
-    void scroll_to_view(bool toTopOfView = false)
+    void scroll_to_view(bool toTopOfView = false, bool smooth = false)
     {
-      SciterScrollToView(he, (BOOL)toTopOfView);
+      UINT flags = 0;
+      if(toTopOfView)  flags |= SCROLL_TO_TOP;
+      if(smooth) flags |= SCROLL_SMOOTH;
+      SciterScrollToView(he, flags );
     }
 
     void get_scroll_info(POINT& scroll_pos, RECT& view_rect, SIZE& content_size)

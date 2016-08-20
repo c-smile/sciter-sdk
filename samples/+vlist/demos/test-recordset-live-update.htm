@@ -76,9 +76,10 @@
         var r = records[at];
         var times = r.nupdates || 0;
         ++times;
-        r.nupdates = times;
-        r.caption = String.$(Item updated {times} time{times > 1?"s":""});
-        //stdout.$n(Item at {at} was updated);
+        r.extend { 
+                    nupdates: times,
+                    caption: String.$(Item updated {times} time{times > 1?"s":""})
+                 };
       }
       
       function noop() {}

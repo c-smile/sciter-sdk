@@ -258,7 +258,7 @@ function VirtualList(params) {
     list.onScroll = function(evt) 
     {
       if( evt.type == Event.SCROLL_POS )
-        onScrollTo(evt.scrollPos / item_height);
+        onScrollTo( (evt.scrollPos / item_height).limit( 0 , records.length - 1 - visible_items));
     };
     
     function onRecordsetRangeAdd(start, end) 

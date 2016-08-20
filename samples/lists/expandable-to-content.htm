@@ -1,0 +1,85 @@
+<html>
+  <head>
+  <title></title>
+  <style>
+  
+    html { background:#EEE; }
+  
+    ul {
+      font: system;
+      behavior:expandable-list;
+      width:230dip;
+      height:*;
+      padding:0;
+      overflow:hidden;
+      border:1px solid;
+      border-color:#BBB #FFF #FFF #BBB;
+    }
+    ul > li 
+    {
+      display:block;
+      padding:0;
+      margin:0;
+      min-height:24dip;
+      height:0;
+      overflow:hidden;
+    }
+    
+    ul > li > div.details { 
+      background:#FEA url(images/inner-shadow.png) expand; 
+      background-position:10 5 5 10;
+      size:*;
+      padding:10px;
+      //-- overflow:auto; 
+    }
+    ul > li > caption
+    {
+      font-size:12dip;
+      font-weight:bold;
+      line-height:14dip;
+      color:#666;
+      margin:0;
+      padding:4px 10px;
+      background-color:#DDD;
+      border-width:1px;
+      border-style:solid;
+      border-color:#FEFEFE #BBB #BBB #FEFEFE;
+      text-shadow:#FFF 1px 1px 2px, #BBB -1px -1px 2px;
+    }
+    
+    //-- ul > li > div.details { visibility:collapse; }
+    
+    ul > li:expanded { height:max-content; transition: height(sine-in-out,400ms); } //++
+    
+    //-- ul > li:animating > div.details { visibility:visible; overflow:hidden; }
+    //-- ul > li:expanded > div.details { visibility:visible; }
+  
+  </style>
+  <script type="text/tiscript"></script>
+  </head>
+<body>
+  <header>Expandable list sample</header>
+  <ul id="expandable">
+    <li default>
+      <caption>First</caption>
+      <div class="details" style="background-color:#FEA">
+        First details				   
+      </div>
+    </li>
+    <li>
+      <caption>Second</caption>
+      <div class="details" style="background-color:#EFA">
+        Second details				   
+      </div>
+    </li>
+    <li>
+      <caption>Third</caption>
+      <div class="details" style="background-color:#AEF">
+        Third details:
+        <widget type=calendar />				   
+      </div>
+    </li>
+  </ul>
+
+</body>
+</html>

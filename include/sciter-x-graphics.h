@@ -28,21 +28,21 @@ namespace gool
   class text_layout;
 }
 
-typedef gool::graphics* HGFX;
-typedef gool::image*    HIMG;
-typedef gool::path*     HPATH;
-typedef gool::text_layout* HTEXT;
+typedef gool::graphics*     HGFX;
+typedef gool::image*        HIMG;
+typedef gool::path*         HPATH;
+typedef gool::text_layout*  HTEXT;
 
-typedef float REAL;
+typedef float SC_REAL;
 
-typedef REAL  POS;           // position
-typedef REAL  DIM;           // dimension
-typedef REAL  ANGLE;         // angle (radians)
-typedef unsigned int COLOR; // COLOR
+typedef SC_REAL  SC_POS;        // position
+typedef SC_REAL  SC_DIM;        // dimension
+typedef SC_REAL  SC_ANGLE;      // angle (radians)
+typedef unsigned int SC_COLOR;  // color
 
-struct COLOR_STOP
+struct SC_COLOR_STOP
 {
-  COLOR color;
+  SC_COLOR color;
   float offset; // 0.0 ... 1.0
 };
 
@@ -136,7 +136,7 @@ struct SciterGraphicsAPI
   //           image_write_function* dataReceiver );
 
   GRAPHIN_RESULT
-        SCFN(imageClear)( HIMG himg, COLOR byColor );
+        SCFN(imageClear)( HIMG himg, SC_COLOR byColor );
 
   GRAPHIN_RESULT
         SCFN(imageLoad)( const BYTE* bytes, UINT num_bytes, HIMG* pout_img ); // load png/jpeg/etc. image from stream of bytes
@@ -151,8 +151,8 @@ struct SciterGraphicsAPI
 
   // SECTION: graphics primitives and drawing operations
 
-  // create COLOR value
-  COLOR
+  // create SC_COLOR value
+  SC_COLOR
         SCFN(RGBA)(UINT red, UINT green, UINT blue, UINT alpha /*= 255*/);
 
   GRAPHIN_RESULT
@@ -166,35 +166,35 @@ struct SciterGraphicsAPI
 
 // Draws line from x1,y1 to x2,y2 using current lineColor and lineGradient.
   GRAPHIN_RESULT
-        SCFN(gLine) ( HGFX hgfx, POS x1, POS y1, POS x2, POS y2 );
+        SCFN(gLine) ( HGFX hgfx, SC_POS x1, SC_POS y1, SC_POS x2, SC_POS y2 );
 
 // Draws rectangle using current lineColor/lineGradient and fillColor/fillGradient with (optional) rounded corners.
   GRAPHIN_RESULT
-        SCFN(gRectangle) ( HGFX hgfx, POS x1, POS y1, POS x2, POS y2 );
+        SCFN(gRectangle) ( HGFX hgfx, SC_POS x1, SC_POS y1, SC_POS x2, SC_POS y2 );
 
 // Draws rounded rectangle using current lineColor/lineGradient and fillColor/fillGradient with (optional) rounded corners.
   GRAPHIN_RESULT
-        SCFN(gRoundedRectangle) ( HGFX hgfx, POS x1, POS y1, POS x2, POS y2, const DIM* radii8 /*DIM[8] - four rx/ry pairs */);
+        SCFN(gRoundedRectangle) ( HGFX hgfx, SC_POS x1, SC_POS y1, SC_POS x2, SC_POS y2, const SC_DIM* radii8 /*SC_DIM[8] - four rx/ry pairs */);
 
 // Draws circle or ellipse using current lineColor/lineGradient and fillColor/fillGradient.
   GRAPHIN_RESULT
-        SCFN(gEllipse) ( HGFX hgfx, POS x, POS y, DIM rx, DIM ry );
+        SCFN(gEllipse) ( HGFX hgfx, SC_POS x, SC_POS y, SC_DIM rx, SC_DIM ry );
 
 // Draws closed arc using current lineColor/lineGradient and fillColor/fillGradient.
   GRAPHIN_RESULT
-        SCFN(gArc) ( HGFX hgfx, POS x, POS y, POS rx, POS ry, ANGLE start, ANGLE sweep );
+        SCFN(gArc) ( HGFX hgfx, SC_POS x, SC_POS y, SC_POS rx, SC_POS ry, SC_ANGLE start, SC_ANGLE sweep );
 
 // Draws star.
   GRAPHIN_RESULT
-        SCFN(gStar) ( HGFX hgfx, POS x, POS y, DIM r1, DIM r2, ANGLE start, UINT rays );
+        SCFN(gStar) ( HGFX hgfx, SC_POS x, SC_POS y, SC_DIM r1, SC_DIM r2, SC_ANGLE start, UINT rays );
 
 // Closed polygon.
   GRAPHIN_RESULT
-        SCFN(gPolygon) ( HGFX hgfx, const POS* xy, UINT num_points );
+        SCFN(gPolygon) ( HGFX hgfx, const SC_POS* xy, UINT num_points );
 
   // Polyline.
   GRAPHIN_RESULT
-        SCFN(gPolyline) ( HGFX hgfx, const POS* xy, UINT num_points );
+        SCFN(gPolyline) ( HGFX hgfx, const SC_POS* xy, UINT num_points );
 
 // SECTION: Path operations
 
@@ -208,19 +208,19 @@ struct SciterGraphicsAPI
         SCFN(pathRelease) ( HPATH path );
 
   GRAPHIN_RESULT
-        SCFN(pathMoveTo) ( HPATH path, POS x, POS y, BOOL relative );
+        SCFN(pathMoveTo) ( HPATH path, SC_POS x, SC_POS y, BOOL relative );
 
   GRAPHIN_RESULT
-        SCFN(pathLineTo) ( HPATH path, POS x, POS y, BOOL relative );
+        SCFN(pathLineTo) ( HPATH path, SC_POS x, SC_POS y, BOOL relative );
 
   GRAPHIN_RESULT
-        SCFN(pathArcTo) ( HPATH path, POS x, POS y, ANGLE angle, DIM rx, DIM ry, BOOL is_large_arc, BOOL clockwise, BOOL relative );
+        SCFN(pathArcTo) ( HPATH path, SC_POS x, SC_POS y, SC_ANGLE angle, SC_DIM rx, SC_DIM ry, BOOL is_large_arc, BOOL clockwise, BOOL relative );
 
   GRAPHIN_RESULT
-        SCFN(pathQuadraticCurveTo) ( HPATH path, POS xc, POS yc, POS x, POS y, BOOL relative );
+        SCFN(pathQuadraticCurveTo) ( HPATH path, SC_POS xc, SC_POS yc, SC_POS x, SC_POS y, BOOL relative );
 
   GRAPHIN_RESULT
-        SCFN(pathBezierCurveTo) ( HPATH path, POS xc1, POS yc1, POS xc2, POS yc2, POS x, POS y, BOOL relative );
+        SCFN(pathBezierCurveTo) ( HPATH path, SC_POS xc1, SC_POS yc1, SC_POS xc2, SC_POS yc2, SC_POS x, SC_POS y, BOOL relative );
 
   GRAPHIN_RESULT
         SCFN(pathClosePath) ( HPATH path );
@@ -233,20 +233,20 @@ struct SciterGraphicsAPI
 // SECTION: affine tranformations:
 
   GRAPHIN_RESULT
-        SCFN(gRotate) ( HGFX hgfx, ANGLE radians, POS* cx /*= 0*/, POS* cy /*= 0*/ );
+        SCFN(gRotate) ( HGFX hgfx, SC_ANGLE radians, SC_POS* cx /*= 0*/, SC_POS* cy /*= 0*/ );
 
   GRAPHIN_RESULT
-        SCFN(gTranslate) ( HGFX hgfx, POS cx, POS cy );
+        SCFN(gTranslate) ( HGFX hgfx, SC_POS cx, SC_POS cy );
 
   GRAPHIN_RESULT
-        SCFN(gScale) ( HGFX hgfx, DIM x, DIM y );
+        SCFN(gScale) ( HGFX hgfx, SC_DIM x, SC_DIM y );
 
   GRAPHIN_RESULT
-        SCFN(gSkew) ( HGFX hgfx, DIM dx, DIM dy );
+        SCFN(gSkew) ( HGFX hgfx, SC_DIM dx, SC_DIM dy );
 
   // all above in one shot
   GRAPHIN_RESULT
-        SCFN(gTransform) ( HGFX hgfx, POS m11, POS m12, POS m21, POS m22, POS dx, POS dy );
+        SCFN(gTransform) ( HGFX hgfx, SC_POS m11, SC_POS m12, SC_POS m21, SC_POS m22, SC_POS dx, SC_POS dy );
 
 // end of affine tranformations.
 
@@ -264,7 +264,7 @@ struct SciterGraphicsAPI
 
   // set line width for subsequent drawings.
   GRAPHIN_RESULT
-        SCFN(gLineWidth) ( HGFX hgfx, DIM width );
+        SCFN(gLineWidth) ( HGFX hgfx, SC_DIM width );
 
   GRAPHIN_RESULT
         SCFN(gLineJoin) ( HGFX hgfx, SCITER_LINE_JOIN_TYPE type );
@@ -275,32 +275,32 @@ struct SciterGraphicsAPI
   //GRAPHIN_RESULT SCFN
   //      (*gNoLine ( HGFX hgfx ) { gLineWidth(hgfx,0.0); }
 
-  // COLOR for solid lines/strokes
+  // SC_COLOR for solid lines/strokes
   GRAPHIN_RESULT
-        SCFN(gLineColor) ( HGFX hgfx, COLOR c);
+        SCFN(gLineColor) ( HGFX hgfx, SC_COLOR c);
 
-  // COLOR for solid fills
+  // SC_COLOR for solid fills
   GRAPHIN_RESULT
-        SCFN(gFillColor) ( HGFX hgfx, COLOR color );
+        SCFN(gFillColor) ( HGFX hgfx, SC_COLOR color );
 
 //inline void
 //      graphics_no_fill ( HGFX hgfx ) { graphics_fill_color(hgfx, graphics_rgbt(0,0,0,0xFF)); }
 
   // setup parameters of linear gradient of lines.
   GRAPHIN_RESULT
-        SCFN(gLineGradientLinear)( HGFX hgfx, POS x1, POS y1, POS x2, POS y2, COLOR_STOP* stops, UINT nstops );
+        SCFN(gLineGradientLinear)( HGFX hgfx, SC_POS x1, SC_POS y1, SC_POS x2, SC_POS y2, SC_COLOR_STOP* stops, UINT nstops );
 
   // setup parameters of linear gradient of fills.
   GRAPHIN_RESULT
-        SCFN(gFillGradientLinear)( HGFX hgfx, POS x1, POS y1, POS x2, POS y2, COLOR_STOP* stops, UINT nstops );
+        SCFN(gFillGradientLinear)( HGFX hgfx, SC_POS x1, SC_POS y1, SC_POS x2, SC_POS y2, SC_COLOR_STOP* stops, UINT nstops );
 
   // setup parameters of line gradient radial fills.
   GRAPHIN_RESULT
-        SCFN(gLineGradientRadial)( HGFX hgfx, POS x, POS y, DIM rx, DIM ry, COLOR_STOP* stops, UINT nstops );
+        SCFN(gLineGradientRadial)( HGFX hgfx, SC_POS x, SC_POS y, SC_DIM rx, SC_DIM ry, SC_COLOR_STOP* stops, UINT nstops );
 
   // setup parameters of gradient radial fills.
   GRAPHIN_RESULT
-        SCFN(gFillGradientRadial)( HGFX hgfx, POS x, POS y, DIM rx, DIM ry, COLOR_STOP* stops, UINT nstops );
+        SCFN(gFillGradientRadial)( HGFX hgfx, SC_POS x, SC_POS y, SC_DIM rx, SC_DIM ry, SC_COLOR_STOP* stops, UINT nstops );
 
   GRAPHIN_RESULT
         SCFN(gFillMode) ( HGFX hgfx, BOOL even_odd /* false - fill_non_zero */ );
@@ -316,40 +316,40 @@ struct SciterGraphicsAPI
         SCFN(textCreate)(HTEXT* ptext, LPCWSTR text, UINT textLength, const SCITER_TEXT_FORMAT* format );
 
   GRAPHIN_RESULT
-        SCFN(textGetMetrics)(HTEXT text, DIM* minWidth, DIM* maxWidth, DIM* height, DIM* ascent, DIM* descent, UINT* nLines);
+        SCFN(textGetMetrics)(HTEXT text, SC_DIM* minWidth, SC_DIM* maxWidth, SC_DIM* height, SC_DIM* ascent, SC_DIM* descent, UINT* nLines);
 
   GRAPHIN_RESULT
-        SCFN(textSetBox)(HTEXT text, DIM width, DIM height);
+        SCFN(textSetBox)(HTEXT text, SC_DIM width, SC_DIM height);
 
   // draw text with position (1..9 on MUMPAD) at px,py
   // Ex: gDrawText( 100,100,5) will draw text box with its center at 100,100 px
   GRAPHIN_RESULT
-        SCFN(gDrawText) ( HGFX hgfx, HTEXT text, POS px, POS py, UINT position );
+        SCFN(gDrawText) ( HGFX hgfx, HTEXT text, SC_POS px, SC_POS py, UINT position );
 
   // SECTION: image rendering
 
   // draws img onto the graphics surface with current transformation applied (scale, rotation).
   GRAPHIN_RESULT
-        SCFN(gDrawImage) ( HGFX hgfx, HIMG himg, POS x, POS y,
-                           DIM* w /*= 0*/, DIM* h /*= 0*/, UINT* ix /*= 0*/, UINT* iy /*= 0*/, UINT* iw /*= 0*/, UINT* ih, /*= 0*/
+        SCFN(gDrawImage) ( HGFX hgfx, HIMG himg, SC_POS x, SC_POS y,
+                           SC_DIM* w /*= 0*/, SC_DIM* h /*= 0*/, UINT* ix /*= 0*/, UINT* iy /*= 0*/, UINT* iw /*= 0*/, UINT* ih, /*= 0*/
                            float* opacity /*= 0, if provided is in 0.0 .. 1.0*/ );
 
   // SECTION: coordinate space
 
   GRAPHIN_RESULT
-        SCFN(gWorldToScreen) ( HGFX hgfx, POS* inout_x, POS* inout_y);
+        SCFN(gWorldToScreen) ( HGFX hgfx, SC_POS* inout_x, SC_POS* inout_y);
 
   //inline GRAPHIN_RESULT
-  //      graphics_world_to_screen ( HGFX hgfx, POS* length)
+  //      graphics_world_to_screen ( HGFX hgfx, SC_POS* length)
   //{
   //   return graphics_world_to_screen ( hgfx, length, 0);
   //}
 
   GRAPHIN_RESULT
-        SCFN(gScreenToWorld) ( HGFX hgfx, POS* inout_x, POS* inout_y);
+        SCFN(gScreenToWorld) ( HGFX hgfx, SC_POS* inout_x, SC_POS* inout_y);
 
   //inline GRAPHIN_RESULT
-  //      graphics_screen_to_world ( HGFX hgfx, POS* length)
+  //      graphics_screen_to_world ( HGFX hgfx, SC_POS* length)
   //{
   //   return graphics_screen_to_world (hgfx, length, 0);
   //}
@@ -357,7 +357,7 @@ struct SciterGraphicsAPI
 // SECTION: clipping
 
   GRAPHIN_RESULT
-        SCFN(gPushClipBox) ( HGFX hgfx, POS x1, POS y1, POS x2, POS y2, float opacity /*=1.f*/);
+        SCFN(gPushClipBox) ( HGFX hgfx, SC_POS x1, SC_POS y1, SC_POS x2, SC_POS y2, float opacity /*=1.f*/);
 
   GRAPHIN_RESULT
         SCFN(gPushClipPath) ( HGFX hgfx, HPATH hpath, float opacity /*=1.f*/);

@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <title>Plus: very basic sample</title>
+    <style>
+      @import url(../plus.css); 
+      @import url(../../note.css); 
+      
+      #container {
+        flow: row(label,input);
+      }
+      
+      output { display: inline-block; border: 1px gray dotted; }
+    </style>
+    
+    <script type="text/tiscript">
+    
+      include "../plus.tis"; // model below uses @observing decorator defined in plus.tis
+  
+      namespace Data // our model
+      {  
+        var someVariable = false;
+
+        var someObject = {
+            someVariable: false
+        };
+
+        @observing #changes "someVariable" 
+        function myFunction1()
+        {
+            stdout.printf("function1\n");
+        }
+
+        @observing #changes "someObject.someVariable"
+        function myFunction2()
+        {
+            stdout.printf("function2\n");
+        }        
+      }
+
+      function self.ready() {
+        self.timer(1s, :: Data.someVariable = true); 
+      }  
+    
+    </script>
+  </head>
+
+<body model="Data"> <!-- define data model we observe -->
+
+  
+</body>
+</html>

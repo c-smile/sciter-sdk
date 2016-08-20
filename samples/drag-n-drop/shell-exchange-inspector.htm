@@ -1,0 +1,90 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      div.drop-zone {
+        prototype: DropZone;
+        size:200px;
+        color: gray;
+        border: 4px dashed;
+        vertical-align:middle;
+        text-align:center;
+      }
+      div.drop-zone.active-target {
+        background:gold;
+      }    
+    
+    </style>
+    <script type="text/tiscript">
+    
+    
+    class DropZone :Behavior 
+    {
+    
+      function onExchange(evt)
+      {
+        if( evt.type == Event.X_DRAG_ENTER)
+        {
+          this.attributes.addClass("active-target");
+          var types = evt.exchangeData();
+          this.html = types.join("<br>");
+          return true;
+        }
+        else if( evt.type == Event.X_DRAG_LEAVE )
+        {
+          this.attributes.removeClass("active-target");
+          //this.html = "";
+          return true;
+        }
+        else if( evt.type == Event.X_DRAG)
+        {
+          stdout.println(evt.x,evt.y);
+          return true;
+        }
+        else if( evt.type == Event.X_DROP)
+        {
+          this.attributes.removeClass("active-target");
+          var dl = $(dl);
+          dl.clear();
+          var types = evt.exchangeData();
+          
+          for(var dt in types)  
+            switch(dt) {
+              case #text: {
+                var str = evt.exchangeData(#text);
+                dl.$append(<dt>text</dt><dd><pre>{str}</pre></dd>);
+              } break;
+              case #html: {
+                var (url,html) = evt.exchangeData(#html);
+                dl.$append(<dt>html</dt><dd>url:{url}<pre>{html}</pre></dd>);
+              } break;
+              case #url: {
+                var (caption,url) = evt.exchangeData(#url);
+                dl.$append(<dt>url</dt><dd>caption:{caption}<br>url:{url}</dd>);
+              } break;
+              case #file: {
+                var files = evt.exchangeData(#file);
+                dl.$append(<dt>files</dt><dd>{files.join(" ")}</dd>);
+              } break;
+              case #picture: {
+                var img = evt.exchangeData(#picture);
+                self.bindImage("in-memory:exchange",img);
+                dl.$append(<dt>picture</dt><dd><img src="in-memory:exchange"></dd>);
+              } break;
+            }
+            
+          return true;
+        }
+      }    
+    }    
+    
+    </script>
+  </head>
+<body>
+  <div.drop-zone>
+    Drop stuff here
+  </div>
+  <dl></dl>
+</body>
+</html>

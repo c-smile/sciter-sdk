@@ -514,15 +514,6 @@ el.$content(This is item number <b>{ num }</b>);
       <p>After <em>milliseconds</em> delay engine will call <em>callback</em> function with <em>this</em> variable set to the dom element. Return <em>true</em> from the <em>callback()</em> function if you need to continue timer ticks and <em>false</em> otherwise.</p>
       <p>Call of timer() with <em>milliseconds = 0</em> parameter will stop the timer.</p>
       <p>If the element already contains running timer with function of the same oringin as the callback then that timer gets removed before adding new timer. Passing <em>true</em> as <em>avoidSameOriginCheck</em> parameter will suppress same origin matching.</p></dd>
-    <dt>graphics</dt>
-    <dd>
-      <div><strong>(</strong> [ <strong>color</strong>: integer | <strong>color</strong>: color[, <strong>forceInitialization</strong>:bool = true ]] <strong>)</strong> : <a href="Graphics.htm">Graphics</a></div>
-      <p>Returns <a href="Graphics.htm">Graphics</a> object of the element. Graphics is a bitmap that has dimensions of the element therefore, once drawn, image will stay on the screen. Each invocation of the <em>graphics</em> method with color value will return that bitmap with all bits initialized with the <em>color</em> if <em>forceInitialization</em> is <em>true</em> or if graphics does not exist (first call of graphics()). Call of graphics() without parameters first time creates Graphics and initializes it with transparent color 0xFFFFFF, further calls returns created Graphics object and do nothing.</p>
-      <p>To remove graphics from the element use <code>el.graphics(#destroy)</code> call.</p></dd>
-    <dt>graphics</dt>
-    <dd>
-      <div><strong>(</strong> <strong>#destroy</strong> <strong>)</strong> : <a href="Graphics.htm">Graphics</a> | null</div>
-      <p>Removes graphics from the element.</p></dd>
     <dt>swap</dt>
     <dd>
       <div><strong>(other</strong>: Element <strong>)</strong> : null</div>

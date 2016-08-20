@@ -5,13 +5,15 @@
     
       html { background: orange; }
     
-      body {  flow: "1 2 3 4"
-                    "5 5 5 5"; 
+      body {  flow:vertical;
               size:*; 
-              margin:3px; 
-              background:gold;
-            }
-      body > header { width:*; line-height:1.6em;}
+              margin:3dip; }
+              
+      body > header { width:*; line-height:1.6em; background:gold; 
+                      flow:horizontal; }
+      body > header > caption { width:*; }
+      body > header > button { margin-bottom:20dip;; }
+      body > main { size:*; background:white;}
     
     </style>
     <script type="text/tiscript">
@@ -19,16 +21,27 @@
     function self.ready() {
       view.state = View.WINDOW_SHOWN;
     }
+         
+    self.on("click","button#hide", function() {
+      // hide it for 5 seconds:
+      view.state = View.WINDOW_HIDDEN;
+      self.timer(5s, function() {
+        view.state = View.WINDOW_SHOWN;
+      });
+    });
     
     </script>
   </head>
 <body>
-  <header role="window-caption">Caption</header>
-  <button role="window-minimize">_</button>
-  <button role="window-maximize">o</button>
-  <button role="window-close">X</button>
-  <div>  
+  <header role="window-caption">
+    <caption disable>Caption</caption>
+    <button role="window-minimize">_</button>
+    <button role="window-maximize">o</button>
+    <button role="window-close">X</button>
+    <button #hide>-</button>
+  </header>
+  <main>  
     Hello world!
-  </div>
+  </main>
 </body>
 </html>

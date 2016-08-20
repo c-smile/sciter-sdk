@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <script type="text/tiscript">
+    
+      $(input#uppercase).on("keypress", function(evt) 
+      {
+        var s = String.fromCharCode(evt.keyCode);
+        s = s.toUpperCase();
+        evt.keyCode = s.charCodeAt(0);
+        stdout.println(s);
+      });
+    
+    </script>
+  </head>
+<body>
+
+  <p>Input below has all characters converted to uppercase</p>
+
+  <input|text #uppercase>
+
+</body>
+</html>

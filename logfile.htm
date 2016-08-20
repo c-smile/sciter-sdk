@@ -11,6 +11,42 @@
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
     <tr>
+      <td valign="top" bgcolor="#FFFADA">3.3.2.10</td>
+      <td nowrap valign="top" align="center">20-08-2016</td>
+      <td>
+        <p>new:</p>
+        <ul>
+          <li>+ <code>Event.exchangeData([type])</code> - allows to fetch various data/formats from system exchange events.</li></ul>
+        <p>fixes:</p>
+        <ul>
+          <li>Attempt to fix of image animations restart : <a href="http://sciter.com/forums/topic/gifapng-animation-does-not-work-when-parent-window-is-redisplay">http://sciter.com/forums/topic/gifapng-animation-does-not-work-when-parent-window-is-redisplay</a></li>
+          <li>dynamic DPI change adjustments.</li>
+          <li>&lt;img src=&quot;...svg&quot;&gt; - script interpretation disabled in non-inline SVGs.</li>
+          <li>[win,iAccessible] fix of AV (0xC0000005) </li>
+          <li>[script] eval(src) accepts bytecodes in src if it is a byte array</li>
+          <li>&lt;output|time value=&quot;...&quot;&gt; parsing fix.</li>
+          <li>input|date and input|time respect @lang now.</li>
+          <li>Fix of type definition conflict: COLOR is SC_COLOR, ANGLE is SC_ANGLE and so on</li>
+          <li>&lt;select|dropdown&gt; fix of button click</li>
+          <li>[osx] fix of GUI thread - video producer in worker thread case.</li>
+          <li>&lt;header role=&quot;window-caption&quot;&gt; may contain other &lt;role=&quot;window-****&quot;&gt; elements </li>
+          <li>[master-css,win] tooltip background</li>
+          <li>fix of sciter.exe icons on high dpi</li>
+          <li>[win] fix tooltip rendering on W7</li>
+          <li>[css] scroll-manner property, fix of inheritance.</li>
+          <li>MacOS &quot;kinetic overscroll&quot; behavior on all platforms, configured by #define USE_OVERSCROLL true|false</li>
+          <ul>
+            <li>[+vlist] adjustments to support overscroll.</li></ul>
+          <li>[dom] better handling of element removal when it is hovered by the mouse, affects +vlist and similar cases.</li>
+          <li>[+plus] repeatable related fixes.</li>
+          <li>css, custom scrollbar, dip rendering.</li>
+          <li>[+plus] defines Object.merge() function to merge object hierarchy[s] into this one. See: sdk/samples/+plus/demos/C-hierarchy-function-binding.htm</li>
+          <li>[css] fix of memory leak in properties using calc() expression.</li>
+          <li>Object.extend() fix for bound objects.</li>
+          <li>fix &lt;input|number&gt; compatibility with +plus, see: <a href="http://sciter.com/forums/topic/plus-some-demos-are-broken-in-3-3-2-9-because-of-decimal-input-type">http://sciter.com/forums/topic/plus-some-demos-are-broken-in-3-3-2-9-because-of-decimal-input-type</a> </li>
+          <li>[+plus] fix of <a href="http://sciter.com/forums/topic/plus-bound-attribute-is-failed-to-bind">http://sciter.com/forums/topic/plus-bound-attribute-is-failed-to-bind</a> </li>
+          <li>fix of issue with multiple animators running on the same element.</li></ul></td></tr>
+    <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.2.9</td>
       <td nowrap valign="top" align="center">18-07-2016</td>
       <td>

@@ -29,6 +29,11 @@
 
 namespace sciter
 {
+  typedef SC_COLOR COLOR;
+  typedef SC_COLOR_STOP COLOR_STOP;
+  typedef SC_DIM   DIM;
+  typedef SC_POS   POS;
+  typedef SC_ANGLE ANGLE;
 
   struct writer
   {
@@ -336,14 +341,14 @@ namespace sciter
       assert(r == GRAPHIN_OK); r;
     }
 
-    void scale ( REAL x, REAL y )
+    void scale ( SC_REAL x, SC_REAL y )
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gScale( hgfx, x, y ); 
       assert(r == GRAPHIN_OK); r;
     }
 
-    void skew ( REAL dx, REAL dy )
+    void skew ( SC_REAL dx, SC_REAL dy )
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gSkew( hgfx, dx, dy ); 

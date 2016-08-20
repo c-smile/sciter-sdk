@@ -78,10 +78,10 @@ const Plus = function() {
   function setupTerminalBinding(model,thing,path,isInput,updater) 
   {
     //stdout.printf("STB %s %V\n", path, path.match( reIsExpression ) );
-    stdout.println("STB", thing, path);
+    //stdout.println("STB", thing, path);
     if( typeof model != #object  && typeof model != #namespace)
     {
-      stdout.println("!!!!!! STB", thing, path, typeof model);
+      //stdout.println("!!!!!! STB", thing, path, typeof model);
       return;      
     }
 
