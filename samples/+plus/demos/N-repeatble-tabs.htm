@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <title>Plus: very basic sample</title>
+    <style>
+      @import url(../plus.css); /* the only thing needed to include Plus framework */
+      @import url(../../note.css); 
+      
+      tabs { display:block; flow:vertical; size:*; }
+      tabs > labels { display:block; flow:horizontal; border-spacing:0.5em; }
+      tabs > labels > label  { background:#eee; padding: 0.25em 1em; behavior:clickable; cursor:pointer; }
+      tabs > labels > label:expanded  { background:gold; }
+      tabs > panels { display:block; flow:stack; size:*; }
+      tabs > panels > panel { display:block; size:*; visibility:none; border:1dip solid; }
+      tabs > panels > panel:expanded { visibility:visible; }
+
+    </style>
+    
+    <script type="text/tiscript">
+      
+  
+      namespace Data // our model
+      {  
+        var objects =
+        [
+          { name: "first", content: "Dum spiro spero"},
+          { name: "second", content: "Per aspera ad astra"},
+          { name: "third", content: "Vita est via"},
+        ];
+        var currentObject = objects[0]; // current tab's object 
+      }
+      
+    </script>
+  </head>
+
+<body model="Data"> <!-- define data model we observe -->
+
+  <note><p>Tabs as two repeatable containers.</p></note>
+
+  <!-- tabs as repeateable sections -->
+      
+  <tabs>
+    <labels each="object in objects">
+      <label(object.name) @expanded="object === Data.currentObject" click="Data.currentObject = object" />
+    </labels>
+    <panels each="object in objects">
+      <panel @expanded="object === Data.currentObject">
+        <div(object.content)></div>
+        (Content of <span(object.name) /> object)
+      </panel>
+    </panels>
+  </tabs>
+  
+</body>
+</html>
