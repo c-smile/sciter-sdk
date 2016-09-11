@@ -271,8 +271,12 @@ if( fn ) view.<strong>load</strong>(fn);
   <dl>
     <dt>&quot;size&quot;</dt>
     <dd>Event is generated after dimensions of the view (window) was changed. Use view.box() method to get dimensions.</dd>
+    <dt>&quot;sizing&quot;</dt>
+    <dd>Event is generated while user is changing dimensions of resizeable window. Function-handler shall have signature: <code>function(sizingParams)</code> where <code>sizingParams</code> is an object of this structure: <code>{ x:integer, y:integer, width:integer, height: integer, side: 1...9 }</code> - propsed dimensions of the window and <code>side</code> is a window side/corner dragged to change window dimension. </dd>
     <dt>&quot;move&quot;</dt>
     <dd>Event is generated after position of the view (window) was changed. Use view.box() method to get dimensions and positions.</dd>
+    <dt>&quot;moving&quot;</dt>
+    <dd>Event is generated while user is moving the window by dragging it by caption. Function-handler shall have signature: <code>function(movingParams)</code> where <code>movingParams</code> is an object of this structure: <code>{ x:integer, y:integer, width:integer, height: integer }</code> - propsed dimensions of the window. Function-handler can change properties of the object discriminating window movements.</dd>
     <dt>&quot;statechange&quot;</dt>
     <dd>Event is generated when state of the view (maximized, minimized, hidden, shown ) was changed. See View<em>.state</em> property.</dd>
     <dt>&quot;resolutionchange&quot;</dt>

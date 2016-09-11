@@ -14,16 +14,30 @@
       overflow:none;
       padding:0;
       background-color:gold;
-      border-radius:4px;
     }
     
-    window-button  { display:inline-block; width:max-content; font-family: Marlett; font-size:14px; outline-color:red; behavior:clickable; }
-    window-caption { display:block; flow:text; width:*; font:system; padding: 4px 8px; }
-    window-button#window-close { background-color:#dbb7ab; color:white; }
-    window-button#window-close:hover { background-color:red; outline:5px glow red -1px; transition: outline(linear,200ms) background-color(linear,200ms); }
+    window-button  { display:inline-block; size: 19dip; outline-color:red; behavior:clickable; }
+    window-caption { display:block; flow:text; width:*; font:system; padding: 4dip 8dip; }
+    window-button#window-close { 
+        background-color:#dbb7ab; color:white;
+        background-image: url(path:M22.245,4.015c0.313,0.313,0.313,0.826,0,1.139l-6.276,6.27c-0.313,0.312-0.313,0.826,0,1.14l6.273,6.272 
+                                   c0.313,0.313,0.313,0.826,0,1.14l-2.285,2.277c-0.314,0.312-0.828,0.312-1.142,0l-6.271-6.271c-0.313-0.313-0.828-0.313-1.141,0
+                                   l-6.276,6.267c-0.313,0.313-0.828,0.313-1.141,0l-2.282-2.28c-0.313-0.313-0.313-0.826,0-1.14l6.278-6.269
+                                   c0.313-0.312,0.313-0.826,0-1.14L1.709,5.147c-0.314-0.313-0.314-0.827,0-1.14l2.284-2.278C4.308,1.417,4.821,1.417,5.135,1.73
+                                   L11.405,8c0.314,0.314,0.828,0.314,1.141,0.001l6.276-6.267c0.312-0.312,0.826-0.312,1.141,0L22.245,4.015z);
+        background-size: 13dip;
+        background-position: 50% 50%;
+        background-repeat:no-repeat;
+        fill: #fff;
+    }
+    window-button#window-close:hover { 
+      background-color:red; 
+      outline:5px glow red -1px; 
+      transition: outline(linear,200ms) 
+      background-color(linear,200ms); }    
         
     body { 
-      padding:0; margin:4px; 
+      padding:0; margin:6dip; 
       flow: "1 2" 
             "3 3";
     }
@@ -48,7 +62,7 @@
 </head>
 <body>
   <window-caption role="window-caption">Resizeable dialog</window-caption>
-  <window-button #window-close role="window-close">r</window-button>
+  <window-button #window-close role="window-close"></window-button>
   <section>
     <p>Try to resize the window</p>
     <div #content>

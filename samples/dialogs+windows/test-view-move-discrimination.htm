@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+    </style>
+    <script type="text/tiscript">
+    
+    function self.ready() {
+    
+      var initialX = 0;
+      var isReplacing = false;
+      // test of UI replacement view events
+      view.on("replacement-start", function() { isReplacing = true; initialX = view.box(#left,#border,#screen); } )
+          .on("replacement-end", function() { isReplacing = false; })
+          .on("moving", function(rectw) {
+            if( isReplacing ) {
+              rectw.x = initialX;
+              return true;   
+            }
+          });
+    }
+    
+    </script>
+  </head>
+<body>
+  <p>Test of <code>view.on("moving",rectw) </code> event.</p>
+
+  <p>This window can be moved only in vertical direction</p>
+
+</body>
+</html>

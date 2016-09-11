@@ -8,6 +8,7 @@
 #include "sciter-mfc.h"
 #include "MainFrm.h"
 
+#pragma comment(lib, "windowscodecs.lib")
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

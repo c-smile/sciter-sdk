@@ -46,7 +46,34 @@
           alignment:3,
         };
       }  
+
+      var sidebar = null;      
       
+      $(#frame-sidebar).onClick = function() {
+      
+        var (screenX1,screenY1,screenX2,screenY2) = view.screenBox(#workarea,#rect);
+      
+        if(!sidebar)
+          sidebar = View.window // note .window() methods is called as a static method of View class here
+          {                   // and so the window will be created in detached mode - will stay on screen even its owner is closed 
+            type:View.POPUP_WINDOW,
+            url: self.url("samples/sample-glassy-window.htm"),
+            x:screenX2 - 480 + 1,
+            y:screenY1,
+            width : 480,
+            height : screenY2 - screenY1,
+            state: View.WINDOW_SHOWN,
+            alignment:7,
+          };
+        
+        //sidebar.display(#show, #slide, #from-right, 300ms); 
+        //function sidebar(progress) {
+        //  sidebar.move((screenX2 - progress * 480).toInteger(),screenY1);
+        //  return true;
+        //}
+        //sidebar.root.animate(step, 600ms);
+        
+      }        
       
     
      $(#custom-tool).onClick = function() {
@@ -155,6 +182,7 @@
   <button #tool-layered>tool + layered</button>
   <hr>
   <button #frame-detached>"Detached" frame window</button>
+  <button #frame-sidebar>"Detached" glassy sidebar window</button>
   
   <hr>
   <button #hide>hide last window</button>

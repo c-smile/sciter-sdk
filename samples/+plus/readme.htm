@@ -17,7 +17,7 @@
    ...
 }
 </pre>
-  <p>then content of the body element (in this case) can be linked (bound) with the data in MyDataNamespace. </p>
+  <p>then content of the body element (in this case) can be linked (bound) with the data in MyDataNamespace.</p>
   <p>Topmost element that has such model attribute is known as a <em>data model view</em> - elements bound with the model data namespace / object reflect state of the data.</p>
   <h2>Bound elements</h2>
   <p>Element's value can be bound with some variable in the model. +plus framework uses attribute <em>name</em> that shall contain name or expression to bind with.</p>
@@ -41,11 +41,12 @@
     <li><code>@collapsed=&quot;expression&quot;</code> - boolean expression is bound as element.state.collapsed = expression;</li></ul>
   <h2>Repeatables</h2>
   <p>Any container may have attribute each=&quot;<em>item</em> in <em>items</em>&quot; defined. In this case initial content of the container is used as a template markup that will be repeated for each element in items collection. Format of the <em>each</em> attribute:</p>
-  <pre>{item} <strong>in</strong> {items-expression} [ <strong>|</strong> {filter-expression}
+  <pre>[{index},]{item} <strong>in</strong> {items-expression} [ <strong>|</strong> {filter-expression}
 </pre>
   <p>where:</p>
   <ul>
     <li><code>{item}</code> - arbitrary name of variable that represents current item in repeatable section;</li>
+    <li><code>{index}</code> - optional, variable name that receives integer - index of the item in items array;</li>
     <li><code>{items-expression}</code> - name of variable in model or expression that resolves to some array - list of objects to render by this repeatable.</li>
     <li><code>{filter-expression}</code> - optional, filter to apply to list of objects. Can be either:</li>
     <ul>

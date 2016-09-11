@@ -39,8 +39,10 @@
   <!-- tabs as repeateable sections -->
       
   <tabs>
-    <labels each="object in objects">
-      <label(object.name) @expanded="object === Data.currentObject" click="Data.currentObject = object" />
+    <labels each="index,object in objects">
+      <label @expanded="object === Data.currentObject" click="Data.currentObject = object" >
+        <output(index+1) /> - <output(object.name)/>
+      </label>
     </labels>
     <panels each="object in objects">
       <panel @expanded="object === Data.currentObject">

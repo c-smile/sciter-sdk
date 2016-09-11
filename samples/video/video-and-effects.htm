@@ -1,0 +1,57 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      body { flow:stack;
+             behavior:check; margin:0; }
+		
+			video.generator {
+				behavior: video-generator video;
+				size: *;
+				foreground-size:contain;
+				border:1px solid #000;
+			}
+      
+      section#background { background:#fff; size:*;  }
+      
+      section#osd { 
+                    background:rgba(80,80,80,0.75); color:#fff; 
+                    width:200dip;
+                    height:*;
+                    margin-left:*;
+                    transform: translate(100%,0); // out of screen
+                  }
+                    
+      body:checked > section#background
+      {
+        filter: blur(5dip);                   // stained glass 
+        foreground-color:rgba(80,80,80,0.5);  // effect
+      }          
+          
+      body:checked > section#osd
+      {
+        transform: translate(0,0); // shown
+        transition: transform( quad-out, 400ms);
+      }          
+		
+		</style>
+    <script type="text/tiscript">
+	
+		</script>
+  </head>
+<body>
+
+  <section #background>
+    <p>This demo simulates partial video frame update. See sdk/include/behaviors/behavior_video_generator.cpp source.
+    On each frame (24 FPS) it updates portion of the frame.</p>
+    <video.generator />
+  </section>
+  
+  <section #osd>
+    OSD menu    
+  </section>
+  
+  
+</body>
+</html>

@@ -1,0 +1,67 @@
+<html custom-frame="glassy" state="hidden">
+<head>
+  <title>Glassy window</title>
+  <style>
+    html 
+    { 
+      font:system;
+      background:transparent; 
+      overflow:none;
+      padding:0;
+    }
+    
+    body 
+    {
+      //background-color:rgba(50,50,50,0.7); 
+      background-clip: padding-box;
+      padding:8dip; margin:0;
+      border-left:1dip solid rgba(150,150,150,0.25); 
+      transform: translate(0%,0);
+    }
+    
+    html[state="shown"] {
+      transform: translate(0%,0);
+      transition: transform(quint-out,300ms);
+    }
+    
+    section {
+      flow: grid(1 2,
+                 3 3,
+                 4 5);
+      border-spacing: 8dip;
+    }
+    
+    brick { 
+      display:block;
+      width:*; 
+      height: 100dip; 
+      background: gold;
+    }
+   
+    
+  </style>
+  <script type="text/tiscript">
+  
+    self.post( function() {
+      self.attributes["state"] = "shown";
+    });
+  
+    self.on("click","#hide", function() {
+      self.attributes["state"] = "hidden";
+    });
+        
+    
+    </script>
+</head>
+<body>
+  <h1><button #hide>&raquo;</button> Glassy window</h1>
+  
+  <section>
+    <brick>1</brick>
+    <brick>2</brick>
+    <brick>3</brick>
+  </section>
+  
+  
+</body>
+</html>

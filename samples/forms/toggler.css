@@ -25,11 +25,11 @@
   
   :root > caption { line-height:1.4em; padding:0 0.6em; height:1.6em }
   
-  :root > caption.true { padding-left:2em; background-color:highlight; color: highlighttext; }
-  :root > caption.false { padding-right:2em; background-color:threedface; }
+  :root > caption.true { padding-right:2em; background-color:highlight; color: highlighttext; }
+  :root > caption.false { padding-left:2em; background-color:threedface; }
   
-  :root:checked > caption.false { transform: translate(-100%,0);  }
-  :root:not(:checked) > caption.true  { transform: translate(100%,0); }
+  :root:checked > caption.false { transform: translate(100%,0);  }
+  :root:not(:checked) > caption.true  { transform: translate(-100%,0); }
   
   /*do transitions only after behavior assignment - when it is UI operational */
   :root:ready { transition: foreground-position(linear,200ms);  }
@@ -39,7 +39,7 @@
   { 
     display:block; 
     size:1.6em; 
-    margin: 1* 0* 1* 1*; 
+    margin: 1* 1* 1* 0*; 
     background-image:url(stock:disk);
     background-size:1.1em;
     background-position:50% 50%;
@@ -47,7 +47,7 @@
     stroke:threedshadow; stroke-width: 1dip;
     fill:#fff;
   } 
-  :root:checked::after { margin: 1* 1* 1* 0*; transition: margin(linear,200ms);  } 
+  :root:checked::after { margin: 1* 0* 1* 1*; transition: margin(linear,200ms);  } 
   
 }
 

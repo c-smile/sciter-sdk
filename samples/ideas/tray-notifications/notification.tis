@@ -26,6 +26,7 @@ class Notification : Behavior
       msg.on("animationend.notification", function(evt) { 
         msg.off(this function); // do it once
         msg.attributes["state"] = undefined;
+        msg.postEvent("notification-closed"); 
         msg.move();
         return true;
       });
