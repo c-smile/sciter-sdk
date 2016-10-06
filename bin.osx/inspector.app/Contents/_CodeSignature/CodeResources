@@ -3,9 +3,41 @@
 <plist version="1.0">
 <dict>
 	<key>files</key>
-	<dict/>
+	<dict>
+		<key>Resources/AppIcon.icns</key>
+		<data>
+		yD1w3Px8XPWiW97AcRykWc4WWoc=
+		</data>
+		<key>Resources/Base.lproj/MainMenu.nib</key>
+		<data>
+		h6FIegLvQDnw7Vzh6Z48lfcIcT4=
+		</data>
+	</dict>
 	<key>files2</key>
-	<dict/>
+	<dict>
+		<key>Resources/AppIcon.icns</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			yD1w3Px8XPWiW97AcRykWc4WWoc=
+			</data>
+			<key>hash2</key>
+			<data>
+			xnkaIrG63ep0vgNyDqFFuBK7bz6nrscV/3WlEMtLBeQ=
+			</data>
+		</dict>
+		<key>Resources/Base.lproj/MainMenu.nib</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			h6FIegLvQDnw7Vzh6Z48lfcIcT4=
+			</data>
+			<key>hash2</key>
+			<data>
+			ISJk4kzCFz3csaW8g4nzXceXOq+aWOZ8PTBvnb7PnFI=
+			</data>
+		</dict>
+	</dict>
 	<key>rules</key>
 	<dict>
 		<key>^Resources/</key>
@@ -23,6 +55,11 @@
 			<true/>
 			<key>weight</key>
 			<real>1100</real>
+		</dict>
+		<key>^Resources/Base\.lproj/</key>
+		<dict>
+			<key>weight</key>
+			<real>1010</real>
 		</dict>
 		<key>^version.plist$</key>
 		<true/>
@@ -82,6 +119,11 @@
 			<true/>
 			<key>weight</key>
 			<real>1100</real>
+		</dict>
+		<key>^Resources/Base\.lproj/</key>
+		<dict>
+			<key>weight</key>
+			<real>1010</real>
 		</dict>
 		<key>^[^/]+$</key>
 		<dict>

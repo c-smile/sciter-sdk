@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <title></title>
+    <style></style>
+    <script type="text/tiscript">
+   
+      include "init-storage-2.tis";
+    
+      function self.ready() {
+        const url = self.url("storage2.sdb");
+        var storage = Storage.open(url);
+        var root = storage.root || initStorage(storage);
+        
+        var search = $(#lookup);
+        var ol = $(ol);
+        
+        function showRecords(range, text) {
+          ol.clear();
+          var list = [];
+          for( var item in range ) // intermediate list - prevention of duplicates
+            if(list.indexOf(item) < 0) 
+              list.push(item); 
+          for( var item in list )
+            ol.$append(<li>{item.t}</li>);
+        }
+        
+        search.on("change", function() {
+          var text = this.value.toLowerCase();
+          if( text )
+            showRecords(root.itemsByWords.select(text,text + "\xffff"), text);
+          else
+            showRecords(root.itemsByNumber, text);
+        });
+        
+        search.sendEvent("change");
+        
+      }
+    
+    </script>
+  </head>
+<body>
+  <input|text #lookup novalue="text to lookup" />
+ 
+  <ol></ol>
+  
+</body>
+</html>

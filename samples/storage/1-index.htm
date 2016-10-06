@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <title></title>
+    <style></style>
+    <script type="text/tiscript">
+   
+      include "init-storage-1.tis";
+    
+      function self.ready() {
+        const url = self.url("storage1.sdb");
+        var storage = Storage.open(url);
+        var root = storage.root || initStorage(storage);
+        
+        var form = $(form);
+        var ol = $(ol);
+        
+        function showRecords(range) {
+          ol.clear();
+          for( var item in range )
+            ol.$append(<li>{item.t}</li>);
+        }
+        
+        form.on("change", function() {
+          var asc = this.value.order == "ascending";
+          stdout.printf("%V\n",this.value);
+          switch( this.value.index ) {
+            case "by-index" : showRecords( root.itemsByNumber ); break;
+            case "by-text" : showRecords( root.itemsByText ); break;
+          }
+        });
+        
+        form.sendEvent("change");
+        
+      }
+    
+    </script>
+  </head>
+<body>
+  <form>
+    Order by:
+    <button|radio(index) value="by-index" checked>Index</button>
+    <button|radio(index) value="by-text">Text</button>
+  </form>
+  
+  <ol></ol>
+  
+</body>
+</html>

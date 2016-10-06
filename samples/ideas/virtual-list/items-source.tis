@@ -1,9 +1,9 @@
 
 namespace LoremIpsum
 {
-  const MAX_ITEMS = 100;
-  
-  var ipsums = [
+  const MAX_ITEMS = 1000;
+   
+  const ipsums = [
     "<b>Lorem ipsum</b> dolor sit amet, consectetur adipisicing elit." ,
     "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." ,
     "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." ,
@@ -35,6 +35,13 @@ namespace LoremIpsum
     "To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it?" ,
     "But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?" ,
   ];
+  
+  const images = [
+    "images/Brown_Monsters_1-01.png",
+    "images/Brown_Monsters_24-01.png",
+    "images/Brown_Monsters_48-01.png",
+    "images/user-icon.png"
+  ];
 
   function range(start, length = 0) // returns generator function, length can be positive to scan forward or negative for backward scan
   { 
@@ -48,7 +55,8 @@ namespace LoremIpsum
           if( ++idx < last ) return 
             { 
               caption: "item " + idx, 
-              content: ipsums[idx % ipsums.length] 
+              content: ipsums[idx % ipsums.length],
+              image: images[idx % images.length]
             };  
       }
     }
@@ -62,7 +70,8 @@ namespace LoremIpsum
           if( --idx >= first ) return 
             { 
               caption: "item " + idx, 
-              content: ipsums[idx % ipsums.length] 
+              content: ipsums[idx % ipsums.length],
+              image: images[idx % images.length]
             };  
       }
     }

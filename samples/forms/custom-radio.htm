@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      button[type=radio] { 
+        background-image:url(stock:circle); 
+        background-size:16dip 16dip; 
+        background-position: 0 50%; 
+        stroke:#333;
+      }
+      button[type=radio]:checked { 
+        // that fat dot inside:
+        foreground-image:url(stock:disk); 
+        foreground-size:8dip 8dip; 
+        foreground-position: 4dip 50%; 
+        foreground-repeat: no-repeat; 
+      }
+      
+      button[type=radio]:hover {
+        stroke:#0af;
+      }
+    
+    </style>
+    <script type="text/tiscript"></script>
+  </head>
+<body>
+
+  <button|radio(group) checked>first</button>
+  <button|radio(group)>second</button>
+
+</body>
+</html>

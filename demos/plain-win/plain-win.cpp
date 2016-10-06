@@ -112,6 +112,19 @@ LRESULT CALLBACK window::wnd_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
 
     return 0;
   }
+  if( message == WM_KEYDOWN && wParam == VK_F1 )
+  {
+    window* self = ptr(hWnd);
+    sciter::dom::element root = self->get_root();
+    sciter::dom::element first = root.find_first("#first");
+    sciter::dom::element second = root.find_first("#second");
+
+    auto fw = first.get_style_attribute("width");
+    auto sw = second.get_style_attribute("width");
+
+    return 0;
+  }
+
 
 
   //date_time::DT_UTC | date_time::DT_HAS_DATE | date_time::DT_HAS_TIME | date_time::DT_HAS_SECONDS

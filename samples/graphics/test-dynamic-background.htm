@@ -62,6 +62,12 @@
         view.clipboard(#put, dynImage);
       }
       
+      $(button#from-clipboard).onClick = function()
+      {
+        var img = view.clipboard(#get, #picture);
+        if( img )
+          self.bindImage("in-memory:test", img);
+      }
       
     </script>
   </head>
@@ -69,6 +75,7 @@
   <button #test>ReGenerate</button>
   <button #save>Save image to file</button>
   <button #to-clipboard>Save image to clipboard</button>
+  <button #from-clipboard>Load image from clipboard</button>
   <div .test>Test</div>
 </body>
 </html>

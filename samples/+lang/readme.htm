@@ -7,8 +7,8 @@
       code { background:#fffff5; }
       li,p { line-height:1.5em; }
     </style>
-    <meta name="generator" content="h-smile:richtext" />
-    <meta name="author" content="Andrew Fedoniouk" />
+    <meta name="author" content="Andrew Fedoniouk"/>
+    <meta name="generator" content="h-smile:richtext"/>
   </head>
 <body>
   <h1>The Lang framework</h1>
@@ -20,22 +20,22 @@
     <li>Translation for particualr language is defined in single file instead of spreading it among various code, style and markup files. So translation of given UI to some new language is a matter of creating single file with predefined set of items.</li></ol>
   <h2>Basic principles</h2>
   <p>UI of the application is presented as one or set of HTML files. These files are the same for all supported languages.</p>
-  <p>Each supported language gets so called translation map file (TMF). </p>
+  <p>Each supported language gets so called translation map file (TMF).</p>
   <p>Each TMF file is a tiscript file that defines mapping of translatable item ID to its textual representation in given human language.</p>
   <h3>Translation map file structure</h3>
-  <p>TMF is an ordinary script file that gets eval() 'ed upon loading. </p>
+  <p>TMF is an ordinary script file that gets eval() 'ed upon loading.</p>
   <p>Result of TMF file shall be an object - map of &quot;translatable ID&quot; to either another string (st) or a function that provides translated/composed string (e.g. pluralized text of some value).</p>
   <p>Example of simple translation map file for English language:</p>
   <pre>({
   &quot;Matchboxes&quot;:&quot;Match boxes&quot;,        // static text entry
   &quot;There are # matches in the box&quot; : // simple pluralization entry
-      function(n) { 
-        return  n == 0 ? &quot;The matchbox is empty&quot; 
-              : n == 1 ? &quot;There is just one match in the box&quot; 
+      function(n) {
+        return  n == 0 ? &quot;The matchbox is empty&quot;
+              : n == 1 ? &quot;There is just one match in the box&quot;
               : String.printf(&quot;There are %d matches in the box&quot;,n);
   },
   ...
-}) 
+})
 </pre>
   <p>As you see the value of such map file is a simple map containing items to be translated for the given language.</p>
   <h2>Translation aware markup structure</h2>
@@ -69,39 +69,41 @@
     <li>Using <code>&lt;var&gt;</code> elements, example: <br/><code>&lt;var&gt;There are # matches in the box&lt;/var&gt;</code>. <br/>The <code>&lt;var&gt;</code> element is getting <code>value</code> property redefined by the Lang. So in code if you assign some numeric value to such <code>&lt;var&gt;</code> element the Lang will call corresponding formatting function defined in the map. For an example see translation map file sample above.</li>
     <li>Assigning var class to any other elements containing text only, for example <code>&lt;li class=&quot;var&quot;&gt;There are # matches in the box&lt;/li&gt;</code>;</li>
     <li>Defining <em>Lang.Formatter</em> aspect to any other element by using arbitrary CSS selector as:<br/><code>ul#options &gt; li &nbsp;{ aspect:&quot;Lang.Formatter&quot;; }</code></li></ol>
+  <h4>Explicit translation: <code>Lang.x()</code> function.</h4>
+  <p>Lang namespace defines <code>Lang.x(text[,value])</code> function that can be used in code to explicitly translate the <em>text</em>. &nbsp;That function uses the same translation table and rules as <code>&lt;dfn&gt;</code>s and <code>&lt;var&gt;</code>s. If <em>text</em> maps to function defined in translation file and value is provided then that function gets called for the translation.</p>
   <h2>Automatic translation map generation and maintainance</h2>
   <p>I'd suggest to use following sequence of actions:</p>
   <h4>0. Create initial en.tis translation file with this content:</h4>
   <pre>({ })
 </pre>
   <p>and save it as, say, /lang/en.tis file. For now it contains empty translation table.</p>
-  <h4>1. Design your UI in your default language. </h4>
+  <h4>1. Design your UI in your default language.</h4>
   <p>Let's assume that it will be English for now. Here is how your markup with Lang attached may look like:</p>
   <pre>&lt;html lang=&quot;en&quot;&gt;
   &lt;head&gt;
     &lt;link href=&quot;lang/en.tis&quot; hreflang=&quot;en&quot; rel=&quot;translation&quot; &gt;
-    
+
     &lt;style&gt;
       @import url(../lang.css); /* enabling the Lang */
     &lt;/style&gt;
-    
+
     &lt;script type=&quot;text/tiscript&quot;&gt;
-      include &quot;../lang.tis&quot;;       // the Lang itself.  
-      include &quot;../lang-tool.tis&quot;;  // the Lang tool - translation map generator.  
+      include &quot;../lang.tis&quot;;       // the Lang itself.
+      include &quot;../lang-tool.tis&quot;;  // the Lang tool - translation map generator.
     &lt;/script&gt;
-    
+
   &lt;/head&gt;
   &lt;body&gt;
-    
-    &lt;label&gt;MATCHES&lt;/label&gt; 
-    &lt;var id=&quot;nmatches&quot;&gt;MATCHES-PLURALIZED&lt;/var&gt;&lt;/p&gt; 
-    
+
+    &lt;label&gt;MATCHES&lt;/label&gt;
+    &lt;var id=&quot;nmatches&quot;&gt;MATCHES-PLURALIZED&lt;/var&gt;&lt;/p&gt;
+
   &lt;/body&gt;
 &lt;/html&gt;
 </pre>
   <p>Note <code>include &quot;../lang-tool.tis&quot;; </code>&nbsp;statement above . It includes special translate map generator tool.</p>
   <h4>2. Load markup in your application and run map tool</h4>
-  <p>After loading the UI press CTRL+SHIFT+F11 inside your application. It will invoke translation map generator that will place its report into the clipboard. <br/></p>
+  <p>After loading the UI press CTRL+SHIFT+F11 inside your application. It will invoke translation map generator that will place its report into the clipboard.</p>
   <p>Paste clipboard content into some file. With empty translation map and on markup above you should get content like this:</p>
   <pre>// items not found:
 {
@@ -111,7 +113,7 @@
 // OK, no unused items
 </pre>
   <p>First section will give you full list of items that need to be translated and appear in your final translation map:</p>
-  <pre>({ 
+  <pre>({
  &quot;MATCHES-PLURALIZED&quot;: function (v){ return ... },
  &quot;MATCHES&quot;: &quot;Matches&quot;
 })

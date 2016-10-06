@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+     @import url(../note.css);
+    
+    </style>
+    <script type="text/tiscript">
+    
+    !function() 
+    {
+    
+      var sidebar = null;    
+      
+      $(#frame-sidebar).onClick = function() {
+      
+        var (screenX1,screenY1,screenX2,screenY2) = view.screenBox(#workarea,#rect);
+     
+        if( !sidebar )
+          sidebar = View.window // note .window() methods is called as a static method of View class here
+          {                   // and so the window will be created in detached mode - will stay on screen even its owner is closed 
+            type:View.POPUP_WINDOW,
+            url: self.url("sidebar-window.htm"),
+            x:screenX2 - 480 + 1,
+            y:screenY1,
+            width : 480,
+            height : screenY2 - screenY1,
+            state: View.WINDOW_HIDDEN,
+            alignment:7,
+          };
+        
+        sidebar.reveal();
+        
+      }        
+      
+  }();
+    
+    
+    </script>
+  </head>
+<body>
+  <note>
+    This sample mimics Windows 10 Action Center side panel animation and intended to run on Windows 7, 10 and above.
+  </note>
+
+  <button #frame-sidebar>Show sidebar window</button>
+</body>
+</html>

@@ -1,0 +1,98 @@
+function Bubbles() 
+{
+
+  // Create an array to store our particles
+  var particles = [];
+  
+  const particleColor = color(0xFF,0xE0,0x8A);
+  const particleMaxRadius = 60;
+  const particleMinRadius = 30;
+
+  // The amount of particles to render
+  const particleCount = 40;
+
+  // The maximum velocity in each direction
+  const maxBlurRadius = 8;
+
+  // The target frames per second (how often do we want to update / redraw the scene)
+  const targetFPS = 16;
+  
+  const minOpacity = 20;
+  const maxOpacity = 255;
+
+  // Set the dimensions of the canvas as variables so they can be used.
+  var (width, height) = this.box(#dimension);
+
+  function random( min, max ) { return rand( max - min ) + min; }
+  
+  function createParticle() {
+    return {
+      x : random(0, width),
+      y : random(0, height),
+      xVelocity: random(1, 10) * 0.1,
+      yVelocity: random(1, 5) * 0.1,
+      color: color(particleColor.r, particleColor.g,particleColor.b, random(minOpacity, maxOpacity)),
+      blur: random(80, 100) / 100.0,
+      radius: random(particleMinRadius,particleMaxRadius)
+    };
+  }
+  
+  function moveParticle(particle) 
+  {
+    // Update the position of the particle with the addition of the velocity.
+    particle.x += particle.xVelocity;
+    particle.y += particle.yVelocity;
+
+    // Check if has crossed the right edge
+    if (particle.x >= width) {
+        particle.xVelocity = -particle.xVelocity;
+        particle.x = width;
+    }
+    // Check if has crossed the left edge
+    else if (particle.x <= 0) {
+        particle.xVelocity = -particle.xVelocity;
+        particle.x = 0;
+    }
+
+    // Check if has crossed the bottom edge
+    if (particle.y >= height) {
+        particle.yVelocity = -particle.yVelocity;
+        particle.y = height;
+    }
+    
+    // check if has crossed the top edge
+    else if (particle.y <= 0) {
+        particle.yVelocity = -particle.yVelocity;
+        particle.y = 0;
+    }
+    
+  }
+  
+  function drawParticle(gfx,particle)
+  {
+    gfx.fillRadialGradient(particle.x, particle.y, particle.radius,
+                           [particle.color, particle.color, rgba(particle.color.r,particle.color.g,particle.color.b, 0.0)],
+                           [0.0, particle.blur, 1.0] );
+    gfx.rectangle( particle.x - particle.radius, particle.y - particle.radius, 2 * particle.radius, 2 * particle.radius);                       
+                           
+  }
+  
+  this.paintContent = function(gfx) {
+    for( var particle in particles )     
+      drawParticle(gfx,particle);
+  }
+  
+  this.animate( function() {
+    
+    for( var particle in particles )
+      moveParticle(particle);
+
+    self.refresh();    
+    return 1000 / targetFPS;
+  });
+
+  // Initialize the scene
+  for( var n in particleCount )
+    particles.push(createParticle());
+
+}

@@ -27,6 +27,10 @@
         button { display:block; }
         p.ellipsis  { text-overflow:ellipsis; white-space:nowrap; overflow-x:hidden; }
         p.path-ellipsis  { text-overflow:path-ellipsis; white-space:nowrap; overflow-x:hidden; } */
+        
+        frameset { border:3dip solid; }
+        frameset > div { background:#fff; }
+        
     </style>
 </head>
 <body>
@@ -42,6 +46,11 @@
   </p>
 
   <pre#out /> 
+  frameset demo:
+  <frameset cols="200dip,*">
+    <div #first>1</div>
+    <div #second>2</div>
+  </frameset>
 
 </body>
 </html>

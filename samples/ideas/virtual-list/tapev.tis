@@ -52,7 +52,10 @@ class TapeV: Behavior
   {
     for (var field in div.$$([merge-code])) // for all DOM elements with merge-code attribute
     {
-      field.html = data[ symbol(field.@#merge-code) ]; // get value of data.<field name> in put it in field.html
+      if(field.tag == "img" || field.tag == "picture")
+        field.@#src = data[ symbol(field.@#merge-code) ]; // get value of data.<field name> in put it as "src" attribute
+      else
+        field.html = data[ symbol(field.@#merge-code) ]; // get value of data.<field name> in put it in field.html
     }
   }
     

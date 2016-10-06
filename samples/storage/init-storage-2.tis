@@ -1,0 +1,33 @@
+﻿
+
+  function initStorage(storage)
+  {
+    var list = [
+      { t: "Invite your team to this board using the Add Members button" },
+      { t: "Drag people onto a card to indicate that they're responsible for it" },
+      { t: "Use color-coded labels for organization" },
+      { t: "You can change the board background" },
+      { t: "Try dragging cards anywhere." },
+      { t: "The quick brown fox jumps over the lazy dog" }
+    ];
+    
+    var idxNumber = storage.createIndex(#integer, true /*unique*/);
+    //  index on separate words:
+    var idxWords = storage.createIndex(#string, false);
+    
+    for( var (i,item) in list ) {
+      idxNumber[i] = item;
+      // put each word in index
+      for( var word in item.t.toLowerCase().match(/\w+/g))
+      {
+        var wordObjects = idxWords[word];
+        if( !wordObjects || wordObjects.indexOf(item) < 0 )
+          idxWords[word] = item;
+      }
+    }
+    
+    return storage.root = {
+      itemsByNumber : idxNumber,
+      itemsByWords : idxWords,
+    };
+  }

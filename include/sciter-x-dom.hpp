@@ -145,7 +145,7 @@ namespace dom
     **/
     element(HELEMENT h)       { use(h); }
 
-  /**Copy constructor;
+  /**Copy constructo(void)r;
     * \param e \b #element
     **/
     element(const element& e) { use(e.he); }
@@ -253,7 +253,7 @@ namespace dom
     {
       sciter::string s;
       SCDOM_RESULT r = SciterGetNthAttributeValueCB(he, n, &_LPCWSTR2STRING, &s);
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
       return s;
     }
 
@@ -265,7 +265,7 @@ namespace dom
     {
       sciter::astring s;
       SCDOM_RESULT r = SciterGetNthAttributeNameCB(he, n, &_LPCSTR2ASTRING, &s);
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
       return s;
     }
 
@@ -538,25 +538,25 @@ namespace dom
     void get_scroll_info(POINT& scroll_pos, RECT& view_rect, SIZE& content_size)
     {
       SCDOM_RESULT r = SciterGetScrollInfo(he, &scroll_pos, &view_rect, &content_size);
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
     }
     void set_scroll_pos(POINT scroll_pos)
     {
       SCDOM_RESULT r = SciterSetScrollPos(he, scroll_pos, true);
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
     }
 
     /** get min-intrinsic and max-intrinsic widths of the element. */
     void get_intrinsic_widths(int& min_width,int& max_width)
     {
       SCDOM_RESULT r = SciterGetElementIntrinsicWidths(he, &min_width, &max_width);
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
     }
     /** get min-intrinsic height of the element calculated for forWidth. */
     void get_intrinsic_height(int for_width, int& min_height)
     {
       SCDOM_RESULT r = SciterGetElementIntrinsicHeight(he, for_width, &min_height);
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
     }
 
     /**Get element's tag name.
@@ -590,7 +590,7 @@ namespace dom
     void attach_hwnd(HWINDOW child)
     {
       SCDOM_RESULT r = SciterAttachHwndToElement(he,child);
-      assert( r == SCDOM_OK ); r = r;
+      assert( r == SCDOM_OK ); (void)r;
     }
 
 
@@ -653,7 +653,7 @@ namespace dom
       else
       {
         SCDOM_RESULT r = SciterSetElementHtml(he, html, UINT(html_length), where);
-        assert(r == SCDOM_OK); r;
+        assert(r == SCDOM_OK); (void)r;
       }
     }
 
@@ -663,7 +663,7 @@ namespace dom
     {
       sciter::astring s;
       SCDOM_RESULT r = SciterGetElementHtmlCB(he, BOOL(outer), &_LPCBYTE2ASTRING,&s);
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
       return s;
     }
 
@@ -672,14 +672,14 @@ namespace dom
     {
       sciter::string s;
       SCDOM_RESULT r = SciterGetElementTextCB(he, &_LPCWSTR2STRING, &s);
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
       return s;
     }
 
     void  set_text(const WCHAR* utf16, size_t utf16_length)
     {
       SCDOM_RESULT r = SciterSetElementText(he, utf16, UINT(utf16_length));
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
     }
 
     void  set_text(const WCHAR* t)
@@ -691,7 +691,7 @@ namespace dom
     void clear() // clears content of the element
     {
       SCDOM_RESULT r = SciterSetElementText(he, 0, 0);
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
     }
 
     HELEMENT find_first( const char* selector, ... ) const
@@ -729,7 +729,7 @@ namespace dom
 
       HELEMENT heFound = 0;
       SCDOM_RESULT r = SciterSelectParent(he, buffer, 0, &heFound);
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
       return heFound;
     }
 
@@ -743,7 +743,7 @@ namespace dom
       va_end ( args );
       HELEMENT heFound = 0;
       SCDOM_RESULT r = SciterSelectParent(he, buffer, 1, &heFound);
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
       return heFound != 0;
     }
 
@@ -754,7 +754,7 @@ namespace dom
     {
       UINT state = 0;
       SCDOM_RESULT r = SciterGetElementState(he,&state);
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
       return state; /*ELEMENT_STATE_BITS*/
     }
 
@@ -764,7 +764,7 @@ namespace dom
     {
       UINT state = 0;
       SCDOM_RESULT r = SciterGetElementState(he,&state);
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
       return (state & bits) != 0;
     }
 
@@ -776,7 +776,7 @@ namespace dom
       /*ELEMENT_STATE_BITS*/ unsigned int bitsToClear = 0, bool update = true )
     {
       SCDOM_RESULT r = SciterSetElementState(he,bitsToSet,bitsToClear, BOOL(update));
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
     }
 
     /** "deeply enabled" **/
@@ -784,7 +784,7 @@ namespace dom
     {
       BOOL b = false;
       SCDOM_RESULT r = SciterIsElementEnabled(he,&b);
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
       return b != 0;
     }
 
@@ -793,21 +793,21 @@ namespace dom
     {
       BOOL b = false;
       SCDOM_RESULT r = SciterIsElementVisible(he,&b);
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
       return b != 0;
     }
 
     void start_timer(unsigned int ms, void* timer_id = 0)
     {
       SCDOM_RESULT r = SciterSetTimer(he,ms,UINT_PTR(timer_id));
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
     }
     void stop_timer(void* timer_id = 0)
     {
       if(he)
       {
         SCDOM_RESULT r = SciterSetTimer(he,0,UINT_PTR(timer_id));
-        assert(r == SCDOM_OK); r;
+        assert(r == SCDOM_OK); (void)r;
       }
     }
 
@@ -823,7 +823,7 @@ namespace dom
     {
         element e(0);
         SCDOM_RESULT r = SciterCreateElement( tagname, text, &e.he ); // don't need 'use' here, as it is already "addrefed"
-        assert(r == SCDOM_OK); r;
+        assert(r == SCDOM_OK); (void)r;
         return e;
     }
 
@@ -840,7 +840,7 @@ namespace dom
     {
         element e(0);
         SCDOM_RESULT r = SciterCloneElement( he, &e.he ); // don't need 'use' here, as it is already "addrefed"
-        assert(r == SCDOM_OK); r;
+        assert(r == SCDOM_OK); (void)r;
         return e;
     }
 
@@ -850,7 +850,7 @@ namespace dom
     void insert( const element& e, unsigned int index )
     {
         SCDOM_RESULT r = SciterInsertElement( e.he, this->he, index );
-        assert(r == SCDOM_OK); r;
+        assert(r == SCDOM_OK); (void)r;
     }
 
   /** Append element e as last child of this element.
@@ -863,7 +863,7 @@ namespace dom
     void detach()
     {
       SCDOM_RESULT r = SciterDetachElement( he );
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
     }
 
     /** destroy - remove this element from its parent and destroy all behaviors
@@ -872,7 +872,7 @@ namespace dom
     {
 		  HELEMENT t = he; he = 0;
       SCDOM_RESULT r = SciterDeleteElement( t );
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
     }
 
     /** swap two elements in the DOM
@@ -880,7 +880,7 @@ namespace dom
     void swap(HELEMENT with)
     {
         SCDOM_RESULT r = SciterSwapElements(he, with);
-        assert(r == SCDOM_OK); r;
+        assert(r == SCDOM_OK); (void)r;
     }
 
     /** traverse event - send it by sinking/bubbling on the
@@ -890,7 +890,7 @@ namespace dom
     {
       BOOL handled = false;
       SCDOM_RESULT r = SciterSendEvent(he, event_code, heSource? heSource: he, reason, &handled);
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
       return handled != 0;
     }
 
@@ -901,14 +901,14 @@ namespace dom
     void post_event(unsigned int event_code, unsigned int reason = 0, HELEMENT heSource = 0)
     {
       SCDOM_RESULT r = SciterPostEvent(he, event_code, heSource? heSource: he, reason);
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
     }
 
     bool fire_event(const BEHAVIOR_EVENT_PARAMS& evt, bool post = true)
     {
       BOOL handled = false;
       SCDOM_RESULT r = SciterFireEvent(&evt, post, &handled);
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
       return handled != 0;
     }
 
@@ -930,7 +930,7 @@ namespace dom
     void load_data(const WCHAR* url, UINT dataType, HELEMENT initiator = 0)
     {
       SCDOM_RESULT r = SciterRequestElementData(he,url, dataType, initiator);
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
     }
 
 
@@ -958,7 +958,7 @@ namespace dom
         end = children_count();
 
       SCDOM_RESULT r = SciterSortElements(he, start, end, &comparator::scmp, &cmp);
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
     }
 
     // "manually" attach event_handler proc to the DOM element
@@ -989,7 +989,7 @@ namespace dom
         throw sciter::script_error(reason.c_str());
       }
 #endif
-      assert(r == SCDOM_OK); r = r;
+      assert(r == SCDOM_OK); (void)r;
       return rv;
     }
 
@@ -1036,7 +1036,7 @@ namespace dom
         throw sciter::script_error(reason.c_str());
       }
 #endif
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
       return rv;
     }
 
@@ -1073,7 +1073,7 @@ namespace dom
     {
       SCITER_VALUE rv;
       SCDOM_RESULT r = SciterEvalElementScript( he, script, UINT(script_length), &rv );
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
       return rv;
     }
     SCITER_VALUE eval(aux::wchars script)
@@ -1085,7 +1085,7 @@ namespace dom
     {
       UINT t = 0;
       SCDOM_RESULT r = ::SciterControlGetType(he,&t);
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
       return CTL_TYPE(t);
     }
 
@@ -1093,14 +1093,14 @@ namespace dom
     {
       SCITER_VALUE rv;
       SCDOM_RESULT r = SciterGetValue(he, &rv);
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
       return rv;
     }
 
     void set_value(const SCITER_VALUE& v)
     {
       SCDOM_RESULT r = SciterSetValue(he, &v);
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
     }
 
     // get scripting object associated with this DOM element
@@ -1108,7 +1108,7 @@ namespace dom
     {
       SCITER_VALUE rv;
       SCDOM_RESULT r = SciterGetExpando(he, &rv, force_create);
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
       return rv;
     }
 
@@ -1117,7 +1117,7 @@ namespace dom
     {
       tiscript::value rv;
       SCDOM_RESULT r = SciterGetObject(he, &rv, force_create);
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
       return rv;
     }
 
@@ -1125,7 +1125,7 @@ namespace dom
     {
       tiscript::value rv;
       SCDOM_RESULT r = SciterGetElementNamespace(he, &rv);
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
       return rv;
     }
 
@@ -1141,7 +1141,7 @@ namespace dom
     {
       HELEMENT h = 0;
       SCDOM_RESULT r = SciterGetHighlightedElement(hSciterWnd,&h);
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
       return h;
     }
 
@@ -1154,12 +1154,12 @@ namespace dom
     void set_highlighted(HWINDOW hSciterWnd)
     {
       SCDOM_RESULT r = SciterSetHighlightedElement(hSciterWnd,he);
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
     }
     static void remove_highlightion(HWINDOW hSciterWnd)
     {
       SCDOM_RESULT r = SciterSetHighlightedElement(hSciterWnd,0);
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
     }
   };
 
@@ -1198,7 +1198,7 @@ namespace dom
   {
     UINT n = 0;
     SCDOM_RESULT r = SciterNodeChildrenCount(hn,&n);
-    assert(r == SCDOM_OK); r;
+    assert(r == SCDOM_OK); (void)r;
     return n;
   }
 
@@ -1206,7 +1206,7 @@ namespace dom
   {
     HNODE hrn = 0;
     SCDOM_RESULT r = SciterNodeNthChild(hn,idx,&hrn);
-    assert(r == SCDOM_OK); r;
+    assert(r == SCDOM_OK); (void)r;
     return hrn;
   }
 
@@ -1214,7 +1214,7 @@ namespace dom
   {
     UINT nodeType = UINT(-1);
     SCDOM_RESULT r = SciterNodeType(hn, &nodeType);
-    assert(r == SCDOM_OK); r;
+    assert(r == SCDOM_OK); (void)r;
     return nodeType == NT_TEXT;
   }
 
@@ -1222,7 +1222,7 @@ namespace dom
   {
     UINT nodeType = UINT(-1);
     SCDOM_RESULT r = SciterNodeType(hn, &nodeType);
-    assert(r == SCDOM_OK); r;
+    assert(r == SCDOM_OK); (void)r;
     return nodeType == NT_COMMENT;
   }
 
@@ -1230,7 +1230,7 @@ namespace dom
   {
     UINT nodeType = UINT(-1);
     SCDOM_RESULT r = SciterNodeType(hn, &nodeType);
-    assert(r == SCDOM_OK); r;
+    assert(r == SCDOM_OK); (void)r;
     return nodeType == NT_ELEMENT;
   }
 
@@ -1238,7 +1238,7 @@ namespace dom
   {
     HELEMENT he = 0;
     SCDOM_RESULT r = SciterNodeCastToElement(hn, &he);
-    assert(r == SCDOM_OK); r;
+    assert(r == SCDOM_OK); (void)r;
     return he;
   }
 
@@ -1248,7 +1248,7 @@ namespace dom
     SCDOM_RESULT r = SciterNodeParent(hn, &heParent);
     if(r == SCDOM_OK_NOT_HANDLED)
       return 0;
-    assert(r == SCDOM_OK); r;
+    assert(r == SCDOM_OK); (void)r;
     return heParent;
   }
 
@@ -1258,7 +1258,7 @@ namespace dom
     SCDOM_RESULT r = SciterNodeNextSibling(hn,&hrn);
     if(r == SCDOM_OK_NOT_HANDLED)
       return 0;
-    assert(r == SCDOM_OK); r;
+    assert(r == SCDOM_OK); (void)r;
     return hrn;
   }
   inline HNODE node::prev_sibling() const
@@ -1267,7 +1267,7 @@ namespace dom
     SCDOM_RESULT r = SciterNodePrevSibling(hn,&hrn);
     if(r == SCDOM_OK_NOT_HANDLED)
       return 0;
-    assert(r == SCDOM_OK); r;
+    assert(r == SCDOM_OK); (void)r;
     return hrn;
   }
 
@@ -1275,7 +1275,7 @@ namespace dom
   {
     HNODE hrn = 0;
     SCDOM_RESULT r = SciterNodeFirstChild(hn,&hrn);
-    assert(r == SCDOM_OK); r;
+    assert(r == SCDOM_OK); (void)r;
     return hrn;
   }
 
@@ -1283,7 +1283,7 @@ namespace dom
   {
     HNODE hrn = 0;
     SCDOM_RESULT r = SciterNodeLastChild(hn,&hrn);
-    assert(r == SCDOM_OK); r;
+    assert(r == SCDOM_OK); (void)r;
     return hrn;
   }
 
@@ -1291,21 +1291,21 @@ namespace dom
   {
     sciter::string s;
     SCDOM_RESULT r = SciterNodeGetText(hn, &_LPCWSTR2STRING, &s);
-    assert(r == SCDOM_OK); r;
+    assert(r == SCDOM_OK); (void)r;
     return s;
   }
 
   inline void node::text(LPCWSTR text, UINT textLength) const // get text as sciter::string (utf16)
   {
     SCDOM_RESULT r = SciterNodeSetText(hn, text,textLength);
-    assert(r == SCDOM_OK); r;
+    assert(r == SCDOM_OK); (void)r;
   }
 
   inline node node::make_text_node(LPCWSTR text, UINT textLength)
   {
     node rn;
     SCDOM_RESULT r = SciterCreateTextNode(text,textLength,&rn.hn);
-    assert(r == SCDOM_OK); r;
+    assert(r == SCDOM_OK); (void)r;
     return rn;
   }
 
@@ -1313,14 +1313,14 @@ namespace dom
   {
     node rn;
     SCDOM_RESULT r = SciterCreateCommentNode(text,textLength,&rn.hn);
-    assert(r == SCDOM_OK); r;
+    assert(r == SCDOM_OK); (void)r;
     return rn;
   }
 
   inline void node::remove()
   {
     SCDOM_RESULT r = SciterNodeRemove(hn,BOOL(true));
-    assert(r == SCDOM_OK); r;
+    assert(r == SCDOM_OK); (void)r;
     SciterNodeRelease(hn);
     hn = 0;
   }
@@ -1328,31 +1328,31 @@ namespace dom
   inline void node::detach()
   {
     SCDOM_RESULT r = SciterNodeRemove(hn,BOOL(false));
-    assert(r == SCDOM_OK); r;
+    assert(r == SCDOM_OK); (void)r;
   }
 
   inline void node::append(HNODE thatnode)
   {
     SCDOM_RESULT r = SciterNodeInsert(hn,NIT_APPEND,thatnode);
-    assert(r == SCDOM_OK); r;
+    assert(r == SCDOM_OK); (void)r;
   }
 
   inline void node::prepend(HNODE thatnode)
   {
     SCDOM_RESULT r = SciterNodeInsert(hn,NIT_PREPEND,thatnode);
-    assert(r == SCDOM_OK); r;
+    assert(r == SCDOM_OK); (void)r;
   }
 
   inline void node::insert_before(HNODE thatnode)
   {
     SCDOM_RESULT r = SciterNodeInsert(hn,NIT_BEFORE,thatnode);
-    assert(r == SCDOM_OK); r;
+    assert(r == SCDOM_OK); (void)r;
   }
 
   inline void node::insert_after(HNODE thatnode)
   {
     SCDOM_RESULT r = SciterNodeInsert(hn,NIT_AFTER,thatnode);
-    assert(r == SCDOM_OK); r;
+    assert(r == SCDOM_OK); (void)r;
   }
 
 

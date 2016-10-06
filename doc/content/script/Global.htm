@@ -100,7 +100,7 @@ for(var (k,v) in Foo )
     <dt>gc</dt>
     <dd>
       <div><strong>( )</strong> : ( <em>total</em>:integer, <em>free</em>: integer, <em>used</em>: integer )</div>
-      <p>Invokes garbage collector and returns: total VM heap memeory size, &nbsp;size of free area in the heap and size of used area by the script. total = free + used; </p>
+      <p>Invokes garbage collector and returns: total VM heap memeory size, &nbsp;size of free area in the heap and size of used area by the script. total = free + used;</p>
       <p>Note that VM requests twice as <em>total</em> number of bytes from the system.</p></dd>
     <dt>crackUrl</dt>
     <dd>
@@ -143,5 +143,15 @@ for(var (k,v) in Foo )
     <dd>(<strong> v</strong>: float ) : angle, constructs angle value from float number of radians</dd>
     <dt>deg</dt>
     <dd>(<strong> v</strong>: int | float ) : angle, constructs angle value from number of degrees</dd></dl>
+  <h2>JSON namespace</h2>
+  <dl>
+    <dt>JSON.stringify</dt>
+    <dd>(<strong>value</strong>[, <strong>replacer</strong>: function | array][, <strong>space</strong>:string | integer]) : string
+      <p>Produces canonical JSON string representation. </p>
+      <p>If the <em>replacer</em> is a <code>function (key, value) </code>&nbsp;then it gets called for each key / value pair. The function shall return JSON compatible value. If <em>replacer</em> &nbsp;is an array , only members with key values in the array will be converted. The order in which the members are converted is the same as the order of the keys in the array. The replacer array is ignored when the value argument is also an array.</p>
+      <p>If <em>space</em> is a string then all \t characters in output are replaced by that string. If it is a number then all \t characters get replaced by that number of spaces.</p></dd>
+    <dt>JSON.parse</dt>
+    <dd>(<strong>text</strong>:string[, <strong>reviver</strong>]) : value
+      <p>Parses JSON string. &nbsp;The <em>replacer</em> is a <code>function (key, value): value</code> or <code>function (key, value): (key,value</code>) - allows to transform parsed into another value or key/value pair.</p></dd></dl>
 </body>
 </html>

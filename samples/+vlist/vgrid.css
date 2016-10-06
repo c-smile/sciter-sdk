@@ -11,7 +11,7 @@
 												 when new rows are pumping up */
     border-spacing:0;
     padding:0;
-    overflow-x:scroll-indicator;
+    overflow-x:auto;
   }
   
   table:root[resizeable] > thead {
@@ -23,7 +23,7 @@
 
   table:root > tbody 
   { 
-    overflow-y: scroll-indicator;
+    overflow-y: auto;
     size:*;
   }
   

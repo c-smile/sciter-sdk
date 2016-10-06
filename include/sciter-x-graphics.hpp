@@ -71,7 +71,7 @@ namespace sciter
     static image create( UINT width, UINT height, bool withAlpha )
     {
       HIMG himg = 0;
-      GRAPHIN_RESULT r = gapi()->imageCreate(&himg, width, height, withAlpha ); assert(r == GRAPHIN_OK); r;
+      GRAPHIN_RESULT r = gapi()->imageCreate(&himg, width, height, withAlpha ); assert(r == GRAPHIN_OK); (void)(r);
       if( himg ) 
         return image( himg );
       return image(0);
@@ -80,7 +80,7 @@ namespace sciter
     static image create( UINT width, UINT height, bool withAlpha, const BYTE* pixmap )
     {
       HIMG himg = 0;
-      GRAPHIN_RESULT r = gapi()->imageCreateFromPixmap(&himg, width, height, withAlpha, pixmap ); assert(r == GRAPHIN_OK); r;
+      GRAPHIN_RESULT r = gapi()->imageCreateFromPixmap(&himg, width, height, withAlpha, pixmap ); assert(r == GRAPHIN_OK); (void)(r);
       if( himg ) 
         return image( himg );
       return image(0);
@@ -89,7 +89,7 @@ namespace sciter
     static image load( aux::bytes data ) // loads image from png or jpeg enoded data
     {
       HIMG himg;
-      GRAPHIN_RESULT r = gapi()->imageLoad( data.start, data.length, &himg); assert(r == GRAPHIN_OK); r;
+      GRAPHIN_RESULT r = gapi()->imageLoad( data.start, data.length, &himg); assert(r == GRAPHIN_OK); (void)(r);
       if( himg )
         return image( himg );
       return image(0);
@@ -97,7 +97,7 @@ namespace sciter
     void save( writer& w, UINT quality = 0 /*JPEG qquality: 20..100, if 0 - PNG */ ) // save image as png or jpeg enoded data
     {
       GRAPHIN_RESULT r = gapi()->imageSave( himg, writer::image_write_function, &w, 24, quality ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     /* example of use of the writer:
@@ -116,14 +116,14 @@ namespace sciter
     ~image() 
     {
       if( himg ) {
-        GRAPHIN_RESULT r = gapi()->imageRelease( himg ); assert(r == GRAPHIN_OK); r;
+        GRAPHIN_RESULT r = gapi()->imageRelease( himg ); assert(r == GRAPHIN_OK); (void)(r);
       }
     }
     
     bool dimensions( UINT& width, UINT& height ) {
       if( himg ) {
         BOOL usesAlpha;
-        GRAPHIN_RESULT r = gapi()->imageGetInfo(himg,&width,&height,&usesAlpha); assert(r == GRAPHIN_OK); r;
+        GRAPHIN_RESULT r = gapi()->imageGetInfo(himg,&width,&height,&usesAlpha); assert(r == GRAPHIN_OK); (void)(r);
         return true;
       }
       width = 0; height = 0;
@@ -133,7 +133,7 @@ namespace sciter
     void clear(COLOR c = 0)
     {
         GRAPHIN_RESULT r = gapi()->imageClear(himg,c); 
-        assert(r == GRAPHIN_OK); r;
+        assert(r == GRAPHIN_OK); (void)(r);
     }
 
   };
@@ -163,14 +163,14 @@ namespace sciter
     static path create()
     {
       HPATH hpath = 0;
-      GRAPHIN_RESULT r = gapi()->pathCreate(&hpath); assert(r == GRAPHIN_OK); r;
+      GRAPHIN_RESULT r = gapi()->pathCreate(&hpath); assert(r == GRAPHIN_OK); (void)(r);
       return path( hpath );
     }
 
     ~path() 
     {
       if( hpath ) {
-        GRAPHIN_RESULT r = gapi()->pathRelease( hpath ); assert(r == GRAPHIN_OK); r;
+        GRAPHIN_RESULT r = gapi()->pathRelease( hpath ); assert(r == GRAPHIN_OK); (void)(r);
       }
     }
 
@@ -178,42 +178,42 @@ namespace sciter
     {
       assert(hpath);
       GRAPHIN_RESULT r = gapi()->pathMoveTo( hpath, x, y, relative ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     void line_to ( POS x, POS y, bool relative )
     {
       assert(hpath);
       GRAPHIN_RESULT r = gapi()->pathLineTo( hpath, x, y, relative ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     void arc_to( POS x, POS y, ANGLE angle, POS rx, POS ry, bool is_large_arc, bool sweep_flag, bool relative )
     {
       assert(hpath);
       GRAPHIN_RESULT r = gapi()->pathArcTo( hpath, x, y, angle, rx, ry, is_large_arc, sweep_flag, relative ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     void quadratic_curve_to ( POS xc, POS yc, POS x, POS y, bool relative )
     {
       assert(hpath);
       GRAPHIN_RESULT r = gapi()->pathQuadraticCurveTo( hpath, xc, yc, x, y, relative ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     void bezier_curve_to ( POS xc1, POS yc1, POS xc2, POS yc2, POS x, POS y, bool relative )
     {
       assert(hpath);
       GRAPHIN_RESULT r = gapi()->pathBezierCurveTo( hpath, xc1, yc1, xc2, yc2, x, y, relative ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     void close_path()
     {
       assert(hpath);
       GRAPHIN_RESULT r = gapi()->pathClosePath( hpath ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
   };
 
@@ -232,7 +232,7 @@ namespace sciter
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gLine( hgfx, x1, y1, x2, y2 ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     // Draws rectangle using current lineColor/lineGradient and fillColor/fillGradient 
@@ -240,7 +240,7 @@ namespace sciter
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gRectangle( hgfx, x1, y1, x2, y2 ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     // Draws rounded rectangle using current lineColor/lineGradient and fillColor/fillGradient with rounded corners.
@@ -249,7 +249,7 @@ namespace sciter
       DIM rad[8] = { rAll, rAll, rAll, rAll, rAll, rAll, rAll, rAll};
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gRoundedRectangle( hgfx, x1, y1, x2, y2, rad ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     void rectangle ( POS x1, POS y1, POS x2, POS y2, DIM rTopLeft, DIM rTopRight, DIM rBottomRight, DIM rBottomLeft )
@@ -257,7 +257,7 @@ namespace sciter
       DIM rad[8] = { rTopLeft, rTopLeft, rTopRight, rTopRight, rBottomRight, rBottomRight, rBottomLeft, rBottomLeft };
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gRoundedRectangle( hgfx, x1, y1, x2, y2, rad ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
 
@@ -266,13 +266,13 @@ namespace sciter
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gEllipse( hgfx, x, y, rx, ry ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
     void circle ( POS x, POS y, POS radii )
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gEllipse( hgfx, x, y, radii, radii ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     // Draws closed arc using current lineColor/lineGradient and fillColor/fillGradient.
@@ -280,7 +280,7 @@ namespace sciter
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gArc( hgfx, x, y, rx, ry, start, sweep ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     // Draws star.
@@ -288,7 +288,7 @@ namespace sciter
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gStar( hgfx, x, y, r1, r2, start, rays ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     // Draws closed polygon using current lineColor/lineGradient and fillColor/fillGradient.
@@ -296,7 +296,7 @@ namespace sciter
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gPolygon( hgfx, xy, num_points ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     // you bet
@@ -304,7 +304,7 @@ namespace sciter
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gPolyline( hgfx, xy, num_points ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     // SECTION: Path operations
@@ -313,7 +313,7 @@ namespace sciter
     {
       assert(hgfx && p.hpath);
       GRAPHIN_RESULT r = gapi()->gDrawPath( hgfx, p.hpath, dpm ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     // end of path opearations
@@ -324,35 +324,35 @@ namespace sciter
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gRotate( hgfx, radians, 0, 0 ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     void rotate ( ANGLE radians, POS center_x, POS center_y )
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gRotate( hgfx, radians, &center_x, &center_y ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     void translate ( POS cx, POS cy )
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gTranslate( hgfx, cx, cy ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     void scale ( SC_REAL x, SC_REAL y )
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gScale( hgfx, x, y ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     void skew ( SC_REAL dx, SC_REAL dy )
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gSkew( hgfx, dx, dy ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     // all above in one shot
@@ -360,7 +360,7 @@ namespace sciter
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gTransform( hgfx, m11, m12, m21, m22, dx, dy ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     // end of affine tranformations.
@@ -371,14 +371,14 @@ namespace sciter
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gStateSave( hgfx ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     void state_restore ( )
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gStateRestore( hgfx ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     // end of state save/restore
@@ -390,7 +390,7 @@ namespace sciter
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gLineWidth( hgfx, width ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     void no_line ( ) 
@@ -402,21 +402,21 @@ namespace sciter
     { 
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gLineColor( hgfx, c); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     void line_cap(SCITER_LINE_CAP_TYPE ct)
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gLineCap( hgfx, ct); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     void line_join(SCITER_LINE_JOIN_TYPE jt)
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gLineJoin( hgfx, jt); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     // COLOR for solid fills
@@ -424,7 +424,7 @@ namespace sciter
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gFillColor( hgfx, c); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     void no_fill ( ) 
@@ -437,7 +437,7 @@ namespace sciter
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gLineGradientLinear( hgfx, x1, y1, x2, y2, stops, nstops ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
     void line_linear_gradient( POS x1, POS y1, POS x2, POS y2, COLOR c1, COLOR c2 )
     {
@@ -450,7 +450,7 @@ namespace sciter
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gFillGradientLinear( hgfx, x1, y1, x2, y2, stops, nstops); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     void fill_linear_gradient( POS x1, POS y1, POS x2, POS y2, COLOR c1, COLOR c2 )
@@ -464,7 +464,7 @@ namespace sciter
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gFillGradientRadial( hgfx, x, y, radiix, radiiy, stops, nstops); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     void line_radial_gradient( POS x, POS y, DIM radiix, DIM radiiy, COLOR c1, COLOR c2 )
@@ -478,7 +478,7 @@ namespace sciter
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gFillGradientRadial( hgfx, x, y, radiix, radiiy, stops, nstops); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     void fill_radial_gradient( POS x, POS y, DIM radiix, DIM radiiy, COLOR c1, COLOR c2 )
@@ -491,7 +491,7 @@ namespace sciter
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gFillMode( hgfx, even_odd ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     // SECTION: text
@@ -501,7 +501,7 @@ namespace sciter
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gSetFont( hgfx, name, size, bold, italic, angle ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     // draw text at x,y with text alignment
@@ -509,7 +509,7 @@ namespace sciter
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gText( hgfx, x, y, t.start, t.length ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     // calculates width of the text string
@@ -518,7 +518,7 @@ namespace sciter
       DIM width;
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gTextWidth( hgfx, t.start, t.length, &width ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
       return width;
     }
 
@@ -527,7 +527,7 @@ namespace sciter
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gFontMetrics( hgfx, &height, &ascent ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     // set text alignments
@@ -535,7 +535,7 @@ namespace sciter
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gTextAlignment( hgfx, x, y ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 */
 
@@ -546,28 +546,28 @@ namespace sciter
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gDrawImage( hgfx, pimg->himg, x, y, &w, &h, &ix, &iy, &iw, &ih, 0 ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
     // draws whole img onto the graphics surface with current transformation applied (scale, rotation). expensive
     void draw_image ( image* pimg, POS x, POS y )
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gDrawImage( hgfx, pimg->himg, x, y, 0, 0, 0, 0, 0, 0, 0 ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
     // blends image bits with bits of the surface. no affine transformations. less expensive
     void blend_image ( image* pimg, POS x, POS y, float opacity, UINT ix, UINT iy, UINT iw, UINT ih )
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gDrawImage( hgfx, pimg->himg, x, y, 0, 0, &ix, &iy, &iw, &ih, &opacity ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
     // blends image bits with bits of the surface. no affine transformations. less expensive
     void blend_image ( image* pimg, POS x, POS y, float opacity )
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gDrawImage( hgfx, pimg->himg, x, y, 0, 0, 0, 0, 0, 0, &opacity ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     // SECTION: coordinate space
@@ -576,28 +576,28 @@ namespace sciter
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gWorldToScreen( hgfx, &inout_x, &inout_y ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     void world_to_screen ( DIM& inout_length)
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gWorldToScreen( hgfx, &inout_length, 0 ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     void screen_to_world ( POS& inout_x, POS& inout_y)
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gScreenToWorld( hgfx, &inout_x, &inout_y ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     void screen_to_world ( DIM& inout_length)
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gScreenToWorld( hgfx, &inout_length, 0 ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     // SECTION: clipping
@@ -606,21 +606,21 @@ namespace sciter
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gPushClipBox( hgfx, x1, y1, x2, y2, opacity ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     void push_clip_path ( const path& p, float opacity = 1.0)
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gPushClipPath( hgfx, p.hpath , opacity ); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
 
     void pop_clip ()
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gPopClip( hgfx); 
-      assert(r == GRAPHIN_OK); r;
+      assert(r == GRAPHIN_OK); (void)(r);
     }
   };
 

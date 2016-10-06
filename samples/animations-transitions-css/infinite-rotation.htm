@@ -38,6 +38,12 @@
           run.call(this);
       };
       
+      // restart animation when window gets shown:
+      view.on("statechange", function() {
+        if( view.state == View.WINDOW_SHOWN )
+          run.call(this super);
+      });
+      
       run.call(this);
     }
     

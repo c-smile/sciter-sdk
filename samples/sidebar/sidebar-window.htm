@@ -1,0 +1,78 @@
+<html custom-frame="layered" state="hidden">
+<head>
+  <title>Glassy window</title>
+  <style>
+    html 
+    { 
+      font:system;
+      background:transparent; 
+      overflow:hidden;
+      padding:0;
+    }
+    
+    body 
+    {
+      background-color:rgba(0,0,0,0.7); 
+      background-clip: padding-box;
+      padding:8dip; margin:0;
+      border-left:1dip solid rgba(150,150,150,0.25); 
+      transform: translate(100%,0);
+    }
+    
+    html[state="shown"] > body {
+      transform: translate(0%,0);
+      transition: transform(quad-out,200ms);
+    }
+    
+    section {
+      flow: grid(1 2,
+                 3 3,
+                 4 5);
+      border-spacing: 8dip;
+    }
+    
+    brick { 
+      display:block;
+      width:*; 
+      height: 100dip; 
+      background: gold;
+    }
+   
+    h1 { color:#fff;}
+    
+  </style>
+  <script type="text/tiscript">
+  
+    function view.reveal() {
+      this.state = View.WINDOW_SHOWN;
+      self.attributes["state"] = "shown";
+    }
+  
+    self.on("click","#hide", function() {
+      view.isBlurBehind = false;
+      self.attributes["state"] = "hidden";
+    });
+    
+    self.on("animationend", function() {
+      var state = self.attributes["state"];
+      if(state == "shown")
+        view.isBlurBehind = true;
+      else if(state == "hidden")
+        view.state = View.WINDOW_HIDDEN;
+    });
+        
+    
+    </script>
+</head>
+<body>
+  <button #hide>&raquo;</button>
+  <h1>Glassy window</h1>
+  <section>
+    <brick>1</brick>
+    <brick>2</brick>
+    <brick>3</brick>
+  </section>
+  
+  
+</body>
+</html>

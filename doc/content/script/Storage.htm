@@ -1,4 +1,4 @@
-<html>
+﻿<html>
   <head>
     <title>Storage</title>
     <meta name="generator" content="h-smile:richtext"/>
@@ -6,39 +6,28 @@
 <body>
   <h1>Storage object</h1>
   <p>Represents persistent storage.</p>
-  
-    <dl>
-      
-        
-          <h2>Properties</h2>
-      
-        <dt>root</dt>
-        <dd>- <em>object</em>, root object in the storage. Read/write property.</dd>
-      
-        <dt>autocommit</dt>
-        <dd>- <em>boolean</em>, indicates if storage commits all associated objects into storage automatically. Read-only property.</dd>
-      
-        
-          <h2>Methods</h2>
-      
-        <dt>open</dt>
-        <dd>
-          <p><strong>( </strong><em>file-name</em><strong> </strong> [, autocommit] ) returns: storage | null</p>
-          <p>Static method. Opens the storage, which name is stored in the <em>file-name</em> string and returns an instance of Storage object.<br/><em>autocommit</em> indicates if storage commits all associated objects into storage automatically. Default value is <em>true</em>.</p></dd>
-      
-        <dt>close</dt>
-        <dd>
-          <div><strong>()</strong></div>
-          <p>Closes underlying Storage object. Commits all data if <em>autocommit</em> is set to <em>true</em>.</p></dd>
-      
-        <dt>commit</dt>
-        <dd>
-          <p><strong>()</strong></p>
-          <p>Commits all related objects into storage.</p></dd>
-      
-        <dt>createIndex</dt>
-        <dd>
-          <div><strong>(</strong><em>type [, unique]</em><strong>)</strong> returns: <em>Index | null</em></div>
-          <p>Creates an index of type 'type' and returns <em>Index</em> object. <em>Index</em> could have unique or duplicated keys depending on <em>unique</em> argument. Default value for <em>unique</em> is <em>true</em>. Supported types: #<em>integer, #float, #date, #string</em>.</p></dd></dl>
+  <dl>
+    <h2>Properties</h2>
+    <dt>root</dt>
+    <dd>- <em>object</em>, root object in the storage. Read/write property.</dd>
+    <dt>autocommit</dt>
+    <dd>- <em>boolean</em>, indicates if storage commits all associated objects into storage automatically. Read-only property.</dd>
+    <h2>Methods</h2>
+    <dt>open</dt>
+    <dd>
+      <p><strong>( </strong><em>file-name</em><strong> </strong>[, autocommit] ) returns: storage | null</p>
+      <p>Static method. Opens the storage, which name is stored in the <em>file-name</em> string and returns an instance of Storage object.<br/><em>autocommit</em> indicates if storage commits all associated objects into storage automatically. Default value is <em>true</em>.</p></dd>
+    <dt>close</dt>
+    <dd>
+      <div><strong>()</strong></div>
+      <p>Closes underlying Storage object. Commits all data if <em>autocommit</em> is set to <em>true</em>.</p></dd>
+    <dt>commit</dt>
+    <dd>
+      <p><strong>()</strong></p>
+      <p>Commits all related objects into storage.</p></dd>
+    <dt>createIndex</dt>
+    <dd>
+      <div><strong>(</strong><em>type [, unique]</em><strong>)</strong> returns: <em>Index | null</em></div>
+      <p>Creates an index of type 'type' and returns <em>Index</em> object. <em>Index</em> could have unique or duplicated keys depending on <em>unique</em> argument. Default value for <em>unique</em> is <em>true</em>. Supported types: #<em>integer, #float, #date, #string</em>.</p></dd></dl>
 </body>
 </html>

@@ -5,15 +5,17 @@
     
     #tapes {  flow:"1 3"
                    "2 4";
-              border-spacing:10px; height:*; }
+              border-spacing:10dip; height:*; }
               
     div.tapev > div.item
     {
       border:1px solid #aaa;
       flow: "1 1"
             "2 3"; 
+      border-spacing:6dip;
     }
     div.tapev > div.item > .content { width:*; }
+    div.tapev > div.item > img { max-width:64dip; }
               
   </style>  
   <script type="text/tiscript">
@@ -38,7 +40,7 @@
     <div #tape .tapev items-source="LoremIpsum" >
       <div .item .template>
         <caption merge-code="caption" />
-        <img src="images/user-icon.png" />
+        <img merge-code="image" />
         <div .content merge-code="content" />
       </div>
     </div>
@@ -46,7 +48,7 @@
     <div #kinetic-tape .tapev items-source="LoremIpsum" kinetic >
       <div .item .template>
         <caption merge-code="caption" />
-        <img src="images/user-icon.png" />
+        <img merge-code="image" />
         <div .content merge-code="content" />
       </div>
     </div>  

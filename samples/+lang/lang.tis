@@ -126,12 +126,20 @@ const Lang = function() {
     return (notFoundItems,notUsedItems);
   }
   
+  function translate(text, val = "") 
+  {
+    var fmt = xlation[text]; 
+    if( !fmt ) { if(notfound) notfound[text] = #text; }
+    else return typeof fmt == #function ? fmt.call(this, val) : fmt.replace("#",val.toString() );
+  }
 
   return {
       Controller    : Controller,
       Label         : Label,
       Formatter     : Formatter,
-      initStats     : initStats
+      initStats     : initStats,
+      translate     : translate,
+      x             : translate // short form of the above
    };
 
 }();

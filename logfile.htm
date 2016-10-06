@@ -11,6 +11,36 @@
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
     <tr>
+      <td valign="top" bgcolor="#FFFADA">3.3..2.12</td>
+      <td nowrap valign="top" align="center">06-10-2016</td>
+      <td>
+        <p>new:</p>
+        <ul>
+          <li>[+lang] <code>Lang.x(text[,value])</code> function - explicit translation. + demo: demos/6-lang-msgbox.htm</li>
+          <li>[tiscript, storage] samples : sdk/samples/storage/</li>
+          <li><code>Event.X_DRAG_CANCEL</code> - sent if drag was canceled.</li>
+          <li><code>view.isBlurBehind</code> property to set blur dynamically. See: &nbsp;/sdk/samples/sidebar - Windows 10 Action Center alike thing.</li>
+          <li>+ sdk/samples/ideas/effects/bubbles effect.</li></ul>
+        <p>fixes:</p>
+        <ul>
+          <li>[behavior:htmlarea] disabling some experimental features (caret navigation).</li>
+          <li>[scrollable table] <code>&lt;tbody&gt;</code>, fix of vertical scrollbar rendering when horizontal scroll is present. &nbsp;samples/+vlist/vgrid.htm case with columns resized.</li>
+          <li>[API] fix of <code>dom::element::get_style_attribute()</code> for length values: <a href="https://sciter.com/forums/topic/get_style_attributewidth-data-format">https://sciter.com/forums/topic/get_style_attributewidth-data-format/</a></li>
+          <li>[native api] <code>SciterSortElements</code> fix.</li>
+          <li>[popup] dynamic update fix, case: sdk/samples/popup/popup-dynamic-sizing.htm</li>
+          <li>[svg] fix of rendering artifacts in <code>&lt;defs&gt;&lt;rect/&gt;&lt;/defs&gt;</code></li>
+          <li>[win] fix of icon click handling on custom-frame, see my question: <a href="http://stackoverflow.com/questions/39731220/is-there-wm-queryhide-close-or-similar-message">http://stackoverflow.com/questions/39731220/is-there-wm-queryhide-close-or-similar-message</a></li>
+          <li>[win] clipboard::get_image() fix for malformed alpha images. </li>
+          <li>[layout] <code>flow:default | vertical</code> , fix of max-content calculation, see: <a href="http://sciter.com/forums/topic/css-layout-chalenge">http://sciter.com/forums/topic/css-layout-chalenge/</a></li>
+          <li>[d2d] layered popup, svg and image graphcs - fix of rendering on some cards.</li>
+          <li><code>&lt;option&gt;</code> <code>:node</code> state setting is back. Fixes <a href="http://sciter.com/forums/topic/3-3-2-11-treeview-bug">http://sciter.com/forums/topic/3-3-2-11-treeview-bug/</a> case. </li>
+          <li>[tiscript] fix of eval against persisted objects.</li>
+          <li>Support of <code>&quot;role=window-max&quot;</code> and <code>&quot;role=window-maximize&quot;</code> roles in custom frame windows.</li>
+          <li><code>JSON.stringify(, array)</code> case support.</li>
+          <li><code>JSON.stringify()</code> and <code>JSON.parse()</code> have been documented.</li>
+          <li>[win,d2d] unknown glyph rendering fix.</li></ul>Builds: win32/win64, osx32/osx64, linux/gtk64
+        <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
+    <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.2.11</td>
       <td nowrap valign="top" align="center">10-09-2016</td>
       <td>
@@ -20,7 +50,7 @@
           <li>[win10] custom-frame=&quot;blur&quot; support.</li>
           <li>[tis] <em>this var</em> in classes - deep cloning, see <a href="http://sciter.com/forums/topic/class-variables">http://sciter.com/forums/topic/class-variables/</a> discussion.</li>
           <li>view.on(&quot;moving&quot;,function(rectw) {...}) and <br/>view.on(&quot;sizing&quot;,function(rectw) {...}) events. + sdk/samples/dialogs+windows/test-view-move-discrimination.htm</li>
-          <li>[css] + <em>text-selection-caret-color</em>: color property, explicit caret color definition. </li></ul>
+          <li>[css] + <em>text-selection-caret-color</em>: color property, explicit caret color definition.</li></ul>
         <p>fixes:</p>
         <ul>
           <li>flow:grid() layout calculation, fix for spanned cells: <a href="http://sciter.com/forums/topic/particular-combination-of-elements-lead-to-mouse-glitch">http://sciter.com/forums/topic/particular-combination-of-elements-lead-to-mouse-glitch/</a></li>

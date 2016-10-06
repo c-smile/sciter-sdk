@@ -289,6 +289,9 @@ function Float_test()
 
 class Foo
 {
+  this var memberVar = [1,2,3];
+  var staticVar = [1,2,3];
+
   function this(n = "o1")   { this.one = 1; this._name = n; }
   function foo()            { return "foo"; }
   property name(v)                
@@ -384,7 +387,19 @@ function Object_test()
   if( typeof bar != #object ) throw "typeof";
   if( !(bar instanceof Bar) ) throw "instanceof 1";
   if( !(bar instanceof Foo) ) throw "instanceof 2";
-
+  
+// `this var` (instance data)  and 'var' (class data, a.k.a. "static") 
+  var f1 = new Foo();  
+  var f2 = new Foo();  
+  
+  assert f1.memberVar == [1,2,3];
+  assert f1.staticVar == [1,2,3];
+  
+  assert f1.memberVar == f2.memberVar;
+  assert f1.memberVar !== f2.memberVar; // instances has their own clones of proto arrays and objects
+  
+  assert f1.staticVar == f2.staticVar;
+  assert f1.staticVar === f2.staticVar;
 
 // class literals and dynamic subclassing
 

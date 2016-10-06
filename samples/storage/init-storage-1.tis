@@ -1,0 +1,25 @@
+﻿
+
+  function initStorage(storage)
+  {
+    var list = [
+      { t: "Invite your team to this board using the Add Members button" },
+      { t: "Drag people onto a card to indicate that they're responsible for it" },
+      { t: "Use color-coded labels for organization" },
+      { t: "You can change the board background" },
+      { t: "Try dragging cards anywhere." },
+    ];
+    
+    var idxNumber = storage.createIndex(#integer, true /*unique*/);
+    var idxText = storage.createIndex(#string, false);
+    
+    for( var (i,item) in list ) {
+      idxNumber[i] = item;
+      idxText[item.t] = item;
+    }
+    
+    return storage.root = {
+      itemsByNumber : idxNumber,
+      itemsByText : idxText,
+    };
+  }
