@@ -665,7 +665,7 @@ SCDOM_RESULT SCAPI SciterWindowAttachEventHandler( HWINDOW hwndLayout, LPELEMENT
 SCDOM_RESULT SCAPI SciterWindowDetachEventHandler( HWINDOW hwndLayout, LPELEMENT_EVENT_PROC pep, LPVOID tag );
 
 
-/** SendEvent - sends sinking/bubbling event to the child/parent chain of he element.
+/** SciterSendEvent - sends sinking/bubbling event to the child/parent chain of he element.
     First event will be send in SINKING mode (with SINKING flag) - from root to he element itself.
     Then from he element to its root on parents chain without SINKING flag (bubbling phase).
 
@@ -680,7 +680,7 @@ SCDOM_RESULT SCAPI SciterWindowDetachEventHandler( HWINDOW hwndLayout, LPELEMENT
 SCDOM_RESULT SCAPI SciterSendEvent(
           HELEMENT he, UINT appEventCode, HELEMENT heSource, UINT reason, /*out*/ BOOL* handled);
 
-/** PostEvent - post sinking/bubbling event to the child/parent chain of he element.
+/** SciterPostEvent - post sinking/bubbling event to the child/parent chain of he element.
  *  Function will return immediately posting event into input queue of the application.
  *
  * \param[in] he \b HELEMENT, element to send this event to.
@@ -693,7 +693,7 @@ SCDOM_RESULT SCAPI SciterSendEvent(
 SCDOM_RESULT SCAPI SciterPostEvent( HELEMENT he, UINT appEventCode, HELEMENT heSource, UINT reason);
 
 
-/** Fire - sends or posts sinking/bubbling event to the child/parent chain of specified element.
+/** SciterFireEvent - sends or posts sinking/bubbling event to the child/parent chain of specified element.
     First event will be send in SINKING mode (with SINKING flag) - from root to element itself.
     Then from element to its root on parents chain without SINKING flag (bubbling phase).
 
