@@ -171,7 +171,7 @@ SCDOM_RESULT SCAPI SciterGetParentElement(HELEMENT he, HELEMENT* p_parent_he);
 
 /** Get html representation of the element.
  * \param[in] he \b #HELEMENT
- * \param[in] outer \b BOOL, if TRUE will retunr outer HTML otherwise inner.
+ * \param[in] outer \b BOOL, if TRUE will return outer HTML otherwise inner.
  * \param[in] rcv \b pointer to function receiving UTF8 encoded HTML.
  * \param[in] rcv_param \b parameter that passed to rcv as it is.
  * \return \b #SCDOM_RESULT SCAPI
@@ -692,6 +692,16 @@ SCDOM_RESULT SCAPI SciterSendEvent(
 
 SCDOM_RESULT SCAPI SciterPostEvent( HELEMENT he, UINT appEventCode, HELEMENT heSource, UINT reason);
 
+
+/** Fire - sends or posts sinking/bubbling event to the child/parent chain of specified element.
+    First event will be send in SINKING mode (with SINKING flag) - from root to element itself.
+    Then from element to its root on parents chain without SINKING flag (bubbling phase).
+
+ * \param[in] evt \b BEHAVIOR_EVENT_PARAMS, pointer to event param block
+ * \param[in] post \b BOOL, \c TRUE to post event asynchronously, \c FALSE otherwise
+ * \param[out] handled \b BOOL*, variable to receive TRUE if any handler handled it, FALSE otherwise.
+
+ **/
 
 SCDOM_RESULT SCAPI SciterFireEvent( const struct BEHAVIOR_EVENT_PARAMS* evt, BOOL post, BOOL *handled);
 
