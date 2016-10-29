@@ -298,7 +298,7 @@ UINT SCAPI ValueNativeFunctorSet( VALUE* pval,
 BOOL SCAPI ValueIsNativeFunctor( const VALUE* pval);
 
 
-#if defined(__cplusplus) && !defined(__value_hpp__)
+#if defined(__cplusplus) && !defined(__value_hpp__) && !defined(PLAIN_API_ONLY)
 
   #include "value.hpp"
 

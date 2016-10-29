@@ -245,10 +245,10 @@ typedef struct _ISciterAPI {
   LPSciterGraphicsAPI SCFN( GetSciterGraphicsAPI )();
   LPSciterRequestAPI SCFN( GetSciterRequestAPI )();
 
-#ifdef WINDOWS
-  BOOL SCFN( SciterCreateOnDirectXWindow ) (HWINDOW hwnd, IDXGISwapChain* pSwapChain);
-  BOOL SCFN( SciterRenderOnDirectXWindow ) (HWINDOW hwnd, HELEMENT elementToRenderOrNull, BOOL frontLayer);
-  BOOL SCFN( SciterRenderOnDirectXTexture ) (HWINDOW hwnd, HELEMENT elementToRenderOrNull, IDXGISurface* surface);
+#ifdef WINDOWS 
+    BOOL SCFN( SciterCreateOnDirectXWindow ) (HWINDOW hwnd, IUnknown* pSwapChain); // IDXGISwapChain
+    BOOL SCFN( SciterRenderOnDirectXWindow ) (HWINDOW hwnd, HELEMENT elementToRenderOrNull, BOOL frontLayer);
+    BOOL SCFN( SciterRenderOnDirectXTexture ) (HWINDOW hwnd, HELEMENT elementToRenderOrNull, IUnknown* surface); // IDXGISurface
 #endif
 
 
@@ -292,7 +292,7 @@ typedef ISciterAPI* (SCAPI *SciterAPI_ptr)();
             SciterAPI_ptr sciterAPI = (SciterAPI_ptr) GetProcAddress(hm, "SciterAPI");
             if( sciterAPI ) {
               _api = sciterAPI();
-#if defined(__cplusplus)
+#if defined(__cplusplus) && !defined(PLAIN_API_ONLY)
               tiscript::ni( _api->TIScriptAPI() );
 #endif
             } else {
@@ -604,9 +604,9 @@ typedef ISciterAPI* (SCAPI *SciterAPI_ptr)();
   inline BOOL SCAPI Sciter_V2v(HVM vm, const VALUE* value, tiscript_value* out_script_value) { return SAPI()->Sciter_V2v(vm,value,out_script_value); }
     
 #ifdef WINDOWS
-  inline BOOL SCAPI SciterCreateOnDirectXWindow(HWINDOW hwnd, IDXGISwapChain* pSwapChain) { return SAPI()->SciterCreateOnDirectXWindow(hwnd,pSwapChain); }
+  inline BOOL SCAPI SciterCreateOnDirectXWindow(HWINDOW hwnd, IUnknown* pSwapChain) { return SAPI()->SciterCreateOnDirectXWindow(hwnd,pSwapChain); }
   inline BOOL SCAPI SciterRenderOnDirectXWindow(HWINDOW hwnd, HELEMENT elementToRenderOrNull, BOOL frontLayer) { return SAPI()->SciterRenderOnDirectXWindow(hwnd,elementToRenderOrNull,frontLayer); }
-  inline BOOL SCAPI SciterRenderOnDirectXTexture(HWINDOW hwnd, HELEMENT elementToRenderOrNull, IDXGISurface* surface) { return SAPI()->SciterRenderOnDirectXTexture(hwnd,elementToRenderOrNull,surface); }
+  inline BOOL SCAPI SciterRenderOnDirectXTexture(HWINDOW hwnd, HELEMENT elementToRenderOrNull, IUnknown* surface) { return SAPI()->SciterRenderOnDirectXTexture(hwnd,elementToRenderOrNull,surface); }
 #endif
 
 

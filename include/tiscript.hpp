@@ -4,7 +4,7 @@
 #include <assert.h>
 #include "tiscript.h"
 
-#if defined(__cplusplus)
+#if defined(__cplusplus) && !defined(PLAIN_API_ONLY)
 
 #include "tiscript-streams.hpp"
 

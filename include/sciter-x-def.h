@@ -266,7 +266,7 @@ typedef SCN_GRAPHICS_CRITICAL_FAILURE* LPSCN_GRAPHICS_CRITICAL_FAILURE;
  * \param[in] uri \b LPCWSTR, URI of the data requested by Sciter.
  * \param[in] data \b LPBYTE, pointer to data buffer.
  * \param[in] dataLength \b UINT, length of the data in bytes.
- * \param[in] requestId \b LPVOID, SCN_LOAD_DATA requestId, can ne NULL.
+ * \param[in] requestId \b LPVOID, SCN_LOAD_DATA requestId, can be NULL.
  * \return \b BOOL, TRUE if Sciter accepts the data or \c FALSE if error occured
  **/
 
@@ -506,7 +506,7 @@ typedef VOID SC_CALLBACK URL_DATA_RECEIVER( const URL_DATA* pUrlData, LPVOID par
 *
 **/
 
-BOOL SCAPI SciterCreateOnDirectXWindow(HWINDOW hwnd, IDXGISwapChain* pSwapChain);
+BOOL SCAPI SciterCreateOnDirectXWindow(HWINDOW hwnd, IUnknown* pSwapChain); // IDXGISwapChain
 
 /**Renders content of the document loaded into the window
 * Optionally allows to render parts of document (separate DOM elements) as layers
@@ -528,7 +528,7 @@ BOOL SCAPI SciterRenderOnDirectXWindow(HWINDOW hwnd, HELEMENT elementToRenderOrN
 * \return \b BOOL, \c TRUE if layer was rendered successfully.
 *
 **/
-BOOL SCAPI SciterRenderOnDirectXTexture(HWINDOW hwnd, HELEMENT elementToRenderOrNull, IDXGISurface* surface);
+BOOL SCAPI SciterRenderOnDirectXTexture(HWINDOW hwnd, HELEMENT elementToRenderOrNull, IUnknown* surface); // IDXGISurface
 
 
 /**Render document to ID2D1RenderTarget
