@@ -145,7 +145,7 @@ namespace dom
     **/
     element(HELEMENT h)       { use(h); }
 
-  /**Copy constructo(void)r;
+  /**Copy constructor;
     * \param e \b #element
     **/
     element(const element& e) { use(e.he); }
