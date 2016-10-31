@@ -3,6 +3,9 @@
 #include "sciter-x-behavior.h"
 #include "sciter-x-graphics.hpp"
 #include <time.h>   
+#include <cmath>
+
+using namespace std;
 
 namespace sciter
 {
@@ -124,6 +127,55 @@ struct native_clock: public event_handler
       return false;
     
     }
+
+
+    // generation of Graphics.Path object on native side to be passed to script for drawing
+    
+    sciter::value nativeGetPath(sciter::value vx, sciter::value vy, sciter::value vw, sciter::value vh, sciter::value vt, sciter::value vclosed) 
+    {
+      float x = vx.get<float>();
+      float y = vy.get<float>();
+      float w = vw.get<float>();
+      float h = vh.get<float>();
+      float t = vt.get<float>();
+      bool  closed = vclosed.get<bool>();
+
+      float samples[6];
+	    float sx[6], sy[6];
+	    float dx = w/5.0f;
+	    
+        samples[0] = (1+sinf(t*1.2345f+cosf(t*0.33457f)*0.44f))*0.5f;
+	    samples[1] = (1+sinf(t*0.68363f+cosf(t*1.3f)*1.55f))*0.5f;
+	    samples[2] = (1+sinf(t*1.1642f+cosf(t*0.33457f)*1.24f))*0.5f;
+	    samples[3] = (1+sinf(t*0.56345f+cosf(t*1.63f)*0.14f))*0.5f;
+	    samples[4] = (1+sinf(t*1.6245f+cosf(t*0.254f)*0.3f))*0.5f;
+	    samples[5] = (1+sinf(t*0.345f+cosf(t*0.03f)*0.6f))*0.5f;
+
+	    for (int i = 0; i < 6; i++) {
+		    sx[i] = x+i*dx;
+		    sy[i] = y+h*samples[i]*0.8f;
+	    }
+
+      // creating path:
+      sciter::path p = sciter::path::create();
+
+      p.move_to(sx[0], sy[0],false);
+      for(int i = 1; i < 6; ++i)
+        p.bezier_curve_to(sx[i-1]+dx*0.5f,sy[i-1], sx[i]-dx*0.5f,sy[i], sx[i],sy[i],false);
+
+      if( closed ) {
+        p.line_to(x+w,y+h,false);
+        p.line_to(x+0,y+h,false);
+        p.close_path();
+      }
+
+       // .line_to(points[n],points[n+1]);
+     return p.to_value(); // wrap the path into sciter::value;
+    }
+
+    BEGIN_FUNCTION_MAP
+      FUNCTION_6("nativeGetPath", nativeGetPath); 
+    END_FUNCTION_MAP
 
 };
 

@@ -44,6 +44,12 @@
           "HTML Files (*.htm,*.html)|*.HTM;*.HTML|All Files (*.*)|*.*" , "html" );
      
       });
+      
+      function self.ready() {
+        var w = self.intrinsicWidthMax();
+        var h = self.intrinsicHeight(w);
+        view.move(100,100,w,h,true);
+      }
     
     </script>
   </head>

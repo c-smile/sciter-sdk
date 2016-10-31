@@ -12,7 +12,7 @@
             var text = await view.request { url: url, output: #string };
             $(pre#out).text = text;
           } catch(e) {
-            $(pre#out).text = e.toString();
+            $(pre#out).text = String.$( HTTP status: {e.data.status}, response length: {e.data.response.length} );
           }
         }
         

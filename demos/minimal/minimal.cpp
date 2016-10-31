@@ -1,6 +1,7 @@
 // minimal.cpp : minimal Sciter application.
 
 #include <windows.h>
+
 #include "sciter-x.h"
 
 HINSTANCE ghInstance = 0;

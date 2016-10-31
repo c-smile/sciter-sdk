@@ -1,0 +1,128 @@
+<html>
+  <head>
+    <title>Sciter Graphics.Path</title>
+    <style>
+    
+      @import url(../note.css);
+    
+      html { background: transparent; }
+      
+      section {
+        flow:horizontal;
+      }
+      
+      widget.label
+      {
+        prototype:TabLabel;
+        behavior: clickable; // generates "click" event
+        width:*;
+        height:64pt;
+        font-size:24pt;
+        text-align:center;
+        vertical-align:middle;
+      }
+      
+      widget.label:last-child { margin-left:-100dip; }
+            
+    </style>
+    <script type="text/tiscript">
+      class TabLabel : Behavior
+      {
+        const COLOR_BACK = color(0xAF,0x7F,0x7F);
+        const COLOR_BACK_HOVER = color(0xFF,0x7F,0x7F);
+        const COLOR_BACK_ACTIVE = color(0xFF,0,0);
+      
+        function attached() 
+        { 
+          // attaching the paint() to paintContent layer handler
+          this.paintBackground = this.paint; 
+          // attaching hitTest as isPointInside method
+          this.isPointInside = this.hitTest;
+        }
+                
+        function getShape()
+        {
+          var shape = this.shape;
+          if(!shape) 
+          {
+            shape = this.shape = new Graphics.Path();
+            this.shapeWidth = null;
+            this.shapeHeight = null;
+          }
+         
+          var (w,h) = this.box(#dimension);
+         
+          if( this.shapeWidth == w && this.shapeHeight == h)
+            return shape; // nothing to do already calculated
+          
+          shape.reset();
+          var cw = Integer.min(h,w/2);
+          
+          var x1 = cw, x2 = w - cw;
+          var xc1 = cw/2, xc2 = w - cw/2;
+          
+          shape.moveTo(0,h)
+               .bezierCurveTo(xc1,h,xc1,0,x1,0)
+               .lineTo(x2,0)
+               .bezierCurveTo(xc2,0,xc2,h,w,h)
+               .close();
+
+          return shape; 
+        }
+        
+        // test is event point is inside the shape
+        function hitTest(x,y)
+        {
+          return this.getShape().isPointInside(x,y);
+        }
+       
+        // function is called while handling WM_PAINT 
+        function paint(gfx)
+        {
+          if(var shape = this.getShape())
+          {
+            var backColor = this.state.pressed
+                    ?COLOR_BACK_ACTIVE
+                    :(this.state.hover
+                       ? COLOR_BACK_HOVER
+                       : COLOR_BACK);
+
+            gfx.lineWidth(2)
+               .lineColor(color(0xFF,0,0))
+               .fillColor(backColor)
+               .drawPath( shape );
+          }
+          return false;
+        }
+        
+        function onMouse(evt)
+        {
+          switch( evt.type )
+          {
+            case Event.MOUSE_DOWN: 
+            case Event.MOUSE_DCLICK: 
+            case Event.MOUSE_UP: 
+            case Event.MOUSE_ENTER:
+            case Event.MOUSE_LEAVE:
+              this.refresh();
+              break;
+          }
+        }
+        
+      }
+      
+    </script>
+  </head>
+<body>
+
+  <note>  
+    Demo of custom hit testing on elements using this.isPointInside(x,y) tester.
+    Move mouse between tabs.
+  </note>
+
+  <section>
+    <widget .label>Label &#8470;1</widget>
+    <widget .label>Label &#8470;2</widget>
+  </section>
+</body>
+</html>

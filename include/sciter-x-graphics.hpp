@@ -46,6 +46,7 @@ namespace sciter
   };
 
   class graphics;
+  class painter;
 
   class image
   {
@@ -85,7 +86,6 @@ namespace sciter
         return image( himg );
       return image(0);
     }
-
     static image load( aux::bytes data ) // loads image from png or jpeg enoded data
     {
       HIMG himg;
@@ -94,6 +94,24 @@ namespace sciter
         return image( himg );
       return image(0);
     }
+
+    // fetch image reference from sciter::value envelope
+    static image from(const sciter::value& valImage) {
+      HIMG himg;
+      GRAPHIN_RESULT r = gapi()->vUnWrapImage(&valImage, &himg); assert(r == GRAPHIN_OK); (void)(r);
+      if( himg )
+        return image( himg );
+      return image(0);
+    }
+
+    sciter::value to_value() {
+      sciter::value v;
+      GRAPHIN_RESULT r = gapi()->vWrapImage(himg,&v); assert(r == GRAPHIN_OK); (void)(r);
+      return v;
+    }
+
+    void paint( painter* p );
+
     void save( writer& w, UINT quality = 0 /*JPEG qquality: 20..100, if 0 - PNG */ ) // save image as png or jpeg enoded data
     {
       GRAPHIN_RESULT r = gapi()->imageSave( himg, writer::image_write_function, &w, 24, quality ); 
@@ -167,6 +185,21 @@ namespace sciter
       return path( hpath );
     }
 
+    // fetch path reference from sciter::value envelope
+    static path from(const sciter::value& valPath) {
+      HPATH hpath;
+      GRAPHIN_RESULT r = gapi()->vUnWrapPath(&valPath, &hpath); assert(r == GRAPHIN_OK); (void)(r);
+      if( hpath )
+        return path( hpath );
+      return path(0);
+    }
+
+    sciter::value to_value() {
+      sciter::value v;
+      GRAPHIN_RESULT r = gapi()->vWrapPath(hpath,&v); assert(r == GRAPHIN_OK); (void)(r);
+      return v;
+    }
+
     ~path() 
     {
       if( hpath ) {
@@ -217,7 +250,6 @@ namespace sciter
     }
   };
 
-
   class graphics
   {
     HGFX hgfx;  
@@ -226,6 +258,21 @@ namespace sciter
     graphics( HGFX gfx ): hgfx(gfx) { if(hgfx) gapi()->gAddRef(hgfx); }
     
     ~graphics() { if(hgfx) gapi()->gRelease(hgfx); }
+
+    // fetch graphics reference from sciter::value envelope
+    static graphics from(const sciter::value& valGfx) {
+      HGFX hgfx;  
+      GRAPHIN_RESULT r = gapi()->vUnWrapGfx(&valGfx, &hgfx); assert(r == GRAPHIN_OK); (void)(r);
+      if( hgfx )
+        return graphics( hgfx );
+      return graphics(0);
+    }
+
+    sciter::value to_value() {
+      sciter::value v;
+      GRAPHIN_RESULT r = gapi()->vWrapGfx(hgfx,&v); assert(r == GRAPHIN_OK); (void)(r);
+      return v;
+    }
 
     // Draws line from x1,y1 to x2,y2 using current line_color and line_gradient.
     void line ( POS x1, POS y1, POS x2, POS y2 )
@@ -259,7 +306,6 @@ namespace sciter
       GRAPHIN_RESULT r = gapi()->gRoundedRectangle( hgfx, x1, y1, x2, y2, rad ); 
       assert(r == GRAPHIN_OK); (void)(r);
     }
-
 
     // Draws circle or ellipse using current lineColor/lineGradient and fillColor/fillGradient.
     void ellipse ( POS x, POS y, POS rx, POS ry )
@@ -623,6 +669,26 @@ namespace sciter
       assert(r == GRAPHIN_OK); (void)(r);
     }
   };
+
+  class painter
+  {
+    friend class image;
+  public:
+    virtual void paint( graphics& gfx, UINT width, UINT height ) = 0; // redefine to do actual painting on image
+  protected:
+    static VOID SCAPI image_paint_function(LPVOID prm, HGFX hgfx, UINT width, UINT height)
+    {
+      painter* pp = (painter* )prm;
+      graphics gfx(hgfx);
+      pp->paint( gfx, width, height );
+    }
+  };
+
+  inline void image::paint( painter* p ) {
+    assert(himg);
+    GRAPHIN_RESULT r = gapi()->imagePaint(himg, &painter::image_paint_function,p);
+    assert(r == GRAPHIN_OK); (void)(r);
+  } 
 
 }
 

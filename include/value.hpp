@@ -73,6 +73,7 @@
       value( bool v )           { ValueInit(this); ValueIntDataSet(this, v?1:0, T_BOOL, 0); }
       value( int  v )           { ValueInit(this); ValueIntDataSet(this, v, T_INT, 0); }
       value( double v )         { ValueInit(this); ValueFloatDataSet(this, v, T_FLOAT, 0); }
+      value( float v )          { ValueInit(this); ValueFloatDataSet(this, v, T_FLOAT, 0); }
 
       value( const WCHAR* s, unsigned int slen = 0 ) { ValueInit(this); ValueStringDataSet(this, LPCWSTR(s), (slen || !s)? slen : (unsigned int)str_length(s), 0); }
       value( const string& s ) { ValueInit(this); ValueStringDataSet(this, LPCWSTR(s.c_str()), UINT(s.length()), 0); }

@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+    toolbar { padding:3dip;
+              display:block; flow:horizontal; background:#ddd; }
+    toolbar > button { width:16dip; }
+    toolbar > button:checked { color:red; }
+    
+    </style>
+    <script type="text/tiscript">
+    
+      const htmlarea = $(htmlarea);
+      
+      $(#b1).on("click", function(){ 
+        htmlarea.clear();
+        htmlarea.$append(<text><br></text>);
+        htmlarea.selection.advance(#first);
+        htmlarea.state.focus = true;
+        return true; 
+      });  
+      $(#b2).on("click", function(){ 
+        htmlarea.clear();
+        htmlarea.$append(<div>Hello Macrocosm</div>);
+        htmlarea.selection.advance(#last);
+        htmlarea.state.focus = true;
+        return true; 
+      });  
+    
+    </script>
+  </head>
+<body>
+
+<button #b1>Update and go start</button>
+<button #b2>Update and go end</button>
+
+<htmlarea>
+  <p><br></p>
+</htmlarea>
+
+</body>
+</html>

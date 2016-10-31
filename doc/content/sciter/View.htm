@@ -12,8 +12,8 @@
     <h2>Properties</h2>
     <dt>root</dt>
     <dd><font color="#999999">r - </font><em>Element</em>, root element of a document loaded into the view.</dd>
-    <dt>state</dt>
-    <dd><font color="#999999">r/w</font> - state of the view's window. Applicable only for toplevel frame windows (sciter.exe).</dd>
+    <dt>windowState</dt>
+    <dd><font color="#999999">r/w</font> - state of the window. Applicable only for toplevel windows. Accepts values: <code>View.WINDOW_MINIMIZED,</code> <code>View.WINDOW_MAXIMIZED</code>, <code>View.WINDOW_HIDDEN</code>, <code>View.WINDOW_SHOWN</code> or <code>View.WINDOW_FULL_SCREEN</code>.</dd>
     <dt>focus</dt>
     <dd><font color="#999999">r/w</font> - <em>Element</em>, current element that has input focus. To set new element in focus use view.focus = el;</dd>
     <dt>eventsRoot</dt>
@@ -28,22 +28,24 @@ view.<u>eventsRoot</u> = null;
     <dd><font color="#999999">r</font> - integer, screen number where this window is located</dd>
     <dt>screens</dt>
     <dd><font color="#999999">r</font> - integer, number of screens (monitors) in the system.</dd>
-    <dt>caption</dt>
+    <dt>windowCaption</dt>
     <dd><font color="#999999">r/w</font> - string, window caption.</dd>
-    <dt>aspectRatio</dt>
+    <dt>windowAspectRatio</dt>
     <dd><font color="#999999">r/w</font> - float | null, aspect area of client area of this window;</dd>
-    <dt>isResizeable</dt>
+    <dt>windowResizable</dt>
     <dd><font color="#999999">r/w</font> - boolean, <em>true</em> if window can be resized by the user;</dd>
-    <dt>isMinimizable</dt>
+    <dt>windowMinimizable</dt>
     <dd><font color="#999999">r/w</font> - boolean, <em>true</em> if window has minimize button - can be minimized by the user;</dd>
-    <dt>isMaximizable</dt>
+    <dt>windowMaximizable</dt>
     <dd><font color="#999999">r/w</font> - boolean, <em>true</em> if window has maximize button - can be maximized by the user;</dd>
-    <dt>isTopmost</dt>
+    <dt>windowTopmost</dt>
     <dd><font color="#999999">r/w</font> - boolean, <em>true</em> if the window is at the topmost level;</dd>
-    <dt>minSize</dt>
+    <dt>windowMinSize</dt>
     <dd><font color="#999999">r/w</font> - (x:integer,y:integer), min window dimension constraints. User cannot make window smaller than these;<br/>Example: <code>view.minSize = (160,100);</code></dd>
-    <dt>maxSize</dt>
+    <dt>windowMaxSize</dt>
     <dd><font color="#999999">r/w</font> - (x:integer,y:integer), max window dimension constraints. User cannot make window larger than these;<br/>Example: <code>view.maxSize = (1600,1000);</code></dd>
+    <dt>windowIcon</dt>
+    <dd><font color="#999999">r/w</font> - window icon, the property accepts: <code>null</code> - set default icon, <code>&quot;url&quot;</code> - string, url of window icon or instance of <code>Image</code>.</dd>
     <h2>Methods</h2>
     <dt><strike>this</strike></dt>
     <dd>(non-constructable)</dd>
@@ -272,7 +274,7 @@ if( fn ) view.<strong>load</strong>(fn);
     <dt>&quot;size&quot;</dt>
     <dd>Event is generated after dimensions of the view (window) was changed. Use view.box() method to get dimensions.</dd>
     <dt>&quot;sizing&quot;</dt>
-    <dd>Event is generated while user is changing dimensions of resizeable window. Function-handler shall have signature: <code>function(sizingParams)</code> where <code>sizingParams</code> is an object of this structure: <code>{ x:integer, y:integer, width:integer, height: integer, side: 1...9 }</code> - propsed dimensions of the window and <code>side</code> is a window side/corner dragged to change window dimension. </dd>
+    <dd>Event is generated while user is changing dimensions of resizeable window. Function-handler shall have signature: <code>function(sizingParams)</code> where <code>sizingParams</code> is an object of this structure: <code>{ x:integer, y:integer, width:integer, height: integer, side: 1...9 }</code> - propsed dimensions of the window and <code>side</code> is a window side/corner dragged to change window dimension.</dd>
     <dt>&quot;move&quot;</dt>
     <dd>Event is generated after position of the view (window) was changed. Use view.box() method to get dimensions and positions.</dd>
     <dt>&quot;moving&quot;</dt>

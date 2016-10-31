@@ -68,7 +68,7 @@ function AniReplace(container, stateChanger, DURATION = 600)
       if( def.fimg )
         gfx.blendImage(def.fimg, x, y, 0,0, w,h,progress);
     }
-    return true;
+    return true; // handled, don't do default drawing.
   }
   
   // animation step

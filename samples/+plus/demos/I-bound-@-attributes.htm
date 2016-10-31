@@ -13,6 +13,12 @@
       div.test { visibility:none; background: gold; width: max-content; }
       div.test:expanded { visibility:visible; }
       
+      //div.test2 { visibility:visible; }
+      //div.test2:collapsed { visibility:none; }
+      
+      [@collapsed] { visibility:none; }
+      [@collapsed]:not(:collapsed) { visibility:visible; }      
+      
     </style>
     
     <script type="text/tiscript">
@@ -28,6 +34,7 @@
         var isButtonEnabled = true;
         
         var isSectionExpanded = true;
+        var isSectionCollapsed = true;
         
       }    
       
@@ -53,9 +60,15 @@
   </form>
   
   <h3>@expanded attribute demo</h3> 
-  
-  <button|checkbox(isSectionExpanded)>Show/hide next block</button>:
-  <div.test @expanded="isSectionExpanded">block to be shown/hidden</div> 
+
+  <section>  
+    <button|checkbox(isSectionExpanded)>Show/hide next block</button>:
+    <div.test @expanded="isSectionExpanded">block to be shown/hidden</div> 
+  </section>
+  <section>
+    <button|checkbox(isSectionCollapsed)>Next block hidden</button>:
+    <div.test2 @collapsed="isSectionCollapsed">block to be shown/hidden</div> 
+  </section>
     
   
 </body>

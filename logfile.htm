@@ -11,7 +11,69 @@
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
     <tr>
-      <td valign="top" bgcolor="#FFFADA">3.3..2.12</td>
+      <td valign="top" bgcolor="#FFFADA">3.3.2.13</td>
+      <td nowrap valign="top" align="center">30-10-2016</td>
+      <td>
+        <p>new:</p>
+        <ul>
+          <li>[api] methods to pass Graphics, Image, Graphics.Path and Graphics.Text objects between script and native code:</li>
+          <ul>
+            <li><code>sciter::graphics::from(sciter::value v); sciter::value sciter::graphics::to_value();</code></li>
+            <li><code>sciter::path::from(sciter::value v); sciter::value sciter::path::to_value();</code></li>
+            <li><code>sciter::image::from(sciter::value v); sciter::value sciter::image::to_value();</code></li>
+            <li><code>sciter::text::from(sciter::value v);</code> <code>sciter::value sciter::text::to_value();</code></li>
+            <li>Yet <code>sciter::image::paint()</code> to render on image surface from native code.</li>
+            <li>See: sdk/samples/behaviors/native-drawing.htm<br/>Objective: to provide means for faster generation of graphics on native side.</li></ul>
+          <li>Generalization (essentially renaming) of window related attributes, properties and methods:</li>
+          <ul>
+            <li>Attributes (of root &lt;html&gt; element):</li>
+            <ul>
+              <li><code>&lt;html window-frame=&quot;default&quot; | &quot;solid&quot; | &quot;solid-with-shadow&quot; | &quot;transparent&quot; &gt;</code></li>
+              <li><code>&lt;html window-blurbehind [= &quot;true&quot; | &quot;false&quot;] &gt;</code></li>
+              <li><code>&lt;html window-resizable [= &quot;true&quot; | &quot;false&quot;] &gt;</code></li></ul></ul>
+          <li>Properties: </li>
+          <ul>
+            <li><code>view.windowState </code></li>
+            <li><code>view.windowCaption </code></li>
+            <li><code>view.windowAspectRatio</code></li>
+            <li><code>view.windowTopmost</code></li>
+            <li><code>view.windowResizable</code></li>
+            <li><code>view.windowMaximizable</code></li>
+            <li><code>view.windowMinimizable</code></li>
+            <li><code>view.windowBlurbehind</code></li>
+            <li><code>view.windowMinSize</code></li>
+            <li><code>view.windowMaxSize</code></li></ul>
+          <li><code>view.windowIcon = null | &quot;url&quot; | Image;</code> - set window icon programmatically. See: sdk/samples.dialogs+windows/window-icon.htm</li>
+          <li><code>&lt;html window-icon=&quot;url&quot;&gt;</code> html property for the same purpose.</li>
+          <li>[script] <code>Error.data</code> - auxiliary data - payload that error can carry.</li>
+          <li>[dom] <code>view.request()</code> errors thrown contain <code>{ status: ..., response: ... }</code> details.</li></ul>
+        <p>fixes:</p>
+        <ul>
+          <li>[richtext] fix of caret position between two inline block elements.</li>
+          <li>[api] PLAIN_API_ONLY compatibility. See: <a href="https://github.com/c-smile/sciter-sdk/issues/45">https://github.com/c-smile/sciter-sdk/issues/45</a></li>
+          <li>[api] fix of SciterGetElementLoacation() returning RECT with bottom and right coordinates off by one pixel.</li>
+          <li>[gtk] view.close() async fix;</li>
+          <li>[css] support of `@` in attribute selectors, [@collapsed] for example.</li>
+          <li><code>Element.selection.advance(#first | #last, ...)</code> fix.</li>
+          <li>[osx] fix of &quot;rendering paused when menu is shown&quot;</li>
+          <li>[osx,linux] accesskey attribute handling fix.</li>
+          <li>[win] UI Automation, reporting rendered text rather than what is defined in DOM. Note: rendered text can be different from what is defined in DOM when CSS content:&quot;other text&quot; is used.</li>
+          <li>[win] View.POPUP_WINDOW and View.TOOL_WINDOW - disabling appearance on taskbar. &nbsp;</li>
+          <li>Transaction.insertText() implementation</li>
+          <li>Fix of &lt;select|tree&gt; dblclick handling.</li>
+          <li>Fix of <code>button[role=default-button]</code> styling when not in in focus state.</li>
+          <li>Fix of MOUSE_WHEEL double callback generation in some cases: <a href="http://sciter.com/forums/topic/why-does-onmouse-execute-2-times">http://sciter.com/forums/topic/why-does-onmouse-execute-2-times/</a></li>
+          <li>[win] role=&quot;default-button&quot; in dialog, fix if that button is not the first;</li>
+          <li>[win] - glassy message boxes are gone.</li>
+          <li>[win] fix of <a href="http://sciter.com/forums/topic/sciter-forcedly-handles-wm_nchittest">http://sciter.com/forums/topic/sciter-forcedly-handles-wm_nchittest</a> issue. </li>
+          <li><code>Element.isPointInside = function(x,y) {}</code> - support of elements with arbitrary shape. See discussion : <a href="http://sciter.com/forums/topic/custom-shaped-widget">http://sciter.com/forums/topic/custom-shaped-widget/</a> and sample sdk/samples/graphics/test-element-custom-shape.htm</li>
+          <li>Fix of selection.html, last character issue: <a href="http://sciter.com/forums/topic/selection-html-will-loss-the-last-char-when-including-img">http://sciter.com/forums/topic/selection-html-will-loss-the-last-char-when-including-img/</a></li>
+          <li>[tiscript] <code>stream.printf(str)</code> fix of the case when str contains characters higher than BMP, see: <a href="http://sciter.com/forums/topic/unicode-in-string-stream">http://sciter.com/forums/topic/unicode-in-string-stream/</a></li>
+          <li>[tiscript] fix of namespace handling in presence of await;</li>
+          <li>[win] <code>role='window-max'</code> and <code>role='window-min'</code> independent handling. &nbsp;Window can be maximisable but not minimisable.</li></ul>Builds: win32/win64, osx32/osx64, linux/gtk64
+        <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFFADA">3.3.2.12</td>
       <td nowrap valign="top" align="center">06-10-2016</td>
       <td>
         <p>new:</p>
@@ -30,10 +92,10 @@
           <li>[popup] dynamic update fix, case: sdk/samples/popup/popup-dynamic-sizing.htm</li>
           <li>[svg] fix of rendering artifacts in <code>&lt;defs&gt;&lt;rect/&gt;&lt;/defs&gt;</code></li>
           <li>[win] fix of icon click handling on custom-frame, see my question: <a href="http://stackoverflow.com/questions/39731220/is-there-wm-queryhide-close-or-similar-message">http://stackoverflow.com/questions/39731220/is-there-wm-queryhide-close-or-similar-message</a></li>
-          <li>[win] clipboard::get_image() fix for malformed alpha images. </li>
+          <li>[win] clipboard::get_image() fix for malformed alpha images.</li>
           <li>[layout] <code>flow:default | vertical</code> , fix of max-content calculation, see: <a href="http://sciter.com/forums/topic/css-layout-chalenge">http://sciter.com/forums/topic/css-layout-chalenge/</a></li>
           <li>[d2d] layered popup, svg and image graphcs - fix of rendering on some cards.</li>
-          <li><code>&lt;option&gt;</code> <code>:node</code> state setting is back. Fixes <a href="http://sciter.com/forums/topic/3-3-2-11-treeview-bug">http://sciter.com/forums/topic/3-3-2-11-treeview-bug/</a> case. </li>
+          <li><code>&lt;option&gt;</code> <code>:node</code> state setting is back. Fixes <a href="http://sciter.com/forums/topic/3-3-2-11-treeview-bug">http://sciter.com/forums/topic/3-3-2-11-treeview-bug/</a> case.</li>
           <li>[tiscript] fix of eval against persisted objects.</li>
           <li>Support of <code>&quot;role=window-max&quot;</code> and <code>&quot;role=window-maximize&quot;</code> roles in custom frame windows.</li>
           <li><code>JSON.stringify(, array)</code> case support.</li>

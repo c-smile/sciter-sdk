@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <title></title>
+    <style></style>
+    <script type="text/tiscript">
+    
+    
+    function generateImage()
+    {
+      function painter(gfx) // generates 100 random lines on graphics
+      {            
+        for(var n = 0; n < 10; ++n) 
+        {
+          var x1 = rand(48);
+          var x2 = rand(48);
+          var y1 = rand(48);
+          var y2 = rand(48);
+          gfx.lineWidth(1 + rand(6)); // 1..7
+          gfx.lineColor(color(rand(256),rand(256),rand(256)));
+          gfx.line(x1,y1,x2,y2);
+        }
+      }
+      // generate image 
+      return new Image(48,48,painter,color(255,255,255,0.0));    
+    }
+    
+    $(form).on("change", function() {
+    
+      switch(this.value.iconType) {
+      
+        case "png": view.windowIcon = self.url("user-login-48.png"); break;
+        case "svg": view.windowIcon = self.url("../svg/samples/system-log-out.svg"); break;
+        case "script": view.windowIcon = generateImage(); break;
+      }
+    
+    });
+    
+    
+    </script>
+  </head>
+<body>
+  <form>
+    Set window icon from:
+    <button|radio(iconType) value="png">PNG</button>
+    <button|radio(iconType) value="svg">SVG</button>
+    <button|radio(iconType) value="script">Script</button>
+  </form>
+
+</body>
+</html>

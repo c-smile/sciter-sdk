@@ -117,6 +117,8 @@
     <dd><font color="#999999">w</font> - <em>null | </em>function(gfx), assigns foreground layer painting function. The function gets Graphics object that is used to draw the layer. If the function returns <em>true</em> then default foreground drawing is suppressed. The content drawing function gets invoked <strong>before</strong> native foreground drawing.</dd>
     <dt>paintOutline</dt>
     <dd><font color="#999999">w</font> - <em>null | </em>function(gfx), assigns outline layer painting function. The function gets Graphics object that is used to draw the layer. If the function returns <em>true</em> then default outline drawing is suppressed. The outline drawing function gets invoked <strong>before</strong> native outline drawing.</dd>
+    <dt>isPointInside</dt>
+    <dd>r/w - <em>null | </em>function(x,y), assigns hit tester function. The function gets x,y coordinate and returns <em>true</em> if the point is inside the element shape. This allows to support elements with arbitrary shape.</dd>
     <h3>properties inherited from Node class or Node specific properties</h3>
     <dt>nodeIndex</dt>
     <dd><font color="#999999">r</font> - Integer, index of the node in parent nodes collection.</dd>

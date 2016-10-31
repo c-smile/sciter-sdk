@@ -821,6 +821,9 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
 #define FUNCTION_5(name, method) \
       if( const_chars(name) == _name && argc == 5) \
         { retval = method(argv[0],argv[1],argv[2],argv[3],argv[4]); return true; }
+#define FUNCTION_6(name, method) \
+      if( const_chars(name) == _name && argc == 6) \
+        { retval = method(argv[0],argv[1],argv[2],argv[3],argv[4],argv[5]); return true; }
 #define CHAIN_FUNCTION_MAP(SUPER_T) \
       if(SUPER_T::on_script_call(he, name, argc, argv, retval)) return true;
 

@@ -106,7 +106,10 @@ struct SCITER_TEXT_FORMAT
     LPWSTR                localeName;
 };
 
+// imageSave callback:
 typedef BOOL SCAPI image_write_function(LPVOID prm, const BYTE* data, UINT data_length);
+// imagePaint callback:
+typedef VOID SCAPI image_paint_function(LPVOID prm, HGFX hgfx, UINT width, UINT height);
 
 struct SciterGraphicsAPI
 {
@@ -339,20 +342,9 @@ struct SciterGraphicsAPI
   GRAPHIN_RESULT
         SCFN(gWorldToScreen) ( HGFX hgfx, SC_POS* inout_x, SC_POS* inout_y);
 
-  //inline GRAPHIN_RESULT
-  //      graphics_world_to_screen ( HGFX hgfx, SC_POS* length)
-  //{
-  //   return graphics_world_to_screen ( hgfx, length, 0);
-  //}
-
   GRAPHIN_RESULT
         SCFN(gScreenToWorld) ( HGFX hgfx, SC_POS* inout_x, SC_POS* inout_y);
 
-  //inline GRAPHIN_RESULT
-  //      graphics_screen_to_world ( HGFX hgfx, SC_POS* length)
-  //{
-  //   return graphics_screen_to_world (hgfx, length, 0);
-  //}
 
 // SECTION: clipping
 
@@ -365,6 +357,39 @@ struct SciterGraphicsAPI
   // pop clip layer previously set by gPushClipBox or gPushClipPath
   GRAPHIN_RESULT
         SCFN(gPopClip) ( HGFX hgfx);
+
+  // image painter
+
+    GRAPHIN_RESULT
+        SCFN(imagePaint)( HIMG himg, image_paint_function* pPainter, void* prm ); // paint on image using graphics
+
+  // VALUE interface
+
+  GRAPHIN_RESULT
+        SCFN(vWrapGfx) ( HGFX hgfx, VALUE* toValue);
+
+  GRAPHIN_RESULT
+        SCFN(vWrapImage) ( HIMG himg, VALUE* toValue);
+  
+  GRAPHIN_RESULT
+        SCFN(vWrapPath) ( HPATH hpath, VALUE* toValue);
+
+  GRAPHIN_RESULT
+        SCFN(vWrapText) ( HTEXT htext, VALUE* toValue);
+
+  GRAPHIN_RESULT
+        SCFN(vUnWrapGfx) ( const VALUE* fromValue, HGFX *phgfx);
+
+  GRAPHIN_RESULT
+        SCFN(vUnWrapImage) ( const VALUE* fromValue, HIMG *phimg );
+  
+  GRAPHIN_RESULT
+        SCFN(vUnWrapPath) ( const VALUE* fromValue, HPATH *phpath);
+
+  GRAPHIN_RESULT
+        SCFN(vUnWrapText) ( const VALUE* fromValue, HTEXT *phtext);
+
+
 
 };
 

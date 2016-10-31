@@ -68,6 +68,17 @@
       }
       progress.timer(50,inc);
     }
+    
+    $(#dyn1-set).onClick = function()
+    {
+      var progress = $(#dyn1);
+      progress.value = 50; 
+      progress.state.busy = false;
+      return true;
+    }
+    
+    
+    
     $(#dyn2-start).onClick = function()
     {
       var progress = $(#dyn2);
@@ -95,6 +106,7 @@
       
       <h2>dynamic, with animation</h2>
       <div><progress #dyn1 max="200" value="0"/><button #dyn1-start>Start</button></div>
+      <button #dyn1-set>Set 50</button></div>
 
       <h2>indefinite, with animation</h2>
       <div><progress #dyn3 /> <button type=checkbox #dyn3-start>Run</button></div>

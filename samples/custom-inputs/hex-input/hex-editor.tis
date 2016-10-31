@@ -36,6 +36,7 @@ class HexEditor : Behavior {
     {
       if( evt.wheelDelta < 0 ) this.doDec();
       else this.doInc();
+      return true;
     }
       
   }
