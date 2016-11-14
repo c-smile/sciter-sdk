@@ -11,6 +11,39 @@
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
     <tr>
+      <td valign="top" bgcolor="#FFFADA">3.3.3.0</td>
+      <td nowrap valign="top" align="center">13-11-2016</td>
+      <td>
+        <p>new:</p>
+        <ul>
+          <li><strong>[css variables]</strong> basic implementation. length and color units for a while. See: sdk/samples/css3-variables and <a href="http://sciter.com/css-variables-support">http://sciter.com/css-variables-support/</a></li>
+          <li>[DOM,script] <code>Element.animate()</code> if called without duration is considered as infinite animation and gets continued after window appears after being WINDOW_HIDDEN.</li>
+          <li>[script] Object.referenceOf() supports indexed access now. </li>
+          <li>[+plus] duplex binding with array elements, see: sdk/samples/+plus/demos/O-array-index-binding.htm</li>
+          <li>[windows] + <code>&lt;html window-frame=&quot;extended&quot;&gt;</code>, see : sdk/samples/dialogs+windows/test-window.htm and sdk/samples/dialogs+windows/samples/sample-window-extended-frame.htm</li>
+          <li>[api, graphics] <code>sciter::image::paint()</code> preserves original image allowing incremental updates.</li>
+          <li>Use of <a href="https://en.wikipedia.org/wiki/Cassowary_(software)" onmousedown="return rwt(this,'','','','1','AFQjCNHW46CQx-mdYIfHDw3I21qbRWz6DA','YV-E5AErOdbA4C-SFlx1Lg','0ahUKEwjNqqnoxqfQAhXCqlQKHesMDfMQFggdMAA','','',event)" style="color: rgb(102, 0, 153); cursor: pointer; text-decoration: none;">Cassowary</a> solver in <code>flow:grid()</code> layout manager.</li>
+          <li>[ddm2] </li>
+          <ul>
+            <li>+ <code>def.notOn = selector;</code> - defines elements from where D&amp;D cannot originate;</li>
+            <li><code>def.autoScroll = true;</code> - implementation.</li>
+            <li>fix of drop handling at incorrect position.</li></ul>
+          <li>[tiscript.exe] </li>
+          <ul>
+            <li>support of &quot;-o null&quot; to suppress output creation, can be used in builds to check fo syntax validity. &nbsp;&nbsp;</li>
+            <li>exe returns -1 on any error and 0 on success.</li></ul>
+          <li>[script] Support of deep namespace merging, so this <br/><code>namespace N { namespace NN { ... } }<br/>namespace N { namespace NN { ... continuation ... } }</code><br/>will not produce errors.</li>
+          <li><code>behavior:shell-icon;</code> &nbsp;does the same as <code>behavior:file-icon;</code> but without accessing file system.</li></ul>
+        <p>fixes:</p>
+        <ul>
+          <li>[css] fix of box-shadow implementation.</li>
+          <li>[inspector] fix of internal script error in some cases.</li>
+          <li>[css] fix of <code>visibility:hidden</code> handling on <code>display:inline</code> elements. See: <a href="http://sciter.com/forums/topic/visibility-hidden-for-inline-elements">http://sciter.com/forums/topic/visibility-hidden-for-inline-elements/</a></li>
+          <li>[script] fix <code>for( var k in regexp-result )</code> enumeration.</li>
+          <li>[script] fix of <code>RegExp.exec()</code> to comply JavaScript specification.</li>
+          <li><code>&lt;video&gt;</code>, fix of multithreading issue.</li></ul>Builds: win32/win64, osx32/osx64, linux/gtk64
+        <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
+    <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.2.13</td>
       <td nowrap valign="top" align="center">30-10-2016</td>
       <td>
@@ -31,10 +64,10 @@
               <li><code>&lt;html window-frame=&quot;default&quot; | &quot;solid&quot; | &quot;solid-with-shadow&quot; | &quot;transparent&quot; &gt;</code></li>
               <li><code>&lt;html window-blurbehind [= &quot;true&quot; | &quot;false&quot;] &gt;</code></li>
               <li><code>&lt;html window-resizable [= &quot;true&quot; | &quot;false&quot;] &gt;</code></li></ul></ul>
-          <li>Properties: </li>
+          <li>Properties:</li>
           <ul>
-            <li><code>view.windowState </code></li>
-            <li><code>view.windowCaption </code></li>
+            <li><code>view.windowState</code></li>
+            <li><code>view.windowCaption</code></li>
             <li><code>view.windowAspectRatio</code></li>
             <li><code>view.windowTopmost</code></li>
             <li><code>view.windowResizable</code></li>
@@ -65,7 +98,7 @@
           <li>Fix of MOUSE_WHEEL double callback generation in some cases: <a href="http://sciter.com/forums/topic/why-does-onmouse-execute-2-times">http://sciter.com/forums/topic/why-does-onmouse-execute-2-times/</a></li>
           <li>[win] role=&quot;default-button&quot; in dialog, fix if that button is not the first;</li>
           <li>[win] - glassy message boxes are gone.</li>
-          <li>[win] fix of <a href="http://sciter.com/forums/topic/sciter-forcedly-handles-wm_nchittest">http://sciter.com/forums/topic/sciter-forcedly-handles-wm_nchittest</a> issue. </li>
+          <li>[win] fix of <a href="http://sciter.com/forums/topic/sciter-forcedly-handles-wm_nchittest">http://sciter.com/forums/topic/sciter-forcedly-handles-wm_nchittest</a> issue.</li>
           <li><code>Element.isPointInside = function(x,y) {}</code> - support of elements with arbitrary shape. See discussion : <a href="http://sciter.com/forums/topic/custom-shaped-widget">http://sciter.com/forums/topic/custom-shaped-widget/</a> and sample sdk/samples/graphics/test-element-custom-shape.htm</li>
           <li>Fix of selection.html, last character issue: <a href="http://sciter.com/forums/topic/selection-html-will-loss-the-last-char-when-including-img">http://sciter.com/forums/topic/selection-html-will-loss-the-last-char-when-including-img/</a></li>
           <li>[tiscript] <code>stream.printf(str)</code> fix of the case when str contains characters higher than BMP, see: <a href="http://sciter.com/forums/topic/unicode-in-string-stream">http://sciter.com/forums/topic/unicode-in-string-stream/</a></li>

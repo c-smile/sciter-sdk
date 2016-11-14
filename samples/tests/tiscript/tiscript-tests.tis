@@ -929,6 +929,11 @@ namespace NS.SubNS
 namespace NS // second namespace declaration with the same name is allowed
 {
   function bar() { return pi; }
+  
+  namespace NSS // here is too - second namespace declaration with the same name is allowed
+  {
+    function foo2()  { return super.foo() + 1; } // members of parent namespace are accessible by 'super'  
+  }
 }
 
 function Namespace_test()
@@ -1194,6 +1199,42 @@ function match_test() {
 
 }
 
+function referenceOf_test() {
+
+  var obj = { 
+    foo: [1,2,3],
+    bar: [{ a:1 },{ a:2 },{ a:3}],
+    baz: { a:1, b:2, c:3 }
+  };
+
+  var (col,key) = Object.referenceOf(obj,"foo");
+  assert col == obj && key == #foo : "foo";
+
+  (col,key) = Object.referenceOf(obj,"foo[0]");
+  assert col == obj.foo && key == 0 : "foo[0]";
+
+  (col,key) = Object.referenceOf(obj,"foo.last");
+  assert col == obj.foo && key == #last : "foo.last";
+
+  (col,key) = Object.referenceOf(obj,"bar[0].a");
+  assert col == obj.bar[0] && key == #a : "bar[0].a";
+
+  (col,key) = Object.referenceOf(obj,"baz.a");
+  assert col == obj.baz && key == #a : "baz.a";
+  
+  (col,key) = Object.referenceOf(obj,"bar.last.a");
+  assert col == obj.bar[2] && key == #a : "bar.last.a";
+  
+  (col,key) = Object.referenceOf(obj,"baz.zoo");
+  assert col == obj.baz && key == #zoo : "bar.zoo";
+
+  // path does not exist
+  (col,key) = Object.referenceOf(obj,"baz.zoo.c");
+  assert col == null && key == null : "bar.zoo.c";
+
+}
+
+
 function showMemStats(msg) {
   var (total,free, used) = gc();
   stdout.printf("heap %s total=%d free=%d used=%d bytes\n", msg, total, free, used);
@@ -1227,6 +1268,7 @@ run( JSON_test );
 run( Undefined_test );
 run( ForIn_test );
 run( match_test );
+run( referenceOf_test );
 
 showMemStats("after");
 

@@ -1,0 +1,60 @@
+<html window-frame="extended" window-resizable>
+  <head>
+    <title>Window caption</title>
+    <style>
+    
+      html { 
+        background: transparent;
+        padding:7dip; /* spacing for resizing */ 
+      }
+      
+      html > body { background-color:window; border:1px solid #999; margin:0; }
+      
+      html > header { flow:horizontal; margin-right: 116dip; overflow-x: hidden;}
+      html > header > caption { 
+        width:*; padding:2dip 0 * 10dip; 
+        text-shadow: 0 0 6dip #fff;
+        white-space:nowrap;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+      }
+      
+      html > header > toolbar { width:max-content; background: transparent;}
+      
+      html > header > toolbar > button { 
+        padding:0; margin:0; size:24dip; 
+        foreground-repeat: no-repeat;
+        foreground-position:50% 50%;
+      }
+      
+      html > header > toolbar > icon {
+        display:block;
+        size:24dip; 
+        border-radius: 12dip;
+        background: red;
+      }
+      
+      button#copy { foreground-image: url(sciter:copy.png); }
+      button#cut { foreground-image: url(sciter:cut.png); }
+      button#paste { foreground-image: url(sciter:paste.png); }
+      button#undo { foreground-image: url(sciter:undo.png); }
+      button#redo { foreground-image: url(sciter:redo.png); }
+    
+    </style>
+    <script type="text/tiscript"></script>
+  </head>
+<header>
+  <toolbar>
+    <icon role="window-icon"></icon>
+    <button#copy></button>
+    <button#cut></button>
+    <button#paste></button>
+    <button#undo></button>
+    <button#redo></button>
+  </toolbar>
+  <caption role="window-caption">Window caption</caption>
+</header>
+<body>
+  Sample of toolbar replaced in window's chrome area.
+</body>
+</html>

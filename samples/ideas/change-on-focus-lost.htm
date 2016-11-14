@@ -1,0 +1,34 @@
+<html>
+  <head>
+    <style>
+    
+    [deferred-change] { aspect: DeferredChange; }
+    
+    </style>
+    <script type="text/tiscript">
+    
+      function DeferredChange() {
+        var changed = false;
+        this.on("~change", function() { changed = true; return true; /* consume the event  */ });
+        this.on("~focus", function() { changed = false; });
+        this.on("~blur", function() { if(changed) { changed = false; this.postEvent("change"); }});
+      } 
+
+      // testing 
+      function self.ready() {
+      
+        $(body).on("change", function(evt) {
+          stdout.println("change from", evt.target);
+        });
+      
+      }
+    </script>
+  </head>
+<body>
+
+  <p>These inputs will generate "change" event on LOST FOCUS event, check console:</p>
+
+  <input|text deferred-change value="Veni Vidi Vici" /><br>
+  <textarea deferred-change>Veni Vidi Vici</textarea>
+</body>
+</html>

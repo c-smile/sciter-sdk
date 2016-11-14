@@ -1,0 +1,125 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+    body { 
+      font:system; 
+      var(colora): #f00;
+      var(colorb): #0f0;
+      var(colorc): #00f;
+    }
+    
+    input#hue
+    {
+      border:none;
+      height: 3dip;
+      background: linear-gradient(left, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
+    }
+    
+  
+    section { flow:vertical; border-spacing: 10dip; }
+    section > div { size:100dip 36dip; border:1px solid; }
+    
+    .lighten5  { background-color: var(lighten5,#000); }
+    .lighten4  { background-color: var(lighten4,#000); }
+    .lighten3  { background-color: var(lighten3,#000); }
+    .lighten2  { background-color: var(lighten2,#000); }
+    .lighten1  { background-color: var(lighten1,#000); }
+      .normal  { background-color: var(normal,#000); }
+     .darken1  { background-color: var(darken1,#000); }
+     .darken2  { background-color: var(darken2,#000); }
+     .darken3  { background-color: var(darken3,#000); }
+     .darken4  { background-color: var(darken4,#000); }
+     .ascent1  { background-color: var(ascent1,#000); }
+     .ascent2  { background-color: var(ascent2,#000); }
+     .ascent3  { background-color: var(ascent3,#000); }
+     .ascent4  { background-color: var(ascent4,#000); }
+    
+    
+    </style>
+    <script type="text/tiscript">
+    
+      function self.ready() {
+      
+        var body = $(body);
+        
+        var angle = 0;
+        
+            // H   S   V
+        
+       var mt=[[ -9,0.078,1    ],   
+               [ -6,0.198,1    ], 
+               [  0,0.356,0.937],
+               [  0,0.498,0.898],
+               [  1,0.665,0.937],
+               [  4,0.779,0.957],
+               [  1,0.769,0.898],
+               [  0,0.777,0.827],
+               [  0,0.798,0.776],
+               [  0,0.847,0.718],
+               [  5,0.498,1    ], 
+               [  0,0.678,1    ], 
+               [-12,0.91 ,1    ],  
+               [  0,1    ,0.835]]; 
+
+        function mtc( n ) {
+          var row = mt[n];
+          return Color.hsv((360 + angle + row[0]) % 360 ,row[1],row[2]);
+        }
+        
+        function updateVariables() {
+          body.style.variables {
+            lighten5: mtc(0),
+            lighten4: mtc(1),
+            lighten3: mtc(2),
+            lighten2: mtc(3),
+            lighten1: mtc(4),
+              normal: mtc(5),
+             darken1: mtc(6),  
+             darken2: mtc(7),
+             darken3: mtc(8),
+             darken4: mtc(9),
+             ascent1: mtc(10),
+             ascent2: mtc(11),
+             ascent3: mtc(12),
+             ascent4: mtc(13) };
+        }
+          
+        $(input#hue).on("change", function() {
+          angle = this.value;
+          // defining CSS variables by code:
+          updateVariables();
+        });
+        
+        updateVariables();
+      }
+    
+    
+    </script>
+  </head>
+<body>
+
+  <h2>Material colors generator</h2>
+  
+  Base color <input|hslider#hue min=0 max=360 />
+
+  <section>
+    <div.lighten5>lighten5</div>
+    <div.lighten4>lighten4</div>
+    <div.lighten3>lighten3</div>
+    <div.lighten2>lighten2</div>
+    <div.lighten1>lighten1</div>
+    <div.normal>normal</div>    
+    <div.darken1>darken1</div>  
+    <div.darken2>darken2</div>  
+    <div.darken3>darken3</div>  
+    <div.darken4>darken4</div>  
+    <div.ascent1>ascent1</div>  
+    <div.ascent2>ascent2</div>  
+    <div.ascent3>ascent3</div>  
+    <div.ascent4>ascent4</div>  
+  </section>
+
+</body>
+</html>

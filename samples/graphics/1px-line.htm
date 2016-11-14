@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      widget { 
+        width:100dip; height: 3dip; 
+      }
+      
+    
+    </style>
+    <script type="text/tiscript">
+    
+     $(widget#n0).paintContent = function(gfx) {
+        gfx.strokeColor(color(0,0,0))
+           .strokeWidth(1)
+           .line(0,0,100,0);
+     };
+    
+     $(widget#n1).paintContent = function(gfx) {
+        gfx.strokeColor(color(0,0,0))
+           .strokeWidth(1)
+           .line(0.5,0.5,100.5,0.5);
+     };
+
+     $(widget#n2).paintContent = function(gfx) {
+        gfx.translate(0.5,0.5)
+           .strokeColor(color(0,0,0))
+           .strokeWidth(1)
+           .line(0,0,100,0);
+     };
+    
+    </script>
+  </head>
+<body>
+  <h2>Demo of half pixel effects</h2>
+  
+  <p><code>line(0,0,100,0)</code>, note: line is blured (spans 2 pixels)</p>
+  <widget #n0 /> 
+  <p><code>line(0.5,0.5,100.5,0.5)</code>, note: line starts/ends in the middle of the pixel</p>
+  <widget #n1 /> 
+  <p><code>line(0,0,100,0)</code>, but translate(0.5,0.5) to shift coordinate system</p>
+  <widget #n2 /> 
+
+</body>
+</html>

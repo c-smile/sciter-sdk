@@ -1,0 +1,59 @@
+<html>
+  <head>
+    <title>Grid Layout</title>
+    <style>
+    
+      section {
+        size:*; 
+        flow:grid(1 1 0 0 0 0,
+                  0 2 2 2 0 0,
+                  0 4 3 3 3 3,
+                  0 4 5 0 0 8,
+                  0 4 5 6 0 9,
+                 10 4 5 6 7 0);
+      }
+      
+      section > div { size:*; text-align:center; vertical-align:middle; font-size:40dip; }
+      section > div:nth-child(1)  { background:red; }
+      section > div:nth-child(2)  { background:orange; }
+      section > div:nth-child(3)  { background:gold; }
+      section > div:nth-child(4)  { background:yellow; }
+      section > div:nth-child(5)  { background:green; }
+      section > div:nth-child(6)  { background:cyan; }
+      section > div:nth-child(7)  { background:blue; }
+      section > div:nth-child(8)  { background:magenta; }
+      section > div:nth-child(9)  { background:gray; }
+      section > div:nth-child(10) { background:teal; }
+      
+    </style>
+    <script type="text/tiscript"></script>
+  </head>
+<body>
+
+  <header>
+    flow:grid may have "holes" - cells marked by 0 (zero)
+  </header>
+  
+  <pre>flow:grid(1 1 0 0 0 0,
+          0 2 2 2 0 0,
+          0 4 3 3 3 3,
+          0 4 5 0 0 8,
+          0 4 5 6 0 9,
+         10 4 5 6 7 0);
+  </pre>
+
+  <section>
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+    <div>5</div>
+    <div>6</div>
+    <div>7</div>
+    <div>8</div>
+    <div>9</div>
+    <div>10</div>
+  </section>
+
+</body>
+</html>

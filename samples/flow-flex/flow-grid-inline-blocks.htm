@@ -1,0 +1,57 @@
+<html>
+  <head>
+    <title>Grid Layout</title>
+    <style>
+    
+      section {
+        size:*; 
+        flow:grid(1 2 3,
+                  4 5 6,
+                  7 8 9);
+        border-spacing:8dip; /* defines spacing between cells */
+      }
+      
+      section > span { 
+        display:inline-block; /* may not span whole grid cell */
+        font-size:40dip; 
+        text-align:center;
+        size:3em;
+        line-height:3em;
+      }
+      
+      section > span:nth-child(1)  { background:red;     margin-bottom:*; margin-right:*; }
+      section > span:nth-child(2)  { background:orange;  margin-bottom:*; margin-right:*; margin-left:*; }
+      section > span:nth-child(3)  { background:gold;    margin-bottom:*; margin-left:*; }
+      section > span:nth-child(4)  { background:yellow;  margin-bottom:*; margin-top:*; margin-right:*;}
+      section > span:nth-child(5)  { background:green;   margin:*; }
+      section > span:nth-child(6)  { background:cyan;    margin-bottom:*; margin-top:*; margin-left:*;}
+      section > span:nth-child(7)  { background:blue;    margin-top:*; margin-right:*;  }
+      section > span:nth-child(8)  { background:magenta; margin-top:*; margin-right:*; margin-left:*;  }
+      section > span:nth-child(9)  { background:teal;    margin-top:*; margin-left:*; }
+      
+    </style>
+    <script type="text/tiscript"></script>
+  </head>
+<body>
+
+  <header>
+    <code>display:inline-block</code> elements may not span whole grid cell. 
+    flex margins can be used to align such elements inside grid cells.
+  </header>
+  <pre>flow:grid(1 2 3,
+          4 5 6,
+          7 8 9);</pre>
+  <section>
+    <span>1</span>
+    <span>2</span>
+    <span>3</span>
+    <span>4</span>
+    <span>5</span>
+    <span>6</span>
+    <span>7</span>
+    <span>8</span>
+    <span>9</span>
+  </section>
+
+</body>
+</html>

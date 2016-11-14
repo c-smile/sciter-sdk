@@ -18,6 +18,7 @@ function DragDrop2(def)
   //| def.what = selector [string], defines group of draggable elements.
   //| def.where = selector [string], defines group of target elements where dragables can be dropped.
   //| def.notBefore = selector [string], defines positions where drop is not allowed. 
+  //| def.notOn = selector [string], defines sub element(s) that cannot trigger D&D, item rlative 
   //| def.acceptDrop = function(draggable, target, indexAtTarget), function to be called before the drop, if it is defined and returns true operation ends successfully.
   //| def.acceptDrag = function(draggable), function to be called before the drag starts, if it is defined and returns either #copying or #moving operation starts successfully.
   //| def.arrivedTo = function(draggable, target), function to be called when draggable enters the target.
@@ -36,6 +37,8 @@ function DragDrop2(def)
   const STEP_DELAY  = 8;
   const PING_THRESHOLD = 400ms;
   const ANI_DURATION = def.animationDuration || 200ms;
+  
+  const AUTO_SCROLL_DELTA = 1; // pixels 
 
   const dd_marker_color = color("highlight");
   const dd_marker_width = 4;
@@ -382,11 +385,9 @@ function DragDrop2(def)
     if( !easef )
       { whenDone(); return; } // just return
     
-    //stdout.println(where.parent);
-    
     var (fromx,fromy) = (dd_cx,dd_cy);
     var (tox,toy) = ( dd_marker_x1, dd_marker_y1 );
-    //var progress = 0.0;
+
     function anim(progress) 
     {
       if( !dd_source || progress >= 1.0 ) { 
@@ -406,7 +407,10 @@ function DragDrop2(def)
   doDrop = function() 
   {
     assert dd_source && dd_target;
-    if(!def.acceptDrop || def.acceptDrop( dd_source, dd_target, dst.index ))
+    
+    if( typeof dd_marker_position != #integer || typeof dd_marker_x1 != #integer)
+      doCancelDrop();
+    else if(!def.acceptDrop || def.acceptDrop( dd_source, dd_target, dst.index ))
     {
       moveIt(function(){
         var from = dd_source.parent;
@@ -446,19 +450,37 @@ function DragDrop2(def)
     }
   }
   
+  function doScroll(direction, distance) {
+    if( !def.autoScroll ) return;
+    var x = dd_container.scroll(#left);
+    var y = dd_container.scroll(#top);
+    switch(direction) {
+      case 8: dd_container.scrollTo(x, y - distance * AUTO_SCROLL_DELTA); break; // top
+      case 2: dd_container.scrollTo(x, y + distance * AUTO_SCROLL_DELTA); break; // bottom
+      case 4: dd_container.scrollTo(x - distance * AUTO_SCROLL_DELTA, y); break; // left
+      case 2: dd_container.scrollTo(x + distance * AUTO_SCROLL_DELTA, y); break; // right
+    }
+    return true;
+  }
+  
   function draggableMouseHandler(evt)
   { 
     switch(evt.type)  
     {
       case Event.MOUSE_DOWN | Event.SINKING:  
       {
+        if(def.notOn && evt.target.selectParent(def.notOn))
+          break;
         (dd_x,dd_y) = localCoord(this,evt);
         return false;
       }
       case Event.MOUSE_UP | Event.SINKING:  
-        dd_x = dd_y = null; 
-        this.timer(0, ping);
-        return true; 
+        if(dd_source) {
+          dd_x = dd_y = null; 
+          this.timer(0, ping);
+          return true; 
+        }
+        break;
       case Event.MOUSE_ENTER | Event.SINKING:  
       case Event.MOUSE_LEAVE | Event.SINKING:  
         if(!dd_source)
@@ -466,16 +488,17 @@ function DragDrop2(def)
         break; 
         
       case Event.MOUSE_TICK | Event.SINKING:  
-        {
+        if(dd_source) {
           var (x1,y1,x2,y2) = dd_container.box(#rect,#inner,#view);
           var xv = evt.xView;
           var yv = evt.yView;
-          if( yv < y1 )      dd_container.postEvent("drag-n-drop-ping", 8); // generate "ping" event in case of UI need to scroll, etc.
-          else if( yv > y2 ) dd_container.postEvent("drag-n-drop-ping", 2); // evt.data -> direction
-          else if( xv < x1 ) dd_container.postEvent("drag-n-drop-ping", 4); 
-          else if( xv > x2 ) dd_container.postEvent("drag-n-drop-ping", 6); 
+          if( yv < y1 )      dd_container.sendEvent("drag-n-drop-ping", 8) || doScroll(8, y1 - yv); // generate "ping" event in case of UI need to scroll, etc.
+          else if( yv > y2 ) dd_container.sendEvent("drag-n-drop-ping", 2) || doScroll(2, yv - y2); // evt.data -> direction
+          else if( xv < x1 ) dd_container.sendEvent("drag-n-drop-ping", 4) || doScroll(4, x1 - xv); 
+          else if( xv > x2 ) dd_container.sendEvent("drag-n-drop-ping", 6) || doScroll(6, xv > x2); 
+          return true;
         }
-        return true;
+        break;
   
       case Event.MOUSE_MOVE | Event.SINKING: 
         if( !evt.mainButton ) 

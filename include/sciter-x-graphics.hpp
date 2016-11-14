@@ -63,7 +63,7 @@ namespace sciter
     image& operator = (const image& im) 
     { 
       if(himg) gapi()->imageRelease(himg); 
-      himg = im.himg; gapi()->imageAddRef(himg); 
+      himg = im.himg; if(himg) gapi()->imageAddRef(himg); 
       return *this;
     }
     
@@ -588,31 +588,57 @@ namespace sciter
     // SECTION: image rendering
 
     // draws img onto the graphics surface with current transformation applied (scale, rotation). expensive
-    void draw_image ( image* pimg, POS x, POS y, DIM w, DIM h, UINT ix, UINT iy, UINT iw, UINT ih )
+    void draw_image ( const image* pimg, POS x, POS y, DIM w, DIM h, UINT ix, UINT iy, UINT iw, UINT ih )
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gDrawImage( hgfx, pimg->himg, x, y, &w, &h, &ix, &iy, &iw, &ih, 0 ); 
       assert(r == GRAPHIN_OK); (void)(r);
     }
+
+    void draw_image ( const image& pimg, POS x, POS y, DIM w, DIM h, UINT ix, UINT iy, UINT iw, UINT ih )
+    {
+      assert(hgfx);
+      GRAPHIN_RESULT r = gapi()->gDrawImage( hgfx, pimg.himg, x, y, &w, &h, &ix, &iy, &iw, &ih, 0 ); 
+      assert(r == GRAPHIN_OK); (void)(r);
+    }
+
     // draws whole img onto the graphics surface with current transformation applied (scale, rotation). expensive
-    void draw_image ( image* pimg, POS x, POS y )
+    void draw_image ( const image* pimg, POS x, POS y )
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gDrawImage( hgfx, pimg->himg, x, y, 0, 0, 0, 0, 0, 0, 0 ); 
       assert(r == GRAPHIN_OK); (void)(r);
     }
+    void draw_image ( const image& pimg, POS x, POS y )
+    {
+      assert(hgfx);
+      GRAPHIN_RESULT r = gapi()->gDrawImage( hgfx, pimg.himg, x, y, 0, 0, 0, 0, 0, 0, 0 ); 
+      assert(r == GRAPHIN_OK); (void)(r);
+    }
     // blends image bits with bits of the surface. no affine transformations. less expensive
-    void blend_image ( image* pimg, POS x, POS y, float opacity, UINT ix, UINT iy, UINT iw, UINT ih )
+    void blend_image ( const image* pimg, POS x, POS y, float opacity, UINT ix, UINT iy, UINT iw, UINT ih )
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gDrawImage( hgfx, pimg->himg, x, y, 0, 0, &ix, &iy, &iw, &ih, &opacity ); 
       assert(r == GRAPHIN_OK); (void)(r);
     }
+    void blend_image ( const image& pimg, POS x, POS y, float opacity, UINT ix, UINT iy, UINT iw, UINT ih )
+    {
+      assert(hgfx);
+      GRAPHIN_RESULT r = gapi()->gDrawImage( hgfx, pimg.himg, x, y, 0, 0, &ix, &iy, &iw, &ih, &opacity ); 
+      assert(r == GRAPHIN_OK); (void)(r);
+    }
     // blends image bits with bits of the surface. no affine transformations. less expensive
-    void blend_image ( image* pimg, POS x, POS y, float opacity )
+    void blend_image ( const image* pimg, POS x, POS y, float opacity )
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gDrawImage( hgfx, pimg->himg, x, y, 0, 0, 0, 0, 0, 0, &opacity ); 
+      assert(r == GRAPHIN_OK); (void)(r);
+    }
+    void blend_image ( const image& pimg, POS x, POS y, float opacity )
+    {
+      assert(hgfx);
+      GRAPHIN_RESULT r = gapi()->gDrawImage( hgfx, pimg.himg, x, y, 0, 0, 0, 0, 0, 0, &opacity ); 
       assert(r == GRAPHIN_OK); (void)(r);
     }
 

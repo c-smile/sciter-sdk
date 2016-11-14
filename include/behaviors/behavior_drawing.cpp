@@ -144,7 +144,7 @@ struct native_clock: public event_handler
 	    float sx[6], sy[6];
 	    float dx = w/5.0f;
 	    
-        samples[0] = (1+sinf(t*1.2345f+cosf(t*0.33457f)*0.44f))*0.5f;
+      samples[0] = (1+sinf(t*1.2345f+cosf(t*0.33457f)*0.44f))*0.5f;
 	    samples[1] = (1+sinf(t*0.68363f+cosf(t*1.3f)*1.55f))*0.5f;
 	    samples[2] = (1+sinf(t*1.1642f+cosf(t*0.33457f)*1.24f))*0.5f;
 	    samples[3] = (1+sinf(t*0.56345f+cosf(t*1.63f)*0.14f))*0.5f;
@@ -173,8 +173,37 @@ struct native_clock: public event_handler
      return p.to_value(); // wrap the path into sciter::value;
     }
 
+    class IMGPainter : public sciter::painter {
+      public:
+      void paint(sciter::graphics& gfx, UINT width, UINT height)
+      {
+          gfx.line_width(3);
+          gfx.line_color(sciter::gcolor(255, 0, 0));
+          gfx.line(0, 0, sciter::POS(width), sciter::POS(height));
+          gfx.line(sciter::POS(width), 0, 0, sciter::POS(height));
+      }
+    };
+
+    sciter::value nativeImage(sciter::value v_width, sciter::value v_height)
+    {
+        UINT width = (UINT) v_width.get<int>();
+        UINT height = (UINT) v_height.get<int>();
+
+        BYTE *b = new BYTE[width * height * 4];
+        memset(b, 127, width * height * 4);
+
+        sciter::image img = sciter::image::create(width, height, false, b);
+
+        IMGPainter painter;
+        img.paint(&painter);
+
+        return img.to_value();
+    }
+
+
     BEGIN_FUNCTION_MAP
       FUNCTION_6("nativeGetPath", nativeGetPath); 
+      FUNCTION_2("nativeImage", nativeImage); 
     END_FUNCTION_MAP
 
 };

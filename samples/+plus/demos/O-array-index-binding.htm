@@ -1,0 +1,60 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      @import url(../plus.css); /* the only thing needed to include Plus framework */
+      
+      @import url(../../note.css); 
+      
+      widget { flow:horizontal; }
+      form { flow:row(label, input widget); }
+      form > label { width: max-content; }
+      
+      div { margin: 1em; }
+      div > span { visibility:none; }
+      div > span:expanded { visibility:visible; }
+    
+    </style>
+    <script type="text/tiscript">
+    
+      namespace Data {
+        
+        var connection = {
+          name: "Local network",
+          dhcp: false,
+          ip: [192,168,0,1]
+        }
+      }
+    
+    </script>
+  </head>
+<body model="Data">
+
+  <note> 
+    DOM elements bound with array elements 
+  </note>
+
+  <form>
+    <label>name:</label><input(connection.name) />
+    <label>use DHCP:</label><input|checkbox(connection.dhcp)>
+    <label>ip address:</label>
+       <widget @disabled="connection.dhcp">
+         <input|integer(connection.ip[0]) max=255>.
+         <input|integer(connection.ip[1]) max=255>.
+         <input|integer(connection.ip[2]) max=255>.
+         <input|integer(connection.ip[3]) max=255>
+       </widget>
+  </form>
+  <div>
+     "<(connection.name)/>" uses 
+     <span @expanded="connection.dhcp">auto IP address</span>   
+     <span @expanded="!connection.dhcp">IP address 
+       <(connection.ip[0])/>.<(connection.ip[1])/>.<(connection.ip[2])/>.<(connection.ip[3])/>
+     </span>
+  </div>
+  
+</body>
+</html>
+
+

@@ -1,0 +1,91 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+    body {
+      flow:grid(1 1 1,
+                2 3 4);
+      border-spacing:1em;
+    }
+    
+    /* Basic theme defintions */
+    
+    form { 
+      flow:row(label,input); 
+      background: var(panel-back, #f00); /* uses variable */
+      color: var(panel-text, #ff0); /* uses variable */
+      padding:10dip;
+      border-spacing:10dip;
+    }
+    form > label { white-space:nowrap; vertical-align:baseline; }
+    
+    input[type=text] {
+      background: var(edit-back, #0f0); /* uses variable */
+      padding:3dip;
+      border:1dip solid var(edit-border, #00f); /* uses variable */
+      color:var(edit-text, #044); /* uses variable */
+      vertical-align:baseline;
+    }
+ 
+    /* Light theme settigns: defines only colors */
+    
+    .light {
+      var(panel-back) : #eee;
+      var(panel-text) : #000;
+      var(edit-back)  : #fff;
+      var(edit-border): #999;
+      var(edit-text)  : #000;
+    }
+
+    .dark {
+      var(panel-back) : #000;
+      var(panel-text) : #ccc;
+      var(edit-back)  : #333;
+      var(edit-border): #666;
+      var(edit-text)  : #fff;
+    }
+
+        
+    </style>
+    <script type="text/tiscript"></script>
+  </head>
+<body>
+
+<h2>Theme architecture idea</h2>
+
+<section>
+  <header>undefined theme</header>
+  <form>
+    <label>first name</label>
+    <input|text value="Albert"/>
+    <label>last name</label>
+    <input|text value="Einshtein"/>
+  </form>
+</section>
+
+<section.light>
+  <header>"light" theme</header>
+  <form>
+    <label>first name</label>
+    <input|text value="Albert"/>
+    <label>last name</label>
+    <input|text value="Einshtein"/>
+  </form>
+</section>
+
+<section.dark>
+  <header>"dark" theme</header>
+  <form>
+    <label>first name</label>
+    <input|text value="Albert"/>
+    <label>last name</label>
+    <input|text value="Einshtein"/>
+  </form>
+</section>
+
+<p>Note that styles of elements is defined only once. But there are two styles that define color blocks.</p>
+
+
+</body>
+</html>

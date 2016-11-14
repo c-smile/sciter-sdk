@@ -1,7 +1,11 @@
 <html>
   <head>
     <title></title>
-    <style></style>
+    <style>
+    
+      body > button { display:block; }
+    
+    </style>
     <script type="text/tiscript">
     
     !function() 
@@ -154,7 +158,16 @@
          };
       }      
 
-
+    $(#ext-frame).onClick = function() {
+     
+        other = view.window {
+          type:View.FRAME_WINDOW,
+          url: self.url("samples/sample-window-extended-frame.htm"),
+          width : 640,
+          height : 480,
+          alignment:5,
+         };
+      }   
       
     $(#hide).onClick = function() {
       if(other)
@@ -177,7 +190,8 @@
   <button #custom-frame>Custom frame window</button>
   <button #popup>Popup window</button>
   <button #with-params>window with parameters</button>
-  
+  <button #ext-frame>window-frame=extended</button>
+  <hr>
   <button #tool-full-screen>tool + full screen</button>
   <button #tool-layered>tool + layered</button>
   <hr>

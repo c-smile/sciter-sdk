@@ -22,6 +22,8 @@
         var w,h;
         var cycles = 0;
         
+        var image = clock.nativeImage(20,20);
+        
         clock.paintBackground = function(gfx) {
           if( path ) 
           {
@@ -33,6 +35,11 @@
             gfx.strokeColor( color(128,200,128) )
                .strokeWidth( 3dip )
                .drawPath(path);
+               
+            gfx.drawImage(image,0,0)
+               .drawImage(image,w-20,0)
+               .drawImage(image,w-20,h-20)
+               .drawImage(image,0,h-20);
           }
         }
         

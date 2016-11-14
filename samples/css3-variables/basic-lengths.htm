@@ -1,0 +1,117 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+    body { 
+      font:system; 
+      var(basecolor): #f00;
+      var(colora): #f00;
+      var(colorb): #0f0;
+      var(colorc): #00f;
+    }
+    
+    form { flow: row(label,input); }
+    form > label { display:block; width:max-content; text-align:right; }
+    
+    input#hue
+    {
+      border:none;
+      height: 3dip;
+      background: linear-gradient(left, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
+    }
+    
+    input#sat
+    {
+      border:none;
+      height: 3dip;
+      background: linear-gradient(left, #fff 0%, var(basecolor,#f00) 100%);
+    }
+    
+    input#val
+    {
+      border:none;
+      height: 3dip;
+      background: linear-gradient(left, #000 0%, var(basecolor,#f00) 100%);
+    }
+    
+  
+    section { flow:horizontal; border-spacing: 10dip; }
+    section > div { size:100dip; border:1px solid; }
+    
+    section > div.a { background-color: var(colora,#f00); size: var(sza,100dip); }
+    section > div.b { background-color: var(colorb,#0f0); size: var(szb,160dip); }
+    section > div.c { background-color: var(colorc,#00f); size: var(szc,256dip); }
+    
+    </style>
+    <script type="text/tiscript">
+    
+      function self.ready() {
+      
+        var body = $(body);
+        
+         var hue = 0;
+         var sat = 1.0;
+         var val = 1.0;
+         
+         // defining CSS variables by code:
+         function updateColors() 
+         {
+            body.style.variables {
+              basecolor: Color.hsv(hue,1,1),
+              colora: Color.hsv(hue,sat,val),
+              colorb: Color.hsv((hue + 120) % 360 ,sat,val),
+              colorc: Color.hsv((hue + 240) % 360 ,sat,val)
+            };
+        }
+
+        $(input#hue).on("change", function() {
+          hue = this.value;
+          updateColors();
+        });
+        
+        $(input#sat).on("change", function() {
+          sat = this.value;
+          updateColors();
+        });
+        
+        $(input#val).on("change", function() {
+          val = this.value;
+          updateColors();
+        });
+        
+
+        $(input#size).on("change", function() {
+          var sz = this.value;
+          body.style.variables {
+            sza: dip(sz),
+            szb: dip(sz*1.6),
+            szc: dip(sz*1.6*1.6)
+          }
+        });
+
+        
+      }
+    
+    
+    </script>
+  </head>
+<body>
+
+  <h2>Basic harmonic colors</h2>
+  
+  <form>
+    <label>hue:</label><input|hslider#hue min=0 max=360 />
+    <label>sat:</label><input|hslider#sat min=0.0 max=1.0 value=1.0 />
+    <label>val:</label><input|hslider#val min=0.0 max=1.0 value=1.0 />
+    <label>size:</label><input|hslider#size min=100 max=200 />
+  </form>
+
+  <section>
+    <div.a #test>1</div>
+    <div.b>2</div>
+    <div.c>3</div>
+  </section>
+
+</body>
+</html>

@@ -148,8 +148,8 @@ class DomTree : Behavior
      var node = this.$(option[value={uid}]);
      //view.log("onNodeModelChanged",node);
      if(node && node.state.expanded) {
-       collapseOption(node);
-       expandOption(node);
+       this.collapseOption(node);
+       this.expandOption(node);
        return true;
      }
      return false;
