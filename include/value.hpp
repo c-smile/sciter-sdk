@@ -303,24 +303,27 @@
       const value operator[](const value& key) const { return get_item(key); }
       value_key_a operator[](const value& key);
 
+#ifdef CPP11
       typedef std::function<bool(const value& key, const value& val)> key_value_cb;
+#endif
 
       struct enum_cb
       {
         // return true to continue enumeration
         virtual bool on(const value& key, const value& val) = 0;
+
         static BOOL SC_CALLBACK _callback( LPVOID param, const VALUE* pkey, const VALUE* pval )
         {
           enum_cb* cb = (enum_cb*)param;
           return cb->on( *(value*)pkey, *(value*)pval );
         }
-
+#ifdef CPP11
         static BOOL SC_CALLBACK lambda_callback( LPVOID param, const VALUE* pkey, const VALUE* pval )
         {
           key_value_cb* cb = (key_value_cb*)param;
           return (*cb)(*(value*)pkey, *(value*)pval );
         }
-
+#endif
       };
 
       // enum
