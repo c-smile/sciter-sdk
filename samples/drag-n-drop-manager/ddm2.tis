@@ -146,7 +146,7 @@ function DragDrop2(def)
       tel.state.droptarget = true; // to give CSS a chance to highlight them somehow using :drop-target
     
     dd_source = el;
-    (dd_width, dd_height) = el.box(#dimension);
+    (dd_width, dd_height) = el.box(#dimension, #border);
     
     dd_source.state[ dd_op ] = true;
     

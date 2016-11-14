@@ -36,18 +36,22 @@
       background:yellow;
     }
     
+    ul#items > li:drag-source { background-color:#eee;  }
+    ul#items > li:drag-source > * { visibility:hidden;  }    
+    
   </style>  
   <script type="text/tiscript">
     
-    include "ddm.tis";
+    include "ddm2.tis";
     include "animations.tis";
     
-    DragDrop
+    DragDrop2
     {
       what      : "ul#items > li",
       where     : "ul#items",
       container : "ul#items",
-      easeDrop  : Animation.Ease.OutQuad
+      easeDrop  : Animation.Ease.OutQuad,
+      autoScroll: true
     };
   
     var n = 0; // new button counter
