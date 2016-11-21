@@ -332,11 +332,13 @@
         ValueEnumElements(const_cast<value*>(this), &enum_cb::_callback, &cb);
       }
 
+#ifdef CPP11
       // calls cbf for each key/value pair found in T_OBJECT or T_MAP  
       void each_key_value(key_value_cb cbf) const
       {
         ValueEnumElements(const_cast<value*>(this), &enum_cb::lambda_callback, &cbf);
       }
+#endif      
       
       value key(int n) const
       {
@@ -436,7 +438,7 @@
         return rv;
       }
 
-      value call() const {  return call(0,nullptr);  }
+      value call() const {  return call(0,0);  }
       value call( const value& p1 ) const {  return call(1,&p1); }
       value call( const value& p1, const value& p2 )  const { value args[2] = { p1,p2 };  return call(2,args); }
       value call( const value& p1, const value& p2, const value& p3 ) const { value args[3] = { p1,p2,p3 };  return call(3,args); }

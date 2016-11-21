@@ -24,7 +24,7 @@ const Plus = function() {
       //[2] - symbol or string, property name - for objects
       //      or start of changed range (index) in arrays  
       //[3] - end of changed range (index, not inclusive) in arrays  
-      switch(changedef[0]) {
+      if(changedef) switch(changedef[0]) {
         case #update: if( key == changedef[2] ) changed(coll[key]); break; // object-property
         case #delete: if( key == changedef[2] ) changed(undefined); break; // object-property
         case #update-range: if( key >= changedef[2] &&  key < changedef[3] ) changed(coll[key]); break; // vector-index
@@ -333,6 +333,8 @@ const Plus = function() {
     return true;
   }
   
+  
+  
   function Repeater() {
       var (ncoll, nitem, nindex, filter) = crackEachExpression(this.@["each"]);
       var root = thisModel(this); 
@@ -349,6 +351,8 @@ const Plus = function() {
       var fs = null;       // filter value
 
       function rqRenderList() { thing.post(renderList,true); } 
+      var updateCollectionObserves;
+      function rqUpdateCollectionObserves() { thing.post(updateCollectionObserves,true); } 
      
       function appendRepeatableItem(cont, coll, idx, val, domItemIdx)
       {
@@ -373,9 +377,10 @@ const Plus = function() {
                           else domitem.remove(); } );
         
         cont.insert(domitem,domItemIdx);
-        
-        if( ff !== eachRecord && typeof val == #object ) // if something in the record has changed we need to rerender the list
-          Object.addObserver.call(val, rqRenderList);
+       
+        // if something in the record has changed we need to notify list observers
+        if( typeof val == #object && !val.eachObserver( :fun: fun.name == rqUpdateCollectionObserves) )
+          val.addObserver(rqUpdateCollectionObserves);
       }
     
       var (rcoll,rkey) = Object.referenceOf(root, ncoll);
@@ -383,7 +388,7 @@ const Plus = function() {
                  //eval(ncoll,root);
       assert(coll);
       
-      //WRONG: this.$model = coll; why do we need repeateble to have distinct $model ?
+      updateCollectionObserves = function() { coll.eachObserver( :fun: fun(null) ) }
      
       renderList = function () {
         //debug stacktrace;

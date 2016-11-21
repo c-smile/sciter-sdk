@@ -1080,7 +1080,14 @@ function Units_test()
   
   assert 4 * 10px == 40px;
   assert 4.15 * 10pt == 41.5pt;
-  
+
+  // questionable but ...
+  assert 10cm + 4 == 14cm;
+  assert 10pt - 4 == 6pt;
+  assert 10cm + 4.5 == 14.5cm;
+  assert 10pt - 4.5 == 5.5pt;
+  assert 10pt % 4 == 2pt;
+    
   assert 360deg == Math.PI * 2 * 1rad;
   assert 360deg == 400grad;
   assert 360deg == 1turn;

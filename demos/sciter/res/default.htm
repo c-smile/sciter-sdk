@@ -76,10 +76,9 @@
             
       /*div#intro { behavior:htmlarea; }*/
       
-      @media on-glass 
-      {
-         html { background-color:transparent; }
-         frame#content { background-image:none; }
+      @media on-glass {
+        html { background-color:transparent; }
+        html > body > frame#content { background-image:none; }
       }
       
       hr { margin:0; padding:0; height:0; border:none; border-top: 1px dashed #999; }
@@ -150,7 +149,10 @@
 
       $(button#glass).onClick = function()
       {
-        view.glass(this.value);
+        if( this.value)
+          view.windowBlurbehind = #auto;
+        else
+          view.windowBlurbehind = undefined;
       }
       
       $(button#help).onClick = function()

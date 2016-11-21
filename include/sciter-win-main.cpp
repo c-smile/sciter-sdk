@@ -10,6 +10,8 @@
 
 HINSTANCE ghInstance = 0;
 
+#ifndef SKIP_MAIN
+
 int APIENTRY wWinMain(HINSTANCE hInstance,
                       HINSTANCE hPrevInstance,
                       LPWSTR    lpCmdLine,
@@ -44,6 +46,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance,
 	  
 }
 
+#endif
 namespace sciter {
 
   namespace application 

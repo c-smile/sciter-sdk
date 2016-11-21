@@ -14,6 +14,8 @@
 
 static std::vector<sciter::string> _argv;
 
+#ifndef SKIP_MAIN
+
 int main(int argc, const char * argv[])
 {
   NSApplication * application = [NSApplication sharedApplication];
@@ -35,6 +37,7 @@ int main(int argc, const char * argv[])
   //};
   //return uimain(message_pump);
 }
+#endif
 
 namespace sciter {
     

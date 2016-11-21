@@ -76,11 +76,11 @@
       
       /*div#intro { behavior:htmlarea; }*/
       
-      @media on-glass 
-      {
+      //@media on-glass 
+      //{
          html { background-color:transparent; }
          frame#content { background-image:none; }
-      }
+      //}
       
       hr { margin:0; padding:0; height:0; border:none; border-top: 1px dashed #999; }
       
@@ -148,10 +148,18 @@
         }
       }
 
+      var bbModesCount = 0;
       $(button#glass).onClick = function()
       {
-		    view.glass(this.value);
-      }
+        const bbModes = [#ultra-dark,#dark,#light,#ultra-light,#auto];
+
+        if(this.value) { 
+          bbModesCount = (bbModesCount + 1) % bbModes.length;
+		      view.windowBlurbehind = bbModes[bbModesCount];
+        }
+        else
+          view.windowBlurbehind = undefined;
+      } 
       
        $(button#help).onClick = function()
       {

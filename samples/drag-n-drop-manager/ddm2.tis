@@ -167,7 +167,7 @@ function DragDrop2(def)
     
   // 5) commit screen updates:
     view.update();
-   
+    
   // 6) DD events until mouse up is received
     requested_cancel = false;
     dd_dragging = el;

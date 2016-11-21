@@ -101,17 +101,25 @@ view.<u>eventsRoot</u> = null;
       <p>If <em>clientCoordinates</em> is <em>true</em> x,y, <em>width</em> and <em>height</em> are interpretted as a desired position/size of the client area on the screen.</p></dd>
     <dt>selectFile</dt>
     <dd>
-      <div><strong>(</strong> <em>#save</em> | <em>#</em>open, <em>filter</em>:string , <em>ext</em>: string <strong>) </strong>: string | null</div>
+      <div><strong>(</strong> <em>#save</em> | <em>#</em>open, <em>filter</em>:string , <em>ext</em>: string [,<em>initialPath</em>:string[, <em>dialogCaption</em>:string]] <strong>) </strong>: string | null</div>
       <p>Methods shows system file selector modal dialog and returns full path name of the selected file or null if user cancels this dialog.</p>
       <ul>
         <li>First parameter is either #save or #load symbol. If #save is provided then dialog will have a caption <em>Save As...</em> otherwise (#load) it will have caption <em>Open...</em></li>
         <li><em>filter</em> is a string - filter which defines list of allowed file extensions seprated by character '|' in the form: &quot;label1|file.ext1|label2|file.ext1|..&quot; where <em>label</em> is a label of item (appears in the selector on the dialog) and file.ext is a ';' seprated list of filename templates.</li>
-        <li><em>ext</em> is a string - default file extension used if user will type filename without extension.</li></ul>
+        <li><em>ext</em> is a string - default file extension used if user will type filename without extension.</li>
+        <li><em>initialPath</em> - string, if provided will open dialog with folder.</li>
+        <li><em>dialogCaption</em> - string, caption of the file open dialog.</li></ul>
       <div>Following sample will popup dialog to select html files and will load file in current view:</div>
       <pre><font color="#0033cc">var</font> fn = view.<strong>selectFile</strong>(<font color="#0033cc">#open</font>,
        <font color="#009900">&quot;HTML Files (*.htm,*.html)|*.HTM;*.HTML|All Files (*.*)|*.*&quot;</font> , <font color="#009900">&quot;html&quot;</font> );
 if( fn ) view.<strong>load</strong>(fn);
 </pre></dd>
+    <dt>selectFolder</dt>
+    <dd><strong>(</strong> [ <em>dialogCaption</em>:string]] <strong>) </strong>: string | null
+      <p>Methods shows system folder selector modal dialog and returns full path name of the selected folder or null if user cancels this dialog.</p>
+      <ul>
+        <li><em>dialogCaption</em> - string, caption of the file open dialog.</li></ul>
+      <div>Note that different platforms may have different UIs from &nbsp;selectFile.</div></dd>
     <dt>selectPrinter</dt>
     <dd>TBD</dd>
     <dt>dialog</dt>

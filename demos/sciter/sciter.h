@@ -72,8 +72,6 @@ namespace sciter
 
     main_frame(const wchar_t* url = L"res:default.htm");
 
-    void switch_glass(bool on_off);
-
     //virtual bool on_close() 
     //{ 
     //  ::DestroyWindow(get_hwnd());
@@ -90,8 +88,6 @@ namespace sciter
     BEGIN_FUNCTION_MAP
       FUNCTION_0("title", get_title);
       FUNCTION_1("title", set_title);
-      FUNCTION_0("glass", get_glass);
-      FUNCTION_1("glass", set_glass);
       FUNCTION_V("log", debug);
       FUNCTION_1("open",  open);
       FUNCTION_2("open",  open);
@@ -103,8 +99,6 @@ namespace sciter
 
     json::value get_title();
     json::value set_title(json::value title);
-    json::value get_glass();
-    json::value set_glass(json::value on_off);
     json::value open(json::value url, json::value param = json::value());
     json::value get_native_functor_test();
     json::value inspector_is_present();

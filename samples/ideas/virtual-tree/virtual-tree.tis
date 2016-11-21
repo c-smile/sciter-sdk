@@ -31,9 +31,9 @@ class VirtualTree : Behavior
   function collapseOption(opt)
   {
     //stdout.println("collapse");
-    opt.state.collapsed = true; 
     while(opt.length > 1)
       opt.last.remove();
+    opt.state.collapsed = true;       
   }
   
   function onControlEvent(evt)

@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+    html { font:system; }
+    
+    </style>
+    <script type="text/tiscript">
+    
+      function self.ready() {
+      
+        var fps = new Graphics.Text("",self);
+      
+        var deltas = [1];
+        var ptick = System.ticks;
+        
+        self.paintForeground = function(gfx) {
+          var tick = System.ticks;
+          deltas.push( tick - ptick );
+          if( deltas.length > 10 )
+            deltas.shift();
+          ptick = tick;
+          var avdelta = deltas.reduce(:a,b: a + b) / deltas.length;
+          fps.chars = "FPS:" + (1000 / avdelta).toString();
+          
+          var (w,h) = self.box(#dimension,#inner);
+                    
+          gfx.fillColor(color(200,100,0)).drawText(fps, w - 10, 10, 9);
+          
+        };
+        
+        self.animate(function() { 
+          this.refresh(); // requests repaint on each animate tick
+          return true;
+        });
+      }
+    
+    </script>
+  </head>
+<body>
+  FPS tester, see real FPS on the right.
+</body>
+</html>

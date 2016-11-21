@@ -11,6 +11,35 @@
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
     <tr>
+      <td valign="top" bgcolor="#FFFADA">3.3.3.1</td>
+      <td nowrap valign="top" align="center">20-11-2016</td>
+      <td>
+        <p>new:</p>
+        <ul>
+          <li>+ <strong>bin/scapp.exe</strong> - standalone sciter executable (sciter lib linked statically). &nbsp;Windows and MacOS. Essentially it is similiar to Electorn.js ( Node.js + Chromium browser = <span style="color: rgb(51, 51, 51); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); display: inline !important; float: none;">142 MB</span> ) but is a monolitic executable without dependencies of size 4 MB.</li>
+          <li><code>Element.move(,,, referencePoint)</code> parameter;</li>
+          <li>Support of <code>@import url(content.zip#test.css)</code> - loading styles from zips;</li>
+          <li>+ sidebar sample: &nbsp;sdk/samples/dialogs+windows/test-sidebar.htm;</li>
+          <li><code>view.windowBlurbehind = #auto | #ultra-dark | #dark | #light | #ultra-light | undefined</code>. On Windows and MacOS;</li>
+          <li>+ sample sdk/samples/dialogs+windows/test-element-move-between-windows.htm for <a href="http://sciter.com/forums/topic/is-it-ok-to-move-dom-elements-from-one-rootwindow-to-another">http://sciter.com/forums/topic/is-it-ok-to-move-dom-elements-from-one-rootwindow-to-another/</a></li>
+          <li>+ <code>Element.view</code> property. See: http://sciter.com/forums/topic/is-it-ok-to-move-dom-elements-from-one-rootwindow-to-another/</li></ul>
+        <p>fixes:</p>
+        <ul>
+          <li>length units conversion overflow fix: <a href="http://sciter.com/forums/topic/strange-behavior-of-absolute-positioning-using-dip">http://sciter.com/forums/topic/strange-behavior-of-absolute-positioning-using-dip/</a></li>
+          <li>[+plus] script error while update fix. </li>
+          <li>[+plus] fix of the case when multiple repeatables looking on the same model. See: sdk/samples/+plus/demos/5-repeatable-filtering-2.htm</li>
+          <li>Fix of <code>:node</code> state flag handling, see: <a href="http://sciter.com/forums/topic/cant-remove-node-flag">http://sciter.com/forums/topic/cant-remove-node-flag/</a> &nbsp;Note: sdk/samples/ideas/virtual-tree/virtual-tree.tis sample also changed to accommodate changed behavior.</li>
+          <li>Fix of flickering while processing posted things. Especially in [+plus] use cases.</li>
+          <li><code>flow:grid()</code>, fix of crash in <a href="http://sciter.com/forums/topic/flow-grid">http://sciter.com/forums/topic/flow-grid/</a> and similar cases.</li>
+          <li>Regression: fix of tooltip rendering and text rendering in some cases;</li>
+          <li>[+plus] fix of update of bound filtered lists;</li>
+          <li>[tiscript] support of length + integer operation so <code>10pt + 4 == 14pt</code>;</li>
+          <li>[sdk] sdk/include/value.hpp CPP11 issue fix.</li>
+          <li>[doc] view.selectFile() and view.selectFolder() documented;</li>
+          <li>[ddm2] fix of draggable rendering;</li>
+          <li>[osx] memleak in osx_screen_name_id();</li></ul>Builds: win32/win64, osx32/osx64, linux/gtk64
+        <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
+    <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.3.0</td>
       <td nowrap valign="top" align="center">13-11-2016</td>
       <td>
@@ -18,17 +47,17 @@
         <ul>
           <li><strong>[css variables]</strong> basic implementation. length and color units for a while. See: sdk/samples/css3-variables and <a href="http://sciter.com/css-variables-support">http://sciter.com/css-variables-support/</a></li>
           <li>[DOM,script] <code>Element.animate()</code> if called without duration is considered as infinite animation and gets continued after window appears after being WINDOW_HIDDEN.</li>
-          <li>[script] Object.referenceOf() supports indexed access now. </li>
+          <li>[script] Object.referenceOf() supports indexed access now.</li>
           <li>[+plus] duplex binding with array elements, see: sdk/samples/+plus/demos/O-array-index-binding.htm</li>
           <li>[windows] + <code>&lt;html window-frame=&quot;extended&quot;&gt;</code>, see : sdk/samples/dialogs+windows/test-window.htm and sdk/samples/dialogs+windows/samples/sample-window-extended-frame.htm</li>
           <li>[api, graphics] <code>sciter::image::paint()</code> preserves original image allowing incremental updates.</li>
           <li>Use of <a href="https://en.wikipedia.org/wiki/Cassowary_(software)" onmousedown="return rwt(this,'','','','1','AFQjCNHW46CQx-mdYIfHDw3I21qbRWz6DA','YV-E5AErOdbA4C-SFlx1Lg','0ahUKEwjNqqnoxqfQAhXCqlQKHesMDfMQFggdMAA','','',event)" style="color: rgb(102, 0, 153); cursor: pointer; text-decoration: none;">Cassowary</a> solver in <code>flow:grid()</code> layout manager.</li>
-          <li>[ddm2] </li>
+          <li>[ddm2]</li>
           <ul>
             <li>+ <code>def.notOn = selector;</code> - defines elements from where D&amp;D cannot originate;</li>
             <li><code>def.autoScroll = true;</code> - implementation.</li>
             <li>fix of drop handling at incorrect position.</li></ul>
-          <li>[tiscript.exe] </li>
+          <li>[tiscript.exe]</li>
           <ul>
             <li>support of &quot;-o null&quot; to suppress output creation, can be used in builds to check fo syntax validity. &nbsp;&nbsp;</li>
             <li>exe returns -1 on any error and 0 on success.</li></ul>

@@ -63,13 +63,13 @@ public:
     HWINDOW   get_hwnd() const { return hwnd; }
     HINSTANCE get_resource_instance() const { return 0; /*not used on this platform*/ }
     
-    BEGIN_FUNCTION_MAP
+/*    BEGIN_FUNCTION_MAP
       FUNCTION_0("glass", get_glass);
       FUNCTION_1("glass", set_glass);
     END_FUNCTION_MAP
     
     sciter::value get_glass();
-    sciter::value set_glass(sciter::value on_off);
+    sciter::value set_glass(sciter::value on_off); */
 
 };
 

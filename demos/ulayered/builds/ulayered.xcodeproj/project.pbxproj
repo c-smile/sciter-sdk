@@ -106,6 +106,8 @@
 				TargetAttributes = {
 					495218221A50A4A400FB7F08 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 642T6M376L;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -242,8 +244,10 @@
 		495218411A50A4A500FB7F08 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = ../../../bin.osx;
+				DEVELOPMENT_TEAM = 642T6M376L;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -259,8 +263,10 @@
 		495218421A50A4A500FB7F08 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = ../../../bin.osx;
+				DEVELOPMENT_TEAM = 642T6M376L;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,

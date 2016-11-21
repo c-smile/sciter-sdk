@@ -13,7 +13,7 @@
 NSView*   get_nsview(window* w)   { return static_cast<NSView*>(w->get_hwnd()); }
 NSWindow* get_nswindow(window* w) { return [get_nsview(w) window]; }
 
-sciter::value window::get_glass() {
+/*sciter::value window::get_glass() {
     NSWindow* nsw = get_nswindow(this);
     bool on = [nsw isOpaque] != YES;
     return sciter::value(on);
@@ -24,9 +24,9 @@ sciter::value window::set_glass(sciter::value on_off)
     if( on_off.get(false) )
     {
         [nsw setOpaque:NO];
-        NSColor* backgroundColor = [nsw backgroundColor];
-        backgroundColor = [backgroundColor colorWithAlphaComponent:0.5];
-        [nsw setBackgroundColor:backgroundColor];
+        //NSColor* backgroundColor = [nsw backgroundColor];
+        //backgroundColor = [backgroundColor colorWithAlphaComponent:0.5];
+        //[nsw setBackgroundColor:backgroundColor];
     }
     else
     {
@@ -38,5 +38,5 @@ sciter::value window::set_glass(sciter::value on_off)
     SciterSetMediaVars(get_hwnd(), &vars);
     
     return on_off;
-}
+} */
 

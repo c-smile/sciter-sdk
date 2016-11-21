@@ -55,7 +55,7 @@
       <p>compositionOp is one of composition opeatrions: #src-over, #dst-over, #src-in, #dst-in, #src-out, #dst-out, #src-atop, #dst-atop, #xor, #copy.</p></dd>
     <dt>update</dt>
     <dd>
-      <div>( <strong>renderer</strong>: function )</div>
-      <p>This method allows to render on existing image by calling <code>function renderer(gfx:</code><a href="Graphics.htm"><code>Graphics</code></a><code>)</code> passing image bound graphics object as a parameter.</p></dd></dl>
+      <div>( <strong>renderer</strong>: function [, <strong>clearBy</strong>: color ] )</div>
+      <p>This method allows to render on existing image by calling <code>function renderer(gfx:</code><a href="Graphics.htm"><code>Graphics</code></a><code>)</code> passing image bound graphics object as a parameter. If <em>clearBy</em> parameter is provided and is a color then it is used to clear the image surface before rendering.</p></dd></dl>
 </body>
 </html>

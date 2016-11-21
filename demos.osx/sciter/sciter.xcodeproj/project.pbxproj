@@ -257,6 +257,16 @@
 				CLASSPREFIX = Sciter;
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "andrew fedoniouk";
+				TargetAttributes = {
+					490E8B0B1951ED3A00850B46 = {
+						DevelopmentTeam = 642T6M376L;
+						ProvisioningStyle = Automatic;
+					};
+					495189EE18DF683800844B99 = {
+						DevelopmentTeam = 642T6M376L;
+						ProvisioningStyle = Automatic;
+					};
+				};
 			};
 			buildConfigurationList = 495189EA18DF683800844B99 /* Build configuration list for PBXProject "sciter" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -360,8 +370,10 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = NO;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/../../bin.osx";
+				DEVELOPMENT_TEAM = 642T6M376L;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "sciter/sciter-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -387,8 +399,10 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = NO;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/../../bin.osx";
+				DEVELOPMENT_TEAM = 642T6M376L;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "sciter/sciter-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -485,8 +499,10 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = NO;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/../../bin.osx";
+				DEVELOPMENT_TEAM = 642T6M376L;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "sciter/sciter-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -519,8 +535,10 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = NO;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/../../bin.osx";
+				DEVELOPMENT_TEAM = 642T6M376L;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "sciter/sciter-Prefix.pch";
 				HEADER_SEARCH_PATHS = (

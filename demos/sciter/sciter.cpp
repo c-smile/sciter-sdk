@@ -195,8 +195,6 @@ namespace sciter
 
   void main_frame::init_instance(const dom::element& root)
   {
-    if(root.get_style_attribute("background-color") == L"transparent")
-       switch_glass(true);
   }
 
 
@@ -207,42 +205,7 @@ namespace sciter
     sciter::main_frame* wnd = new sciter::main_frame(url.to_string().c_str());
     return json::value(wnd != 0);
   }
-
-  void main_frame::switch_glass(bool on_off)
-  {
-
-    typedef HRESULT STDAPICALLTYPE DwmExtendFrameIntoClientArea_t(HWND hWnd, _In_ const MARGINS* pMarInset);
-
-    static DwmExtendFrameIntoClientArea_t* _DwmExtendFrameIntoClientArea = 0;
-    static bool load_attempt_has_been_made = false;
-
-    if(!_DwmExtendFrameIntoClientArea) {
-      if(load_attempt_has_been_made)
-        return;
-      load_attempt_has_been_made = true;
-      HMODULE hm = LoadLibrary(L"dwmapi.dll");
-      if( !hm ) 
-        return;
-      _DwmExtendFrameIntoClientArea = reinterpret_cast<DwmExtendFrameIntoClientArea_t*>(GetProcAddress(hm,"DwmExtendFrameIntoClientArea"));
-      if( !_DwmExtendFrameIntoClientArea )
-        return;
-    }
-
-    _is_glassy = on_off;
-    static MARGINS unlimited_margins = {-1};
-    static MARGINS zero_margins = {0};
-    HRESULT hr = _DwmExtendFrameIntoClientArea(get_hwnd(),_is_glassy?&unlimited_margins:&zero_margins); // Extend frame across entire window.
-    assert(SUCCEEDED(hr));
-
-    ::SciterSetOption(get_hwnd(),SCITER_TRANSPARENT_WINDOW,_is_glassy);
-    RECT rc;
-    ::GetWindowRect(get_hwnd(), &rc);
-    ::SetWindowPos(get_hwnd(), NULL,
-                 rc.left, rc.top,
-                 rc.right - rc.left, rc.bottom - rc.top,
-                 SWP_FRAMECHANGED);    
-  }
-
+    
   json::value main_frame::get_title()
   {
     return json::value(frame::get_title());
@@ -251,17 +214,6 @@ namespace sciter
   {
     frame::set_title(title.to_string());
     return json::value();
-  }
-
-  json::value main_frame::get_glass()
-  {
-    return json::value(_is_glassy);
-  }
-  json::value main_frame::set_glass(json::value on_off)
-  {
-     json::value pv = get_glass();
-     switch_glass(on_off.get(false));
-     return pv;
   }
   
   bool main_frame::on_message(UINT message, WPARAM wparam, LPARAM lparam, LRESULT& lresult) 

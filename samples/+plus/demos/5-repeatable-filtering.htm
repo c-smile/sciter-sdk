@@ -46,10 +46,20 @@
   </switch>
 
   <!-- the repeateable section bound with the filter variable -->
-  <ol each="item in items|filter">
+  <ol each="item in items|filter" #all>
       <li class="{{done:item.done}}"><input|checkbox(item.done)/> <output|text(item.subject)/></li>
   </ol>
   
+  <p>Done items</p>
+  <ol each="item in items|{done:true}" #test>
+      <li class="{{done:item.done}}"><input|checkbox(item.done)/> <output|text(item.subject)/></li>
+  </ol>
+
+  <p>Not yet done items</p>
+  <ol each="item in items|{done:false}" #notyet>
+      <li class="{{done:item.done}}"><input|checkbox(item.done)/> <output|text(item.subject)/></li>
+  </ol>
+
   
 </body>
 </html>

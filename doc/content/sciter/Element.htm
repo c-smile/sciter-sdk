@@ -35,6 +35,8 @@
     <dd><font color="#999999">rw - </font><em>Element</em>, child element of the element at the <em>index</em> position, Read-write index accessor. Zero-based index.</dd>
     <dt>root</dt>
     <dd><font color="#999999">r</font> - <em>Element</em>, root element of the DOM this element belongs to. Read-only.</dd>
+    <dt>view</dt>
+    <dd><font color="#999999">r</font> - <em>View</em>, parent view (window) of the element. Read-only. Note: <code>element.view</code> &nbsp;may not be equal to global <code>view</code> &nbsp;variable if the element was moved from one view to another.</dd>
     <dt>parent</dt>
     <dd><font color="#999999">r - </font><em>Element</em>, parent element of given element or <em>null</em> if this element is a root element. Read-only.</dd>
     <dt>layoutParent</dt>
@@ -598,7 +600,7 @@ el.$content(This is item number <b>{ num }</b>);
       <p><em>fromIndex</em> and <em>numOfElements</em> are used for defining range of elements to sort.</p></dd>
     <dt>move</dt>
     <dd>
-      <div><strong>( </strong>[<strong>x</strong>: int, <strong>y</strong>: int [, <strong>w</strong>: int, <strong>h</strong>: int] [, <strong>#view</strong> | <strong>#root</strong> | <strong>#screen</strong> | <strong>#self</strong> [, mode: <strong>#auto</strong> | <strong>#attached-window</strong> | <strong>#detached-window</strong> | <strong>#detached-topmost-window</strong> ]]] &nbsp;<strong>)</strong> : void</div>
+      <div><strong>( </strong>[<strong>x</strong>: int, <strong>y</strong>: int [, <strong>w</strong>: int, <strong>h</strong>: int] [, <strong>relto</strong>] [, <strong>mode</strong> ][, <strong>referencePoint</strong>: int] &nbsp;<strong>)</strong> : void</div>
       <p>This methods transforms the element into the &quot;sprite&quot; - element that moves independently from the rest of the DOM:</p>
       <p>Declares element as having <em>position:popup</em> and moves it to the position (<em>x</em>,<em>y</em>). If the element happens to be outside of the view then engine creates special popup window for it. Third parameter describes role of x and y values. <em>w</em> and <em>h</em> parameters, if provided, change dimensions of the element.<br/><em>mode</em> parameter</p>
       <ul>
@@ -606,9 +608,11 @@ el.$content(This is item number <b>{ num }</b>);
         <li><em>#attached-window</em> - forces the engine to create popup window for the element, window is moved in sync with its host window (view).</li>
         <li><em>#detached-window</em> - forces the engine to create popup window for the element, element's window position is indpenedent from the host window.</li>
         <li><em>#detached-topmost-window</em> - that is <em>#detached-window</em> but created on topmost window layer.</li></ul>
+      <p><em>relto</em> tells what kind of coordinates x,y are: <strong>#view</strong>, <strong>#root</strong>, <strong>#screen</strong> or <strong>#self</strong> relative. Default - <strong>#view</strong>.</p>
+      <p><em>referencePoint</em> is a number from 1 to 9 - defines what x,y are cordinates of. 7 is top/left corner, 5 is center of the element, see numpad on keyboard. NOTE: if provided the <em>referencePoint</em> defines position of element's <em>border box</em>. &nbsp;In all other cases x/y defines position of top/left corner of cotent box.</p>
       <p>Samples are in sdk/samples/ideas/moveable-windows/ and sdk/samples/ideas/rect-tracker/ folders.</p>
       <p>Call of the <code>move()</code> without parameters restores default positioning of the element.</p>
-      <p>See also: Element.style.dimension() method.</p></dd>
+      <p>See also: <code>Element.style.dimension()</code> method.</p></dd>
     <dt>textWidth</dt>
     <dd>
       <div><strong>( text</strong>: string<strong> )</strong> : int</div>
