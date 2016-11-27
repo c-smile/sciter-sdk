@@ -8,10 +8,10 @@
     </style>
     <script type="text/tiscript">
     
-    $(button#test).onClick = function() {
+    event "click|button#test" () {
       Notification.show("Are you still with me, my friend?");     
     }
-    $(button#cancel).onClick = function() {
+    event "click|button#cancel" () {
       Notification.cancel();     
     }
     

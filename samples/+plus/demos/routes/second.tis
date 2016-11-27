@@ -1,0 +1,12 @@
+class SecondController: Element {
+
+  function attached() {
+    this.msg = this.$(#msg);
+    this.msg.text = "SecondController activated!";
+  } 
+  
+  event "click|button#test" (evt) {
+    view.msgbox(#information, "Click handled by SecondController");
+  };
+
+}

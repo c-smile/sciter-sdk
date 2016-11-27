@@ -75,7 +75,7 @@
       
       .play(); // play it right now (when self.ready() is invoked)
     
-    $(button#state1).onClick = function() {
+    $(button#state1) << event click() {
       // defining timeline and starting it.
       Timeline.on(self)
         .defaults { duration: 0.5, ease: Ease.bounceOut }
@@ -88,7 +88,7 @@
         
       return true;
     }
-    $(button#state2).onClick = function() {
+    $(button#state2) << event click() {
       // defining timeline and starting it.
       Timeline.on(self)
         .defaults { ease: Ease.elasticOut, start:0s }

@@ -57,7 +57,7 @@
     }
 
     // async requests
-    $(#SumA).onClick = function()
+    $(#SumA) << event click()
     {
       var p0 = $(#p0).value;
       var p1 = $(#p1).value;
@@ -65,7 +65,7 @@
       rpc.post("add", p0, p1).then(show,show); // .then(show,show) a.k.a .always(show)
     }
 
-    $(#SubA).onClick = function()
+    $(#SubA) << event click()
     {
       var p0 = $(#p0).value;
       var p1 = $(#p1).value;
@@ -74,7 +74,7 @@
     }
     
     // sequential
-    $(#Sum3seq).onClick = function()
+    $(#Sum3seq) << event click()
     {
       var p2 = $(#p2).value;
       var p3 = $(#p3).value;
@@ -86,7 +86,7 @@
     }
     
     // parallel, use of promise.when combinator
-    $(#Sum3par).onClick = function()
+    $(#Sum3par) << event click()
     {
       var p2 = $(#p2).value;
       var p3 = $(#p3).value;
@@ -97,7 +97,7 @@
     }
     
     // sync requests
-    $(#SumS).onClick = function()
+    $(#SumS) << event click()
     {
       var p0 = $(#p0).value;
       var p1 = $(#p1).value;
@@ -107,7 +107,7 @@
       show(v,status);
     }
 
-    $(#SubS).onClick = function()
+    $(#SubS) << event click()
     {
       var p0 = $(#p0).value;
       var p1 = $(#p1).value;

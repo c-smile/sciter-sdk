@@ -40,11 +40,11 @@
       <div>( [color: color] ): Graphics</div>
       <p>Clears the graphics.</p></dd>
     <dd></dd>
+    <h4>Shapes and Lines</h4>
     <dt>line</dt>
     <dd>
       <div>( <strong>x1</strong>:<em>float</em>, <strong>y1</strong>:<em>float</em>, <strong>x2</strong>:<em>float</em>, <strong>y2</strong>:<em>float</em> ) : Graphics</div>
       <p>Draws line from x1,y1 to x2,y2 using current lineColor and lineGradient.</p></dd>
-    <h4>Shapes and Lines</h4>
     <dt>triangle</dt>
     <dd>
       <div>( x1:<em>float</em>, y1:<em>float</em>, x2:<em>float</em>, y2:<em>float</em>, x3:<em>float</em>, y3:<em>float</em> ) : Graphics</div>
@@ -208,6 +208,10 @@
       <div>( [template:string] ) : array of strings, class method (a.k.a. static method).</div>
       <p>Returns array of strings - list of installed font names. <em>template</em> if defined is a template for font name. E.g. Graphics.fonts(&quot;Arial*&quot;) may return array like [&quot;Arial&quot;, &quot;Arial Black&quot;, &quot;Arial Narrow&quot;] on your OS.</p></dd>
     <h4>State</h4>
+    <dt>antialiasing</dt>
+    <dd>
+      <div>( <strong>onOff</strong>: boolean ) : Graphics</div>
+      <p>Enables/disables anti-aliasing. By default anti-aliasing is <i>on</i>.</p></dd>
     <dt>save</dt>
     <dd>
       <div>( ) : Graphics</div>

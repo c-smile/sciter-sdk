@@ -16,8 +16,8 @@
       include "../lang-tool.tis";
     
       $(select#lang).onValueChanged = function() { self.language = this.value; }
-      $(button#t1).onClick = function() { view.msgbox(#information, Lang.translate("First test")); }
-      $(button#t2).onClick = function() { view.msgbox(#information, Lang.translate("Second test")); }
+      $(button#t1) << event click() { view.msgbox(#information, Lang.translate("First test")); }
+      $(button#t2) << event click() { view.msgbox(#information, Lang.translate("Second test")); }
       
     </script>
     

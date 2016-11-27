@@ -1,0 +1,56 @@
+
+function Hamburger(params={}) 
+{
+ 
+  const burger = [[ 0.0 , 0.0, 1.0 , 0.0 ],
+                  [ 0.0 , 0.5, 1.0 , 0.5 ],
+                  [ 0.0 , 1.0, 1.0 , 1.0 ]];
+
+  const arrow =  [[ 0.5 , 0.0, 1.0 , 0.5 ],
+                  [ 0.0 , 0.5, 1.0 , 0.5 ],
+                  [ 0.5 , 1.0, 1.0 , 0.5 ]];
+                  
+  const strokeWidth = this.toPixels( this.style#stroke-width, #width ) || 3;
+  const strokeColor = this.style#stroke;
+  
+  const duration = params.duration || 400ms; 
+  
+  var r = 0.0; // ratio : 0.0 - burger, 1.0 - arrow
+                
+  this.paintContent = function(gfx) 
+  {
+    var (w,h) = this.box(#dimension);
+    gfx.strokeWidth(strokeWidth)
+       .strokeCap(#round)
+       .strokeColor(strokeColor);
+       
+    w -= strokeWidth;
+    h -= strokeWidth;        
+    
+    gfx.translate(strokeWidth / 2.0, strokeWidth / 2.0);
+    gfx.rotate( 0.5 * r * 1turn, w / 2, h / 2 );
+    
+    for(var n in 3) {
+      var s = burger[n]; 
+      var f = arrow[n];
+      gfx.line( Float.morph(s[0],f[0],r) * w,
+                Float.morph(s[1],f[1],r) * h,
+                Float.morph(s[2],f[2],r) * w,
+                Float.morph(s[3],f[3],r) * h);
+    }
+  }
+  
+  var b2a = true;
+  
+  function step(progress) {
+    r = b2a ? progress : (1 - progress);
+    this.refresh();
+  }
+  
+  this << event change() {  
+    b2a = this.value;
+    if( b2a ) this.parent.state.expanded = true; else this.parent.state.collapsed = true;
+    this.animate(step, duration);
+  }
+
+}

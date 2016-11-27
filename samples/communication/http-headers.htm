@@ -43,11 +43,11 @@
 		}
 	}
 
-	$(#clear).onClick = function() {
+	$(#clear) << event click() {
 		sandbox.value = indicator.value = "";
 	}
 	
-	$(#get).onClick = function() {
+	$(#get) << event click() {
     var params = { q:1 }; // passing custom parameters
     var headers = { "user-token": "for the demo purposes!" }; // passing custom headers
 		var re = sandbox.request(show, #get, "http://www.terrainformatica.com/tools/http-headers.php", params,headers);

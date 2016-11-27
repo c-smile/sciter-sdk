@@ -65,43 +65,43 @@
     // feed it by these records
     vlist.value = records;
     
-    $(#add).onClick = function() {
+    $(#add) << event click() {
       for(var i in 10)
         records.push { index: ++n, caption:"New Item" };
     }
-    $(#insert).onClick = function() {
+    $(#insert) << event click() {
       for(var i in 10)
         records.unshift{ index: --p, caption:"New Item" };
     };
     
-    $(#delf).onClick = function() {
+    $(#delf) << event click() {
       for(var i in 10)
         records.shift();
     };
     
-    $(#dell).onClick = function() {
+    $(#dell) << event click() {
       for(var i in 10)
         records.pop();
     };
     
-    $(#del5).onClick = function() {
+    $(#del5) << event click() {
       delete records[5];
     };
 
-    $(#del45).onClick = function() {
+    $(#del45) << event click() {
       delete records[45];
     };
 
-    $(#ins5).onClick = function() {
+    $(#ins5) << event click() {
       records.splice(5,0,{ index: ++n , caption:"Inserted Item" });
     };
     
-    $(#update).onClick = function() {
+    $(#update) << event click() {
       for(var i in 10)
         records[i] = { index: ++n, caption:"Updated Item" };
     };
     
-    $(#reorder).onClick = function() {
+    $(#reorder) << event click() {
     
       function cmp(a,b) {
         if( a.index > b.index ) return -1;
@@ -113,17 +113,17 @@
     };
     
 
-    $(#updateIndex).onClick = function() {
+    $(#updateIndex) << event click() {
       for(var record in records)
         record.index += 1;
     }
 
-    $(#removeHighlighted).onClick = function() {
+    $(#removeHighlighted) << event click() {
       for(var record in records)
         record.highlighted = false;
     }
     
-    $(#updateHighlighted).onClick = function() {
+    $(#updateHighlighted) << event click() {
       for(var (n,record) in records)
         record.highlighted = (n & 1) != 0;
     }

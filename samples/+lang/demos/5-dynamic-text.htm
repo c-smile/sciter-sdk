@@ -15,8 +15,8 @@
       include "../lang.tis";
       include "../lang-tool.tis";
     
-      $(select#lang).onValueChanged = function() { self.language = this.value; }
-      $(button#test).onClick = function() { this.text="Second test"; }
+      $(select#lang) << event change() { self.language = this.value; }
+      $(button#test) << event click() { this.text="Second test"; }
     </script>
     
   </head>

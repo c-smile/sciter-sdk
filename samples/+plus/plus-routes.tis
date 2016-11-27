@@ -1,0 +1,61 @@
+include "plus.tis";
+
+// the routes thing
+function Plus.Application() {
+
+  assert !Plus.app : "only one instance allowed!"
+
+  var main = $(main);
+  assert main : "<main> shall exist";
+
+  var routes = []; // [{path:"/xxx", url:"..." }]
+  var path = "";
+  var param = null;
+ 
+  function go(topath, andparam = null) 
+  {
+    for( var route in routes ) 
+      if( route.path like topath ) {
+        path = topath;
+        param = andparam;
+        main.load(self.url(route.url));
+        main.postEvent("routechange");
+        return;
+      }
+    throw "Plus.app: unknown path:" + path;  
+  }
+  
+  var app = {go:go};  
+
+  // anything clickable with href works like hyperlink  
+  self << event "click|[href]" (evt) 
+  {
+    var param = this.attributes["param"] || null;
+    go( this.attributes["href"], param );
+    return true;
+  }
+
+  Plus.app = app;
+
+  app.routes = property(v) 
+  {
+    get return routes;
+    set { routes = v; }
+  }
+  
+  app.path = property(v) 
+  {
+    get return path;
+    set { throw "use app.go() to navigate to path"; }
+  }
+
+  app.param = property(v) 
+  {
+    get return param;
+    set { param = v; }
+  }
+  
+  // Voulez vous danser ?
+  main.post( :: go(routes[0].path) );
+
+}

@@ -1,0 +1,77 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+    @const ANIMATION-DURATION: 400ms;
+    
+    icon.hamburger {
+      behavior:check; /* checked -> arrow */
+      aspect: Hamburger(duration:@ANIMATION-DURATION) url(hamburger.tis);
+      display:block;
+      size:17dip;
+      stroke: #000;
+      stroke-width: 3dip;
+      margin-left:*;
+    }
+    
+    body { 
+      margin:0; padding:0;
+      flow:stack;
+      size:*;
+    }
+    
+    aside {
+      width:max-content;
+      height:*;
+      transform: translate(-100%,0) translate(29dip,0);
+      z-index:10;
+      background-color: gold; 
+      padding:6dip;
+    }
+    
+    aside > ol { transform: translate(-29dip,0); }
+    
+    aside:expanded {
+      background-color: #fff; 
+      transform: translate(0%,0) translate(0dip,0);
+      transition: transform(quad-out, @ANIMATION-DURATION) background-color(linear, @ANIMATION-DURATION);
+    }
+    
+    aside:expanded > ol { 
+      transform: translate(0dip,0); 
+      transition: transform(quad-out, @ANIMATION-DURATION);
+    }
+    
+    main {
+      size:*;
+      margin-left:29dip;
+      padding:1em;
+      foreground-color: rgba(255,215,0,0.0);
+    }
+    aside:expanded + main {
+      foreground-color: rgba(255,215,0,0.8);
+      transition: foreground-color(linear, @ANIMATION-DURATION);
+    }
+    
+    </style>
+    <script type="text/tiscript"></script>
+  </head>
+<body>
+  <aside>
+    <icon.hamburger/>
+    <ol> 
+      <li>First action</li>
+      <li>Second action</li>
+      <li>Third action</li>
+    </ol>
+  </aside>
+  <main #test>
+    <p>Click on the hamburger icon</p>
+    <p>Demo image:</p>
+    <picture src="http://sciter.com/wp-content/uploads/2016/11/legos.jpg"/>
+  </main>  
+  
+
+</body>
+</html>

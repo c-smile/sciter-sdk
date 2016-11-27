@@ -61,47 +61,47 @@
     // feed it by these records
     vlist.value = records;
     
-    $(#add).onClick = function() {
+    $(#add) << event click() {
       for(var i in 10)
         records.push { index: ++n, caption:"New Item" };
     }
-    $(#insert).onClick = function() {
+    $(#insert) << event click() {
       for(var i in 10)
         records.unshift{ index: --p, caption:"New Item" };
     }
-    $(#delf).onClick = function() {
+    $(#delf) << event click() {
       for(var i in 10)
         records.shift();
     }
-    $(#dell).onClick = function() {
+    $(#dell) << event click() {
       records.length -= 10; // that's the same as:      
       //for(var i in 10)
       //  records.pop();
     }
 
-    $(#update).onClick = function() {
+    $(#update) << event click() {
       for(var i in 10)
         records[i] = { index: ++n, caption:"Updated Item" };
     }
     
-    $(#update-last).onClick = function() {
+    $(#update-last) << event click() {
       for(var i in 10)
         records[records.length - 10 + i] = { index: ++n, caption:"Updated Item" };
     }
 
-    $(#updateIndex).onClick = function() {
+    $(#updateIndex) << event click() {
       for(var record in records)
         if(record)
           record.index += 1;
     }
 
-    $(#removeHighlighted).onClick = function() {
+    $(#removeHighlighted) << event click() {
       for(var record in records)
         if(record)
           record.highlighted = false;
     }
     
-    $(#updateHighlighted).onClick = function() {
+    $(#updateHighlighted) << event click() {
       for(var (n,record) in records)
         if(record)
           record.highlighted = (n & 1) != 0;

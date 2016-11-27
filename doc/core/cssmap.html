@@ -606,7 +606,7 @@
               <td nowrap bgcolor="#ffffdd" align="right"><strong>foreground-image-cursor</strong></td>
               <td bgcolor="#ffffdd">
           <div>Used when <em>foreground-repeat</em> has <em>no-repeat</em> value to define when mouse hovers foreground-image area.</div>
-          <div>Values: <em>auto | crosshair | default | pointer | move | e-resize | ne-resize | nw-resize | n-resize | se-resize | sw-resize | s-resize | w-resize | text | wait | help | progress | no-drop </em> or url of .cur or .ani file.</div></td></tr>
+          <div>Values: <em>auto | crosshair | default | pointer | move | e-resize | ne-resize | nw-resize | n-resize | se-resize | sw-resize | s-resize | w-resize | text | wait | help | progress | no-drop </em>&nbsp;or url of .cur or .ani file.</div></td></tr>
             <tr>
               <td rowspan="33" valign="top"><strong>Layout properties</strong></td>
               <td nowrap align="right"><strong>border</strong></td>
@@ -1328,12 +1328,8 @@
               <td rowspan="3" bgcolor="#ffe4ca" valign="top"><strong>Behavioral &nbsp;attributes</strong></td>
               <td nowrap bgcolor="#ffe4ca" align="right"><strong>behavior</strong></td>
               <td bgcolor="#ffe4ca">
-          <div>list of whitespace delimeted <a href="http://www.w3.org/TR/REC-xml/#NT-Nmtoken">nmtoken</a>s - names of behaviors applied to this element.</div>
-          <div>List may contain '~' symbol in front or at the end of the list:</div>
-          <ul>
-            <li><em>behavior: <strong>~</strong> new-behavior;</em> will update list of behaviors defined before for the element, and</li>
-            <li><em>behavior: new-behavior <strong>~</strong>;</em> will insert new-behavior in front of behaviors defined before for the element.</li></ul>
-          <p>Behavior is the name of builtin or application defined class of behavior. List of standard (builtin) behaviors is <a href="http://www.terrainformatica.com/htmlayout/behaviors.whtm">here</a>.</p></td></tr>
+          <div>list of whitespace delimeted <a href="http://www.w3.org/TR/REC-xml/#NT-Nmtoken">nmtoken</a>s - names of native behaviors applied to this element.</div>
+          <p>Behavior is the name of builtin or application defined class of behavior.</p></td></tr>
             <tr>
               <td nowrap bgcolor="#ffe4ca" align="right"><strong>prototype</strong></td>
               <td bgcolor="#ffe4ca">
@@ -1362,11 +1358,10 @@ input[focus] { aspect: handleFocusAttribute; }
           <p>Allows to redefine textual content of the element in style. In h-smile <em>content</em> is can be applied to the element itself.</p>
           <p>If the content is a string then it is used &quot;as is&quot; to replace element's content. If it is <code>attr(attrname)</code> then content of the element is replaced by value of the attribute.</p>
           <div>This allow to define different captions of some element by CSS using for example some attribute as a switch:</div>
-          <blockquote>
-            <blockquote>
-              <div><font face="Courier New">p.status[state=&quot;pending&quot;] { content: &quot;Pending&quot;; foreground-image:...; }</font></div>
-              <div><font face="Courier New">p.status[state=&quot;done&quot;] { content: &quot;Done&quot;; foreground-image:...; }</font></div>
-              <div><font face="Courier New">p.status[state=&quot;warning&quot;] { content: &quot;Warning!&quot;; foreground-image:...; }</font></div></blockquote></blockquote>
+              <pre>p.status[state=&quot;pending&quot;] { content: &quot;Pending&quot;; foreground-image:...; }
+p.status[state=&quot;done&quot;] { content: &quot;Done&quot;; foreground-image:...; }
+p.status[state=&quot;warning&quot;] { content: &quot;Warning!&quot;; foreground-image:...; }
+</pre>
           <div><em>content</em> is applicable only to elements that allowed to have textual content. E.g. it will work for P, SPAN, etc. but not for DIV.</div></td></tr>
             <tr>
               <td nowrap bgcolor="#ffe4ca" align="right"><strong>vertical-scrollbar</strong></td>

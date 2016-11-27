@@ -29,13 +29,13 @@
       }
       
       // set the value in one shot. Note: it will generate <li>s in <ol(friends)> automagically.
-      $(#set).onClick = function() { root.value = data; }
+      $(#set) << event click() { root.value = data; }
       
       // get the value in one shot too: 
-      $(#get).onClick = function() { $(#out).text = String.printf("%V", root.value ).replace("\t","  "); }
+      $(#get) << event click() { $(#out).text = String.printf("%V", root.value ).replace("\t","  "); }
       
       // show the formation structure:
-      $(#show).onClick = function() { 
+      $(#show) << event click() { 
         view.msgbox( #information, root.toHtmlString());
       }
     

@@ -193,10 +193,10 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
   /** #HANDLE_FOCUS commands */
   enum FOCUS_EVENTS
   {
-      FOCUS_LOST = 0,           /**< non-bubbling event, target is new focus element */
-      FOCUS_GOT = 1,            /**< non-bubbling event, target is old focus element */
-      FOCUS_IN = 2,             /**< bubbling event/notification, target is an element that got focus */
-      FOCUS_OUT = 3,            /**< bubbling event/notification, target is an element that lost focus */
+      FOCUS_IN = 0,             /**< container got focus on element inside it, target is an element that got focus */
+      FOCUS_OUT = 1,            /**< container lost focus from any element inside it, target is an element that lost focus */
+      FOCUS_LOST = 2,           /**< target element lost focus */
+      FOCUS_GOT = 3,            /**< target element got focus */
       FOCUS_REQUEST = 4,        /**< bubbling event/request, gets sent on child-parent chain to accept/reject focus to be set on the child (target) */
   };
 

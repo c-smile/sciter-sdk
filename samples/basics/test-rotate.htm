@@ -48,7 +48,7 @@
     
       //include "rotator.tis";
 
-      $(#rotate).onClick = function()
+      $(#rotate) << event click()
       {     
         var container = $(div#stack);
         var next = container.shown.next || container.first;
@@ -65,7 +65,7 @@
       stdout << a1 << "\n";
       stdout.printf("%d %s %v %v\n", a1.length, a1.tag, a1[0], a1[1]);
       
-      $(button#test-transform-set).onClick = function()
+      $(button#test-transform-set) << event click()
       {
         $(div#stack)[1].style#transform = [[:scale 0.25], [:translate pr(25),0]];
       }

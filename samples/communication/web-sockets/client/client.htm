@@ -26,8 +26,8 @@
                 }
   };
   
-  $(button#send).onClick = function() { var msg = $(input#message);  channel( msg.value ); msg.value = ""; sendStart = System.ticks; }
-  $(button#close).onClick = function() { channel( null ); }
+  $(button#send) << event click() { var msg = $(input#message);  channel( msg.value ); msg.value = ""; sendStart = System.ticks; }
+  $(button#close) << event click() { channel( null ); }
   
 </script>
   </head>

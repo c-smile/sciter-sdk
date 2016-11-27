@@ -116,59 +116,6 @@
           view.caption =  "Sciter"; // calling native method defined in sciter.h 
       }
 
-      $(button#open).onClick = function()
-      {
-        var fn = view.selectFile(#open,file_filter);
-		    if( fn ) 
-		    {
-          loadFile(fn);
-          // getting root node of the frame
-          var croot = content[0];
-          var title = croot.$(head>title); 
-          if( title )
-            view.title(title.text); // calling native method defined in sciter.h 
-        }
-      }
-      $(button#reload).onClick = function()
-      {
-		    if( filename ) {
-          content.load(filename);
-          if(debugIsActive)
-            view.launchDebugView();
-        }
-      }
-
-      $(button#open-in-view).onClick = function()
-      {
-        var fn = view.selectFile(#open,file_filter);
-		    if( fn ) 
-		    {
-          view.load(fn);
-        }
-      }
-
-      $(button#glass).onClick = function()
-      {
-        if( this.value)
-          view.windowBlurbehind = #auto;
-        else
-          view.windowBlurbehind = undefined;
-      }
-      
-      $(button#help).onClick = function()
-      {
-		    //view.open("file://" + System.home("../doc/main.htm"));
-        view.window 
-        {
-          url: "file://" + System.home("../doc/main.htm"),
-          type: View.FRAME_WINDOW,
-          state: View.WINDOW_SHOWN,
-          alignment:5,
-          width: 1024,
-          height: 800
-        };
-      }
-
       function content.onExchange(evt)
       {
          if( evt.type == Event.X_DRAG_ENTER && evt.draggingDataType == #file)
@@ -198,17 +145,67 @@
          }
       }
 
-      $(button#inspector).onClick = function()
+      event "click|button#open" ()
+      {
+        var fn = view.selectFile(#open,file_filter);
+		    if( fn ) 
+		    {
+          loadFile(fn);
+          // getting root node of the frame
+          var croot = content[0];
+          var title = croot.$(head>title); 
+          if( title )
+            view.title(title.text); // calling native method defined in sciter.h 
+        }
+      }
+      event "click|button#reload" ()
+      {
+		    if( filename ) {
+          content.load(filename);
+          if(debugIsActive)
+            view.launchDebugView();
+        }
+      }
+
+      event "click|button#open-in-view" ()
+      {
+        var fn = view.selectFile(#open,file_filter);
+		    if( fn ) 
+		    {
+          view.load(fn);
+        }
+      }
+
+      event "click|button#glass" () 
+      {
+        if( this.value)
+          view.windowBlurbehind = #auto;
+        else
+          view.windowBlurbehind = undefined;
+      }
+      
+      event "click|button#help" ()
+      {
+		    //view.open("file://" + System.home("../doc/main.htm"));
+        view.window 
+        {
+          url: "file://" + System.home("../doc/main.htm"),
+          type: View.FRAME_WINDOW,
+          state: View.WINDOW_SHOWN,
+          alignment:5,
+          width: 1024,
+          height: 800
+        };
+      }
+
+      event "click|button#inspector" ()
       {
         if(!view.inspectorIsPresent()) // native function, defined in sciter.cpp
           Sciter.launch( System.home("inspector.exe") );
       
         if( var connectToInspector = view.connectToInspector ) 
           connectToInspector($(frame#content));
-        //view.launchDebugView();
       }
-
-           
            
     </script>
 

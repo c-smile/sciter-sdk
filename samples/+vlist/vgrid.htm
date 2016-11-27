@@ -34,7 +34,7 @@
     // setting first item as current:    
     vlist.tbody.currentIndex = 0;
     
-    $(#mutate).onClick = function() {
+    $(#mutate) << event click() {
     
       function add() { 
         var at = rand(records.length + 1);
@@ -68,7 +68,7 @@
 
     }
     
-    $(#populate).onClick = function() {
+    $(#populate) << event click() {
     
       records.splice(0,records.length); // clear the list
 
@@ -88,21 +88,21 @@
     
     }
     
-    $(#addone).onClick = function()
+    $(#addone) << event click()
     {
 	    records.push {index: records.length, caption:"New item", status:"" };
 	    vlist.tbody.scrollTo(0, 9999999, true, true);
     }
-    $(#copy).onClick = function() 
+    $(#copy) << event click() 
     {
       view.clipboard(#put,records[vlist.tbody.currentIndex].data);
     }
-    $(#deleteall).onClick = function() 
+    $(#deleteall) << event click() 
     {
       //records.length = 0;
       records.splice(0,records.length);
     }
-    $(#delete).onClick = function() 
+    $(#delete) << event click() 
     {
       records.splice(vlist.tbody.currentIndex,1);
     }    

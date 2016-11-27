@@ -10,7 +10,7 @@
     
       include "http.tis";
    
-      $(button#download).onClick = function() {
+      $(button#download) << event click() {
       
         var out = $(code#out);
         var progress = $(progress#downloading);

@@ -1,0 +1,141 @@
+﻿<html>
+  <head>
+    <meta name="source"/>
+    <meta name="source"/>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>Custom UI Components</h1>
+  <p>Sciter offers three forms of DOM elements extensibility:</p>
+  <ul>
+    <li><strong>Behaviors</strong> - any DOM element, exisiting or custom, can be extended by a script class. Such class can define new properties, methods and event handlers. Behaviors can be assigned as declaratevely - by using CSS' <code>prototype</code> property or manually in code by changing <code>prototype</code> property of existing DOM element.</li>
+    <li><strong>Aspects</strong> - any DOM element may have set of functions declared to be called on them. Such aspect function, when inoked, can configure the element in the way needed: change properties, attach event handlers and so on. Aspects are assigned declaratively - by uning CSS' <code>aspect</code> property.</li>
+    <li>Ad hoc <strong>event handers</strong> - functions can be assigned to events on elements explicitly by code.</li></ul>
+  <h2>Behaviors</h2>
+  <p>Behavior classes are defined in code as script classes derived from stock Element class.</p>
+  <h3>Declarative behaviors assignment</h3>
+  <p>Declarative behaviors assignment in CSS is made using prototype property:</p>
+  <pre><em>selector</em> {
+    prototype: <em>ClassName</em> <em>url(file.tis)</em>;
+    /* ... other CSS properties */
+}
+</pre>
+  <p>where:</p>
+  <ul>
+    <li><em>selector</em> is a valid CSS selector, examples:</li>
+    <ul>
+      <li><code>input[type=foo] { prototype: MyWidget; }</code> &nbsp;</li>
+      <li><code>foo { display:block; prototype: MyWidget; }</code></li>
+      <li><code>widget { prototype: MyWidget; }</code></li></ul>
+    <li><em>ClassName</em> is a name of your class in script;</li>
+    <li><em>url(file.tis)</em> is a url of script file containing the class. This field is optional if class is defined in script section of the document itself.</li></ul>
+  <h3>Behavior class declaration</h3>
+  <p>Behavior is a class derived from stock <code>Element</code> class or other behavior class. Template of such class:</p>
+  <pre><u>class</u> MyWidget : <u>Element
+</u>{
+   // instance variables, each element will have its own copy of those
+   <u>this var</u> foo = &quot;foo&quot;;
+   ...
+   // class variables, shared by all instances of this class
+   <u>var</u> bar = &quot;bar&quot;;
+   ...
+
+   // life cycle methods:
+
+   // behavior's &quot;constructor&quot;, called when element gets this class
+   <u>function</u> <em>attached</em>() { /* <em>this </em>is the element */ }
+
+   // behavior's &quot;destructor&quot;, called when element looses the class
+   <u>function</u> <em>detached</em>() { /* <em>this</em> is the element */ }
+
+   // virtual properties
+   <u>property</u> baz(v) { ... }
+   // and methods
+   <u>function</u> boo() { ... }
+
+   // event handlers:
+
+   // any click
+   <u>event</u> &quot;click&quot; (evt, onElement) { /* Note: <em>this</em> is the element of MyWidget classs*/ }
+
+   // click event on &lt;a class=&quot;next&quot;&gt; element
+   <u>event</u> &quot;click|a.next&quot; (evt, onElement) { ... }
+   ...
+}
+</pre>
+  <h4><em>this</em> environment variable</h4>
+  <p>All methods, event handlers and properties are called by runtime with <code>this</code> variable set to the element this class is assigned to.</p>
+  <h2>Aspects</h2>
+  <p>Main problem with Behaviors is that at any given moment of time the element can have only one script class assigned. Aspects allows to overcome such problem by defining set of functions to be called when element gets into the DOM.</p>
+  <h3>Declarative aspect assignment</h3>
+  <p><font size="2">Aspects are assigned by the <code>aspect</code> CSS property</font>:</p>
+  <pre>  aspect: function-name [ url(of-function-implementation-file) ];
+</pre>
+  <p>Where <code>&quot;function-name&quot;</code> is fully qualified name of the “aspect” function that is aimed to configure/setup some additional functionality on the element. And the <code>url(...)</code> is file name where the function is defined.</p>
+  <p>Principles of aspect handling:</p>
+  <p>The “aspect” function is an ordinary script function that gets called:</p>
+  <ol>
+    <li>with <code>this</code> set to the DOM element satisfying the CSS rule.</li>
+    <li>strictly once per life time of the DOM element.</li></ol>
+  <p>The aspect CSS property uses non-standard inheritance – if the element has multiple matching rules with the <code>aspect</code> defined the used aspect property value is a list of all aspects from all matching rules. Thus if you have have these rules (example taken from the Plus engine):</p>
+  <pre>[click] { aspect:Plus.Click; }
+[dblclick] { aspect:Plus.DblClick; }
+</pre>
+  <p>and the element defined in markup as</p>
+  <pre>&lt;b id=&quot;clickable&quot; click=&quot;...&quot; dblclick=&quot;...&quot;&gt;text&lt;/b&gt;
+</pre>
+  <p>it will get two calls – <code>Plus.Click()</code> and <code>Plus.DblClick()</code> on it, as if you have the following in your CSS:</p>
+  <pre>#clickable { aspect:&quot;Plus.Click&quot; &quot;Plus.DblClick&quot;; }
+</pre>
+  <p>The aspect mechanism is actively used by Plus ( /samples/+plus/ ) and Lang ( /samples/+lang/ ) engines in Sciter SDK. Plus provides declarative data binding facilities &quot;a la&quot; AngularJS and Lang is about i18n support.</p>
+  <h4>Parametrized aspect definitions</h4>
+  <p>Aspect assignment can contain parameters defined in CSS:</p>
+  <pre>#chart { aspect: MicroChart.Donut(fill: #f00 #0f0 #00f, thickness:0.2 ); }
+</pre>
+  <p>This will call <code>MicroChart.Donut</code> function with single object parameter as if the following code is run:</p>
+  <pre>const params = {
+  fill: [ color(255,0,0), color(0,255,0), color(0,0,255) ],
+  thickness: 0.2
+};
+MicroChart.Donut(params); // in fact as MicroChart.Donut.call(domElement,params);
+</pre>
+  <p>If your aspect function supports parameters then it should have the following signature:</p>
+  <pre>namespace MicroChart {
+  function Donut(params = {}) {
+    // do something with this element ...
+  }
+}
+</pre>
+  <p>this way it can be assigned either with or without params in CSS.</p>
+  <h2>Event Handlers</h2>
+  <p>UI programming is all about handling of events of various kinds. In Sciter event handlers are ordinary functions that get assigned to elements in one of following ways:</p>
+  <h3>Event functions</h3>
+  <p>You can define <a href="../script/language/Functions.htm#event-functions">event function</a> in-place and assign it to the DOM element by shift operator:</p>
+  <pre>// basic event handler
+elem &lt;&lt; <u>event</u> &quot;click&quot; () { ... }
+</pre>
+  <p>Note the <code>&quot;click</code>&quot; string above, that is an event defintion string having the following format: &quot;name.namespace|css-selector&quot; where:</p>
+  <ul>
+    <li><em>name</em> is either one of <a href="Event.htm#symbolic-event-names">known events</a> or custom event name;</li>
+    <li><em><code>.</code> namespace</em> is an arbitrary event namespace name a la jQuery, optional;</li>
+    <li><code>|</code> <em>css-selector</em> &nbsp;is a CSS selector. If provided, filters only events coming from satifying DOM elements, optional.</li></ul>
+  <p>Here is an example of &quot;change&quot; events handling coming from any &lt;input type=text&gt; element inside the document:</p>
+  <pre>elem &lt;&lt; <u>event</u> &quot;change|input[type=text]&quot; () { 
+  <em>// this</em> is the input[type=text] so
+  var changedValue = this.value;
+  ...
+}
+</pre>
+  <p>Event namespaces are used for identification purposes, when you need, for example to <strong>unsubscribe</strong> particualr group of event handlers:</p>
+  <pre>elem &gt;&gt; &quot;.mygroup&quot;; // remove all event handlers having .mygroup namespace.
+</pre>
+  <p>If needed you can use full event identifier:</p>
+  <pre>elem &gt;&gt; &quot;change|input[type=text]&quot; 
+     &gt;&gt; &quot;mousedown|input[type=text]&quot;;
+</pre>
+  <h3>Event handling with traditional functions</h3>
+  <p><code>Element.on(&quot;name.namespace&quot;, &quot;selector&quot;, function )</code> method of Element class can be used to attach function to the element to handle event given by &quot;name&quot;. </p>
+  <p>And &nbsp;<code>Element.off(...) </code>is used to unsubscribe event handlers.</p>
+  <p></p>
+</body>
+</html>

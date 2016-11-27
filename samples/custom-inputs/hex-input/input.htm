@@ -7,7 +7,7 @@
     </style>
     <script type="text/tiscript">
     
-    $(button#show).onClick = function()
+    $(button#show) << event click()
     {
       var v = $(input#hex).value;
       $(pre).text = String.printf("%d %x",v,v);

@@ -14,12 +14,12 @@
       
       var root = formation( self );
       
-      root.getAll.onClick = function() 
+      root.getAll << event click() 
       {
         quotes.getAll().then( :data: root.quotes.value = data ); 
       };
 
-      root.delFirst.onClick = function() 
+      root.delFirst << event click() 
       {
         quotes.deleteOne(0).then( :: view.msgbox(#information,"Deleted!") ); 
       };

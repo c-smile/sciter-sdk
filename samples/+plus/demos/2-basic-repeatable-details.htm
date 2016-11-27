@@ -1,0 +1,80 @@
+<html>
+  <head>
+    <title>Plus: very basic sample</title>
+    <style>
+      @import url(../plus.css); /* the only thing needed to include Plus framework */
+      @import url(../../note.css); 
+      
+      ol { width:40em; }
+      ol > li { 
+        behavior:radio; /* !!! only one item is :checked at the moment !!! */
+        border-bottom:1px solid dotted;
+      }
+      ol > li > div.details { 
+        prototype: FruitDetails; // see below
+        visibility:none; 
+        background-color:white;
+        overflow:hidden;
+        flow:row(label,output); 
+        border-spacing: 1em 0;  
+        height:0; 
+      }
+      ol > li:checked > div.details { 
+        background-color:gold;
+        visibility:visible; 
+        height:4em; 
+        transition: height(linear, 200ms) background-color(linear, 200ms);
+      }
+      
+      ol > li > div.details:animating { visibility:visible; /* visible while animating */ }
+      ol > li > div.details > label { display:block; white-space:nowrap; width:max-content; text-align:right; }
+      
+    </style>
+    
+    <script type="text/tiscript">
+  
+      namespace Data // our model
+      {  
+        var fruits = [{name:"apple", energy:52, carbohydrates:13.81, protein:0.26 },
+                      {name:"orange", energy:49, carbohydrates:11.89, protein:0.94 },
+                      {name:"sweet cherry", energy:63, carbohydrates:16.1, protein:1.06 }];
+      }  
+      
+      class FruitDetails : Element 
+      {
+        function onVisibilityChanged(onOff) {
+          if(onOff)
+            this.$content(
+              <label>energy, cal</label><output|number(fruit.energy)/>
+              <label>carbohydrates, g</label><output|number(fruit.carbohydrates)/>
+              <label>protein, g</label><output|number(fruit.protein)/>
+            );
+          else
+            this.clear(); // clear it to remove not used DOM.
+        }
+      }
+      
+    </script>
+  </head>
+
+<body model="Data"> <!-- define data model we observe -->
+
+  <note>
+  <p>List below is bound with <code>Data.fruits</code> array and so it 
+  reflects list items in that array.</p>
+  <p>&lt;div.details&gt; element uses FruitDetails behavior.</p>
+  <p>When element gets invisible FruitDetails clears the detail element. 
+  And creates details content on demand then it needs to be rendered.</p>
+  </note>
+
+  <p>Click on of items below.</p>
+  <p>Numbers below are for 100g of product</p>
+  <!-- the repeateable section -->
+  <ol each="fruit in fruits">
+    <li><caption><output(fruit.name)/></caption>
+        <div.details />
+    </li>
+  </ol>
+  
+</body>
+</html>

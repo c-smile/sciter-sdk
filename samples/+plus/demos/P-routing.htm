@@ -1,0 +1,60 @@
+<html>
+  <head>
+    <title>Plus: very basic sample</title>
+    <style>
+      @import url(../plus-routes.css); /* the only thing needed to include Plus framework */
+      @import url(../../note.css); 
+      
+      toolbar > button { 
+        behavior:radio;
+        height:*; 
+        width:64dip; 
+        height:48dip; 
+        text-align:center;
+        vertical-align:middle;
+      }
+      toolbar > caption { 
+        width:*; 
+        text-align:center;
+        vertical-align:middle;
+      }
+      
+      
+    </style>
+    
+    <script type="text/tiscript">
+  
+/*      namespace Data // our model
+      {  
+        var fruits = [{name:"apple", energy:52, carbohydrates:13.81, protein:0.26 },
+                      {name:"orange", energy:49, carbohydrates:11.89, protein:0.94 },
+                      {name:"sweet cherry", energy:63, carbohydrates:16.1, protein:1.06 }];
+      }   */
+      
+      function self.ready() {
+        Plus.app.routes = [
+          { path:"/first", url:"routes/first.htm" },
+          { path:"/second", url:"routes/second.htm" },
+          { path:"/third", url:"routes/third.htm" }
+        ]; 
+      }
+      
+      self << event "routechange" (evt) {
+        var button = $(toolbar>button[href="{Plus.app.path}"]); 
+        button.value = true;
+      }
+      
+    </script>
+  </head>
+
+<body> <!-- define data model we observe -->
+  <toolbar>
+    <button(route) href="/first" checked>First</button> 
+    <button(route) href="/second">Second</button> 
+    <button(route) href="/third">Third</button> 
+    <caption>Routes and views on Plus</caption>
+  </toolbar>
+  <main></main>
+  
+</body>
+</html>

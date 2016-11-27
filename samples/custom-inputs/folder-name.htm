@@ -19,7 +19,7 @@
         
         var path = this.path = this.$(.path);
         
-        this.$(button.selector).onClick = function () {
+        this.$(button.selector) << event click() {
           var fn = view.selectFolder();
           if( fn ) path.value = fn;
           (this super).postEvent(Event.EDIT_VALUE_CHANGED);

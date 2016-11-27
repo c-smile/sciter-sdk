@@ -20,7 +20,7 @@ class Tabs : Element
       assert panel : "Tab panel with the name " + name + " not found";
 
       if(label)
-        this.activate(label, false);
+        this.post( ::this.activate(label, false) );
     }
      
     // get/set current tab by name

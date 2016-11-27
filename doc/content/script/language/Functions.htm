@@ -1,7 +1,6 @@
-<html>
+﻿<html>
   <head>
     <title>Functions</title>
-    <link rel="stylesheet" href="for-screen.css"/>
     <meta name="generator" content="h-smile:richtext"/>
   </head>
 <body>
@@ -20,15 +19,31 @@
   <h2><a name="anonymous-functions" id="anonymous-functions">Anonymous functions</a></h2>
   <p>Anonymous functions can be declared in-place by using the following forms:</p>
   <p>Classic JavaScript form:</p>
-  <pre class="code tiscript"><code>function</code> <code>(</code> &lt;parameters&gt; <code>)</code> <code>{</code> &lt;statements&gt; <code>}</code>
+  <pre class="code tiscript"><code>function</code> <code>(</code> &lt;parameters&gt; <code>)</code> <code>{</code> &lt;statements&gt; <code>}
 </pre>
-  <p>Single expression lambda function form:</p>
+  <p><code>Single expression lambda function form:</code></p>
   <pre><code>:</code> &lt;parameters&gt; <code>:</code> &lt;statement&gt;
 </pre>
   <p>Block lambda function form:</p>
   <pre><code>:</code> &lt;parameters&gt; <code>{</code> &lt;statements&gt; <code>}</code>
 </pre>
   <p>Nested functions (functions inside of other functions) are allowed.</p>
+  <h2><a name="event-functions" id="event-functions">Event functions</a></h2>
+  <p>Event handling function is a variant of normal function but function name given as a string. Instead of <code>function</code> event functions are declared with <code>event</code> keyword:</p>
+  <pre><code>event</code> &quot;event-definition&quot; <code>(</code> [eventObj [,element] <code>)</code>
+</code>{
+  //... event handling function body
+}
+</pre>
+  <p>where:</p>
+  <ul>
+    <li><code>&quot;event-definition&quot;</code> is a string with the content: <code>&quot;event.namespace|css-selector&quot;</code> having the following parts:</li>
+    <ul>
+      <li><em>name</em> is either one of known events or custom event name;</li>
+      <li><em><code>.</code> namespace</em> is an arbitrary event namespace name a la jQuery, optional;</li>
+      <li><code>|</code> <em>css-selector</em> &nbsp;is a CSS selector. If provided, filters only events coming from satifying DOM elements, optional.</li></ul>
+    <li><code>eventObj</code> is a name of parameter receiving reference to instance of Event object defining details of the event. Could be any valid name like: <em>evt</em>, <em>eo</em> or even <em>event</em>.</li>
+    <li><code>element</code> is a name of parameter receiving reference of DOM element.</li></ul>
   <h2><a name="optional-parameters" id="optional-parameters">Optional parameters</a></h2>
   <p>TIScript supports optional parameters in function declarations:</p>
   <h3><a name="parameters-with-default-values" id="parameters-with-default-values">Parameters with default values</a></h3>
@@ -92,13 +107,13 @@
   <p>Having such function in place we can use it now as:</p>
   <pre>var arr = [1,2,3];
 var table = self.$( table#some );
-for( var n in arr ) 
+for( var n in arr )
   table.$append ( &lt;tr&gt;&lt;td&gt;Cell #{n}&lt;/td&gt;&lt;/td&gt; );
 </pre>
   <p>Code above will insert three rows/cells with texts: &quot;Cell #1&quot;, &quot;Cell #2&quot; and &quot;Cell #3&quot; into the table. Pretty convenient, isn't it?</p>
   <h2>Function call with literal object</h2>
   <p>If some function accepts single parameter-object then it can be called omitting '(' and ')' brackets like this:</p>
-  <pre>  foo { one:1, two:2 } 
+  <pre>  foo { one:1, two:2 }
 </pre>
   <p>that is an exact equivalent of this standard JavaScript call:</p>
   <pre>  foo ({ one:1, two:2 })

@@ -11,12 +11,44 @@
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
     <tr>
+      <td valign="top" bgcolor="#FFFADA">3.3.3.2</td>
+      <td nowrap valign="top" align="center">26-11-2016</td>
+      <td>
+        <p>new:</p>
+        <ul>
+          <li><strong>event</strong>-function handlers: <code>event &quot;event-def&quot; (...) { ... }</code> &nbsp;See: sdk/doc/content/sciter/CustomComponents.htm</li>
+          <li>[+plus] features:</li>
+          <ul>
+            <li>plus-routers.tis - <strong>Routers/Views/Conterollers</strong> with Plus. See: sdk/samples/+plus/demos/P-routing.htm</li>
+            <li>+ sample: 2-basic-repeatable-details.htm - list/details sample.</li>
+            <li>UI updates: on attempt to update removed element the Plus does &quot;throw undefined;&quot; to inform runtime to unsubscribe that function from observers. This handles cases when bound DOM element are added/removed.</li></ul>
+          <li>+ sdk/widgets/tabs2, uses dedicated &lt;panels&gt; container. </li>
+          <li>+ sample <strong>&quot;hamburger&quot; menu</strong> button animation: sdk/samples/animated-effects/hamburger-test.htm</li>
+          <li>[css, syntax] support of <code>rgb(50%,50%,50%)</code>, <code>rgb(0.5,0.5,0.5)</code>, <code>rgba(50%,50%,50%,50%)</code>, <code>rgba(0.5,0.5,0.5,0.5)</code> and <code>rgba(red,0.5)</code> color forms.</li>
+          <li><code>Graphics.antialiasing(onOff)</code> - enables/disables anti-aliasing.</li>
+          <li><code>Element.onVisibilityChanged(onOff)</code> - called on visibility change of the element. + onVisibilityChanged() can be defined in behavior classes.</li>
+          <li>[dom] Support of dynamic <code>&lt;style&gt;</code> blocks insertion/deletion. On &lt;style&gt; removal all its rules gets deleted too.</li></ul>
+        <p>fixes:</p>
+        <ul>
+          <li>[DOM] <code>paintBackhround()</code> and other <code>paint****</code> methods can be defined in behavior classes now.</li>
+          <li>[css] fix of <code>aspect()</code> with parameters parsing when parameters contain CSS constants. </li>
+          <li>[css] <code>foreground-color</code> transition fix.</li>
+          <li>[css] <code>outline:solid ...;</code> follows border radius now.</li>
+          <li>generation of <code>FOCUS_IN</code> and <code>FOCUS_OUT</code> events on event_handler attached to the window when window gets or loses focus. </li>
+          <li>[css,doc] traces of behavior: ~ ...; constructs removed.</li>
+          <li>[script] <code>Function.name</code> property fix.</li>
+          <li>[richtext] fix of text node deletion: &nbsp;<a href="http://sciter.com/forums/topic/backspace-strange-in-htmlarea">http://sciter.com/forums/topic/backspace-strange-in-htmlarea/</a></li>
+          <li>[api] fix of <code>FOCUS_IN</code>, <code>FOCUS_OUT</code>, <code>FOCUS_LOST</code> and <code>FOCUS_GOT</code> constant values in SDK headers. Note: coul be a breaking change in some corner cases.</li>
+          <li>[flow:grid()] support of single column grids, like <code>flow:grid(2,1)</code>; &nbsp;</li>
+          <li>[select|tree] fix of issue: <a href="http://sciter.com/forums/topic/treeview-element-appendinsert-will-lose-some-states-in-3-3-3-x">http://sciter.com/forums/topic/treeview-element-appendinsert-will-lose-some-states-in-3-3-3-x/</a></li></ul>Builds: win32/win64, osx32/osx64, linux/gtk64
+        <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
+    <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.3.1</td>
       <td nowrap valign="top" align="center">20-11-2016</td>
       <td>
         <p>new:</p>
         <ul>
-          <li>+ <strong>bin/scapp.exe</strong> - standalone sciter executable (sciter lib linked statically). &nbsp;Windows and MacOS. Essentially it is similiar to Electorn.js ( Node.js + Chromium browser = <span style="color: rgb(51, 51, 51); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); display: inline !important; float: none;">142 MB</span> ) but is a monolitic executable without dependencies of size 4 MB.</li>
+          <li>+ <strong>bin/scapp.exe</strong> - standalone sciter executable (sciter lib linked statically). &nbsp;Windows and MacOS. Essentially it is similiar to Electorn.js ( Node.js + Chromium browser = <span style="color: rgb(51, 51, 51); font-family: -apple-system, BlinkMacSystemFont, " Segoe UI", Helvetica, Arial, sans-serif, "Apple color Emoji", "Segoe UI Symbol"; font-size: 14px; font-style: normal; font-variant-ligatures: font-variant-caps: font-weight: letter-spacing: orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: widows: word-spacing: -webkit-text-stroke-width: background-color: rgb(255, 255, 255); display: inline !important; float: none;">142 MB</span> ) but is a monolitic executable without dependencies of size 4 MB.</li>
           <li><code>Element.move(,,, referencePoint)</code> parameter;</li>
           <li>Support of <code>@import url(content.zip#test.css)</code> - loading styles from zips;</li>
           <li>+ sidebar sample: &nbsp;sdk/samples/dialogs+windows/test-sidebar.htm;</li>
@@ -26,7 +58,7 @@
         <p>fixes:</p>
         <ul>
           <li>length units conversion overflow fix: <a href="http://sciter.com/forums/topic/strange-behavior-of-absolute-positioning-using-dip">http://sciter.com/forums/topic/strange-behavior-of-absolute-positioning-using-dip/</a></li>
-          <li>[+plus] script error while update fix. </li>
+          <li>[+plus] script error while update fix.</li>
           <li>[+plus] fix of the case when multiple repeatables looking on the same model. See: sdk/samples/+plus/demos/5-repeatable-filtering-2.htm</li>
           <li>Fix of <code>:node</code> state flag handling, see: <a href="http://sciter.com/forums/topic/cant-remove-node-flag">http://sciter.com/forums/topic/cant-remove-node-flag/</a> &nbsp;Note: sdk/samples/ideas/virtual-tree/virtual-tree.tis sample also changed to accommodate changed behavior.</li>
           <li>Fix of flickering while processing posted things. Especially in [+plus] use cases.</li>

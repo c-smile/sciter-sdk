@@ -1,0 +1,123 @@
+
+
+class Tabs : Element 
+{
+    function attached() 
+    { 
+      if( ! this.length )
+        return;
+      if( ! this.$(:root>strip) )
+        this.init();
+        
+      this.state.focusable = true;
+        
+      var label = this.$(:root>strip>label[selected],:root>strip>label:first-child); // initialy selected tab or the first one
+
+      var name = label.attributes["for"];
+      
+      // find panel we need to show by default 
+      var panel = this.$(:root>panels>[name='{name}'],:root>panels>#{name});
+      assert panel : "Tab panel with the name " + name + " not found";
+
+      if(label)
+        this.post( ::this.activate(label, false) );
+
+    }
+     
+    // get/set current tab by name
+    property current(v) {
+      get {
+        var label = this.$(:root>strip>label:current);
+        return label ? label.attributes["for"] : undefined;
+      } 
+      set {
+        var label = this.$(:root>strip>label[for='{v}']);
+        this.activate(label,false);
+      }
+    }
+
+    function onMouse(event)
+    {
+      if( event.type != (Event.MOUSE_DOWN | Event.SINKING) && event.type != (Event.MOUSE_DCLICK | Event.SINKING))
+        return false;
+        
+      var label = event.target.$p(label);
+      
+      if( label && label.parent === this.$(:root>strip) )
+        return this.activate( label );
+        
+      return false;        
+    }
+    
+    function onFocus(event) {
+      switch( event.type )
+      {
+        case Event.GOT_FOCUS: /*stdout.println("focus");*/ break;
+      }
+    
+    } // it is here to indicate that it needs focus.
+
+    function onKey(event) 
+    { 
+      if(event.type != Event.KEY_DOWN)
+        return false; // we are handling only KEY_DOWN here
+        
+      if(!this.state.focus)
+        return false;
+
+      var currentLabel = this.$(:root>strip>label:current);
+
+      switch( event.keyCode )
+      {
+        case Event.VK_TAB: 
+          if( event.ctrlKey ) 
+            return this.activate( event.shiftKey? currentLabel.prior : currentLabel.next );
+          break;
+        case Event.VK_LEFT: return this.activate( currentLabel.prior );
+        case Event.VK_RIGHT: return this.activate( currentLabel.next );
+        case Event.VK_HOME: return this.activate( currentLabel.parent.first );
+        case Event.VK_END: return this.activate( currentLabel.parent.last );
+      }
+      return false; 
+    }
+
+    // a.k.a. select tab, label here is a <label> inside <strip> 
+    function activate( label, notify = true )
+    {
+      if( !label )
+        return false;
+      if(label.state.current)
+        // already selected, nothing to do...
+        return true; // but we've handled it.
+     
+      var strip = this.$(:root>strip);
+     
+      //find currently selected element (tab and panel) and remove "selected" from them
+      var currentPanel = this.$(:root>panels>[name]:expanded,:root>panels>[id]:expanded);
+      var currentLabel = strip.$(label:current);
+
+      // find new tab and panel       
+      var name = label.attributes["for"];
+      var panel = this.$(:root>panels>[name='{name}'],:root>panels>#{name});
+      
+      assert panel : "panel " + name + " not found";
+
+      if( currentPanel ) {
+        currentPanel.state.collapsed = true; // set collapsed in case of someone use it for styling
+        currentPanel.postEvent("collapsed");
+      }
+      if( currentLabel )
+        currentLabel.state.current = false; 
+
+      panel.sendEvent("expanded");
+      strip.state.current = true; 
+      panel.state.expanded = true; // expand it
+      label.state.current = true;
+      
+      if(notify)
+        this.postEvent("statechange");
+      
+      return true;
+    }
+
+}

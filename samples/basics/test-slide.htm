@@ -89,13 +89,13 @@
         el.subscribe(animationDone,Event.BEHAVIOR_EVENT,Event.ANIMATION);
       }
       
-      prevBtn.onClick = function()
+      prevBtn << event click()
       {
         var current = stack.$(:root>:current);
         var new_current = stack[current.index-1];
         animationStart(new_current,"left");
       }
-      nextBtn.onClick = function()
+      nextBtn << event click()
       {
         var current = stack.$(:root>:current);
         var new_current = stack[current.index+1];

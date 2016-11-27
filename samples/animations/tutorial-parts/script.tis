@@ -3,10 +3,10 @@ include "../timeline/timeline.tis";
 var box = self#box;
 var src = self#src;
 
-self#run.onClick = function() {
+self#run << event click() {
   box.eval(src.value);
 }
-self#clear.onClick = function() {
+self#clear << event click() {
   for(var el in box) el.style.clear();
 }
 

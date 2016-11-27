@@ -17,7 +17,7 @@
       }
       
     
-      $(button#connect).onClick = function() {
+      $(button#connect) << event click() {
         if(socket = DataSocket.connect(22349)) 
         {
           socket.on("connect",reportConnected)
@@ -28,7 +28,7 @@
         }
       }
 
-      $(button#send).onClick = function() {
+      $(button#send) << event click() {
         socket.send({test:1});
         socket.send(form.value);
       }

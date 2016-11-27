@@ -15,7 +15,7 @@
       
       var root = formation( self );
       
-      $(#set).onClick = function() {
+      $(#set) << event click() {
       
         // Note: accessing sub-formation from root one
         root.person.value = {
@@ -28,8 +28,8 @@
         
       }
 
-      $(#get).onClick = function() { $(#out).text = String.printf("%V", root.value ).replace("\t","  "); }
-      $(#show).onClick = function() { $(#structure).html = root.toHtmlString(); }
+      $(#get) << event click() { $(#out).text = String.printf("%V", root.value ).replace("\t","  "); }
+      $(#show) << event click() { $(#structure).html = root.toHtmlString(); }
     
     </script>
   </head>

@@ -43,12 +43,12 @@ function Carousel() {
   
   list.on("animationend",checkScrollState);
   
-  next.onClick = function() {
+  next << event click() {
     var sp = list.scroll(#left);
     list.scrollTo(sp + listWidth,0,true);
     checkScrollState();
   }
-  prev.onClick = function() {
+  prev << event click() {
     var sp = list.scroll(#left);
     list.scrollTo(sp - listWidth,0,true);
     checkScrollState();
