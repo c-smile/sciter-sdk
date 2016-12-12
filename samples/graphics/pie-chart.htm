@@ -3,10 +3,11 @@
     <title></title>
     <style>
     
-    div#pie-chart {
+    pie-chart {
+      display:block;
+      aspect: Pie(band:20dip, sector:rgb(100,150,200), circle:rgb(230,230,230));
       size:200dip;
       font-size:30dip;
-      border:1px dotted #aaa;
       vertical-align:middle;
       text-align:center;
     }
@@ -14,50 +15,54 @@
     </style>
     <script type="text/tiscript">
     
-      function PieChartOn(element) 
+      function Pie(params = {}) 
       {
-        const strokeWidth = 20; // px
-        const strokeColor = color(100,150,200); // blue
-        const circleColor = color(230,230,230); // gray
+        const strokeWidth = params.band || 10dip; 
+        const strokeColor = params.sector || color(100,0,0); 
+        const circleColor = params.circle || color(230,230,230); 
       
         var start = 0; 
-        var value = 0.0; 
-      
+        var value = 0;  
+
         function render(gfx) 
         {
+
+          const sw = this.toPixels(strokeWidth, #width); 
+
           var (w,h) = this.box(#dimension); 
           var (x,y) = (w/2, h/2);  
-          var r = Integer.min(w,h) / 2 - strokeWidth / 2;  
+          var r = Integer.min(w,h) / 2 - sw / 2;  
           
-          gfx.strokeWidth(strokeWidth + 0.5)
+          gfx.strokeWidth(sw + 0.5)
              .strokeColor(circleColor)
              .arc(x,y,r,r, 0deg, 360deg)
              .strokeColor(strokeColor)
              .arc(x,y,r,r, 360deg * start, 360deg * value);
         }  
         
-        element.paintContent = render;
+        this.paintContent = render;
         
         // redefining property 'value' on that element
-        element["value"] = property(v) {
+        this["value"] = property(v) {
           get return value;
           set {
             value = v;
-            element.text = String.$({(value * 100).toInteger() }%) ;
-            element.refresh();
+            this.text = String.$({(value * 100).toInteger() }%) ;
+            this.refresh();
           }
         };
+        this.value = this.attributes["value"].toFloat(0.0);
       }
+
+      function self.ready() {
       
-      var chart = $(#pie-chart);
-      
-      PieChartOn( chart );
-      
-      chart.value = 0.25;
-      
-      $(input).on("change", function() {
-        chart.value = this.value;
-      });
+      	var chart = $(pie-chart);
+                  
+      	$(input) << event change {
+        	chart.value = this.value;
+      	}
+
+      }
       
     
     </script>
@@ -66,7 +71,7 @@
 
   value: <input|hslider min=0.0 max=1.0 value=0.25 >
 
-  <div #pie-chart />
+  <pie-chart value=0.25 />
 
 </body>
 </html>

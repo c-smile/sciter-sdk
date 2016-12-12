@@ -6,13 +6,13 @@
       div#test 
       { 
         behavior:button;
-        size:100px; 
-        border:1px solid; 
+        size:100dip; 
+        border:1dip solid; 
         margin-left:*; 
       }
       
-      #test > popup { background:gold; size:100px; border: 1px solid; margin:0 6px; }
-      #test > popup > ol { overflow-y:auto; height:*; background:white; }
+      #test > popup { background:gold; size:200dip 100dip; border: 1dip solid; margin:0 6dip; }
+      #test > popup > ol { overflow-y:auto; height:*; background:white; margin:0; }
       
       #test > popup > ol > li { 
         overflow-x:hidden;
@@ -22,7 +22,7 @@
     </style>
     <script type="text/tiscript">
     
-      $(div#test).onClick = function() 
+      $(div#test) << event click
       {
         this.popup(this.$(popup),0x16);
       } 

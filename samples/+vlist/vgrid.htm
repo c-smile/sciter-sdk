@@ -105,7 +105,13 @@
     $(#delete) << event click() 
     {
       records.splice(vlist.tbody.currentIndex,1);
+    }
+
+    $(#toLast) << event click() 
+    {
+      vlist.tbody.currentIndex = records.length - 1; 
     }    
+    
     
     vlist.on("change",function(evt) {
       stdout.println("change", vlist.tbody.currentIndex)
@@ -125,6 +131,7 @@
   <button #mutate>Start random updates</button>
   
   <button #addone>add one</button>
+  <button #toLast>go to last</button>
   <button #copy>copy</button>
   <button #deleteall>deleteall</button>
   <button #delete>delete</button>

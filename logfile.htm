@@ -11,6 +11,41 @@
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
     <tr>
+      <td valign="top" bgcolor="#FFFADA">3.3.3.3</td>
+      <td nowrap valign="top" align="center">11-12-2016</td>
+      <td>
+        <p>new:</p>
+        <ul>
+          <li><strong>event notation finalized</strong>: <code>event name.namespace $(selector) (params) {code}</code> where all parts except of name and code are optional.</li>
+          <li>support of event subscription notations:</li>
+          <ul>
+            <li><code>element &lt;&lt; event click { ... }</code> and </li>
+            <li><code>element + event click { ... }</code> </li></ul>
+          <li>[WebSocket] <code>WebSocket.connect(url,timeout)</code> is asynchronous now.</li>
+          <li>+ <code>Element.mapViewToLocal(x,y)</code> and <code>Element.mapLocalToView(x,y)</code> - maps point between view and local coordinates with respect of CSS transformations.</li>
+          <li>/samples/graphics/pie-chart.htm, reformulated as an aspect</li>
+          <li>+ <code>view.performDrag()</code> methods - initiates system drag-n-drop.</li>
+          <li>[css] support of now standard '<code>linear-gradient(to ...)</code>' notation. See: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient">https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient</a></li>
+          <li>[css] support of now standard '<code>radial-gradient(... at x,y)</code>' notation. See: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/radial-gradient">https://developer.mozilla.org/en-US/docs/Web/CSS/radial-gradient</a></li>
+          <li>[inspector] spans (display:inline elements) highlighting.</li>
+          <li><code>behavior:windowed</code> - experimental, elements in normal flow but rendered in windows.</li>
+          <li>[frameset] &nbsp;<code>fs.framesetState()</code> - persists splitters states. </li>
+          <li>[help browser] - persisting state.</li>
+          <li>string += &quot;other&quot;; optimization, see: <a href="http://sciter.com/optimising-and-operators-for-strings">http://sciter.com/optimising-and-operators-for-strings/</a></li></ul>
+        <p>fixes:</p>
+        <ul>
+          <li>[script] fix of include &quot;path&quot; in frames, see : <a href="http://sciter.com/forums/topic/frame-behavior-load">http://sciter.com/forums/topic/frame-behavior-load/</a></li>
+          <li>libpng upgraded to version 1.6.26</li>
+          <li>libjpeg updated to release 9b of 17-Jan-2016</li>
+          <li>[css] fix of <code>rgba(247, 66, 50, 1)</code> parsing. &nbsp;</li>
+          <li>[+plus] fix of index update in repeatable items that use index;</li>
+          <li>[+plus] sdk/samples/+plus/demos/5-repeatable-filtering.htm update with custom filter functions.</li>
+          <li>[CSS] <code>transition:none;</code> fix.</li>
+          <li>fix of tooltip shoutout on scroll, see: <a href="http://sciter.com/forums/topic/tooltips-and-ellipsis">http://sciter.com/forums/topic/tooltips-and-ellipsis/</a></li>
+          <li>sdk/samples/ideas/effects/bubbles/bubbles-demo.htm refactored to use cached bubbles.</li>
+          <li>[events] fix of false syntax error generation when <em>event</em> is used as a variable name: &nbsp;<a href="http://sciter.com/forums/topic/for-loop">http://sciter.com/forums/topic/for-loop/</a></li></ul>Builds: win32/win64, osx32/osx64, linux/gtk64
+        <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
+    <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.3.2</td>
       <td nowrap valign="top" align="center">26-11-2016</td>
       <td>
@@ -22,7 +57,7 @@
             <li>plus-routers.tis - <strong>Routers/Views/Conterollers</strong> with Plus. See: sdk/samples/+plus/demos/P-routing.htm</li>
             <li>+ sample: 2-basic-repeatable-details.htm - list/details sample.</li>
             <li>UI updates: on attempt to update removed element the Plus does &quot;throw undefined;&quot; to inform runtime to unsubscribe that function from observers. This handles cases when bound DOM element are added/removed.</li></ul>
-          <li>+ sdk/widgets/tabs2, uses dedicated &lt;panels&gt; container. </li>
+          <li>+ sdk/widgets/tabs2, uses dedicated &lt;panels&gt; container.</li>
           <li>+ sample <strong>&quot;hamburger&quot; menu</strong> button animation: sdk/samples/animated-effects/hamburger-test.htm</li>
           <li>[css, syntax] support of <code>rgb(50%,50%,50%)</code>, <code>rgb(0.5,0.5,0.5)</code>, <code>rgba(50%,50%,50%,50%)</code>, <code>rgba(0.5,0.5,0.5,0.5)</code> and <code>rgba(red,0.5)</code> color forms.</li>
           <li><code>Graphics.antialiasing(onOff)</code> - enables/disables anti-aliasing.</li>
@@ -31,10 +66,10 @@
         <p>fixes:</p>
         <ul>
           <li>[DOM] <code>paintBackhround()</code> and other <code>paint****</code> methods can be defined in behavior classes now.</li>
-          <li>[css] fix of <code>aspect()</code> with parameters parsing when parameters contain CSS constants. </li>
+          <li>[css] fix of <code>aspect()</code> with parameters parsing when parameters contain CSS constants.</li>
           <li>[css] <code>foreground-color</code> transition fix.</li>
           <li>[css] <code>outline:solid ...;</code> follows border radius now.</li>
-          <li>generation of <code>FOCUS_IN</code> and <code>FOCUS_OUT</code> events on event_handler attached to the window when window gets or loses focus. </li>
+          <li>generation of <code>FOCUS_IN</code> and <code>FOCUS_OUT</code> events on event_handler attached to the window when window gets or loses focus.</li>
           <li>[css,doc] traces of behavior: ~ ...; constructs removed.</li>
           <li>[script] <code>Function.name</code> property fix.</li>
           <li>[richtext] fix of text node deletion: &nbsp;<a href="http://sciter.com/forums/topic/backspace-strange-in-htmlarea">http://sciter.com/forums/topic/backspace-strange-in-htmlarea/</a></li>

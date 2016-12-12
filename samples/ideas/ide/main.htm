@@ -1,4 +1,4 @@
-<html custom-frame="solid" resizeable>
+<html window-frame="solid" window-blurbehind="dark" resizeable>
   <head>
     <title>Sciter IDE</title>
     <style >
@@ -27,12 +27,13 @@
   </head>
 <body>
   <header id="window">
+    <menubar><include src="menu.htm"/></menubar>   
     <caption role="window-caption">editor caption</caption> 
-    <chrome-button role="window-minimize">0</chrome-button> 
-    <chrome-button role="window-maximize">1</chrome-button> 
-    <chrome-button role="window-close">r</chrome-button> 
+    <chrome-button.min   role="window-minimize"></chrome-button> 
+    <chrome-button.max   role="window-maximize"></chrome-button> 
+    <chrome-button.close role="window-close"></chrome-button> 
   </header>
-  <menubar><include src="menu.htm"/></menubar>
+  
   <main>
     <frameset cols="200dip,*">
       <widget type="tree" id="tree" />

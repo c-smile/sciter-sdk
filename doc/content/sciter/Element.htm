@@ -356,6 +356,12 @@ some.selectParent(printel, &quot;div&quot;);
       <div>( [<strong>toTop</strong>:bool, <strong>smooth</strong>: bool = true ] )</div>
       <p>Scrolls the element to the view - ensures that element is visible. В If <em>toTop</em> is <em>true </em>then forces element to be on top of its scrollable container. This method does deep scroll - it tries to make the element visible through all its scrollable containers. If <em>smooth</em> is false then no attempt to animate the scrolling will be made.</p>
       <p>NOTE: in order that method to work the element should establish a box - to be of display: block | inline-block | table-cell | etc. In contrary <code>&lt;tr&gt;</code> (table row) for example is not a box element. In order to scroll to particular row in table you should choose first cell in that row.</p></dd>
+    <dt>mapLocalToView</dt>
+    <dd>(<strong>xLocal</strong>:int, <strong>yLocal</strong>:int ) : (int,int)
+      <p>maps xLocal/yLocal point of the element to xView/yView (window) coordinates. </p></dd>
+    <dt>mapViewToLocal</dt>
+    <dd>(<strong>xView</strong>:int, <strong>yView</strong>:int ) : (int,int)
+      <p>maps xView/yViewl point of the view into xLocal/yLocal (element) coordinates.</p></dd>
     <dt>insert</dt>
     <dd>
       <div><strong>( element</strong> | <strong>html</strong> | <strong>object </strong>| <strong>array</strong> [,<strong>index</strong> = Integer.MAX]<strong>)</strong> returns: true | false.</div>
@@ -491,7 +497,10 @@ el.$content(This is item number <b>{ num }</b>);
     <dt>capture</dt>
     <dd>
       <div><strong>( onOff</strong>: true | false | #strict<strong> ) </strong>:void</div>
-      <p>element.capture(<em>true</em>) - sets &quot;soft&quot; mouse capture to the element, mouse messages are delivered to the element and its children;<br/>element.capture(#strict) - sets &quot;strict&quot; mouse capture to the element, mouse messages are delivered to the element only; <br/>element.capture(<em>false</em>) - removes mouse capture from the element.</p></dd>
+      <ul>
+        <li>element.capture(<em>true</em>) - sets &quot;soft&quot; mouse capture to the element, mouse messages are delivered to the element and its children;</li>
+        <li>element.capture(<em>#strict</em>) - sets &quot;strict&quot; mouse capture to the element, mouse messages are delivered to the element only;</li> 
+        <li>element.capture(<em>false</em>) - removes mouse capture from the element.</li></ul></dd>
     <dt>popup</dt>
     <dd>
       <div><strong>( el</strong>: Element, <strong>placement</strong>: int<strong> )</strong> :void</div>

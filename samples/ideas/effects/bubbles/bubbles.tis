@@ -25,16 +25,29 @@ function Bubbles()
 
   function random( min, max ) { return rand( max - min ) + min; }
   
+  function generateParticleImage(particle)
+  {
+      const dim = 2 * particle.radius; 
+      return new Image(dim, dim, function(gfx) {
+        gfx.fillRadialGradient(particle.radius, particle.radius, particle.radius,
+                           [particle.color, particle.color, rgba(particle.color.r,particle.color.g,particle.color.b, 0.0)],
+                           [0.0, particle.blur, 1.0] );
+        gfx.rectangle( 0, 0, dim, dim);          
+      });
+  }    
+  
   function createParticle() {
-    return {
+    var particle = {
       x : random(0, width),
       y : random(0, height),
       xVelocity: random(1, 10) * 0.1,
       yVelocity: random(1, 5) * 0.1,
       color: color(particleColor.r, particleColor.g,particleColor.b, random(minOpacity, maxOpacity)),
       blur: random(80, 100) / 100.0,
-      radius: random(particleMinRadius,particleMaxRadius)
+      radius: random(particleMinRadius,particleMaxRadius),
     };
+    particle.image = generateParticleImage(particle);
+    return particle;
   }
   
   function moveParticle(particle) 
@@ -70,10 +83,11 @@ function Bubbles()
   
   function drawParticle(gfx,particle)
   {
-    gfx.fillRadialGradient(particle.x, particle.y, particle.radius,
-                           [particle.color, particle.color, rgba(particle.color.r,particle.color.g,particle.color.b, 0.0)],
-                           [0.0, particle.blur, 1.0] );
-    gfx.rectangle( particle.x - particle.radius, particle.y - particle.radius, 2 * particle.radius, 2 * particle.radius);                       
+    //gfx.fillRadialGradient(particle.x, particle.y, particle.radius,
+    //                       [particle.color, particle.color, rgba(particle.color.r,particle.color.g,particle.color.b, 0.0)],
+    //                       [0.0, particle.blur, 1.0] );
+    //gfx.rectangle( particle.x - particle.radius, particle.y - particle.radius, 2 * particle.radius, 2 * particle.radius);                       
+    gfx.drawImage(particle.image, particle.x - particle.radius, particle.y - particle.radius);
                            
   }
   

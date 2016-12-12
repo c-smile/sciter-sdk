@@ -11,7 +11,9 @@ class Tabs : Element
         
       this.state.focusable = true;
         
-      var label = this.$(:root>strip>label[selected],:root>strip>label:first-child); // initialy selected tab or the first one
+      var label = this.$(:root>strip>label[selected]) ||
+                  this.$(:root>strip>label:first-child);
+      // initialy selected tab or the first one
 
       var name = label.attributes["for"];
       
@@ -19,9 +21,11 @@ class Tabs : Element
       var panel = this.$(:root>panels>[name='{name}'],:root>panels>#{name});
       assert panel : "Tab panel with the name " + name + " not found";
 
-      if(label)
-        this.post( ::this.activate(label, false) );
-
+      if(label) 
+        this.post( function() {
+          if( !this.$(:root>strip>label:current) ) // if it was not set by code
+             this.activate(label, false);       // proceed with initialization.
+        });
     }
      
     // get/set current tab by name

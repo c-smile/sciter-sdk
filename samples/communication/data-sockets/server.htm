@@ -7,18 +7,18 @@
     var serverSocket = null;
     
     // simple echo server
-    function server() {
+    function serve() {
     
       var log = $(pre#out);
     
       function acceptConnection(socket) 
       {
         log.text = "got connection";
-        socket.on("data",function( data ) 
+        socket << event data( data ) // subscribe on "data" event
         {
           log.text += JSON.stringify(data,"  ");
           socket.send(data);
-        });
+        };
         return true; // we accept this connection
       }
     
@@ -29,7 +29,9 @@
     
     }
     
-    $(button#serve).onClick = server;
+    event click $(button#serve) { 
+       serve(); 
+    }
     
     
     </script>

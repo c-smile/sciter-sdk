@@ -234,6 +234,28 @@ if( fn ) view.<strong>load</strong>(fn);
     <dd>
       <div><strong>(#put</strong>, data: string | object | Image <strong>)</strong> : undefined;</div>
       <p>Stores data to the clipboard.</p></dd>
+    <dt>performDrag</dt>
+    <dd>
+        (<strong>element</strong>:Element, <strong>data</strong>:Object, ddMode: <strong>#any</strong> | <strong>#copy</strong> | <strong>#move</strong>) : <strong>null</strong> | <strong>#copy</strong> | <strong>#move</strong>
+        <p>Performs system drag and drop operation.</p>
+        <p><em>element</em> is a DOM element that is used as a drag image.</p>
+        <p><em>data</em> is an object that contain following properties:</p>
+        <ul>
+            <li><code>{text: String}</code> - plain text string;</li>
+            <li><code>{html: String | Element}</code> - html, either as a string or outer HTML of given element;</li>
+            <li><code>{file: String | [String, String, ...]}</code> - single file name or list of file names to drop;</li>
+            <li><code>{link: String}</code> - single url as a string;</li>
+            <li><code>{json: value}</code> - any value that will be serialized into JSON string. JSON can be used to pass additional data between Sciter windows.</li>
+        </ul>
+        <p>The <em>data</em> object may contain multiple properties, destination will choose most appropriate.</p>
+        <p><em>ddMode</em> defines types of drag-n-drop operations allowed:</p>
+        <ul>
+            <li><strong>#copy</strong> - copy from source to destination;</li>
+            <li><strong>#move</strong> - move from source to destination;</li>
+            <li><strong>#any</strong> - either move or copy.</li>
+        </ul>
+        <p><code>performDrag()</code> is a blocking operation - the function returns when drag-n-drop is complete or rejected.</p>
+    </dd>
     <dt>cursorLocation</dt>
     <dd>
       <div><strong>(</strong> <strong>)</strong> : (x:int, y: int)</div>
