@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+    /*a { display:inline-block; } */
+    
+    </style>
+    <script type="text/tiscript">
+    
+      $(picture) << event mousedragrequest (evt) {
+        var data = {
+          file: self.url( this.attributes["src"] ), 
+          //text: "tref",
+        };
+        
+        var r = view.performDrag( this, data, #copy );
+        stdout.println(r);
+        return true;
+      };
+      
+      $(a[href]) << event "mousedragrequest" (evt) {
+        var data = {
+          text: this.text,
+          //html: this,
+          html: this.outerHtml,
+          //link: { caption: this.text, url:this.attributes["href"] },
+          //link: this.attributes["href"]
+        };
+        
+        var r = view.performDrag( this, data, #copy );
+        stdout.println(r);
+        return true;
+      };      
+      
+    </script>
+  </head>
+<body>
+  <picture src="../animations/tutorial-parts/tref.png" /> 
+  
+  <p>You can drag that one <a href="http://sciter.com">Sciter</a> too</p>
+  
+  
+</body>
+</html>

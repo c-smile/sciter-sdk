@@ -56,10 +56,13 @@
    // event handlers:
 
    // any click
-   <u>event</u> &quot;click&quot; (evt, onElement) { /* Note: <em>this</em> is the element of MyWidget classs*/ }
+   <u>event</u> click (evt, that) { /* Note: <em>this</em> is the element generated click
+                                <em>that</em> is the subsciber element - the
+                                one that has MyWidget class. */ }
 
    // click event on &lt;a class=&quot;next&quot;&gt; element
-   <u>event</u> &quot;click|a.next&quot; (evt, onElement) { ... }
+   <u>event</u> click $(a.next) (evt, that) { ... /* Note: <em>this</em> is the a.next
+                                      element that generated click */  }
    ...
 }
 </pre>
@@ -112,15 +115,15 @@ MicroChart.Donut(params); // in fact as MicroChart.Donut.call(domElement,params)
   <h3>Event functions</h3>
   <p>You can define <a href="../script/language/Functions.htm#event-functions">event function</a> in-place and assign it to the DOM element by shift operator:</p>
   <pre>// basic event handler
-elem &lt;&lt; <u>event</u> &quot;click&quot; () { ... }
+elem &lt;&lt; <u>event</u> click () { ... }
 </pre>
-  <p>Note the <code>&quot;click</code>&quot; string above, that is an event defintion string having the following format: &quot;name.namespace|css-selector&quot; where:</p>
+  <p>Note the <code>click</code> name-token above, that is an event defintion having the following format: <em>name</em>[<code>.</code><em>namespace</em>] [<code>$(</code><em>selector</em><code>)</code>] where:</p>
   <ul>
     <li><em>name</em> is either one of <a href="Event.htm#symbolic-event-names">known events</a> or custom event name;</li>
     <li><em><code>.</code> namespace</em> is an arbitrary event namespace name a la jQuery, optional;</li>
-    <li><code>|</code> <em>css-selector</em> &nbsp;is a CSS selector. If provided, filters only events coming from satifying DOM elements, optional.</li></ul>
+    <li><em>selector</em> &nbsp;is a CSS selector. If provided, filters only events coming from satifying DOM elements, optional.</li></ul>
   <p>Here is an example of &quot;change&quot; events handling coming from any &lt;input type=text&gt; element inside the document:</p>
-  <pre>elem &lt;&lt; <u>event</u> &quot;change|input[type=text]&quot; () { 
+  <pre>elem &lt;&lt; <u>event</u> change $(input[type=text]) {
   <em>// this</em> is the input[type=text] so
   var changedValue = this.value;
   ...
@@ -129,13 +132,8 @@ elem &lt;&lt; <u>event</u> &quot;click&quot; () { ... }
   <p>Event namespaces are used for identification purposes, when you need, for example to <strong>unsubscribe</strong> particualr group of event handlers:</p>
   <pre>elem &gt;&gt; &quot;.mygroup&quot;; // remove all event handlers having .mygroup namespace.
 </pre>
-  <p>If needed you can use full event identifier:</p>
-  <pre>elem &gt;&gt; &quot;change|input[type=text]&quot; 
-     &gt;&gt; &quot;mousedown|input[type=text]&quot;;
-</pre>
   <h3>Event handling with traditional functions</h3>
-  <p><code>Element.on(&quot;name.namespace&quot;, &quot;selector&quot;, function )</code> method of Element class can be used to attach function to the element to handle event given by &quot;name&quot;. </p>
+  <p><code>Element.on(&quot;name.namespace&quot;, &quot;selector&quot;, function )</code> method of Element class can be used to attach function to the element to handle event given by &quot;name&quot;.</p>
   <p>And &nbsp;<code>Element.off(...) </code>is used to unsubscribe event handlers.</p>
-  <p></p>
 </body>
 </html>

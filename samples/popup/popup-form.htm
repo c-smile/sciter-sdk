@@ -3,20 +3,25 @@
     <title></title>
     <style>
     
-      popup {padding:1em; background:gold;}
+      popup { padding:1em; background:gold; }
+      popup > button { display: block; margin:0.5em *;  }
+      popup > form { flow:row(label,input); border-spacing: 4dip; }
       
     
     </style>
     <script type="text/tiscript">
     
-      $(#show).onClick = function() { 
+      $(#show) << event click { 
         this.popup( $(popup#test));
       }
-    
     
     </script>
         
     <popup #test>
+      <form>
+        <label>name</label><input type=text>
+        <label>surname</label><input type=text>
+      </form>
       <button>Test</button>
     </popup>
     
@@ -24,7 +29,6 @@
 <body>
 
   <button #show>Show popup</button>
-  
 
 </body>
 </html>

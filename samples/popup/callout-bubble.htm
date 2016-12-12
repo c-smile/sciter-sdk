@@ -6,8 +6,8 @@
     {
       prototype: BubblePopup;
       background-color: transparent;
-      width:400px;
-      height:300px;
+      width:400dip;
+      height:300dip;
       cursor:pointer;
       padding-top: 12dip;
       cursor: default;
@@ -19,9 +19,9 @@
     
     div#anchor
     {
-      border:1px solid blue;
-      width:50px;
-      height:50px;
+      border:1dip solid blue;
+      width:50dip;
+      height:50dip;
       cursor:pointer;
     }
   </style>  
@@ -34,16 +34,16 @@
   </style>    
   <script type="text/tiscript">
     
-      $(div#anchor).onClick = function() 
+      $(div#anchor) << event click
       {
         this.popup( $(popup.bubble), (8 /*popup middle-top*/ << 16) | 2 /*at anchor's middle-top*/);
       } 
       
       class BubblePopup: Behavior {
       
-        const RADIUS = 10;
-        const ARROW_HEIGHT = 12;
-        const STROKE_WIDTH = 1.0;
+        const RADIUS = 10dip;
+        const ARROW_HEIGHT = 12dip;
+        const STROKE_WIDTH = 1dip;
         const STROKE_COLOR = color(0xCF,0xAF,0x33);
         const BACK_COLOR = color(0xFF,0xFF,0xFF);
       
@@ -67,12 +67,14 @@
             return shape; // nothing to do already calculated
           
           shape.reset();
+
+          const stoke_width = this.toPixels(STROKE_WIDTH,#width);
           
           // lines shall go through pixels middles:
-          x += STROKE_WIDTH / 2; y -= STROKE_WIDTH / 2; w -= STROKE_WIDTH; h -= STROKE_WIDTH;
+          x += stoke_width / 2; y -= stoke_width / 2; w -= stoke_width; h -= stoke_width;
           
-          const r = RADIUS;
-          const ah = ARROW_HEIGHT;
+          const r = this.toPixels(RADIUS,#width);
+          const ah = this.toPixels(ARROW_HEIGHT,#height);
           
           shape          
             .moveTo(x+r, y)

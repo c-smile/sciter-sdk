@@ -1,1 +1,0 @@
-promise() is a part script runtime now. You don't need to include it anymore. It is here for the reference.

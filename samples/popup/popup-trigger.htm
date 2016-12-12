@@ -5,17 +5,17 @@
     popup#test
     {
       background-color: orange;
-      border:1px solid red;
-      width:100px;
-      height:100px;
+      border:1dip solid red;
+      width:100dip;
+      height:100dip;
       cursor:pointer;
     }
     div#anchor
     {
       behavior: button;    
-      border:1px solid blue;
-      width:50px;
-      height:50px;
+      border:1dip solid blue;
+      width:50dip;
+      height:50dip;
       cursor:pointer;
       aspect: PopupTrigger;
     }
@@ -35,20 +35,21 @@
         popup = self.select(popupSelector);
       if( !popup )
         popup = this.select("popup");
+      
       assert popup : "PopupTrigger: popup not found";
       
       var popupShown = false;
       var me = this;
       
-      this.subscribe("click", function() {
+      this << event click {
         if(popupShown)
           popup.state.popup = false;
         else
           this.popup(popup);
-      });
+      }
      
-      popup.subscribe("popupready",     function(evt) { popupShown = true });
-      popup.subscribe("popupdismissed", function(evt) { me.timer(500ms, ::popupShown = false); });
+      popup << event popupready { popupShown = true; }
+            << event popupdismissed { me.timer(500ms, ::popupShown = false); };
 
     } 
       
@@ -57,7 +58,7 @@
 </head>
 <body>
 
-   <p>Choose position above and click on the anchor:</p>
+   <p>Second click on the anchor closes the popup:</p>
     <div#anchor popup="#test" title="hello"> 
       anchor
     </div>

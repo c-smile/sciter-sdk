@@ -29,7 +29,11 @@
                     ];
                     
         var filter = null; // current filter, null - show all.  
-      }    
+      }
+
+      self.on("click", "button#filter-custom", function(){
+         Todo.filter = function(item, index) { return (index & 1) == 0; };
+      });    
     
     </script>
   </head>
@@ -45,6 +49,8 @@
     <option value="{done:true}">Complete</option>
   </switch>
 
+  <button#filter-custom>Only even items (Custom function)</button>
+  
   <!-- the repeateable section bound with the filter variable -->
   <ol each="item in items|filter" #all>
       <li class="{{done:item.done}}"><input|checkbox(item.done)/> <output|text(item.subject)/></li>

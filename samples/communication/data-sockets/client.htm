@@ -8,21 +8,23 @@
       var form = $(form#data);
       var log = $(pre#out);
       
-      function reportData(data) {
+      /*function reportData(data) {
         log.text += "<text>received:\n" + JSON.stringify(data, "  ") + "</text>";
       }
       function reportConnected() {
         log.text = "connected";
         form.state.disabled = false;
-      }
+      }*/
       
     
       $(button#connect) << event click() {
         if(socket = DataSocket.connect(22349)) 
         {
-          socket.on("connect",reportConnected)
-                .on("data",reportData);
-                
+          socket << event connect {
+                      log.text = "connected";
+                      form.state.disabled = false; }
+                 << event data(data) {
+                      log.text += "<text>received:\n" + JSON.stringify(data, "  ") + "</text>"; };
         } else {
           log.text = "connection failed";
         }

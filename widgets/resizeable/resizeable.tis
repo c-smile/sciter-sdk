@@ -15,7 +15,7 @@ function Resizeable() {
   var dx, dy;     // deltas (offsets)
   var isResizing = false; // true when inside mouse dragging loop
   
-  function onMouseDown(evt) { 
+  this << event mousedown(evt) { 
     if(!isMouseOnCorner(this,evt)) 
       return false;
     
@@ -32,23 +32,20 @@ function Resizeable() {
     return true; 
   }
 
-  function onMouseMove(evt) { 
+  this << event mousemove(evt) { 
   
     if(isResizing) {
       var neww = (evt.xView - xs + dx).toInteger();
       var newh = (evt.yView - ys + dy).toInteger();
       this.style#width = px(neww);
       this.style#height = px(newh);
-      view.update();
+      this.update();
       return true;
     }
     else
       this.attributes.toggleClass("mouse-on-corner", isMouseOnCorner(this, evt));
     return false; 
   }
-
-  this.subscribe("mousedown", onMouseDown);
-  this.subscribe("mousemove", onMouseMove);
 
 }
 

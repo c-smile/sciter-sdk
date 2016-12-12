@@ -5,8 +5,10 @@
     @import url(styles/main.css);
   </style>
   <script type="text/tiscript">
+    const APP_NAME = "sciter-help";
     include "toc.tis";
     include "indexer.tis";
+    include "settings.tis";
     var back      = self.$(#toolbar>button.back);
     var forward   = self.$(#toolbar>button.forward);
     var frameset  = self.$(frameset#body);
@@ -69,6 +71,24 @@
 	}
 	
 	View.SciterDocsGoToPage = GoToPage;
+
+  // persistence of frameset state
+  Settings.add {
+    store: function(data) 
+      {
+        data.frameset =  frameset.framesetState();  
+      },
+    restore: function(data) 
+      {
+        if( data.frameset )
+          frameset.framesetState(data.frameset);
+      }
+  }; 
+
+  function statechange { saveState(); /* settings.tis */ } 
+
+  Settings.restore();
+
   </script>
   </head>
   <body>

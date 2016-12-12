@@ -21,29 +21,31 @@
   <p>Classic JavaScript form:</p>
   <pre class="code tiscript"><code>function</code> <code>(</code> &lt;parameters&gt; <code>)</code> <code>{</code> &lt;statements&gt; <code>}
 </pre>
-  <p><code>Single expression lambda function form:</code></p>
+  <p>Single expression lambda function form:</p>
   <pre><code>:</code> &lt;parameters&gt; <code>:</code> &lt;statement&gt;
 </pre>
   <p>Block lambda function form:</p>
-  <pre><code>:</code> &lt;parameters&gt; <code>{</code> &lt;statements&gt; <code>}</code>
+  <pre><code>:</code> &lt;parameters&gt; <code>{</code> &lt;statements&gt; <code>}
 </pre>
   <p>Nested functions (functions inside of other functions) are allowed.</p>
   <h2><a name="event-functions" id="event-functions">Event functions</a></h2>
   <p>Event handling function is a variant of normal function but function name given as a string. Instead of <code>function</code> event functions are declared with <code>event</code> keyword:</p>
-  <pre><code>event</code> &quot;event-definition&quot; <code>(</code> [eventObj [,element] <code>)</code>
-</code>{
+  <pre><code>event</code> <em>name</em>[<code>.</code><em>namespace</em>] [<code>$(</code>selector<code>)</code>]  [<code>(</code> [eventObj [,element] <code>)</code>]
+{
   //... event handling function body
 }
 </pre>
   <p>where:</p>
   <ul>
-    <li><code>&quot;event-definition&quot;</code> is a string with the content: <code>&quot;event.namespace|css-selector&quot;</code> having the following parts:</li>
-    <ul>
-      <li><em>name</em> is either one of known events or custom event name;</li>
-      <li><em><code>.</code> namespace</em> is an arbitrary event namespace name a la jQuery, optional;</li>
-      <li><code>|</code> <em>css-selector</em> &nbsp;is a CSS selector. If provided, filters only events coming from satifying DOM elements, optional.</li></ul>
-    <li><code>eventObj</code> is a name of parameter receiving reference to instance of Event object defining details of the event. Could be any valid name like: <em>evt</em>, <em>eo</em> or even <em>event</em>.</li>
-    <li><code>element</code> is a name of parameter receiving reference of DOM element.</li></ul>
+    <li><em>name</em> is either one of known events or custom event name;</li>
+    <li><em><code>.</code> namespace</em> is an arbitrary event namespace name a la jQuery, optional;</li>
+    <li><em>selector</em> &nbsp;is a CSS selector. If provided, filters only events coming from satifying DOM elements, optional.</li></ul>
+  <ul>
+    <li/>
+    <li>call parameters are optional, if provided may contain one or two parameters:
+      <ol>
+        <li><code>eventObj</code> is a name of parameter receiving reference to instance of Event object defining details of the event. Could be any valid name like: <em>evt</em>, <em>eo</em> or even <em>event</em>.</li>
+        <li><code>element</code> is a name of parameter receiving reference of DOM element.</li></ol></li></ul>
   <h2><a name="optional-parameters" id="optional-parameters">Optional parameters</a></h2>
   <p>TIScript supports optional parameters in function declarations:</p>
   <h3><a name="parameters-with-default-values" id="parameters-with-default-values">Parameters with default values</a></h3>

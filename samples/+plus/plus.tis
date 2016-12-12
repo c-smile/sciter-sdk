@@ -359,8 +359,11 @@ const Plus = function() {
         var domitem = cont[domItemIdx];
         if( domitem && domitem.$model) {
           var elval = domitem.$model[nitem];
-          if( elval === val)
-            return; // record already bound with the DOM  
+          if( elval === val) {
+            if(nindex && domitem.$model[nindex] != idx) 
+              domitem.$model[nindex] = idx;
+            return; // record already bound with the DOM
+          }  
           domitem.remove(); 
           Object.removeObserver.call(elval, rqRenderList);
         }

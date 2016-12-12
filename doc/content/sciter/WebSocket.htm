@@ -27,8 +27,8 @@
     <h2>Methods</h2>
     <dt>connect</dt>
     <dd>
-      <p><strong>( url: string</strong> <strong>)</strong> : WebSocket</p>
-      <p>Static constructor of the WebSocket. Accepts websocket schema URL: &quot;ws://domain/path&quot;. Returns new socket in INITIAL state.</p></dd>
+      <p><strong>( url</strong>: string [,<strong> timeout</strong>: duration] <strong>)</strong> : WebSocket</p>
+      <p>Static constructor of the WebSocket. Accepts websocket schema URL: &quot;ws://domain/path&quot;. Returns new socket in INITIAL state. The <em>timeout</em> is a connection timeout. If timeout is exceeded while connecting error event will be generated.</p></dd>
     <dt>on</dt>
     <dd>
       <p><strong>( event</strong>: string<strong>, callback</strong>: function<strong> )</strong> : this</p>
