@@ -391,7 +391,7 @@ const Plus = function() {
                  //eval(ncoll,root);
       assert(coll);
       
-      updateCollectionObserves = function() { coll.eachObserver( :fun: fun(null) ) }
+      updateCollectionObserves = function() { coll.eachObserver( :fun: fun([null,null,null]) ) }
      
       renderList = function () {
         //debug stacktrace;
@@ -529,6 +529,7 @@ function @observing(func, paths..) {
                 observeChanges(obj[i], onchange, spath);
             }
             case #delete-range: spath = path + "[]"; break;
+            default: return;
           }
         onchange(obj,changedef,spath);
       }

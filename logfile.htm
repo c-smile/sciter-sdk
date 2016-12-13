@@ -11,6 +11,17 @@
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
     <tr>
+      <td valign="top" bgcolor="#FFFADA">3.3.3.4</td>
+      <td nowrap valign="top" align="center">12-12-2016</td>
+      <td>
+        <p>fixes:</p>
+        <ul>
+          <li>[script] fix, regression of string concatenation optimization, see: <a href="http://sciter.com/forums/topic/bug-in-3-3-3-3-string-other-optimization">http://sciter.com/forums/topic/bug-in-3-3-3-3-string-other-optimization/</a></li>
+          <li><code>Element.find(x,y)</code> fix when capture() is used, see : <a href="http://sciter.com/forums/topic/element-find-doesnt-work-correctly-when-using-the-css-property-flow-horizontal">http://sciter.com/forums/topic/element-find-doesnt-work-correctly-when-using-the-css-property-flow-horizontal/</a></li>
+          <li><code>System.exec()</code> fix for arguments containing spaces.</li>
+          <li>[+plus] fix in repeatable's notify observers logic.</li></ul>Builds: win32/win64, osx32/osx64, linux/gtk64
+        <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
+    <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.3.3</td>
       <td nowrap valign="top" align="center">11-12-2016</td>
       <td>
@@ -19,8 +30,8 @@
           <li><strong>event notation finalized</strong>: <code>event name.namespace $(selector) (params) {code}</code> where all parts except of name and code are optional.</li>
           <li>support of event subscription notations:</li>
           <ul>
-            <li><code>element &lt;&lt; event click { ... }</code> and </li>
-            <li><code>element + event click { ... }</code> </li></ul>
+            <li><code>element &lt;&lt; event click { ... }</code> and</li>
+            <li><code>element + event click { ... }</code></li></ul>
           <li>[WebSocket] <code>WebSocket.connect(url,timeout)</code> is asynchronous now.</li>
           <li>+ <code>Element.mapViewToLocal(x,y)</code> and <code>Element.mapLocalToView(x,y)</code> - maps point between view and local coordinates with respect of CSS transformations.</li>
           <li>/samples/graphics/pie-chart.htm, reformulated as an aspect</li>
@@ -29,7 +40,7 @@
           <li>[css] support of now standard '<code>radial-gradient(... at x,y)</code>' notation. See: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/radial-gradient">https://developer.mozilla.org/en-US/docs/Web/CSS/radial-gradient</a></li>
           <li>[inspector] spans (display:inline elements) highlighting.</li>
           <li><code>behavior:windowed</code> - experimental, elements in normal flow but rendered in windows.</li>
-          <li>[frameset] &nbsp;<code>fs.framesetState()</code> - persists splitters states. </li>
+          <li>[frameset] &nbsp;<code>fs.framesetState()</code> - persists splitters states.</li>
           <li>[help browser] - persisting state.</li>
           <li>string += &quot;other&quot;; optimization, see: <a href="http://sciter.com/optimising-and-operators-for-strings">http://sciter.com/optimising-and-operators-for-strings/</a></li></ul>
         <p>fixes:</p>
