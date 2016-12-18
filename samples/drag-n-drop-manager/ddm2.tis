@@ -333,20 +333,11 @@ function DragDrop2(def)
     }
     
     // check for positions that are not allowed in DD:
-    if( typeof pos != #integer )
+    if( typeof pos != #integer ) {
+      dd_marker_position = null;
+      dd_marker_x1 = dd_marker_x2 = dd_marker_y1 = dd_marker_y2 = null;
       return;
-/*    else if( pos >= dd_target.length ) // after last pos
-    {
-      var tc = dd_target.last;
-      if(tc === dd_source) 
-        return; // not allowing to insert next to source
     }
-    else
-    {
-      var tc = dd_target[pos];
-      if( tc === dd_source) 
-        return; // not allowing to insert before the source
-    }*/
     
     var after = false;
     var marker;

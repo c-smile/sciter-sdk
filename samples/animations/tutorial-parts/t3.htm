@@ -4,7 +4,7 @@
 <style src="style.css"></style>
 <style> 
   div#box { flow:horizontal; overflow:hidden;}  
-  picture { transform:translate(200px,0px) rotate(0deg); }
+  picture { transform:translate(200dip,0dip) rotate(0deg); }
 </style>
 <script type="text/tiscript" src="script.tis"></script>
   </head>
@@ -25,7 +25,7 @@
     <p>FROM state - current state of the DOM element.</p>
     <p>TO state - defined in code:</p>
     <p>Note 1: $$(picture) returns list of picture elements. Each animation is offset by interval:0.3s.</p>
-    <p>Note 2: Initially all pictures are offset by translate(200px,0px); in CSS</p>
+    <p>Note 2: Initially all pictures are offset by translate(200dip,0dip); in CSS</p>
   </div>
   
   <textarea #src>Timeline.on(this)

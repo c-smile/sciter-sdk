@@ -439,6 +439,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -511,16 +512,7 @@
 					../..,
 				);
 				INFOPLIST_FILE = "sciter/sciter-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/hsmile-axtwzvesxuhmvhalgjokdndftooh/Build/Products/Debug",
-					"/Users/andrew/Desktop/sciter.stable/osx/sciter-osx/build/Debug/../../../../sdk/bin.osx",
-					"/Users/andrew/Desktop/sciter.3.1/osx/sciter-osx/build/Debug/../../../../sdk/bin.osx",
-					"/Users/andrew/Desktop/sciter.3.1/stable/osx/sciter-osx/build/Debug/../../../../sdk/bin.osx",
-					"/Users/andrew/Desktop/Sciter.3.1/osx/sciter-osx/build/Debug/../../../../sdk/bin.osx",
-					"/Users/andrew/Desktop/Sciter.3.1/osx/sciter-osx/build/Release/../../../../sdk/bin.osx",
-					"/Users/andrew/Desktop/Sciter.3.1/osx/sciter-osx/build/sdk/bin.osx",
-				);
+				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CFLAGS = "-fshort-wchar";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -547,16 +539,7 @@
 					../..,
 				);
 				INFOPLIST_FILE = "sciter/sciter-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/hsmile-axtwzvesxuhmvhalgjokdndftooh/Build/Products/Debug",
-					"/Users/andrew/Desktop/sciter.stable/osx/sciter-osx/build/Debug/../../../../sdk/bin.osx",
-					"/Users/andrew/Desktop/sciter.3.1/osx/sciter-osx/build/Debug/../../../../sdk/bin.osx",
-					"/Users/andrew/Desktop/sciter.3.1/stable/osx/sciter-osx/build/Debug/../../../../sdk/bin.osx",
-					"/Users/andrew/Desktop/Sciter.3.1/osx/sciter-osx/build/Debug/../../../../sdk/bin.osx",
-					"/Users/andrew/Desktop/Sciter.3.1/osx/sciter-osx/build/Release/../../../../sdk/bin.osx",
-					"/Users/andrew/Desktop/Sciter.3.1/osx/sciter-osx/build/sdk/bin.osx",
-				);
+				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CFLAGS = "-fshort-wchar";
 				PRODUCT_NAME = "$(TARGET_NAME)";

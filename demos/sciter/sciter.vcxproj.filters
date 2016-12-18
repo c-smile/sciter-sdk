@@ -132,6 +132,9 @@
     <ClInclude Include="..\..\include\sciter-x-request.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sciter-x-msg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -146,9 +149,6 @@
     <ClCompile Include="..\..\include\behaviors\behavior_tabs.cpp">
       <Filter>behaviors</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\include\behaviors\behavior_camera_capture.cpp">
-      <Filter>behaviors</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\include\behaviors\behavior_video_generator.cpp">
       <Filter>behaviors</Filter>
     </ClCompile>
@@ -156,6 +156,12 @@
       <Filter>behaviors</Filter>
     </ClCompile>
     <ClCompile Include="..\..\include\behaviors\behavior_drawing-gdi.cpp">
+      <Filter>behaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\behaviors\behavior_camera_capture.cpp">
+      <Filter>behaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\behaviors\behavior_drawing-opengl.cpp">
       <Filter>behaviors</Filter>
     </ClCompile>
   </ItemGroup>

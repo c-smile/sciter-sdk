@@ -4,7 +4,7 @@
 <style src="style.css"></style>
 <style> 
   div#box { flow:horizontal; overflow:hidden;}  
-  picture { transform: translate(200px,0px); }
+  picture { transform: translate(200dip,0dip); }
 </style>
 <script type="text/tiscript" src="script.tis"></script>
   </head>
@@ -33,7 +33,7 @@
 
   .to( $$(picture), { duration:1s, interval:0.3s, ease: #quadInOut,
                       repeats:8, swing:true  }, 
-                    { transform: translate(0px,0px) } )
+                    { transform: translate(0dip,0dip) } )
   .play();
   </textarea>
   

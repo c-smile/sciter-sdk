@@ -11,6 +11,38 @@
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
     <tr>
+      <td valign="top" bgcolor="#FFFADA">4.0.0.0</td>
+      <td nowrap valign="top" align="center">18-12-2016</td>
+      <td>
+        <p>new:</p>
+        <ul>
+          <li>SDK contains Sciter binaries with Skia backend from now and on.</li>
+          <ul>
+            <li><strong>On Windows</strong> sciter is compiled as different DLLs having the same name <em>sciter.dll </em>&nbsp;locating in following folders:</li>
+            <ul>
+              <li>bin/32/sciter.dll \</li>
+              <li>bin/64/sciter.dll – Direct2D and GDI+ backends as before</li>
+              <li>bin/skia32/sciter.dll \</li>
+              <li>bin/skia64/sciter.dll – Direct2D and Skia/OpenGL backends.</li></ul>
+            <li><strong>On MacOS</strong> sciter includes as CoreGraphics as Skia/OpenGL backends (default) switchable by SciterSetOption() function.</li></ul>
+          <li>+ sample: sdk/samples/ideas/effects/blur-behind/bb-demo.htm - ambient color effect.</li>
+          <li><code>Element.state.awaitsDraw</code> flag. The flag is &quot;on&quot; after invalidation request was issued on the element and until first draw after that.</li></ul>
+        <p>fixes:</p>
+        <ul>
+          <li>[script] await and yield parsing fix; </li>
+          <li>[regression] Fix of AV on SW_ALPHA window.</li>
+          <li>[ddm2] cancelling D&amp;D operation when drop on source element.</li>
+          <li>[dom] fix of closed popup rendering, see: <a href="http://sciter.com/forums/topic/the-context-menu-can-not-close-after-click-which-in">http://sciter.com/forums/topic/the-context-menu-can-not-close-after-click-which-in/</a></li>
+          <li><code>SciterCreateWindow</code> based windows, <code>WM_CLOSE</code> message delegation fix.</li>
+          <li><code>input[type=text]:empty</code> flag initialization fix.</li>
+          <li>[script] <code>Color.rgba(0.1,0.1,0.1)</code> support.</li>
+          <li>Fix of insertion of whitespace sequences in plain texts (<code>&amp;nbsp;</code> auto insertion) ;</li>
+          <li>[event handling] regression after event handling changes, fix of <code>element.on(&quot;name&quot;, &quot;parent selector&quot;)</code> case.</li>
+          <li>[css] <code>filter:blur()</code> border effect fix.</li>
+          <li>&nbsp;Fixes in documentation suggested.</li>
+          <li>[inspector] empty log on document reload.</li></ul>Builds: win32/win64, osx32/osx64 ( but not linux/gtk64 for a while )
+        <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
+    <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.3.4</td>
       <td nowrap valign="top" align="center">12-12-2016</td>
       <td>

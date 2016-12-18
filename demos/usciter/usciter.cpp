@@ -1,6 +1,6 @@
 
 #include "sciter-x-window.hpp"
-#include "behaviors/behavior_video_generator.cpp"
+//#include "behaviors/behavior_video_generator.cpp"
 
 // native API demo
 

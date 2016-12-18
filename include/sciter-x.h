@@ -22,6 +22,7 @@
 #include "sciter-x-dom.h"
 #include "sciter-x-value.h"
 #include "sciter-x-api.h"
+#include "sciter-x-msg.h"
 
 #if defined(__cplusplus) && !defined( PLAIN_API_ONLY )
 

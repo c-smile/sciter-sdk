@@ -358,10 +358,10 @@ some.selectParent(printel, &quot;div&quot;);
       <p>NOTE: in order that method to work the element should establish a box - to be of display: block | inline-block | table-cell | etc. In contrary <code>&lt;tr&gt;</code> (table row) for example is not a box element. In order to scroll to particular row in table you should choose first cell in that row.</p></dd>
     <dt>mapLocalToView</dt>
     <dd>(<strong>xLocal</strong>:int, <strong>yLocal</strong>:int ) : (int,int)
-      <p>maps xLocal/yLocal point of the element to xView/yView (window) coordinates. </p></dd>
+      <p>maps xLocal/yLocal point of the element to xView/yView (window) coordinates with respect of CSS tranformations.</p></dd>
     <dt>mapViewToLocal</dt>
     <dd>(<strong>xView</strong>:int, <strong>yView</strong>:int ) : (int,int)
-      <p>maps xView/yViewl point of the view into xLocal/yLocal (element) coordinates.</p></dd>
+      <p>maps xView/yViewl point of the view into xLocal/yLocal (element) coordinates with respect of CSS tranformations.</p></dd>
     <dt>insert</dt>
     <dd>
       <div><strong>( element</strong> | <strong>html</strong> | <strong>object </strong>| <strong>array</strong> [,<strong>index</strong> = Integer.MAX]<strong>)</strong> returns: true | false.</div>
@@ -499,18 +499,40 @@ el.$content(This is item number <b>{ num }</b>);
       <div><strong>( onOff</strong>: true | false | #strict<strong> ) </strong>:void</div>
       <ul>
         <li>element.capture(<em>true</em>) - sets &quot;soft&quot; mouse capture to the element, mouse messages are delivered to the element and its children;</li>
-        <li>element.capture(<em>#strict</em>) - sets &quot;strict&quot; mouse capture to the element, mouse messages are delivered to the element only;</li> 
+        <li>element.capture(<em>#strict</em>) - sets &quot;strict&quot; mouse capture to the element, mouse messages are delivered to the element only;</li>
         <li>element.capture(<em>false</em>) - removes mouse capture from the element.</li></ul></dd>
     <dt>popup</dt>
     <dd>
-      <div><strong>( el</strong>: Element, <strong>placement</strong>: int<strong> )</strong> :void</div>
-      <p>Function will show element <em>el</em> as a popup window placed relatively to <em>this</em> element. <em>Placement</em> accepts following values:</p>
+      <div><strong>( el</strong>: Element [, <strong>placement</strong>: int]<strong> )</strong> :void</div>
+      <p>Function will show element <em>el</em> as a popup window placed relatively to <em>this</em> element. <em>Placement</em> is a combination of two values from two groups:</p>
+      <p>Point on <em>this</em> element ( a.k.a. popup anchor point )</p>
       <ul>
-        <li><em>2</em> - popup element below this element (anchor);</li>
-        <li><em>8</em> - popup element above this element;</li>
-        <li><em>4</em> - popup element on the left side of this element;</li>
-        <li><em>6</em> - popup element on right side of this element;</li></ul>
-      <div>( see keyboard numpad to get an idea of numbering).</div></dd>
+        <li><code>1</code> - this element's bottom-left point</li>
+        <li><code>2</code> - this element's bottom-center point</li>
+        <li><code>3</code> - this element's bottom-right point</li>
+        <li><code>4</code> - this element's center-left point</li>
+        <li><code>5</code> - this element's middle-center point</li>
+        <li><code>6</code> - this element's middle-right point</li>
+        <li><code>7</code> - this element's top-left point</li>
+        <li><code>8</code> - this element's top-center point</li>
+        <li><code>9</code> - this element's top-right point</li></ul>
+      <p>Point on <em>popup</em> to be placed at the anchor point:</p>
+      <ul>
+        <li><code>1 &lt;&lt; 16 </code>- popup bottom-left is at anchor point</li>
+        <li><code>2 &lt;&lt; 16</code> - popup bottom-center is at anchor point</li>
+        <li><code>3 &lt;&lt; 16</code> - popup bottom-right is at anchor point</li>
+        <li><code>4 &lt;&lt; 16</code> - popup center-left is at anchor point</li>
+        <li><code>5 &lt;&lt; 16</code> - popup middle-center is at anchor point</li>
+        <li><code>6 &lt;&lt; 16</code> - popup middle-right is at anchor point</li>
+        <li><code>7 &lt;&lt; 16</code> - popup top-left is at anchor point</li>
+        <li><code>8 &lt;&lt; 16</code> - popup top-center is at anchor point</li>
+        <li><code>9 &lt;&lt; 16</code> - popup top-right is at anchor point</li></ul>
+      <div>( see keyboard numpad to get an idea of numbering).</div>
+      <div></div>
+      <p class="MsoNormal"><span style="mso-ascii-font-family:Calibri;mso-hansi-font-family:
+Calibri;mso-bidi-font-family:Calibri"><em>placement</em> parameter is optional. The popup position can also be defined in CSS</span> &nbsp;by <i><span style="mso-ascii-font-family:
+Calibri;mso-hansi-font-family:Calibri;mso-bidi-font-family:Calibri">popup-position</span></i> property. </p>
+      <div></div></dd>
     <dt>popup</dt>
     <dd>
       <div><strong>( el</strong>: Element, <strong>x</strong>:int, <strong>y</strong>:int ) :void</div>

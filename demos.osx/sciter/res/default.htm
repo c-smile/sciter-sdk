@@ -11,7 +11,7 @@
 	    @const BUTTON_FORE_DISABLED: none;
 
       @image-map icons {
-        src: url(icons-n.png) 200dpi,
+        src: url(icons-h.png) 192dpi,
              url(icons-h.png) ;
         cells:3 2; /* 3 columns, 2 rows */
         /* logical names of the parts, see toolbar-icons.png */ 
@@ -42,9 +42,9 @@
         display:block; 
         background-repeat:no-repeat; 
         background-position:50% 50%; 
-        background-size:38dip 38dip;
+        background-size:48dip 48dip;
         padding:0;
-        size:46dip; 
+        size:56dip; 
 	                }
 	    div#toolbar > button:hover          {  foreground-image: @BUTTON_FORE_HOVER; transition:none; }
 	    div#toolbar > button:active         {  foreground-image: @BUTTON_FORE_ACTIVE; foreground-position:53% 53%; }
@@ -76,11 +76,11 @@
       
       /*div#intro { behavior:htmlarea; }*/
       
-      //@media on-glass 
-      //{
+      @media on-glass 
+      {
          html { background-color:transparent; }
          frame#content { background-image:none; }
-      //}
+      }
       
       hr { margin:0; padding:0; height:0; border:none; border-top: 1px dashed #999; }
       

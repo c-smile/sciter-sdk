@@ -32,14 +32,14 @@ namespace sciter
 
 	  wcex.cbSize = sizeof(WNDCLASSEX);
 
-	  wcex.style			    = CS_HREDRAW | CS_VREDRAW;
+	  wcex.style			    = 0;//CS_HREDRAW | CS_VREDRAW;
 	  wcex.lpfnWndProc	  = wnd_proc;
 	  wcex.cbClsExtra		  = 0;
 	  wcex.cbWndExtra		  = 0;
 	  wcex.hInstance		  = ghInstance;
 	  wcex.hIcon			    = LoadIcon(ghInstance, MAKEINTRESOURCE(IDI_SCITER));
 	  wcex.hCursor		    = LoadCursor(NULL, IDC_ARROW);
-	  wcex.hbrBackground	= NULL;//(HBRUSH)(COLOR_WINDOW+1);
+	  wcex.hbrBackground	= (HBRUSH)(COLOR_WINDOW+1);
 	  wcex.lpszMenuName	  = 0;//MAKEINTRESOURCE(IDC_PLAINWIN);
 	  wcex.lpszClassName	= WINDOW_CLASS_NAME;
 	  wcex.hIconSm		    = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));

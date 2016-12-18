@@ -1,0 +1,140 @@
+<html>
+  <head>
+    <title>OpenGL integration demo</title>
+    <style>
+    
+    html { }
+    
+    body { 
+      size:*;
+      overflow:auto; 
+      flow:stack;
+      margin:0;
+    }
+    
+    body > section 
+    {
+      size:*; /* sections spans whole window surface */
+    }
+    
+    body > section#back-layer 
+    {
+      background: radial-gradient(75% 75%, circle farthest-side, white, orange, rgb(0,0,204));
+      color:#fff;
+      overflow:hidden;
+      /*padding:10dip;*/
+    }
+    
+    body > section#back-layer > h1:hover 
+    {
+      color: red;
+    }
+    
+    section#fore-layer 
+    {
+      font:system;
+      background-color: rgba(140,140,140,0.7);
+      width:200dip;
+      height:*;
+      margin-left:*; /*attached to the right side*/
+      padding:10dip;
+      border-left: rgba(240,240,240,0.5) solid 1dip;
+      transform: translate(95%, 0);
+    }
+    section#fore-layer:hover 
+    {
+      transform: translate(0%, 0);
+      transition: transform(quad-out, 300ms, 200ms); /*300ms transition, 200ms delay to start */
+    }
+    
+    section#fore-layer > p 
+    {
+      background:rgba(255,255,255,0.8);
+      padding:0.5em 1em;
+      border-radius: 4dip;
+    }
+    
+    form 
+    {
+      flow:row(label,input); /*organized in table having one <label> and one <input> per row */
+    }
+    
+    form input.hue {
+      border:none;
+      height: 2dip;
+      background: linear-gradient(left, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
+    }
+    
+    
+    </style>
+    <script type="text/tiscript">
+
+    function self.ready() {
+
+      $(#machine).text = Sciter.machineName();
+
+      var counter = 0;
+
+      $(button#append).on("click", function()
+      {
+        $(section#back-layer).$append(<h1#test>{++counter }</h1>);
+      });
+
+      $(button#open).on("click", function(){
+        var fn = view.selectFile(#open,
+          "HTML Files (*.htm,*.html)|*.HTM;*.HTML|All Files (*.*)|*.*" , "html" );
+      });
+
+      var form = $(#fore-layer > form);
+
+      function rgbFromHue(hue) {
+        var c = Color.hsv(hue,1,1);
+        return ( c.r / 255.0, c.g / 255.0, c.b / 255.0);
+      }
+
+      form.on("change", function() {
+        var values = form.value;
+        var r,g,b;
+        // updating native side:
+        (r,g,b) = rgbFromHue(values.hue1); view.setCornerColor(0,r,g,b);
+        (r,g,b) = rgbFromHue(values.hue2); view.setCornerColor(1,r,g,b);
+        (r,g,b) = rgbFromHue(values.hue3); view.setCornerColor(2,r,g,b);
+        view.setRotationSpeed(values.rotation);
+      });
+
+
+    }
+
+
+    </script>
+  </head>
+<body>
+
+  <section id="back-layer">
+    <h1>Minimal Sciter GLFW/OpenGL Application</h1>
+    <p>Running on <em #machine /> machine</p>
+  </section>
+
+  <section id="fore-layer">
+    <p>Demonstration of input elements handling in OpenGL window</p>
+    <form>
+      <label>rotation:</label><input|hslider(rotation) value=1.0 min=0.0 max=10.0 />
+      <label>hue1:</label><input|hslider.hue(hue1) value=0 min=0 max=360 />
+      <label>hue2:</label><input|hslider.hue(hue2) value=120 min=0 max=360 />
+      <label>hue3:</label><input|hslider.hue(hue3) value=240 min=0 max=360 />
+    </form>
+    <hr />
+    <input|text value="Hello world!"> 
+    <hr />
+    <button #append>Append</button> 
+    <button #open>Open</button> 
+    <select>
+      <option>First</option>
+      <option>Second</option>
+      <option>Third</option>
+    </select>
+    <input type=calendar />
+  </section>
+
+</body>
+</html>

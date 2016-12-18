@@ -53,43 +53,12 @@
 	  $(#country).text = System.country;
 	  $(#os-type).text = System.HANDHELD_OS? "handheld":"desktop";
 	  $(#os-version).text = System.OS;
-    
-    stdout.println(System.PLATFORM);
-
-    var gfxids = System.PLATFORM == "Windows" ? ["?","GDI+","WARP","D2D"] 
-               : System.PLATFORM == "OSX" ? ["?","CoreGraphics","OpenGL" ]
-               : [ "?" ];
-    //stdout.printf("%V\n", gfxids);
-    
-    $(#gfx-backend).text = gfxids[view.backend];
+    $(#gfx-backend).text = view.backendName;
   
   </script>
 </head>
 <body>
   <div #intro><img #arrow src="stock:arrow-left" > use this button to open HTML files...</div>
-  <!--
-  <form style="background:threedface; padding:10px;">
-    <img style="background:purple; width:39px; height:25px;"><br>
-    <button>Test</button>
-    <button type=radio >Test 1</button>
-    <button type=radio >Test 2</button>
-    <button type=checkbox >Test 3</button>
-    <button type=checkbox mixed >Test 4</button>
-    <select>
-      <option>First</option>
-      <option>Second</option>
-    </select>
-    <select editable>
-      <option>First</option>
-      <option>Second</option>
-    </select>
-    <select size=3>
-      <option>First</option>
-      <option>Second</option>
-      <option>Third</option>
-      <option>Fourth</option>
-    </select>
-  </form>-->
   <dl #info>
 	  <header>Sciter</header>
 	  <dt>version:</dt>	   <dd #version></dd>
@@ -104,6 +73,9 @@
 	  <dt>country:</dt>	   <dd #country></dd>
 	  <dt>language:</dt>	 <dd #language></dd>
   </dl>
-  <footer>Sciter contains H-SMILE (HTML/CSS) and TIScript engines of Terra Informatica Software, Inc.</footer>
+  <footer>Sciter contains: 
+    <ul><li>H-SMILE (HTML/CSS) and TIScript engines of Terra Informatica Software, Inc.</li>
+        <li>Skia library, sponsored and managed by Google.</li></ul>
+  </footer>
 </body>
 </html>

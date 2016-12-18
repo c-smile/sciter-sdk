@@ -42,7 +42,7 @@ struct video_generated_stream: public event_handler
         return false;
       // we handle only VIDEO_BIND_RQ requests here
 
-      printf("VIDEO_BIND_RQ %d\n",reason);
+      //printf("VIDEO_BIND_RQ %d\n",reason);
 
       if( !reason )
         return true; // first phase, consume the event to mark as we will provide frames
@@ -61,7 +61,7 @@ struct video_generated_stream: public event_handler
       return true;
     }
 
-		static void generation_thread(sciter::fragmented_video_destination* dst) {
+	static void generation_thread(sciter::fragmented_video_destination* dst) {
 		  aux::asset_ptr<sciter::fragmented_video_destination> rendering_site = dst;
       // simulate video stream
       sciter::sync::sleep(100);

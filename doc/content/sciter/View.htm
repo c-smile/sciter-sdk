@@ -46,6 +46,8 @@ view.<u>eventsRoot</u> = null;
     <dd><font color="#999999">r/w</font> - (x:integer,y:integer), max window dimension constraints. User cannot make window larger than these;<br/>Example: <code>view.maxSize = (1600,1000);</code></dd>
     <dt>windowIcon</dt>
     <dd><font color="#999999">r/w</font> - window icon, the property accepts: <code>null</code> - set default icon, <code>&quot;url&quot;</code> - string, url of window icon or instance of <code>Image</code>.</dd>
+    <dt>windowBlurbehind</dt>
+    <dd><font color="#999999">r/w</font> - window blur-behind effect, the property accepts: <code>#auto</code> | <code>#ultra-dark</code> | <code>#dark</code> | <code>#light</code> | <code>#ultra-light</code> | <code>#none</code> values. If this flag is set then the window window is semitransparent. Root document shall use <code>html { background:transparent; }</code> in order to see desktop behind the window.</dd>
     <h2>Methods</h2>
     <dt><strike>this</strike></dt>
     <dd>(non-constructable)</dd>
@@ -84,8 +86,8 @@ view.<u>eventsRoot</u> = null;
         <li><strong>area</strong> - one of symbolic constants <strong>#frame </strong>- monitor screen dimension, <strong>#workarea</strong> - monitor workarea (dimension modulo task/menu bars). In device pixels.</li>
         <li><strong>part</strong>, one of view:</li>
         <ul>
-          <li><strong>#rect</strong> - (x1,y1,x2,y2) metrics;</li>
-          <li><strong>#rectw</strong> - metrics as (x,y,width,height), <em>default</em>;</li>
+          <li><strong>#rect</strong> - (x1,y1,x2,y2) metrics, <em>default</em>;</li>
+          <li><strong>#rectw</strong> - metrics as (x,y,width,height);</li>
           <li><strong>#position</strong> - (x,y)<em>,</em></li>
           <li><strong>#dimension</strong> - (width,height)<em>,</em></li></ul>
         <li><strong>screenNo - </strong>integer, optional. If provided returns metrics of particular screen. If omitted returns metrics of this window screen.</li></ul></dd>
@@ -235,27 +237,23 @@ if( fn ) view.<strong>load</strong>(fn);
       <div><strong>(#put</strong>, data: string | object | Image <strong>)</strong> : undefined;</div>
       <p>Stores data to the clipboard.</p></dd>
     <dt>performDrag</dt>
-    <dd>
-        (<strong>element</strong>:Element, <strong>data</strong>:Object, ddMode: <strong>#any</strong> | <strong>#copy</strong> | <strong>#move</strong>) : <strong>null</strong> | <strong>#copy</strong> | <strong>#move</strong>
-        <p>Performs system drag and drop operation.</p>
-        <p><em>element</em> is a DOM element that is used as a drag image.</p>
-        <p><em>data</em> is an object that contain following properties:</p>
-        <ul>
-            <li><code>{text: String}</code> - plain text string;</li>
-            <li><code>{html: String | Element}</code> - html, either as a string or outer HTML of given element;</li>
-            <li><code>{file: String | [String, String, ...]}</code> - single file name or list of file names to drop;</li>
-            <li><code>{link: String}</code> - single url as a string;</li>
-            <li><code>{json: value}</code> - any value that will be serialized into JSON string. JSON can be used to pass additional data between Sciter windows.</li>
-        </ul>
-        <p>The <em>data</em> object may contain multiple properties, destination will choose most appropriate.</p>
-        <p><em>ddMode</em> defines types of drag-n-drop operations allowed:</p>
-        <ul>
-            <li><strong>#copy</strong> - copy from source to destination;</li>
-            <li><strong>#move</strong> - move from source to destination;</li>
-            <li><strong>#any</strong> - either move or copy.</li>
-        </ul>
-        <p><code>performDrag()</code> is a blocking operation - the function returns when drag-n-drop is complete or rejected.</p>
-    </dd>
+    <dd>(<strong>element</strong>:Element, <strong>data</strong>:Object, ddMode: <strong>#any</strong> | <strong>#copy</strong> | <strong>#move</strong>) : <strong>null</strong> | <strong>#copy</strong> | <strong>#move</strong>
+      <p>Performs system drag and drop operation.</p>
+      <p><em>element</em> is a DOM element that is used as a drag image.</p>
+      <p><em>data</em> is an object that contain following properties:</p>
+      <ul>
+        <li><code>{text: String}</code> - plain text string;</li>
+        <li><code>{html: String | Element}</code> - html, either as a string or outer HTML of given element;</li>
+        <li><code>{file: String | [String, String, ...]}</code> - single file name or list of file names to drop;</li>
+        <li><code>{link: String}</code> - single url as a string;</li>
+        <li><code>{json: value}</code> - any value that will be serialized into JSON string. JSON can be used to pass additional data between Sciter windows.</li></ul>
+      <p>The <em>data</em> object may contain multiple properties, destination will choose most appropriate.</p>
+      <p><em>ddMode</em> defines types of drag-n-drop operations allowed:</p>
+      <ul>
+        <li><strong>#copy</strong> - copy from source to destination;</li>
+        <li><strong>#move</strong> - move from source to destination;</li>
+        <li><strong>#any</strong> - either move or copy.</li></ul>
+      <p><code>performDrag()</code> is a blocking operation - the function returns when drag-n-drop is complete or rejected.</p></dd>
     <dt>cursorLocation</dt>
     <dd>
       <div><strong>(</strong> <strong>)</strong> : (x:int, y: int)</div>

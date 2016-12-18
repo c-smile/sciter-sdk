@@ -1,0 +1,1 @@
+sciter.exe sciter-gfx=d2d

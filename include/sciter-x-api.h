@@ -16,6 +16,7 @@
 #include "sciter-x-def.h"
 #include "sciter-x-dom.h"
 #include "sciter-x-request.h"
+#include "sciter-x-msg.h"
 #include "value.h"
 #include "tiscript.hpp"
 
@@ -31,7 +32,12 @@
   #include <dlfcn.h>
 #endif
 
+#ifdef __cplusplus
+  #include <cstddef>
+#endif
+
 struct SciterGraphicsAPI;
+struct SCITER_X_MSG;
 
 typedef struct _ISciterAPI {
 
@@ -251,6 +257,7 @@ typedef struct _ISciterAPI {
     BOOL SCFN( SciterRenderOnDirectXTexture ) (HWINDOW hwnd, HELEMENT elementToRenderOrNull, IUnknown* surface); // IDXGISurface
 #endif
 
+  BOOL SCFN(SciterProcX)(HWINDOW hwnd, SCITER_X_MSG* pMsg ); // returns TRUE if handled
 
 } ISciterAPI;
 
@@ -281,13 +288,7 @@ typedef ISciterAPI* (SCAPI *SciterAPI_ptr)();
        if( ext ) _api = ext;
        if( !_api )
        {
-          HMODULE hm = LoadLibrary( TEXT(SCITER_DLL_NAME) );
-          //#if defined(WIN64) || defined(_WIN64)
-          //  TEXT("sciter64.dll")
-          //#else
-          //  TEXT("sciter32.dll")
-          //#endif
-          //);
+          HMODULE hm = LoadLibrary( TEXT("sciter.dll") );
           if(hm) {
             SciterAPI_ptr sciterAPI = (SciterAPI_ptr) GetProcAddress(hm, "SciterAPI");
             if( sciterAPI ) {
@@ -609,5 +610,14 @@ typedef ISciterAPI* (SCAPI *SciterAPI_ptr)();
   inline BOOL SCAPI SciterRenderOnDirectXTexture(HWINDOW hwnd, HELEMENT elementToRenderOrNull, IUnknown* surface) { return SAPI()->SciterRenderOnDirectXTexture(hwnd,elementToRenderOrNull,surface); }
 #endif
 
+  inline   BOOL SCAPI SciterProcX(HWINDOW hwnd, SCITER_X_MSG* pMsg) { return SAPI()->SciterProcX(hwnd, pMsg); }
+#ifdef __cplusplus
+  template<class MSG>
+  inline   BOOL SCAPI SciterProcX(HWINDOW hwnd, MSG &msg) { 
+     static_assert(offsetof(MSG, header) == 0, "must contain SCITER_X_MSG as first memeber");
+     static_assert(std::is_same<decltype(MSG::header), SCITER_X_MSG>::value, "must contain SCITER_X_MSG");
+     return SAPI()->SciterProcX(hwnd, reinterpret_cast<SCITER_X_MSG*>(&msg));
+  }
+#endif
 
 #endif

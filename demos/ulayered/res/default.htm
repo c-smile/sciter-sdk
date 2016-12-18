@@ -39,9 +39,7 @@
 
 </style>
 <script type="text/tiscript">
-
-  include "moveable-view.tis";
-
+  
   const body = $(body);
   
   self.ready = function() // html loaded - DOM ready
@@ -72,15 +70,12 @@
   {
     view.state = View.WINDOW_MINIMIZED;
   });
- 
-  // setup movable window handler:
-  movableView();
 
 </script>
 
 </head>
 <body>
-  <header><span #platform /> <span #arch />bit time</header>
+  <header role="window-caption"><span #platform /> <span #arch />bit time</header>
   <footer>
     <input|text value="test">
     <button #minimize>Minimize Window</button>

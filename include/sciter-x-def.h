@@ -416,14 +416,6 @@ enum SCRIPT_RUNTIME_FEATURES
   ALLOW_SYSINFO = 0x00000008
 };
 
-enum GFX_LAYER
-{
-  GFX_LAYER_GDI      = 1,
-  GFX_LAYER_WARP     = 2,
-  GFX_LAYER_D2D      = 3,
-  GFX_LAYER_AUTO     = 0xFFFF,
-};
-
 enum SCITER_RT_OPTIONS
 {
    SCITER_SMOOTH_SCROLL = 1,      // value:TRUE - enable, value:FALSE - disable, enabled by default

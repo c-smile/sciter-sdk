@@ -26,6 +26,17 @@
   #include <string>
 #endif
 
+enum GFX_LAYER
+{
+    GFX_LAYER_GDI = 1,
+    GFX_LAYER_WARP = 2,
+    GFX_LAYER_D2D = 3,
+    GFX_LAYER_SKIA = 4,
+    GFX_LAYER_SKIA_OPENGL = 5,
+    GFX_LAYER_AUTO = 0xFFFF,
+};
+
+
 #if defined(_WIN32) || defined(_WIN64)
 
   #define WINDOWS
@@ -66,6 +77,7 @@
 
 #endif
 
+
   #if defined(_MSC_VER) && _MSC_VER < 1900
   // Microsoft has finally implemented snprintf in Visual Studio 2015.
   # define snprintf _snprintf_s
@@ -98,10 +110,8 @@
 
   #ifdef _WIN64
     #define TARGET_64
-    #define SCITER_DLL_NAME "sciter64.dll"
   #else
     #define TARGET_32
-    #define SCITER_DLL_NAME "sciter32.dll"
   #endif
 
 #elif defined(OSX)
@@ -112,7 +122,12 @@
   #ifndef BOOL
     typedef signed char BOOL;
   #endif
-  typedef unsigned int UINT;
+  #ifndef TRUE
+    #define TRUE (1)
+    #define FALSE (0)
+  #endif
+
+typedef unsigned int UINT;
   typedef int INT;
   typedef unsigned long long UINT64;
   typedef int INT64;
@@ -128,10 +143,12 @@
   typedef void* LPVOID;
   typedef const void* LPCVOID;
 
-  #define SCAPI  
+  #define SCAPI
   #define SCFN(name) (*name)
-  #define SC_CALLBACK 
-  #define CALLBACK 
+  #define SC_CALLBACK
+  #define CALLBACK
+
+
 
   typedef struct tagRECT
   {
@@ -156,7 +173,10 @@
 
   #define HWINDOW void*   // NSView*
   #define HINSTANCE void* // NSApplication*
+  #define HDC void*       // CGContextRef
+
   #define LRESULT long
+
 
   #ifdef __LP64__
     #define TARGET_64
@@ -172,7 +192,7 @@
   #include <string.h>
   #include <wctype.h>
 
-#ifndef BOOL
+  #ifndef BOOL
     typedef signed char BOOL;
   #endif
   typedef unsigned int UINT;
@@ -219,6 +239,7 @@
   #define HWINDOW GtkWidget* //
   #define HINSTANCE void*    //
   #define LRESULT long
+  #define HDC void*       // cairo_t
 
   #ifdef __x86_64
     #define TARGET_64

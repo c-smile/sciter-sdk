@@ -36,7 +36,7 @@
     
       $(div#anchor) << event click
       {
-        this.popup( $(popup.bubble), (8 /*popup middle-top*/ << 16) | 2 /*at anchor's middle-top*/);
+        this.popup( $(popup.bubble), (8 /*popup middle-top*/ << 16) | 2 /*at anchor's middle-bottom*/);
       } 
       
       class BubblePopup: Behavior {
@@ -45,7 +45,7 @@
         const ARROW_HEIGHT = 12dip;
         const STROKE_WIDTH = 1dip;
         const STROKE_COLOR = color(0xCF,0xAF,0x33);
-        const BACK_COLOR = color(0xFF,0xFF,0xFF);
+        const BACK_COLOR = color(0xFA,0xFA,0xFF);
       
         function attached() { 
           this.paintBackground = this.drawBackground;
@@ -106,7 +106,7 @@
   
 </head>
 <body>
-   <p>Popup with custom shape</p>
+   <p>HTML/CSS popup with custom shape</p>
    <div#anchor> 
       click to reveal popup
    </div>

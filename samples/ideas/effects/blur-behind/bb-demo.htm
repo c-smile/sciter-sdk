@@ -1,0 +1,76 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+          body { flow:stack } 
+
+          body > #content {
+            size: 300dip 200dip;
+            background: blue;
+            margin:7* 3* 3* 7*;
+            box-shadow: 3dip 3dip 3dip #000;
+            color:white;
+          }
+          body > #content > div {
+            background:yellow; 
+            size:60dip; 
+            margin:* 0 0 *;
+          }
+
+          body > #content.left {
+            background: magenta;
+          }
+
+          body > #content.left > div {
+            margin:* * 0 0;
+          }
+
+          body > #background {
+            size:*;
+            filter: blur(25dip) saturate(50%);
+          }
+
+        </style>
+        <script type="text/tiscript">
+          function self.ready() {
+            var backgroundLayer = $(#background);
+            var foregroundLayer = $(#content);
+            var image = null;
+
+            backgroundLayer.paintBackground = function(gfx) {
+
+               var (thisw,thish) = this.box(#dimension);
+               
+               if( !image || foregroundLayer.state.awaitsDraw ) {
+                  // we recreate the content image only if it was changed and awaits drawing
+                  if(image) image.destroy();
+                  foregroundLayer.state.awaitsDraw = false; // reset the flag as we've done with it
+                  var (w,h) = foregroundLayer.box(#dimension, #border);
+                  image = new Image(w,h,foregroundLayer);
+                  //stdout.println("image recreated");
+               }
+               gfx.drawImage(image,0,0,thisw,thish);
+               return true;
+            };
+
+            $(button#test) << event click 
+            {
+              foregroundLayer.attributes.toggleClass("left");
+            }
+
+          }
+           
+        </script>
+    </head>
+    <body>
+       <section#background>
+         <a href="#">For hover effect</a>
+       </section>
+       <section#content>
+          <button#test>Test</button>
+          <p>Demo of ambient color effect</p>
+          <div></div>
+       </section>
+
+    </body>
+</html>

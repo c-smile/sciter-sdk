@@ -1,0 +1,76 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+    html {
+      background: radial-gradient(75% 75%, circle farthest-side, white, orange, rgb(0,0,204));
+      //background: #f00;
+      color:#fff;
+    }
+    
+    html:rtl {
+      mapping: left-to-right(background);
+    }
+    
+    
+    //body { 
+    //  size:*;
+    //  overflow:auto; 
+    //}
+    
+    </style>
+    <script type="text/tiscript">
+
+/*    
+      stdout.println("minimal demo started");
+    
+      $(#machine).text = Sciter.machineName();
+      
+      var counter = 0;
+      
+      $(button#append).on("click", function(){
+      
+        //var newElem = new Element("H1", (++counter).toString());
+        //$(body).append( newElem );
+
+        $(body).$append(<h1#test>{++counter }</h1>);
+        
+      
+      });
+      
+      $(button#open).on("click", function(){
+      
+        var fn = view.selectFile(#open,
+          "HTML Files (*.htm,*.html)|*.HTM;*.HTML|All Files (*.*)|*.*" , "html" );
+     
+      }); */
+      
+      function self.ready() {
+        var w = self.intrinsicWidthMax();
+        var h = self.intrinsicHeight(w);
+        view.move(100,100,w,h,true);
+      }
+    
+    </script>
+  </head>
+<body>
+
+<h1>Minimal Sciter Application</h1>
+<!--    <p>Running on <em #machine /> machine</p>
+  
+  <button #append>Append</button> 
+  <button #open>Open</button> 
+  <select>
+    <option>First</option>
+    <option>Second</option>
+    <option>Third</option>
+  </select> -->
+  
+  <input|text #first novalue="{text}">
+  <input|password #second novalue="{password}">
+  
+  <p>test of generated image: <img src="in-memory:test"> </p>
+
+</body>
+</html>

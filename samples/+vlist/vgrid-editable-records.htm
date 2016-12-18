@@ -27,18 +27,20 @@
     
     const selectAll = vlist.$(input#select-all);
     
-    vlist.on("change","tbody > tr", function() { // some change inside tr 
+    vlist << event change $(tbody > tr) { 
+      // some change inside tr 
       // note: each row (this) is a form here so its value is structure: 
       this.data.selected = this.value.selected; // input(selected).value to record.selected in this case
       if( !this.data.selected )
         selectAll.value = false;
-    });
+    };
     
-    vlist.on("change","#select-all", function() { // select/deselect all
+    vlist << event change $(#select-all) { 
+      // select/deselect all
       var selected = this.value;
       for( var record in records )
         record.selected = selected; 
-    });
+    };
     
     $(#test).on("click", function () {
       view.msgbox(#information, String.printf("%V", records).replace("\t", " "));
