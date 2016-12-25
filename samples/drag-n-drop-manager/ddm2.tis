@@ -466,8 +466,8 @@ function DragDrop2(def)
         return false;
       }
       case Event.MOUSE_UP | Event.SINKING:  
+        dd_x = dd_y = null;
         if(dd_source) {
-          dd_x = dd_y = null; 
           this.timer(0, ping);
           return true; 
         }

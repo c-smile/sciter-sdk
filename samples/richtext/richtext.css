@@ -42,29 +42,31 @@
         :root > toolbar { 
           display:block;
           display-model:block-inside; 
-          flow:horizontal-wrap; border-spacing:2px; 
+          flow:horizontal-wrap; border-spacing:2dip; 
           padding:0;
-          border-left: 1px solid #F4F4F4;
-          border-bottom: 1px solid #BBB;
+          border-left: 1dip solid #F4F4F4;
+          border-bottom: 1dip solid #BBB;
           background:linear-gradient(top, #F1F1F1, #DADADA);
         }
         :root > toolbar button { 
-          size:21px; 
+          size:21dip; 
           padding:0;
           behavior:clickable;
-          foreground:no-repeat 50% 50%; padding:3px; 
-          background-image:none; 
-          background-repeat:expand(stretch-left stretch-right stretch-middle); 
-          background-position:4 4 4 4; 
-          hit-margin: 2px;
-          margin: 2px;
+          foreground:no-repeat 50% 50%;
+          foreground-size:25dip; 
+          //background-image:none; 
+          //background-repeat:expand(stretch-left stretch-right stretch-middle); 
+          //background-position:4 4 4 4; 
+          hit-margin: 2dip;
+          margin: 2dip;
+          padding:3dip; 
           transition:none;
         }
         
         :root > toolbar button[type=menu] {
           behavior:clickable popup-menu; 
         }
-        :root > toolbar button:hover { 
+        /*:root > toolbar button:hover { 
           background-image: url(sciter:toolbar-button-hover.png)
         }
         :root > toolbar button:active { 
@@ -80,7 +82,7 @@
         :root > toolbar button:disabled { 
           background-image:none; 
           opacity:0.25;
-        }
+        }*/
         :root > toolbar > splitter {
           width:0;
           height:*;

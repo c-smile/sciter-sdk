@@ -36,7 +36,7 @@ enum VALUE_TYPE
     T_FUNCTION,
     T_BYTES,      // sequence of bytes - e.g. image data
     T_OBJECT,     // scripting object proxy (TISCRIPT/SCITER)
-    T_DOM_OBJECT  // DOM object (CSSS!), use get_object_data to get HELEMENT 
+    T_DOM_OBJECT  // DOM object, use get_object_data to get HELEMENT 
 };
 
 enum VALUE_UNIT_TYPE

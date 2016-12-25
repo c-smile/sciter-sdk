@@ -77,11 +77,8 @@ const Plus = function() {
   
   function setupTerminalBinding(model,thing,path,isInput,updater) 
   {
-    //stdout.printf("STB %s %V\n", path, path.match( reIsExpression ) );
-    //stdout.println("STB", thing, path);
     if( typeof model != #object  && typeof model != #namespace)
     {
-      //stdout.println("!!!!!! STB", thing, path, typeof model);
       stdout.println("Model is not an object while binding ", path);
       return;      
     }
@@ -92,6 +89,7 @@ const Plus = function() {
       // try treat it as an expression
       if(reIsExpression.test(path)) { // looks like an expression, setup it as data observer
         var parts = path.split(reIsExpression);
+        //stdout.printf("STB %s %V\n", path, parts );        
         var expr = compileExpr(model,path);
         for( var part in parts) {
           if( part.match(reVarName) ) {
@@ -106,11 +104,6 @@ const Plus = function() {
       }
       return;
     }
-     
-    
-    //stdout.printf("STB %V %V\n", model, path );
-        
-    
     //stdout.printf("setupTerminalBinding: coll=%s key=%v\n", typeof coll, key);    
     
     if( key == #length ) { // special treatment for length computale property

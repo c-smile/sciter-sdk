@@ -40,6 +40,8 @@
 
   <note>List below is bound with <code>Data.fruits</code> array and so it reflects list items in that array. Inputs below allow to populate that array</note>
 
+  <p>Viewing all <output(fruits.length) /> items</p>  
+
   <!-- the repeateable section -->
   <ol each="fruit in fruits">
       <li><output(fruit.name)/> <output|currency(fruit.price)/> </li>
@@ -52,7 +54,8 @@
       <input|decimal(newPrice) novalue="price" />
       <button click="add()">Add</button>
   </div>
-  
+
+
   <button click="clear()">Clear list</button> 
   
 </body>

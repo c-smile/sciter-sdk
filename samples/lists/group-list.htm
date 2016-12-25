@@ -11,12 +11,12 @@
       
       ul > header { 
         background:gold; 
-        padding:2px 4px; 
+        padding:2dip 4dip; 
         font-size:200%; 
         font-weight:bold; 
-        position:relative; /* position:relative is mission critical here */
-        border-bottom:1px solid #AAA;
-        border-top:1px solid #FFA;
+        border-bottom:1dip solid #AAA;
+        border-top:1dip solid #FFA;
+        position:relative;
       }
       
     </style>
@@ -41,27 +41,25 @@
         
           var i = findHeader();
           
-          var sh = headers[i];
+          shifted = headers[i];
           
           if( i < headers.length - i ) {
             // there is next header
-            var h = sh.box(#height,#border);
+            var h = shifted.box(#height,#border);
             if( headerys[i+1] < y + h )
               y -= h - (headerys[i+1] - y);
           }
+          for(var th in headers) th.style#transform = undefined;
           // shift the header from its current position to get it into the view.
-          sh.style#top = px(y - headerys[i]);
-          if( sh != shifted ) {
-            shifted.style#top = undefined;
-            shifted = sh;
-          }
+          shifted.style#transform = [translate: 0, px(y - headerys[i])];
         }
       
         el.onScroll = function(evt) {
-          if(evt.type == Event.SCROLL_POS && headers) {
-            if(y != evt.scrollPos) {
-              y = evt.scrollPos;
-              el.post(replaceHeaders);
+          if((evt.type == Event.SCROLL_POS) && headers) {
+            var pos = evt.scrollPos.limit(0 , el.box(#height,#content) - el.scroll(#height));
+            if(y != pos) {
+              y = pos;
+              replaceHeaders();
             }
           }
         }

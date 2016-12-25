@@ -67,6 +67,10 @@
       value(const value& src) { ValueInit(this); ValueCopy(this,&src); }
       value(const VALUE& src) { ValueInit(this); ValueCopy(this,&src); }
 
+#ifdef CPP11
+      value(value&& src) { ValueInit(this); std::swap( *(VALUE*)this, *(VALUE*)&src); }
+#endif
+      
       value& operator = (const value& src) { ValueCopy(this,&src); return *this; }
       value& operator = (const VALUE& src) { ValueCopy(this,&src); return *this; }
 

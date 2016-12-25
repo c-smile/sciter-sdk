@@ -69,7 +69,11 @@
     <button|checkbox(isSectionCollapsed)>Next block hidden</button>:
     <div.test2 @collapsed="isSectionCollapsed">block to be shown/hidden</div> 
   </section>
-    
+
+  <section>
+    <div.test2 @collapsed="!isSectionCollapsed">block to be hidden/shown (test of condition expression)</div> 
+  </section>
+
   
 </body>
 </html>

@@ -11,6 +11,41 @@
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
     <tr>
+      <td valign="top" bgcolor="#FFFADA">4.0.0.1</td>
+      <td nowrap valign="top" align="center">25-12-2016</td>
+      <td>
+        <p>new:</p>
+        <ul>
+          <li><code>:owns-focus</code> flag (CSS) and <code>Element.state.ownsfocus</code> - focus is on element or somewhere inside.</li>
+          <li>[win, @media] 'ux-themes' media variable, it is <code>true</code> when uxthemes.dll is loaded and <code>false</code> when &quot;classic&quot; theme is used. </li>
+          <li><code>Event.extendedKey</code> - extended key flag - allows to distinguish right/left shifts, alts and controls. </li>
+          <li>ux-master.css, used colors exposed as CSS variables.</li></ul>
+        <p>fixes:</p>
+        <ul>
+          <li>[flow:horizontal and flow:horizontal-wrap] auto shrink-to-fit for elements that has no width defined.</li>
+          <li>[ddm2] fix of <code>params.notOn = selector</code> handling.</li>
+          <li>[gtk] fix of getting default font. </li>
+          <li>[win,skia] fix of uxtheme images rendering.</li>
+          <li>[win] Excluding unused DLL imports: <a href="http://sciter.com/forums/topic/theme-images-for-windows-xp-classic-scheme">http://sciter.com/forums/topic/theme-images-for-windows-xp-classic-scheme/</a></li>
+          <li>[flexes] Fix of calculation in overconstrained cases like: <a href="http://sciter.com/forums/topic/flex-layout-bug">http://sciter.com/forums/topic/flex-layout-bug/</a></li>
+          <li>[inspector] fix of dropping log messages on initial load.</li>
+          <li><code>element.postEvent(&quot;name.namespace&quot;)</code> fix.</li>
+          <li>[+plus] regression, fix of <code>array.length</code> binding.</li>
+          <li>[skia] fix of font size mismatches between D2D and Skia backends.</li>
+          <li><code>&lt;select&gt;&lt;option value=&quot;&quot;&gt;Foo&lt;/option&gt;&lt;/select&gt;</code> reports <code>value == &quot;&quot;</code> (empty string) rather than &quot;Foo&quot; as it used to be.</li>
+          <li>[regression] view.msgbox fix, see: <a href="http://sciter.com/forums/topic/a-bug-of-view-msgbox-from-3-3-3-3">http://sciter.com/forums/topic/a-bug-of-view-msgbox-from-3-3-3-3/</a></li>
+          <li>[skia] fix of font mapping, see: <a href="http://sciter.com/forums/topic/the-chinese-chars-render-bug-of-skia-backend-when-font-not-support">http://sciter.com/forums/topic/the-chinese-chars-render-bug-of-skia-backend-when-font-not-support/</a></li>
+          <li><code>SciterGraphicsAPI.imageClear()</code> implementation.</li>
+          <li>[dom] fix of positioned element's hit testing, case: <a href="http://sciter.com/forums/topic/can-not-click-button-by-this-way">http://sciter.com/forums/topic/can-not-click-button-by-this-way/</a></li>
+          <li>[script] fix of &quot;BrokenHeart&quot; issue when <code>this var</code> are used in behaviors.</li>
+          <li><code>flow:grid()</code> adjustments related to <code>vertical-align:baseline</code></li>
+          <li>[inspector] fix of second AV in <a href="http://sciter.com/forums/topic/selection-crash">http://sciter.com/forums/topic/selection-crash/</a></li>
+          <li>Fix of AV in Selection.select : <a href="http://sciter.com/forums/topic/selection-crash">http://sciter.com/forums/topic/selection-crash/</a></li>
+          <li>[master-css] fixes for high-dpi monitors and W10. </li>
+          <li>Fix of sdk/samples/lists/group-list.htm - scrollable list with group headers.</li>
+          <li>Fix of tooltip rendering.</li></ul>Builds: win32/win64, osx32/osx64, linux/gtk64
+        <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
+    <tr>
       <td valign="top" bgcolor="#FFFADA">4.0.0.0</td>
       <td nowrap valign="top" align="center">18-12-2016</td>
       <td>
@@ -29,7 +64,7 @@
           <li><code>Element.state.awaitsDraw</code> flag. The flag is &quot;on&quot; after invalidation request was issued on the element and until first draw after that.</li></ul>
         <p>fixes:</p>
         <ul>
-          <li>[script] await and yield parsing fix; </li>
+          <li>[script] await and yield parsing fix;</li>
           <li>[regression] Fix of AV on SW_ALPHA window.</li>
           <li>[ddm2] cancelling D&amp;D operation when drop on source element.</li>
           <li>[dom] fix of closed popup rendering, see: <a href="http://sciter.com/forums/topic/the-context-menu-can-not-close-after-click-which-in">http://sciter.com/forums/topic/the-context-menu-can-not-close-after-click-which-in/</a></li>

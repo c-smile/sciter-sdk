@@ -12,15 +12,7 @@ class EditableImage: Behavior {
     this.paintOutline = null;
     this.resizing = false;
   }
-  
-  function onMouse( evt ) {
-    switch(evt.type) {
-      case Event.MOUSE_UP:   return this.onMouseUp(evt); 
-      case Event.MOUSE_DOWN: return this.onMouseDown(evt); 
-      case Event.MOUSE_MOVE: return this.onMouseMove(evt); 
-    }
-  }
-  
+    
   property richtext(v) {
     for(var p = this.parent; p; p = p.parent)
       if( p.style#behavior && (p.style#behavior like "*richtext*")) 
@@ -33,8 +25,8 @@ class EditableImage: Behavior {
     var (w,h) = this.box(#dimension,#border);
     return evt.x > (w - 15) && evt.y > (h - 15);
   }
-  
-  function onMouseUp(evt) { 
+
+  event mouseup(evt) { 
 
     if( this.resizing ) {
       this.capture(false);
@@ -45,7 +37,8 @@ class EditableImage: Behavior {
       
       // make undoable "change width" transaction:
       function changeWidth(transaction) {
-        transaction.attr(img,"width",img.newWidth.toString());
+        var dips = img.newWidth / img.toPixels(1dip,#width); // to dips
+        transaction.attr(img,"width",dips.toString());
         img.style#width = undefined;
         img.newWidth = undefined;
         return true;
@@ -58,8 +51,9 @@ class EditableImage: Behavior {
     //  return this.state.pressed ? this.activate(): false;   
   }
   
-  function onMouseDown(evt) { 
-    if(this.isMouseOnCorner(evt)) {
+  event mousedown(evt) { 
+    if(this.isMouseOnCorner(evt)) 
+    {
       var (x,y,w,h) = this.box(#rectw,#border,#view);
       this.ratio = w.toFloat() / h.toFloat();
       this.xs = x;
@@ -72,10 +66,11 @@ class EditableImage: Behavior {
     }
     return false; 
   }
-  function onMouseMove(evt) { 
-    if(this.resizing) {
+  event mousemove(evt) { 
+    if(this.resizing) 
+    {
       var neww = (evt.xView - this.xs + this.dx).toInteger();
-      this.newWidth = neww;
+      this.newWidth = neww; 
       this.style#width = px(neww);
       return true;
     }

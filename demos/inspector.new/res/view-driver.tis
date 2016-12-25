@@ -115,7 +115,7 @@ class ViewDriver: Behavior
   function deeAttach( title, url = "?", snapshot = null )  { 
       this.deeUrl = url; /*stdout.println("deeAttach",this);*/ 
       this.label.$(text).text = title; 
-      log.clearMsgs();
+      //log.clearMsgs();
   }
   function deeDetach() { views.postEvent("disconnected"); views.removeTab(this.vid);  }
   function deeReattach( title, url = "?", snapshot = null )  { 

@@ -132,7 +132,7 @@ struct gdi_drawing: public event_handler
     }
 
     void do_draw( HDC hdc, unsigned width, unsigned height ) {
-      RECT rc = { 0,0,width,height };
+      RECT rc = { 0,0,int(width),int(height) };
       HBRUSH hbr1 = ::CreateSolidBrush(0x000000);
       HBRUSH hbr2 = ::CreateSolidBrush(0x0000FF);
       // fill it by black color:

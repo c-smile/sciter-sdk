@@ -2628,7 +2628,7 @@
 	"aux-slice.h"
 	<algorithm>
 
-1468429861 /home/andrew/Desktop/sciter.stable/sdk/include/sciter-x-types.h
+1482698459 /home/andrew/Desktop/sciter.stable/sdk/include/sciter-x-types.h
 	<string>
 	"TargetConditionals.h"
 	<specstrings.h>
@@ -2640,17 +2640,18 @@
 	<string.h>
 	<wctype.h>
 
-1449602616 /home/andrew/Desktop/sciter.stable/sdk/include/sciter-x.h
+1482698459 /home/andrew/Desktop/sciter.stable/sdk/include/sciter-x.h
 	"sciter-x-types.h"
 	"sciter-x-def.h"
 	"sciter-x-dom.h"
 	"sciter-x-value.h"
 	"sciter-x-api.h"
+	"sciter-x-msg.h"
 	"sciter-x-dom.hpp"
 	"sciter-x-host-callback.h"
 	"sciter-x-debug.h"
 
-1477881072 /home/andrew/Desktop/sciter.stable/sdk/include/sciter-x-def.h
+1482698459 /home/andrew/Desktop/sciter.stable/sdk/include/sciter-x-def.h
 	"sciter-x-types.h"
 	"sciter-x-request.h"
 	"value.h"
@@ -2663,11 +2664,11 @@
 	"sciter-x-dom.h"
 	"sciter-x-behavior.h"
 
-1477881072 /home/andrew/Desktop/sciter.stable/sdk/include/value.h
+1482698459 /home/andrew/Desktop/sciter.stable/sdk/include/value.h
 	"sciter-x-types.h"
 	"value.hpp"
 
-1479698521 /home/andrew/Desktop/sciter.stable/sdk/include/value.hpp
+1482698459 /home/andrew/Desktop/sciter.stable/sdk/include/value.hpp
 	"value.h"
 	<string>
 	<functional>
@@ -2707,23 +2708,25 @@
 1456450732 /home/andrew/Desktop/sciter.stable/sdk/include/tiscript.h
 	"sciter-x-types.h"
 
-1479945606 /home/andrew/Desktop/sciter.stable/sdk/include/sciter-x-behavior.h
+1482698459 /home/andrew/Desktop/sciter.stable/sdk/include/sciter-x-behavior.h
 	"sciter-x-types.h"
 	"sciter-x-dom.h"
 	"sciter-x-value.h"
 	"sciter-x-graphics.h"
 
-1477881072 /home/andrew/Desktop/sciter.stable/sdk/include/sciter-x-api.h
+1482698459 /home/andrew/Desktop/sciter.stable/sdk/include/sciter-x-api.h
 	"sciter-x-types.h"
 	"sciter-x-def.h"
 	"sciter-x-dom.h"
 	"sciter-x-request.h"
+	"sciter-x-msg.h"
 	"value.h"
 	"tiscript.hpp"
 	<stdlib.h>
 	<unistd.h>
 	<libproc.h>
 	<dlfcn.h>
+	<cstddef>
 	<libgen.h>
 	<dlfcn.h>
 
@@ -2737,7 +2740,7 @@
 	"aux-cvt.h"
 	<string>
 
-1477881072 /home/andrew/Desktop/sciter.stable/sdk/include/sciter-x-dom.hpp
+1482698459 /home/andrew/Desktop/sciter.stable/sdk/include/sciter-x-dom.hpp
 	"tiscript.hpp"
 	"sciter-x-dom.h"
 	<algorithm>
@@ -2764,12 +2767,11 @@
 	<windows.h>
 	<atomic>
 
-1479698521 source:/home/andrew/Desktop/sciter.stable/sdk/demos/usciter/usciter.cpp
+1482698458 source:/home/andrew/Desktop/sciter.stable/sdk/demos/usciter/usciter.cpp
 	"sciter-x-window.hpp"
-	"behaviors/behavior_video_generator.cpp"
 	"resources.cpp"
 
-1438636441 /home/andrew/Desktop/sciter.stable/sdk/demos/usciter/resources.cpp
+1482698458 /home/andrew/Desktop/sciter.stable/sdk/demos/usciter/resources.cpp
 
 1463562821 /usr/lib/x86_64-linux-gnu/glib-2.0/include/glibconfig.h
 	<glib/gmacros.h>
@@ -2884,7 +2886,7 @@
 	<gtk/deprecated/gtkstyleproperties.h>
 	<gtk/gtktypes.h>
 
-1447205378 source:/home/andrew/Desktop/sciter.stable/sdk/include/behaviors/behavior_video_generator.cpp
+1482698459 source:/home/andrew/Desktop/sciter.stable/sdk/include/behaviors/behavior_video_generator.cpp
 	"stdafx.h"
 	"sciter-x.h"
 	"sciter-x-behavior.h"
@@ -3172,6 +3174,10 @@
 	"sciter-x-video-api.h"
 
 1479945782 /home/andrew/Desktop/sciter.skia/sdk/include/sciter-x-msg.h
+	"sciter-x-types.h"
+	"sciter-x-def.h"
+
+1482698459 /home/andrew/Desktop/sciter.stable/sdk/include/sciter-x-msg.h
 	"sciter-x-types.h"
 	"sciter-x-def.h"
 
