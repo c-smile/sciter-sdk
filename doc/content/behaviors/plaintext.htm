@@ -1,4 +1,4 @@
-﻿<html>
+<html>
   <head>
     <meta name="source" content="http://www.terrainformatica.com/wiki/doku.php?id=h-smile:built-in-behaviors:edit"/>
     <meta name="generator" content="h-smile:richtext"/>
@@ -42,9 +42,31 @@
     <li>CTRL+X</li>
     <li>CTRL+V</li>
     <li>CTRL+Z</li>
-    <li>CTRL+(LEFT)SHIFT and CTRL+(RIGHT)SHIFT - in forms having the <code>dir</code> attribute these key combinations switches between <code>dir=&quot;ltr&quot;</code> and <code>dir=&quot;rtl&quot;</code>.</li></ul>
+    <li>CTRL+(LEFT)SHIFT and CTRL+(RIGHT)SHIFT - in forms having the <code>dir</code> attribute these key combinations switches between <code>dir=&quot;ltr&quot;</code> and <code>dir=&quot;rtl&quot;</code>.</li></ul><h2>Commands</h2><p>Commands supported by the behavior through <code>Element.execCommand()</code> and <code>Element.queryMethods()</code>:&nbsp;</p><ul><li><code>&quot;edit:cut&quot;</code> - cut selection - copy selection to the clipboard and remove it;</li><li><code>&quot;edit:copy&quot;</code> - copy selection to the clipboard;</li><li><code>&quot;edit:paste&quot;</code> - paste content of the clipboard;</li><li><code>&quot;edit:selectall&quot;</code> - select whole content of the element;</li><li><code>&quot;edit:undo&quot;</code> - undo last editing operation;</li><li><code>&quot;edit:redo&quot;</code> - redo last operation that was undone;</li><li><code>&quot;edit:delete-next&quot;</code> - if there is a selection - delete selected content, otherwise delete next character;</li><li><code>&quot;edit:delete-prev&quot;</code> - if there is a selection - delete selected content, otherwise delete previous character;</li><li><code>&quot;edit:delete-word-next&quot;</code> - if there is a selection - delete selected content, otherwise delete next word;</li><li><code>&quot;edit:delete-word-prev&quot;</code> - if there is a selection - delete selected content, otherwise delete previous word;</li></ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
   <h2>Methods</h2>
   <dl>
-    <dt>TBD</dt></dl>
+    <dt><code>loadDocument</code></dt>
+    <dd><code>(url:string): true|false</code> 
+        <p>loads file from URL into the editor;</p></dd>
+    <dt><code>saveDocument</code></dt>
+    <dd><code>(url:string): true|false</code> 
+        <p>saves content to file;</p></dd>
+    <dt><code>setContent</code></dt>
+    <dd><code>(text:string):&nbsp;true|false</code>
+        <p>sets content from the string;</p></dd>
+    <dt><code>setContent</code></dt>
+    <dd><code>(text:string, selStart:integer, selEnd:integer):&nbsp;true|false</code>
+        <p>sets content from the <i>text</i> and selection from&nbsp;given <i>selStart</i> and <i>selEnd</i>;</p></dd><dt><code>getContent</code></dt><dd><code>() : [string, integer, integer] </code><p>returns content and selection as an array of three elements;</p>
+        </dd>
+    </dl>
 </body>
 </html>

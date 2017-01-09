@@ -70,6 +70,9 @@
 #ifdef CPP11
       value(value&& src) { ValueInit(this); std::swap( *(VALUE*)this, *(VALUE*)&src); }
 #endif
+
+      value(const value_key_a& src);
+      value(const value_idx_a& src);
       
       value& operator = (const value& src) { ValueCopy(this,&src); return *this; }
       value& operator = (const VALUE& src) { ValueCopy(this,&src); return *this; }
@@ -506,7 +509,6 @@
     public:
       ~value_key_a() {}
       value_key_a& operator= (const value& val) { col.set_item(key,val); return *this; }
-      operator const value() const              { return col.get_item(key); }
     };
 
     inline value_key_a 
@@ -524,13 +526,23 @@
     public:
       ~value_idx_a() {}
       value_idx_a& operator= (const value& val) { col.set_item(idx,val); return *this; }
-      operator const value() const              { return col.get_item(idx); }
     };
 
     inline value_idx_a 
         value::operator[](int idx) { return value_idx_a(*this, idx); }
 
+    inline value::value(const value_key_a& src) {
+      ValueInit(this);
+      *this = src.col.get_item(src.key);
+    }
+
+    inline value::value(const value_idx_a& src) {
+      ValueInit(this);
+      *this = src.col.get_item(src.idx);
+    }
+
   }
+
 
 
 #ifdef CPP11

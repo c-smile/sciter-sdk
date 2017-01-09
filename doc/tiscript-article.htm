@@ -147,7 +147,7 @@ for( var item in <strong>fruits.forward</strong> ) stdout &lt;&lt; item &lt;&lt;
   stdout &lt;&lt; &quot;Fruits in opposite direction:\n&quot;;
 for( var item in <strong>fruits.backward</strong> ) stdout &lt;&lt; item &lt;&lt; &quot;\n&quot;;
 </pre>
-  <p>People from Mozilla introduced their version of <a href="https://developer.mozilla.org/en/Core_JavaScript_1.5_Guide/Iterators_and_Generators" class="l" onmousedown="return clk(this.href,'','','res','1','&sig2=Z5S9FJOQ4UcsNkUoe67JEQ')">Iterators in Spider Monkey</a> that was I believe borrowed &quot;as is&quot; from the Python. I think that my version of iterators better suits JavaScript spirit. At least it does not introduce new entities and classes.</p>
+  <p>People from Mozilla introduced their version of <a href="https://developer.mozilla.org/en/Core_JavaScript_1.5_Guide/Iterators_and_Generators" class="l" onmousedown="return clk(this.href,'','','res','1','&amp;sig2=Z5S9FJOQ4UcsNkUoe67JEQ')">Iterators in Spider Monkey</a> that was I believe borrowed &quot;as is&quot; from the Python. I think that my version of iterators better suits JavaScript spirit. At least it does not introduce new entities and classes.</p>
   <h2>The <code>prototype</code> property</h2>
   <p>Compared with JavaScript, the prototyping mechanism has been simplified in TIScript.</p>
   <p>Each object in TIScript has a property named <code>prototype</code>. The prototype of an object is a reference to its class, which is also simply an object. The prototype of a class is a reference to its superclass. Similarly, the prototype of a namespace (which is an object, like anything else) is a reference to its parent namespace.</p>
@@ -189,13 +189,13 @@ for( var item in <strong>fruits.backward</strong> ) stdout &lt;&lt; item &lt;&lt
   <p>As you can see, symbols may be used as self descriptive, convenient, and effective auto-enum values.</p>
   <p>Another feature that makes symbols quite useful is <em>access-by-symbol notation</em>.</p>
   <p>Constructions like:</p>
-  <pre><code>var aa = obj#name;
+  <pre>var aa = obj#name;
          obj#name = val;
-</pre></code>
+</pre>
   <p>get translated into</p>
-  <pre><code>var aa = obj[#name]; //</code> and
-<code>         obj[#name] = val
-</pre></code>
+  <pre>var aa = obj[#name]; // and
+         obj[#name] = val
+</pre>
   <p>statements. Not too much but will make code a bit more readable.</p>
   <p>This is often used in <a href="/sciter/main.whtm">Sciter</a>, which is an embeddable HTML/CSS/Scripting engine. For example, to access style (CSS) attributes of DOM elements:</p>
   <pre>var elem = self.select(&quot;#some&quot;);

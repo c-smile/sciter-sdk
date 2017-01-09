@@ -1,0 +1,36 @@
+
+widget[type="folder-tree"] { style-set: std-folder-tree; }
+
+// define std-folder-tree style set derived from system's std-tree (defined in master.css)
+@set std-folder-tree < std-tree 
+{
+  :root 
+  {
+    prototype: FolderTree url(folder-tree.tis);
+  }
+
+  option:not(:node) 
+  {
+    padding:0;
+  }
+
+  option > text  /* option text */
+  {
+    behavior:file-icon; /* supplies foreground image from the system */
+    line-height:18dip;        
+    padding:1dip 3dip 1dip 20dip;
+    foreground-repeat:no-repeat;
+    foreground-position:0 50%;
+    min-width:4em;
+  }
+  
+  option > text:rtl
+  {
+    padding:1dip 20dip 1dip 3dip;
+    foreground-position:100% 50%;
+  }
+     
+}
+
+
+

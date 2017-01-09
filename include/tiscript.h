@@ -1,25 +1,17 @@
 #ifndef __tis_h__
 #define __tis_h__
 
-#include "sciter-x-types.h"
-
 #if defined(__GNUC__)
   #define __cdecl __attribute__((__cdecl__))
 #endif
 
-#if !defined(WINDOWS)
-  #define EXTAPI __cdecl
-#else
+#if defined(_WINDOWS) || defined(WIN32) || defined(WIN64)
   #define EXTAPI __stdcall
+#else
+  #define EXTAPI __cdecl  
 #endif
 
 #define TISAPI __cdecl
-
-#if !defined(WINDOWS)
-  #define EXTAPI __cdecl
-#else
-  #define EXTAPI __stdcall
-#endif
 
 #pragma pack(push,8)
 

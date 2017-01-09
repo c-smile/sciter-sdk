@@ -1,4 +1,4 @@
-include "decorators.tis";
+﻿include "decorators.tis";
 
 // handles list of host resources
 class ResourceList: Behavior {
@@ -61,7 +61,9 @@ class ResourceList: Behavior {
       var list = this.sections[res.type];
       if( !list ) list = this.othersList;
       var urlparts = res.url.match(URL_PARTS);
-      if( !urlparts[2] ) // non-hierarchical    
+      if( !urlparts ) // wrong
+        list.$append(<li res="{res.url}">{res.url}</li>);
+      else if( !urlparts[2] ) // non-hierarchical    
         list.$append(<li res="{res.url}"><span.prot>{urlparts[1]}</span><span.file>{urlparts[3]}</span><span.ext>{urlparts[4]}</span></li>);
       else
         list.$append(<li res="{res.url}"><span.prot>{urlparts[1]}</span><span.path>{urlparts[2]}</span><span.file>{urlparts[3]}</span><span.ext>{urlparts[4]}</span></li>);

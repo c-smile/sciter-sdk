@@ -4,12 +4,60 @@
     <meta name="generator" content="h-smile:richtext"/>
   </head>
 <body>
-  <h3>Sciter 3.* logfile:</h3>
+  <h3>Sciter 3.* and 4.* logfile:</h3>
   <table border="1" cellpadding="3" cellspacing="1" width="100%">
     <tr>
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
+    <tr>
+      <td valign="top" bgcolor="#FFFADA">4.0.0.2</td>
+      <td nowrap valign="top" align="center">08-01-2017</td>
+      <td>
+        <p>new:</p>
+        <ul>
+          <li>[script] <code>for(var codepoint in string)</code> -&gt; iteration over unicode code points in strings (that is UTF16 thing in JS and TIS).</li>
+          <li>[script] <code>__FOLDER__</code> meta variable. Same as <code>__FILE__</code> but just a folder.</li>
+          <li>View supports <code>view &lt;&lt; event move {...}</code> notation.</li>
+          <li>CSS: rules defined by style-set's are applied first and other CSS definitions on top of them. CSS specificity of rules in style sets are the same as of rules of master css;</li>
+          <li>[script] support of &quot;dashed&quot; event names like <code>event item-activate &nbsp;{...}</code></li>
+          <li>+ sdk/widgets/folder-tree/ sample widget;</li>
+          <li>+ samples/markdows/hierarchical/ - yet another markdown-to-html converter;</li>
+          <li>+ sample sdk/samples/ideas/ui-themes/using-style-sets.htm</li>
+          <li><code>&lt;input type=integer max=12345&gt;</code> limits input length by 5 (determined from min/max attributes);</li>
+          <li><code>behavior:richtext</code> method <code>rt.contentToSource()</code> returns <code>[text,anchorPos,caretPos]</code>;</li>
+          <li><code>behavior:plaintext</code> method <code>pt.setContent(text,anchorPos,caretPos);</code></li>
+          <li>[+plus] </li>
+          <ul>
+            <li>@observing function gets called with <em>this</em> set to the rightmost object on the path. </li>
+            <li>@observing is documented (somehow).</li></ul>
+          <li>[script] event handlers defined on classes are called with <em>this</em> set to the instance of the class:</li>
+          <pre>class One : Element {
+  event click { this /*is an instance of the class*/ }
+}
+</pre></ul>
+        <p>fixes:</p>
+        <ul>
+          <li>[linux] libcurl.so is loaded dynamically / on demand now. May fix libcurl issues on Linuxes that use curl v.4;</li>
+          <li>fix of new Image(w,h,element) rendering. See: <a href="http://sciter.com/forums/topic/new-image-bug">http://sciter.com/forums/topic/new-image-bug/</a></li>
+          <li>[inspector] fix of data marshalling between debugee and inspector when data contains custom native objects;</li>
+          <li>[tiscript, Windows] fix of <code>include library &quot;name&quot;</code>;</li>
+          <li>[d2d,win] fix of potential AV on image rendering, this fixes some errors in rendering of SVG images on some machines; </li>
+          <li>[win] CallMsgFilter() call on internal message pumps;</li>
+          <li>[win] fix of window-resizable + window-frame=&quot;extended&quot; combination.</li>
+          <li>Fix of <code>Event.wheelDelta</code> property reporting, see: <a href="http://sciter.com/forums/topic/evt-wheeldelta-undefined">http://sciter.com/forums/topic/evt-wheeldelta-undefined/</a></li>
+          <li>[svg] fix of default sizing of <code>&lt;text&gt;</code> element.</li>
+          <li>[script, float] <code>NaN</code> handling.</li>
+          <li>Better mouse wheel overscroll animation.</li>
+          <li>Fix of HTML / overlapping spans parsing;</li>
+          <li>[css] fix of dynamic change of visibility. See: <a href="http://sciter.com/forums/topic/a-bug-after-3-3-3-4">http://sciter.com/forums/topic/a-bug-after-3-3-3-4/</a></li>
+          <li><code>behavior:progress</code>, preventing &quot;busy&quot; animation when <code>opacity:0</code></li>
+          <li>[W7,themes] compatibility fix.</li>
+          <li>[layout] <code>flow:grid | row</code>, fix of under-constrained cases handling.</li>
+          <li>[skia] fix of infinite loop in some cases (<code>Image.update()</code>) .</li>
+          <li>[script] std::regex is replaced by more JS compatible Regex implementation. In particular /m (multiline) mode is supported; </li>
+          <li>vertical-align:baseline fix: <a href="http://sciter.com/forums/topic/horizontal-flow-bug">http://sciter.com/forums/topic/horizontal-flow-bug/</a></li></ul>Builds: win32/win64, osx32/osx64, linux/gtk64
+        <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">4.0.0.1</td>
       <td nowrap valign="top" align="center">25-12-2016</td>
@@ -17,14 +65,14 @@
         <p>new:</p>
         <ul>
           <li><code>:owns-focus</code> flag (CSS) and <code>Element.state.ownsfocus</code> - focus is on element or somewhere inside.</li>
-          <li>[win, @media] 'ux-themes' media variable, it is <code>true</code> when uxthemes.dll is loaded and <code>false</code> when &quot;classic&quot; theme is used. </li>
-          <li><code>Event.extendedKey</code> - extended key flag - allows to distinguish right/left shifts, alts and controls. </li>
+          <li>[win, @media] 'ux-themes' media variable, it is <code>true</code> when uxthemes.dll is loaded and <code>false</code> when &quot;classic&quot; theme is used.</li>
+          <li><code>Event.extendedKey</code> - extended key flag - allows to distinguish right/left shifts, alts and controls.</li>
           <li>ux-master.css, used colors exposed as CSS variables.</li></ul>
         <p>fixes:</p>
         <ul>
           <li>[flow:horizontal and flow:horizontal-wrap] auto shrink-to-fit for elements that has no width defined.</li>
           <li>[ddm2] fix of <code>params.notOn = selector</code> handling.</li>
-          <li>[gtk] fix of getting default font. </li>
+          <li>[gtk] fix of getting default font.</li>
           <li>[win,skia] fix of uxtheme images rendering.</li>
           <li>[win] Excluding unused DLL imports: <a href="http://sciter.com/forums/topic/theme-images-for-windows-xp-classic-scheme">http://sciter.com/forums/topic/theme-images-for-windows-xp-classic-scheme/</a></li>
           <li>[flexes] Fix of calculation in overconstrained cases like: <a href="http://sciter.com/forums/topic/flex-layout-bug">http://sciter.com/forums/topic/flex-layout-bug/</a></li>
@@ -41,7 +89,7 @@
           <li><code>flow:grid()</code> adjustments related to <code>vertical-align:baseline</code></li>
           <li>[inspector] fix of second AV in <a href="http://sciter.com/forums/topic/selection-crash">http://sciter.com/forums/topic/selection-crash/</a></li>
           <li>Fix of AV in Selection.select : <a href="http://sciter.com/forums/topic/selection-crash">http://sciter.com/forums/topic/selection-crash/</a></li>
-          <li>[master-css] fixes for high-dpi monitors and W10. </li>
+          <li>[master-css] fixes for high-dpi monitors and W10.</li>
           <li>Fix of sdk/samples/lists/group-list.htm - scrollable list with group headers.</li>
           <li>Fix of tooltip rendering.</li></ul>Builds: win32/win64, osx32/osx64, linux/gtk64
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>

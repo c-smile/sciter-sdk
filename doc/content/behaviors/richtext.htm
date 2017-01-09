@@ -1,0 +1,74 @@
+<html>
+  <head>
+    <meta name="source" content="http://www.terrainformatica.com/wiki/doku.php?id=h-smile:built-in-behaviors:edit"/>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>behavior: htmlarea</h1>
+  <p>HTML WYSIWYG  editting behavior.</p><p>The behavior supports document container&nbsp;mode similar to &lt;frame&gt;/behavior:frame - it supports loading full &lt;html&gt;...&lt;/html&gt; document in it.</p>
+  <h2>Elements</h2>
+  <p>that have this behavior applied by default:</p>
+  <ul>
+    <li><code>&lt;htmlarea&gt;...&lt;/htmlarea&gt;</code> editor;</li></ul>
+  <h2>Attributes</h2>
+  <p>that this behavior knows about:</p>
+  <ul>
+    <li><code>readonly</code> - &nbsp;declares that element is read only;</li>
+		<li><code>content-style</code> - string, URL of .css file to apply to content of the editor. Use it when you need to apply editing specific styling.</li></ul>
+  <h2>Model</h2>
+  <p>Richtext supports two content models, HTML fragment: </p>
+  <pre>&lt;htmlarea&gt;
+   &lt;h2&gt;Some HTML content&lt;/h2&gt;
+   &lt;p&gt;Line 2&lt;/p&gt;
+   &lt;p&gt;Line 3&lt;/p&gt;
+&lt;/htmlarea&gt;
+</pre>
+	<p>and full document. In this case <code>&lt;htmlarea&gt;</code> behaves as a <code>&lt;frame&gt;</code> containing the document:</p>
+	<pre>&lt;htmlarea&gt;
+   &lt;html&gt;
+      &lt;body&gt;
+        &lt;h2&gt;Some HTML content&lt;/h2&gt;
+        &lt;p&gt;Line 2&lt;/p&gt;
+        &lt;p&gt;Line 3&lt;/p&gt;
+      &lt;/body&gt;
+   &lt;/html&gt;
+&lt;/htmlarea&gt;</pre> Content model is 
+determined by the document loaded in the editor.<h2>Events</h2>
+  <p>Together with the standard set of events (mouse, keyboard, focus) <em>behavior: richtext</em> generates:</p>
+  <ul>
+    <li>EDIT_VALUE_CHANGED event - value of the element was changed due to user actions. Posted (asynchronous) event.</li>
+    <li>EDIT_VALUE_CHANGING event - sent when value of the element is about to change. Synchronous event.</li></ul>
+  <h2>Value</h2>
+  <p>string, reflects current status of internal editing buffer.</p>
+  <h2>Special key combinations</h2>
+  <ul>
+    <li>LEFT, CTRL+LEFT, SHIFT+LEFT, CTRL+SHIFT+LEFT</li>
+    <li>RIGHT, CTRL+RIGHT, SHIFT+RIGHT, CTRL+SHIFT+RIGHT</li>
+    <li>HOME, SHIFT+HOME</li>
+    <li>END, SHIFT+END</li>
+    <li>BACKSPACE, ALT+BACKSPACE, CTRL+BACKSPACE</li>
+    <li>CTRL+A</li>
+    <li>DELETE, SHIFT+DELETE, CTRL+DELETE</li>
+    <li>INSERT, SHIFT+INSERT, CTRL+INSERT</li>
+    <li>CTRL+X</li>
+    <li>CTRL+V</li>
+    <li>CTRL+Z</li>
+    <li>CTRL+(LEFT)SHIFT and CTRL+(RIGHT)SHIFT - in forms having the <code>dir</code> attribute these key combinations switches between <code>dir=&quot;ltr&quot;</code> and <code>dir=&quot;rtl&quot;</code>.</li></ul>
+  <h2>Methods</h2>
+  <dl>
+    <dt><code>loadDocument</code></dt>
+    <dd><code>(url:string): true|false</code> 
+        <p>loads file from URL into the editor;</p></dd>
+    <dt><code>saveDocument</code></dt>
+    <dd><code>(url:string): true|false</code> 
+        <p>saves content to file;</p></dd>
+    <dt><code>setContent</code></dt>
+    <dd><code>(text:string):&nbsp;true|false</code>
+        <p>sets content from the string;</p></dd>
+    <dt><code>setContent</code></dt>
+    <dd><code>(text:string, selStart:integer, selEnd:integer):&nbsp;true|false</code>
+        <p>sets content from the <i>text</i> and selection from&nbsp;given <i>selStart</i> and <i>selEnd</i>;</p></dd><dt><code>getContent</code></dt><dd><code>() : [html:string, selStart:integer, selEnd:integer] </code><p>returns content and selection as an array of three elements;</p>
+        </dd>
+    </dl>
+</body>
+</html>

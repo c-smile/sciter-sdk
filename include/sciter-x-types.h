@@ -53,7 +53,9 @@ enum GFX_LAYER
   #endif
 
 #elif defined(__linux__)
-  #define LINUX
+  #ifndef LINUX
+    #define LINUX
+  #endif
 #else
   #error "This platform is not supported yet"
 #endif

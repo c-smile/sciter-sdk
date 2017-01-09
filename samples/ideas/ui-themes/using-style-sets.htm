@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+          main { 
+            style-set: "light-theme"; 
+            size:*; 
+            padding:1em;
+          }
+          main[theme=dark] { style-set: "dark-theme"; }
+
+          img {size:16dip;}
+
+          @set light-theme {
+            @const BACK: #eee;
+            @const CTL-BACK: #fff;
+            @const FORE: #000;
+            @const BORDER: #ccc;
+            :root { background:@BACK; color:@FORE; } 
+            input { background:@CTL-BACK; color:@FORE; border:1dip solid @BORDER; } 
+            img { foreground-image:url(sciter:copy.png); }
+          }
+          @set dark-theme {
+            @const BACK: #333;
+            @const CTL-BACK: #000;
+            @const FORE: #FFF;
+            @const BORDER: #666;
+            :root { background:@BACK; color:@FORE; } 
+            input { background:@CTL-BACK; color:@FORE; border:1dip solid @BORDER; } 
+            img { foreground-image:url(sciter:paste.png); }
+          }
+
+        </style>
+        <script type="text/tiscript">
+
+         event click $(#light) { $(main).attributes["theme"] = "light"; }          
+         event click $(#dark) { $(main).attributes["theme"] = "dark"; }          
+
+        </script>
+    </head>
+    <body>
+    <button|radio checked #light>Light</button>
+    <button|radio #dark>Dark</button>
+
+    <main>
+      <p>Hello world!</p>
+      <input|text value="Hello world!">
+      <img />
+    </main>
+    </body>
+</html>

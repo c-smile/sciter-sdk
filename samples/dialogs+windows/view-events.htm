@@ -10,37 +10,29 @@
     
       var cnt = 0;
     
-      function showEvent(src) {
+      function showEvent(eventname) {
         var list = $(div#list);
-        return function(param = "") {
-          list.$prepend(<text>{++cnt} on {src} {param}</text>);
-          if(list.length > 200)
-            list.last.remove();
-            
-          const states = [ "WINDOW_STATE_NA", "WINDOW_SHOWN", "WINDOW_MINIMIZED", "WINDOW_MAXIMIZED", "WINDOW_HIDDEN", "WINDOW_FULL_SCREEN"];
-          $(#state).value = states[view.state]; 
-  
-        };
+        list.$prepend(<text>{++cnt}. {eventname}</text>);
+        if(list.length > 200)
+          list.last.remove();
+        const states = [ "WINDOW_STATE_NA", "WINDOW_SHOWN", "WINDOW_MINIMIZED", "WINDOW_MAXIMIZED", "WINDOW_HIDDEN", "WINDOW_FULL_SCREEN"];
+        $(#state).value = states[view.state]; 
       }
-      
-      $(#full-screen).on("click", function(){
-        view.state = View.WINDOW_FULL_SCREEN;
-      });
-      $(#default).on("click", function(){
-        view.state = View.WINDOW_SHOWN;
-      });
 
+      event click $(#full-screen)  { view.state = View.WINDOW_FULL_SCREEN }
+      event click $(#default)      { view.state = View.WINDOW_SHOWN }
 
-      
-      view.on("move.demo",showEvent("move"))
-          .on("size.demo",showEvent("size"))
-          .on("mediachange.demo", showEvent("mediachange"))
-          .on("activate.demo", showEvent("activate"))
-          .on("resolutionchange.demo", showEvent("resolutionchange"))
-          .on("statechange.demo", showEvent("statechange"));
+      view << event move.demo { showEvent("move") }
+           << event size.demo { showEvent("size") }
+           << event mediachange.demo { showEvent("mediachange") }
+           << event activate.demo { showEvent("activate") }
+           << event resolutionchange.demo { showEvent("resolutionchange") }
+           << event statechange.demo { showEvent("statechange") };
+
 
       self.closed = function() {
-        view.off(".demo");
+        view >> ".demo"; // pull of (remove) all event handlers with .demo namespace
+        //view.off(".demo"); - same as above
       } 
     
     </script>

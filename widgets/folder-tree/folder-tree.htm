@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+
+      @import url(folder-tree.css);
+    
+      widget#tree 
+      {
+        font:system; 
+        size: 300dip *;
+        overflow-x:hidden;
+      }
+     
+      body { flow:horizontal; }
+    	  
+    </style>
+    <script type="text/tiscript">
+
+    function self.ready() {
+      $(widget#tree).show();
+    }
+   
+    event change $(widget#tree) 
+    {
+      var current = this.$(option:current);
+      var currentFilename = current.attributes["filename"];
+      stdout.println("current item", currentFilename, (current.state.collapsed || current.state.expanded) ? "folder" : "file");
+    }
+
+    // either dblclick or VK_ENTER on the item
+    event item-activate $(widget#tree) (evt) {
+       var fn = evt.data;
+       stdout.println("item-activate",fn); 
+    } 
+       
+    </script>
+  </head>
+<body>
+  <widget|folder-tree #tree
+     filter="*.html;*.htm;*.png;*.jpg;*.gif" />
+</body>
+</html>

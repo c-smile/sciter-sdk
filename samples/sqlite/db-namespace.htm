@@ -5,15 +5,15 @@
     th,td { border:1px solid black; padding:3px; }
   </style>  
   <script type="text/tiscript">
-  
+    
   include "sqlite.tis";
     
-  function self#test.onClick()
+  event click $(#test)
   {  
     var db = SQLite.DB.open(":memory:"); // in memory, temporary DB
            //DB.open("c:/test.db");
     var r = db.exec("CREATE TABLE stocks (key INTEGER PRIMARY KEY, date TEXT, trans TEXT, symbol TEXT, qty REAL, price REAL);" );
-        self#result.text = r.toString();
+        $(#result).text = r.toString();
         // as a string   
         db.exec("insert into stocks values (NULL,'2006-01-05','BUY','RHAT',100,35.14)" );
         db.exec("insert into stocks values (NULL,'2006-01-05','BUY','BANT',10,5.23)" );
@@ -25,7 +25,7 @@
     if ( rs instanceof Recordset )
       showRecordset(rs);
     else
-      self#result.text = "Wrong type:" + rs;
+      $(#result).text = "Wrong type:" + rs;
 
     showSchema(db);  
     db.close();

@@ -6,12 +6,11 @@ function functionChart(element,F)
   var v = F(0.0, 0.0, 1.0, 1.0);  
   pathLine.moveTo(0.0,v);
   pathFill.moveTo(0.0,v);
-  for( var p = 0.01; p <= 1. ; p += 0.01 )
+  for( var p = 0.01; p < 1.0 ; p += 0.01 )
   {
     v = F(p, 0.0, 1.0, 1.0);
     pathLine.lineTo(p,v);
     pathFill.lineTo(p,v);
-    //stdout.$n(p={p});
   }
   pathFill.lineTo(1.0,0.0);
   pathFill.close();

@@ -1,4 +1,4 @@
-
+ï»¿
 class DomTree : Behavior
 {
   function attached() {
@@ -114,7 +114,7 @@ class DomTree : Behavior
       case Event.ELEMENT_EXPANDED: this.expandOption(evt.target); return true;
       case Event.ELEMENT_COLLAPSED: this.collapseOption(evt.target); return true; 
       case Event.SELECT_SELECTION_CHANGED: 
-        // Òotify other parties that our user selected something on the treeþ
+        // Ã’otify other parties that our user selected something on the treeÃ¾
         // 200ms throttling is used to prevent UI flutter
         this.timer( 200ms, function() { this.postEvent("element-selected", this.value ); return false; }); 
         return true;

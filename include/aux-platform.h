@@ -34,7 +34,9 @@
   #define POSIX
 #elif defined( __linux__ )
   #define PLATFORM_LINUX
-  #define LINUX
+  #ifndef LINUX
+    #define LINUX
+  #endif
   #ifdef __x86_64__
     #define X64BITS
   #endif

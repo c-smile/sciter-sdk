@@ -1,4 +1,4 @@
-﻿<html>
+<html>
   <head>
     <style></style>
     <meta name="generator" content="h-smile:richtext"/>
@@ -59,7 +59,25 @@
       &lt;li&gt;&lt;picture @src=&quot;customer.image&quot; /&gt; &lt;output(customer.name)/&gt;&lt;/li&gt;
   &lt;/ol&gt;
 </pre>
-  <h2>Basic event handlers</h2>
+  <h2>Observing changes on data paths</h2><p>The Plus defines <code>@observing</code> decorator that can be used to subscribe functions on particular changes in model data tree. Syntax of declaring such subscriptions:</p>
+<pre>@observing &quot;path&quot; [&quot;path2&quot;[,&nbsp;... &quot;pathN&quot; ]] 
+  function(path) {
+      
+  }</pre>
+<p>Where <i>path</i> is a&nbsp;string separated by <code>.</code> (dot) and <code>[]</code> (if element on the path is an array).</p><p>The function gets called with <i>this</i> set to rightmost object or array on the path.</p><p>Example:</p>
+<pre>namespace Data 
+{ 
+   var items = [
+       { name:&quot;Alan&quot;, state: true },
+       { name:&quot;Winston&quot;, state: false }
+   ];
+
+   @oberving &quot;items[].state&quot; function() {
+      // .state property was changed in one of items
+      // 'this' here is the item
+   }
+}</pre>
+<h2>Basic event handlers</h2>
   <p>Elements may contain one of event attributes defining function to be executed on corresponding action. The handler function is called with <code>this</code> set to the DOM element and first parameter set to bound object.</p>
   <p>List of event attributes: &quot;click&quot;, &quot;dblclick&quot;, &quot;change&quot;, &quot;enter&quot;, &quot;escape&quot;, &quot;focusin&quot;, &quot;focusout&quot;.</p>
   <p>Example:</p>

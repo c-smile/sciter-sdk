@@ -1,0 +1,63 @@
+
+class VirtualTree : Element
+{
+  // overridables:
+
+  // notifications:
+  function optionExpanded(option) {}
+  function optionCollapsed(option) {}
+  function selectionChanged() {}
+  // workers, must be implemented:
+  // toCall = function(caption, path, isFolder);
+  function eachChild(ofPath,toCall) { assert false: "must be implemented"; }
+  // toCall = function(caption, path, isFolder);
+  function eachRoot(toCall) { assert false: "must be implemented"; }
+
+  // implementation:
+  function appendOption(parentOpt, caption, path, nodeState)
+  {
+    var opt = parentOpt.$append(<option filename="{path}"><text>{caption}</text></option>);
+    if( nodeState === true ) // expanded folder
+      opt.state.expanded = true;
+    else if( nodeState === false ) // collapsed folder
+      opt.state.collapsed = true;
+    return opt;
+  }
+
+  function expandOption(opt)
+  {
+    function appendChild(caption, path, isFolder) { (this super).appendOption(opt, caption, path, isFolder? false: undefined); }
+    this.eachChild(opt.attributes["filename"], appendChild);
+    opt.state.expanded = true;
+  }
+
+  function collapseOption(opt)
+  {
+    while(opt.length > 1)
+      opt.last.remove();
+    opt.state.collapsed = true;       
+  }
+  
+  event expand(evt) { this.expandOption(evt.target); this.optionExpanded(evt.target); return true; }
+  event collapse(evt) { this.collapseOption(evt.target); this.optionCollapsed(evt.target); return true; }
+
+  event dblclick $(option:not(:node)) (evt,option) { this.postEvent("item-activate",option.attributes["filename"]);  }
+  event keydown $(option:not(:node)) (evt,option) { if(evt.keyCode == Event.VK_ENTER) this.postEvent("item-activate", option.attributes["filename"]);  }
+  
+  function appendRoot(caption, path, isFolder)
+  {
+    var rn = this.appendOption(this, caption, path, isFolder? true: undefined);
+    if(isFolder)
+      this.expandOption(rn);
+  }
+
+  function show(path = "") {
+    this.clear(); 
+    function rootAppender(caption, path, isFolder) { (this super).appendRoot(caption, path, isFolder); }
+    if(path)
+      this.eachChild(path,rootAppender); 
+    else 
+      this.eachRoot(rootAppender); 
+  }
+}
+

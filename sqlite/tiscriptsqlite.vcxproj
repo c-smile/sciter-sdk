@@ -37,7 +37,6 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F4A9D650-FB2F-48C1-A370-65BD1C6214CE}</ProjectGuid>
     <RootNamespace>tiscriptsqlite</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -618,7 +617,6 @@
     <ClInclude Include="sqlite-wrap.h" />
     <ClInclude Include="sqlite3.h" />
     <ClInclude Include="..\include\tiscript-streams.hpp" />
-    <ClInclude Include="..\include\tiscript-types.h" />
     <ClInclude Include="..\include\tiscript.h" />
     <ClInclude Include="..\include\tiscript.hpp" />
     <ClInclude Include="tiscriptsqlite.h" />

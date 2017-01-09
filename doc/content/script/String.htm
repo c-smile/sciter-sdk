@@ -1,4 +1,4 @@
-﻿<html>
+<html>
   <head>
     <meta name="GENERATOR" content="BLOCKNOTE.NET"/>
     <meta name="source"/>
@@ -12,11 +12,18 @@
   <dl>
     <h2>Properties</h2>
     <dt>length</dt>
-    <dd bgcolor="#fffff0" valign="middle">- <em>integer</em>, number of characters in the string. Read-only property.</dd>
+    <dd>- <em>integer</em>, number of characters in the string. Read-only property.</dd>
     <dt>[index]</dt>
-    <dd bgcolor="#fffff0" valign="middle">- <em>integer</em>, code of character at the <em>index</em> position, Read-write index accessor. Zero-based index.</dd>
+    <dd>- <em>integer</em>, code of character at the <em>index</em> position, Read-write index accessor. Zero-based index.</dd>
     <dt>[begin..end]</dt>
-    <dd bgcolor="#fffff0" valign="middle">- <em>integers</em>, zero-based indexes of first and last character. Returns string slice contained characters from <em>start</em> index and up to but not included <em>end</em> index. <em>Begin</em> or/and <em>end</em> are optional. If begin is ommited then it is assumed to be 0, if end - <em>length</em> is used as end value.</dd>
+    <dd>- <em>integers</em>, zero-based indexes of first and last character. Returns string slice contained characters from <em>start</em> index and up to but not included <em>end</em> index. <em>Begin</em> or/and <em>end</em> are optional. If begin is ommited then it is assumed to be 0, if end - <em>length</em> is used as end value.</dd>
+		</dl>
+	<h2>Iteration</h2>
+	<p><code>for (var <i>codepoint</i> in str) {...}</code></p>
+	<p> Iterates all UNICODE code points in string. Internally strings are stored as arrays of UTF16 code units and <code>str.length</code> reports number of UTF16 code units. In contrary, on each iteration the <i>codepoint</i> variable receives integer value - UNICODE code point. Note that number of iterations can be less than <code>str.length</code> if the string contains so called surrogate pairs - symbols presented by two UTF16 code units.<br/></p>
+	<p><i><code>for (var (strpos,codepoint) in str) {...}</code><br/></i></p>
+	<p>Does the same as the above but also reports position (index) of the codepoint in string.</p>
+  <dl>
     <h2>Methods</h2>
     <dt>toInteger</dt>
     <dd>

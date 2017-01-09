@@ -1,0 +1,89 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+
+      @import url(styles.css);
+    
+      toolbar { display:block; flow:horizontal; }
+      plaintext { display:block; size:*; font:10pt monospace;}
+
+      pre#debug { size:*; overflow: scroll-indicator; }      
+     
+
+    </style>
+    <script type="text/tiscript">
+    
+      include "md.tis";
+      
+      const md = $(#markdown);
+      const pv = $(#preview);
+      
+      /*function preview() {
+        var html = markdown.parse(md.value);
+        pv.html = html;
+        $(pre#debug).text = html;
+      }
+      
+      md.on("change", preview.debounce(500ms));
+     
+      preview(); */
+    
+    </script>
+  </head>
+<body>
+  <!--<toolbar>
+    <button>New</button>
+    <button>Open</button>
+    <button>Save</button>
+  </toolbar>-->
+  
+  <h2>Hierarchical markdown editor and convertor</h2> 
+  <p>Type in the left pane to see result</p>
+  
+  <frameset cols="300dip,*,300dip">
+    <plaintext.markdown #markdown htmlview="htmlview" srcview="pre#debug">
+= Heading 1
+== Heading 2    
+=== Heading 3
+    ---
+    hello
+    world
+    ---
+==== Heading 4
+aaa
+===== Heading 5
+      Continuation 5
+
+**bold** *italic* `code`
+[[link]] [[link|caption]] 
+ccc
+* AA
+  * AA.1
+  * AA.2
+* BB
+  ---
+  hello
+  Universe
+  ---
+* CC
+# first 
+  continuation 
+  : prop1 
+    prop1 description 
+  : prop2 
+    prop2 description 
+  sss
+# second
+
+[* th1.1 *][* th2 *][* th3 *]
+[* th1.2 *][  td1  ][  td2  ]
+[* th1.3 *][  td3  ][  td4  ]
+
+eee
+</plaintext>
+   <htmlview/>
+   <pre#debug></pre>
+  </frameset>
+</body>
+</html>

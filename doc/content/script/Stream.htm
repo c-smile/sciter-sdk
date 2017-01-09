@@ -47,13 +47,13 @@
       
         <dt>openFile</dt>
         <dd>
-          <p><strong>(</strong><em>file-name</em> [,<em>mode</em>]<strong>) </strong>: <em>stream</em> | <em>null</em></p>
+          <strong>(</strong><em>file-name</em> [,<em>mode</em>]<strong>) </strong>: <em>stream</em> | <em>null</em>
           <p>Static method. Opens the file which name is stored in the <em>file-name</em> string and returns an instance of Stream object. Operations allowed to the stream returned are defined by the <em>mode</em> parameter-string.</p>
           <p>Script engine uses C/C++ runtime for opening file streams. See <a href="http://www.cplusplus.com/ref/cstdio/fopen.html" target="_blank">fopen function definition</a> for the meaning of the <em>mode</em> string.</p></dd>
       
         <dt>openSocket</dt>
         <dd>
-          <p><strong>(</strong><em>&quot;address:port&quot; </em>[,<em> timeout</em>[, numberOfAttempts:1 ] ] <strong>)</strong> :  <em>stream</em> | <em>null</em></p>
+          <p><strong>(</strong><em>&quot;address:port&quot; </em>[,<em> timeout</em>[, numberOfAttempts:1 ] ] <strong>)</strong> : <em>stream</em> | <em>null</em></p>
           <p>Static method. Opens the socket stream which address and port is stored in the <em>address-port </em>string and returns an instance of Stream object. Opens socket stream in read-write mode. <em>Address</em> can be either domain name or IP address. Format of <em>address:port</em> string is <font color="#006666">&quot;domain<strong>:</strong>NNN&quot;</font> or <font color="#006666">&quot;NNN.NNN.NNN.NNN:NNN&quot;</font> where N is a decimal digit. <em>timeout</em> is a number of seconds to wait on any operations on this socket. If execution of operation on this socket will take more than this limit then exception will be thrown by runtime system.</p>
           <p><em>numberOfAttempts</em> is an integer - number of attempts to connect, 1 by default.</p>
           <p>Example: following code will print out http server response of terrainformatica.com server:</p>
@@ -80,7 +80,7 @@ sock.println(&quot;&quot;);
         <dt>openPipe</dt>
         <dd>
           <div>( [<em>receiver</em>: function [, <em>proxy</em>: object]] ) : <em>stream</em></div>
-          <p>Creates so called pipe - stream used for inter-thread communications. Pipe is shared between two threads allowing two threads to  communicate. See methods <em>send()</em>, <em>post()</em> and properties <em>pending</em> and <em>proxy</em>.</p>
+          <p>Creates so called pipe - stream used for inter-thread communications. Pipe is shared between two threads allowing two threads to communicate. See methods <em>send()</em>, <em>post()</em> and properties <em>pending</em> and <em>proxy</em>.</p>
           <p>The <em>receiver</em> is the function that has following signature: <code>function recv(value)</code>. This function will be called when data printed by print(), println() or printf() will arrive from other side of the pipe.</p>
           <p>The <em>proxy</em> object is an object that is used as an interface with functions accessible from the alien thread (VM) sitting on other side of the pipe, See methods <em>send()</em> and <em>post()</em> below.</p>
           <p>Example, following fragment (from ScIDE/facades.tis) creates three pipes that are used as stdin, stdout and stderr streams in the alien VM (other ScIDE window running is separate thread).</p>
@@ -102,7 +102,7 @@ sock.println(&quot;&quot;);
       
         <dt>toString</dt>
         <dd>
-          <p><strong>( ) </strong>:  <em>stream</em></p>
+          <p><strong>( ) </strong>: <em>stream</em></p>
           <p>Returns content of string buffer if this is a string stream or name/address of the stream if it was open as file or socket stream.</p></dd>
       
         <dt>close</dt>
@@ -143,7 +143,7 @@ sock.println(&quot;&quot;);
         <dt>scanf</dt>
         <dd>
           <div><strong>( </strong><em>format</em>: string <strong>)</strong> : array</div>
-          <p>Scans the stream for values according to the rules of <a href="http://www.cplusplus.com/reference/clibrary/cstdio/scanf.html">scanf C/C++ function</a> with wildcard (like %[a-z] ) extensions. See definition of  <a href="http://msdn.microsoft.com/en-us/library/xdb9w69d(VS.71).aspx">scanf in MSDN</a>.</p>
+          <p>Scans the stream for values according to the rules of <a href="http://www.cplusplus.com/reference/clibrary/cstdio/scanf.html">scanf C/C++ function</a> with wildcard (like %[a-z] ) extensions. See definition of <a href="http://msdn.microsoft.com/en-us/library/xdb9w69d(VS.71).aspx">scanf in MSDN</a>.</p>
           <p>Additional format types:</p>
           <ul>
             <p><strong>%N</strong> - scans for either float or integer number.</p></ul>
