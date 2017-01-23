@@ -37,7 +37,20 @@
       <p>Matches the preceding item 0 or 1 time.</p>
       <p>For example, <code>/e?le?/</code> matches the 'el' in &quot;angel&quot; and the 'le' in &quot;angle.&quot;</p>
       <p>If used immediately after any of the quantifiers <code>*</code>, <code>+</code>, <code>?</code>, or <code>{}</code>, makes the quantifier non-greedy (matching the minimum number of times), as opposed to the default, which is greedy (matching the maximum number of times).</p>
-      <p>Also used in lookahead assertions, described under <code>(?=)</code>, <code>(?!)</code>, and <code>(?:)</code> in this table.</p></dd>
+      <p>Also used in look ahead assertions, described under <code>(?=)</code>, <code>(?!)</code>, and <code>(?:)</code> in this table.</p></dd>
+    <dt><code>x{n}</code></dt>
+    <dd>
+      <p>Where n is a positive integer. Matches exactly n occurrences of the preceding item x.</p>
+      <p>For example, /a{2}/ doesn't match the &quot;a&quot; in &quot;candy&quot;, but it matches all of the &quot;a&quot;'s in &quot;caandy&quot;, and the first two &quot;a&quot;'s in &quot;caaandy&quot;.</p>
+    </dd> 
+    <dt><code>x{n,}</code></dt>
+    <dd>
+      <p>Where n is a positive integer. Matches at least n occurrences of the preceding item x.</p>
+    </dd> 
+    <dt><code>x{n,m}</code></dt>
+    <dd>
+      <p>Where n and m are positive integers. Matches at least n and at most m occurrences of the preceding item x.</p>
+    </dd> 
     <dt><code>.</code></dt>
     <dd>
       <p>(The decimal point) matches any single character except the newline characters: \n \r \u2028 or \u2029. (<code>[\s\S]</code> can be used to match any character including newlines.)</p>
@@ -46,6 +59,12 @@
     <dd>
       <p>Matches <code><em>x</em></code> and remembers the match. These are called capturing parentheses.</p>
       <p>For example, <code>/(foo)/</code> matches and remembers 'foo' in &quot;foo bar.&quot; The matched substring can be recalled from the resulting array's elements <code>[1], ..., [n]</code> or from the predefined <code>RegExp</code> object's properties <code>$1, ..</code></p></dd>
+    <dt><code>(x?=y)</code></dt>
+    <dd>
+      <p>Matches <i>x</i> only if <i>x</i> is followed by <i>y</i>.</p></dd>
+    <dt><code>x(?!y)</code></dt>
+    <dd>
+      <p>Matches <i>x</i> only if <i>x</i> is not followed by <i>y</i>.</p></dd>    
     <dt><code>x|y</code></dt>
     <dd>
       <p>Matches either <code><em>x</em></code> or <code><em>y</em></code>.</p>
@@ -60,74 +79,34 @@
       <p>For example, <code>/\w\Bn/</code> matches 'on' in &quot;noonday&quot;, and <code>/y\B\w/</code> matches 'ye' in &quot;possibly yesterday.&quot;</p></dd>
     <dt><code>\d</code></dt>
     <dd>
-      <p>Matches a digit character from any alphabet.</p>
-      <p>For example, <code>/\d/</code> or <code>/[0-9]/</code> matches '2' in &quot;B2 is the suite number.&quot;</p></dd>
+      <p>Matches a digit character from any alphabet. </p>
+      <p>For example, <code>/\d/</code> or <code>/[0-9]/</code> matches '2' in &quot;B2 is the suite number.&quot;</p>
+			<p><b>Note:</b> that is different from JavaScript where \d matches only [0-9] characters.</p></dd>
     <dt><code>\D</code></dt>
     <dd>
       <p>Matches any non-digit character in any alphabet.</p>
       <p>For example, <code>/\D/</code> or <code>/[^0-9]/</code> matches 'B' in &quot;B2 is the suite number.&quot;</p></dd>
-    <dt><code>\m</code></dt>
-    <dd>
-      <p>Matches any alpha or numeric character from any alphabet.</p></dd>
-    <dt><code>\M</code></dt>
-    <dd>
-      <p>Matches any non-alpha and non-numeric character from any alphabet.</p></dd>
     <dt><code>\a</code></dt>
     <dd>
       <p>Matches any alpha character from any alphabet.</p></dd>
     <dt><code>\A</code></dt>
     <dd>
       <p>Matches any non-alpha character from any alphabet.</p></dd>
-    <dt><code>\c</code></dt>
+    <dt><code>\w</code></dt>
     <dd>
-      <p>Matches any control character from any alphabet.</p></dd>
-    <dt><code>\C</code></dt>
+      <p>Matches any alpha or digit character from any alphabet.</p>
+			<p><b>Note:</b> that is different from JavaScript where \w&nbsp;matches only ASCII  characters and digits.</p></dd>
+    <dt><code>\W</code></dt>
     <dd>
-      <p>Matches any non-control character from any alphabet.</p></dd>
-    <dt><code>\g</code></dt>
-    <dd>
-      <p>Matches any character that has graphic representation from any alphabet.</p></dd>
-    <dt><code>\G</code></dt>
-    <dd>
-      <p>Matches any character that has no graphic representation from any alphabet.</p></dd>
-    <dt><code>\p</code></dt>
-    <dd>
-      <p>Matches any printable or space character from any alphabet.</p></dd>
-    <dt><code>\P</code></dt>
-    <dd>
-      <p>Matches any non-printable and non-space character from any alphabet.</p></dd>
-    <dt><code>\l</code></dt>
-    <dd>
-      <p>Matches any lower case character from any alphabet.</p></dd>
-    <dt><code>\L</code></dt>
-    <dd>
-      <p>Matches any non-lower case character from any alphabet.</p></dd>
-    <dt><code>\u</code></dt>
-    <dd>
-      <p>Matches any upper case character from any alphabet.</p></dd>
-    <dt><code>\U</code></dt>
-    <dd>
-      <p>Matches any non-upper case character from any alphabet.</p></dd>
-    <dt><code>\n</code></dt>
-    <dd>
-      <p>Matches any punctuation character from any alphabet.</p></dd>
-    <dt><code>\N</code></dt>
-    <dd>
-      <p>Matches any non-punctuation character from any alphabet.</p></dd>
-    <dt><code>\s</code></dt>
+      <p>Matches any non-alpha and non-digit character from any alphabet.</p></dd>    <dt><code>\s</code></dt>
     <dd>
       <p>Matches any space character from any alphabet.</p></dd>
     <dt><code>\S</code></dt>
     <dd>
       <p>Matches any non-space character from any alphabet.</p></dd>
-    <dt><code>\x</code></dt>
-    <dd>
-      <p>Matches any hexadecimal character.</p></dd>
-    <dt><code>\X</code></dt>
-    <dd>
-      <p>Matches any non-hexadecimal character.</p></dd></dl>
-  <dl>
+
     <h2>Properties</h2>
+    <dl>
     <dt>length</dt>
     <dd>- <em>integer</em>, number of matches after last <em>exec</em> or <em>match</em> methods calls.</dd>
     <dt>input</dt>
@@ -156,5 +135,5 @@
     <dt>positions</dt>
     <dd>(<strong>matchIdex</strong>:0... length - 1) : (<em>start</em>:integer, <em>end</em>:integer)
       <p>Valid after the exec() call, returns pair of integers - start and end positions of matched sub-expressions in input string</p></dd></dl>
-</body>
+</dl></body>
 </html>

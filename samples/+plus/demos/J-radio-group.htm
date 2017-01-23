@@ -13,6 +13,7 @@
       namespace Data // our model
       {  
         var at = "two";
+        var bits = 16;
       }    
     
     </script>
@@ -22,11 +23,21 @@
   <note>Radio group here is bound with single <code>Data.at</code> variable. Note: in order this to work each radio button has to have its own unique value defined.
   <br>Changes of group value are reflected in output:
   </note>
-
+  String values:
   <div>
       <button|radio(at) value="one">First</button>
       <button|radio(at) value="two">Second</button>
+      <button|radio(at) value="three">Three</button>
   </div>
   <p>Result: <output(at) /></p>
+  Integer values:
+  <div>
+      <button|radio(bits) value=8>8</button>
+      <button|radio(bits) value=16>16</button>
+      <button|radio(bits) value=32>32</button>
+  </div>
+  <p>Result: <output(bits) /></p>
+
+
 </body>
 </html>

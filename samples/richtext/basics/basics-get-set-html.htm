@@ -2,31 +2,44 @@
   <head>
     <title></title>
     <style>
-    
-    toolbar { padding:3dip;
-              display:block; flow:horizontal; background:#ddd; }
-    toolbar > button { width:16dip; }
-    toolbar > button:checked { color:red; }
+
+    htmlarea {size:*;}
     
     </style>
     <script type="text/tiscript">
     
       const htmlarea = $(htmlarea);
+      const plaintext = $(plaintext);
       
-      $(#b1).on("click", function(){ 
+      event click $(#b1) { 
         htmlarea.clear();
         htmlarea.$append(<text><br></text>);
         htmlarea.selection.advance(#first);
         htmlarea.state.focus = true;
         return true; 
-      });  
-      $(#b2).on("click", function(){ 
+      }  
+
+      event click $(#b2){ 
         htmlarea.clear();
         htmlarea.$append(<div>Hello Macrocosm</div>);
         htmlarea.selection.advance(#last);
         htmlarea.state.focus = true;
         return true; 
-      });  
+      };  
+
+      event click $(#b3){ 
+        var text = plaintext.value;  
+        htmlarea.html = text;
+        htmlarea.state.focus = true;
+        return true; 
+      };  
+
+      event click $(#b4){ 
+        plaintext.value = htmlarea.html;  
+        htmlarea.state.focus = true;
+        return true; 
+      };  
+
     
     </script>
   </head>
@@ -35,9 +48,17 @@
 <button #b1>Update and go start</button>
 <button #b2>Update and go end</button>
 
+<button #b3>set html content</button>
+<button #b4>get html content</button>
+
 <htmlarea>
   <p><br></p>
 </htmlarea>
+
+<plaintext>
+  <p>First</p>
+  <p>Second</p>
+</plaintext>
 
 </body>
 </html>

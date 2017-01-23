@@ -1,4 +1,4 @@
-<html>
+﻿<html>
   <head>
     <meta name="generator" content="h-smile:richtext"/>
     <meta name="source"/>
@@ -7,7 +7,7 @@
   <h1>TIScript, a gentle extension of JavaScript</h1>
   <p>As a language, TIScript is an extended version of ECMAScript (JavaScript 1.X). You could think of it as JavaScript++, if you wish.</p>
   <p>The design of TIScript was based on the analysis of practical JavaScript use cases. In some areas, it simplifies and harmonizes JavaScript features. For example, the <em>prototype</em> mechanism was simplified. In other cases, it extends JavaScript, while preserving the original &quot;look-and-feel&quot; of JS.</p>
-  <p>TIScript Engine consists of:</p>
+  <p>TIScript Engine consists  of:</p>
   <ul>
     <li><em>compiler</em> that produces byte code</li>
     <li><em>virtual machine</em> (VM) that executes this bytecode</li>
@@ -72,11 +72,11 @@ var one = rs.one; // access the column named &quot;one&quot; in the recordset
     <dd><code>':' [param-list] '{' &lt;statement-list&gt; '}'</code></dd>
     <dt>Classic anonymous function:</dt>
     <dd><code>'function(' [param-list] ')' '{' &lt;statement-list&gt; '}'</code></dd></dl>
-  <p>Here is an axample of how you would sort an array in descending order by using a comparator function that is defined in-place:</p>
+  <p>Here is an example of how you would sort an array in descending order by using a comparator function that is defined in-place:</p>
   <pre>var arr = [1,2,3];
 arr.sort( :a,b: a &lt; b? 1:-1 );
 </pre>
-  <p>Here, <code>:a,b: a &lt; b? 1:-1</code> is an inplace declaration of a lambda function that will be passed to the <code>Array.sort()</code> method.</p>
+  <p>Here, <code>:a,b: a &lt; b? 1:-1</code> is an in-place declaration of a lambda function that will be passed to the <code>Array.sort()</code> method.</p>
   <h2>Decorators</h2>
   <p>Decorators are a sort of meta-programming feature that was borrowed from the Python language. In TIScript, a decorator is an ordinary function. Its name must start with the '@' character, and it must have at least one parameter. That parameter (the first one) is a reference to some other function (or class) that is being decorated. Here is an example of a decorator function declaration:</p>
   <pre>function @KEY(func, keyCode)
@@ -173,7 +173,7 @@ for( var item in <strong>fruits.backward</strong> ) stdout &lt;&lt; item &lt;&lt
     <dt><em>Symbol</em> (also known as Atom)</dt>
     <dd>Almost all dynamic languages have a concept of atoms in one form or another. TIScript has them too:</dd></dl>
   <h3>Symbols</h3>
-  <p>A name of an object is a string of allowed characters. A symbol is a number assosiated with the name. TIScript maintains a global map of such <code>name&lt;-&gt;int</code> pairs (implemented internally as a <em>ternary search tree</em>). At compile time, each name gets translated into an int32 number - its symbol.</p>
+  <p>A name of an object is a string of allowed characters. A symbol is a number associated with the name. TIScript maintains a global map of such <code>name&lt;-&gt;int</code> pairs (implemented internally as a <em>ternary search tree</em>). At compile time, each name gets translated into an int32 number - its symbol.</p>
   <p>In some cases, you may want to declare symbols explicitly. In this case, symbol literals come in handy. The symbol literal is a sequence of characters that starts with the <code>'#'</code> character. It can contain alpha-numeric characters, underscores (<code>'_'</code>) , and dashes (<code>'-'</code>). Dashes are used in symbols for compatibility with CSS (Cascading Style Sheets), where they are parts of name tokens.</p>
   <p>Example of symbol use:</p>
   <pre>function ChangeMode( mode )

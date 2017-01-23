@@ -41,7 +41,9 @@
       var popupShown = false;
       var me = this;
       
-      this << event click {
+      this << event click (evt) {
+        if( !evt.target.belongsTo(this,false,true) )
+          return false;
         if(popupShown)
           popup.state.popup = false;
         else

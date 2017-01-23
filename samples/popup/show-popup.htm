@@ -45,7 +45,7 @@
       } 
       
       // close popup on mouseup inside it
-      event "~mouseup|popup" {
+      event ~mouseup $(popup) {
         this.state.popup = false;
       }
       

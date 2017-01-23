@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+          label {
+            display:block;
+            width:4em;
+            border:1dip solid;
+            overflow-x:hidden;
+            white-space:nowrap;
+            text-overflow:ellipsis;
+          } 
+
+          label.custom popup[role=overflow-tooltip] {
+            background: gold;
+            border:1dip solid;
+            border-radius: 4dip;
+            padding:4dip;
+          }
+
+        </style>
+    </head>
+    <body>
+     <p>Hover mouse to see automatic tooltip generation on text-overflow:ellipsis;</p> 
+
+     <label>Some long text</label>
+
+     <p>Styling text-overflow:ellipsis tooltip:</p>
+
+     <label.custom>Another long text</label>     
+
+    </body>
+</html>

@@ -1,4 +1,4 @@
-<html>
+﻿<html>
   <head>
     <meta name="source" content="http://www.terrainformatica.com/wiki/doku.php?id=h-smile:built-in-behaviors:edit"/>
     <meta name="generator" content="h-smile:richtext"/>
@@ -32,14 +32,14 @@
         &lt;p&gt;Line 3&lt;/p&gt;
       &lt;/body&gt;
    &lt;/html&gt;
-&lt;/htmlarea&gt;</pre> Content model is 
-determined by the document loaded in the editor.<h2>Events</h2>
+&lt;/htmlarea&gt;</pre><p>Content model is determined by content loaded in it.</p>
+<h2>Events</h2>
   <p>Together with the standard set of events (mouse, keyboard, focus) <em>behavior: richtext</em> generates:</p>
   <ul>
     <li>EDIT_VALUE_CHANGED event - value of the element was changed due to user actions. Posted (asynchronous) event.</li>
     <li>EDIT_VALUE_CHANGING event - sent when value of the element is about to change. Synchronous event.</li></ul>
   <h2>Value</h2>
-  <p>string, reflects current status of internal editing buffer.</p>
+  <p>string, reflects current status of content DOM&nbsp;- value gets/sets current HTML content.&nbsp; For the richtext DOM element property <i>value</i> is an alias of property  <i>html.</i></p>
   <h2>Special key combinations</h2>
   <ul>
     <li>LEFT, CTRL+LEFT, SHIFT+LEFT, CTRL+SHIFT+LEFT</li>
@@ -61,13 +61,14 @@ determined by the document loaded in the editor.<h2>Events</h2>
         <p>loads file from URL into the editor;</p></dd>
     <dt><code>saveDocument</code></dt>
     <dd><code>(url:string): true|false</code> 
-        <p>saves content to file;</p></dd>
-    <dt><code>setContent</code></dt>
-    <dd><code>(text:string):&nbsp;true|false</code>
-        <p>sets content from the string;</p></dd>
-    <dt><code>setContent</code></dt>
-    <dd><code>(text:string, selStart:integer, selEnd:integer):&nbsp;true|false</code>
-        <p>sets content from the <i>text</i> and selection from&nbsp;given <i>selStart</i> and <i>selEnd</i>;</p></dd><dt><code>getContent</code></dt><dd><code>() : [html:string, selStart:integer, selEnd:integer] </code><p>returns content and selection as an array of three elements;</p>
+        <p>saves content to a file;</p></dd>
+    <dt><code>emptyDocument</code></dt>
+    <dd><code>():&nbsp;true|false</code>
+        <p>initializes the editor by empty document;</p></dd>
+    <dt><code>sourceToContent</code></dt>
+    <dd><code>(html:string, url:string, selStart:integer, selEnd:integer):&nbsp;true|false</code>
+        <p>The method&nbsp;sets content from the <i>html</i> and selection from&nbsp;given <i>selStart</i> and <i>selEnd</i>.</p>
+			<p>This method does incremental content update - supposed to be used when you need to update content from HTML source  code view as it preserves undo/redo operational stack.&nbsp;</p></dd><dt><code>contentToSource</code></dt><dd><code>() : [html:string, selStart:integer, selEnd:integer] </code><p>returns content and selection as an array of three elements;</p>
         </dd>
     </dl>
 </body>

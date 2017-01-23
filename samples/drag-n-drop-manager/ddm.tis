@@ -43,6 +43,7 @@ function DragDrop(def)
   var dd_target = null;     // current target, mouse is over it.
   var dd_targets = def.where instanceof Element ? [def.where] : self.selectAll(def.where);
   var dd_placeholder_src = null;
+  var dd_source_index = 0;
   var dd_placeholder_dst = null;
   var dd_container = null;  // DD happens inside this only
   var dd_width, dd_height;  // dims of the draggable
@@ -132,7 +133,7 @@ function DragDrop(def)
   // 3.b) exchange positions of dd_source and dd_placeholder_src so dd_source 
   //      that we move will always be at the end so it will not conflict with findByPos
     dd_source.swap(dd_placeholder_src); 
-    
+    dd_source_index = dd_placeholder_src.index;
   // 3.c) call def.setupPlaceholder for dd_placeholder_src so caller can do something special with it. 
     if (def.setupPlaceholder)
     	def.setupPlaceholder(dd_placeholder_src);
@@ -287,13 +288,17 @@ function DragDrop(def)
 
     //var tc = view.root.find(vx, vy);
     
-    if( tc && tc.parent === dd_target ) {
-      if( tc.index <= dd_placeholder_src.index || dd_target !== dd_source.parent )
-        return validPosition(tc.index);
+    if( tc && tc.parent === dd_target ) 
+    {
+      if (tc.index <= dd_placeholder_src.index || dd_target !== dd_source.parent) 
+         return validPosition(tc.index);
       else 
-        return validPosition(tc.index + 1);
-    }
-    return dd_target.length;
+         return validPosition(tc.index + 1);
+    } 
+    else if (dd_source.parent !== dd_target) 
+      return dd_target.length;
+    else 
+      return dd_source_index;
   }
   
   

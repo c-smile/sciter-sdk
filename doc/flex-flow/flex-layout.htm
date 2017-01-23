@@ -64,22 +64,7 @@ margin-left  = 2/4 * width-to-distribute = 148px;
     <li><code>min-intrinsic</code> value of some container is a minimal length that is needed to render the container without overflow in corresponding direction. E.g. for elements with overflow:auto it is a minimal width of the element to show it without scrollbars.</li>
     <li><code>max-intrinsic</code> value of some container is a minimal length needed to show the element without wrapping. In other words when width is max-intrinsic the height of the element is minimal in horizontal writing systems like <em>rtl</em>/<em>ltr</em>. In vertical writing systems (like <em>ttb</em>) &nbsp;<code>height:max-intrinsic</code> will get minimal value of the height when width of the element becomes minimal.</li></ul>
   <p><code>width:min-intrinsic</code> for paragraph <code>&lt;p&gt;first second&lt;/p&gt;</code> will be equal to the width of widest word in the paragraph. <code>width:max-intrinsic</code> for the paragraph will be equal to the sum of all words and spaces in the paragraph - the paragraph will be rendered as single line of text.</p>
-  <h3>2.2. &quot;Relative flexes&quot;, the <code>fx()</code> function.</h3>
-  <p>The <code>fx()</code> function allows to define flexible length with a base value. There are two forms of the fx function:</p>
-  <ol>
-    <li><code>fx( &lt;decimal&gt; | &lt;percent&gt; )</code> &nbsp;- this form defines plain (a.k.a absolute) flex value. <code>fx(1)</code> is an exact equivalent of <code>1*</code> &nbsp;and <code>fx(50%)</code> is just another form of defining <code>0.5*</code>.</li>
-    <li><code>fx( &lt;decimal&gt; | &lt;percent&gt;, &lt;length&gt; | &lt;percent&gt; )</code> - this form defines flexible length that is &quot;flexing around&quot; the base value.</li></ol>
-  <p>Example: these two children that use relative flexes:</p>
-  <pre>&lt;div style=&quot;flow:horizontal; width:440px&quot;&gt;
-  &lt;div style=&quot;width:fx(1,160px)&quot; /&gt;
-  &lt;div style=&quot;width:fx(1,80px)&quot; /&gt;
-&lt;/div&gt;
-</pre>
-  <p>will be rendered using following computed lengths:</p>
-  <p><img src="images/relative-flexes.png"/></p>
-  <p>To compute relative flex values we susbstract all base lengths from free space of the container and distribute only space that is left after that (a.k.a. post-base space). The post-base space can be as positive as negative. If post-base space is negative then final lengths will be less than their base values.</p>
-  <p>The <code>fx()</code> function can be used in the same set of properties where flex units are acceptable.</p>
-  <h2>3. The flow property</h2>
+  <h3>3. The flow property</h3>
   <p>The flow property defines how the container lays out its children. In other words, it establishes a layout manager for the container element.</p>
   <p><a name="propdef-flow" class="propdef-title"><strong>'flow'</strong></a></p>
   <table class="propinfo" cellpadding="0" cellspacing="0">
@@ -107,28 +92,28 @@ margin-left  = 2/4 * width-to-distribute = 148px;
   <p>This attribute defines the layout method of children in normal flow:</p>
   <table>
     <tr>
-      <th nowrap>value of the flow</th>
+      <th nowrap="">value of the flow</th>
       <th>Resulting display of children</th></tr>
     <tr>
-      <td nowrap><code>vertical</code></td>
+      <td nowrap=""><code>vertical</code></td>
       <td>Stacked vertically.</td></tr>
     <tr>
-      <td nowrap><code>horizontal</code></td>
+      <td nowrap=""><code>horizontal</code></td>
       <td>Positioned horizontally in a single row. Direction is governed by the <em>direction</em> attribute, in particular by values <code>ltr</code> and <code>rtl</code>.</td></tr>
     <tr>
-      <td nowrap><code>horizontal-flow</code></td>
+      <td nowrap=""><code>horizontal-flow</code></td>
       <td>Positioned horizontally, wrapping on multiple rows, if needed. Direction is governed by the <em>direction</em> attribute.</td></tr>
     <tr>
-      <td nowrap><code>vertical-flow</code></td>
+      <td nowrap=""><code>vertical-flow</code></td>
       <td>Positioned vertically, wrapping on multiple <em>columns</em>, if needed.</td></tr>
     <tr>
-      <td nowrap><code>&quot;template</code>&quot;</td>
+      <td nowrap=""><code>&quot;template</code>&quot;</td>
       <td>Replaced according to the template. Binding of child position with the named cell in the template is made by using the <code>float:&quot;name&quot;</code> attribute.</td></tr>
     <tr>
-      <td nowrap><code>row(tag1,tag2,...)</code></td>
+      <td nowrap=""><code>row(tag1,tag2,...)</code></td>
       <td>Positioned in rows according to the row() template function.</td></tr>
     <tr>
-      <td nowrap><code>stack</code></td>
+      <td nowrap=""><code>stack</code></td>
       <td>Elements positioned on top of each other.</td></tr></table>
   <ul>
     <p>Terms used in the document:</p>

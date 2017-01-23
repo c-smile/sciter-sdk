@@ -79,8 +79,8 @@ elem.style.height = ... ;
       <p>The only difference is when last parameter <em>delayed</em> = <code>true</code> is provided. With it the method changes dimensions of the element immediately and defers remeasurement of children for some later time. It makes sense to use this method if you need to update dimensions of the <em>overflow:auto | scroll</em> element with many children in response of some frequent events like MOUSE_MOVE (E.g. in custom splitter implementation). In this case mutiple MOUSE_MOVEs will end up in only one remeasurement of element's content.</p></dd>
     <dt>documentRules</dt>
     <dd>
-      <div>(<em> </em>[<em>callback</em>: function] [, <em>filter</em>: object ] ) returns number of rules processed (integer)</div>
-      <p>Enumerates CSS rules defined and used by the document.</p>
+      <div>(<em> </em>[<em>callback</em>: function] [, <em>filter</em>: object ] ) : integer</div>
+      <p>Enumerates CSS rules defined and used by the document. Returns number of rules processed.</p>
       <p>Where:</p>
       <ul>
         <li><em>callback</em> is <code>function( selector, file, lineNo, usageCounter )</code> that receives CSS selector , file URL, line number where the rule is defined and the number of DOM elements that use this rule to the moment of the documentRules() call.</li>
@@ -90,6 +90,9 @@ elem.style.height = ... ;
           <li><em>file</em> - string, url of CSS file where the rule is defined;</li>
           <li><em>lineNo</em> - integer, line number in CSS file where the rule is defined;</li>
           <li><em>properties</em> - <code>function(props:object) : null | object</code> , properties accessor function, the function will receive CSS properties defined by the rule. If the function returns an object then properties of the CSS rule will be updated by the object properties.</li></ul></ul>
-      <p>Therefore the <em>documentRules</em> function can be used as for inspection as for mutation of the CSS rules table associated with the document.</p></dd></dl>
+      <p>Therefore the <em>documentRules</em> function can be used as for inspection as for mutation of the CSS rules table associated with the document.</p>
+			</dd>
+      <dt>variables</dt>
+   		<dd>(  [<i>varsToSet</i>:object] ) : object | undefined<p>The method gets or sets (if <i>varsToSet</i> provided) CSS variables defined on the element.</p></dd></dl>
 </body>
 </html>

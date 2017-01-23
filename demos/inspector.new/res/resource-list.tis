@@ -58,7 +58,7 @@ class ResourceList: Behavior {
     
     for( var (url,res) in this.driver.resources ) 
     {
-      var list = this.sections[res.type];
+      var list = this.sections[res.type || DATA_HTML];
       if( !list ) list = this.othersList;
       var urlparts = res.url.match(URL_PARTS);
       if( !urlparts ) // wrong

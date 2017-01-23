@@ -81,26 +81,26 @@ function String_test()
   r = "one,two,three" /~ "A";   assert r == "one,two,three" : "rcar NF";  
   r = "one,two,three" %~ "A";   assert r == ""              : "rcdr NF";  
 
-  // stringizer function tests:	
-	
-	// stringizer function per se (name starts from $)
+  // stringizer function tests: 
+  
+  // stringizer function per se (name starts from $)
   function $( s.. ) // all string composition components are passed here, e.g. 
-	                  // for the call $(one{1}two) s.. will be an array with the content:
-										// ["one",1,"two"]  
-	{
-	  return s.join("");
-	}
-		
-	assert $({1}one) == "1one";
-	assert $(one{1}two) == "one1two";
-	assert $(one{1}) == "one1";
-	assert $({1}{2}) == "12";
-	assert $({1}one{2}) == "1one2";
+                    // for the call $(one{1}two) s.. will be an array with the content:
+                    // ["one",1,"two"]  
+  {
+    return s.join("");
+  }
+    
+  assert $({1}one) == "1one";
+  assert $(one{1}two) == "one1two";
+  assert $(one{1}) == "one1";
+  assert $({1}{2}) == "12";
+  assert $({1}one{2}) == "1one2";
   assert $({"{"}one}) == "{one}";
-	assert $("the string") == "\"the string\"";
-	assert $(x{ 1 + 2 }y) == "x3y";
-	assert $(x({1 + 2})y) == "x(3)y";
-	
+  assert $("the string") == "\"the string\"";
+  assert $(x{ 1 + 2 }y) == "x3y";
+  assert $(x({1 + 2})y) == "x(3)y";
+  
 }
 
 function Array_test()
@@ -978,8 +978,8 @@ function ExtLoop_test()
 class superA
 {
   function this(p) { this.name = p + "a"; } 
-	function foo() { return "A";}
-	function bar() { return "a";}  
+  function foo() { return "A";}
+  function bar() { return "a";}  
   function baz() { return "1";}  
 }
 
@@ -1206,6 +1206,16 @@ function match_test() {
 
 }
 
+function regex_match_test() {
+   const nameRE = /^[\w\-_\.@\+ \$\&\!]*$/g;
+   
+   function isNameValid(val) { return val.match(nameRE); }
+   
+   assert isNameValid("oskryp");
+   assert isNameValid("test_test");
+}
+
+
 function referenceOf_test() {
 
   var obj = { 
@@ -1275,6 +1285,7 @@ run( JSON_test );
 run( Undefined_test );
 run( ForIn_test );
 run( match_test );
+run( regex_match_test );
 run( referenceOf_test );
 
 showMemStats("after");

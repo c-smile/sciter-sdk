@@ -21,6 +21,7 @@
 #include "tiscript.hpp"
 #include "sciter-x-dom.h"
 #include <algorithm>
+#include <vector>
 
 /**sciter namespace.*/
 namespace sciter
@@ -716,6 +717,22 @@ namespace dom
       va_end ( args );
       select_elements( cb, buffer); // find all elements satisfying given CSS selector
       //assert(find_first.hfound);
+    }
+
+    std::vector<sciter::dom::element> 
+      find_all(const char* selector, ...) const
+    {
+      struct each_callback : public sciter::dom::callback
+      {
+        std::vector<sciter::dom::element> elements;
+        virtual bool on_element(HELEMENT he) {
+          elements.push_back(sciter::dom::element(he));
+          return false; // no stop
+        }
+      };
+      each_callback cb;
+      this->find_all(&cb, selector);
+      return cb.elements;
     }
 
     // will find first parent satisfying given css selector(s)

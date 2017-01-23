@@ -12,7 +12,7 @@
   <p>To simplify UI tests scripting it has few extensions listed below:</p>
   <dl>
     <dt><code>HRESULT IAccessible::get_accChild(VARIANT varChild, IDispatch **ppdispChild);</code></dt>
-    <dd>the varChild may accept strings passed as <code>VARIANT(VT_BSTR,str)</code>. &nbsp;The str is interpretted as a selector and if matching element is found its IAccessible wrapper gets returned in <code>ppdispChild</code>. That is equivalent of Element.select(selector) method in script. </dd>
+    <dd>the <i>varChild</i> may accept strings passed as <code>VARIANT(VT_BSTR,str)</code>. &nbsp;The <i>str</i> is interpreted as a selector and if matching element is found its IAccessible wrapper gets returned in <code>ppdispChild</code>. That is equivalent of Element.select(selector) method in script. </dd>
     <dt><code>HRESULT IAccessible::get_accValue(VARIANT varChild, BSTR *pszValue);</code></dt>
     <dd>If <code>varChild</code> here holds negative int (VT_I4) then it gets interpreted as an index of attribute and the method returns corresponding attribute value. -1 - first attribute. -2 - second, etc. And if <code>varChild</code> holds string (VT_BSTR) then it gets interpreted as a name of attribute and the method returns corresponding attribute value.</dd>
     <dt><code>HRESULT IAccessible::get_accName(VARIANT varChild, BSTR *pszValue);</code></dt>
@@ -20,7 +20,6 @@
     <dt><code>HRESULT IAccessible::get_accState( VARIANT varChild, VARIANT *pvarState);</code></dt>
     <dd>If <code>varChild</code> here holds -1 (VT_I4) then the method returns number of attributes defined on element as <code>VARIANT(VT_I4,nAttributes)</code></dd></dl>
   <p>Standard parameter values and other IAccessible methods work as defined IAccessible documentation. </p>
-  <dl>
-    <dt></dt></dl>
+  <p></p>
 </body>
 </html>

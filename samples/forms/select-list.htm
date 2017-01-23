@@ -6,22 +6,29 @@
     </style>
     <script type="text/tiscript">
     
-      $(#get).onClick = function()
+      event click $(#get)
       {
         stdout.printf("%V\n",$(select).value);
       }
-      $(#set).onClick = function()
+      event click $(#set)
       {
         $(select).value = 8;
       }
-      $(#clear).onClick = function()
+      event click $(#clear)
       {
         $(select).value = undefined;
       }      
+      event click $(button#set-by-dom-ref)
+      {
+        $(option[value=8]).execCommand("set-current");
+      }
+
     </script>
   </head>
 <body>
-  value <button #get>get</button> <button #set>set</button> <button #clear>clear</button>
+  value <button #get>get</button> 
+  <button #set>set</button> <button #clear>clear</button>
+  <button #set-by-dom-ref>set by DOM reference</button>
   <select|list name="country" size=16>
     <option value=0 selected>not specified</option>
     <option value=1 >Afghanistan</option>

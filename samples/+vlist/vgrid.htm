@@ -111,11 +111,15 @@
     {
       vlist.tbody.currentIndex = records.length - 1; 
     }    
-    
-    
-    vlist.on("change",function(evt) {
+        
+    vlist << event change {
       stdout.println("change", vlist.tbody.currentIndex)
-    });
+    }
+
+    vlist << event dblclick $(tr) {
+      stdout.println("dblclick", vlist.tbody.currentIndex)
+    }
+
     
   }
   

@@ -1,18 +1,53 @@
 ﻿<html>
   <head>
-    <title>Sciter 3.* logfile</title>
+    <title>Sciter 3.* and 4.* logfile</title>
     <meta name="generator" content="h-smile:richtext"/>
   </head>
 <body>
   <h3>Sciter 3.* and 4.* logfile:</h3>
   <table border="1" cellpadding="3" cellspacing="1" width="100%">
     <tr>
-      <td width="60" nowrap valign="top" align="center">Build#</td>
-      <td width="78" nowrap valign="top" align="center">Date</td>
+      <td width="60" nowrap="" valign="top" align="center">Build#</td>
+      <td width="78" nowrap="" valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr>
+    <tr><td valign="top" bgcolor="#FFFADA">4.0.0.3</td><td nowrap="" valign="top" align="center">22-01-2017</td><td>
+				
+				
+				<p>new:</p>
+				<ul>
+					<li>[css] <code>border-collapse: collapse</code> support in tables.  That's probably last CSS2.1 property that was not implemented.</li><li>Enabling <code>SciterSetOption(SCITER_SET_GFX_LAYER</code>) on all platforms.</li>
+					<li>[script, regexp] <code>\w</code> matches alpha and digit characters as they defined by UNICODE ( JS only uses ASCII range ).<br/>+ <code>\a</code> matches alpha characters as they defined by UNICODE <code>\A</code> matches any non-alpha UNICODE character.</li>
+					<li>New <code>Event.VK_SHORTCUT</code> key code - it is an alias on <code>COMMAND</code> key on Mac or <code>CONTROL</code> on other platforms.</li>
+					<li><code>option.execCommand(&quot;set-current&quot;)</code> - allows to set <code>&lt;option&gt;</code> in <code>&lt;select&gt;</code> using DOM element (that option) reference.</li>
+					<li>[richtext]  <code>richtext.value</code> is an alias of <code>richtext.html</code></li></ul><p>fixes:</p><ul>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					<li>better double click handling in behavior:htmlarea | richtext | plaintext.</li><li>bin/32 and bin/64 binaries are compiled by VC2010 as&nbsp;vc140_xp toolset (VS2015) produces code that is unstable on Windows XP. Investigating.</li><li>[script] fix of <code>BrokenHeart</code> issue in <code>Element.sort()</code>.<br/></li><li>[css,layout] margin collapsing fix.</li><li>[printing,win] fix of pager demo.<br/></li><li>[doc] <code>element.style.variables()</code> documented now.</li><li>[win] fix of doubled call of <code>self.closing()</code>.</li><li>[osx] system font size adjustment.</li><li>[osx,linux] System.scanFiles() caption in callback.</li><li>[skia, all platforms] fix of popups rendering, see: http://sciter.com/forums/topic/ideascalloutdynamic-callout-not-transparent-on-macos/</li><li>[win, gdi] fix of popups (menus, dd-list, etc) rendering.<br/></li><li>[skia] expandable images, fix of drawing artifacts. </li><li>[behavior:richtext] multiple fixes.</li><li>[d2d] Fix of errors in <code>Path.xxx()</code> operations when path was drawn already.</li><li><code>&lt;img&gt;</code> and <code>&lt;picture&gt;</code> - freeing image on @src change and <code>element.remove()</code>;</li><li><code>behavior:radio</code>, fix of <code>element.value</code> calculation when DOM attribute value is numeric. </li><li>[masked-edit] clipboard-copy fix. </li><li>Fix of GC issue in <code>Bytes.load()</code>. See: http://sciter.com/forums/topic/bytes-tostring-bug-or-not-bug/</li><li>Reverted experimental @set application (introduced in 4.0.0.2). </li><li>[win/d2d/highdpi] &quot;novalue&quot; rendering fix when line-height is present.</li><li>Fix of getting value of <code>&lt;input|hidden&gt;</code></li><li>[skia] default image scaling quality is increased from &quot;nearest neighbour&quot; to &quot;bilinear&quot;.<br/></li><li>[skia] support of CSS image-rendering modes.</li><li>[script] RegEx, removing some limitations on RE size.</li><li>[win,script] made code friendly to /LARGEADDRESSAWARE (64 bit addresses in 32bit module)</li></ul>
+				<p>Builds: win32/win64, osx32/osx64, linux/gtk64
+        <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></p></td></tr><tr>
       <td valign="top" bgcolor="#FFFADA">4.0.0.2</td>
-      <td nowrap valign="top" align="center">08-01-2017</td>
+      <td nowrap="" valign="top" align="center">08-01-2017</td>
       <td>
         <p>new:</p>
         <ul>
@@ -60,7 +95,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">4.0.0.1</td>
-      <td nowrap valign="top" align="center">25-12-2016</td>
+      <td nowrap="" valign="top" align="center">25-12-2016</td>
       <td>
         <p>new:</p>
         <ul>
@@ -95,7 +130,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">4.0.0.0</td>
-      <td nowrap valign="top" align="center">18-12-2016</td>
+      <td nowrap="" valign="top" align="center">18-12-2016</td>
       <td>
         <p>new:</p>
         <ul>
@@ -104,9 +139,9 @@
             <li><strong>On Windows</strong> sciter is compiled as different DLLs having the same name <em>sciter.dll </em>&nbsp;locating in following folders:</li>
             <ul>
               <li>bin/32/sciter.dll \</li>
-              <li>bin/64/sciter.dll – Direct2D and GDI+ backends as before</li>
+              <li>bin/64/sciter.dll â€“ Direct2D and GDI+ backends as before</li>
               <li>bin/skia32/sciter.dll \</li>
-              <li>bin/skia64/sciter.dll – Direct2D and Skia/OpenGL backends.</li></ul>
+              <li>bin/skia64/sciter.dll â€“ Direct2D and Skia/OpenGL backends.</li></ul>
             <li><strong>On MacOS</strong> sciter includes as CoreGraphics as Skia/OpenGL backends (default) switchable by SciterSetOption() function.</li></ul>
           <li>+ sample: sdk/samples/ideas/effects/blur-behind/bb-demo.htm - ambient color effect.</li>
           <li><code>Element.state.awaitsDraw</code> flag. The flag is &quot;on&quot; after invalidation request was issued on the element and until first draw after that.</li></ul>
@@ -127,7 +162,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.3.4</td>
-      <td nowrap valign="top" align="center">12-12-2016</td>
+      <td nowrap="" valign="top" align="center">12-12-2016</td>
       <td>
         <p>fixes:</p>
         <ul>
@@ -138,7 +173,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.3.3</td>
-      <td nowrap valign="top" align="center">11-12-2016</td>
+      <td nowrap="" valign="top" align="center">11-12-2016</td>
       <td>
         <p>new:</p>
         <ul>
@@ -173,7 +208,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.3.2</td>
-      <td nowrap valign="top" align="center">26-11-2016</td>
+      <td nowrap="" valign="top" align="center">26-11-2016</td>
       <td>
         <p>new:</p>
         <ul>
@@ -205,11 +240,11 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.3.1</td>
-      <td nowrap valign="top" align="center">20-11-2016</td>
+      <td nowrap="" valign="top" align="center">20-11-2016</td>
       <td>
         <p>new:</p>
         <ul>
-          <li>+ <strong>bin/scapp.exe</strong> - standalone sciter executable (sciter lib linked statically). &nbsp;Windows and MacOS. Essentially it is similiar to Electorn.js ( Node.js + Chromium browser = <span style="color: rgb(51, 51, 51); font-family: -apple-system, BlinkMacSystemFont, " Segoe UI", Helvetica, Arial, sans-serif, "Apple color Emoji", "Segoe UI Symbol"; font-size: 14px; font-style: normal; font-variant-ligatures: font-variant-caps: font-weight: letter-spacing: orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: widows: word-spacing: -webkit-text-stroke-width: background-color: rgb(255, 255, 255); display: inline !important; float: none;">142 MB</span> ) but is a monolitic executable without dependencies of size 4 MB.</li>
+          <li>+ <strong>bin/scapp.exe</strong> - standalone sciter executable (sciter lib linked statically). &nbsp;Windows and MacOS. Essentially it is similiar to Electorn.js ( Node.js + Chromium browser = <span style="color: rgb(51, 51, 51); font-family: -apple-system, BlinkMacSystemFont, " Segoe="" UI",="" Helvetica,="" Arial,="" sans-serif,="" "Apple="" color="" Emoji",="" "Segoe="" UI="" Symbol";="" font-size:="" 14px;="" font-style:="" normal;="" font-variant-ligatures:="" font-variant-caps:="" font-weight:="" letter-spacing:="" orphans:="" 2;="" text-align:="" start;="" text-indent:="" 0px;="" text-transform:="" none;="" white-space:="" widows:="" word-spacing:="" -webkit-text-stroke-width:="" background-color:="" rgb="" name="255, 255, 255" ;="" display:="" inline="" type="important;" float:="" none;"="">142 MB</span> ) but is a monolitic executable without dependencies of size 4 MB.</li>
           <li><code>Element.move(,,, referencePoint)</code> parameter;</li>
           <li>Support of <code>@import url(content.zip#test.css)</code> - loading styles from zips;</li>
           <li>+ sidebar sample: &nbsp;sdk/samples/dialogs+windows/test-sidebar.htm;</li>
@@ -234,7 +269,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.3.0</td>
-      <td nowrap valign="top" align="center">13-11-2016</td>
+      <td nowrap="" valign="top" align="center">13-11-2016</td>
       <td>
         <p>new:</p>
         <ul>
@@ -267,7 +302,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.2.13</td>
-      <td nowrap valign="top" align="center">30-10-2016</td>
+      <td nowrap="" valign="top" align="center">30-10-2016</td>
       <td>
         <p>new:</p>
         <ul>
@@ -329,7 +364,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.2.12</td>
-      <td nowrap valign="top" align="center">06-10-2016</td>
+      <td nowrap="" valign="top" align="center">06-10-2016</td>
       <td>
         <p>new:</p>
         <ul>
@@ -359,7 +394,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.2.11</td>
-      <td nowrap valign="top" align="center">10-09-2016</td>
+      <td nowrap="" valign="top" align="center">10-09-2016</td>
       <td>
         <p>new:</p>
         <ul>
@@ -379,7 +414,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.2.10</td>
-      <td nowrap valign="top" align="center">20-08-2016</td>
+      <td nowrap="" valign="top" align="center">20-08-2016</td>
       <td>
         <p>new:</p>
         <ul>
@@ -415,7 +450,7 @@
           <li>fix of issue with multiple animators running on the same element.</li></ul></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.2.9</td>
-      <td nowrap valign="top" align="center">18-07-2016</td>
+      <td nowrap="" valign="top" align="center">18-07-2016</td>
       <td>
         <p>fixes:</p>
         <ul>
@@ -423,7 +458,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.2.8</td>
-      <td nowrap valign="top" align="center">17-07-2016</td>
+      <td nowrap="" valign="top" align="center">17-07-2016</td>
       <td>
         <p>new:</p>
         <ul>
@@ -440,7 +475,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.2.7</td>
-      <td nowrap valign="top" align="center">13-07-2016</td>
+      <td nowrap="" valign="top" align="center">13-07-2016</td>
       <td>
         <p>new:</p>
         <ul>
@@ -477,7 +512,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.2.6</td>
-      <td nowrap valign="top" align="center">12-06-2016</td>
+      <td nowrap="" valign="top" align="center">12-06-2016</td>
       <td>
         <p>new:</p>
         <ul>
@@ -501,7 +536,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.2.5</td>
-      <td nowrap valign="top" align="center">28-05-2016</td>
+      <td nowrap="" valign="top" align="center">28-05-2016</td>
       <td>
         <p>new:</p>
         <ul>
@@ -523,7 +558,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.2.4</td>
-      <td nowrap valign="top" align="center">15-05-2016</td>
+      <td nowrap="" valign="top" align="center">15-05-2016</td>
       <td>
         <p>new:</p>
         <ul>
@@ -551,7 +586,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.2.3</td>
-      <td nowrap valign="top" align="center">03-05-2016</td>
+      <td nowrap="" valign="top" align="center">03-05-2016</td>
       <td>
         <p>new:</p>
         <ul>
@@ -574,7 +609,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.2.2</td>
-      <td nowrap valign="top" align="center">25-04-2016</td>
+      <td nowrap="" valign="top" align="center">25-04-2016</td>
       <td>
         <p>fixes:</p>
         <ul>
@@ -582,7 +617,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.2.1</td>
-      <td nowrap valign="top" align="center">24-04-2016</td>
+      <td nowrap="" valign="top" align="center">24-04-2016</td>
       <td>
         <p>new:</p>
         <ul>
@@ -630,7 +665,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.2.0</td>
-      <td nowrap valign="top" align="center">19-03-2016</td>
+      <td nowrap="" valign="top" align="center">19-03-2016</td>
       <td>
         <p>new:</p>
         <ul>
@@ -662,7 +697,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.1.11</td>
-      <td nowrap valign="top" align="center">13-03-2016</td>
+      <td nowrap="" valign="top" align="center">13-03-2016</td>
       <td>
         <p>new:</p>
         <ul>
@@ -690,7 +725,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.1.10</td>
-      <td nowrap valign="top" align="center">07-03-2016</td>
+      <td nowrap="" valign="top" align="center">07-03-2016</td>
       <td>
         <p>fixes:</p>
         <ul>
@@ -701,7 +736,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.1.9</td>
-      <td nowrap valign="top" align="center">06-03-2016</td>
+      <td nowrap="" valign="top" align="center">06-03-2016</td>
       <td>
         <p>new features:</p>
         <ul>
@@ -728,7 +763,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.1.8</td>
-      <td nowrap valign="top" align="center">27-02-2016</td>
+      <td nowrap="" valign="top" align="center">27-02-2016</td>
       <td>
         <p>new features:</p>
         <ul>
@@ -763,7 +798,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.1.7</td>
-      <td nowrap valign="top" align="center">16-02-2016</td>
+      <td nowrap="" valign="top" align="center">16-02-2016</td>
       <td>
         <p>new features:</p>
         <ul>
@@ -795,7 +830,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.1.6</td>
-      <td nowrap valign="top" align="center">07-02-2016</td>
+      <td nowrap="" valign="top" align="center">07-02-2016</td>
       <td>
         <p>new features:</p>
         <ul>
@@ -828,7 +863,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.1.5</td>
-      <td nowrap valign="top" align="center">03-02-2016</td>
+      <td nowrap="" valign="top" align="center">03-02-2016</td>
       <td>
         <p>fixes:</p>
         <ul>
@@ -837,7 +872,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.1.4</td>
-      <td nowrap valign="top" align="center">02-02-2016</td>
+      <td nowrap="" valign="top" align="center">02-02-2016</td>
       <td>
         <p>new features:</p>
         <ul>
@@ -868,7 +903,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.1.3</td>
-      <td nowrap valign="top" align="center">24-01-2016</td>
+      <td nowrap="" valign="top" align="center">24-01-2016</td>
       <td>
         <p>new features:</p>
         <ul>
@@ -916,7 +951,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.1.2</td>
-      <td nowrap valign="top" align="center">03-01-2016</td>
+      <td nowrap="" valign="top" align="center">03-01-2016</td>
       <td>
         <p>new features:</p>
         <ul>
@@ -936,7 +971,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.1.1</td>
-      <td nowrap valign="top" align="center">19-12-2015</td>
+      <td nowrap="" valign="top" align="center">19-12-2015</td>
       <td>
         <p>fixes:</p>
         <ul>
@@ -955,7 +990,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.1.0</td>
-      <td nowrap valign="top" align="center">08-12-2015</td>
+      <td nowrap="" valign="top" align="center">08-12-2015</td>
       <td>
         <p>new features:</p>
         <ul>
@@ -996,7 +1031,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.0.7</td>
-      <td nowrap valign="top" align="center">15-11-2015</td>
+      <td nowrap="" valign="top" align="center">15-11-2015</td>
       <td>
         <p>new features:</p>
         <ul>
@@ -1045,7 +1080,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA">3.3.0.6</td>
-      <td nowrap valign="top" align="center">09-10-2015</td>
+      <td nowrap="" valign="top" align="center">09-10-2015</td>
       <td>
         <p>new features:</p>
         <ul>
@@ -1106,7 +1141,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA"><strong>3.3.0.5</strong></td>
-      <td nowrap valign="top" align="center">08-09-2015</td>
+      <td nowrap="" valign="top" align="center">08-09-2015</td>
       <td>
         <ul>
           <li>new features:</li>
@@ -1125,7 +1160,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA"><strong>3.3.0.4</strong></td>
-      <td nowrap valign="top" align="center">30-08-2015</td>
+      <td nowrap="" valign="top" align="center">30-08-2015</td>
       <td>
         <ul>
           <li>inspector evolution:</li>
@@ -1165,7 +1200,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA"><strong>3.3.0.3</strong></td>
-      <td nowrap valign="top" align="center">14-08-2015</td>
+      <td nowrap="" valign="top" align="center">14-08-2015</td>
       <td>
         <ul>
           <li>inspector evolution:</li>
@@ -1196,10 +1231,10 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA"><strong>3.3.0.2</strong></td>
-      <td nowrap valign="top" align="center">03-08-2015</td>
+      <td nowrap="" valign="top" align="center">03-08-2015</td>
       <td>
         <ul>
-          <ol></ol></ul>
+          <ol/></ul>
         <p>New <strong>inspector.exe</strong> - works on all supported platforms in localhost and remote mode. Supports multiplatform operation, for example inspector on Mac OSX and debugee on Linux. Check <a href="http://www.terrainformatica.com/index.php/2015/08/new-domscript-inspector-is-coming" rel="bookmark" style="color: rgb(61, 96, 114); text-decoration: none;">New DOM/script inspector is coming</a> article.</p>
         <ul>
           <li>[win] element.state.focus = true; calls ::SetForegroundWindow( sciterhwnd ); if it was not foreground.</li>
@@ -1218,7 +1253,7 @@
         <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA"><strong>3.3.0.1</strong></td>
-      <td nowrap valign="top" align="center">18-07-2015</td>
+      <td nowrap="" valign="top" align="center">18-07-2015</td>
       <td>
         <ul>
           <li>accesskey DOM attribute documentation and demo in sdk/samples/accesskey</li>
@@ -1252,7 +1287,7 @@
         <p>Builds: win32, win64, osx64, linux/gtk64</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFADA"><strong>3.3.0.0</strong></td>
-      <td nowrap valign="top" align="center">04-07-2015</td>
+      <td nowrap="" valign="top" align="center">04-07-2015</td>
       <td>
         <ul>
           <li>+ <strong>Print and Print Preview</strong> support (on Windows only for a while) - behavior:pager:</li>
@@ -1318,7 +1353,7 @@
         <p>Builds: win32, win64, osx64, linux/gtk64</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFEFDF"><strong>3.2.0.9</strong></td>
-      <td nowrap valign="top" align="center">23-05-2015</td>
+      <td nowrap="" valign="top" align="center">23-05-2015</td>
       <td>
         <ul>
           <li>+ [windows, drag-n-drop] support of IDropSource/IDataObject (dragging text out of / in Sciter window) in behaviors: edit | textarea | htmlarea | richtext;</li>
@@ -1405,7 +1440,7 @@
         <p>Builds: win32, win64, osx64, linux/gtk64</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFEFDF"><strong>3.2.0.8</strong></td>
-      <td nowrap valign="top" align="center">01-04-2015</td>
+      <td nowrap="" valign="top" align="center">01-04-2015</td>
       <td>
         <ul>
           <li>[rtl, tables] fix of &lt;td colspan=2&gt; placement in RTL</li>
@@ -1426,7 +1461,7 @@
         <p>Builds: win32, win64, osx64, linux/gtk64</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFEFDF"><strong>3.2.0.7</strong></td>
-      <td nowrap valign="top" align="center">25-03-2015</td>
+      <td nowrap="" valign="top" align="center">25-03-2015</td>
       <td>
         <ul>
           <li><code>flow:stack</code> rendering order fix, see: <a href="http://www.terrainformatica.com/forum/read.php?4,1693,1693">http://www.terrainformatica.com/forum/read.php?4,1693,1693</a></li>
@@ -1460,7 +1495,7 @@
         <p>Builds: win32, win64, osx64, linux/gtk64</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFEFDF"><strong>3.2.0.6</strong></td>
-      <td nowrap valign="top" align="center">08-03-2015</td>
+      <td nowrap="" valign="top" align="center">08-03-2015</td>
       <td>
         <ul>
           <li>behavior:frameset, less controversial on-size handling.</li>
@@ -1478,7 +1513,7 @@
         <p>Builds: win32, win64, osx64, linux/gtk64</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFEFDF"><strong>3.2.0.5</strong></td>
-      <td nowrap valign="top" align="center">28-02-2015</td>
+      <td nowrap="" valign="top" align="center">28-02-2015</td>
       <td>
         <ul>
           <li>[osx] final @font-face fix.</li>
@@ -1493,7 +1528,7 @@
         <p>Builds: win32, win64, osx64, linux/gtk64</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFEFDF"><strong>3.2.0.4</strong></td>
-      <td nowrap valign="top" align="center">22-02-2015</td>
+      <td nowrap="" valign="top" align="center">22-02-2015</td>
       <td>
         <ul>
           <li>[windows, http client] Content-Length handling.</li>
@@ -1515,7 +1550,7 @@
         <p>Builds: win32, win64, osx64, linux/gtk64</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFEFDF"><strong>3.2.0.3</strong></td>
-      <td nowrap valign="top" align="center">13-02-2015</td>
+      <td nowrap="" valign="top" align="center">13-02-2015</td>
       <td>
         <ul>
           <li>view.dialog { screen: N } and view.window { screen: N } - monitor selection for window to appear.</li>
@@ -1553,7 +1588,7 @@
         <p>Builds: win32, win64, osx64, linux/gtk64</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFEFDF"><strong>3.2.0.2</strong></td>
-      <td nowrap valign="top" align="center">18-01-2015</td>
+      <td nowrap="" valign="top" align="center">18-01-2015</td>
       <td>
         <ul>
           <li>Documentation: started documenting built-in behaviors. See <em>Sciter behaviors</em> section in sdk/doc viewer.</li>
@@ -1572,7 +1607,7 @@
         <p>Builds: win32, win64, osx64, linux/gtk64</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFEFDF"><strong>3.2.0.1</strong></td>
-      <td nowrap valign="top" align="center">02-01-2015</td>
+      <td nowrap="" valign="top" align="center">02-01-2015</td>
       <td>
         <ul>
           <li>[inspector] fix of master CSS retrieval.</li>
@@ -1582,7 +1617,7 @@
         <p>Builds: win32, win64, osx64, gtk64</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFEFDF"><strong>3.2.0.0</strong></td>
-      <td nowrap valign="top" align="center">26-12-2014</td>
+      <td nowrap="" valign="top" align="center">26-12-2014</td>
       <td>
         <p>3.2.X.X series adds Linux/GTK port of the Sciter. Note that while Windows and OS X ports are production ready and stable Linux port is in beta phase. On Linux Sciter uses GTK for windowing and Cairo as graphics backend.</p>
         <ul>
@@ -1610,7 +1645,7 @@
         <p>Builds: win32, win64, osx64, gtk64</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFEFDF"><strong>3.1.0.18</strong></td>
-      <td nowrap valign="top" align="center">22-11-2014</td>
+      <td nowrap="" valign="top" align="center">22-11-2014</td>
       <td>
         <ul>
           <li>support of &quot;nullable&quot; selects: &lt;select|dropdown <u>novalue=&quot;...text...&quot;</u>&gt;</li>
@@ -1644,7 +1679,7 @@
         <p>Builds: win32, win64, osx64</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFEFDF"><strong>3.1.0.17</strong></td>
-      <td nowrap valign="top" align="center">06-11-2014</td>
+      <td nowrap="" valign="top" align="center">06-11-2014</td>
       <td>
         <ul>
           <li>static sciter lib support, available as sciter-win-32/64.lib and sciter-osx-32/64.a. Allows to link Sciter statically with the rest of the application.</li>
@@ -1657,7 +1692,7 @@
         <p>Builds: win32, win64, osx64</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFEFDF"><strong>3.1.0.16</strong></td>
-      <td nowrap valign="top" align="center">02-11-2014</td>
+      <td nowrap="" valign="top" align="center">02-11-2014</td>
       <td>
         <ul>
           <li>New and better way of doing virtual grids, see: sdk/samples/+vlist/vgrid.htm</li>
@@ -1671,13 +1706,13 @@
         <p>Builds: win32, win64, osx64</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFEFDF"><strong>3.1.0.15</strong></td>
-      <td nowrap valign="top" align="center">25-10-2014</td>
+      <td nowrap="" valign="top" align="center">25-10-2014</td>
       <td>
         <ul>
           <li>[CSS] New '<strong>visibility:none</strong>' feature (new value of existing visibility property). Conceptually visibility:none and display:none both have exactly the same effect. The only difference is that you can safely switch 'visibility:none' &lt;-&gt; 'visibility:visible' in runtime. And this will not affect display model of the element (not all elements are display:block's normally!). See: samples/css++/visibility-none.htm sample.</li>
           <li>[DDM] various fixes and additional sample.</li>
           <li>New Event.MEDIA_CHANGED and self.on(&quot;mediachanged&quot;, function() {...}) - generated when media changes (N of screens, colors, etc.)</li>
-          <li>new property Element.state.screen - returns № of screen (monitor) where the element is rendered.</li>
+          <li>new property Element.state.screen - returns â„– of screen (monitor) where the element is rendered.</li>
           <li>fix of mem leak when assigned! is used in CSS (legacy HTMLayout CSSS! feature)</li>
           <li>New sample: Code Colorizer + Rainbow JavaScript colorizing engine written by Craig Campbell, ported to Sciter. &nbsp;See: samples/code-colorizer/demo.htm</li>
           <li>[tiscript] new String.splice() method, mimics Array.splice().</li>
@@ -1701,7 +1736,7 @@
         <p>Builds: win32, win64, osx64</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFEFDF"><strong>3.1.0.14</strong></td>
-      <td nowrap valign="top" align="center">12-10-2014</td>
+      <td nowrap="" valign="top" align="center">12-10-2014</td>
       <td>
         <ul>
           <li>new behavior sample : native external <strong>behavior:camera</strong> - capturing camera video stream. Demo of VIDEO_BIND_RQ, see: sdk/include/behaviors/behavior_camera_capture.cpp and sdk/samples/video/video-camera-behavior.htm</li>
@@ -1715,7 +1750,7 @@
         <p>Builds: win32, win64, osx64</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFEFDF"><strong>3.1.0.13</strong></td>
-      <td nowrap valign="top" align="center">05-10-2014</td>
+      <td nowrap="" valign="top" align="center">05-10-2014</td>
       <td>
         <ul>
           <li>[win] fix of animation restart on layered windows.</li>
@@ -1737,7 +1772,7 @@
         <p>Builds: win32, win64, osx64</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFEFDF"><strong>3.1.0.12</strong></td>
-      <td nowrap valign="top" align="center">28-09-2014</td>
+      <td nowrap="" valign="top" align="center">28-09-2014</td>
       <td>
         <ul>
           <li>behavior:menu fixes.</li>
@@ -1760,7 +1795,7 @@
         <p>Builds: win32, win64, osx64</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFEFDF"><strong>3.1.0.11</strong></td>
-      <td nowrap valign="top" align="center">15-09-2014</td>
+      <td nowrap="" valign="top" align="center">15-09-2014</td>
       <td>
         <ul>
           <li>[windows, themes] Fix of color:scrollbar color handling.</li>
@@ -1774,7 +1809,7 @@
         <p>Builds: win32, win64, osx64</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFEFDF"><strong>3.1.0.10</strong></td>
-      <td nowrap valign="top" align="center">06-09-2014</td>
+      <td nowrap="" valign="top" align="center">06-09-2014</td>
       <td>
         <ul>
           <li>+ new sample: sdk/samples/ideas/graph-ed - sketch of graphics editor.</li>
@@ -1797,7 +1832,7 @@
         <p>Builds: win32, win64, osx64</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFEFDF">3.1.0.9</td>
-      <td nowrap valign="top" align="center">10-08-2014</td>
+      <td nowrap="" valign="top" align="center">10-08-2014</td>
       <td>
         <ul>
           <li>+ view.clipboard(#put, image), see sdk/samples/graphics/test-dynamic-background.htm</li>
@@ -1833,7 +1868,7 @@
         <p>Builds: win32, win64, osx64</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFEFDF"><strong>3.1.0.8</strong></td>
-      <td nowrap valign="top" align="center">19-07-2014</td>
+      <td nowrap="" valign="top" align="center">19-07-2014</td>
       <td>
         <ul>
           <li>[API, sdk headers] aux-slice.h, fix of aux::const_wchars(&quot;literal&quot;) construct. &nbsp;</li>
@@ -1849,7 +1884,7 @@
         <p>Builds: win32, win64, osx64</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFEFDF"><strong>3.1.0.7</strong></td>
-      <td nowrap valign="top" align="center">13-07-2014</td>
+      <td nowrap="" valign="top" align="center">13-07-2014</td>
       <td>
         <ul>
           <li>[video] new sample: sdk/samples/video/video-controls.htm - small scripting behavior that provides video playback controls.</li>
@@ -1873,7 +1908,7 @@
         <p>Builds: win32, win64, osx64</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFEFDF"><strong>3.1.0.6</strong></td>
-      <td nowrap valign="top" align="center">06-07-2014</td>
+      <td nowrap="" valign="top" align="center">06-07-2014</td>
       <td>
         <ul>
           <li>&lt;video&gt; - basic video playback support. Documntation is in help browser, samples are in sdk/samples/video/ folder. On Windows Sciter uses DirectShow infrastructure to play videos windowlessly.</li>
@@ -1881,14 +1916,14 @@
         <p>Builds: win32, win64</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFEFDF">3.1.0.5</td>
-      <td nowrap valign="top" align="center">01-07-2014</td>
+      <td nowrap="" valign="top" align="center">01-07-2014</td>
       <td>
         <ul>
           <li>Emergency fix of issue with Element.loadImage(): <a href="http://www.terrainformatica.com/forum/read.php?4,1052,1052#msg">http://www.terrainformatica.com/forum/read.php?4,1052,1052</a></li></ul>
         <p>Builds: win32, win64, osx64</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFEFDF"><strong>3.1.0.4</strong></td>
-      <td nowrap valign="top" align="center">30-06-2014</td>
+      <td nowrap="" valign="top" align="center">30-06-2014</td>
       <td>
         <ul>
           <li>[CSS3] support of <strong>background-size: cover | contain</strong>. See: <u>sdk/samples/css3/background-size.htm</u> sample</li>
@@ -1908,7 +1943,7 @@
         <p>Builds: win32, win64, osx64</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFEFDF"><strong>3.1.0.3</strong></td>
-      <td nowrap valign="top" align="center">21-06-2014</td>
+      <td nowrap="" valign="top" align="center">21-06-2014</td>
       <td>
         <ul>
           <li>[SVG] mouse hit testing and behaviors, see; <u>sdk/samples/svg/inline-svg-hit-testing.htm</u></li>
@@ -1923,7 +1958,7 @@
         <p>Builds: win32, win64, osx64</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFEFDF"><strong>3.1.0.2</strong></td>
-      <td nowrap valign="top" align="center">16-06-2014</td>
+      <td nowrap="" valign="top" align="center">16-06-2014</td>
       <td>
         <ul>
           <h3>basic <strong>SVG support</strong> in Sciter:</h3>
@@ -1941,7 +1976,7 @@
         <p>Builds: win32, win64, osx64</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFEFDF"><strong>3.1.0.1</strong></td>
-      <td nowrap valign="top" align="center">05-06-2014</td>
+      <td nowrap="" valign="top" align="center">05-06-2014</td>
       <td>
         <ul>
           <li>fix of custom CSS attributes side effect against CSS aspects.</li>
@@ -1955,7 +1990,7 @@
         <p>Builds: win32, win64, osx64</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFEFDF"><strong>3.1.0.0</strong></td>
-      <td nowrap valign="top" align="center">19-05-2014</td>
+      <td nowrap="" valign="top" align="center">19-05-2014</td>
       <td>Sciter 3.1 supports now as <strong>Windows</strong> as <strong>Mac OS X</strong>.
         <p>Status:</p>
         <ul>
@@ -1984,7 +2019,7 @@
         <p>Builds: win32, win64, osx64</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFFDF">3.0.2.7</td>
-      <td nowrap valign="top" align="center">25-04-2014</td>
+      <td nowrap="" valign="top" align="center">25-04-2014</td>
       <td>
         <ul>
           <li>[sample,fix] sdk\samples\ideas\drag-n-drop-manager fixes and new sample;</li>
@@ -2012,7 +2047,7 @@
         <p>Builds: win32, win64</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFFDF"><strong>3.0.2.6</strong></td>
-      <td nowrap valign="top" align="center">12-04-2014</td>
+      <td nowrap="" valign="top" align="center">12-04-2014</td>
       <td>
         <ul>
           <li>[API] Fix of : SciterGetExpando returns &quot;undefined&quot;.</li>
@@ -2036,7 +2071,7 @@
         <p>Builds: win32, win64</p></td></tr>
     <tr>
       <td valign="top" bgcolor="#FFFFDF">3.1.0.0</td>
-      <td nowrap valign="top" align="center">19-05-2014</td>
+      <td nowrap="" valign="top" align="center">19-05-2014</td>
       <td>Sciter 3.1 supports now as Windows as Mac OS X.
         <p>Status:</p>
         <ul>

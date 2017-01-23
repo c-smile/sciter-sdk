@@ -1,10 +1,10 @@
 
 div.tapev
 {
-  width:300px;
+  width:300dip;
   height:*;
   prototype: TapeV;
-  border:1px solid #AAA;
+  border:1dip solid #AAA;
   background-color: gold;
   overflow:hidden-scroll; /* this allows to scroll content without scrollbars */
   flow:vertical;
@@ -12,20 +12,20 @@ div.tapev
      To reduce CPU consumption simply delete these three: */  
   foreground-image: url(images/cover.png);
   foreground-repeat: expand;
-  foreground-position: 32px 16px 32px 16px; 
+  foreground-position: 32 16 32 16; 
 }
 
 div.tapev > div.item
 {
-  margin:10px;
-  padding:4px;
+  margin:10dip;
+  padding:4dip;
   background-color: white;
-  min-height:64px;
+  min-height:64dip;
 }
 
 div.tapev > div.item > caption
 {
   background-color: #DDD;
-  margin:-4px -4px 4px -4px;
-  padding:4px;
+  margin:-4dip -4dip 4dip -4dip;
+  padding:4dip;
 }

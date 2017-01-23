@@ -98,20 +98,21 @@ view.<u>eventsRoot</u> = null;
       <p>If <em>clientCoordinates</em> is <em>true</em> x and y are interpretted as a desired position of the client area on the screen.</p></dd>
     <dt>move</dt>
     <dd>
-      <div><strong>( </strong><em>x</em>:int, <em>y</em>:int, <em>width</em>:int, <em>height</em>:int [, <em>clientCoordinates</em>: true | false] <strong>В ) </strong>:void</div>
+      <div><strong>( </strong><em>x</em>:int, <em>y</em>:int, <em>width</em>:int, <em>height</em>:int [, <em>clientCoordinates</em>: true | false] <strong>) </strong>:void</div>
       <p>Replaces window and changes dimension of the view (dialog or frame) on the screen. This method is applicable only for standalone Sciter.</p>
       <p>If <em>clientCoordinates</em> is <em>true</em> x,y, <em>width</em> and <em>height</em> are interpretted as a desired position/size of the client area on the screen.</p></dd>
     <dt>mediaVars</dt>
     <dd>
-      <div><strong>()</strong> : Object</div>
-      <p>Returns views current media variables.</p>
+      <div><strong>(</strong>[ newVars:object]<strong>)</strong> : Object | undefined</div>
+      <p>If no <i>newVars</i> parameter provided then the method returns current set of media variables used by the view.</p>
+			<p>If <i>newVars</i> is an object then the method will update view's media variables from properties of the object. Returns <i>undefined</i> in this case.</p>
     </dd>
     <dt>selectFile</dt>
     <dd>
       <div><strong>(</strong> <em>#save</em> | <em>#</em>open, <em>filter</em>:string , <em>ext</em>: string [,<em>initialPath</em>:string[, <em>dialogCaption</em>:string]] <strong>) </strong>: string | null</div>
       <p>Methods shows system file selector modal dialog and returns full path name of the selected file or null if user cancels this dialog.</p>
       <ul>
-        <li>First parameter is either #save or #load symbol. If #save is provided then dialog will have a caption <em>Save As...</em> otherwise (#load) it will have caption <em>Open...</em></li>
+        <li>First parameter is either #save or #open symbol. If #save is provided then dialog will have a caption <em>Save As...</em> otherwise (#open) it will have caption <em>Open...</em></li>
         <li><em>filter</em> is a string - filter which defines list of allowed file extensions seprated by character '|' in the form: &quot;label1|file.ext1|label2|file.ext1|..&quot; where <em>label</em> is a label of item (appears in the selector on the dialog) and file.ext is a ';' seprated list of filename templates.</li>
         <li><em>ext</em> is a string - default file extension used if user will type filename without extension.</li>
         <li><em>initialPath</em> - string, if provided will open dialog with folder.</li>
@@ -329,4 +330,5 @@ if( fn ) view.<strong>load</strong>(fn);
         <li><strong>true</strong> - window is activated somehow but not by mouse;</li>
         <li><strong>#by-mouse</strong> - window is activated by mouse click on it.</li></ul></dd></dl>
 </body>
+
 </html>

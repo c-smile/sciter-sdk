@@ -25,12 +25,12 @@
     </style>
     <script type="text/tiscript">
     
-      $(button#get).onClick = function()
+      event click $(button#get)
       {
         var v = $(form).value;
         $(#out).value = String.printf("%V",v);
       }
-      $(button#set).onClick = function()
+      event click $(button#set)
       {
         var v = {
           ddm: ["Five","Six","Seven"],
@@ -41,7 +41,13 @@
         $(form).value = v;
         $(#out).value = String.printf("%V",$(form).value);
       }
-    
+
+      event click $(button#set-by-dom-ref)
+      {
+        for(var option in $$(option.toset))
+          option.execCommand("set-current");
+      }
+
     
     </script>
   </head>
@@ -51,11 +57,13 @@
 
   <button #get>Get values</button>
   <button #set>Set values</button>
+  <button #set-by-dom-ref>Set by DOM element reference</button>
   <form>
-  <label>dropdown:</label><select name=dd>
+  <label>dropdown:</label>
+  <select name=dd>
     <option>One</option>
     <option>Two</option>
-    <option>Three</option>
+    <option.toset>Three</option>
     <option selected>Four</option>
     <option>Five</option>
     <option>Six</option>
@@ -66,10 +74,11 @@
     <option>Eleven</option>
     <option>Twelve</option>
   </select>
-  <label>combobox (editable select):</label> <select name=dde editable>
+  <label>combobox (editable select):</label> 
+  <select name=dde editable>
     <option>One</option>
     <option>Two</option>
-    <option>Three</option>
+    <option.toset>Three</option>
     <option selected>Four</option>
     <option>Five</option>
     <option>Six</option>
@@ -83,7 +92,7 @@
   <label>dropdown multiple:</label><select name=ddm multiple>
     <option>One</option>
     <option>Two</option>
-    <option>Three</option>
+    <option.toset>Three</option>
     <option selected>Four</option>
     <option>Five</option>
     <option>Six</option>
@@ -98,7 +107,7 @@
   <select name=ddcm>
     <option>One</option>
     <option>Two</option>
-    <option>Three</option>
+    <option.toset>Three</option>
     <option selected>Four</option>
     <option>Five</option>
     <option>Six</option>
@@ -113,7 +122,7 @@
   <select name=ddn novalue="(nothing)">
     <option>One</option>
     <option>Two</option>
-    <option>Three</option>
+    <option.toset>Three</option>
     <option>Four</option>
     <option>Five</option>
     <option>Six</option>
@@ -128,7 +137,7 @@
     <option>One</option>
     <optgroup label="2..4">
       <option>Two</option>
-      <option>Three</option>
+      <option.toset>Three</option>
       <option>Four</option>
     </optgroup>
     <optgroup>

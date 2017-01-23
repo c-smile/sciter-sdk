@@ -15,22 +15,26 @@
     </style>
     <script type="text/tiscript">
     
-      $(#get).onClick = function()
+      event click $(#get)
       {
         stdout.printf("%V\n",$(select).value);
       }
-      $(#set1).onClick = function()
+      event click $(#set1)
       {
         $(select).value = "Transition Metals";
       }
-      $(#set2).onClick = function()
+      event click $(#set2)
       {
         $(select).value = "Na";
       }
-      $(#clear).onClick = function()
+      event click $(#clear)
       {
         $(select).value = undefined;
-      }      
+      }    
+      event click $(button#set-by-dom-ref)
+      {
+        $(option[value=K]).execCommand("set-current");
+      }  
     </script>
   </head>
 <body>
@@ -38,6 +42,7 @@
         <button #set1>set "Transition Metals"</button> 
         <button #set2>set "Na"</button> 
         <button #clear>clear</button>
+        <button #set-by-dom-ref>set by DOM reference</button>
 
   <select #dd type="tree" size=16 >
     <option expanded value="Metals">
