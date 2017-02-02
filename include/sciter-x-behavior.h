@@ -424,11 +424,12 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
 
   };
 
-  enum EVENT_REASON
+  enum CLICK_REASON
   {
       BY_MOUSE_CLICK,
       BY_KEY_CLICK,
-      SYNTHESIZED, // synthesized, programmatically generated.
+      SYNTHESIZED,       // synthesized, programmatically generated.
+      BY_MOUSE_ON_ICON,  
   };
 
   enum EDIT_CHANGED_REASON
@@ -437,6 +438,7 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
       BY_INS_CHARS, // character range insertion, clipboard
       BY_DEL_CHAR,  // single char deletion
       BY_DEL_CHARS, // character range deletion (selection)
+      BY_UNDO_REDO, // undo/redo
   };
 
   typedef struct BEHAVIOR_EVENT_PARAMS

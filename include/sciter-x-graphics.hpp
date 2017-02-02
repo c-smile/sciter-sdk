@@ -99,8 +99,10 @@ namespace sciter
     static image from(const sciter::value& valImage) {
       HIMG himg;
       GRAPHIN_RESULT r = gapi()->vUnWrapImage(&valImage, &himg); assert(r == GRAPHIN_OK); (void)(r);
-      if( himg )
-        return image( himg );
+      if (himg) {
+        gapi()->imageAddRef(himg);
+        return image(himg);
+      }
       return image(0);
     }
 
@@ -189,8 +191,10 @@ namespace sciter
     static path from(const sciter::value& valPath) {
       HPATH hpath;
       GRAPHIN_RESULT r = gapi()->vUnWrapPath(&valPath, &hpath); assert(r == GRAPHIN_OK); (void)(r);
-      if( hpath )
-        return path( hpath );
+      if (hpath) {
+        gapi()->pathAddRef(hpath);
+        return path(hpath);
+      }
       return path(0);
     }
 
@@ -263,8 +267,10 @@ namespace sciter
     static graphics from(const sciter::value& valGfx) {
       HGFX hgfx;  
       GRAPHIN_RESULT r = gapi()->vUnWrapGfx(&valGfx, &hgfx); assert(r == GRAPHIN_OK); (void)(r);
-      if( hgfx )
-        return graphics( hgfx );
+      if (hgfx) {
+        gapi()->gAddRef(hgfx);
+        return graphics(hgfx);
+      }
       return graphics(0);
     }
 
