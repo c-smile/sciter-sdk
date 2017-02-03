@@ -36,7 +36,7 @@ int uimain( std::function<int()> run );
 //   ... initialization and window creation
 //   int r = run();
 //   ... optional de-initialization
-//   return r;/Users/andrew/Desktop/sciter/sdk/include/sciter-win-main.cpp
+//   return r;
 // }
 
 /**sciter namespace.*/
