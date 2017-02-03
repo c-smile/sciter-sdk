@@ -447,7 +447,7 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
       HELEMENT heTarget;   // target element handler, in MENU_ITEM_CLICK this is owner element that caused this menu - e.g. context menu owner
                            // In scripting this field named as Event.owner
       HELEMENT he;         // source element e.g. in SELECTION_CHANGED it is new selected <option>, in MENU_ITEM_CLICK it is menu item (LI) element
-      UINT_PTR reason;     // EVENT_REASON or EDIT_CHANGED_REASON - UI action causing change.
+      UINT_PTR reason;     // CLICK_REASON or EDIT_CHANGED_REASON - UI action causing change.
                            // In case of custom event notifications this may be any
                            // application specific value.
       SCITER_VALUE 

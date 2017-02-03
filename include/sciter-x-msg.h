@@ -74,7 +74,7 @@ struct SCITER_X_MSG_SIZE {
 **/
 typedef VOID SC_CALLBACK ELEMENT_BITMAP_RECEIVER(LPCBYTE rgba, INT x, INT y, UINT width, UINT height, LPVOID param);
 
-/** #SCITER_X_MSG_CODE message/function identifier */
+/** #SCITER_X_MSG_PAINT target identifier. */
 enum SCITER_PAINT_TARGET_TYPE {
   SPT_DEFAULT   = 0,  /**< default rendering target - window surface */    
   SPT_RECEIVER  = 1,  /**< target::receiver fields are valid */    
@@ -100,8 +100,4 @@ struct SCITER_X_MSG_PAINT {
 #endif
 };
 
-
-
 #endif
-
-
