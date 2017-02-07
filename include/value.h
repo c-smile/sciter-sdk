@@ -292,8 +292,8 @@ UINT SCAPI ValueInvoke( const VALUE* pval, VALUE* pthis, UINT argc, const VALUE*
  */
 UINT SCAPI ValueNativeFunctorSet( VALUE* pval, 
     NATIVE_FUNCTOR_INVOKE*  pinvoke,
-    NATIVE_FUNCTOR_RELEASE* prelease = NULL,
-    VOID* tag = NULL );
+    NATIVE_FUNCTOR_RELEASE* prelease /* = NULL*/,
+    VOID* tag /* = NULL*/ );
 
 BOOL SCAPI ValueIsNativeFunctor( const VALUE* pval);
 
