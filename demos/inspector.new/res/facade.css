@@ -317,14 +317,25 @@ widget.element-details > section:expanded > dl > header
   background-color:inactivecaption;
   border-bottom:1px solid activecaption;
   padding: 4dip;
-  white-space:nowrap;
+  //white-space:nowrap;
   flow:horizontal;
+  //overflow-x:hidden;
 }
 widget.element-details > section:expanded > dl > header > span.selector 
 {
+  display:block;  
   font-weight:bold;
   margin-right:*;
 }
+
+widget.element-details > section:expanded > dl > header > a 
+{ 
+  display:block; 
+  white-space:nowrap;
+  overflow-x: hidden;
+  text-overflow: path-ellipsis;
+}
+
 widget.element-details > section:expanded > dl > dt 
 {
   width:*;

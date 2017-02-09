@@ -3,31 +3,35 @@
   <style>
     @import url(carousel.css);
     
-    div#carousel { width: calc( ( 10px + 75px ) * 3 + 10px + 130px); height: 95px; background:#CCC; padding:10px }
+    div#carousel { 
+      width: 395dip; 
+      //width: calc( ( 10dip + 75dip ) * 3 + 10dip + 130dip); 
+      height: 95dip; background:#CCC; 
+      padding:10dip }
     
     div#carousel > .list
     {
-      border:1px solid #AAA;
+      border:1dip solid #AAA;
       background-color: gold;
       foreground-image: url(images/cover.png);
       foreground-repeat: expand;
-      foreground-position: 16px 32px 16px 32px; 
+      foreground-position: 16 32 16 32; 
     }
     
-    div#carousel picture { width:75px; height: 75px; margin: 10px; }
+    div#carousel picture { width:75dip; height: 75dip; margin: 10dip; }
     div#carousel > widget.button.prev 
     {
       background:url(images/button-left.png) no-repeat 50% 50%;
-      width:45px;
-      height:45px;
-      margin:* 10px;
+      width:45dip;
+      height:45dip;
+      margin:* 10dip;
     }
     div#carousel > widget.button.next 
     {
       background:url(images/button-right.png) no-repeat 50% 50%;
-      width:45px;
-      height:45px;
-      margin:* 10px;
+      width:45dip;
+      height:45dip;
+      margin:* 10dip;
     }
     div#carousel > widget.button:hover { background-image-transformation: contrast-brightness-gamma(0.5,0.58, 1.1); }
     div#carousel > widget.button:active { background-image-transformation: contrast-brightness-gamma(0.5,0.58, 1.4); }

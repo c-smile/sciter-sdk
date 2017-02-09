@@ -26,7 +26,7 @@
           function checkPasswordStrength() {
             if( pass.length >= 8 )
               passStrength = #strong;
-            else if( pass.length >= 1 )
+            else if( pass.length >= 3 )
               passStrength = #weak;
             else
               passStrength = null;
@@ -43,6 +43,8 @@
   <p>Type password: <input|password(pass)> 
                     <span class="pwd {{hide:passStrength != #weak}}">Weak!</span>
                     <strong class="pwd {{hide:passStrength != #strong}}">Strong!</strong> </p>
+
+  <strong class="{{hide:!passStrength}}">Well, at least something</strong>
                     
   <p .comment>(pass.length >= 8 is considered as a strong one here)</p>
 </body>

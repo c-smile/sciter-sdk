@@ -38,7 +38,10 @@
     <dd>
       <div><strong>( caret</strong>:<em>bookmark</em> [<strong> , anchor</strong>:bookmark ]<strong> ) </strong>returns: <em>true | false</em></div>
       <p>Set's selection to the range or single caret position.</p></dd>
-    <dt>advance</dt>
+    <dt>select</dt>
+    <dd>
+      <div><strong>( el</strong>:<em>element</em> [<strong> , how</strong>: #content | #element ]<strong> ) </strong>returns: <em>true | false</em></div>
+      <p>Set's selection to either the element <i>el</i> itself (<i>what</i> is <code>#element</code>) or to its content - its first and last caret positions.</p></dd>    <dt>advance</dt>
     <dd>
       <div><strong>( step</strong>:symbol [, <strong>target</strong>:symbol] <strong>)</strong> returns: <em>true | false</em>.</div>
       <p>Advances <em>target</em> to new position by <em>step</em>. The <em>target</em> defines what end of selection to advance, can be one of:</p>

@@ -40,6 +40,19 @@
           // In order to update deep hierarchies and keeping them bound use 
           // Object.merge() method (defined in +plus.tis):
           obj.baz.merge { abc:"changed", def:"changed" };        
+
+
+          /*
+          // Merging the whole namespace
+          Object.merge (Data, {
+            obj:{
+              foo:1,
+              bar:4,
+              baz: { abc:"changed", def:4 }
+            }
+          });*/
+
+
         }
         
       }    

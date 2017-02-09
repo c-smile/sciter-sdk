@@ -48,6 +48,10 @@
           option.execCommand("set-current");
       }
 
+      event change $(select) {
+        stdout.println("change", this, "value", this.value); 
+      }
+
     
     </script>
   </head>

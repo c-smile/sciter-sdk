@@ -49,9 +49,26 @@
   function self.ready() {
   
     var records = new Array(500);
+
+    function imageUrl(i) {
+      switch(i) {
+        case 0: return "../../ideas/carousel/images/199480111_87d4cb3e38_s.jpg";
+        case 1: return "../../ideas/carousel/images/199481072_b4a0d09597_s.jpg";
+        case 2: return "../../ideas/carousel/images/199481087_33ae73a8de_s.jpg";
+        case 3: return "../../ideas/carousel/images/199481108_4359e6b971_s.jpg";
+        default:
+          if(i & 1) return "../../ideas/carousel/images/199481143_3c148d9dd3_s.jpg";
+          return "../../ideas/carousel/images/199481203_ad4cdcf109_s.jpg";
+      }
+    }
     
     for(var i = 0; i < records.length; ++i)
-      records[i] = {index: i, caption:"Item", status:"", imageUrl: (i & 1 ? "sciter:copy.png": "sciter:cut.png") };
+      records[i] = {
+        index: i, 
+        caption:"Item", 
+        status:"",
+        imageUrl: imageUrl(i) //(i & 1 ? "sciter:copy.png": "sciter:cut.png") 
+      };
 
     var n = records.length;
     var p = 0;
@@ -62,7 +79,7 @@
    
     var vlist = VirtualList {
       container     : $(table>tbody),
-      bufferSize    : 100, // records in sliding window
+      bufferSize    : 20, // records in sliding window
       setupItemView : setupItemView
     };
     

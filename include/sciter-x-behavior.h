@@ -467,6 +467,7 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
   enum BEHAVIOR_METHOD_IDENTIFIERS
   {
     DO_CLICK = 0,
+/*  remnants of HTMLayout API, not used 
     GET_TEXT_VALUE = 1,
     SET_TEXT_VALUE,
       // p - TEXT_VALUE_PARAMS
@@ -490,10 +491,11 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
     TEXT_EDIT_GET_SELECTION_TEXT, // p - TEXT_SELECTION_PARAMS
     TEXT_EDIT_GET_SELECTION_HTML, // p - TEXT_SELECTION_PARAMS
     TEXT_EDIT_CHAR_POS_AT_XY,     // p - TEXT_EDIT_CHAR_POS_AT_XY_PARAMS
+    */
 
     IS_EMPTY      = 0xFC,       // p - IS_EMPTY_PARAMS // set VALUE_PARAMS::is_empty (false/true) reflects :empty state of the element.
     GET_VALUE     = 0xFD,       // p - VALUE_PARAMS 
-    SET_VALUE     = 0xFE,       // p - VALUE_PARAMS 
+    SET_VALUE     = 0xFE,       // p - VALUE_PARAMS  
 
     FIRST_APPLICATION_METHOD_ID = 0x100
   };

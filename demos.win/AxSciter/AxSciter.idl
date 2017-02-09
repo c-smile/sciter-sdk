@@ -1,0 +1,48 @@
+// AxSciter.idl : IDL source for AxSciter
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (AxSciter.tlb) and marshalling code.
+
+#include "olectl.h"
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(CE8DB2CD-C37D-40D2-9E2A-911ED7A312CD),
+	dual,
+	nonextensible,
+	pointer_default(unique)
+]
+interface ISciter : IDispatch{
+  [id(1)] HRESULT LoadHtmlFile([in] BSTR fileUrl, [out, retval] VARIANT_BOOL* result);
+  [id(2), helpstring("load html from string, baseUrl is used to resolve relative links (if any)")] HRESULT LoadHtml([in] BSTR html, BSTR baseUrl, [out, retval] VARIANT_BOOL* result);
+};
+
+[
+	uuid(B39EBA5E-3275-4E64-B88A-435CD3FF179A),
+	version(1.0),
+]
+library AxSciterLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(09C2F7D8-E1BD-4568-99A0-631D3A3A09A9)		
+	]
+	dispinterface _ISciterEvents
+	{
+		properties:
+		methods:
+	};
+	[
+		uuid(7832863F-C30A-49DF-B65E-3B1CE46C829E),		
+		control
+	]
+	coclass Sciter
+	{
+		[default] interface ISciter;
+		[default, source] dispinterface _ISciterEvents;
+	};
+};
+

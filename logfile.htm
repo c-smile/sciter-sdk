@@ -10,9 +10,22 @@
       <td width="60" nowrap="" valign="top" align="center">Build#</td>
       <td width="78" nowrap="" valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FFFADA">4.0.0.3</td><td nowrap="" valign="top" align="center">22-01-2017</td><td>
-				
-				
+    <tr><td valign="top" bgcolor="#FFFADA">4.0.0.4</td><td nowrap="" valign="top" align="center">08-02-2017</td><td>new:
+				<ul>
+					
+					<li><code>Selection.select(element)</code> - to select whole element.</li><li>[api] <code>EDIT_CHANGED_REASON</code> enumeration adjustments.</li><li> event name comparison is case insensitive now so <code>event MouseEnter {}</code> and <code>event mouseenter {}</code> are equivalent.</li>
+					<li>+ <code>event TooltipRequest (evt) { evt.data = &quot;Tooltip text&quot;; return true; }</code> - application can provide custom tooltip text.</li>
+					<li>packfolder / C++ produces <code>const unsigned char data[]</code>&nbsp;literal rather than <code>unsigned char data[].</code></li>
+					<li>sciter.exe - window position/size is persist-able.</li>
+					<li>+ sdk/demos.win/AxSciter - barebone Sciter ActiveX Control demo.</li></ul><p>fixes:</p>
+				<ul>					
+					<li>fix of mouse wheel handling in behavior:slider&nbsp;</li><li>better update handling when ::after and ::before are present.</li><li>[+plus] sdk/samples/+plus/demos/4-class-binding.htm fix( script runtime) and sample update.</li><li>[+vlist] added gc() call after 1 second of last scrolling. To remove traces of cached DOM element and free native resources like images if they used in records.</li><li>fix of overflow ellipsis tooltip generation, see: http://sciter.com/forums/topic/text-overflow-ellipsis-reveals-hidden-spans/</li><li>margin collapsing again.</li><li>SDK header fixes, see: http://sciter.com/forums/topic/wildcard-match-bug-in-sdk</li><li>sdk/samples/ideas/carousel/carousel.htm sample fix.</li><li><code>Elements.state.get()</code> fix.</li><li>[css, animation] fix of first frame rendering.</li><li>[win] &lt;progress&gt; on platforms that do not support themes in full.</li><li><code>&lt;select|dropdown&gt;</code> fix of redundant &quot;change&quot; event generation when click on already selected option.</li><li>Preventing posting multiple EDIT_VALUE_CHANGED, SELECT_VALUE_CHANGED, etc. events for the same element.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li><li>Fix of <code>event exec:....&nbsp; {}</code> handling&nbsp;</li><li>fix of AV in erroneous <code>event mouseleave $(child) {}</code> case.</li><li>[css,rendering] fix of border-radius rendering.&nbsp;</li><li>[css] fix of :not(:empty) selector interpretation, see: http://sciter.com/forums/topic/notempty-selector-for-element-not-working/&nbsp;</li><li>Fix of SciterSwapElements API.</li><li>[inspector] fix of styling, see: http://sciter.com/forums/topic/problems-in-inspector-exe/</li><li>[win, printing] fix of AV while selecting printer.</li><li>better behavior:column-resizer;</li><li>ideas/virtual-grid/vgrid.tis, fix of tooltips handling.</li><li>[css, layout] fix of % unit calculations in calc()&nbsp;</li><li>One more RegExp fix.</li><li>[DOM,events] fix of &quot;focusin&quot;, &quot;focusout&quot; event generation.</li>
+					</ul>
+         <p>Builds: win32/win64, osx32/osx64, linux/gtk64
+        </p><p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10</p>
+				<p><b>NOTE (Windows XP)</b>: 32/sciter.dll and&nbsp;64/sciter.dll are compiled using VS2015 / v140_xp toolset. While SDK samples work on XP the DLL may fail to load in some host application. Sciter sources contain XP release targets that use&nbsp;VS2010&nbsp;/ v100 toolset that are known to work on XP, but you need access to sources to build them.</p>
+        </td></tr>
+        <tr><td valign="top" bgcolor="#FFFADA">4.0.0.3</td><td nowrap="" valign="top" align="center">22-01-2017</td><td>
 				<p>new:</p>
 				<ul>
 					<li>[css] <code>border-collapse: collapse</code> support in tables.  That's probably last CSS2.1 property that was not implemented.</li><li>Enabling <code>SciterSetOption(SCITER_SET_GFX_LAYER</code>) on all platforms.</li>
@@ -20,32 +33,9 @@
 					<li>New <code>Event.VK_SHORTCUT</code> key code - it is an alias on <code>COMMAND</code> key on Mac or <code>CONTROL</code> on other platforms.</li>
 					<li><code>option.execCommand(&quot;set-current&quot;)</code> - allows to set <code>&lt;option&gt;</code> in <code>&lt;select&gt;</code> using DOM element (that option) reference.</li>
 					<li>[richtext]  <code>richtext.value</code> is an alias of <code>richtext.html</code></li></ul><p>fixes:</p><ul>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
 					<li>better double click handling in behavior:htmlarea | richtext | plaintext.</li><li>bin/32 and bin/64 binaries are compiled by VC2010 as&nbsp;vc140_xp toolset (VS2015) produces code that is unstable on Windows XP. Investigating.</li><li>[script] fix of <code>BrokenHeart</code> issue in <code>Element.sort()</code>.<br/></li><li>[css,layout] margin collapsing fix.</li><li>[printing,win] fix of pager demo.<br/></li><li>[doc] <code>element.style.variables()</code> documented now.</li><li>[win] fix of doubled call of <code>self.closing()</code>.</li><li>[osx] system font size adjustment.</li><li>[osx,linux] System.scanFiles() caption in callback.</li><li>[skia, all platforms] fix of popups rendering, see: http://sciter.com/forums/topic/ideascalloutdynamic-callout-not-transparent-on-macos/</li><li>[win, gdi] fix of popups (menus, dd-list, etc) rendering.<br/></li><li>[skia] expandable images, fix of drawing artifacts. </li><li>[behavior:richtext] multiple fixes.</li><li>[d2d] Fix of errors in <code>Path.xxx()</code> operations when path was drawn already.</li><li><code>&lt;img&gt;</code> and <code>&lt;picture&gt;</code> - freeing image on @src change and <code>element.remove()</code>;</li><li><code>behavior:radio</code>, fix of <code>element.value</code> calculation when DOM attribute value is numeric. </li><li>[masked-edit] clipboard-copy fix. </li><li>Fix of GC issue in <code>Bytes.load()</code>. See: http://sciter.com/forums/topic/bytes-tostring-bug-or-not-bug/</li><li>Reverted experimental @set application (introduced in 4.0.0.2). </li><li>[win/d2d/highdpi] &quot;novalue&quot; rendering fix when line-height is present.</li><li>Fix of getting value of <code>&lt;input|hidden&gt;</code></li><li>[skia] default image scaling quality is increased from &quot;nearest neighbour&quot; to &quot;bilinear&quot;.<br/></li><li>[skia] support of CSS image-rendering modes.</li><li>[script] RegEx, removing some limitations on RE size.</li><li>[win,script] made code friendly to /LARGEADDRESSAWARE (64 bit addresses in 32bit module)</li></ul>
 				<p>Builds: win32/win64, osx32/osx64, linux/gtk64
-        <p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></p></td></tr><tr>
+        </p><p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10.</p></td></tr><tr>
       <td valign="top" bgcolor="#FFFADA">4.0.0.2</td>
       <td nowrap="" valign="top" align="center">08-01-2017</td>
       <td>

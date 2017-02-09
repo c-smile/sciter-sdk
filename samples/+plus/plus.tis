@@ -577,8 +577,16 @@ function Object.merge(objects..)
         reciever[k] = v;
     }
   }
-  for( var obj in objects )
-    merge1(this,obj);
+
+  if(typeof this == #object)
+    for( var obj in objects ) // called as memeber function
+      merge1(this,obj);
+  else { 
+    var _this = objects[0];
+    for( var obj in objects.slice(1)) // called static function
+      merge1(_this,obj);
+  }
 }
+
 
 

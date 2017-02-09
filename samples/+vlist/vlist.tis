@@ -35,9 +35,11 @@ function VirtualList(params) {
     var   setupRecord = params.setupItemView || null;  // setupItemView(index,record, itemElement)
     var   recordData = params.getItemData;
     
-   
     //multiselection support (not yet)
     //var   selected = params.multiselect ? {} : null; // ATTENTION: if multiselect then each record must have unique .id field
+
+    // requests gc to be called
+    function dogc() { gc(); }
         
     var   setupSetObserver;
     
@@ -93,6 +95,7 @@ function VirtualList(params) {
       cache.push(el); 
       el.detach();    
       el.state.clear(0xFFFFFFFF); // clear all flags      
+      list.timer(1s,dogc);     // throttle GC call as DOM object may hold various native resources
     }
     
     function createRecViewer(rec) {
@@ -421,7 +424,7 @@ function VirtualList(params) {
     }
                 
     list.onMouse = function(evt) {
-      if( evt.type == (Event.MOUSE_DOWN | Event.SINKING) )
+      if( evt.type == Event.MOUSE_DOWN )
       {
         var li = evt.target.$p(li,tr);
         if( li && li.parent === list )

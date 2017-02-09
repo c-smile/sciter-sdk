@@ -46,9 +46,9 @@ class ElementDetails : Behavior
           styleRulesList.$append(<header><span.selector>{rule.selector}</span><a href='{rule.file}' line={rule.lineNo} >{fn}({rule.lineNo})</a></header>); 
         }
         else if(rule.type == "inline-style")
-          styleRulesList.$append(<header>@style:</header>); 
+          styleRulesList.$append(<header><span.selector>@style:</span></header>); 
         else if(rule.type == "runtime-style")
-          styleRulesList.$append(<header>runtime style:</header>); 
+          styleRulesList.$append(<header><span.selector>runtime style:</span></header>); 
           
         var props = rule.properties;  
         var props_names = [];  
