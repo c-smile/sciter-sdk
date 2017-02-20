@@ -686,7 +686,7 @@ void Render()
     if( g_backLayer && g_foreLayer )
       SciterRenderOnDirectXWindow(g_hWnd, g_backLayer, FALSE); // render back layer before 3D scene
     else 
-      SciterRenderOnDirectXWindow(g_hWnd);
+      SciterRenderOnDirectXWindow(g_hWnd, NULL, FALSE);
 // SCITER -
     
     //

@@ -419,14 +419,12 @@ typedef ISciterAPI* (SCAPI *SciterAPI_ptr)();
 
   inline LPSciterGraphicsAPI gapi()
   {
-    static LPSciterGraphicsAPI _gapi = SAPI()->GetSciterGraphicsAPI();
-    return _gapi;
+    return SAPI()->GetSciterGraphicsAPI();
   }
 
   inline LPSciterRequestAPI rapi()
   {
-    static LPSciterRequestAPI _rapi = SAPI()->GetSciterRequestAPI();
-    return _rapi;
+    return SAPI()->GetSciterRequestAPI();
   }
 
 
