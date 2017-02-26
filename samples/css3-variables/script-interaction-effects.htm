@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+
+        div {
+          var(x): 0px;
+          var(y): 0px;
+          size:400dip;
+          background: radial-gradient(var(x,0px) var(y,0px), 200dip 200dip, red, yellow, green, blue, rgba(255,0,255,0.5) );
+        }
+
+
+        </style>
+        <script type="text/tiscript">
+
+          $(#eye) << event mousemove (evt) {
+
+            // update CSS variables x,y 
+            this.style.variables {
+              x : px(evt.x),
+              y : px(evt.y)
+            };
+            this.refresh();
+            
+          }
+
+
+        </script>
+    </head>
+    <body>
+       <div #eye>move mouse over it</div>
+    </body>
+</html>

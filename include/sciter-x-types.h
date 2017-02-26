@@ -133,7 +133,7 @@ enum GFX_LAYER
     #define FALSE (0)
   #endif
 
-  typedef unsigned int UINT;
+typedef unsigned int UINT;
   typedef int INT;
   typedef unsigned long long UINT64;
   typedef int INT64;

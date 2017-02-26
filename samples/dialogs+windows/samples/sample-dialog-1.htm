@@ -3,14 +3,26 @@
   <title>Simple dialog</title>
   <style>
     @import url(sample-dialog-1.css);
+
+    body { prototype:Body; }
+
   </style>
   <script type="text/tiscript">
-    include "../../decorators.tis";
-    
-    @click @on "#close-dialog":
+
+    class Body : Element {
+      function attached() { stdout.println("attached"); }
+      function detached() { stdout.println("detached"); }
+    }
+   
+    event click $(#close-dialog)
     {
       view.close("Hello from Dialog");
     }
+
+    function self.closing(reason) {
+      stdout.println("closing", reason);
+    }
+
     </script>
 </head>
 <body>

@@ -108,9 +108,9 @@
     <dt>selection</dt>
     <dd><font color="#999999">r</font> - <em>null | Selection</em>, returns <a href="selection.htm">Selection</a> object if the element has behavior (htmlarea or richtext) supporting selection functionality.</dd>
     <dt>firstCaretPos</dt>
-    <dd><font color="#999999">r</font> - <em>null | bookmark</em>, returns bookmark of first caret position inside the element.</dd>
+    <dd><font color="#999999">r</font> - <em>null | </em><a href="Selection.htm#bookmark">bookmark</a>, returns bookmark of first caret position inside the element.</dd>
     <dt>lastCaretPos</dt>
-    <dd><font color="#999999">r</font> - <em>null | bookmark</em>, returns bookmark of last caret position inside the element.</dd>
+    <dd><font color="#999999">r</font> - <em>null | </em><a href="Selection.htm#bookmark">bookmark</a>, returns bookmark of last caret position inside the element.</dd>
     <dt>paintBackground</dt>
     <dd><font color="#999999">w</font> - <em>null | </em>function(gfx), assigns background layer painting function. The function gets Graphics object that is used to draw the layer. If the function returns <em>true</em> then default background and borders drawing is suppressed. The background drawing function is drawn <strong>before</strong> native background drawing.</dd>
     <dt>paintContent</dt>
@@ -416,13 +416,15 @@ el.$content(This is item number <b>{ num }</b>);
       <div>( .. html .. ) : Element</div>
       <p>Stringizer method, removes this element from the DOM and content defined by the html in its place.</p>
       <p>Method returns first added element.</p></dd>
+		<dt>nodes</dt>
+		<dd>( ) : Array<p>Method creates an array and populates it by list of child DOM nodes. Text and&nbsp;comment nodes are represented by instance of <a href="Node.htm#node">Node</a>&nbsp;object and elements by the Element.</p></dd>
     <dt>detach</dt>
     <dd>
-      <div><strong>( ) </strong>: В Element</div>
+      <div><strong>( ) </strong>: Element</div>
       <p>Removes this element from its parent's children collection so after call of this method this.<em>parent</em> become <em>null</em>. If update is true then calls update() for the parent element. Returns element that was just detached (this). This method does not destroy state and behaviors attached to the element until GC will not collect the element (if there are no references to it)</p></dd>
     <dt>remove</dt>
     <dd>
-      <div><strong>( ) </strong>: В Element</div>
+      <div><strong>( ) </strong>: Element</div>
       <p>Removes this element from its parent's children collection so after call of this method this.<em>parent</em> become <em>null</em>. If update is true then calls update() for the parent element. Returns element that was just detached (this). All runtime states and behaviors are destroyed by the method. Native behaviors will receive BEHAVIOR_DETACHED event.</p></dd>
     <dt>load</dt>
     <dd>
@@ -831,9 +833,11 @@ Calibri;mso-hansi-font-family:Calibri;mso-bidi-font-family:Calibri">popup-positi
     <dt>Event.ACTIVATE_CHILD</dt>
     <dd>Request to container to activate child. <em>accesskey</em> processor post this message if accesskey is defined for the element but element is passive, e.g. tab on Tabs control. See: extenders.js / type Tabs.</dd>
     <dt>Event.POPUP_REQUEST</dt>
-    <dd>Secret stuff.</dd>
+    <dd>Request to show popup just received. event.source is the popup element. The popup can be populated at this moment.</dd>
     <dt>Event.POPUP_READY</dt>
+		<dd>Popup element is ready to be shown.</dd>
     <dt>Event.POPUP_DISMISSED</dt>
+		<dd>Popup became invisible.&nbsp;</dd>
     <dt>Event.MENU_ITEM_ACTIVE</dt>
     <dd>Happens when menu item is highlighted.</dd>
     <dt>Event.MENU_ITEM_CLICK</dt>

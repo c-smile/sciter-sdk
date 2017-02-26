@@ -51,7 +51,7 @@
       <strong>( )</strong> : symbol
       <p>parses input and returns type of token:</p>
       <ul>
-        <li>Tokens of <strong>#markup</strong> tokenizer:</li>
+        <li>Tokens of <strong>#markup</strong> tokenizer:
         <ul>
           <li><strong>#TAG-START</strong> - start of tag, e.g. when <code>&lt;div</code> is parsed;</li>
           <li><strong>#TAG-HEAD-END</strong> - end of tag &quot;head&quot;, e.g. when <code>&lt;div id=&quot;some&quot;&gt;</code> &nbsp;is parsed;</li>
@@ -64,17 +64,38 @@
           <li><strong>#PI</strong> - when SGML processing instruction is parsed;</li>
           <li><strong>#DOCTYPE</strong> - when doctype declaration is parsed;</li>
           <li><strong>#ENTITY</strong> - after parse of HTML/XML entity, tokenizer.value is the entity text;</li>
-          <li><strong>#ERROR</strong> - on basic HTML/XML syntax errors.</li></ul>
-        <li><strong>#source </strong>specific tokens:</li>
+          <li><strong>#ERROR</strong> - on basic HTML/XML syntax errors.</li></ul></li>
+        <li><strong>#source </strong>specific tokens:
         <ul>
           <li><strong>#NUMBER</strong> - number literal is parsed: 123, 456.09, 0xFF, etc.</li>
-          <li><strong>#NUMBER-UNIT</strong> - number with unit desgnator is parsed: 100px, 400ms, etc.</li>
+          <li><strong>#NUMBER-UNIT</strong> - number with unit designator is parsed: 100px, 400ms, etc.</li>
           <li><strong>#STRING</strong> - string literal, only &quot;string&quot; or 'string' at the moment.</li>
           <li><strong>#NAME</strong> - name token is parsed - sequence of characters that looks like keyword or variable name.</li>
           <li><strong>#COMMENT</strong> - comment is parsed, either single line <code>//</code> &nbsp;comment or multi-line <code>/* ... */</code> .</li>
           <li><strong>#OPERATOR</strong> - sequence of &quot;opeartor&quot; characters: <code>:!%+-/*;</code> ,etc. </li>
           <li><strong>#O-PAREN</strong> and <strong>#C-PAREN</strong> - <code>(</code> or <code>)</code> &nbsp;are encountered.</li>
           <li><strong>#ERROR</strong> - basic syntax errors, for example not closed string literal.</li>
-          <li><strong>#END-OF-ISLAND</strong> - when pushed tokeinizer gets sequence of characters defined by <em>until </em>parameter.</li></ul></ul></dd></dl>
+          <li><strong>#END-OF-ISLAND</strong> - when pushed tokeinizer gets sequence of characters defined by <em>until </em>parameter.</li></ul></li></ul></dd><dt>elementType</dt>
+		<dd>( tag: string ) : (elementType, contentModelType, parsingType)<p>This static method returns&nbsp;types of markup element known to Sciter by default (this data is defined in its internal tables).</p>
+			<p><i>elementType</i> is one of the following values:</p>
+			
+			<pre>const UNKNOWN_TAG = 0;      // unknown 
+const INLINE_BLOCK_TAG = 1; // &lt;img&gt;, &lt;input&gt; ...
+const BLOCK_TAG = 2;        // &lt;div&gt;,&lt;ul&gt;,&lt;p&gt; ... 
+const INLINE_TAG = 3;       // &lt;span&gt;,&lt;b&gt;,&lt;strong&gt; ...
+const TABLE_TAG = 4;        // &lt;table&gt;
+const TABLE_BODY_TAG = 5;   // &lt;thead&gt;,&lt;tbody&gt;,&lt;tfoot&gt;
+const TABLE_ROW_TAG = 6;    // &lt;tr&gt;
+const TABLE_CELL_TAG = 7;   // &lt;td&gt;,&lt;th&gt;
+const INFO_TAG = 8;         // &lt;link&gt;,&lt;style&gt;,&lt;head&gt; ...  </pre><p><i>contentModelType </i>describes type of content normally allowed inside&nbsp;the element:</p>
+			
+			<pre>const CMODEL_BLOCKS = 0;      // Flow elements - blocks and inlines : &lt;div&gt;
+const CMODEL_INLINES = 1;     // Phrasing elements - inlines: &lt;p&gt;
+const CMODEL_TRANSPARENT = 2; // &lt;del&gt;, &lt;a&gt;, etc. 
+const CMODEL_TEXT = 3;        // Only text: &lt;title&gt; 
+const CMODEL_TABLE = 4;       // Only table components inside</pre><p><i>parsingType</i> describes HTML parsing flavour:</p>
+			<pre>const PMODEL_NORMAL = 0;  // normal head/tail: &lt;div&gt;&lt;/div&gt; ...
+const PMODEL_NO_TAIL = 1; // no tail: &lt;img&gt;, &lt;br&gt;, &lt;hr&gt; ...
+const PMODEL_CDATA = 2;   // head/tail, known to contain CDATA inside: &lt;script&gt;,&lt;style&gt;,...</pre></dd></dl>
 </body>
 </html>

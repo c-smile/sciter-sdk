@@ -3,30 +3,30 @@
     <meta name="generator" content="microsoft visual studio 8.0">
     <title>plain-api demo</title>
     <script type="text/tiscript">
-      //$(#test).onClick = function() { stdout.println("click"); }
 
       namespace Test {
         function add(n1,n2) { return n1+n2; }
         // function add(n1,n2) { return n / 0; } // error simulation, will throw sciter::script_error with .what() -> stack trace
       }
       
-      $(#test).onClick = function() {
+      event click $(#test) {
         var data = self.request(5000, #get, "res:test.json");
         $(pre#out).text = data.toString();
       };
 
+      event click $(#dependent-window) {
+        view.window {
+          url: self.url(),
+          type: View.FRAME_WINDOW,
+          alignment: -5,
+          width:800, 
+          height:600,
+        };
+      }
+
     </script>
     <style>
         html { background:white; font:system; }
-        /*
-        p.test { font:18pt "Arial Unicode MS"; margin:20px; }
-        p.test span.large { font-size:14pt; }
-        p.test span.back { background:gold; }
-        p.test span.over { text-decoration:overline; }
-        body { border:red 2px solid; behavior:htmlarea; }
-        button { display:block; }
-        p.ellipsis  { text-overflow:ellipsis; white-space:nowrap; overflow-x:hidden; }
-        p.path-ellipsis  { text-overflow:path-ellipsis; white-space:nowrap; overflow-x:hidden; } */
         
         frameset { border:3dip solid; }
         frameset > div { background:#fff; }
@@ -39,11 +39,11 @@
 
   <em>Test</em> document content.
   
-  Test Element.request(#get) for local resource: <button #test>Test rq</button>
+  <p>Test Element.request(#get) for local resource: <button #test>Test rq</button></p>
 
-  <p>
-    CTRL+F8: <input|time id=time />
-  </p>
+  <p>Test view.window {} call: <button #dependent-window>Show secondary window</button></p>
+
+  
 
   <pre#out /> 
   frameset demo:

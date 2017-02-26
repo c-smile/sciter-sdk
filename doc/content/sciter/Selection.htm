@@ -3,7 +3,7 @@
     <meta name="generator" content="h-smile:richtext"/>
   </head>
 <body>
-  <h1>Selection object</h1>
+  <h1 id="selection">Selection object</h1>
   <p>Represents textual (and block) selection inside <a href="Element.htm">element</a> that has either htmlarea or richtext behaviors attached.</p>
   <p>To access the selection object of the element use its <em>selection</em> property.</p>
   <dl>
@@ -13,13 +13,13 @@
     <dt>isCollapsed</dt>
     <dd><em>true</em> | <em>false</em>, read-only property. true if the selection is represented by only caret so selection.start == selection.end.</dd>
     <dt>anchor</dt>
-    <dd><em>null | bookmark</em>, read-only property. DOM position of selection anchor.</dd>
+    <dd><em>null | </em><a href="#bookmark">bookmark</a>, read-only property. DOM position of selection anchor.</dd>
     <dt>caret</dt>
-    <dd><em>null | bookmark</em>, read-only property. DOM position of selection caret.</dd>
+    <dd><em>null | </em><a href="#bookmark">bookmark</a>, read-only property. DOM position of selection caret.</dd>
     <dt>start</dt>
-    <dd><em>null | bookmark</em>, read-only property. DOM position of either caret or anchor, whichever is lower in DOM order.</dd>
+    <dd><em>null | </em><a href="#bookmark">bookmark</a>, read-only property. DOM position of either caret or anchor, whichever is lower in DOM order.</dd>
     <dt>end</dt>
-    <dd><em>null | bookmark</em>, read-only property. DOM position of either caret or anchor, whichever is greater in DOM order.</dd>
+    <dd><em>null | </em><a href="#bookmark">bookmark</a>, read-only property. DOM position of either caret or anchor, whichever is greater in DOM order.</dd>
     <dt>text</dt>
     <dd><em>string</em>, read-only property. text contained in the selection.</dd>
     <dt>html</dt>
@@ -67,8 +67,9 @@
       <p>The function returns number of changes made.</p></dd>
     <dt>clearMark</dt>
     <dd>(<strong>start</strong>: <em>bookmark</em>, <strong>end</strong>: <em>bookmark</em>, <strong>markName</strong>: string): returns: integer
-      <p>clears mentioned mark from the region.<br/>The function returns number of changes made.</p></dd></dl>
-  <h3 name="bookmark">Bookmark</h3>
+      <p>clears mentioned mark from the region.</p>
+			<p>The function returns number of changes made.</p></dd></dl>
+  <h3 id="bookmark">bookmark</h3>
   <p>Some methods above use so called bookmark object that is a tuple (of length 3) having tag #bookmark. Usually you will get ready to use bookmarks from various properties or &nbsp;methods but if needed bookmarks can be constructed literally as:</p>
   <pre>var bm = [bookmark: node, index, after];
 </pre>

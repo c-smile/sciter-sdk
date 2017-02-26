@@ -1,0 +1,304 @@
+// sciter port of Jens Stimpfle HTML/JS version
+
+namespace Scitris 
+{
+
+  var NUM_ROWS = 20;
+  var NUM_COLS = 10;
+
+  var gameOver = false;
+  var score = 0;
+  var currentBlock = null;
+  var currentBlockY = 0;
+  var currentBlockX = 3;
+  var nextBlock = null;
+  var boardRows = null;  
+
+  var cellWidth = 10;  // pixels, updated later
+  var cellHeight = 10; // pixels, updated later
+
+  var boardShiftY = 0; // pixels, rows dismissal shift
+
+  var board = null; // DOM element
+  var previewNext = null; // DOM element
+
+  function init() {
+    gameOver = false;
+    score = 0;
+    currentBlock = new Block();
+    currentBlockY = 0;
+    currentBlockX = 3;
+    nextBlock = new Block();
+    var rows = new Array(NUM_ROWS);
+    for( var r in NUM_ROWS ) 
+      rows[r] = new Array(NUM_COLS);
+    boardRows = rows;
+  }
+
+  function checkFullRows() 
+  {
+    var newRows = [];
+    var rows = boardRows;
+    var k = NUM_ROWS;
+    for (var i = NUM_ROWS; i-- > 0;) 
+    {
+      for (var j in NUM_COLS) {
+        if (!rows[i][j]) {
+          newRows[--k] = rows[i].clone();
+          break;
+        }
+      }
+    }
+    for (var i in k)
+      newRows[i] = new Array(NUM_COLS);
+
+    if(k)
+      animateRowsDismissal(k,newRows);
+    else 
+      boardRows = newRows;
+    return k; // number of deleted full rows
+  }
+
+  function animateRowsDismissal(numRows,newRows) {
+    boardShiftY -= numRows * cellHeight;
+    boardRows = newRows;
+    if( board.state.animating )
+      return;
+    const oneDip = board.toPixels(1dip,#height);
+    function step() {
+      this.refresh();
+      boardShiftY += Integer.max(oneDip, -boardShiftY / 16);
+      if(boardShiftY >= 0) { 
+        boardShiftY = 0;
+        return false; // stop animation
+      }
+      return true;
+    }
+    board.animate(step);
+  }
+
+  function start() {
+    init();
+    self.refresh();
+    board.timer(400ms, step);
+  }
+
+  function step() 
+  {
+    if (gameOver)
+      return false;
+    if (currentBlock.intersects(boardRows, currentBlockY + 1, currentBlockX)) 
+    {
+      // stick current block into the board 
+      boardRows = currentBlock.apply(boardRows, currentBlockY, currentBlockX);
+      var kr = checkFullRows();
+      score += 1 + kr * kr * NUM_COLS;
+      // fetch next block
+      if (nextBlock.intersects(boardRows, 0, NUM_COLS / 2 - 2)) 
+      {
+        gameOver = true;
+      } else {
+        currentBlock = nextBlock;
+        currentBlockY = 0;
+        currentBlockX = NUM_COLS / 2 - 2;
+        nextBlock = new Block();
+        previewNext.refresh();
+        board.postEvent("score-change",score);
+      }
+    } 
+    else 
+    {
+      currentBlockY += 1;
+    }
+    board.refresh();
+    return true;
+  }    
+
+  function shiftLeft() 
+  {
+    if (!currentBlock.intersects(boardRows, currentBlockY, currentBlockX - 1))
+      currentBlockX -= 1;
+  }
+
+  function shiftRight() {
+    if (!currentBlock.intersects(boardRows, currentBlockY, currentBlockX + 1))
+      currentBlockX += 1;
+  }
+
+  function shiftDown() {
+    if (!currentBlock.intersects(boardRows, currentBlockY + 1, currentBlockX))
+      currentBlockY += 1;
+  }
+
+  function rotateLeft() {
+    var newBlock = currentBlock.rotatedLeft();
+    if (!newBlock.intersects(boardRows, currentBlockY, currentBlockX))
+      currentBlock = newBlock;
+  }
+
+  function rotateRight() {
+    var newBlock = currentBlock.rotatedRight();
+    if (!newBlock.intersects(boardRows, currentBlockY, currentBlockX))
+      currentBlock = newBlock;
+  }
+
+  function letFall() {
+    while (!currentBlock.intersects(boardRows, currentBlockY+1, currentBlockX))
+      currentBlockY += 1;
+    step();
+  }   
+
+  function getRows() 
+  {
+    return currentBlock.apply(boardRows, currentBlockY, currentBlockX);
+  }
+
+  function handleKeydown(evt) 
+  {
+    var consumed = true;
+    switch(evt.keyCode) 
+    {
+      case Event.VK_LEFT:  this.shiftLeft(); break;
+      case Event.VK_RIGHT: this.shiftRight(); break;
+      case Event.VK_DOWN:  this.shiftDown(); break;
+      case Event.VK_A:     this.rotateLeft(); break; 
+      case Event.VK_D:     this.rotateRight(); break; 
+      case Event.VK_SPACE: this.letFall(); break;
+      default: consumed = false;
+    }
+    if(consumed) 
+      board.refresh();
+    return consumed;
+  }
+
+  function paintBoard(gfx) {
+    if( !currentBlock || !boardRows)
+      return;
+    var clr = color(255,0,0);
+    var (w,h) = this.box(#dimension);
+    var cw = w / NUM_COLS;
+    var ch = h / NUM_ROWS;
+    cellWidth = cw;
+    cellHeight = ch;
+    for( var (nr,r) in boardRows ) {
+      for( var (nc,c) in r ) 
+        if( c ) {
+          gfx.fillColor(c);
+          gfx.rectangle(nc * cw, nr * ch + boardShiftY, cw, ch);        
+        }
+    }
+    currentBlock.draw(gfx,currentBlockX,currentBlockY,cw,ch);
+    return true;
+  }
+
+  function Board(params = {}) 
+  {
+    NUM_ROWS = params.rows || 20;
+    NUM_COLS = params.cols || 10;
+    board = this; 
+    this.paintContent = paintBoard;
+  }
+
+  function Next() 
+  {
+    previewNext = this; 
+    this.paintContent = function(gfx) {
+      var (w,h) = this.box(#dimension);
+      var cw = w / 4;
+      var ch = h / 4;
+      nextBlock.draw(gfx,0,0,cw,ch);
+    }
+  }
+
+  class Block 
+  {
+    const shapes = 
+      [[[0, 0, 0, 0],
+        [0, 1, 1, 0],
+        [0, 1, 1, 0],
+        [0, 0, 0, 0]],
+       [[0, 0, 1, 0],
+        [0, 0, 1, 0],
+        [0, 0, 1, 0],
+        [0, 0, 1, 0]],
+       [[0, 0, 1, 0],
+        [0, 1, 1, 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, 0]],
+       [[0, 0, 0, 0],
+        [0, 0, 1, 1],
+        [0, 1, 1, 0],
+        [0, 0, 0, 0]],
+       [[0, 0, 0, 0],
+        [0, 1, 1, 0],
+        [0, 0, 1, 1],
+        [0, 0, 0, 0]],
+       [[0, 0, 1, 0],
+        [0, 0, 1, 0],
+        [0, 1, 1, 0],
+        [0, 0, 0, 0]],
+       [[0, 1, 0, 0],
+        [0, 1, 0, 0],
+        [0, 1, 1, 0],
+        [0, 0, 0, 0]]];
+
+    function this(shape = null, color = null) {
+      this.shape = shape ? shape : shapes[rand(shapes.length)];
+      this.color = color ? color : Color.hsv( rand(360),1,0.7 );
+    }
+
+    function rotatedLeft() {
+      var nblock = new Block(
+        [
+          [this.shape[0][3], this.shape[1][3], this.shape[2][3], this.shape[3][3]],
+          [this.shape[0][2], this.shape[1][2], this.shape[2][2], this.shape[3][2]],
+          [this.shape[0][1], this.shape[1][1], this.shape[2][1], this.shape[3][1]],
+          [this.shape[0][0], this.shape[1][0], this.shape[2][0], this.shape[3][0]]
+        ], this.color);
+      return nblock;
+    }
+
+    function rotatedRight() {
+      var nblock = new Block(
+        [
+          [this.shape[3][0], this.shape[2][0], this.shape[1][0], this.shape[0][0]],
+          [this.shape[3][1], this.shape[2][1], this.shape[1][1], this.shape[0][1]],
+          [this.shape[3][2], this.shape[2][2], this.shape[1][2], this.shape[0][2]],
+          [this.shape[3][3], this.shape[2][3], this.shape[1][3], this.shape[0][3]]
+        ],this.color);
+      return nblock;
+    }
+
+    function intersects(rows, y, x) 
+    {
+      for (var i = 0; i < 4; i++)
+        for (var j = 0; j < 4; j++)
+          if (this.shape[i][j])
+            if (y+i >= NUM_ROWS || x+j < 0 || x+j >= NUM_COLS || rows[y+i][x+j])
+              return true;
+      return false;
+    }
+
+    function apply(rows, y, x) 
+    {
+      var newRows = rows.clone(true);
+      for (var i = 0; i < 4; i++)
+        for (var j = 0; j < 4; j++)
+          if (this.shape[i][j])
+            newRows[y+i][x+j] = this.color;
+      return newRows;
+    }
+
+    function draw(gfx,x,y,cw,ch) 
+    {
+      gfx.fillColor(this.color);
+      for( var (nr,r) in this.shape ) {
+        for( var (nc,c) in r ) 
+          if( c )
+            gfx.rectangle((x + nc) * cw, (y + nr) * ch, cw, ch);
+      }
+    }
+
+  }
+
+}

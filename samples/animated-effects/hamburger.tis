@@ -46,11 +46,16 @@ function Hamburger(params={})
     r = b2a ? progress : (1 - progress);
     this.refresh();
   }
-  
-  this << event change() {  
-    b2a = this.value;
+
+  this.expand = function(onOff) {  
+    this.value = b2a = onOff;
     if( b2a ) this.parent.state.expanded = true; else this.parent.state.collapsed = true;
     this.animate(step, duration);
   }
+
+  this << event change() {  
+    this.expand(this.value);
+  }
+
 
 }

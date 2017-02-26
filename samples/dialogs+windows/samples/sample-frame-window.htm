@@ -12,13 +12,13 @@
     
     function self.ready() {
       view.state = View.WINDOW_SHOWN;
-      $(#resizable).value = view.isResizeable;
-      $(#minimizable).value = view.isMinimizable;
-      $(#maximizable).value = view.isMaximizable;
+      $(#resizable).value = view.windowResizeable;
+      $(#minimizable).value = view.windowMinimizable;
+      $(#maximizable).value = view.windowMaximizable;
     }
-    @click @on "#resizable"   :evt,el: view.isResizeable = el.value ;
-    @click @on "#minimizable" :evt,el: view.isMinimizable = el.value ;
-    @click @on "#maximizable" :evt,el: view.isMaximizable = el.value ;
+    @click @on "#resizable"   :evt,el: view.windowResizeable = el.value ;
+    @click @on "#minimizable" :evt,el: view.windowMinimizable = el.value ;
+    @click @on "#maximizable" :evt,el: view.windowMaximizable = el.value ;
     
     isResizable
   

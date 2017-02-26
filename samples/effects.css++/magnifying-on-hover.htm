@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+           .mg { 
+              flow:horizontal; 
+              horizontal-align:center; 
+              vertical-align:bottom; 
+              border-spacing:4dip; 
+              height:64dip;
+              margin-top:*;
+            }
+           .mg > icon { 
+              display:block; 
+              size:64dip; 
+              background-color:gold; }
+
+           .mg > icon:hover { 
+              size:128dip;
+              background-color:red; 
+              transition: size(quad-out,300ms) background-color(linear,300ms);
+            }
+
+        </style>
+        <script type="text/tiscript"></script>
+    </head>
+    <body>
+
+
+      <div.mg>
+        <icon>1</icon>
+        <icon>2</icon>
+        <icon>3</icon>
+      </div>
+
+
+    </body>
+</html>

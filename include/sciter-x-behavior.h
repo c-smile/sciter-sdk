@@ -502,10 +502,10 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
 
   typedef struct SCRIPTING_METHOD_PARAMS
   {
-      LPCSTR        name;   ///< method name
-      SCITER_VALUE* argv;   ///< vector of arguments
-      UINT          argc;   ///< argument count
-      SCITER_VALUE  result; ///< return value
+      LPCSTR              name;   ///< method name
+      const SCITER_VALUE* argv;   ///< vector of arguments
+      UINT                argc;   ///< argument count
+      SCITER_VALUE        result; ///< return value
   } SCRIPTING_METHOD_PARAMS;
 
   typedef struct TISCRIPT_METHOD_PARAMS
@@ -687,7 +687,7 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
       // }
       // will end up with on_script_call(he, "my-method" , 2, argv, retval );
       // where argv[0] will be 1 and argv[1] will be "one".
-      virtual bool on_script_call(HELEMENT he, LPCSTR name, UINT argc, SCITER_VALUE* argv, SCITER_VALUE& retval) { return false; }
+      virtual bool on_script_call(HELEMENT he, LPCSTR name, UINT argc, const SCITER_VALUE* argv, SCITER_VALUE& retval) { return false; }
 
       // Calls from TIScript. Override this if you want your own methods accessible directly from tiscript engine.
       // Use tiscript::args to access parameters.
@@ -800,7 +800,7 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
     }
 
 #define BEGIN_FUNCTION_MAP \
-    virtual bool on_script_call(HELEMENT he, LPCSTR name, UINT argc, sciter::value* argv, sciter::value& retval) \
+    virtual bool on_script_call(HELEMENT he, LPCSTR name, UINT argc, const sciter::value* argv, sciter::value& retval) \
     { \
       aux::chars _name = aux::chars_of(name);
 

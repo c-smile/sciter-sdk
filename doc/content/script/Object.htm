@@ -5,7 +5,7 @@
   </head>
 <body>
   <h1>Object object</h1>
-  <p>Despite of its name Object is a class that contains methods of objects in tiscript. Last line here will be evaluated to <em>true</em>:</p>
+  <p>Despite of its name Object is a class that contains methods of objects in&nbsp;script. For example here last line here will be evaluated to <em>true</em>:</p>
   <pre>var obj = { one:1, two:2 }; // creating object from literal
 if( obj instanceof Object )
       stdout.printf( &quot;I am an instance of Object&quot; ); // will output this
@@ -15,7 +15,7 @@ if( obj instanceof Object )
     <dt>className</dt>
     <dd>readonly, string. Name of the class if object was created as instance of user defined <code>class</code>.</dd>
     <dt>length</dt>
-    <dd>readonly, integer. Returns total number of members this instance contains.</dd>
+    <dd>readonly, integer. Returns total number of members that this instance of object owns. </dd>
     <h2>Methods</h2>
     <dt>this</dt>
     <dd>( )
@@ -76,6 +76,6 @@ if( obj instanceof Object )
     <dd><strong>( observer</strong>:function<strong> | functionName</strong>:symbol<strong> )</strong> : undefined
       <p>Detaches given observer function from the object by function reference or by its name. &nbsp;</p></dd>
     <dt>referenceOf</dt>
-    <dd><strong>( namespace</strong>:object, <strong>path</strong>:string<strong> )</strong> : (collection:object, key:symbol|string)<br/>When given dot separated path like &quot;one.two.three&quot; the function returns obj/key pair - object in which &quot;three&quot; key is defined and that key.</dd></dl>
+    <dd><strong>( namespace</strong>:object, <strong>path</strong>:string<strong> )</strong> : (collection:object, key:symbol|string)<p>When given dot separated path like &quot;one.two.three&quot; the function returns obj/key pair - object in which &quot;three&quot; key is defined and that key.</p></dd></dl>
 </body>
 </html>

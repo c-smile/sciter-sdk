@@ -26,7 +26,8 @@
 </pre>
       <p>variable <em>obj</em> will contain object having two fields: <em>one</em> and <em>two.</em></p>
       <p><em>env</em> is an environment object - if provided then script execution takes place in the namespace of that object.</p>
-      <pre>var env = { one:1, two:2 };<br/>var res = eval( <font color="#990099">&quot;one + two&quot;, </font>env);
+      <pre>var env = { one:1, two:2 };
+var res = eval( &quot;one + two&quot;, env);
 </pre>
       <div>After execution of two lines above variable <em>res</em> will contain integer 3.</div>
       <p class="note">These functions available only if host application configured the engine to use them.</p></dd>
@@ -153,5 +154,34 @@ for(var (k,v) in Foo )
     <dt>JSON.parse</dt>
     <dd>(<strong>text</strong>:string[, <strong>reviver</strong>]) : value
       <p>Parses JSON string. &nbsp;The <em>replacer</em> is a <code>function (key, value): value</code> or <code>function (key, value): (key,value</code>) - allows to transform parsed into another value or key/value pair.</p></dd></dl>
+	<p>URL namespace</p>
+	<p>Contains functions designated to work with URLs:</p>
+	<dl><dt>URL.parse</dt>
+		<dd>(<b>url</b>:string) : object<p>The function parses url and returns object containing URL components:</p>
+      <ul>
+        <li><em>port</em> - integer, tcp/ip port number;</li>
+        <li><em>protocol</em> - string, protocol like &quot;http&quot;, &quot;file&quot;, etc.;</li>
+        <li><em>hostname</em> - string, host name;</li>
+        <li><em>anchor</em> - string, anchor;</li>
+        <li><em>username</em> - string;</li>
+        <li><em>password</em> - string;</li>
+        <li><em>params</em> - string, parameters of http GET request</li>
+        <li><em>dir</em> - string, directory</li>
+        <li><em>name</em> - string, filename without extension</li>
+        <li><em>ext</em> - string, extension</li>
+        <li><em>name_ext</em> - string, filename with extension.</li></ul>
+			</dd><dt>URL.relative</dt>
+		<dd>(<b>url</b>: string, <b>baseUrl</b>:string) : string<p>Makes <i>url</i>  relative to <i>baseUrl</i>. So for:&nbsp;</p>
+			<ul><li>baseUrl:&nbsp;<code>http://example.com/foo/bar.htm</code>  and</li><li>url : &nbsp;<code>http://example.com/zar/laf.htm#location</code></li>
+				</ul>
+			<p>the function returns <code>../zar/laf.htm#location</code></p>
+			
+			</dd><dt>URL.absolute</dt>
+		<dd>( <b>relUrl</b>: string, <b>baseUrl</b>: string ) : string<p>The function combines relative URL with base (absolute) URL.</p>
+			</dd><dt>URL.encode</dt>
+		<dd>( str: string ) : string<p>The function encodes all non-url characters, space for example will be replaced by <code>%20</code> , etc.</p></dd><dt>URL.encodeParam</dt>
+		<dd>( str: string ) : string<p>The function encodes all characters&nbsp;except the following: alphabetic, decimal digits, <code>- _ . ! ~ * ' ( )</code></p>
+			</dd><dt>URL.decode</dt>
+		<dd>( str: string&nbsp;) : string<p>The function decodes URL encoded string to its original form.</p></dd></dl><p></p>
 </body>
 </html>

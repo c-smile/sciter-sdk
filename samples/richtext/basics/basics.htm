@@ -23,8 +23,11 @@
         btn_i.state.checked = htmlarea.queryCommand("format:toggle-span:i|em") == ACTIVE;
       });
       
-      btn_b.on("click", function(){ htmlarea.execCommand("format:toggle-span:b|strong"); return true; });  
-      btn_i.on("click", function(){ htmlarea.execCommand("format:toggle-span:i|em"); return true; });  
+      event click $(#btn-b) { htmlarea.execCommand("format:toggle-span:b|strong"); return true; }  
+      event click $(#btn-i) { htmlarea.execCommand("format:toggle-span:i|em"); return true; }  
+
+
+      htmlarea << event exec:edit:insert-block-break() { return this.execCommand("edit:insert-break"); }
     
     </script>
   </head>
@@ -36,6 +39,7 @@
 </toolbar>
 <htmlarea>
   <p>Hello world!</p>
+  <ol><li>First</li></ol>
 </htmlarea>
 
 </body>

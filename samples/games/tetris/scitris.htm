@@ -1,0 +1,87 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+          body {
+            flow:horizontal;
+            margin:0; padding:0;
+            background-image: url(background.jpg);
+            background-repeat: no-repeat;
+            background-position: 50% 50%;
+            background-size: cover;
+          }
+          body > section { size:*; }
+
+          scitris {
+            aspect: Scitris.Board url(scitris.tis);
+            display:block;
+            width: 50vh;      // 10 columns
+            height: 100vh;    // 20 rows
+            flow:vertical;
+            background-color:rgba(255,255,255,0.8);
+          }
+          scitris-next {
+            aspect: Scitris.Next url(scitris.tis);
+            display:block;
+            width: 15vh;     // 3 columns
+            height: 15vh;    // 3 rows
+            margin: 1em * 0 *;
+          }
+
+          caption { text-align:center; }
+
+          output#score {
+            display:block;
+            margin: 1em * 0 *;
+            font-size:30dip;
+          }
+
+          dl {
+            flow: row(dt,dd);
+            padding:0.5em 1em;
+            background-color:rgba(255,255,255,0.8);
+            margin:*;
+            width:max-content;
+            border-spacing: 0.5em 1em;
+          }
+
+          dl > dt { text-align:right; }
+
+          dl > dd { width:max-content; }
+
+        </style>
+        <script type="text/tiscript">
+
+          function self.ready() {
+            Scitris.start();
+            self.state.focus = true;
+          }
+
+         event ~keydown (evt) { return Scitris.handleKeydown(evt); }
+         event score-change (evt) { $(output#score).value = evt.data; }
+
+
+        </script>
+    </head>
+    <body>
+
+        <section>
+          <caption>Score</caption>
+          <output|number #score />
+        </section>
+        <scitris/>
+        <section>
+          <scitris-next />
+          <dl>
+            <dt>LEFT</dt><dd>shift left</dd>
+            <dt>RIGHT</dt><dd>shift right</dd>
+            <dt>DOWN</dt><dd>shift down</dd>
+            <dt>A</dt><dd>rotate left</dd>
+            <dt>D</dt><dd>rotate right</dd>
+            <dt>SPACE</dt><dd>drop</dd>
+          </dl>
+        </section>
+
+    </body>
+</html>

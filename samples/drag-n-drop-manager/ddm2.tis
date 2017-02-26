@@ -509,10 +509,11 @@ function DragDrop2(def)
           var deltay = dd_y - y;
           //stdout.$n({dd_x} {dd_y});
           if( deltax < -X_THRESHOLD || deltax > X_THRESHOLD ||
-              deltay < -Y_THRESHOLD || deltay > Y_THRESHOLD )
+              deltay < -Y_THRESHOLD || deltay > Y_THRESHOLD ) {
               dd_x = x;
               dd_y = y;
               doDD( this, evt.xView, evt.yView );
+          }
           return true;
         }
     }

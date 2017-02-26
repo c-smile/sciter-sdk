@@ -114,9 +114,9 @@
         var croot = content[0];
         var title = croot.$(head>title); 
         if( title )
-          view.caption =  title.text || "Sciter"; 
+          view.windowCaption =  title.text || "Sciter"; 
         else 
-          view.caption =  "Sciter"; // calling native method defined in sciter.h 
+          view.windowCaption =  "Sciter"; 
       }
 
       function content.onExchange(evt)
@@ -158,7 +158,7 @@
           var croot = content[0];
           var title = croot.$(head>title); 
           if( title )
-            view.title(title.text); // calling native method defined in sciter.h 
+            view.windowCaption = title.text; // calling native method defined in sciter.h 
         }
       }
       event click $(button#reload)
