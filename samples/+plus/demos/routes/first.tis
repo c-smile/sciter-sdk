@@ -5,7 +5,7 @@ class FirstController: Element {
     this.msg.text = "FirstController activated!";
   } 
   
-  event "click|button#test" (evt) {
+  event click $(button#test) {
     view.msgbox(#information, "Click handled by FirstController");
   };
 

@@ -28,7 +28,7 @@ function Plus.Application() {
   var app = {go:go};  
 
   // anything clickable with href works like hyperlink  
-  self << event "click|[href]" (evt) 
+  self << event click $([href]) 
   {
     var param = this.attributes["param"] || null;
     go( this.attributes["href"], param );

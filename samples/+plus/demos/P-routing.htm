@@ -32,7 +32,7 @@
         ]; 
       }
       
-      self << event "routechange" (evt) {
+      self << event routechange (evt) {
         var button = $(toolbar>button[href="{Plus.app.path}"]); 
         button.value = true;
       }
