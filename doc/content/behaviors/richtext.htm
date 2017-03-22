@@ -53,7 +53,17 @@
     <li>CTRL+X</li>
     <li>CTRL+V</li>
     <li>CTRL+Z</li>
-    <li>CTRL+(LEFT)SHIFT and CTRL+(RIGHT)SHIFT - in forms having the <code>dir</code> attribute these key combinations switches between <code>dir=&quot;ltr&quot;</code> and <code>dir=&quot;rtl&quot;</code>.</li>
+		
+    
+		<p>Formatting commands:</p>
+		<li><code>CTRL+D</code> - wraps current text run into <code>&lt;code&gt;text&lt;/code&gt;</code>;</li><li><code>CTRL+NUMPAD1...6</code> - converts current text block to <code>&lt;h1&gt;</code>...<code>&lt;h6&gt;</code>;</li>
+		<li><code>CTRL+NUMPAD7</code>&nbsp;- converts current block or text run to <code>&lt;pre&gt;</code>;</li>
+		<li><code>CTRL+NUMPAD0 </code>- converts current block or text run to <code>&lt;p&gt;</code>;</li>
+		<li><code>CTRL+NUMPAD+</code> - indent current selection;</li>
+		<li><code>CTRL+NUMPAD-</code> - unindent current selection;</li>
+		<li><code>CTRL+NUMPAD.</code> - convert current selection to ordered list&nbsp;<code>&lt;ol&gt;</code><code>/&lt;li&gt;</code>;</li>
+		<li><code>CTRL+NUMPAD*</code> - convert current selection to unordered list&nbsp;<code>&lt;ul&gt;</code><code>/&lt;li&gt;</code>;</li>
+		<li><code>CTRL+NUMPAD/</code> - convert current selection to definition list&nbsp;<code>&lt;dl&gt;</code><code>/&lt;dt&gt;/&lt;dd&gt;</code>;</li>
 		</ul>
 	<h2>Commands</h2>
 	<p>The <code>htmlarea.execCommand(command,attributes)</code> method executes undoable editing command. The <em>command</em> string identifies command to execute.</p><p>Editing commands common to all editable elements ( &lt;input|text&gt;, &lt;textarea&gt;, &lt;plaintext&gt;, &lt;htmlarea&gt; ):</p><ul>
@@ -77,7 +87,7 @@
         <li><code>&quot;format:toggle-pre&quot;</code> - converts selection to or from <code>&lt;pre&gt;</code> block.</li>
         <li><code>&quot;format:indent&quot;</code> - &nbsp;wraps selected paragraphs into <code>&lt;blockquote&gt;</code> or sub-list.</li>
         <li><code>&quot;format:unindent&quot;</code> - &nbsp;unwraps selected paragraphs from <code>&lt;blockquote&gt;</code> or moves sub-list to one level up.</li>
-        <li><code>&quot;format:morph-block:{tag}&quot;</code> - changes tags of selected block elements. This way current <code>&lt;blockquote&gt;</code> &nbsp;can be changed to <code>&lt;div&gt;</code> for example.</li>
+        <li><code>&quot;format:morph-block:{tag}&quot;</code> - changes tags of selected block elements. This way current <code>&lt;blockquote&gt;</code> &nbsp;can be changed to <code>&lt;p&gt;</code> for example. Only block element that do not contain other <code>display:block</code> elements can be morphed.</li>
 			<li><code>&quot;format:unwrap-element:{tag}&quot;</code> - moves content of the element to element's parent and removes (now empty) element from the DOM.</li></ul>
   <h2>Methods</h2>
   <dl>

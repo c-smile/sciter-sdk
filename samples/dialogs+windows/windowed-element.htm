@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+          body { flow:stack; }
+          body > widget { 
+            background: linear-gradient(to right, gold , brown); size:*; }
+          body > overlay { 
+            display:block;
+            behavior:windowed;
+            background: rgba(0,255,0,0.15); border-radius:10dip; size:0.5*; margin:0.25*; }
+
+        </style>
+        <script type="text/tiscript"></script>
+    </head>
+    <body>
+       <widget>custom child window (placeholder for now)</widget>
+       <overlay>Overlay (window)</overlay>
+    </body>
+</html>

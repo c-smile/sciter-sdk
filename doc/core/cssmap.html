@@ -1038,7 +1038,11 @@
               <td nowrap="" valign="top"><em>page</em> : length | percent | auto</td>
               <td>
                 <div><em>auto</em> means &quot;integral step&quot; - single scroll step (UP/DOWN keys) is computed according to dimension of last visible item. In case of length value scroll step will be equal to that value converted to pixels. Percentage value is computed against corresponding dimension of the element.</div>
-                <div>Default value is 100% - whole width or height of the scrollable area of the element.</div></td></tr></table>
+                <div>Default value is 100% - whole width or height of the scrollable area of the element.</div></td></tr>
+            <tr>
+              <td nowrap="" valign="top"><em>wheel-step</em> : length | percent | auto</td>
+              <td>
+                <div>delta added to current scroll position on   each MOUSE_WHEEL event&nbsp;received.</div></td></tr></table>
           <div>Example of scroll manner style definition:</div>
           <div><font face="Courier New">div#scrollable {</font></div>
           <div><font face="Courier New">&nbsp;overflow:auto;</font></div>

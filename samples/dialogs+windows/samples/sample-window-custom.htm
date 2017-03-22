@@ -3,7 +3,7 @@
     <title>Hello world!</title>
     <style>
     
-      html { background: orange; }
+      html { background: orange; width: 400dip; height:300dip; }
     
       body {  flow:vertical;
               size:*; 
@@ -12,33 +12,36 @@
       body > header { width:*; line-height:1.6em; background:gold; 
                       flow:horizontal; }
       body > header > caption { width:*; }
-      body > header > button { margin-bottom:20dip;; }
       body > main { size:*; background:white;}
+
+      button.window { display:block; size:24dip; margin:0; padding:0; background:50% 50% no-repeat; background-size:24dip;  }
+      button.window:hover { background-color:orange; } 
+      button.window#minimize  { background-image:url(icons/icon-minimize.png); } 
+      button.window#maximize  { background-image:url(icons/icon-maximize.png); } 
+      button.window#maximize.restore  { background-image:url(icons/icon-restore.png); }
+      button.window#close     { background-image:url(icons/icon-close.png); }
     
     </style>
     <script type="text/tiscript">
     
     function self.ready() {
       view.state = View.WINDOW_SHOWN;
+
+      view << event statechange {
+        $(button#maximize).attributes.toggleClass("restore", view.windowState == View.WINDOW_MAXIMIZED); 
+      } 
     }
-         
-    self.on("click","button#hide", function() {
-      // hide it for 5 seconds:
-      view.state = View.WINDOW_HIDDEN;
-      self.timer(5s, function() {
-        view.state = View.WINDOW_SHOWN;
-      });
-    });
     
+     
+
     </script>
   </head>
 <body>
   <header role="window-caption">
     <caption disable>Caption</caption>
-    <button role="window-minimize">_</button>
-    <button role="window-maximize">o</button>
-    <button role="window-close">X</button>
-    <button #hide>-</button>
+    <button.window role="window-minimize" #minimize></button>
+    <button.window role="window-maximize" #maximize></button>
+    <button.window role="window-close" #close></button>
   </header>
   <main>  
     Hello world!

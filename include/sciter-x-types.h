@@ -69,7 +69,7 @@ enum GFX_LAYER
   #include <windows.h>
   #include <oaidl.h>
 
-#if defined(__cplusplus) && !defined( PLAIN_API_ONLY )
+/*#if defined(__cplusplus) && !defined( PLAIN_API_ONLY )
   #include <d2d1.h>
   #include <dwrite.h>
 #else
@@ -80,9 +80,7 @@ enum GFX_LAYER
   typedef struct _ID2D1RenderTarget ID2D1RenderTarget;
   typedef struct _ID2D1Factory ID2D1Factory;
   typedef struct _IDWriteFactory IDWriteFactory;
-
-#endif
-
+#endif*/
 
   #if defined(_MSC_VER) && _MSC_VER < 1900
   // Microsoft has finally implemented snprintf in Visual Studio 2015.

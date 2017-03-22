@@ -72,9 +72,9 @@ typedef struct _ISciterAPI {
   VOID    SCFN( SciterGetPPI )(HWINDOW hWndSciter, UINT* px, UINT* py);
   BOOL    SCFN( SciterGetViewExpando )( HWINDOW hwnd, VALUE* pval );
 #ifdef WINDOWS
-  BOOL    SCFN( SciterRenderD2D )(HWINDOW hWndSciter, ID2D1RenderTarget* prt);
-  BOOL    SCFN( SciterD2DFactory )(ID2D1Factory ** ppf);
-  BOOL    SCFN( SciterDWFactory )(IDWriteFactory ** ppf);
+  BOOL    SCFN( SciterRenderD2D )(HWINDOW hWndSciter, IUnknown* /*ID2D1RenderTarget**/ prt);
+  BOOL    SCFN( SciterD2DFactory )(void** /*ID2D1Factory ***/ ppf);
+  BOOL    SCFN( SciterDWFactory )(void** /*IDWriteFactory ***/ ppf);
 #endif
   BOOL    SCFN( SciterGraphicsCaps )(LPUINT pcaps);
   BOOL    SCFN( SciterSetHomeURL )(HWINDOW hWndSciter, LPCWSTR baseUrl);
@@ -458,9 +458,9 @@ typedef ISciterAPI* (SCAPI *SciterAPI_ptr)();
   inline  VOID    SCAPI SciterGetPPI (HWINDOW hWndSciter, UINT* px, UINT* py) { SAPI()->SciterGetPPI (hWndSciter,px,py); }
   inline  BOOL    SCAPI SciterGetViewExpando ( HWINDOW hwnd, VALUE* pval ) { return SAPI()->SciterGetViewExpando ( hwnd, pval ); }
 #ifdef WINDOWS
-  inline  BOOL    SCAPI SciterRenderD2D (HWINDOW hWndSciter, ID2D1RenderTarget* prt) { return SAPI()->SciterRenderD2D (hWndSciter,prt); }
-  inline  BOOL    SCAPI SciterD2DFactory (ID2D1Factory ** ppf) { return SAPI()->SciterD2DFactory (ppf); }
-  inline  BOOL    SCAPI SciterDWFactory (IDWriteFactory ** ppf) { return SAPI()->SciterDWFactory (ppf); }
+  inline  BOOL    SCAPI SciterRenderD2D (HWINDOW hWndSciter, IUnknown* /*ID2D1RenderTarget**/ prt) { return SAPI()->SciterRenderD2D (hWndSciter,prt); }
+  inline  BOOL    SCAPI SciterD2DFactory (void** /*ID2D1Factory ***/ ppf) { return SAPI()->SciterD2DFactory (ppf); }
+  inline  BOOL    SCAPI SciterDWFactory (void** /*IDWriteFactory ***/ ppf) { return SAPI()->SciterDWFactory (ppf); }
 #endif
   inline  BOOL    SCAPI SciterGraphicsCaps (LPUINT pcaps) { return SAPI()->SciterGraphicsCaps (pcaps); }
   inline  BOOL    SCAPI SciterSetHomeURL (HWINDOW hWndSciter, LPCWSTR baseUrl) { return SAPI()->SciterSetHomeURL (hWndSciter,baseUrl); }

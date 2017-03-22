@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+
+       form { flow:row(label,input);  }
+       form > label { white-space:nowrap; }
+
+    </style>
+    <script type="text/tiscript">
+    
+      $(form) << event mousedragrequest (evt) {
+        var data = {
+          json: $(form).value
+        };
+        
+        var r = view.performDrag( this, data, #copy );
+        stdout.println(r);
+        return true;
+      };
+     
+      
+    </script>
+  </head>
+<body>
+  Dragabble form data:
+  <form>
+    <label>first name</label><input(firstName) />
+    <label>last name</label><input(lastName) />
+  </form>
+  
+</body>
+</html>

@@ -1,0 +1,63 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+          div {
+            size:100dip;
+            background:gold; 
+            transform: translate(var(x,0px), var(y,0px));
+          }
+
+
+        </style>
+        <script type="text/tiscript">
+
+
+         function self.ready() {
+
+          var div = $(div);
+          var speed = 0;  
+          var x = 0;  
+          var y = 0;
+
+          function moveStep() {
+            if( !speed ) 
+              return false; // stop animation
+            x += speed;            
+            y += speed;
+            
+            if( x > 300 ) { x = 0; y = 0; }
+
+            this.style.variables {x:px(x), y:px(y)};
+
+            return true;
+          }
+
+          $(select#speed).on("change", function() {
+            var pspeed = speed;
+            speed = this.value;
+            if( pspeed == 0 && speed != 0 )
+              div.animate(moveStep);
+          }); 
+
+                                 
+         }
+           
+
+        </script>
+    </head>
+    <body>
+      
+      <p>Demonstrates CSS variables animation</p> 
+
+      <select #speed> 
+        <option value=0 selected>Stand still</option>
+        <option value=1>Move 1x</option>
+        <option value=2>Move 2x</option>
+      </select>
+
+      <div></div>
+
+    </body>
+</html>

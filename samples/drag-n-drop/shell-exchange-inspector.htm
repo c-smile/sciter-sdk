@@ -72,6 +72,10 @@
                 self.bindImage("in-memory:exchange",img);
                 dl.$append(<dt>picture</dt><dd><img src="in-memory:exchange"></dd>);
               } break;
+              case #json: {
+                var json = evt.exchangeData(#json);
+                dl.$append(<dt>json</dt><dd>{JSON.stringify(json)}</dd>);
+              } break;
             }
             
           return true;

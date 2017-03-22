@@ -1,0 +1,28 @@
+<html>
+<head>
+    <script type="text/tiscript">
+    self.ready = function()
+    {
+        var top = $(div#topDiv);
+        for(var i = 0; i < 100; i++)
+        {
+            var btn = new Element(#button,String.printf("button-%d", i));
+            top.append(btn);
+        }
+    }
+    </script>
+    <style>
+      div#topDiv
+      {
+        flow:vertical;
+        overflow:auto scroll-manner(wheel-animation:false, wheel-step:10dip);
+        size:*;
+      }
+
+    </style>
+    
+</head>
+<body>
+   <div id="topDiv"></div>
+</body>
+</html>

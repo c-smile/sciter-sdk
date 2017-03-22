@@ -1,0 +1,101 @@
+<html>
+<head>
+  <style>
+    body { margin:0; }
+    div.header 
+    {
+      background-image: url(images/header.png);
+      background-repeat: expand; 
+      background-position: 0 0 0 460; // top right bottom left offsets/margins
+      height:76px;  
+    }
+    div.body 
+    {
+      font: system;
+      background-image: url(images/body-back.png);
+      background-repeat: expand; 
+      background-position: 80 0 0 0; // top right bottom left offsets/margins
+      height:*;  // takes the rest of the view
+      padding:25dip 10dip 10dip 10dip;
+      flow:horizontal;     // two columns
+      border-spacing:10dip; // with 20 dip margin in between
+    }
+    
+    #left { width:20em; }    
+    
+    div.panel
+    {
+      background-image: url(images/panel-back.png);
+      background-repeat: expand; 
+      background-position: 14 14 14 14; // top right bottom left offsets/margins
+      padding: 0 10dip 10dip 10dip;
+      margin-bottom:20dip;
+    }
+    div.panel > caption
+    {
+      background-image: url(images/panel-caption-back.png);
+      background-repeat: expand stretch-left stretch-middle stretch-right; 
+      background-position: 3 3 3 3; // top right bottom left offsets/margins
+      padding:6dip 6dip;
+      color:white;
+      font-weight:bold;
+      position:relative;
+      top:-0.7em;
+      margin-bottom:-0.6em;
+    }
+        
+    div.panel :link { text-decoration:none; color:#8b8368; cursor:pointer; behavior:hyperlink; }
+    div.panel :link:hover { color:red; }
+    div.panel :link:active { text-decoration:none; }
+    div.panel :link:focus { color:orange; }
+    div.panel :link:tab-focus { text-decoration:double-underline; }
+    div.panel ul { padding: 0 6dip; margin: 10dip 0; }
+    div.panel li { display:block; margin: 2dip 0; }
+    div.panel dl { padding: 0 6dip; }
+    div.panel dt { font-weight:bold; margin-bottom:4dip; }
+    div.panel dt:not(:first-child) { border-top: 1dip dotted #8b8368; margin-top:6dip; padding-top:6dip;}
+    div.panel dd { padding-left:12dip; }
+    
+    #recent-projects ul { border-bottom: 1dip dashed #8b8368;}
+    #recent-projects table { margin:0 auto; }
+    #recent-projects table td:first-child { text-align:right; }
+    
+  	img.shell-icon 
+    {
+		  width:20dip;
+      height:20dip;
+      behavior: shell-icon;
+      vertical-align:middle;
+	  }
+  </style>  
+<head>
+<body>
+  <div .header>
+  </div> 
+  <div .body>
+    <div #left>
+      <div .panel #recent-projects>
+        <caption>Recent projects</caption>
+        <ul><include src="content/list-of-projects.htm" /></ul>
+        <table>
+          <tr><td>Open:</td><td href="#">Project...</td></tr>
+          <tr><td>Create:</td><td href="#">Project...</td></tr>
+        </table>
+      </div>
+      <div .panel #getting-started>
+        <caption>Getting started</caption>
+        <ul><include src="content/getting-started.htm" /></ul>
+      </div>
+      <div .panel #headlines>
+        <caption>Headlines</caption>
+        <dl><include src="content/headlines.htm" /></dl>
+      </div>
+    </div>
+    <div .panel #msdn-news>
+      <caption>MSDN: Recent news</caption>
+      <dl><include src="content/msdn-recent-news.htm" /></dl>
+      <p style="text-align:right;"><a href="#">More news...</a></p>
+    </div>
+  </div> 
+</body>
+</html>

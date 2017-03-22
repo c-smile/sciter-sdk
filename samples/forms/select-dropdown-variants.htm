@@ -52,6 +52,28 @@
         stdout.println("change", this, "value", this.value); 
       }
 
+      event click $(#populate) {
+        const countries = [
+        "Afghanistan",
+        "Albania",
+        "Algeria",
+        "American Samoa",
+        "Andorra",
+        "Angola",
+        "Anguilla",
+        "Antarctica",
+        "Antigua And Barbuda",
+        "Argentina",
+        "Armenia"];
+
+        var select = $(select[name=dd]);
+
+        select.options.clear();
+        for(var (i,country) in countries)
+          select.options.$append(<option value={i}>{country}</option>);
+        select.value = 7;
+
+    }
     
     </script>
   </head>
@@ -62,6 +84,7 @@
   <button #get>Get values</button>
   <button #set>Set values</button>
   <button #set-by-dom-ref>Set by DOM element reference</button>
+  <button #populate>Populate options in first select</button>
   <form>
   <label>dropdown:</label>
   <select name=dd>

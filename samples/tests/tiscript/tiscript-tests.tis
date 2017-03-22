@@ -52,6 +52,9 @@ function String_test()
   
   assert s.split( " " ).length == 9;
   assert s.split( re1 ).length == 5;
+
+  assert "Russia".split("") == ["R","u","s","s","i","a"];
+  assert "Russia".split("s") == ["Ru","","ia"];
     
   assert s.substr(12, 5) == "Spain";
   assert s.substring(12, 17) == "Spain";

@@ -20,13 +20,14 @@
         view.move(x,y,nw,nh);
       }
       
-      $(input#delta).onValueChanged = function() {
-          setWindowSize(iw + this.value, ih + this.value);
+      $(input#delta) << event change {
+        stdout.println(this.value);
+        setWindowSize(iw + this.value, ih + this.value);
       } 
       
       $(#resizeable).value = view.isResizeable;
       
-      $(#resizeable).onValueChanged = function() {
+      $(#resizeable) << event change {
         view.isResizeable = this.value;
       }
 

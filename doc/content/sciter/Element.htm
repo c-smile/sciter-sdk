@@ -275,10 +275,20 @@ some.selectParent(printel, &quot;div&quot;);
       <p>Invalidates area occupied by the element on the screen. If <em>x</em> , <em>y</em>, <em>width</em>, <em>height </em>(coordinates of area inside element) are provided then it invalidates only that portion. This method is useful if you are using Graphics for rendering on element surface area.</p></dd>
     <dt>animate</dt>
     <dd>
-      <div><strong>( nextStep</strong>: function [, whenEnded: function] [, <strong>duration</strong>: diration | integer]<strong> )</strong> : undefined</div>
-      <p>Starts animation on the element. <em>nextStep</em> is a function that executes animation step (changes dimension, opacity, etc.). This function is called with <em>this</em> set to the element itself and should return integer - number of milliseconds for the next step. If it returns zero or not an integer then animation stops.</p>
+      <div><strong>( nextStep</strong>: function [, <b>whenEnded</b>: function] [, <strong>duration</strong>: duration | integer]<strong> )</strong> : undefined</div>
+      <p>Starts animation on the element. <em>nextStep</em> is a function that executes animation step (changes dimension, opacity, etc.). This function is called with <em>this</em> set to the element itself and should return:</p>
+			<ul><li><i>true</i> - to continue animation with system defined FPS;</li>
+				<li><i>integer</i>&nbsp;- milliseconds, delay to next animation step  call, if <code>0</code> stop animation;</li>
+				<li><i>duration</i> -&nbsp;delay to next animation step  call, stop animation if the duration is zero;</li>
+				
+				<li>false - stop animation;</li></ul>
       <p>If <em>whenEnded</em> function is provided it will be called on the end of the animation.</p>
-      <p>The <em>duration</em> is a duration of the animation in milliseconds. If it is provided then signature of the <em>nextStep</em> function is expected to be:<br/> <code>function nextStep(progress: float) {}</code> <br/>where progress is a float number from 0.0 to 1.0 - progress of the animation. The nextStep function will always receive progress == 1.0 as the very last step.</p></dd>
+      <p>The <em>duration</em> is total duration of the animation in milliseconds. If it is provided then signature of the <em>nextStep</em> function is expected to be:</p>
+			
+			<pre>function nextStep(progress: float) {} </pre>
+			
+			<p>where <i>progress</i> is a float number from 0.0 to 1.0 - progress of the animation. The <i>nextStep</i> function will always receive <i>progress</i> == 1.0 as the very last step.</p><p>Otherwise step callback function is expected to have no parameters:</p>
+			<pre>function nextStep() {} </pre></dd>
     <dt>box</dt>
     <dd>
       <div><strong>( part</strong> [, <strong>edge</strong> [, <strong>relativeTo</strong> ]] <strong>) </strong>returns: integer, device pixels</div>
@@ -342,7 +352,7 @@ some.selectParent(printel, &quot;div&quot;);
       <ul>
         <li><strong>#left</strong> - left position of the view relative to content origin,</li>
         <li><strong>#top</strong> - top position,</li>
-        <li><strong>#right</strong> - offset of right edge of the view from right edge of В the content box,</li>
+        <li><strong>#right</strong> - offset of right edge of the view from right edge of the content box,</li>
         <li><strong>#bottom </strong>- offset of bottom edge of the view from bottom edge of the content box,</li>
         <li><strong>#width </strong>- width of scrollable area,</li>
         <li><strong>#height</strong> - height of scrollable area.</li>

@@ -1,4 +1,4 @@
-<html window-frame="solid-with-shadow" window-resizable >
+<html window-frame="solid" window-resizable >
   <head>
     <title>Hello world!</title>
     <style></style>
@@ -8,11 +8,19 @@
       view.state = View.WINDOW_SHOWN;
     }
     
-    function self#full-screen.onClick() {
+    event click $(#full-screen) 
+    {
       view.state = this.value ? View.WINDOW_FULL_SCREEN : View.WINDOW_SHOWN;
     }
 
-    function self#close.onClick() {
+    event click $(#full-workspace) 
+    {
+      view.state = View.WINDOW_SHOWN;
+      var (x,y,w,h) = view.screenBox(#workarea,#rectw);
+      view.move(x,y,w,h); 
+    }
+
+    event click $(#close) {
       view.close();
     }
     
@@ -25,8 +33,8 @@
   
   <br>Test of external image <img src="http://www.terrainformatica.com/res/terrainformatica.gif">
   
-  <button|checkbox #full-screen>Full screen</button>
+  <button|radio(mode) #full-screen>Full screen</button>
+  <button|radio(mode) #full-workspace>Full workspace</button>
   <button #close>Close</button>
-  
 </body>
 </html>

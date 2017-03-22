@@ -531,7 +531,7 @@ BOOL SCAPI SciterRenderOnDirectXTexture(HWINDOW hwnd, HELEMENT elementToRenderOr
  *
  **/
 
- BOOL SCAPI SciterRenderD2D(HWINDOW hWndSciter, ID2D1RenderTarget* prt);
+ BOOL SCAPI SciterRenderD2D(HWINDOW hWndSciter, IUnknown* /*ID2D1RenderTarget**/ prt);
 
 /** Obtain pointer to ID2D1Factory instance used by the engine:
  *
@@ -543,7 +543,7 @@ BOOL SCAPI SciterRenderOnDirectXTexture(HWINDOW hwnd, HELEMENT elementToRenderOr
  *
  **/
 
- BOOL SCAPI     SciterD2DFactory(ID2D1Factory ** ppf);
+ BOOL SCAPI     SciterD2DFactory(void** /*ID2D1Factory ***/ ppf);
 
 /** Obtain pointer to IDWriteFactory instance used by the engine:
  *
@@ -555,7 +555,7 @@ BOOL SCAPI SciterRenderOnDirectXTexture(HWINDOW hwnd, HELEMENT elementToRenderOr
  *
  **/
 
- BOOL SCAPI     SciterDWFactory(IDWriteFactory ** ppf);
+ BOOL SCAPI     SciterDWFactory(void** /*IDWriteFactory ***/ ppf);
 
 #endif
 
