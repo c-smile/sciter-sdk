@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <title>Plus: very basic sample</title>
+    <style>
+      @import url(../plus-routes.css); /* the only thing needed to include Plus framework */
+      @import url(../../note.css); 
+      
+      toolbar > button { 
+        behavior:radio;
+        height:*; 
+        width:100dip; 
+        height:48dip; 
+        text-align:center;
+        vertical-align:middle;
+      }
+      toolbar > caption { 
+        width:*; 
+        text-align:center;
+        vertical-align:middle;
+      }
+      
+      
+    </style>
+    
+    <script type="text/tiscript">
+     
+      function self.ready() {
+        Plus.app.routes = [
+          { path:"/first", url:"routes/bound-first.htm" },
+          { path:"/second", url:"routes/bound-second.htm" },
+        ]; 
+      }
+      
+      self << event routechange (evt) {
+        var button = $(toolbar>button[href="{Plus.app.path}"]); 
+        button.value = true;
+      }
+
+      namespace Data {
+          var currentOption = 0; // bound with selects in views
+      };
+      
+    </script>
+  </head>
+
+<body> <!-- no data model in this sample -->
+  <toolbar>
+    <button(route) href="/first" checked>First bound</button> 
+    <button(route) href="/second">Second bound</button> 
+  </toolbar>
+  <main model="Data"></main>
+</body>
+</html>
