@@ -116,11 +116,14 @@ const Plus = function() {
         thing.subscribe("change.plus",on_ui_change); // subscribe to the element value change event
       }
       setupModelChangeHandler( coll, key, function(val) { if( !thing.parent ) throw undefined; updater(thing,val); } );
-      //WRONG: updater(thing,coll[key]);
-      //we need to post this thing as it may have other aspects and behaviors
-      thing.post(::updater(thing,coll[key])); // assign intial value to it;
-      if(thing.tag == "select")
-        thing.plusSetValueFromModel = function() { this.value = coll[key]; return false; } 
+      if(thing.attributes["each"]) // if it has each then wee need to update the value after rendering its items
+      {
+        thing.on("set-value-postfactum.plus", function() { 
+          thing.post(::updater(thing,coll[key]));
+          return true; 
+        });
+      } else //we need to post this thing as it may have other aspects and behaviors
+        thing.post(::updater(thing,coll[key])); // assign intial value to it;
     }
   }
 
@@ -332,9 +335,9 @@ const Plus = function() {
       var (ncoll, nitem, nindex, filter) = crackEachExpression(this.@["each"]);
       var root = thisModel(this); 
       assert root;
-      var isSelect = this.tag == "select";
+      var hasBoundValue = !!this.attributes["name"];
       var that = this; 
-      var thing = isSelect? that.options: that; 
+      var thing = this.tag == "select"? that.options: that; 
       var template = thing.first; 
       thing.clear();
       
@@ -399,8 +402,8 @@ const Plus = function() {
           domitem.remove(); 
           Object.removeObserver.call(elval, rqRenderList);
         }
-        if(isSelect && that.plusSetValueFromModel) // after rendering <select> items we need to reset value to match new options
-          that.timer(1, :: that.plusSetValueFromModel() );
+        if(hasBoundValue) // after rendering <select> items we need to reset value to match new options
+          that.postEvent("set-value-postfactum.plus");
       }
       
       if( filter ) {
@@ -446,16 +449,16 @@ const Plus = function() {
     return true;
   }
     
-  function Click()    { this.subscribe("click", function(evt) { return handleEvent(this,"click",evt) }) }
-  function DblClick() { this.subscribe("dblclick", function(evt) { return handleEvent(this,"dblclick",evt) }) }
+  function Click()    { this.subscribe("click.plus", function(evt) { return handleEvent(this,"click",evt) }) }
+  function DblClick() { this.subscribe("dblclick.plus", function(evt) { return handleEvent(this,"dblclick",evt) }) }
   
-  function Enter()    { this.subscribe("~keydown", function(evt) { return handleKeyEvent(this,"enter", evt) }) }
-  function Escape()   { this.subscribe("~keydown", function(evt) { return handleKeyEvent(this,"escape", evt) }) }
+  function Enter()    { this.subscribe("~keydown.plus", function(evt) { return handleKeyEvent(this,"enter", evt) }) }
+  function Escape()   { this.subscribe("~keydown.plus", function(evt) { return handleKeyEvent(this,"escape", evt) }) }
   
-  function FocusIn()  { this.subscribe("focusin", function(evt) { return handleEvent(this,"focusin",evt); } ) }
-  function FocusOut() { this.subscribe("focusout", function(evt) { return handleEvent(this,"focusout",evt); } ) }
+  function FocusIn()  { this.subscribe("focusin.plus", function(evt) { return handleEvent(this,"focusin",evt); } ) }
+  function FocusOut() { this.subscribe("focusout.plus", function(evt) { return handleEvent(this,"focusout",evt); } ) }
   
-  function Change()   { this.subscribe("change", function(evt) { return handleEvent(this,"change",evt); } ) }
+  function Change()   { this.subscribe("change.plus", function(evt) { return handleEvent(this,"change",evt); } ) }
    
   return {
     Model:Model,
