@@ -43,7 +43,7 @@ typedef struct _ISciterAPI {
 
   UINT    version; // is zero for now
 
-  LPCWSTR SCFN( SciterClassName )();
+  LPCWSTR SCFN( SciterClassName )(void);
   UINT    SCFN( SciterVersion )(BOOL major);
   BOOL    SCFN( SciterDataReady )(HWINDOW hwnd,LPCWSTR uri,LPCBYTE data, UINT dataLength);
   BOOL    SCFN( SciterDataReadyAsync )(HWINDOW hwnd,LPCWSTR uri, LPCBYTE data, UINT dataLength, LPVOID requestId);
@@ -430,7 +430,7 @@ typedef ISciterAPI* (SCAPI *SciterAPI_ptr)();
 
   // defining "official" API functions:
 
-  inline   LPCWSTR SCAPI SciterClassName () { return SAPI()->SciterClassName(); }
+  inline   LPCWSTR SCAPI SciterClassName (void) { return SAPI()->SciterClassName(); }
   inline   UINT    SCAPI SciterVersion (BOOL major) { return SAPI()->SciterVersion (major); }
   inline   BOOL    SCAPI SciterDataReady (HWINDOW hwnd,LPCWSTR uri,LPCBYTE data, UINT dataLength) { return SAPI()->SciterDataReady (hwnd,uri,data,dataLength); }
   inline   BOOL    SCAPI SciterDataReadyAsync (HWINDOW hwnd,LPCWSTR uri, LPCBYTE data, UINT dataLength, LPVOID requestId) { return SAPI()->SciterDataReadyAsync (hwnd,uri, data, dataLength, requestId); }

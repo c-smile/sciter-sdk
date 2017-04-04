@@ -43,7 +43,7 @@
  * The returned name can be used in CreateWindow(Ex)W function.
  * You can use #SciterClassNameT macro.
  **/
-LPCWSTR SCAPI SciterClassName();
+LPCWSTR SCAPI SciterClassName(void);
 
 /**Returns major and minor version of Sciter engine.
   * \return UINT, hiword (16-bit) contains major number and loword contains minor number;

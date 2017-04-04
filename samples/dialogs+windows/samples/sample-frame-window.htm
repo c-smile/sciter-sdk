@@ -8,19 +8,17 @@
     </style>
     <script type="text/tiscript">
 
-    include "../../decorators.tis";
-    
+   
     function self.ready() {
       view.state = View.WINDOW_SHOWN;
-      $(#resizable).value = view.windowResizeable;
+      $(#resizable).value = view.windowResizable;
       $(#minimizable).value = view.windowMinimizable;
       $(#maximizable).value = view.windowMaximizable;
     }
-    @click @on "#resizable"   :evt,el: view.windowResizeable = el.value ;
-    @click @on "#minimizable" :evt,el: view.windowMinimizable = el.value ;
-    @click @on "#maximizable" :evt,el: view.windowMaximizable = el.value ;
-    
-    isResizable
+
+    event click $(#resizable)   { view.windowResizable = this.value }
+    event click $(#minimizable) { view.windowMinimizable = this.value }
+    event click $(#maximizable) { view.windowMaximizable = this.value }
   
     </script>
   </head>
@@ -30,7 +28,6 @@
   <button|checkbox id="resizable" >resizable</button>
   <button|checkbox id="minimizable" >minimizable</button>
   <button|checkbox id="maximizable" >maximizable</button>
-  
   
   
 </body>

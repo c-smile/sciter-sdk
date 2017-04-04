@@ -1,0 +1,34 @@
+<html>
+<head>
+    <style>
+        @import url(../plus.css);
+
+        native-textarea
+        {
+          behavior: native-textarea; // see /sdk/include/behaviors/behavior_native_textarea.cpp
+          display:block;
+          visibility:none;
+          size:*;
+          background-color: red;
+          border:1dip solid;
+        }
+        .shown
+        {
+          visibility: visible;
+        }
+    </style>
+    <script type="text/tiscript">
+
+        namespace Test
+        {
+          var isShown = true;
+        }
+    </script>
+
+</head>
+
+<body model="Test">
+   <button|checkbox(isShown)>shown</button>
+   <native-textarea class="{{shown:isShown}}" />
+</body>
+</html>

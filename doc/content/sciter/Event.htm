@@ -277,7 +277,7 @@ VK_F20      VK_F21      VK_F22      VK_F23      VK_F24
       <p><code>#picture</code> - returns Image object if dragged data contains an image;</p>
       <p><code>#json</code> - returns value - json value.</p></dd></dl>
   <h2 id="symbolic-event-names">Symbolic event names</h2>
-  <p>Symbolic event names are used by <code>Element.subscribe(&quot;name&quot;, ...)</code>, <code>Element.on(&quot;name&quot;, ...)</code>, <code>Event.match(&quot;name&quot;, ...)</code> and <code>event &quot;name&quot; () {}</code> script functions.</p>
+  <p>Symbolic event names are used by <code>Element.subscribe(&quot;name&quot;, ...)</code>, <code>Element.on(&quot;name&quot;, ...)</code>, <code>Event.match(&quot;name&quot;, ...)</code> and <code>event <i>name</i>&nbsp;() {}</code> script functions.</p>
   <dl>
     <dt>&quot;click&quot;</dt>
     <dd>- button and hyperlink clicks;</dd>
@@ -307,7 +307,8 @@ VK_F20      VK_F21      VK_F22      VK_F23      VK_F24
     <dd>- Event.CONTENT_CHANGED, &nbsp;received by the element when its content gets changed - DOM elements added or removed. &nbsp;</dd>
     <dt>&quot;inputlangchange&quot;</dt>
     <dd>- Event.INPUT_LANGUAGE_CHANGED, &nbsp;received by the focus element when the user changes input language. &nbsp;event.data is a string - ISO lang-country code.</dd>
-    <dt>&quot;mousedown&quot;</dt>
+    
+		<h4>Mouse events</h4><dt>&quot;mousedown&quot;</dt>
     <dd>- Event.MOUSE_DOWN event;</dd>
     <dt>&quot;mouseup&quot;</dt>
     <dd>- Event.MOUSE_UP event;</dd>
@@ -319,31 +320,36 @@ VK_F20      VK_F21      VK_F22      VK_F23      VK_F24
     <dd>- Event.MOUSE_LEAVE event, mouse left the element.</dd>
     <dt>&quot;mousedragrequest&quot;</dt>
     <dd>- Event.MOUSE_DRAG_REQUEST event, drag condition (mouse pressed and moved) is detected.</dd>
-    <dt>&quot;focusin&quot;</dt>
+    
+		<h4>Focus events</h4><dt>focusin</dt>
     <dd>- Event.FOCUS_IN, the focusin event is sent to an element when it, or any element inside of it, gains focus. If focus stays inside some container then the container will not receive the event.</dd>
-    <dt>&quot;focusout&quot;</dt>
+    <dt>focusout</dt>
     <dd>- Event.FOCUS_OUT, the focusin event is sent to an element when it, or any element inside of it, loses focus. If focus stays inside some container then the container will not receive the event.</dd>
-    <dt>&quot;focus&quot;</dt>
+    <dt>focus</dt>
     <dd>- Event.GOT_FOCUS, the focus event is sent to an element when it gains focus. Event.target is the element that got focus.</dd>
-    <dt>&quot;blur&quot;</dt>
+    <dt>blur</dt>
     <dd>- Event.LOST_FOCUS, the focus event is sent to an element when it loses focus. Event.target is the element that lost focus.</dd>
-    <dt>&quot;keydown&quot;</dt>
+    
+		<h4>Keyboard events</h4><dt>keydown</dt>
     <dd>- Event.KEY_DOWN, the keydown event is fired when a key is pressed down. Event.keyCode is virtual key code - one of Event.VK_**** values.</dd>
-    <dt>&quot;keyup&quot;</dt>
+    <dt>keyup</dt>
     <dd>- Event.KEY_UP, the keyup event is fired when a key is released. Event.keyCode is virtual key code - one of Event.VK_**** values.</dd>
-    <dt>&quot;keypress&quot;</dt>
+    <dt>keypress</dt>
     <dd>- Event.KEY_CHAR, the keypress event is fired when the element receives character value. Event.keyCode is a UNICODE code point of the character.</dd>
-    <dt>&quot;scroll&quot;</dt>
+    
+		<h4>Scroll event</h4><dt>scroll</dt>
     <dd>- scroll event;</dd>
-    <dt>&quot;popuprequest&quot;</dt>
+		<h4>Popup and tooltip events</h4>
+    <dt>popuprequest</dt>
     <dd>- Event.POPUP_REQUEST, the event is fired as a first phase of popup creation, when window for it is not created. event.source is the popup element. Use this event to popuplate content of the popup.</dd>
-    <dt>&quot;popupready&quot;</dt>
+    <dt>popupready</dt>
     <dd>- Event.POPUP_READY, the event is fired as a last phase of popup creation, when window for it is created. event.source is the popup element.</dd>
-    <dt>&quot;popupdismissed&quot;</dt>
+    <dt>popupdismissed</dt>
     <dd>- Event.POPUP_DISMISSED, the event is fired as after popup window gets removed from screen.</dd>
-		<dt>&quot;tooltiprequest&quot;</dt>
+		<dt>tooltiprequest</dt>
 		<dd>- Event.TOOLTIP_REQUEST, the event is sent in response to Event.MOUSE_IDLE.</dd>
-    <dt>&quot;close&quot;</dt>
+    
+		<h4>Document lifecycle events</h4><dt>&quot;close&quot;</dt>
     <dd>- Event.DOCUMENT_CLOSE, the event is fired as when document gets removed from its container (view or frame). Only document elements and its containers receive this event.</dd>
     <dt>&quot;closerequest&quot;</dt>
     <dd>- Event.DOCUMENT_CLOSE_REQUEST, the event is fired to request document removal from its container (view or frame). Only document elements and its containers receive this event. By handling this request application can discard window or document closing by setting <code>event.cancel = true;</code> &nbsp;in event handler.</dd>
@@ -351,10 +357,20 @@ VK_F20      VK_F21      VK_F22      VK_F23      VK_F24
     <dd>- Event.DOCUMENT_READY, the event is fired as when document gets parsed in full and its DOM is established. Only document elements and its containers receive this event.</dd>
     <dt>&quot;complete&quot;</dt>
     <dd>- Event.DOCUMENT_COMPLETE, the event is fired as when document have downloaded all resources (images, styles, scripts) it requested . Only document elements and its containers receive this event.</dd>
-    <dt>&quot;query:{command}&quot;</dt>
+		<h4>Command execution events</h4>
+    <dt>query:{command}</dt>
     <dd>- the event is fired to query readiness to execute the {command}. E.g. &quot;query:edit:paste&quot; event gets sent to check if the element is able to paste content from clipboard at the moment. The element can set event.result field to report availability of the command. Command can have additional command parameters in event.data field.</dd>
-    <dt>&quot;exec:{command}&quot;</dt>
-    <dd>- the event is fired to execute the {command}. E.g. &quot;query:edit:paste&quot; event is sent to the element to execute paste from clipboard.</dd></dl>
+    <dt>exec:{command}</dt>
+    <dd>- the event is fired to execute the {command}. E.g. &quot;query:edit:paste&quot; event is sent to the element to execute paste from clipboard.</dd>
+		
+		<h4>System drag and drop events</h4><dt>drag</dt>
+		<dd>- fired when a data is being dragged over the element.&nbsp;</dd>
+		<dt>dragenter</dt>
+		<dd>-&nbsp;fired when data drag enters the element.</dd>
+		<dt>dragleave</dt>
+		<dd>-&nbsp;fired when data drag leaves the element.</dd>
+		<dt>drop</dt>
+		<dd>- fired when data is dropped onto the target element.</dd></dl>
   <p>Any other string is considered as custom event, to post/send such events use <code>Element.postEvent</code>/<code>sendEvent(name,...)</code> &nbsp;methods.</p>
 </body>
 </html>

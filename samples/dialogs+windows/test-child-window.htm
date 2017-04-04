@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+           native-textarea {
+             behavior: native-textarea; // see /sdk/include/behaviors/behavior_native_textarea.cpp
+             display:block;
+             size:*;
+             border:1dip solid;
+           }
+
+        </style>
+        <script type="text/tiscript">
+          event click $(#set) {
+            $(#editor).value = "Hello\r\nworld!";
+          }
+          event click $(#get) {
+            $(#out).value = $(#editor).value;
+          }
+        </script>
+    </head>
+    <body>
+      <button #set>Set value</button>
+      <button #get>Get value</button>
+      <native-textarea #editor />
+      <pre#out/>
+    </body>
+</html>

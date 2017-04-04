@@ -19,6 +19,9 @@ static std::vector<sciter::string> _argv;
 int main(int argc, const char * argv[])
 {
   NSApplication * application = [NSApplication sharedApplication];
+  NSArray *tl;
+  [[NSBundle mainBundle] loadNibNamed:@"MainMenu" owner:application topLevelObjects:&tl];
+  
     
   for( int i = 0; i < argc; ++i ) {
       aux::a2w w(argv[i]);

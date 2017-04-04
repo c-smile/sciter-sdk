@@ -21,6 +21,8 @@ int main(int argc, const char * argv[])
     //::SciterSetOption(NULL,SCITER_SET_GFX_LAYER,1); // use this to force the engine to use CoreGraphics backend.
     
     NSApplication * application = [NSApplication sharedApplication];
+    NSArray *tl;
+    [[NSBundle mainBundle] loadNibNamed:@"MainMenu" owner:application topLevelObjects:&tl];
     
     sciter::archive::instance().open(aux::elements_of(sciter_resources)); // bind resources[] (defined in "resources.cpp") with the archive
 

@@ -203,8 +203,10 @@ value DB_exec(VM* vm)
     return RS_create(vm, pst);
 
   sqlite3_finalize(pst);
- 
-  return v_int(r);
+
+  int numrows_affected = sqlite3_changes(pdb);
+  
+  TISCRIPT_RETURN_2(c,v_int(r),v_int(numrows_affected));
 }
 
 // GC detected that the db object is not used by anyone so ... 

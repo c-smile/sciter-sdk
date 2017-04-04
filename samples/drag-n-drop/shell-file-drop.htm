@@ -18,34 +18,43 @@
     </style>
     <script type="text/tiscript">
     
-    class FileDropZone :Behavior 
+    class FileDropZone : Element 
     {
-    
-      function onExchange(evt)
+      event dragenter (evt) 
       {
-        if( evt.type == Event.X_DRAG_ENTER && evt.draggingDataType == #file)
+        if(evt.draggingDataType == #file)
         {
           this.attributes.addClass("active-target");
           return true;
         }
-        else if( evt.type == Event.X_DRAG_LEAVE )
-        {
-          this.attributes.removeClass("active-target");
-          return true;
-        }
-        else if( evt.type == Event.X_DRAG && evt.draggingDataType == #file)
+      }  
+
+      event dragleave (evt) 
+      {
+        this.attributes.removeClass("active-target");
+        return true;
+      }  
+
+      event drag (evt) 
+      {
+        if(evt.draggingDataType == #file)
         {
           stdout.println(evt.x,evt.y);
           return true;
         }
-        else if( evt.type == Event.X_DROP && evt.draggingDataType == #file)
+      }  
+
+      event drop (evt) 
+      {
+        if(evt.draggingDataType == #file)
         {
           this.attributes.removeClass("active-target");
           var fn = evt.dragging;
           view.msgbox(#information, String.printf("Dropped:%V",fn));
           return true;
         }
-      }    
+      }  
+      
     }
     
     </script>

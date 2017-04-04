@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+           form { flow:row(label,input); }
+           form > label {white-space:nowrap;}
+           form [required] { aspect: Validation.requiredField url(validate.tis); }
+           form.needs-validation { aspect: Validation.formWithRequiredFields url(validate.tis); }
+
+           form [required].error { border-right:0.25em red solid; }
+           form [type=password][strength=3] { border-right:0.25em orange solid; }
+           form [type=password][strength=4] { border-right:0.25em gold solid; }
+           form [type=password][strength=5] { border-right:0.25em green solid; }
+
+        </style>
+    </head>
+    <body>
+
+     <form>
+       <label>First name:</label><input|text(first) required title="Must not be empty">
+       <label>Second name:</label><input|text(second) required=".{2,}" title="Please enter 2 characters or more." > 
+       <label>email:</label><input|text(email) required="email" title="Please enter valid email address." > 
+       <label>password:</label><input|password(password) required="strongpassword" title="Please enter valid pasword." > 
+       <caption>Password must contain at least 8 lower case, upper case, digits and special symbols</caption>
+       <label>password again:</label><input|password required="passwordcopy" title="Please enter valid pasword." > 
+
+       <button|submit>Submit</button>
+     </form>
+
+
+    </body>
+</html>

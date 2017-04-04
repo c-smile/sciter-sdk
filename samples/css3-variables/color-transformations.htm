@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+            input#hue
+            {
+              border:none;
+              height: 3dip;
+              background: linear-gradient(left, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
+            }
+
+            div { size:100dip; vertical-align:middle; text-align:center; border-radius:50%; }
+            div#base { background-color: var(base,#f00); }
+            div#dependent { background-color: var(base50,#f00); }
+
+        </style>
+        <script type="text/tiscript">
+
+
+        function updateColors(angle) {
+          self.style.variables { 
+            base: Color.hsv(360 + angle,1.0,1.0),
+            base50: Color.hsv(360 + angle,0.5,1.0)
+          };
+
+        } 
+        event change $(input#hue) {
+          updateColors(this.value);
+        }
+
+        updateColors(0);
+
+        </script>
+    </head>
+    <body>
+      Base color <input|hslider#hue min=0 max=360 />
+      <div #base>Base color</div>
+      <div #dependent>Dependent color</div>        
+
+    </body>
+</html>

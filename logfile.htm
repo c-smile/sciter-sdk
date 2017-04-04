@@ -1,7 +1,7 @@
 ﻿<html>
   <head>
     <title>Sciter 3.* and 4.* logfile</title>
-    <meta name="generator" content="h-smile:richtext"/>
+    <meta name="generator" content="blocknote.net v2.0"/>
   </head>
 <body>
   <h3>Sciter 3.* and 4.* logfile:</h3>
@@ -10,30 +10,28 @@
       <td width="60" nowrap="" valign="top" align="center">Build#</td>
       <td width="78" nowrap="" valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FFFADA">4.0.0.6</td><td nowrap="" valign="top" align="center">21-03-2017</td><td>new:
+    <tr><td valign="top" bgcolor="#FFFADA">4.0.0.7</td><td nowrap="" valign="top" align="center">04-04-2017</td><td>new:
+				<ul><li>+ sdk/samples/material/!test.htm sample - sketch of Material Design theme.</li>
+					<li>[+plus] + sdk/samples/+plus/demos/Q-routing-with-data.htm demo - routing with bound elements.</li>
+					<li><code>Element.style.variable()</code> - get/set single CSS variable.</li>
+					<li>+ sdk/samples/forms/required.htm sample.</li>
+					<li>[css] + transition support for background-image and foreground-image properties. Demo is in&nbsp;sdk/samples/material&nbsp;</li>
+					<li>+ sdk/include/behaviors/behavior_native_textarea.cpp and  &nbsp;sdk/samples/dialogs+windows/test-child-window.htm - child HWND demo.</li>
+					<li><code>packfolder.exe folderpath filepath -binary</code>&nbsp;- produces binary file - packed folder.&nbsp;</li>
+					</ul>
+				<p>fixes:</p>
+				<ul>
+					<li>[inspector] Fix of &quot;Error: dimensions are less or equal to zero at @2@10.postSnapshot (sciter:debug-peer.tis(253))&quot;</li><li>[css] box-shadow caching fix.</li><li><code>&lt;select|dropdown&gt;</code>, popup scroll to current selected item.</li><li><code>Element.clone()</code>, clones ID attribute too.</li><li>[d2d] css filters to work on layered windows.</li>
+					<li>[css] <code>filter:grayscale(50%)</code> - &quot;partial grayscale&quot; aka saturation support.</li><li>[win] elements with attached windows, fix of visibility change. 
+</li><li>[win] <code>behavior:file-thumbnail</code> fix.</li><li>[printing] fix of AV while loading printing templates into &quot;normal&quot; frames.</li><li>[css] custom properties + variables.</li><li>[+plus] <code>&lt;select&gt;</code> updates and routing, see: <a href="https://sciter.com/forums/topic/plus-framework-view-reload/">https://sciter.com/forums/topic/plus-framework-view-reload/</a>&nbsp;</li><li>[script, regex] fix of hangup on&nbsp; <code>&quot;test&quot;.replace(/\u0000/g, &quot;&quot;);</code></li><li>[osx] compiler settings to reduce binary sizes.</li><li>[css, layout] <code>flow:horizontal;</code> vertical-align fix.</li><li>[win] fix of WM_SETTINGCHANGE handling for some types of windows.</li><li>[css] Fix of hsl/hsv() color transforms:&nbsp; samples/css++/hsl-colors.htm</li><li>r5010 regression (forcing padding, margin and border on root html to be zero). root element is allowed to have non-zero borders and paddings.&nbsp;</li><li>fix of event.target in &quot;contentchange&quot; notification generation.</li>
+					</ul>
+				<p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10. On MacOS you may need to run SDK executables directly from console as they are not signed too.</p></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.0.0.6</td><td nowrap="" valign="top" align="center">21-03-2017</td><td>new:
 				<ul><li>[css] + <code>scroll-manner(wheel-step:length)</code></li>
 					<li>[css] <code>list-marker-style: dotted;</code> and <code>list-marker-style: dashed;</code> support for <code>list-style-type: tree-line;</code></li>
 					<li>+ /sdk/samples/ideas/VisualStudio-StartPage/ - old sample from HTMLayout SDK.</li>
 					<li>[css variables] use of variables in transform, see /sdk/samples/css3-variables/animate-variables.htm</li></ul>
 				<p>fixes:</p>
 				<ul>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
 					<li><code>behavior:richtext</code> various fixes.</li><li>[css] fix of use of <code>var()</code> in gradients.</li><li>[script] <code>string.split(&quot;&quot;)</code> splits the string into array of UTF-16 runs (strings).</li><li>[win] /bin/32 binaries  are more XP compatible.&nbsp;</li><li>[win] <code>&lt;button role=&quot;window-maximize&quot;&gt;</code>, fix of second click to restore previous window size;</li><li>forcing padding, margin and border on root element (html) to be zero;</li><li><code>behavior:frameset</code>, fix of values returning by <code>framesetState()</code> method;</li><li>[inspector] fix of doubled DOM elements, see: <a href="https://sciter.com/forums/topic/inspector-bug-in-4-0-0-5-with-duplicated-html/">https://sciter.com/forums/topic/inspector-bug-in-4-0-0-5-with-duplicated-html/</a> ;</li><li>[win] system D&amp;D, support of JSON data exchange;</li><li><code>margin-bottom</code> calculation fix, <a href="https://sciter.com/forums/topic/margins-a-bit-broken-with-4-0-0-3/">https://sciter.com/forums/topic/margins-a-bit-broken-with-4-0-0-3/</a>&nbsp;</li><li>[osx] fix of <code>CMD+x</code>, etc. handling.</li><li>[win] fix of the issue &quot;rendering lost on hot video driver change&quot;;</li><li>fix of element hit test when capture is used. This fixes issue <a href="https://sciter.com/forums/topic/list-marker-style-has-no-effect-with-list-style-type-tree-line/#post-50358">https://sciter.com/forums/topic/list-marker-style-has-no-effect-with-list-style-type-tree-line/#post-50358</a>&nbsp;</li><li><code>&lt;input|numeric&gt;</code> <code>maxlength</code> attribute is defined only for <code>&lt;input|integer&gt;</code>;</li>
 					<li>fix of character filter on <code>&lt;input|numeric&gt;</code>;&nbsp;</li><li>[win] fix of window activation effect when tooltip is shown;</li><li>h/vslider - better MOUSE_WHEEL handler when slider is on scrollable.</li>
 					<li>behavior:slider -&gt; MOUSE_DOWN on areas outside of slider knob now moves the knob to that position (used to cause increment/decrement);</li><li>[API] removing dependency from d2d1.h and dwrite.h headers;</li><li>fix of &quot;crash when rendering a document with Frames&quot;;</li><li>better scroll handling, see: <a href="https://sciter.com/forums/topic/scroll-works-with-freeze/">https://sciter.com/forums/topic/scroll-works-with-freeze/</a> ;</li></ul>
@@ -46,26 +44,6 @@
 					<li> + sdk/samples/css3-variables/script-interaction-effects.htm sample.</li>
 					</ul>
 				<p>fixes:</p><ul>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-						
-						
-						
-						
-						
 						<li><code>&lt;select|dropdown&gt;</code> fix of auto size calculation.</li><li>[ddm2] fix of initial MOUSE_DOWN handling.</li><li>[xgl, windows] fix of OpenGL initialization failure handling.</li><li>[d2d] optimisation of <code>border:dotted</code> and <code>border:dashed</code> drawing.</li><li>[script] fix of rare error-in-error case. Problem manifests itself&nbsp;while <i>re</i>loading sdk/samples/behaviors/native-drawing.htm in sciter.exe</li><li>[script,+plus] notifying observers of namespace when variables added to it at load time (+plus use cases).</li><li>[osx] fix <code>OPT-S</code>, <code>OPT-F</code>, etc. and&nbsp; the like extended character codes handling</li><li>[osx/skia] font's ascent/descent adjustment once again.</li><li>[osx] view.topmost level adjustment</li><li>[osx] fix of AV when modal windows are destroyed in incorrect order (parent first and then modal).</li><li>[win,gdi+] fix of layered windows updates.</li><li>[svg]&nbsp;fix of potential AV while rendering.</li><li>demo/ulayred update - fix of window-caption</li><li>Forcing call of&nbsp;<code>element.detached()</code> on window close.&nbsp;&nbsp;</li><li>Making one more code analyzer tool happy.</li><li>Fix of <code>element.$prepend();</code></li><li>[GTK] attempt to fix an issue with window destruction while animating.</li><li>[API] headers <code>SCRIPTING_METHOD_PARAMS -&gt; <b>const</b> SCITER_VALUE* argv</code></li><li><code>&lt;select|dropdown&gt;</code>, forcing popup to be closed on losing focus.</li><li>margin collapsing again, see: <a href="https://sciter.com/forums/topic/4-0-0-44-0-0-3-bug/">https://sciter.com/forums/topic/4-0-0-44-0-0-3-bug/</a>&nbsp;</li><li><code>&lt;input|decimal novalue&gt;</code> rendering fix. See: <a href="https://sciter.com/forums/topic/how-to-set-novale-to-input/">https://sciter.com/forums/topic/how-to-set-novale-to-input/</a>&nbsp;</li><li>[css] fix of <code>text-overflow: path-ellipsis;</code> rendering when text does not contain path separators:&nbsp;<a href="https://sciter.com/forums/topic/text-overflow-path-ellipsis-and-not-a-full-path-string/">https://sciter.com/forums/topic/text-overflow-path-ellipsis-and-not-a-full-path-string/</a>&nbsp;</li>
 						</ul>
 					<p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10</p></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.0.0.4</td><td nowrap="" valign="top" align="center">08-02-2017</td><td>new:

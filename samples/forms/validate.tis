@@ -1,0 +1,82 @@
+// minimalistic validation framework, feel free to extend it to match your needs.
+
+namespace Validation 
+{
+  // functions to be called as "named validators"
+  // note: `this` is the element to validate
+  function email(str) {
+    const re = /^[a-zA-Z0-9.!#$%&’*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    return re.test(str);
+  }
+
+  function strongpassword(str) {
+    var strength = passwordStrength(str);
+    this.attributes["strength"] = strength.toString();
+    return strength == 5;
+  }
+
+  function passwordcopy(str) {
+    var master = this.$p(form).$([name=password]);
+    return master.value == str;
+  }
+
+  // ---
+
+  function passwordStrength(str) {
+    const uc = /[A-Z]/;
+    const lc = /[a-z]/;
+    const di = /\d/;
+    const nc = /\W/;
+    var strength = 0;
+    if(str.length >= 8) ++strength;
+    if(uc.test(str)) ++strength;
+    if(lc.test(str)) ++strength;
+    if(di.test(str)) ++strength;
+    if(nc.test(str)) ++strength;
+    return strength;
+  }
+
+  function requiredField() {
+    this.$p(form).attributes.addClass("needs-validation");
+    var forcedIsValid = false;
+    function check() {
+      var required = this.attributes["required"];
+      if( required.length ) // it is a regex
+      {
+        var predefined = Validation[required];
+        if( typeof predefined == #function )
+          return predefined.call(this,this.value.toString());
+        var rx = new RegExp(required);
+        assert rx;
+        return rx.test(this.value.toString());
+      }
+      else {
+        var v = this.value;
+        return v !== undefined && v != "";   
+      }
+    }
+    this.isValid = property(v) { get return forcedIsValid || check.call(this); 
+                                 set forcedIsValid = v; }
+    this << event change { this.attributes.toggleClass("error",!this.isValid); }
+    this.attributes.toggleClass("error",!this.isValid);
+  }
+
+  function formWithRequiredFields() 
+  {
+    this.isValid = property(v) { 
+      get {
+        var hasInvalids = false;
+        for(var re in this.$$([required])) {
+          var valid = re.isValid; 
+          if( !valid ) hasInvalids = true;
+        }
+        return !hasInvalids;
+      }
+    }
+    if(var submit = this.$(button[type=submit]))
+    {
+      submit.state.disabled = !this.isValid;
+      this << event change { submit.state.disabled = !this.isValid; }
+    }
+  }
+}

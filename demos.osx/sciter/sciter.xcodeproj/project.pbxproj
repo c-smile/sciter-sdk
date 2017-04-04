@@ -20,6 +20,7 @@
 		49518A0318DF683800844B99 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 49518A0118DF683800844B99 /* Credits.rtf */; };
 		49518A0B18DF683800844B99 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49518A0A18DF683800844B99 /* Images.xcassets */; };
 		497E3CD3196222C900B2D35A /* window.mm in Sources */ = {isa = PBXBuildFile; fileRef = 497E3CD2196222C900B2D35A /* window.mm */; };
+		49983F4B1E90A11D004409A8 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49983F4A1E90A11D004409A8 /* MainMenu.xib */; };
 		49ADAE961C16A149007BC462 /* behavior_drawing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49ADAE951C16A148007BC462 /* behavior_drawing.cpp */; };
 		49ADAE971C16A149007BC462 /* behavior_drawing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49ADAE951C16A148007BC462 /* behavior_drawing.cpp */; };
 		49D422211BA3473B005E6E36 /* behavior_tabs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49D422201BA3473B005E6E36 /* behavior_tabs.cpp */; };
@@ -64,6 +65,7 @@
 		49600DE318E8AD1C00B74219 /* value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = value.h; path = ../../include/value.h; sourceTree = "<group>"; };
 		497E3CD11962210600B2D35A /* window.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = window.h; sourceTree = "<group>"; };
 		497E3CD2196222C900B2D35A /* window.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = window.mm; sourceTree = "<group>"; };
+		49983F4A1E90A11D004409A8 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		49ADAE951C16A148007BC462 /* behavior_drawing.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = behavior_drawing.cpp; path = ../../include/behaviors/behavior_drawing.cpp; sourceTree = "<group>"; };
 		49ADAE981C16A1C4007BC462 /* sciter-x-graphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "sciter-x-graphics.h"; path = "../../include/sciter-x-graphics.h"; sourceTree = "<group>"; };
 		49ADAE991C16A1C4007BC462 /* sciter-x-graphics.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = "sciter-x-graphics.hpp"; path = "../../include/sciter-x-graphics.hpp"; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 			children = (
 				49518A0A18DF683800844B99 /* Images.xcassets */,
 				495189F918DF683800844B99 /* Supporting Files */,
+				49983F4A1E90A11D004409A8 /* MainMenu.xib */,
 			);
 			path = sciter;
 			sourceTree = "<group>";
@@ -304,6 +307,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				495189FD18DF683800844B99 /* InfoPlist.strings in Resources */,
+				49983F4B1E90A11D004409A8 /* MainMenu.xib in Resources */,
 				49518A0B18DF683800844B99 /* Images.xcassets in Resources */,
 				49518A0318DF683800844B99 /* Credits.rtf in Resources */,
 				493B9B491940ED2A0014846B /* compile-res.sh in Resources */,

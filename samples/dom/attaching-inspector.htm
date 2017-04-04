@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style></style>
+        <script type="text/tiscript">
+
+          !function() {
+            if( var connectToInspector = view.connectToInspector ) {
+              //Sciter.launch( System.home("inspector.exe") );
+              connectToInspector(view.root);
+            }
+          }();
+
+          function self.ready() {
+            stdout.println("self.ready");  
+            debug break;
+            var a = 2 + 2;
+            stdout.println("self.ready complete");  
+          }
+
+
+        </script>
+    </head>
+    <body>
+      hello
+    </body>
+</html>

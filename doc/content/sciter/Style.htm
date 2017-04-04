@@ -92,7 +92,8 @@ elem.style.height = ... ;
           <li><em>properties</em> - <code>function(props:object) : null | object</code> , properties accessor function, the function will receive CSS properties defined by the rule. If the function returns an object then properties of the CSS rule will be updated by the object properties.</li></ul></ul>
       <p>Therefore the <em>documentRules</em> function can be used as for inspection as for mutation of the CSS rules table associated with the document.</p>
 			</dd>
-      <dt>variables</dt>
+      <dt>variable</dt>
+   		<dd>(  <i>varName</i>: string, [<i>varToSet</i>:value] ) : value | undefined<p>The method gets or sets (if <i>varToSet</i> provided) single CSS variable&nbsp;defined on the element.</p></dd><dt>variables</dt>
    		<dd>(  [<i>varsToSet</i>:object] ) : object | undefined<p>The method gets or sets (if <i>varsToSet</i> provided) CSS variables defined on the element.</p></dd></dl>
 </body>
 </html>

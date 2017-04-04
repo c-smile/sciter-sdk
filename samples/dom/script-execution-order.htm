@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+          foo {
+            prototype: Foo;  
+            display:block; 
+          }
+        </style>
+        <script type="text/tiscript">
+
+           function Bar() { stdout.println("Bar function"); }
+
+           class Foo : Element 
+           { 
+              function attached() {
+                stdout.println("Foo.attached");  
+              }
+           }
+
+           function self.ready() {
+             stdout.println("self.ready");  
+           }
+
+           Bar(); // call Bar immediately
+
+
+        </script>
+    </head>
+    <body>
+      <foo>Foo component</foo>
+    </body>
+</html>
