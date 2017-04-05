@@ -356,9 +356,9 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
       //                               //     reason = index of the row (fixed_rows..n)
 
       ELEMENT_COLLAPSED = 0x90,      // element was collapsed, so far only behavior:tabs is sending these two to the panels
-      ELEMENT_EXPANDED,              // element was expanded,
+      ELEMENT_EXPANDED = 0x91,       // element was expanded,
 
-      ACTIVATE_CHILD,                // activate (select) child,
+      ACTIVATE_CHILD = 0x92,         // activate (select) child,
                                      // used for example by accesskeys behaviors to send activation request, e.g. tab on behavior:tabs.
 
       //DO_SWITCH_TAB = ACTIVATE_CHILD,// command to switch tab programmatically, handled by behavior:tabs
@@ -369,26 +369,26 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
       //ROWS_DATA_REQUEST,             // request from virtual grid to data source behavior to fill data in the table
       //                               // parameters passed throug DATA_ROWS_PARAMS structure.
 
-      UI_STATE_CHANGED,              // ui state changed, observers shall update their visual states.
+      UI_STATE_CHANGED = 0x95,       // ui state changed, observers shall update their visual states.
                                      // is sent for example by behavior:richtext when caret position/selection has changed.
 
-      FORM_SUBMIT,                   // behavior:form detected submission event. BEHAVIOR_EVENT_PARAMS::data field contains data to be posted.
+      FORM_SUBMIT = 0x96,                   // behavior:form detected submission event. BEHAVIOR_EVENT_PARAMS::data field contains data to be posted.
                                      // BEHAVIOR_EVENT_PARAMS::data is of type T_MAP in this case key/value pairs of data that is about 
                                      // to be submitted. You can modify the data or discard submission by returning true from the handler.
-      FORM_RESET,                    // behavior:form detected reset event (from button type=reset). BEHAVIOR_EVENT_PARAMS::data field contains data to be reset.
+      FORM_RESET  = 0x97,            // behavior:form detected reset event (from button type=reset). BEHAVIOR_EVENT_PARAMS::data field contains data to be reset.
                                      // BEHAVIOR_EVENT_PARAMS::data is of type T_MAP in this case key/value pairs of data that is about 
                                      // to be rest. You can modify the data or discard reset by returning true from the handler.
 
-      DOCUMENT_COMPLETE,             // document in behavior:frame or root document is complete.
+      DOCUMENT_COMPLETE = 0x98,             // document in behavior:frame or root document is complete.
 
-      HISTORY_PUSH,                  // requests to behavior:history (commands)
-      HISTORY_DROP,                     
-      HISTORY_PRIOR,
-      HISTORY_NEXT,
-      HISTORY_STATE_CHANGED,         // behavior:history notification - history stack has changed
+      HISTORY_PUSH = 0x99,                  // requests to behavior:history (commands)
+      HISTORY_DROP = 0x9A,
+      HISTORY_PRIOR = 0x9B,
+      HISTORY_NEXT = 0x9C,
+      HISTORY_STATE_CHANGED = 0x9D,  // behavior:history notification - history stack has changed
       
-      CLOSE_POPUP,                   // close popup request,
-      REQUEST_TOOLTIP,               // request tooltip, evt.source <- is the tooltip element.
+      CLOSE_POPUP = 0x9E,            // close popup request,
+      REQUEST_TOOLTIP = 0x9F,        // request tooltip, evt.source <- is the tooltip element.
 
       ANIMATION         = 0xA0,      // animation started (reason=1) or ended(reason=0) on the element.
 
