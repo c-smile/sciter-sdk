@@ -30,7 +30,8 @@ class ResourceList: Behavior {
    
     var me = this;
     this.driver.on("resource-arrived.resource-list", function(evt) { 
-      me.timer( 200ms, me.show ); 
+      me.timer( 20ms, me.show ); 
+      //me.show();
     });
 
     this.driver.on("navigate-to-source.resource-list", function(evt) { 

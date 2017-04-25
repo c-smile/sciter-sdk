@@ -10,7 +10,38 @@
       <td width="60" nowrap="" valign="top" align="center">Build#</td>
       <td width="78" nowrap="" valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FFFADA">4.0.0.7</td><td nowrap="" valign="top" align="center">04-04-2017</td><td>new:
+    <tr><td valign="top" bgcolor="#FFFADA">4.0.0.8</td><td nowrap="" valign="top" align="center">25-04-2017</td><td>new:
+				<ul><li>[script]&nbsp;<code>Process</code> -&nbsp; class that helps to run another program as a subprocess, receiving its&nbsp;<i>stdout</i> and <i>stderr</i> output and   passing data to its <i>stdin</i> stream.</li>
+					<li>[script,DOM] events:<ul><li><code>event disabledStatusChange {...}</code></li><li><code>event visualStatusChange {...}</code></li>
+							</ul></li>
+					<li>[behavior:edit|textarea] <code>element.clearSelection();</code></li>
+					<li>[osx] mouse click + CTRL - context menu;&nbsp;</li>
+					<li><code>System.EOL</code> constant - platform specific EOL sequence;</li>
+					</ul>
+				<p>fixes:</p>
+				<ul>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					<li><code>&lt;select&gt;</code> value is always a string or undefined, no automatic parsing is made. Could be a breaking change. Check <a href="https://sciter.com/forums/topic/select-value-type/">https://sciter.com/forums/topic/select-value-type/</a> for the reasoning;</li>
+					<li>[osx] <code>gfx.strokeDash(#dashed)</code> implementation;</li><li>[osx] <code>System.scanFiles()</code> fix of retval;</li><li><code>System.path(#PROGRAM_FILES)</code> fix;</li><li>Fix of overflow-x:auto scroll-manner( animation:false );</li><li>Fix of SCN_LOAD_DATA request for <code>url(&quot;&quot;)</code> produced in result of <code>background-image:none</code> handling;</li><li>[osx,gtk] API headers, fix INT64 definition;</li><li>[timeline animations] fix of start:Ts handling in repeatable tweens. + sdk/samples/animations/tutorial-parts/t5.htm testing that;</li><li>behavior:htmlarea/richtext, fix of cell range selection clipboard copyж</li><li>[osx] CoreGraphics backend,fix of font ascent/descent calculation ;</li><li>[css-om] fix of CSSOM updates by Style.documentRules(), test case: sdk/samples/cssom/update-css-rule.htm ;</li><li>better caret drawing (1px off);</li><li><code>behavior:dropdown-select</code>, better MOUSE_UP handling;</li><li><code>behavior:column-resizer</code>, supports flex columns resizing, see: sdk/samples/column-resizer/ samples;</li><li>fix of <a href="https://sciter.com/forums/topic/osx-4-0-0-7-mouseleave/">https://sciter.com/forums/topic/osx-4-0-0-7-mouseleave/</a>&nbsp;</li><li>[osx] fix of <code>debug break;</code> or msgbox inside window&nbsp; creation sequence;</li><li>behavior:textarea, behavior:edit, fix of caret removal on context menu;</li><li>[osx] fix of transparent document rendering on OpenGL surface;</li><li>[inspector] Fix of /sdk/samples/dom/attaching-inspector.htm case - attaching inspector and breaking on BP at load time;</li><li>[SDK,API] fix of enum BEHAVIOR_EVENTS enumeration codes;</li>
+					</ul>
+				<p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10. On MacOS you may need to run SDK executables directly from console as they are not signed too.</p></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.0.0.7</td><td nowrap="" valign="top" align="center">04-04-2017</td><td>new:
 				<ul><li>+ sdk/samples/material/!test.htm sample - sketch of Material Design theme.</li>
 					<li>[+plus] + sdk/samples/+plus/demos/Q-routing-with-data.htm demo - routing with bound elements.</li>
 					<li><code>Element.style.variable()</code> - get/set single CSS variable.</li>

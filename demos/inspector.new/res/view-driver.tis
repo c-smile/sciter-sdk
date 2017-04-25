@@ -32,7 +32,8 @@ class ViewDriver: Behavior
     if(log)
       log.setCurrentView(vid);    
     
-    panel.post( ::panel.setup(socket) );
+    //panel.post( ::panel.setup(socket) );
+    panel.setup(socket);
   }
   
   function setup(socket) {
@@ -127,6 +128,7 @@ class ViewDriver: Behavior
     this.resources[url] = res;
     this.postEvent("connected");     
     this.postEvent("resource-arrived"); 
+    //stdout.printf("deeReattach %V\n", url);
   }
     
   //function deeActivate() { /*log("activate")*/; }
@@ -138,7 +140,6 @@ class ViewDriver: Behavior
   function deeResourceArrived(resDef) { 
     this.resources[resDef.url] = resDef;
     this.postEvent("resource-arrived",resDef.url); 
-    //stdout.printf("deeResourceArrived %V %V %V\n", resDef.url, resDef.type, typeof resDef.data);
   }
   
   function deeSnapshot(bytes) 

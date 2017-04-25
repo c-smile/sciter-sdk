@@ -32,7 +32,7 @@
   <textarea #src>Timeline.on(this)
 
   .to( $$(picture), { duration:1s, interval:0.3s, ease: #quadInOut,
-                      repeats:8, swing:true  }, 
+                      repeats:#forever, swing:true  }, 
                     { transform: translate(0dip,0dip) } )
   .play();
   </textarea>

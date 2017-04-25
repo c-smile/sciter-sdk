@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+          plaintext { display:block; size:*; border:1dip solid;}
+          plaintext > text.error {  background: pink; }
+          plaintext:busy {
+            foreground: url(sciter:busy.png) no-repeat 100% 0%;
+            foreground-size: 16dip;
+          }
+        </style>
+        <script type="text/tiscript">
+          event click $(#exec) {
+            var out = $(plaintext);
+
+            const EOL = System.EOL;
+
+            var task = Process.proxy();
+
+            task.on("stdout",  function (text) { 
+              for(var line in text.split(EOL))
+                out.$append(<text>{line}</text>); 
+            });
+
+            task.on("stderr", function (text) { 
+              for(var line in text.split(EOL))
+                out.$append(<text.error>{line}</text>); 
+            });
+
+            task.on("terminate", function (status) { 
+              out.$append(<text.done>Done:{status.toString()}</text>); 
+              out.state.busy = false;
+            });
+
+            // "ipconfig", "/all"
+
+            if( System.PLATFORM == #Windows )
+              task.exec("tracert", "sciter.com");
+            else
+              task.exec("traceroute", "sciter.com");
+
+            out.state.busy = true;
+          }
+
+        </script>
+    </head>
+    <body>
+
+      <button #exec>Show trace route</button>
+
+      <plaintext></plaintext>
+
+
+    </body>
+</html>

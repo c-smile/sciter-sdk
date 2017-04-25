@@ -25,7 +25,7 @@ int main(int argc, const char * argv[])
     [[NSBundle mainBundle] loadNibNamed:@"MainMenu" owner:application topLevelObjects:&tl];
     
     sciter::archive::instance().open(aux::elements_of(sciter_resources)); // bind resources[] (defined in "resources.cpp") with the archive
-
+    
     RECT frame;
     frame.top = 100;
     frame.left = 100;

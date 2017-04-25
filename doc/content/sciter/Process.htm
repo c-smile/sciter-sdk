@@ -1,0 +1,45 @@
+﻿<html>
+  <head>
+    <title>XMLScanner</title>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>Process object</h1>
+  <p>Using the Process class, your program can run another program as a subprocess, receiving its&nbsp;<i>stdout</i> and <i>stderr</i> output and   passing data to its <i>stdin</i> stream.&nbsp;</p>
+  <dl>
+    <h2>Properties</h2>
+    <dt>running</dt>
+    <dd>- <em>boolean</em>, process running state, true - process is alive.</dd>
+    <h2>Methods</h2>
+    <dt>proxy</dt>
+    <dd>
+      <div><strong>( </strong><strong>)</strong> : Process</div>
+      <p>Constructs new child process proxy object.</p></dd>
+    <dt>exec</dt>
+    <dd>
+      <div><strong>( exepath</strong>: string&nbsp;[, <b>arg1</b>: string, <b>arg2</b>: string, ...] <strong>)</strong> : self (this Process instance)</div>
+      <p>Starts process by running executable on path with command line parameters (optional)&nbsp;</p></dd>
+    <dt>on</dt>
+    <dd>
+      <div><strong>( event</strong>: string<strong>, callback</strong>: function<strong> )</strong> : this</div>
+      <p>Subscribes the callback function to one of process events:</p>
+      <ul>
+        <li><strong>&quot;stdout&quot;</strong> -&gt; <code>function(text:string)</code>, child process has printed&nbsp;the text in its <i>stdout</i> stream;</li>
+        <li><strong>&quot;stderr&quot;</strong> -&gt; <code>function(text:string)</code>, child process has printed the text in its <i>stderr</i> stream;</li>
+        <li><strong>&quot;terminate&quot;</strong> -&gt; <code>function(status: integer)</code>, process terminated with the status code;</li></ul>
+      <p>The event name may contain &quot;.namespace&quot; part that can be used in .off() call.</p></dd>
+    <dt>off</dt>
+    <dd>
+      <div><strong>( event</strong>: string | <strong>callback</strong>: function<strong> )</strong> : this</div>
+      <p>Unsubscribe callback either by its name or by its function reference.</p>
+      <p>Event name may contain only namespace part, so this: <code>socket.off(&quot;.namespace&quot;)</code> will unsubscribe all handlers that were set with that namespace.</p></dd>
+    <dt>send</dt>
+    <dd>
+      <div><strong>( data</strong>: string <strong>)</strong></div>
+      <p>The method sends data to the stdin stream of the child process.</p></dd>
+    <dt>terminate</dt>
+    <dd>
+      <div><strong>( )</strong></div>
+      <p>Makes an attempt to terminate the child process.</p></dd></dl>
+</body>
+</html>

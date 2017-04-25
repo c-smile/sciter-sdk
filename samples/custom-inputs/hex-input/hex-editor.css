@@ -9,12 +9,10 @@ input[type="hex-number"]
     :root
     {
       prototype:HexEditor url(hex-editor.tis); 
-      font-rendering-mode:snap-pixel;
       font-family:monospace;
       color:windowtext;
-      background-image:url(theme:edit-normal); 
-      background-repeat:stretch; 
-      padding:system-border-width; 
+      background:#fff; 
+      border:1dip solid threedshadow;
       width: 6em;
       height: min-intrinsic;
       cursor:default;
@@ -36,7 +34,7 @@ input[type="hex-number"]
 	    flow:text;
       behavior: edit;      
       height:*; width:*;
-      padding:2px; 
+      padding:2dip; 
 	    cursor:text;
       white-space:pre;
       overflow-x:hidden-scroll;
@@ -50,7 +48,7 @@ input[type="hex-number"]
         
     :root:disabled
     { 
-      background-image:url(theme:edit-disabled); 
+      background:#ccc; 
 	    color:graytext;
     }
   
@@ -61,58 +59,45 @@ input[type="hex-number"]
   
     :root > button
     {
-      display:block;
-      behavior:clickable;
-      cursor:default;
-      height:0.5*;
-      min-height:10dip;
+      height:*;
+      width:1.2em;
+      background:threedface;
+      border-left:1dip solid threedshadow;
+      foreground-position:50% 50%;
+      foreground-size:5dip;
+      foreground-repeat:no-repeat;
+    }
+
+    :root:rtl > button {
+       border-left:none;
+       border-right:1dip solid threedshadow; 
+    }
+
+    :root > button:hover
+    {
+      transition:none;
+      background:highlight;
+    }
+    :root > button:active
+    {
+      background:highlight;
+    }
+    :root > button:disabled
+    {
+      background:#ccc; 
     }
   
     :root > button.minus
     {
       padding:0;
-      margin: 0 -2px -2px 0;
-      background-image:url(theme:v-spin-minus-normal); 
-      background-repeat:stretch; 
-      width:system-scrollbar-width;
-      height:50%%;
+      //border-radius: 0 0 @INPUT-RADIUS 0;
+      foreground-image: url(stock:arrow-down); 
     }
    
-    :root > button.minus:hover
-    {
-	    transition:none;
-      background-image:url(theme:v-spin-minus-hover); 
-    }
-    :root > button.minus:active
-    {
-      background-image:url(theme:v-spin-minus-pressed); 
-    }
-    :root > button.minus:disabled
-    {
-      background-image:url(theme:v-spin-minus-disabled); 
-    }
     :root > button.plus
     {
       padding:0;
-	    margin: -2px -2px -1 0;
-      background-image:url(theme:v-spin-plus-normal); 
-      background-repeat:stretch; 
-	    width:system-scrollbar-width;
-	    height:50%%;
-    }
-    
-    :root > button.plus:hover
-    {
-	    transition:none;
-      background-image:url(theme:v-spin-plus-hover); 
-    }
-    :root > button.plus:active
-    {
-      background-image:url(theme:v-spin-plus-pressed); 
-    }
-    :root > button.plus:disabled
-    {
-      background-image:url(theme:v-spin-plus-disabled); 
-    }
-    
-  }
+      //border-radius: 0 @INPUT-RADIUS 0 0;
+      foreground-image: url(stock:arrow-up); 
+    }    
+}

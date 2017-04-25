@@ -129,11 +129,12 @@ class TweenRepeater : Tween  {
            repeats = 1,     // total number of repeats
            swing   = false; // 'true' when each even cycle is running in reversed direction
            
-  function this(tween,nrepeats, doswing, onStart, onStop) 
+  function this(tween, start, nrepeats, doswing, onStart, onStop) 
               {
                 super(tween);
                 tween.parent = this;
                 this.repeats = nrepeats === #forever ? 10000 : (nrepeats || 1);
+                this.startTime = (start || 0.0).toFloat();
                 this.swing = !!doswing;
                 this.onStart = onStart;
                 this.onStop = onStop;
@@ -238,9 +239,9 @@ class Timeline : Tween
                     params.repeats = null;
                     params.swing = null;
                     params = params.clone();
-                  } 
-                  
-                  params.start = start;
+                  } else {
+                    params.start = start;
+                  }
                   
                   var toadd;
                   
@@ -262,9 +263,7 @@ class Timeline : Tween
                     var onStart = params.onStart;
                     var onStop = params.onStop;
                     toadd.onStart = toadd.onStop = null;
-                    //stdout.println(toadd);
-                    toadd = new TweenRepeater(toadd, repeats, swing, onStart, onStop);
-                    //stdout.println(toadd);
+                    toadd = new TweenRepeater(toadd, start, repeats, swing, onStart, onStop);
                   }
                   
                   return this.add(toadd);

@@ -35,6 +35,9 @@ class ResourcesView : Behavior
         tp = RESOURCE_TYPE.IMAGE;
       }
     }
+
+    //if(!rd)
+    //  stdout.printf("%s all %V\n", url, this.driver.resources);
     
     var requiredView = null;
     switch( tp || rd.type ) {

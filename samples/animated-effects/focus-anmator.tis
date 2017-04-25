@@ -1,0 +1,21 @@
+
+
+function FocusAnimator(params) {
+
+  var prevFocus = null;
+  var focus = null;
+  var that = this;  
+  var fx1,fy1,fx2,fy2;
+
+  function step(progress) {
+    var (px1,py1,px2,py2) = (prevFocus || that).box(#rect,#border,#view);
+    var (x1,y1,x2,y2) = (focus || that).box(#rect,#border,#view);
+    
+  }
+
+  this << event focus(evt) {
+      
+  }
+
+
+}

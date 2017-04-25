@@ -1,0 +1,37 @@
+<html>
+   <head>
+      <style type="text/css">
+         table thead { behavior: column-resizer; }
+         table  { border-spacing:0; border-collapse:collapse; width:*; 
+                  border:1dip solid red;
+                  overflow-x:auto;
+                  background:#ddd; }
+         td, th { border: solid 1dip grey; height: 24dip; background:#fff;}
+
+         body
+         {
+           background-color:hsl(103, 11, 195);
+         }
+      </style>
+   </head>
+   <body>
+      <p>The table contains only fixed columns. Normally it is scrollable in horizontal direction.</p>
+      <p>First column is not resizeable due to min/max constraints</p>
+
+      <table fixedlayout>
+        <thead>
+           <tr>
+             <th style="width:100dip; min-width:100dip; max-width:100dip;">Type</th>
+             <th style="width:100dip;">File Path</th>             
+             <th style="width:100dip;">Create Time</th>
+             <th style="width:100dip;">Status</th>
+           </tr>
+        </thead>
+        <tbody>
+           <tr><td/><td/><td/><td/></tr>
+           <tr><td/><td/><td/><td/></tr>
+           <tr><td/><td/><td/><td/></tr>
+        </tbody>
+      </table>
+   </body>
+</html>
