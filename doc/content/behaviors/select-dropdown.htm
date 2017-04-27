@@ -36,7 +36,13 @@
     <li><code>size=integer</code> - number of visible elements in the dropdown list. Note: height of the select element can be overriden by CSS.</li>
     <li><code>name=&quot;name&quot;</code> - standard attribute <em>name</em> - name of the input element on a form.</li>
     <li><code>novalue=&quot;text&quot;</code> - if select has no <code>&lt;option selected&gt;</code> initially it will have this text rendered. The novalue attribute makes this select <strong>nullable</strong> - if there is no option are selected then value of the element is <em>undefined</em>.</li>
-    <li><code>editable</code> - this attribute causes <code>behavior:edit</code> to be applied to the <code>&lt;caption&gt;</code> element making it editable.</li></ul>
+    <li><code>editable</code> - this attribute causes <code>behavior:edit</code> to be applied to the <code>&lt;caption&gt;</code> element making it editable.</li>
+		<li><code>as=&quot;...type...&quot;</code>, defines <code>&lt;option value&gt;</code> parsing rules, accepts following values:<ul><li><code>as=&quot;auto&quot;</code>, default value, tries to parse option's value as integer, float, boolean or length value. If parsing fails it returns value as a string.</li><li><code>as=&quot;integer&quot;</code>, tries to parse option's value as integer. If parsing fails it returns value as a string.</li><li><code>as=&quot;float&quot;</code>, tries to parse option's value as float. If parsing fails it returns value as a string.</li><li><code>as=&quot;numeric&quot;</code>, tries to parse option's value as either integer or float. If parsing fails it returns value as a string.</li><li><code>as=&quot;string&quot;</code>, does not  parse option's value. Returns value as a string.</li></ul></li>
+		
+				
+				
+				
+				</ul>
   <h2>Events</h2>
   <p>Other than standard set of events (mouse, keyboard, focus) behavior:button generates:</p>
   <ul>

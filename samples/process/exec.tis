@@ -1,0 +1,17 @@
+
+
+function exec(args..) {
+
+  var oath = promise();
+  var out = "";
+  var proc = Process.proxy();
+  proc << event stdout (text) { out += text; }
+  proc << event stderr (text) { out += text; }
+  proc << event terminate(status) { 
+    if( status == 0 ) oath(true,[out]);
+    else oath(false,[out]);
+  }
+  proc.exec.apply(proc,args);
+  return oath;
+}
+

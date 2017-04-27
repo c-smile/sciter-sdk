@@ -13,20 +13,20 @@ body {
 {
   .prev 
   { 
-    border:1px solid #AAA; 
+    border:1dip solid #AAA; 
     foreground-image:url( images/sb-v-scroll-prev.png ); 
     foreground-position:50% 50%;
     foreground-repeat:no-repeat;
-    height:15px;
+    height:15dip;
   }
   
   .next 
   { 
-    border:1px solid #AAA; 
+    border:1dip solid #AAA; 
     foreground-image:url( images/sb-v-scroll-next.png ); 
     foreground-position:50% 50%;
     foreground-repeat:no-repeat; 
-    height:15px;
+    height:15dip;
   }
   
   .base,
@@ -39,7 +39,10 @@ body {
   }
   .slider 
   { 
-    border:1px solid #AAA; 
+    border:1dip solid #AAA; 
+    //background:red; 
+    //padding:0 4dip 0 4dip;
+    //background-clip:content-box;
     foreground-image:url( images/sb-scroll-slider.png ); 
     foreground-position:50% 50%;
     foreground-repeat:no-repeat; 
@@ -61,7 +64,7 @@ body {
   .next:active,  .slider:active, 
   .prev:active    { background-color: #FFF; }
   
-  .base { width: 15px; } /* explicit declaration of its width */
+  .base { width: 15dip; } /* explicit declaration of its width */
   .corner { background-color: transparent; }
   
 }
@@ -71,31 +74,31 @@ body {
 {
   .prev 
   { 
-    border:1px solid #AAA; 
+    border:1dip solid #AAA; 
     foreground-image:url( images/sb-h-scroll-prev.png ); 
     foreground-position:50% 50%;
     foreground-repeat:no-repeat;
-    width:15px;
+    width:15dip;
   }
   .next 
   { 
-    border:1px solid #AAA; 
+    border:1dip solid #AAA; 
     foreground-image:url( images/sb-h-scroll-next.png ); 
     foreground-position:50% 50%;
     foreground-repeat:no-repeat; 
-    width:15px;
+    width:15dip;
   }
   .next-page, 
   .prev-page, .base 
   { 
     background-image:url( images/sb-scroll-back.png ); 
-    background-position:5px 5px 5px 5px; /*left top right bottom offsets*/
+    background-position:5dip 5dip 5dip 5dip; /*left top right bottom offsets*/
     background-repeat:expand; 
   }
  
   .slider 
   { 
-    border:1px solid #AAA; 
+    border:1dip solid #AAA; 
     foreground-image:url( images/sb-scroll-slider.png ); 
     foreground-position:50% 50%;
     foreground-repeat:no-repeat; 
@@ -117,7 +120,7 @@ body {
   .next:active,  .slider:active, 
   .prev:active    { background-color: #FFF; }
   
-  .base { height: 15px; } /* explicit declaration of its height */
+  .base { height: 15dip; } /* explicit declaration of its height */
   
 }
 
@@ -132,18 +135,18 @@ div { height:*; width:*; }
 ul { 
   vertical-scrollbar: my-v-scrollbar;
   horizontal-scrollbar: my-h-scrollbar;
-	margin: 10px; 
-	padding: 5px; 
+	margin: 10dip; 
+	padding: 5dip; 
 	size: *; 
-	border: dashed black 4px; 
+	border: dashed black 4dip; 
 	list-style-type: none; 
 	color: black; 
 }
 li { 
-	margin: 5px; 
-	padding: 5px; 
-	width: 240px; 
-	border: dashed black 1px; 
+	margin: 5dip; 
+	padding: 5dip; 
+	width: 240dip; 
+	border: dashed black 1dip; 
 	background-color: white; 
 	color: black; 
 	}

@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+          plaintext { display:block; size:*; border:1dip solid;}
+          plaintext > text.error {  background: pink; }
+          plaintext:busy {
+            foreground: url(sciter:busy.png) no-repeat 100% 0%;
+            foreground-size: 16dip;
+          }
+        </style>
+        <script type="text/tiscript">
+
+          include "exec.tis";
+
+          event click $(#exec) 
+          {
+            var out = $(plaintext);
+            out.state.busy = true;            
+            const EOL = System.EOL;
+            var text = "";
+            try { 
+              if( System.PLATFORM == #Windows )
+                 text = await exec("ping", "-n", "1", "sciter.com");
+              else
+                 text = await exec("ping", "-c", "1", "sciter.com");
+            } catch (err) {
+              text = err.toString();
+            }
+            out.state.busy = false;
+            for(var line in text.split(EOL)) out.$append(<text>{line}</text>);             
+
+          }
+
+        </script>
+    </head>
+    <body>
+
+      <button #exec>Show ping</button>
+
+      <plaintext></plaintext>
+
+
+    </body>
+</html>
