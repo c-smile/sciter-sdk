@@ -7,11 +7,10 @@
       
       div.flipflop 
       { 
-        size:100px;
+        size:100dip;
         background:gold;
-        border:2px solid;
+        border:2dip solid;
         margin:*;
-        
         transform: rotate(-30deg);
       }
       
@@ -25,8 +24,8 @@
     
     function FlipFlop() {
       function toggle() { this.attributes.toggleClass("on"); }
-      this.subscribe("animationend", toggle );
-      toggle.call(this);
+      this.on("animationend", toggle );
+      this.post(::toggle.call(this));
     }
     
     </script>
