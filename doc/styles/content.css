@@ -1,7 +1,7 @@
 html { 
   behavior:sticky-scroll; /* keep position of viewed element */
   overflow:scroll-indicator;
-  aspect: AutoZoom url(autozoom.tis);
+  //aspect: AutoZoom url(autozoom.tis);
 }
 
 body 
@@ -10,16 +10,30 @@ body
   font-rendering-mode:classic;  
   behavior: htmlarea; /* to make it selectable */
   cursor:text;
-  //outline:1px dotted orange -1px;
 }
 
 pre
 {
+  aspect: AutoScrollX url(autozoom.tis);
   background-color:#F5FFFA;
   border:1px dashed gray;
   padding:4px;
   margin:4px;
+  overflow-x:hidden-scroll;
 }
+
+pre.over-left {
+  background:#F5FFFA linear-gradient(to right, rgba(128,128,128,0.8) 0%, rgba(255,255,255,0.0) 5%, rgba(255,255,255,0.0) 100% );
+}
+
+pre.over-right {
+  background:#F5FFFA linear-gradient(to left, rgba(128,128,128,0.8) 0%, rgba(255,255,255,0.0) 5%, rgba(255,255,255,0.0) 100% );  
+}
+
+pre.over-right.over-left {
+  background:#F5FFFA linear-gradient(to right, rgba(128,128,128,0.8) 0%, rgba(255,255,255,0.0) 5%, rgba(255,255,255,0.0) 95%, rgba(128,128,128,0.8) 100% );
+}
+
 
 body > table { border-spacing:0; }
 body > table tr > td { 
@@ -29,8 +43,9 @@ body > table tr > td {
   
 body > table tr > td:first-child:not([colspan]) { text-align: right; white-space:nowrap; border-right:1px solid #dedede; }
 
-body > dl:not(.flat) { flow:row(dt, dd); }
-body > dl:not(.flat) > dt { text-align: right; font-weight:bold; margin:0; margin-top:2em; padding-right: 0.3em; white-space:nowrap; }
+body > dl:not(.flat) { flow:row(dt, dd); width:100%; }
+body > dl:not(.flat) > dt { text-align: right; font-weight:bold; margin:0; margin-top:2em; padding-right: 0.3em; 
+                            width:max-content; max-width:50%;white-space:nowrap; overflow-x:hidden; text-overflow:ellipsis; }
 body > dl:not(.flat) > dd { border-left:1px solid #dedede; margin:0; margin-top:2em; padding-left: 0.3em; width:*;  }
 
 

@@ -1,6 +1,35 @@
 
+function AutoScrollX() {
 
-function AutoZoom() {
+  function showOver() { 
+    var (left,top,right,bottom) = this.scroll(#rect);
+    this.attributes.toggleClass("over-left", left > 0);
+    this.attributes.toggleClass("over-right", right > 0);
+  }
+
+  this.on("mousemove", function(evt) {
+    var (left,top,right,bottom) = this.scroll(#rect);
+    var width = this.scroll(#width); 
+    var over = left + right;
+    if(over > 0 ) { // overflows
+      var w3 = width / 3; 
+      var scrollx;
+      if( evt.x < w3 ) scrollx = 0;
+      else if( evt.x > 2* w3 ) scrollx = over;
+      else scrollx = (evt.x - w3).toFloat() / width * over * 3;
+      this.scrollTo(scrollx.toInteger(),0,true);
+    }
+    showOver.call(this);
+  });
+
+  this.on("mouseleave", :: this.scrollTo(0,0,true) );
+
+  this.on("animationend", showOver);
+  this.onSize = showOver;
+
+}
+
+/*function AutoZoom() {
 
   this.onSize = function() {
     var (left,top,right,bottom) = this.scroll(#rect);
@@ -17,4 +46,4 @@ function AutoZoom() {
       this.style#zoom = zoom;
   }
 
-}
+}*/
