@@ -1,0 +1,20 @@
+
+
+function AutoZoom() {
+
+  this.onSize = function() {
+    var (left,top,right,bottom) = this.scroll(#rect);
+
+    var width = this.scroll(#width); 
+    var contentWidth = width + left + right;
+    var currentZoom = (this.style#zoom || 1.0).toFloat();
+    var zoom = (currentZoom * width / contentWidth * 0.95);
+
+    if( zoom < 0.5 ) zoom = 0.5;
+    else if( zoom > 1 ) zoom = 1.0;
+
+    if( currentZoom != zoom )
+      this.style#zoom = zoom;
+  }
+
+}
