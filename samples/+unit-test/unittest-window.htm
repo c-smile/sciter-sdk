@@ -35,7 +35,10 @@
         const Body = $(body);
         const TestListView = $(select#list);
         const RunButton = $(button#run);
+        const CoverageButton = $(button#coverage);
         const FormResults = $(form);
+
+        var   coverageStats = null;
         
         TestListView.clear();
         var rootOption = TestListView.$append(<option expanded><caption>{rootTest.name}</caption></option>);
@@ -69,6 +72,8 @@
         
         function onAllTestsEnd ( nSucc, nFail )
         {
+          coverageStats = VM.getStats(#coverage);
+          CoverageButton.state.disabled = false;
           //stdout.println("onAllTestsEnd", nSucc, nFail, nSucc + nFail);
           FormResults.value = {
             succeeded: nSucc,
@@ -81,6 +86,7 @@
         RunButton.on("click",function(){
           var indexes = TestListView.value;
           Body.attributes["state"] = "running";
+          VM.startStats(#coverage); // gather coverage 
           UnitTest.run(indexes, onTestStart, onTestEnd,onAllTestsEnd);
         });
 
@@ -88,6 +94,25 @@
           var indexes = TestListView.value || [];
           RunButton.state.disabled = indexes.length == 0;
         });
+
+        CoverageButton.on("click",function() 
+        {
+          CoverageButton.state.disabled = true;
+          view.window {
+            type      : View.FRAME_WINDOW,
+            state     : View.WINDOW_SHOWN,
+            url       : self.url( "unittest-coverage-window.htm" ),
+            width     : self.toPixels(800dip,#width),
+            height    : self.toPixels(600dip,#height),
+            alignment : 5,
+            parameters: 
+                {
+                  stats: VM.getStats(#coverage),
+                  onclose: function() { CoverageButton.state.disabled = false; }
+                }
+          }
+        });
+
         
       }
     
@@ -95,6 +120,7 @@
   </head>
 <body>
   <button #run disabled>Run</button>
+  <button #coverage disabled>Coverage</button>
   <select|tree #list multiple="checkmarks"></select>
   <form>
     <span><label>succeeded</label><output(succeeded)/></span>

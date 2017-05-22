@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style></style>
+        <script type="text/tiscript">
+              
+           event click $(button#case1) {
+              function cb(filename,atts) {
+                stdout.println(filename);
+                return true;
+              }
+              var path = self.url("dummyfile").substr(7);
+              stdout.println("Folder:", path);
+              System.scanFiles(path,cb);
+           }
+
+           event click $(button#case2) {
+              function cb(filename,atts) {
+                stdout.println(filename);
+                return true;
+              }
+              var path = self.url("dummyfile.").substr(7);
+              stdout.println("Folder:", path);
+              System.scanFiles(path,cb);
+           }
+              
+
+        </script>
+    </head>
+    <body>
+
+       <button#case1>scanFiles("*")</button>
+       <button#case2>scanFiles("*.*")</button>
+
+    </body>
+</html>

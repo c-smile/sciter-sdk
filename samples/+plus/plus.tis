@@ -122,8 +122,8 @@ const Plus = function() {
           thing.post(::updater(thing,coll[key]));
           return true; 
         });
-      } else //we need to post this thing as it may have other aspects and behaviors
-        thing.post(::updater(thing,coll[key])); // assign intial value to it;
+      } //we need to post this thing as it may have other aspects and behaviors
+      thing.post(::updater(thing,coll[key])); // assign intial value to it;
     }
   }
 
@@ -586,7 +586,7 @@ function Object.merge(objects..)
       merge1(this,obj);
   else { 
     var _this = objects[0];
-    for( var obj in objects.slice(1)) // called static function
+    for( var obj in objects.slice(1)) // called as static function
       merge1(_this,obj);
   }
 }

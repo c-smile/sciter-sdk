@@ -1,0 +1,75 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+           input[type=path]
+           { 
+              prototype: PathInput;
+              font:system;
+              flow:horizontal;
+              border:1dip solid threedshadow;
+              background: window;
+              height:1.6em;
+           }
+
+           input[type=path] > caption
+           { 
+              flow:text;
+              behavior:edit;
+              white-space:pre;
+              overflow-x:hidden;
+              text-overflow:path-ellipsis;
+              line-height:1.6em;
+              width:*;
+              padding:0 4dip;
+           }
+
+           input[type=path] > button {
+              style-set:none;
+              behavior:clickable;
+              width:0.6em;
+              height:*;
+              background: url(stock:arrow-down) no-repeat 50% 50%;
+           }
+
+           //widget:owns-focus { }
+
+           input#test {
+             width:20em;
+           }
+
+        </style>
+        <script type="text/tiscript">
+
+           class PathInput : Element 
+           {
+              function attached() {  this.update(this.attributes["value"]);  }
+
+              function update(path) { this.$content(<caption>{path}</caption><button/>);}
+
+              event focusout {
+                // reset content to show ellipsis
+                this.update(this.value);  
+              }
+
+              property value(v) { 
+                get return this.$(caption).text; 
+                set this.update(v);
+              }
+
+              event click $(button) 
+              {
+                var fn = view.selectFile(#open, "HTML Files (*.htm,*.html)|*.HTM;*.HTML|All Files (*.*)|*.*" , "html" );
+                if( fn ) this.update(fn);
+              }
+           }
+
+        </script>
+    </head>
+    <body>
+        
+        <input|path #test value="https://sciter.com/forums/topic/path-ellipsis/#post-51193" >
+
+    </body>
+</html>

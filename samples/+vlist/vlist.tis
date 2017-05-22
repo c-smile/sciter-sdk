@@ -28,18 +28,17 @@ function VirtualList(params) {
     var   item_height = 10;   // will be adjusted later
     var   buffer_start = 0;   // index of first buffer element in _records
     var   visible_items = 0;  // number of visible items in the view
-    var   current_record = undefined;  // current record 
-    var   cache = [];         // cache of DOM elements - list items
-    
+    var   current_record = undefined;  // current record z
     var   showRecord = params.renderItemView || null;      // showRecord(index,record, itemElement)
     var   setupRecord = params.setupItemView || null;  // setupItemView(index,record, itemElement)
     var   recordData = params.getItemData;
+    var   cache = []; // cache of DOM elements - list items
     
     //multiselection support (not yet)
     //var   selected = params.multiselect ? {} : null; // ATTENTION: if multiselect then each record must have unique .id field
 
     // requests gc to be called
-    function dogc() { gc(); }
+    //function dogc() { gc(); }
         
     var   setupSetObserver;
     
@@ -64,28 +63,23 @@ function VirtualList(params) {
     }
     
     function detachRecordObserver(el) {
-      if(!el.data)
-        return;
-      var thisObserver = null;
-      function cmp( observer ) { if( observer.el == el ) { thisObserver = observer; return true; } }
-      el.data.eachObserver( cmp );
-      if( thisObserver )
-        el.data.removeObserver(thisObserver);
+      var record = el.data;
+      if(!record) return;
       el.data = null;
+      record.removeObserver(el[#vlist-record-observer]);
+      el[#vlist-record-observer] = null;
     }
  
     function setupRecordObserver(record, el) {
      
       function recordObserver() { 
+        if( el[#vlist-record-observer] !== this function)
+          return;
         var idx = records.indexOf(record);
         if( idx >= buffer_start && idx < buffer_start + list.length )
           showRecord(idx, record, el); 
-        else
-          detachRecordObserver(el);  
       }
-      
-      recordObserver.el = el;
-      
+      el[#vlist-record-observer] = recordObserver;        
       record.addObserver(recordObserver);
       return record;
     }
@@ -95,7 +89,7 @@ function VirtualList(params) {
       cache.push(el); 
       el.detach();    
       el.state.clear(0xFFFFFFFF); // clear all flags      
-      list.timer(1s,dogc);     // throttle GC call as DOM object may hold various native resources
+      //list.timer(1s,dogc);     // throttle GC call as DOM object may hold various native resources
     }
     
     function createRecViewer(rec) {
@@ -348,8 +342,8 @@ function VirtualList(params) {
       }
       else {
         if( !silent )
-          for(var el in list)
-            removeRecViewer(el);
+          while(list.last)
+            removeRecViewer(list.last);
         var thisObserver = null;
         function cmp( observer ) { if( observer.list == list ) { thisObserver = observer; return true; } }
         records.eachObserver( cmp );
@@ -381,8 +375,8 @@ function VirtualList(params) {
     }
   
     list[#offset] = property(v) {
-		get return buffer_start;
-	}
+		  get return buffer_start;
+	  }
   
     if(!showRecord) showRecord = function(i,r,el) 
     {

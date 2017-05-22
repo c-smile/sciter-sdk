@@ -1,0 +1,86 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+          form { flow:row(code,select,pre); border-spacing:1em; }
+          form > * { display:block; vertical-align:middle; }
+             
+        </style>
+        <script type="text/tiscript">
+
+          function showValue(select) {
+             var v = select.value;
+             if( v === undefined )
+               select.next.$content(undefined); 
+             else
+               select.next.$content({v}, { typeof v }); 
+          }
+           
+          event change $(select) {
+            showValue(this); 
+          }
+
+          function self.ready() {
+            for(var select in $$(select))
+              showValue(select);    
+          }
+
+        </script>
+    </head>
+    <body>
+     <p>Different flavours of option type interpretation</p>  
+      <form> 
+        <code>as=auto</code>
+        <select novalue="???" as="auto">
+          <option value=1>1 (integer)</option>
+          <option value=2.0>2.0 (float)</option>
+          <option value=foo>foo (string)</option>
+          <option value=true>true (boolean)</option>
+          <option value=false>false (boolean)</option>
+          <option value=12pt>12pt (length)</option>
+          <option value=2007-12-01>2007-12-01 (date)</option>
+        </select>
+        <pre></pre>
+
+        <code>as=string</code>
+        <select novalue="???" as="string">
+          <option value=1>1 (integer)</option>
+          <option value=2.0>2.0 (float)</option>
+          <option value=foo>foo (string)</option>
+          <option value=true>true (boolean)</option>
+          <option value=false>false (boolean)</option>
+          <option value=12pt>12pt (length)</option>
+          <option value=2007-12-01>2007-12-01 (date)</option>
+        </select>
+        <pre></pre>
+
+        <code>as=numeric</code>
+        <select novalue="???" as="numeric">
+          <option value=1>1 (integer)</option>
+          <option value=2.0>2.0 (float)</option>
+          <option value=foo>foo (string)</option>
+        </select>
+        <pre></pre>
+
+        <code>as=integer</code>
+        <select novalue="???" as="integer">
+          <option value=1>1 (integer)</option>
+          <option value=2.0>2.0 (float)</option>
+          <option value=foo>foo (string)</option>
+        </select>
+        <pre></pre>
+        
+        <code>as=float</code>
+        <select novalue="???" as="float">
+          <option value=1>1 (integer)</option>
+          <option value=2.0>2.0 (float)</option>
+          <option value=foo>foo (string)</option>
+        </select>
+        <pre></pre>
+     <form>
+
+      
+
+    </body>
+</html>

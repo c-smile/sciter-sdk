@@ -148,7 +148,7 @@
          }
       }
 
-      event click $(button#open)
+      event click $(div#toolbar > button#open)
       {
         var fn = view.selectFile(#open,file_filter);
 		    if( fn ) 
@@ -161,7 +161,7 @@
             view.windowCaption = title.text; // calling native method defined in sciter.h 
         }
       }
-      event click $(button#reload)
+      event click $(div#toolbar > button#reload)
       {
 		    if( filename ) {
           content.load(filename);
@@ -170,7 +170,7 @@
         }
       }
 
-      event click $(button#open-in-view)
+      event click $(div#toolbar > button#open-in-view)
       {
         var fn = view.selectFile(#open,file_filter);
 		    if( fn ) 
@@ -179,7 +179,7 @@
         }
       }
 
-      event click $(button#glass)
+      event click $(div#toolbar > button#glass)
       {
         if( this.value)
           view.windowBlurbehind = #auto;
@@ -187,7 +187,7 @@
           view.windowBlurbehind = undefined;
       }
       
-      event click $(button#help)
+      event click $(div#toolbar > button#help)
       {
 		    //view.open("file://" + System.home("../doc/main.htm"));
         view.window 
@@ -201,7 +201,7 @@
         };
       }
 
-      event click $(button#inspector)
+      event click $(div#toolbar > button#inspector)
       {
         if(!view.inspectorIsPresent()) // native function, defined in sciter.cpp
           Sciter.launch( System.home("inspector.exe") );

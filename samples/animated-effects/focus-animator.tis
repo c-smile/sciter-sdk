@@ -1,0 +1,53 @@
+
+
+function FocusAnimator(params = {}) {
+
+  var prevFocus = null;
+  var focus = null;
+  var that = this;  
+  var fx1 = null,fy1,fx2,fy2;
+  var tx1,ty1,tx2,ty2;
+  var focusColor = color(255,0,0);
+  var isAnimating = false;
+
+  function step() {
+    if( fx1 === null)
+      return false;
+    fx1 = (tx1 + fx1) / 2.0;
+    fy1 = (ty1 + fy1) / 2.0;
+    fx2 = (tx2 + fx2) / 2.0;
+    fy2 = (ty2 + fy2) / 2.0;
+    self.refresh();
+    return (isAnimating = (fx1 != tx1 || fy1 != ty1 || fx2 != tx2 || fy2 != ty2));
+  }
+
+  self << event focus(evt) {
+    var (x1,y1,x2,y2) = evt.target.box(#rect,#border,#view);
+    (tx1,ty1,tx2,ty2) = (x1,y1,x2,y2);
+    if( evt.target === self ) {
+      fx1 = null;
+      self.refresh();
+    }
+    else if( fx1 === null) {
+      (fx1,fy1,fx2,fy2) = (tx1,ty1,tx2,ty2);
+      self.refresh();
+    }
+    else if(!isAnimating)
+      self.animate(step);
+  }
+
+  self << event focusout {
+    fx1 = null;
+    self.refresh();
+  }
+
+  self.paintOutline = function(gfx) {
+    if( fx1 === null) return;
+    var (dx,dy) = self.box(#position,#inner,#view);
+    gfx.strokeColor(focusColor)
+       .strokeWidth(3)
+       .rectangle(fx1 - dx,fy1 - dy,fx2 - fx1,fy2 - fy1);
+  }
+
+
+}

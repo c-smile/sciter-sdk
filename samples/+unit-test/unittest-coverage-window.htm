@@ -1,0 +1,97 @@
+﻿<html>
+    <head>
+        <title>Code coverage</title>
+        <style>
+
+          select#files {
+            font:system;
+            display:block; 
+            height:*;
+            background:window;
+            overflow:auto;
+            background:window;
+            border:none;
+          } 
+          select#files > option {
+            line-height:2em;
+            height:2em;
+            overflow-x:hidden;
+            text-overflow:path-ellipsis;
+          }
+
+          select#files > option.not-used {
+            color:gray;
+          }
+
+          plaintext#file > text { white-space:pre; }
+          plaintext#file > text[visits] { background: #FFEFD5; padding-left:0;}
+          plaintext#file > text[visits]::before { 
+            display:inline-block;
+            width:3em;
+            content: attr(visits);  
+            background: #FFDAB9;
+            text-align: center;
+          }
+          plaintext#file > text:not([visits]) {
+            padding-left:3em;
+          }
+
+        </style>
+        <script type="text/tiscript">
+
+          const stats = view.parameters.stats;
+          const onclose = view.parameters.onclose;
+
+          const srcview = $(plaintext#file);
+
+          function self.closing(reason) { if(onclose) onclose(); }
+
+          function self.ready() {
+            var names = [];
+            for( var (key,dummy) in stats ) {
+              var fn = key.toString();
+              // filter out instrumental code:
+              if( fn like "*/unittest.tis" ) continue;         
+              if( fn like "*/unittest-window.htm" ) continue;
+              if( fn like "*/promise.tis" ) continue;
+              if( fn == "sciter:debug-peer.tis" ) continue;
+              // that's
+              names.push(fn);
+            }
+            names.sort();
+            var slist = $(select#files);
+            for( var name in names )
+              slist.$append(<option { stats[name] ? ".used":".not-used" }>{name}</option>);
+          }
+
+          event change $(select#files) 
+          {
+            var fn = this.value;
+
+            function show(data) {
+              srcview.value = data;
+              var visits = stats[fn];
+              if( visits ) for(var (i,nvisits) in visits) {
+                if( nvisits > 0)
+                  srcview[i].attributes["visits"] = "*" + nvisits.toString();
+              }
+            }
+
+            view.request { 
+              url: fn, 
+              output: #string,
+              success: show 
+            };
+
+          }
+
+        </script>
+    </head>
+    <body>
+       <frameset cols="40%,*"> 
+         <select|list #files as="string" />
+         <splitter/>
+         <plaintext #file readonly />
+       </frameset>
+    </body>
+</html>

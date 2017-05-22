@@ -15,6 +15,7 @@
       
         var fn = view.selectFile(#open, filter, defaultExt, initialPath, caption );
         out.text = fn || "{rejected}";
+        return true;
       });
       
       self.on("click","#save",function(){
@@ -26,6 +27,7 @@
       
         var fn = view.selectFile(#save, filter, defaultExt, initialPath, caption );
         out.text = fn || "{rejected}";
+        return true;
       });
       
       

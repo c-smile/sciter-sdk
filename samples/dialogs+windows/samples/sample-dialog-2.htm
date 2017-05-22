@@ -5,8 +5,8 @@
     html 
     { 
       font:system;
-      width:max-intrinsic; 
-      height:max-intrinsic; 
+      width:max-content; 
+      height:max-content; 
       overflow:hidden; 
     }
     
@@ -16,10 +16,8 @@
   </style>
   <script type="text/tiscript">
   
-    include "../../decorators.tis";
-    
-    @click @on "#close-dialog" :: view.close( $(form).value );
-    @change @on "form" :: stdout.printf("value=%V\n",$(form).value);
+    event click $(#close-dialog) { view.close( $(form).value ); }
+    event change $(form) { stdout.printf("value=%V\n",$(form).value); }
     
     // fill data fields from passed parameters.
     // 'parameters' variable passed by dialog function.

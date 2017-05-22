@@ -44,6 +44,8 @@ namespace UnitTest
     var succ = 0; 
     
     var currentTestIndex = 0;
+
+    var onEnd = null;
     
     function runOne() 
     {
@@ -106,7 +108,7 @@ namespace UnitTest
     view.request {
       type:#get,
       url: self.url(testUrl),
-      output: #string,
+      //output: #string,
       success: loadTest,
       error: reportLoadTestError
     };

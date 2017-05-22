@@ -75,6 +75,7 @@
     
     function setupItemView(recordNo, record, itemEl) {
       itemEl.$(img).attributes["src"] = record.imageUrl; // or whatever you have there
+      itemEl.$(td.custom).$content({record.caption} - {record.index});
     }    
    
     var vlist = VirtualList {
@@ -86,6 +87,29 @@
     // feed it by these records
     vlist.value = records;
     
+    $(button#add-record) << event click {
+      var i = records.length;
+      records.push {
+        index: i, 
+        caption:"New item", 
+        status:"",
+        imageUrl: imageUrl(i);
+      }
+    }
+
+    $(button#change-record) << event click {
+      var i = 0;
+      records[i] = {
+        index: i, 
+        caption:"Changed item", 
+        status:"",
+        imageUrl: imageUrl(i);
+      };
+    }
+
+    $(button#update-record) << event click {
+      records[0].caption = records[0].caption + "*";
+    }
     
   }
   
@@ -97,12 +121,16 @@
   
   <p>Records array is created with 500 records initially. Record view is configured by custom setupItemView() function.</p> 
 
+  <button#add-record>Add Record</button>
+  <button#change-record>Change first record</button>
+  <button#update-record>Update first record</button>
+
   <table>
     <thead>
-      <tr><th(index)>index</th><th(caption)>caption</th><th(status)>status</th><th>Image</th></tr>
+      <tr><th(index)>index</th><th(caption)>caption</th><th(status)>status</th><th>Image</th><th>custom content</th></tr>
     </thead>
     <tbody>
-      <tr><td(index)></td><td(caption)></td><td(status)></td><td><img/></td></tr>
+      <tr><td(index)></td><td(caption)></td><td(status)></td><td><img/></td><td.custom></td></tr>
     </tbody>
   </table>
  
