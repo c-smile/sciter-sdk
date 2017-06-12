@@ -4,7 +4,7 @@
     <style>
     
       picture,
-      img { fill:red; outline:1px dashed blue; }
+      img { fill:red; outline:1dip dashed blue; }
       
       section { flow: horizontal; }
       section > div {
@@ -13,11 +13,11 @@
         background-size:100% 100%;
         fill:gold;
         stroke:#444;
-        stroke-width:0.5px;
+        stroke-width:1dip;
         width:max-content;
-        padding:4px 25px;
-        margin:5px;
-        outline:1px dashed #aaa;
+        padding:4dip 25dip;
+        margin:5dip;
+        outline:1dip dashed #aaa;
       } 
       section > div:hover {
         fill:yellow;
@@ -33,9 +33,9 @@
     <!--flexible image , uses 0.5* - 50% of width -->
     <picture src="path:E M0,0 L0.5*,-0 L-0,0z" style="width:*; height:*; fill:green" />
  
-    <img src="path:E M0,0 L50,100 L-0,0z" style="width:100px; height:100px;" >
+    <img src="path:E M0,0 L50%,-0 L-0,0z" style="width:100dip; height:100dip;" >
     <!--diagonal lines -->
-    <img src="path:E M0,0 L-0,-0 M0,-0 L-0,0" style="width:200px; height:100px; stroke-width:8px; stroke-linecap:round" >
+    <img src="path:E M0,0 L-0,-0 M0,-0 L-0,0" style="width:200dip; height:100dip; stroke-width:8dip; stroke-linecap:round" >
     
     
     <p>Eexpandable vector images used as a background-image in CSS:</p>

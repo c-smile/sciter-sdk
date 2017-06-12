@@ -46,33 +46,32 @@
           
           //gfx.scale(0.5,0.5, w/2,h/2);
           
-          gfx.lineWidth(2)
-             .lineLinearGradient(x1,y1,x1,y2,color(0xFF,0,0),color(0,0,0xFF) )
+          gfx.strokeWidth(2)
+             .strokeLinearGradient(x1,y1,x1,y2,color(0xFF,0,0),color(0,0,0xFF) )
              .fillLinearGradient(x1,y1,x1,y2,color(0xFF,0x7F,0x7F,0.3),color(0x7F,0x7F,0xFF,0.6) )
              .rectangle( x1, y1, w1, h1, 20 );
           
-          gfx.lineJoin = #round;
+          gfx.strokeJoin(#round);
           
-          gfx.lineWidth(10)
+          gfx.strokeWidth(10)
              .strokeCap(#round)
-             .strokeDash(#dotted)
-             .lineColor(color(0,0xAF,0))
+             .strokeDash([50,20])
+             .strokeColor(color(0,0xAF,0))
              .fillRadialGradient( (x1+x2)/2, (y1+y2)/2, Integer.min(w,h) / 2, [color(0,0xFF,0,0.3), color(0xFF,0,0,0.5), color(0x7F,0xAF,0x7F)] )
-             .triangle( (x1+x2)/2, y1, x2, y2, x1, y2 )
-             .strokeDash(#solid);
+             .triangle( (x1+x2)/2, y1, x2, y2, x1, y2 );
 
-          gfx.lineWidth(2)
-             .lineColor(color(0,0,0xFF))
+          gfx.strokeWidth(2)
+             .strokeColor(color(0,0,0xFF))
              .line( x1, y1, x2, y2 );
 
           gfx.lineWidth(2)
-             .lineColor(color(0,0xFF,0))
+             .strokeColor(color(0,0xFF,0))
              .fillColor(color(0,0x7F,0,0.5))
              .polygon( 0,0, 40,40, 40, 0, 0, 40);
 
           gfx.translate(w-40,h-40)
-             .lineWidth(2)
-             .lineColor(color(0xFF,0,0))
+             .strokeWidth(2)
+             .strokeColor(color(0xFF,0,0))
              .polyline( 0,0, 40,40, 40, 0, 0, 40);
              
           //var (x,y) = gfx.worldToScreen(10,10);
@@ -97,20 +96,20 @@
           
           //gfx.scale(0.5,0.5, w/2,h/2);
           
-          gfx.lineWidth(2)
-             .lineLinearGradient(x1,y1,x1,y2,color(0xFF,0,0),color(0,0,0xFF) )
+          gfx.strokeWidth(2)
+             .strokeLinearGradient(x1,y1,x1,y2,color(0xFF,0,0),color(0,0,0xFF) )
              .fillLinearGradient(x1,y1,x1,y2,color(0xFF,0x7F,0x7F,0.3),color(0x7F,0x7F,0xFF,0.6) )
              .ellipse( (x1+x2)/2, (y1+y2)/2, w1/2, h1/2 );
 
-          gfx.lineWidth(4)
-             .lineColor(color("gold"))
+          gfx.strokeWidth(4)
+             .strokeColor(color("gold"))
              .fillColor(color(0xFF,0xFF,0,0.3))
              .arc( (x1+x2)/2, (y1+y2)/2, w1/3, h1/3, 0, Math.PI / 2);
           
-          gfx.lineJoin = #round;
+          gfx.strokeJoin(#round);
           
-          gfx.lineWidth(10)
-             .lineColor(color(0,0xAF,0))
+          gfx.strokeWidth(10)
+             .strokeColor(color(0,0xAF,0))
              .fillRadialGradient( (x1+x2)/2, (y1+y2)/2, Integer.min(w,h) / 2, color(0,0xFF,0,0.3), color(0x7F,0xAF,0x7F))
              .star( (x1+x2)/2, (y1+y2)/2, w1/3, h1/3, 0, 7);
 

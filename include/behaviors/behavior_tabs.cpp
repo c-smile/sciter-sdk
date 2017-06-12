@@ -214,7 +214,7 @@ struct tabs: public event_handler, behavior_factory
 
     dom::element target_tab(HELEMENT he, HELEMENT h_tabs_container)
     {
-      if( he == h_tabs_container ) 
+      if( !he || he == h_tabs_container ) 
         return 0;
 
       dom::element el = he;

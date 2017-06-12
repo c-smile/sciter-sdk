@@ -22,9 +22,10 @@
     include "items-source.tis";
     include "tapev.tis";
     
-    self.$(div#tape).onBufferChanged = function(firstIdx, lastIdx)
+    event buffer-change $(div#tape) (evt)
     {
-      self.$(pre#status).text = String.printf("Buffer: first record %d, last record %d", firstIdx, lastIdx);
+      var data = evt.data;
+      $(pre#status).text = String.printf("Buffer: first record %d, last record %d", data[0], data[1]);
     }
         
   </script>  

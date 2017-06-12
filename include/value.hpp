@@ -85,8 +85,6 @@
       value( const WCHAR* s, unsigned int slen = 0 ) { ValueInit(this); ValueStringDataSet(this, LPCWSTR(s), (slen || !s)? slen : (unsigned int)str_length(s), 0); }
       value( const string& s ) { ValueInit(this); ValueStringDataSet(this, LPCWSTR(s.c_str()), UINT(s.length()), 0); }
       value( const astring& s ) { aux::a2w as(s.c_str()); ValueInit(this); ValueStringDataSet(this, LPCWSTR(as.c_str()), UINT(as.length()), UT_STRING_SYMBOL); }
-      //value( const std::ustring& s ) { ValueInit(this); ValueStringDataSet(this, LPCWSTR(s.c_str()), UINT(s.length()), 0); }
-      //value( const std::string& s ) { aux::a2w as(s.c_str()); ValueInit(this); ValueStringDataSet(this, LPCWSTR(as.c_str()), UINT(as.length()), UT_STRING_SYMBOL); }
       value( aux::wchars ws )   { ValueInit(this); ValueStringDataSet(this, LPCWSTR(ws.start), ws.length, 0); }
 
       value( aux::bytes bs )    { ValueInit(this); ValueBinaryDataSet(this, bs.start, bs.length, T_BYTES, 0); }
@@ -102,6 +100,15 @@
       static value date( FILETIME ft, bool is_utc = true /* true if ft is UTC*/ )  { value t; ValueInt64DataSet(&t, *((INT64*)&ft), T_DATE, is_utc); return t;} 
 #endif
       static value symbol( aux::wchars wc ) { value t; ValueInit(&t); ValueStringDataSet(&t, LPCWSTR(wc.start), wc.length , 0xFFFF); return t; }
+
+      /** set color value, abgr - a << 24 | b << 16 | g << 8 | r, where a,b,g,r are bytes */
+      static value color(UINT abgr) { value t; ValueInit(&t); ValueIntDataSet(&t, abgr, T_COLOR, 0); return t; }
+      
+      /** set duration value, seconds */
+      static value duration(double seconds) { value t; ValueInit(&t); ValueFloatDataSet(&t, seconds, T_DURATION, 0); return t; }
+
+      /** set angle value, radians */
+      static value angle(double radians) { value t; ValueInit(&t); ValueFloatDataSet(&t, radians, T_ANGLE, 0); return t; }
 
       // string-symbol
       value( const char* s ) 
@@ -175,6 +182,10 @@
       bool is_dom_element() const { return t == T_DOM_OBJECT; }
       // if it is a native functor reference
       bool is_native_function() const { return !!ValueIsNativeFunctor(this); }
+
+      bool is_color() const { return t == T_COLOR; }
+      bool is_duration() const { return t == T_DURATION; }
+      bool is_angle() const { return t == T_ANGLE; }
       
       bool is_null() const { return t == T_NULL; }
 
@@ -228,6 +239,32 @@
         aux::bytes bs;
         ValueBinaryData(this,&bs.start,&bs.length);
         return bs;
+      }
+
+      UINT get_color(UINT defv = 0) const 
+      {
+        UINT v = defv;
+        assert(is_color());
+        ValueIntData(this, (INT*)&v);
+        return v;
+      }
+
+      // returns radians if this->is_angle()
+      double get_angle(double defv = 0) const 
+      {
+        double v = defv;
+        assert(is_angle());
+        ValueFloatData(this, &v);
+        return v;
+      }
+
+      // returns seconds if this->is_duration()
+      double get_duration(double defv = 0) const
+      {
+        double v = defv;
+        assert(is_duration());
+        ValueFloatData(this, &v);
+        return v;
       }
 
 #ifdef WIN32

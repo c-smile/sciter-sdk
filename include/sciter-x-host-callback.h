@@ -134,6 +134,8 @@ namespace sciter
           // then by calling possibly overloaded load_resource_data method
           if(static_cast< BASE* >(this)->load_resource_data(wu.start+4, pb, cb))
             ::SciterDataReady( pnmld->hwnd, pnmld->uri, pb,  cb);
+          else 
+            return LOAD_DISCARD;
         } else if(wu.like(WSTR("this://app/*"))) {
           // try to get them from archive first
           aux::bytes adata = archive::instance().get(wu.start+11);

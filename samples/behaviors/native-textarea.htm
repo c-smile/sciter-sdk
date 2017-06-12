@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+          widget.textarea {
+            behavior: native-textarea; // defined in sdk/include/behaviors/behavior_native_textarea.cpp 
+            display:block;
+            size:*;
+          }
+
+          widget.textarea.hidden {
+            visibility:hidden;
+          }
+
+        </style>
+        <script type="text/tiscript">
+
+           function self.ready() {
+             $(widget.textarea).value = "Veni!\r\nVidi!\r\nVici!";
+           }
+
+           event change $(#window-visibility) {
+             $(widget.textarea).attributes.toggleClass("hidden", !this.value); 
+           }
+
+        </script>
+    </head>
+    <body>
+       <p>Native textarea demo - native window of class EDIT</p>
+       <button|checkbox #window-visibility checked>Visible</button>
+       <widget.textarea/>
+    </body>
+</html>

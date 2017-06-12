@@ -1,52 +1,38 @@
 
-class TapeV: Behavior
+function Tape()
 {
   const BUFFER_SIZE = 20;     // this is a max number of items in buffer
                               // this number has to be at least twice bigger than number of visible items.
   const BUFFER_CHUNK_SIZE = 5;// this is a number of items that will be fetched from items source on scroll to fill the buffer.
-  const SCROLL_DELTA = 60;    // px, for mouse wheel
+  const SCROLL_DELTA = 60;    // dip, for mouse wheel
   
-  const SCROLL_KINETIC_DELTA = 5.0;    // px, for mouse wheel
-  const SCROLL_KINETIC_DECEL = 0.95;   // deceleration 
+  const SCROLL_KINETIC_DELTA = 10.0;   // dip, for mouse wheel
+  const SCROLL_KINETIC_DECEL = 0.90;   // deceleration 
   const SCROLL_KINETIC_OUT_DECEL = 0.74; // deceleration when head/tail reached
   const SCROLL_KINETIC_STEP_DELAY =  View.ANIMATION_TIMER_SPAN; // milliseconds
-  
-  const FRICTION_COEFF = 0.0972; // friction coefficient of iPhone sliding on office table surface - iCurling, eh? 
-  const G = 9.8;                 // gravitation acceleration at Earth surface.
-  
-  function velocityAt(v0, t)
-  {
-    //v(t)=v0-F*t/m  where F is friction force = k*m*g
-    //v(t)=v0-(k*m*g)*t/m
-    //v(t)=v0-k*g*t;
-    float dv = FRICTION_COEFF * G * float(t) / 1000.; // 1000. as time and speed use milliseconds
-    var v = (v0 < 0)? Float.min(v0 + dv,0):Float.max(v0 - dv,0);
-    return v;  
-  }
 
-  function attached()
-  {
-    // item template
-    this.template = this.$( div.item.template );
-    this.template.detach();
-    this.dataSource = eval( this.@#items-source );
-    this.fillList();
-    if(this.@#kinetic !== undefined)
-    {
-      this.scrollDown = this.scrollDownKinetic;
-      this.scrollUp = this.scrollUpKinetic;
-    }
-    else
-    {
-      this.scrollDown = this.scrollDownNormal;
-      this.scrollUp = this.scrollUpNormal;
-    }
-  }
+  const tape = this;  
+
+  var template = tape.$( div.item.template );
+      template.detach();
+
+  var dataSource = eval( tape.attributes["items-source"] );
+
+  var velocity = 0;
+
+  var scrollDown;
+  var scrollUp;
+
+  var touchPosX;
+  var touchPosY;
+  var isOut = false;
+  var stopAnimation;
+  var idx = 0;
 
   // overridable event handlers:  
-  function onBufferChanged(firstIdx, lastIdx) {}
-  function onStartReached() {}
-  function onEndReached() {}
+  //function onBufferChanged(firstIdx, lastIdx) {}
+  //function onStartReached() {}
+  //function onEndReached() {}
   
   function merge(div,data)
   {
@@ -62,143 +48,31 @@ class TapeV: Behavior
   // initial list setup:
   function fillList()
   {
-    var tmpl = this.template;
-    
     var idx = 0;
-    for( var item in this.dataSource.range(0,BUFFER_SIZE) )
+    for( var item in dataSource.range(0,BUFFER_SIZE) )
     {
-      var div = tmpl.clone(); // new instance of item from template
-      this.insert(div);
+      var div = template.clone(); // new instance of item from template
+      tape.insert(div);
       // merge item fields into div content:
-      this.merge(div,item);
+      merge(div,item);
       div.idx = idx++;
-    }  
+    }
+    isOut = false;  
   }
-  
-  function onMouse(evt)
+
+  function scrollStepDown(scrollDelta, noOverflow = false)
   {
-    switch (evt.type) {
+    var (scroll_left,scroll_top, scroll_right, scroll_bottom) = tape.scroll(#rect);
+    var content_height = tape.box(#height,#content);
     
-      case Event.MOUSE_WHEEL:
-        if(evt.wheelDelta < 0) this.scrollDown(); else this.scrollUp();
-        return true;
-      case Event.MOUSE_DOWN:
-        if( evt.mainButton ) {
-          this.touchPosX = evt.x;
-          this.touchPosY = evt.y;
-        }
-        break;
-      case Event.MOUSE_MOVE:
-        if( evt.mainButton ) {
-          var delta = evt.y - this.touchPosY;
-          this.touchPosX = evt.x;
-          this.touchPosY = evt.y;
-          delta < 0 ? this.scrollStepDown(-delta) : this.scrollStepUp(delta);
-        }
-        break;
-    }
-  }
-  
-  function scrollDownNormal(scrollDelta = SCROLL_DELTA) { return this.scrollStepDown(scrollDelta); }
-  function scrollUpNormal(scrollDelta = SCROLL_DELTA)   { return this.scrollStepUp(scrollDelta); }
-  
-  function scrollDownKinetic(scrollDelta = SCROLL_KINETIC_DELTA)
-  {
-    var v = (this.velocity || 0.0);
-    /*if( v < -0.0001 )
+    function fetchMore()
     {
-      this.stopAnimation = true;
-      this.velocity = 0;
-      return;
-    }
-    this.stopAnimation = false;*/
-    this.velocity = v + scrollDelta;
-    this.doScrollAnimation();
-  }
-  function scrollUpKinetic(scrollDelta = SCROLL_KINETIC_DELTA)
-  {
-    var v = (this.velocity || 0.0);
-    this.velocity = v - scrollDelta;
-    this.doScrollAnimation();
-  }
-  
-  function doScrollAnimation()
-  {
-    if( this.state.animating ) return;
-    function animationStep()
-    {
-      this.velocity *= this.isOut ? SCROLL_KINETIC_OUT_DECEL : SCROLL_KINETIC_DECEL;
-      if( Math.abs(this.velocity) < 0.5 || this.stopAnimation) 
-      {
-        this.post(::this.scrollEnded());
-        return 0;
-      }
-      var v = this.velocity.toInteger();
-      if( v < 0 ) this.scrollStepUp(-v); else this.scrollStepDown(v);
-      return SCROLL_KINETIC_STEP_DELAY;
-    }
-    this.animate(animationStep);
-  }
-  
-  function scrollEnded()
-  {
-    function animateBackTop(distance) 
-    {
-      var scroll_y = this.scroll(#top);
-      var target_y = 0;
-      var target_y_half = scroll_y / 2;
-      var v = 1;
-      this.animate(
-       :{
-          scroll_y += v;
-          if( scroll_y >= target_y ) { this.scrollTo( 0, target_y, false, true ); this.isOut = false; return 0; }
-          this.scrollTo( 0, scroll_y, false, true );
-          if( scroll_y < target_y_half ) ++v;  
-          else if(--v == 0) v = 1;
-          return SCROLL_KINETIC_STEP_DELAY;
-        });
-    }
-    function animateBackBottom(distance) 
-    {
-      var scroll_y = this.scroll(#top);
-      var target_y = scroll_y - distance;
-      var target_y_half = scroll_y - distance / 2;
-      var v = 1;
-      this.animate(
-       :{
-          scroll_y -= v;
-          if( scroll_y <= target_y ) { this.scrollTo( 0, target_y, false, true ); this.isOut = false; return 0; }
-          this.scrollTo( 0, scroll_y, false, true );
-          if( scroll_y > target_y_half ) ++v;  
-          else  if( --v == 0 ) v = 1;
-          return SCROLL_KINETIC_STEP_DELAY;
-        });
-    }
-  
-    var firstTop = this.first.box(#top,#margin,#parent);
-    var lastBottom = this.last.box(#bottom,#margin,#parent);
-    var height = this.box(#height,#inner);
-    if( firstTop > 0 )
-      animateBackTop.call(this,firstTop);
-    else if( lastBottom < height )
-      animateBackBottom.call(this, height - lastBottom );
-    
-  }
-  
-  function scrollStepDown(scrollDelta)
-  {
-    var (scroll_left,scroll_top, scroll_right, scroll_bottom) = this.scroll(#rect);
-    var content_height = this.box(#height,#content);
-    
-    function fetchMore(tape)
-    {
-      var tmpl = tape.template;
       var idx = tape.last.idx + 1; var last_idx = idx;
-      for( var item in tape.dataSource.range(idx,BUFFER_CHUNK_SIZE) )
+      for( var item in dataSource.range(idx,BUFFER_CHUNK_SIZE) )
       {
-        var div = tmpl.clone(); // make new instance of item from the template
+        var div = template.clone(); // make new instance of item from the template
         tape.insert(div);
-        tape.merge(div,item); // merge item fields into the div content
+        merge(div,item); // merge item fields into the div content
         div.idx = idx++; 
         //stdout.println("idx added",div.idx);
       } 
@@ -213,37 +87,48 @@ class TapeV: Behavior
       tape.update();
       var content_height_after = tape.box(#height,#content); // adjust scroll position as
       scroll_top += content_height_after - content_height;   // we've removed first items.
-      tape.onBufferChanged(tape.first.idx,tape.last.idx);
+      content_height = content_height_after;
+      tape.postEvent("buffer-change", [tape.first.idx,tape.last.idx]);
       return false;
     }
     
     //stdout.println(scroll_bottom, scrollDelta ,content_height);    
+
+    var scrolly = scroll_top + scrollDelta;
     
-    if( scroll_bottom < scrollDelta)
+    if( scroll_bottom < scrollDelta) {
       // we need to pump more items in this virtual list:
-      this.isOut = fetchMore(this); 
-      
-    this.scrollTo( scroll_left, scroll_top + scrollDelta, false, true );
+      isOut = fetchMore();
+      if(isOut && noOverflow) { 
+        scrolly = content_height - tape.scroll(#height);
+        isOut = false;
+      }
+      else 
+        scrolly = scroll_top + scrollDelta;
+    }
+    else   
+      isOut = false;
+
+    tape.scrollTo( scroll_left, scrolly, false, true );
   }
     
-  function scrollStepUp(scrollDelta)
+  function scrollStepUp(scrollDelta, noOverflow = false)
   {
-    var (scroll_left,scroll_top, scroll_right, scroll_bottom) = this.scroll(#rect);
+    var (scroll_left,scroll_top, scroll_right, scroll_bottom) = tape.scroll(#rect);
     //this.pastFirst = false;
     //this.pastLast = false;
        
-    function fetchMore(tape)
+    function fetchMore()
     {
-      var tmpl = tape.template;
       var first = tape.first;
       var idx = first.idx - 1; var first_idx = idx;
       var prev_top = first.box(#top,#inner,#parent);
       if(idx >= 0)
-        for( var item in tape.dataSource.range(idx,-BUFFER_CHUNK_SIZE) )
+        for( var item in dataSource.range(idx,-BUFFER_CHUNK_SIZE) )
         {
-          var div = tmpl.clone(); // make new instance of item from template
+          var div = template.clone(); // make new instance of item from template
           tape.insert(div,0);
-          tape.merge(div,item); // merge item fields into the div content
+          merge(div,item); // merge item fields into the div content
           div.idx = idx--;
         } 
       if( idx == first_idx ) 
@@ -253,15 +138,149 @@ class TapeV: Behavior
         tape.last.remove();
       tape.update();
       scroll_top = first.box(#top,#inner,#parent) - prev_top; // adjust scroll position.
-      tape.onBufferChanged(tape.first.idx,tape.last.idx);
+      tape.postEvent("buffer-change", [tape.first.idx,tape.last.idx]);
       return false; 
     }
+
+    var scrolly = scroll_top - scrollDelta;
   
-    if( (scroll_top - scrollDelta) < 0 )
-      // we need to pump more items in this virtual list:
-      this.isOut = fetchMore(this); 
-    this.scrollTo( scroll_left, scroll_top - scrollDelta, false, true );
+    if( scrolly < 0 )
+    {
+      // we need to pump more items in this virtual list:      
+      isOut = fetchMore();
+      if(isOut && noOverflow) {
+        scrolly = 0;
+        isOut = false;
+      }
+      else 
+        scrolly = scroll_top - scrollDelta;
+    } 
+    else
+      isOut = false;
+    tape.scrollTo( scroll_left, scrolly, false, true );
   }
   
+  function scrollEnded()
+  {
+    function animateBackTop(distance) 
+    {
+      var scroll_y = tape.scroll(#top);
+      var target_y = 0;
+      var target_y_half = scroll_y / 2;
+      var v = 1;
+      tape.animate(
+       :{
+          scroll_y += v;
+          if( scroll_y >= target_y ) { tape.scrollTo( 0, target_y, false, true ); isOut = false; return 0; }
+          tape.scrollTo( 0, scroll_y, false, true );
+          if( scroll_y < target_y_half ) ++v;  
+          else if(--v == 0) v = 1;
+          return SCROLL_KINETIC_STEP_DELAY;
+        });
+    }
+    function animateBackBottom(distance) 
+    {
+      var scroll_y = tape.scroll(#top);
+      var target_y = scroll_y - distance;
+      var target_y_half = scroll_y - distance / 2;
+      var v = 1;
+      tape.animate(
+       :{
+          scroll_y -= v;
+          if( scroll_y <= target_y ) { tape.scrollTo( 0, target_y, false, true ); isOut = false; return 0; }
+          tape.scrollTo( 0, scroll_y, false, true );
+          if( scroll_y > target_y_half ) ++v;  
+          else  if( --v == 0 ) v = 1;
+          return SCROLL_KINETIC_STEP_DELAY;
+        });
+    }
+  
+    var firstTop = tape.first.box(#top,#margin,#parent);
+    var lastBottom = tape.last.box(#bottom,#margin,#parent);
+    var height = tape.box(#height,#inner);
+    if( firstTop > 0 )
+      animateBackTop(firstTop);
+    else if( lastBottom < height )
+      animateBackBottom(height - lastBottom );
+  }
+  
+  function doScrollAnimation()
+  {
+    if( tape.state.animating ) return;
+    function animationStep()
+    {
+      velocity *= isOut ? SCROLL_KINETIC_OUT_DECEL : SCROLL_KINETIC_DECEL;
+      if( Math.abs(velocity) < 0.5 || stopAnimation) 
+      {
+        tape.post(scrollEnded);
+        return 0;
+      }
+      var v = velocity.toInteger();
+      if( v < 0 ) scrollStepUp(-v); else scrollStepDown(v);
+      return SCROLL_KINETIC_STEP_DELAY;
+    }
+    tape.animate(animationStep);
+  }
+
+  function scrollDownNormal(scrollDelta = SCROLL_DELTA) { 
+    return scrollStepDown(scrollDelta * tape.toPixels(1dip,#height), true); 
+  }
+  function scrollUpNormal(scrollDelta = SCROLL_DELTA)   { 
+    return scrollStepUp(scrollDelta * tape.toPixels(1dip,#height), true); 
+  }
+  
+  function scrollDownKinetic(scrollDelta = SCROLL_KINETIC_DELTA)
+  {
+    var v = (velocity || 0.0);
+    velocity = v + scrollDelta * tape.toPixels(1dip,#height);
+    doScrollAnimation();
+  }
+  function scrollUpKinetic(scrollDelta = SCROLL_KINETIC_DELTA)
+  {
+    var v = (velocity || 0.0);
+    velocity = v - scrollDelta * tape.toPixels(1dip,#height);
+    doScrollAnimation();
+  }
+
+
+  tape << event mousewheel (evt) 
+  {
+    if( !isOut ) {
+      if(evt.wheelDelta < 0 ) 
+        scrollDown();
+      else
+        scrollUp();
+    }
+    return true;
+  }
+
+  tape << event mousedown (evt) {
+    if( evt.mainButton ) {
+      touchPosX = evt.x;
+      touchPosY = evt.y;
+    }
+  }
+
+  tape << event mousemove (evt) {
+    if( evt.mainButton ) {
+      var delta = evt.y - touchPosY;
+      touchPosX = evt.x;
+      touchPosY = evt.y;
+      delta < 0 ? scrollStepDown(-delta) : scrollStepUp(delta);
+    }
+  } 
+
+  if(tape.@#kinetic !== undefined)
+  {
+    scrollDown = scrollDownKinetic;
+    scrollUp = scrollUpKinetic;
+  }
+  else
+  {
+    scrollDown = scrollDownNormal;
+    scrollUp = scrollUpNormal;
+  }
+
+  fillList();
   
 }

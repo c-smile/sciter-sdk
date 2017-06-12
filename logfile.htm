@@ -10,7 +10,28 @@
       <td width="60" nowrap="" valign="top" align="center">Build#</td>
       <td width="78" nowrap="" valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FFFADA">4.0.1.0</td><td nowrap="" valign="top" align="center">22-05-2017</td><td>
+    <tr><td valign="top" bgcolor="#FFFADA">4.0.1.1</td><td nowrap="" valign="top" align="center">11-06-2017</td><td>new:
+				<ul><li><code>Graphics.strokeDash(array[,offset])</code> - custom dashes support;</li>
+					<li>[API] <code>SciterAttachHwndToElement(element,hwnd)</code>, support case when&nbsp; hwnd == NULL ( to detach );</li>
+					<li>[API] <code>sciter::value::is_color()</code> , <code>sciter::value::is_duration()</code> , <code>sciter::value::is_angle()</code>, etc.</li>
+					<li>[css] <code>cursor: drag-copy | drag-move</code> types;</li>
+					<li>[osx,skia] auto fallback to CPU rendering if no OpenGL on platform (like when OSX is being run on VMWare);</li>
+					<li>+ <code>Node.commonParent(other:Node) : Element</code> method;</li></ul><p>fixes:</p>
+				<ul>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					<li>samples/ideas/virtual-list - &quot;virtual tape&quot; implementation fixes;</li><li>[win] fix of child windows replacement artefacts;</li><li>[win] tooltip window screen order fix, see: <a href="https://sciter.com/forums/topic/popup-is-hidden-behind-another-popup-z-index-doesnt-work/">https://sciter.com/forums/topic/popup-is-hidden-behind-another-popup-z-index-doesnt-work/</a>&nbsp;</li><li>context menu, fix of keyboard handling;</li><li><code>style.documentRules { content:&quot;string&quot; }</code> fix, see <a href="https://sciter.com/forums/topic/assigning-css-content/">https://sciter.com/forums/topic/assigning-css-content/</a>&nbsp;</li><li><code>behavior:textarea</code>, fix of new line handling;</li><li>[sdk samples] <code>behavior:tabs</code> fix;</li><li>zlib upgrade to 1.2.11 ( CVE-2016-9840, CVE-2016-9842 );</li><li>[win] fix of popup rendering on Direct2D backend on &quot;Windows 10 build 16199 via RDP session&quot;;</li><li>[win,skia] fix of font handle leak;</li><li>[osx,xgl,skia] fix of memory leak on window creation/destruction;</li><li> [+plus] better notifications handling on secondary windows, see: <a href="https://sciter.com/forums/topic/plus-mode/">https://sciter.com/forums/topic/plus-mode/</a>&nbsp;</li><li>Fix of <code>border-collapse:collapse</code> in tables with cells that use paddings;</li>
+					</ul>
+				<p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10. On MacOS you may need to run SDK executables directly from console as they are not signed too.</p></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.0.1.0</td><td nowrap="" valign="top" align="center">22-05-2017</td><td>
 				<p>new:</p>
 				<ul><li> <code>System.path(#USER_HOME);</code> - reports user's home folder;</li>
 					<li>+ sample sdk/samples/video/test-video-effects.htm - video rendering with blurred sidebars;</li>
