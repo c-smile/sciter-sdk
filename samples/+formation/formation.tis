@@ -62,8 +62,10 @@ namespace formation {
       for(var (name,nval) in map)  // TODO: reinitialize the children list if something is missing...
       {
         var el = f[name];
-        if( !el ) continue; // see TODO above
-        el.value = nval;
+        if( el ) 
+          el.value = nval;
+        else if( typeof nval != #object) // unrecognized names a treated as attibutes of the container
+          container.attributes[name] = nval.toString();
       }
     }
 
@@ -113,7 +115,7 @@ namespace formation {
     }
     
     const CONTAINERS = ["div","section","fieldset"];
-    const LISTS = ["ul","ol","list","table","tbody"];
+    const LISTS = ["ul","ol","list","table","tbody","menu"];
     
     visitChildren(container, function(el) 
     {

@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+          
+          div
+          {
+            size:100dip;
+            background:gold;
+            context-menu: selector(menu#context);
+          }
+
+          li[data="1"] { color:red; }
+          li[data="2"] { color:green; }
+
+        </style>
+        <script type="text/tiscript">
+
+          include "../formation.tis";
+
+          const menuList = $(menu#list-of-something);
+
+          event contextmenusetup $(div#test) {
+
+            var list = [];
+              list.push {caption: "A", data: 1};
+              list.push {caption: "B", data: 2};
+
+            formation.repeatable(menuList).value = list;
+          }
+
+
+        </script>
+
+        <menu.context #context>
+            <li>Something</li>
+            <li>List of somethings
+                <menu#list-of-something>
+                  <li data><span(caption)/></li>
+                </menu>
+            </li>
+        </menu>
+    </head>
+    <body>
+
+       <div #test>Test context menu</div>
+
+    </body>
+</html>

@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style></style>
+        <script type="text/tiscript">
+
+          include "../formation.tis";
+      
+          var frm = formation( $(section#state) );
+
+          event click $(button#set) 
+          {
+             frm.value = {
+               InstallCardExt: {
+                  AvailableHookups: {
+                    Blinker: true,
+                    Hood: "some text"
+                  }
+               }
+             };
+           }
+
+        event click $(button#show) 
+        {
+           var val = frm.value;
+           $(pre#out).value = JSON.stringify(val,"  ");
+         }
+
+
+        </script>
+    </head>
+    <body>
+
+      <button#set>SetState</button>
+      <button#show>ShowState</button>
+      
+      <section #state>
+        <input|checkbox(InstallCardExt.AvailableHookups.Blinker) /> 
+        <input|text(InstallCardExt.AvailableHookups.Hood) /> 
+      </section>
+      <pre#out />
+    </body>
+</html>

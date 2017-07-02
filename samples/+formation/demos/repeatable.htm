@@ -3,9 +3,9 @@
     <title>Demo of Formation + Repeatable</title>
     <style>
     
-      div { flow:row(label,input); font:system; border-spacing:4px; margin:4px; }
+      div { flow:row(label,input); font:system; border-spacing:4dip; margin:4dip; }
       div > label { vertical-align: baseline; }
-      section[name=person] { border:1px solid; padding:4px; margin:4px; }
+      section[name=person] { border:1dip solid; padding:4dip; margin:4dip; }
     
     </style>
     <script type="text/tiscript">
@@ -29,13 +29,13 @@
       }
       
       // set the value in one shot. Note: it will generate <li>s in <ol(friends)> automagically.
-      $(#set) << event click() { root.value = data; }
+      event click $(#set) { root.value = data; }
       
       // get the value in one shot too: 
-      $(#get) << event click() { $(#out).text = String.printf("%V", root.value ).replace("\t","  "); }
+      event click $(#get) { $(#out).text = String.printf("%V", root.value ).replace("\t","  "); }
       
       // show the formation structure:
-      $(#show) << event click() { 
+      event click $(#show) { 
         view.msgbox( #information, root.toHtmlString());
       }
     
