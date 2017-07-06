@@ -32,8 +32,7 @@ function DragDrop2(def)
   //| def.after = function(), called after finshing DD loop
   //| def.autoScroll = true | false , if autoScroll of container is required
 
-  const X_THRESHOLD = 4;
-  const Y_THRESHOLD = 4;
+  const MOVE_THRESHOLD = 2dip;
   const STEP_DELAY  = 8;
   const PING_THRESHOLD = 400ms;
   const ANI_DURATION = def.animationDuration || 200ms;
@@ -453,7 +452,13 @@ function DragDrop2(def)
     }
     return true;
   }
-  
+
+  function distance(x1,y1,x2,y2) {
+    return Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+  }
+
+  var el_mousedown = null; // mouse down was detected on that element
+
   function draggableMouseHandler(evt)
   { 
     switch(evt.type)  
@@ -462,21 +467,23 @@ function DragDrop2(def)
       {
         if(def.notOn && evt.target.selectParent(def.notOn))
           break;
-        (dd_x,dd_y) = localCoord(this,evt);
+        if(el_mousedown = evt.target.selectParent(def.what))
+          (dd_x,dd_y) = localCoord(this,evt);
         return false;
       }
       case Event.MOUSE_UP | Event.SINKING:  
         dd_x = dd_y = null;
+        el_mousedown = null;
         if(dd_source) {
           this.timer(0, ping);
           return true; 
         }
         break;
-      case Event.MOUSE_ENTER | Event.SINKING:  
-      case Event.MOUSE_LEAVE | Event.SINKING:  
-        if(!dd_source)
-          dd_x = dd_y = null; 
-        break; 
+      //case Event.MOUSE_ENTER | Event.SINKING:  
+      //case Event.MOUSE_LEAVE | Event.SINKING:  
+      //  if(!dd_source)
+      //    dd_x = dd_y = null; 
+      //  break; 
         
       case Event.MOUSE_TICK | Event.SINKING:  
         if(dd_source) {
@@ -502,18 +509,16 @@ function DragDrop2(def)
           this.timer(PING_THRESHOLD, ping);
           return doMove( xViewPos, yViewPos);
         }
-        else if( typeof dd_x == #integer )
+        else if( el_mousedown && evt.target.belongsTo(el_mousedown,false,true))
         {
           var (x,y) = localCoord(this,evt);
-          var deltax = dd_x - x;
-          var deltay = dd_y - y;
           //stdout.$n({dd_x} {dd_y});
-          if( deltax < -X_THRESHOLD || deltax > X_THRESHOLD ||
-              deltay < -Y_THRESHOLD || deltay > Y_THRESHOLD ) {
+          if( distance(dd_x, dd_y, x, y ) >= self.toPixels(MOVE_THRESHOLD) ) {
               dd_x = x;
               dd_y = y;
+              el_mousedown = null;
               doDD( this, evt.xView, evt.yView );
-          }
+          } 
           return true;
         }
     }
