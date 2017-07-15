@@ -1,4 +1,4 @@
 #!/bin/sh
 
 echo "compiling!"
-../../bin.osx/respack ./resources.cpp ./res/ layered
+../../bin.osx/packfolder ./resources.cpp ./res/ layered
