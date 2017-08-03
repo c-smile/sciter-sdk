@@ -1,0 +1,104 @@
+//|
+//| Item is a note that could be of various types 
+//|
+
+
+
+class Note 
+{
+  this var id = null;
+  this var cdate = null;
+  this var mdate = null;  
+  this var kind = null;
+  this var book = null;  
+  this var tags = [];  
+  this var html = null;
+  this var text = null;
+  this var caption = null;
+  this var shortText = null;    
+  this var resources = null;
+  this var lock = undefined;    
+
+  function this(itemKind = "html") {
+    var date = new Date();
+    this.id = String.UID();
+    this.cdate = date;
+    this.mdate = date;  
+    this.kind = itemKind;
+//    this.tags = [];  
+//    this.html = null;
+//    this.text = null;
+//    this.caption = null;
+//    this.shortText = null;    
+//    this.resources = null;
+//    this.lock = undefined;    
+  }
+
+  function setContent(html, text, caption, shortText, preview) 
+  {
+    this.html = html;
+    this.text = text;
+    this.caption = caption;
+    this.shortText = shortText;
+    this.preview = preview;
+    this.mdate = new Date();  
+    
+    self.postEvent("note-updated",this);    
+  }
+
+  function setLock(onOff) {
+    if(this.lock !== onOff) {
+      this.lock = onOff;
+      self.postEvent("note-lock-changed", this);
+    }
+  }
+
+  function addResource(url, mime, bytes)
+  {
+    if( !this.resources) 
+      this.resources = {};
+    this.resources[url] = [bytes,mime];
+    //stdout.println("addResource", url, mime);
+  }
+
+  function getResource(url)
+  {
+    if( !this.resources) return null;
+    var r = this.resources[url];
+    //if( r ) stdout.println("getResource", url, typeof r, typeof r[0],r[0].length);
+    if( typeof r == #array )
+      return (r[0],r[1]);
+  }
+
+  function containsTags(tags) {
+    var thistags = this.tags;
+    if( typeof tags == #array ) {
+      for( var t in tags)
+        if( t !in thistags) 
+            return false;
+    } else if( tags !in thistags) 
+            return false;
+    return true;
+  }
+
+  function matches(tags,text,book) {
+    if( tags && !this.containsTags(tags)) return false;
+    if( text && ((this.text || "").toLowerCase() !like text) ) return false;
+    if( book && (this.book !== book) ) return false;
+    return true;
+  }
+
+  function addTag(tag) { return db.assignTagToItem(this,tag); }
+
+  function removeTag(tag) { return db.removeTagFromItem(this,tag); }
+
+  function getCustomTags() {
+    var r = this.tags.filter(:tag: tag.isCustom);
+    return r;
+  }
+
+  function getTags() {
+    return this.tags;
+  }
+  
+}

@@ -1,0 +1,122 @@
+
+@set books-view < std-select
+{
+  :root {
+    prototype: BooksView url(books-view.tis);
+    flow:vertical;
+    display:block;
+    background: none;
+    border:none;
+    width:*;
+    height:max-content;
+    font-family:Verdana, sans-serif;
+    font-size:16dip;
+    border:none;
+    padding:0;
+  }
+  
+
+  option {
+    color: #fff;
+    flow:horizontal;
+    padding:0;
+    border:none;    
+    height: length(band-size);
+    line-height: length(band-size);
+    context-menu: selector(menu.context#book);
+  }
+
+  //:root:collapsed > option {
+  //  padding:7dip 0;
+  //  transition: padding(linear,@ADUR);
+  //}
+
+  option:current {
+    background:color(selection-dark);  
+    color:color(selection-dark-text);
+  }
+
+  option > i {
+    display:block;
+    width: length(band-size);
+    // disc
+    background-image: url(path: M1664 896q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z);
+    background-repeat:no-repeat;
+    background-position: 50% 50%;
+    background-size: 12dip 12dip;
+    //fill:#ccc;
+    stroke:none;
+    font-style: normal;
+    //font-weight: bold;
+    color:transparent;
+    text-align:center;
+  }
+
+  option#all > i {
+    background-image: url(path: M1546 1050q46 26 59.5 77.5t-12.5 97.5l-64 110q-26 46-77.5 59.5t-97.5-12.5l-266-153v307q0 52-38 90t-90 38h-128q-52 0-90-38t-38-90v-307l-266 153q-46 26-97.5 12.5t-77.5-59.5l-64-110q-26-46-12.5-97.5t59.5-77.5l266-154-266-154q-46-26-59.5-77.5t12.5-97.5l64-110q26-46 77.5-59.5t97.5 12.5l266 153v-307q0-52 38-90t90-38h128q52 0 90 38t38 90v307l266-153q46-26 97.5-12.5t77.5 59.5l64 110q26 46 12.5 97.5t-59.5 77.5l-266 154z);
+  }
+
+  :root:collapsed > option > i {
+    background-size: 24dip 24dip;
+    color:#000;
+    transition: background-size(linear,@ADUR) color(linear,@ADUR);
+  }
+
+  option > span.name {
+    display:block;
+    flow:text;
+    width:*; 
+    white-space:pre;
+    //height: length(band-size);
+    //line-height: length(band-size);
+  }
+
+  option > span.count {
+    display:block;
+    width:max-content;
+    margin: 0 6dip;
+  }
+
+ //:root:collapsed > option > span {
+ //   color:rgba(0,0,0,0.0);
+ //   transition: color(linear,@ADUR);
+ //}  
+
+  option:current  > span.count {
+    color:color(selection-dark-text);
+  }
+
+  option > span.name.editing {
+    behavior:edit;
+    background: #fff;
+    color:#000;
+    width:*; 
+    overflow-x: hidden-scroll;
+  }
+
+}
+
+books-view { style-set: books-view; }
+
+menu.context#book > caption { padding-left:2em; margin:0; }
+
+menu.context#book > div.colors {
+  flow: horizontal;
+  padding:0 1em 0 2em;
+}
+menu.context#book > div.colors > li 
+{
+  size:14dip;
+  padding:3dip; margin:0;
+  foreground-image: url(path: M1664 896q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z);
+  foreground-repeat:no-repeat;
+  foreground-position: 50% 50%;
+  foreground-size: 12dip 12dip;
+  stroke:#000;
+  stroke-width:1dip;
+  cursor:pointer;
+}
+menu.context#book > div.colors > li:checked {
+  stroke-width:2dip;
+} 
+

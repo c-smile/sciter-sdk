@@ -1,0 +1,125 @@
+
+function VirtualTree(params)
+{
+  const tree = params.container; assert tree;
+
+  const eachChild = params.eachChild; assert eachChild;
+  const eachRoot = params.eachRoot; assert eachRoot;
+  const setupOptionCaption = params.setupOptionCaption; assert setupOptionCaption;
+  const autoExpandRoots = params.autoExpandRoots || false;
+
+  // implementation
+  function appendOption(parentOpt, data, nodeState, idx)
+  {
+    parentOpt.insert("<option><text></text></option>",idx);
+    var opt = parentOpt[idx];
+    if( nodeState === true ) // expanded folder
+      opt.state.expanded = true;
+    else if( nodeState === false ) // collapsed folder
+      opt.state.collapsed = true;
+    // else 
+    //   neither state.expanded nor state.collapsed
+    opt.data = data;
+    return opt;
+  }
+
+  var expandOption;
+  var collapseOption;
+
+  function findExisting(parent,data,isFolder,idx) {
+    var opt = null;   
+    if( idx >= parent.length ) 
+      return null; 
+    else if( parent[idx].data === data ) 
+      opt = parent[idx]; 
+    else
+      for( var i = idx + 1; i < parent.length; ++i ) {
+        var topt = parent[i];
+        if( topt.data === data ) {
+          parent.insert(topt, idx);
+          opt = topt;
+          break;
+        }
+      }
+    if(opt) {
+      var isNode = opt.state.collapsed || opt.state.expanded;
+      if( isFolder && !isNode) collapseOption(opt);
+      else if( !isFolder && isNode) {
+        while(opt.length > 1) opt.last.remove();
+        opt.state.collapsed = undefined;
+      } 
+      else if(opt.state.expanded)
+        expandOption(opt);
+    }
+    return opt;     
+  }
+
+  expandOption = function(parentopt)
+  {
+    var idx = 1; // skip its own caption
+    var options = parentopt.$$(> option);
+    function appendChild(data, isFolder) { 
+      var opt = findExisting(parentopt,data,isFolder,idx);
+      if( opt ) 
+        options.removeByValue(opt);
+      else
+        opt = appendOption(parentopt, data, isFolder? false: undefined,idx); 
+      setupOptionCaption(data,opt[0]);
+      ++idx;
+      return opt;      
+    }
+    eachChild(parentopt.data, appendChild);
+    for( var opt in options ) opt.remove();
+    parentopt.state.expanded = true;
+  }
+  
+  collapseOption = function(opt)
+  {
+    //stdout.println("collapse");
+    while(opt.length > 1)
+      opt.last.remove();
+    opt.state.collapsed = true;       
+  }
+
+  tree << event expand (evt) { expandOption(evt.target); /*optionExpanded(evt.target);*/ return true; }
+  tree << event collapse (evt) { collapseOption(evt.target); /*this.optionCollapsed(evt.target);*/ return true; }
+
+  var roots;
+  var rootIdx = 0;  
+  function appendRoot(data, isFolder)
+  {
+    var opt = findExisting(tree,data,isFolder,rootIdx);
+    if( opt)  { 
+       roots.removeByValue(opt); 
+       if(opt.state.expanded)
+         expandOption(opt);
+    }
+    else 
+    {
+      opt = appendOption(tree, data, isFolder? autoExpandRoots: undefined, rootIdx);
+      if(isFolder && autoExpandRoots)
+        expandOption(opt);
+    }
+    setupOptionCaption(data,opt[0]);
+    ++rootIdx;
+    return opt;
+  }
+
+  function reset() {
+    rootIdx = 0;  
+    roots = tree.$$(> option);
+    eachRoot(appendRoot); 
+    for( var r in roots ) r.remove();
+  }
+
+  function eachOption(cb) {
+    function onOpt(opt) { cb(opt[0],opt.data) }
+    tree.select(onOpt,"option");
+  } 
+
+  reset(); // initial setup;
+
+  return reset;
+   
+}
+

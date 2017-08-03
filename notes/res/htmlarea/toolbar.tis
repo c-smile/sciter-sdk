@@ -1,0 +1,125 @@
+function EditingToolbar(htmlarea,toolbar) 
+{
+  var observers = [];  
+
+  const AVAILABLE = 0;
+  const ACTIVE = 0x01;
+  const DISABLED = 0x02;
+
+  function doNotifyObservers() {
+    for(var func in observers) 
+      func();   
+  }
+
+  function notifyObservers() {
+    // throttling notification that may do many updates
+    if( toolbar.isVisible )
+      toolbar.timer(100ms, doNotifyObservers);
+  }
+
+  function showLinkDialog() {
+    var (x,y,w,h) = htmlarea.box(#rectw,#caret,#view);
+    var onSelection = !htmlarea.selection.isCollapsed;
+
+    var dialog = $(popup#link);
+    dialog.value = { text: onSelection ? "{selection}":"", url:"" };
+    dialog.$([name=text]).state.disabled = onSelection;
+
+    dialog.show {
+      x: x,
+      y: y + h,
+      insert: function() {
+        var fields = this.value;
+        if( onSelection ) htmlarea.execCommand("format:apply-span:a", { href: fields.url.trim() });
+        else htmlarea.execCommand("edit:insert-html", " <a href='"+ fields.url.trim() +"'>"+ fields.text +"</a> ");
+        return true; },
+      change: function() {
+        var fields = this.value;
+        var urlValid = RE_HTTP.test(fields.url) || RE_MAIL.test(fields.url);
+        this.$(button[name=insert]).state.disabled = !fields.text.trim() || !urlValid; }
+    };
+  }
+
+  // binds UI thing (e.g. toolbar button) with command|function to be executed on click
+  function bind(selector, cmd, param = undefined) 
+  {
+    var uiel = toolbar.select(selector); assert uiel : "no " + selector;
+    if(typeof cmd == #function) {
+      uiel << event click { cmd.call(htmlarea,#exec,param,uiel); htmlarea.state.focus = true; }
+      observers.push( function() {
+        if(!htmlarea) { uiel.state.disabled = true; }
+        else {
+          var cmdState = cmd.call(htmlarea,#query,param,uiel) || 0;
+          uiel.state.checked  = (cmdState & ACTIVE) != 0;
+          uiel.state.disabled = (cmdState & DISABLED) != 0;
+        }
+      });
+    } else if(typeof cmd == #string) {
+      uiel << event click { htmlarea.execCommand(cmd,param); htmlarea.state.focus = true; }
+      observers.push( function() {//////
+        if(!htmlarea) { uiel.state.disabled = true; }
+        else {
+          var cmdState = htmlarea.queryCommand(cmd,param) || 0;
+          uiel.state.checked  = (cmdState & ACTIVE) != 0;
+          uiel.state.disabled = (cmdState & DISABLED) != 0;
+        }
+      });
+    } else 
+      assert false: "Bad cmd type";
+  }
+
+  bind("button.bold",          "format:toggle-span:b|strong");    
+  bind("button.italic",        "format:toggle-span:i|em");
+  //bind("button.underline",     "format:toggle-span:u");
+  bind("button.strikethrough", "format:toggle-span:s|strike");
+  //bind("button.subscript",     "format:toggle-span:sub");
+  //bind("button.superscript",   "format:toggle-span:sup");
+                               
+  bind("button.list-ul",       "format:toggle-list:ul");
+  bind("button.list-ol",       "format:toggle-list:ol");
+  bind("button.list-dl",       "format:toggle-list:dl");
+  bind("button.pre",           "format:toggle-pre");
+  bind("button.blockquote",    "format:toggle-block:blockquote");
+                             
+  bind("button.unindent",      "format:unindent");
+  bind("button.indent",        "format:indent");
+
+  //bind("button.unlink",        "format:pull-element:a");
+    
+  /*bind("button.font-size li:nth-child(1)", "format:apply-span:font", {size:1});
+  bind("button.font-size li:nth-child(2)", "format:apply-span:font", {size:2});
+  bind("button.font-size li:nth-child(3)", "format:apply-span:font", {size:3});
+  bind("button.font-size li:nth-child(4)", "format:apply-span:font", {size:4});
+  bind("button.font-size li:nth-child(5)", "format:apply-span:font", {size:5});
+  bind("button.font-size li:nth-child(6)", "format:apply-span:font", {size:6});
+  bind("button.font-size li:nth-child(7)", "format:apply-span:font", {size:7});*/
+  
+  //bind("button.picture", this.onInsertPicture);    
+  //SetupTableSelector(this.toolbar.$(button.table));    
+
+  bind("button.link",  function(cmd,param,btn) {
+    if( cmd == #query ) { 
+      if(this.queryCommand("format:pull-element:a") != DISABLED) {
+        // we have <a> element already, so repurpose this button for link removal
+        btn.attributes.addClass("unlink");
+        btn.attributes["title"] = "Remove link";
+        return AVAILABLE;
+      } else {
+        //  no <a> in selection so this will add link
+        btn.attributes.removeClass("unlink");
+        btn.attributes["title"] = "Add link";
+        return AVAILABLE;
+      }
+    }
+    if( cmd == #exec ) { 
+      if( btn.$is(.unlink) ) 
+        this.execCommand("format:pull-element:a");
+      else
+        showLinkDialog();  
+    }
+  });
+
+  htmlarea << event statechange { notifyObservers(); }
+  htmlarea << event change { notifyObservers(); }
+
+}

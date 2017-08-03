@@ -1,0 +1,68 @@
+<html>
+    <head>
+        <title>Sciter Notes</title>
+        <style src="main.css" />
+        <script type="text/tiscript" src="main.tis" />
+        <menu.context#tag>
+          <li(rename-tag)>Rename tag</li>
+          <hr>
+          <li(detach-notes)>Detach notes</li>          
+          <li(delete-tag)>Delete tag</li>
+        </menu>
+        <menu.context#book>
+          <li(add-book)>Add new book</li>
+          <li(rename-book)>Rename book</li>
+          <caption>Book color:</caption>
+          <div.colors>
+            <li color=0/>
+            <li color=1/>
+            <li color=2/>
+            <li color=3/>
+            <li color=4/>
+            <li color=5/>
+            <li color=6/>
+          </div>
+          <hr>
+          <li(move-notes)>Move notes to
+             <menu#move-notes-to></menu>
+          </li>
+          <li(delete-book)>Delete book</li>
+        </menu>
+        <popup.dialog #link>
+          <form><label>Text:</label><input|text(text) />
+                <label>Address:</label><input|text(url) default /></form>
+          <footer><button(insert) disabled>Insert</button></footer>
+        </popup>
+    </head>
+
+    <window-header>
+    </window-header>    
+    <body>
+      <frameset cols="200dip,300dip,*">
+        <aside>
+          <header>
+            <text>Books:</text>
+            <hamburger/>            
+          </header>
+          <books-view/>
+          <section.collapsible full #test>
+            <header(tags)><span.name>Tags</span></header>
+            <tags-view(tags)/>
+          </section>
+          <section.collapsible full>
+            <header(atts)><span.name>Attributes</span></header>
+            <tags-view(atts)/>
+          </section>
+        </aside>
+        <splitter/>
+        <notes-view>
+          <include src="notes-view.htm" />
+        </notes-view>
+        <splitter/>
+        <note-view>
+          <include src="note-view.htm" />
+        </note-view>
+      </frameset>
+      <frame#overlay></frame>
+    </body>
+</html>

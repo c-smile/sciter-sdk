@@ -1,0 +1,94 @@
+
+
+// PopupDialog is a <popup> based so called "mouse modal" dialog
+
+/* Mandatory structure:
+ <popup>
+   <form>...</form>
+   <footer><button>...</button>
+          ...</footer>
+ </popup>
+*/
+
+/*  
+PopupDialog.show(params) accepts following params:
+
+- params.x and params.y - view position of the popup
+- params.name - function(button), called on footer > button click, if function returns true - popup gets closed.
+                name here is @name of the button in footer; 
+- params.change - function(input), called on change in an input;
+- params.gone = function(), called when popup is gone 
+
+input or button element marked by @default will get focus by default
+*/
+
+class PopupDialog : Element 
+{
+  function show(params) 
+  {
+    this.params = params;
+    var x = params.x || 0;
+    var y = params.y || 0;
+    self.popup( this, x, y );
+  }
+
+  property value(v) {
+    get return this.$(form).value;
+    set this.$(form).value = v;
+  }
+
+  function commit(button) {
+    var func = this.params[button.attributes["name"]];
+    if( func instanceof Function) 
+    {
+      if(func.call(this, button)) {
+        this.state.popup = false;
+        return true;
+      }
+    }
+  }
+
+  event click $(footer button) (evt, button) {
+    if( this.commit(button))
+      return true;
+    this.state.popup = false;
+  }
+
+  event change (evt) {
+    if(var f = this.params.change)
+       return f.call(this, evt.target);
+  }
+
+  event ~keydown (evt) {
+    switch(evt.keyCode) {
+      case Event.VK_RETURN:
+        if(var btn = this.$(footer > [role="default-button"])) 
+           return this.commit(button);
+        break;
+      case Event.VK_ESCAPE:
+        if(var btn = this.$(footer > [role="cancel-button"])) { this.state.popup = false; return true; }
+        break;
+    }
+  }
+
+  event popupready (evt) 
+  { 
+    if(evt.target !== this)
+      return;
+    view.eventsRoot = this;
+    var toFocus = this.$([default]) || this.$(:focusable) || this;
+    toFocus.state.focus = true;
+    return true;
+  }
+
+  event popupdismissed (evt) 
+  { 
+    if(evt.target === this) {
+      view.eventsRoot = null;
+      if(var fin = this.params.gone)
+        fin.call(this);
+      return true;
+    }
+  }
+
+}

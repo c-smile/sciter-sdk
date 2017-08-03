@@ -1,0 +1,113 @@
+include "db/tag.tis";
+include "libs/suggestions.tis";
+
+class NoteTags : Element
+{
+
+  function attached() 
+  {
+    this.$append(<input|text.new novalue="new tag">);
+
+    var input = this.$(input.new);
+
+    var me = this; 
+    
+    self << event note-created (evt) { me.note = evt.data; me.state.disabled = false };
+
+    Suggestions({
+      edit:        input,
+      suggestions: function(text) { return me.getSuggestions(text); } ,
+      onselect:    function(text) { input.value = text; me.createTagFrom(input); input.state.focus = true; }
+    });
+
+    function updateTags(tag) { 
+      if(var note = this.note) 
+      {
+        if( note.containsTags(tag) )
+          me.loadNote(note); 
+      }
+    }
+
+    self << event tag-removed(evt) { updateTags(evt.data); } 
+    self << event tag-updated(evt) { updateTags(evt.data); } 
+
+  }
+
+  function loadNote(note) {
+    for(var elt in this.$$(label.tag)) elt.remove();    
+    if( this.note = note ) {
+      var tags = note.getCustomTags();
+      //tags.sort(:tag1,tag2: tag1.name.lexicalCompare(tag2.name));
+      for(var tag in tags)
+        this.addTag(tag);
+      this.state.disabled = false; 
+    } else {
+      // disbale whole thing if note is not created 
+      this.state.disabled = true;
+    }
+  }
+
+  function tagHtml(tag) {
+    return String.printf("<label.tag.name>%s</label>", tag.name );
+  }
+
+  function addTag(tag) {
+    var idx = this.length - 1;
+    this.insert(tagHtml(tag),idx);
+    var t = this[idx]; 
+    t.data = tag;
+    return t;
+  } 
+
+  function createTag(name) {
+     assert this.note;
+     var tag = db.getTagByName(name,true);
+     db.assignTagToItem(this.note,tag);
+     return tag;
+  }
+
+  function createTagFrom(input) {
+    var caption = input.value;
+    input.value = undefined;
+    var tag = this.createTag(caption);
+    for( var t in this ) 
+      if( t.data === tag ) {
+        highlight(t);
+        return true;
+      }
+    this.addTag(tag);
+    return true;
+  }
+
+  function removeTagOf(label) {
+     if(db.removeTagFromItem(this.note,label.data)) {
+       this.post( :: label.remove() );
+       return true;
+     }
+  }
+
+  function getSuggestions(forText) {
+    var note = this.note;
+    var tags = db.getTags();
+    var suggestions = [];
+    for( var tag in tags ) {
+      if( tag in note.tags ) continue;
+      if( tag.name.indexOf(forText) != 0 ) continue;
+      suggestions.push(tag.name);
+    }
+    return suggestions;
+  }
+
+  event ~keydown $(input.new) (evt,input) {
+    if( evt.keyCode == Event.VK_RETURN ) 
+      return this.createTagFrom(input);
+  }
+
+  event mousedown $(label.tag) (evt,label) {
+    if( evt.isOnIcon  ) 
+      return this.removeTagOf(label);
+  }
+
+}
+
+

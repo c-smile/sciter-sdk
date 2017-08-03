@@ -1,0 +1,45 @@
+
+
+function Suggestions(params) {
+
+  var edit = params.edit; assert edit;
+  var suggestions = params.suggestions; assert suggestions;
+  var onselect = params.onselect; assert onselect;
+
+  var popup = $(head > menu.suggestions); 
+
+  if(!popup) {
+    // create popup element for suggestions
+    popup = new Element("menu");
+    popup.attributes.addClass("popup", "suggestions");
+    popup = $(head).append(popup); 
+  } 
+
+  edit << event change { 
+    var text = this.value;
+    var strings = suggestions(text);
+    if( strings.length == 0 ) { popup.state.popup = false; return false; }
+    var content = "";
+    for( var str in strings )
+       content += "<li>" + str.toHtmlString() + "</li>";
+    popup.html = content;
+    edit.popup(popup);
+  }
+
+  edit << event keydown (evt) {
+    if( evt.target == edit && evt.keyCode == Event.VK_DOWN )
+    {
+       popup.state.focus = true;
+       popup[0].state.current = true;
+       return true;
+    }
+  }
+
+  popup << event click $(li) (evt) {
+     onselect(this.text);
+     popup.state.popup = false;
+     return true;
+  }
+
+}
+

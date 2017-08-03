@@ -1,0 +1,21 @@
+
+
+class CollapsibleSection : Element 
+{
+  function attached() {
+    if(this.attributes.exists("collapsed"))
+      this.state.collapsed = true;
+    else if(this.attributes.exists("expanded"))
+      this.state.expanded = true;
+  }
+
+  event click $(header) 
+  { 
+    if(this.state.collapsed) 
+      this.state.expanded = true;
+    else 
+      this.state.collapsed = true;
+    return true;
+  }
+
+}

@@ -1,0 +1,145 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+
+    html { background: #444; color:#ddd; }
+
+    body { flow:horizontal; }
+    body > aside { 
+      width:300dip; height:*; flow:vertical; 
+    }
+    
+    div#printers 
+    { 
+      behavior:form;
+      height:*;
+      max-height:max-content; 
+      width:max-content; 
+      max-width:100%;
+      margin:1em *;
+      overflow:scroll-indicator;
+    }
+    div#printers > button {
+      display:block;
+      white-space: normal;
+      width:*;
+    }
+
+    body > aside > footer {
+      border-spacing:1em;
+    }
+
+    body > aside > footer > button {
+       //width:*;
+       display:block;
+       font:inherit;
+       padding: 0.5em 1em;
+       margin:0 *;
+    }
+
+    body > div { width:*; height:*; }
+
+    body > div > header { flow:horizontal; border-spacing:0.25em; vertical-align:middle; }
+
+    body > div > header > input { font:inherit; background:transparent; border:none;  color:#fff;  }
+    body > div > header > span:first-child { margin-left:*; }
+
+    
+    frame { background:none; prototype: NotePager; }
+
+    frame > pagebox {
+      background-color:white;
+      box-shadow: none;
+    }
+
+    close-button {
+      behavior:button;
+      display:block;
+      cursor:pointer;
+      size:1.2em;
+      foreground-image: url(path:M1490 1322q0 40-28 68l-136 136q-28 28-68 28t-68-28l-294-294-294 294q-28 28-68 28t-68-28l-136-136q-28-28-28-68t28-68l294-294-294-294q-28-28-28-68t28-68l136-136q28-28 68-28t68 28l294 294 294-294q28-28 68-28t68 28l136 136q28 28 28 68t-28 68l-294 294 294 294q28 28 28 68z);
+      foreground-repeat: no-repeat;
+      foreground-position: 50% 50%;
+      foreground-size:1em;
+      fill:#fff;
+      margin-left:*;
+      stroke:none;
+    }
+
+    </style>
+    <script type="text/tiscript">
+
+    const note = currentNote; // short circuit currentNote from global namespace
+    const pager = $(frame[type=pager]);
+
+    class NotePager: Element 
+    {
+
+      event paginationend (evt) 
+      {
+        $(#numpages).value = evt.reason;
+        $(#current-page).attributes["max"] = evt.reason;
+      };
+
+      function onRequest(rq) 
+      {
+        var (data,mime) = note.getResource(rq.requestUrl);
+        if( data ) {
+          // fulfill the request by the data
+          rq.fulfill(data,mime);
+        }
+      }
+
+      event ready (evt)
+      {
+        if( evt.target === this )
+          pager.loadHtml(note.html,"note:" + note.id);
+      }
+
+    }
+
+    function self.ready() 
+    {
+      // show printers list 
+      var printers = $(div#printers);
+
+      for(var printer in pager.printers()) 
+      {
+         if(printer.isDefault)
+           printers.$append(<button|radio(printer) checked value="{printer.id}">{printer.name}</button>);     
+         else
+           printers.$append(<button|radio(printer) value="{printer.id}">{printer.name}</option>);   
+      }
+
+    }
+
+    //event click $(button#close) { closeOverlay(); /* defined in main.tis */  }     
+
+    event change $(div#printers) { pager.setPrinter( this.value.printer ); }     
+      
+    event click $(button#print) { pager.print(); }
+
+    event change $(#current-page) { pager.pageNo( this.value ); }
+
+
+    </script>
+  </head>
+<body>
+  <aside>
+    <header>Printer:</header>
+    <div #printers></div>
+    <footer>
+      <button #print>Print</button>
+    </footer>
+  </aside>
+  <div>
+    <header><span>Page</span><input|integer #current-page value=1 step=1 min=1 max=1>
+            <span>of pages:</span><output|integer #numpages />
+            <close-button #close-overlay/>
+    </header>
+    <frame|pager cols=1 page-template="page-template.htm" />
+  </div>
+  <knob#close-overlay />
+</body>
+</html>

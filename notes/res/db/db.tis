@@ -1,0 +1,314 @@
+
+include "../config.tis";
+include "book.tis";
+include "tag.tis";
+include "note.tis";
+
+//|
+//| open database and initialze it if needed
+//|
+
+function openDatabase()
+{
+  const DBNAME = "sciter-notes.db";
+  const pathname = dbPathFromArgs() || System.path(#USER_DOCUMENTS,DBNAME);
+  var ndb = Storage.open(pathname);
+  if(!ndb.root) { 
+    // new db, initialize structure
+    ndb.root = 
+      {
+        id2item   :ndb.createIndex(#string, true), // main index, item.id -> item, unique
+        date2item :ndb.createIndex(#date, false),  // item by date of creation index, item.cdate -> item, not unique
+        tags      :{},  // map of tagid -> tag
+        books     :{},  // map of bookid -> book; 
+        version   :1,
+        deleted   :ndb.createIndex(#date, false),  // deleted items, item by date of creation index, item.cdate -> item, not unique
+      };
+  }
+  ndb.path = pathname;
+  if(ndb.root.id2item.length == 0)
+    self.postEvent("new-db-initialized");
+  return ndb;
+}
+
+//|
+//| Global db object and its methods
+//|
+const db = openDatabase();
+
+//|
+//| db.addItem method - add item to the db with optional list of tags
+//| tags can bea an array of strings (full path names of tags) or
+//| objects of class Tag
+//| 
+function db.addItem(item, tags = null) 
+{
+  var root = this.root;
+  var now; 
+  
+  if(!item.mdate) item.mdate = (now = new Date()); // modification date-time
+  if(!item.cdate) item.cdate = now || new Date();  // creation date-time
+  
+  item.id = item.id || String.UID();  // each item has an id - global unique identifier 
+  var book = currentBook || this.defaultBook();
+  book.addItem(item);
+ 
+  if( item.tags && (tags === null)) tags = item.tags; 
+  item.tags = [];
+  
+  root.id2item[item.id] = item;
+  root.date2item[item.cdate] = item;  
+    
+  //stdout.printf("\noriginal item:%V",item);
+  if(tags)
+  {
+    //stdout.printf("tags:%V\n",tags);  
+    for( var tag in tags )
+    {
+      if( typeof(tag) == #string )
+        tag = this.getTag(tag,true);
+      if( tag instanceof Tag )
+        tag.addItem(item);
+    }
+  }
+  item.store();
+
+  self.postEvent("note-created",item);
+ 
+  return item;
+}
+
+// this will not delete the item but rather move it to root.deleted index
+function db.deleteItem(item) 
+{
+  var root = this.root;
+  var now; 
+  
+  var t = root.id2item[item.id];
+  assert t === item;
+
+  // add it to deleted list
+  root.deleted[item.cdate] = item;
+  
+  // remove it from alive lists
+  root.id2item.remove(item.id);
+  root.date2item.remove(item.cdate,item);
+
+  if(item.tags) {
+    for( var tag in item.tags )
+      tag.items.remove(item.id);     // remove item from tag
+    item.tags = null;
+  }
+
+  if(item.book) {
+    item.book.remove(item.id);     // remove item from book
+    item.book = null;
+  }
+
+  item.store();
+
+  self.postEvent("note-deleted",item);
+ 
+  return item;
+}
+
+function db.addTag(tag) 
+{
+  this.root.tags[tag.id] = tag;
+  self.postEvent("tag-created", tag);
+  return tag;
+}
+
+function db.getTag(tagId)
+{
+  return this.root.tags[tagId];
+}
+
+function db.getTags() {
+  var out = [];
+  for( var (key,tag) in this.root.tags )
+    out.push(tag);
+  return out;
+}
+
+// 
+function db.getTagByName(name,create = false)
+{
+  //return this.root.tags[tagId];
+  for(var (tid,tag) in this.root.tags)
+    if( tag.name == name )
+      return tag;
+  if( create ) {
+    var tag = new Tag(name);
+    this.addTag(tag);     
+    return tag;
+  }
+  return null;
+}
+
+function db.getUniqueTagName(name) {
+  if(!db.getTagByName(name,false))
+    return name;
+  for(var counter = 2;counter < 10;++counter) {
+    var n = name + counter;
+    if(!db.getTagByName(n,false))
+      return n;
+  }
+  assert false;
+  return name;
+}
+
+// assign tag to the item
+function db.assignTagToItem(item,tag) 
+{
+  return tag.addItem(item);
+}
+
+// remove tag from the item
+function db.removeTagFromItem(item,tag) 
+{
+  return tag.removeItem(item);
+}
+
+function db.totalItems() {
+  return this.root.date2item.length;
+}
+
+// enumerate items in creation sequence order, calls callback if item.tags contain tags 
+// from the tags and text substring 
+
+function db.selectItems(callback, tags = null, text = null, book = null)
+{
+  var root = this.root;
+  var startDate = new Date(1000,1,1);
+  var endDate = new Date(3000,1,1);
+  if( !tags && !text && !book )
+  {
+    for(var it in root.date2item.select(startDate,endDate,false))
+      callback(it);
+  } else {
+    if( text ) text = "*" + text.toLowerCase() + "*";
+    for(var it in root.date2item.select(startDate,endDate,false))
+      if( it.matches(tags,text,book) )
+        callback(it);
+  }
+}
+
+function db.selectTags(callback, tagKind ) {
+  for(var (n,t) in this.root.tags)
+    if( t.kind == tagKind )
+      callback(t);
+}
+
+function db.addBook(book) 
+{
+  this.root.books[book.id] = book;
+  self.postEvent("book-created", book);
+  return book;   
+}
+
+function db.getBook(bookId)
+{
+  return this.root.books[bookId];
+}
+
+function db.getBooks() 
+{
+  var defbook = this.defaultBook();  
+
+  var out = [];
+  for( var (key,book) in this.root.books )
+    out.push(book);
+   
+  out.sort( :a,b {
+    if( a === defbook ) return -2;
+    if( b === defbook ) return 2;
+    return a.name.lexicalCompare(b.name);
+  });
+  return out;
+}
+
+function db.getBookByName(name,create = false)
+{
+  for(var (bid,book) in this.root.books)
+    if( book.name == name )
+      return book;
+  if( create ) {
+    var book = new Book(name);
+    this.addBook(tag);     
+    return book;
+  }
+  return null;
+}
+
+function db.getUniqueBookName(name) {
+  if(!db.getBookByName(name,false))
+    return name;
+  for(var counter = 2;counter < 10;++counter) {
+    var n = name + counter;
+    if(!db.getBookByName(n,false))
+      return n;
+  }
+  assert false;
+  return name;
+}
+
+function db.getBookItemsCount(book /*null - total notes in all books*/) {
+  return book ? book.itemsCount : this.root.date2item.length;
+}
+
+// returns default book
+function db.defaultBook() {
+  const id = "0";
+  var book = this.root.books[id]; 
+  if( !book ) {
+     book = new Book(Sciter.userName() + "'s", id); 
+     this.root.books[id] = book;
+  }
+  return book;  
+}
+
+function db.assignItemToBook(item, book)
+{
+  if(item.book)
+    db.removeItemFromBook(item,item.book);
+
+  item.book = book;
+
+  if( !book.items ) book.items = db.createIndex(#string);
+  book.items[item.id] = item; // append their item to our collection.
+
+  self.postEvent("book-assigned", [book,item]);
+}
+
+function db.removeItemFromBook(item, book)
+{
+  assert book === item.book;
+  book.items.remove(item.id);     // remove item from tag
+}
+
+function db.deleteBook(book, bookToMoveItemsInto = null) {
+   if( book.items && book.items.length )
+      db.mergeBookItems(book, bookToMoveItemsInto || db.defaultBook());
+   this.root.books.remove(book.id);  
+   self.postEvent("book-removed", book);
+}
+
+function db.mergeBookItems(fromBook, toBook) {
+  var cnote = currentNote;
+  if( !toBook.items ) toBook.items = db.createIndex(#string);   
+  for( var item in fromBook.items ) {
+    fromBook.items.remove(item.id);
+    toBook.items[item.id] = item; 
+    item.book = toBook;
+    if( cnote === item )
+      self.postEvent("book-assigned", [toBook,item]);
+  }
+  
+}
+
+
+
+
+
+

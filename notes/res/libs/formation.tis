@@ -1,0 +1,284 @@
+  
+namespace formation {
+  
+  class Formation
+  { 
+    function toHtmlString() 
+    {
+      var out = "<ul>";
+      for(var (name,val) in this) {
+        var typename = "";
+        if( val instanceof RadioGroup ) typename = "RadioGroup";
+        else if( val instanceof Repeatable ) typename = "Repeatable";
+        else if( val instanceof Formation ) typename = "Formation";
+        else { typename = val.tag;  if( var t = val.attributes["type"] ) typename += "|" + t; }
+        out += "<li><span class=name>" + name + "</span> is <span class=type>" + typename + "</span>";
+          if( val instanceof RadioGroup ) 
+            {}
+          else if( val instanceof Formation )
+            out += val.toHtmlString();
+        out += "</li>";
+      }
+      return out + "</ul>";  
+    }
+  }
+  
+  // RadioGroup formation
+  
+  class RadioGroup: Formation 
+  {
+    function this(el) { this.group = [el]; }
+    property value(v) {
+      get {
+        for( var el in this.group ) 
+          if( el.state.checked ) 
+            return el.attributes["value"];
+      }
+      set {
+        for( var el in this.group ) 
+          el.state.checked = el.attributes["value"] == v; 
+      }
+    }
+    function add(el) { this.group.push(el); }
+  }
+
+  // the formation constructor
+  function this( container ) {
+     
+    var f = null; if( container ) f = container.formation;
+    if(f) return f; // already established
+
+    var val = {}; // value of the formation
+    
+    function getValues() {
+      // iterate the elements within the formation
+      for(var (name, el) in f)
+        val[name] = el.value;
+      return val;
+    }
+
+    const special_names = ["name","id"];
+    
+    function setValues(map) {
+      val = map;
+      for(var (name,nval) in map)  // TODO: reinitialize the children list if something is missing...
+      {
+        var el = f[name];
+        if( el ) 
+          el.value = nval;
+        else if( name !in special_names &&
+                (typeof nval != #object) && 
+                 container.attributes.exists(name)) // unrecognized names are treated as attibutes of the container
+        {
+          container.attributes[name] = nval.toString();
+        }
+      }
+    }
+
+    f = {}; // construct the formation object
+    var fp = {};
+    fp[#container] = property(v) { get return container; set container = v; }
+    fp[#value] = property(v) { get return getValues(); set setValues(v); }
+    
+    fp.prototype = Formation;
+    f.prototype = fp;    
+
+    function addNamedItem(fo, name, el) {
+      if( typeof name == #array) 
+        for(var part in name) 
+          fo = addNamedItem(fo, part, part === name.last? el: null); 
+      else if( name.indexOf(".") >= 0 )
+        addNamedItem(fo, name.split("."), el);
+      else if( name ) {
+        if( typeof name == #string ) name = symbol(name);
+        if( var v = fo[name] ) { // already defined, make VectorFormation or what? 
+          if( v instanceof Formation )
+            return v;
+          else
+            stdout.printf("WARNING: %s is already defined in formation %s\n", name, typeof v);
+        }
+        else {
+          if( !el ) { // sub formation request
+            var nf = formation(null);  
+            fo[name] = nf; // stdout.printf("addNamedItem: %s, %s\n", name, typeof el);
+            return nf;
+          } else {
+            fo[name] = el; // stdout.printf("addNamedItem: %s, %s\n", name, typeof el);
+          }
+        }
+      }
+      else
+        stdout.printf("WARNING: attempt to add empty name to formation %V\n", fo); 
+      return fo;
+    }
+    
+    function visitChildren(root, cb) {
+        for(var c in root ) {
+          var r = cb( c );
+          if( r === true ) 
+            visitChildren( c, cb );
+        }
+    }
+    
+    const CONTAINERS = ["div","section","fieldset"];
+    const LISTS = ["ul","ol","list","table","tbody","menu"];
+    
+    visitChildren(container, function(el) 
+    {
+      var behaviorName = el.style#behavior;
+      var isCtl = behaviorName !== undefined;
+      var name = el.attributes["name"] /*|| el.attributes["id"]*/; 
+          //name = name? symbol(name) : null;
+          
+      if( !name ) 
+        return true; // go inside to collect others
+        
+      // handle named items:
+
+      if( el.tag in CONTAINERS ) { // <section id="something"> <section name="something">  
+                                                               // <div id="something">     <div name="something">
+        addNamedItem(f,name,formation(el)) ; // add its sub-hierachy
+        return false;                          // don't go inside it
+      }
+      if( el.tag in LISTS ) { 
+        addNamedItem(f,name,repeatable(el)) ; // theses are repeatable formations
+        return false;                         // don't go inside it
+      }
+      
+      if( behaviorName == "radio") { // special treatment for radio groups
+        var rg = f[name]; 
+        if( !rg) f[name] = rg = new RadioGroup(el); else rg.add(el);
+      } else
+        addNamedItem(f,name,el); // named element is a terminal, 
+      return false;  // don't go inside it
+      
+    });
+    
+    // update container too:
+    if(container) {
+      container[#formation] = property(v) { get return f; }
+      container[#value] = property(v) { get return getValues(); set setValues(v); }
+    }
+    return f;
+  }
+  
+  //|
+  //| repeatable formation
+  //| 
+  
+  class Repeatable : Formation
+  { 
+  }  
+  
+  function repeatable(container) // repeatable formation, it's value is array of items 
+  {
+    var f = container.formation;
+    if(f) return f; // already established
+  
+    var temp = []; // templates, dom elements
+    var cond = []; // conditionals, objects to match
+    
+    var val = [];  // value of the formation
+    
+    function any(rec) { return true; }
+    var filter = any;
+    
+    container.templates = function() { return (temp,cond); }  
+    
+    // get template/conditionals pairs
+    while( var el = container.first )
+    {
+      stdout.println("template", el);
+      temp.push( el );
+      if( var filter = el.attributes["if"] ) {
+        var c = parseData(filter);
+        cond.push(c);
+        el.remove();
+      } else {
+        cond.push(null);
+        el.remove();
+        break;
+      }   
+    }
+    
+    // basic match utility
+    function match( data, cond ) {
+      for( var (k,v) in cond ) {
+        var dv = data[k];
+        if( dv === undefined ) 
+          return false; // no such memeber, does not match 
+        else if( v instanceof Class || v instanceof Type ) {
+          // e.g. { something: Array }
+          if( dv !instanceof v )
+            return false;
+        }
+        else if( typeof v == #object && typeof dv == #object  ) { // sub-object
+          if( !match(dv, v))
+            return false;
+        }
+        else { // literal value
+          if( dv != v )
+            return false;
+        }
+      }
+      return true; // matched
+    }
+    
+    function render( v ) 
+    {
+      container.clear();
+      
+      if( temp.length == 0 ) // that is inner repeatable without templates
+                             // get collection of templates/conditionals from its parent
+        for(var p = container.parent; p; p = p.parent) 
+          if( p.templates ) {
+            (temp,cond) = p.templates();
+            //stdout.println("temp,cond",temp,cond);
+            break;
+          }
+          
+      //assert this.length == 0 : "Element without @if shall be the last one";
+      assert temp.length != 0 : "No template items provided";
+      
+      for(var (recno,rec) in v) 
+      {
+        if( !filter(rec) )
+          continue;
+      
+        for( var (i,c) in cond ) {
+          if(!match(rec,c))
+            continue;
+          var el = temp[i].clone();
+          container.append(el); 
+          el.recno = recno;
+          formation(el).value = rec; // each record is a formation by itself
+          break;
+        }
+      }
+    }
+    
+    function gather() {
+      for( var el in container ) 
+      {
+        var recno = el.recno;
+        val[ recno ] = el.value;
+      }
+      return val;
+    }
+            
+    f = {}; // construct the formation object
+    var fp = {};
+    fp[#container] = property(v) { get return container; set container = v; }
+    fp[#value] = property(v) { get return gather(); set render(v); }
+    fp.prototype = Repeatable;
+    f.prototype = fp;    
+    
+    container[#formation] = property(v) { get return f; }
+    container[#value] = property(v) { get return gather(); set render(v); } 
+    
+    return f;
+
+  }  
+
+}  
+

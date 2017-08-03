@@ -1,0 +1,106 @@
+include "config.tis";
+
+include "db/db.tis";
+
+var currentBook = null; 
+var currentNote = null;
+
+var filterTags = null; 
+var filterText = ""; 
+
+const RE_HTTP = /((?:https?:\/\/)?(([\da-z\\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)\/?))/;
+const RE_MAIL = /([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})/;
+
+function PopulteNotesList(array) {
+  array.length = 0;
+  db.selectItems(:note: array.push(note), filterTags, filterText, currentBook);
+}
+
+function UpdateNotesList(array) {
+  var idx = 0;
+  function cb(note) {
+    if( idx >= array.length ) 
+      array.push(note);    
+    else if( array[idx] !== note )
+      array.splice(idx,0,note);
+    ++idx;
+  }
+  db.selectItems(cb, filterTags, filterText, currentBook);
+  array.length = idx; // prune the rest
+}
+
+function setFilterTags(tags)
+{
+  if(filterTags != tags) {
+    filterTags = tags;
+    self.postEvent("notes-filter-changed");
+  }
+}
+function setFilterText(text)
+{
+  if(filterText != text) {
+    filterText = text;
+    self.postEvent("notes-filter-changed");
+  }
+}
+
+function setCurrentBook(book)
+{
+  if( currentBook != book ) {
+    currentBook = book;
+    setFilterTags(null);  
+    self.postEvent("book-selected");
+    //self.postEvent("notes-filter-changed");
+  }
+}
+
+function showOverlay(url) {
+  self.$(frame#overlay).loadDocument(url);
+  self.$(body).attributes.addClass("overlay-shown");
+}
+
+function closeOverlay() {
+  self.$(frame#overlay).clear();
+  self.$(body).attributes.removeClass("overlay-shown");
+}
+
+function highlight(element) {
+  
+}
+
+event click $(#print-note) {
+  showOverlay("printing/pager.htm");
+}
+
+event click $(#close-overlay) { closeOverlay(); }
+
+//function handleNewNoteHotkey() {
+//  self.timer(100ms, function() { self.postEvent("start-new-note", #from-clipboard) }); 
+//}
+
+event new-db-initialized {
+  showOverlay("initial/intro.htm");
+}
+
+function self.ready() {
+  // let's start with new note
+  this.postEvent("start-new-note");
+  this.postEvent("start");
+
+  if( "-debug" in argv ) {
+     const inspector = System.PLATFORM == "Windows" ? "inspector.exe" : "inspector";
+     Sciter.launch( System.home(inspector) );
+     if( var connectToInspector = view.connectToInspector ) 
+        connectToInspector();
+   }
+
+  // this has to be delayed on Windows otherwise caption will be transparent too, why?
+
+  if(!this.parent)
+    this.post(:: view.windowBlurbehind = #ultra-dark );
+
+ 
+
+}
+
+

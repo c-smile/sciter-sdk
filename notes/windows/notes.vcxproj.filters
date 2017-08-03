@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="res">
+      <UniqueIdentifier>{ef5cd298-b7db-4d5e-a3eb-eabc9e6bd4b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\printing">
+      <UniqueIdentifier>{493e92dc-2461-4cd3-a551-d83a89d6c7d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\htmlarea">
+      <UniqueIdentifier>{a58dfa9d-1e1e-4e3b-8783-4ac337582dec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\db">
+      <UniqueIdentifier>{adc5ec0b-3878-4607-9003-eb7df7a1d868}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\libs">
+      <UniqueIdentifier>{325b2d3b-84c5-4d50-a440-46d6a6f62431}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\notes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\notes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\sciter-win-main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="notes.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="notes.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\res\main.htm">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\pack-resources.bat">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\res\aside.css">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\aside.tis">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\books-view.css">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\books-view.tis">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\main.css">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\main.tis">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\notes-view.css">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\notes-view.htm">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\notes-view.tis">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\note-tag-list.tis">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\note-view.css">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\note-view.htm">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\note-view.tis">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\tags-view.css">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\tags-view.tis">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\printing\page-template.htm">
+      <Filter>res\printing</Filter>
+    </None>
+    <None Include="..\res\printing\pager.htm">
+      <Filter>res\printing</Filter>
+    </None>
+    <None Include="..\res\htmlarea\canonicalize-dom.tis">
+      <Filter>res\htmlarea</Filter>
+    </None>
+    <None Include="..\res\htmlarea\htmlarea.css">
+      <Filter>res\htmlarea</Filter>
+    </None>
+    <None Include="..\res\htmlarea\htmlarea.tis">
+      <Filter>res\htmlarea</Filter>
+    </None>
+    <None Include="..\res\htmlarea\htmlarea-blank.htm">
+      <Filter>res\htmlarea</Filter>
+    </None>
+    <None Include="..\res\htmlarea\table-ctrl.tis">
+      <Filter>res\htmlarea</Filter>
+    </None>
+    <None Include="..\res\htmlarea\toolbar.tis">
+      <Filter>res\htmlarea</Filter>
+    </None>
+    <None Include="..\res\db\book.tis">
+      <Filter>res\db</Filter>
+    </None>
+    <None Include="..\res\db\db.tis">
+      <Filter>res\db</Filter>
+    </None>
+    <None Include="..\res\db\note.tis">
+      <Filter>res\db</Filter>
+    </None>
+    <None Include="..\res\db\tag.tis">
+      <Filter>res\db</Filter>
+    </None>
+    <None Include="..\res\libs\collapsible.tis">
+      <Filter>res\libs</Filter>
+    </None>
+    <None Include="..\res\libs\dom.tis">
+      <Filter>res\libs</Filter>
+    </None>
+    <None Include="..\res\libs\formation.tis">
+      <Filter>res\libs</Filter>
+    </None>
+    <None Include="..\res\libs\hamburger.tis">
+      <Filter>res\libs</Filter>
+    </None>
+    <None Include="..\res\libs\popup-dialog.tis">
+      <Filter>res\libs</Filter>
+    </None>
+    <None Include="..\res\libs\suggestions.tis">
+      <Filter>res\libs</Filter>
+    </None>
+    <None Include="..\res\libs\vlist.tis">
+      <Filter>res\libs</Filter>
+    </None>
+    <None Include="..\res\libs\vtree.tis">
+      <Filter>res\libs</Filter>
+    </None>
+    <None Include="..\res\config.tis">
+      <Filter>res</Filter>
+    </None>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,56 @@
+//|
+//| Tag represents "tag" that can be assigned to 
+//| the Item, see: addItem/removeItem. 
+//|
+
+class Book
+{
+  this var id;
+  this var name;         // human readable name(caption)
+  this var items = null; // index item.id -> item
+  this var color = 0;    // visual color type 0..9
+
+  function this(bookName, id = null)
+  {
+    this.id = id || String.UID();
+    this.name   = bookName;  
+    this.items  = null;      
+    this.color  = colorId;   
+  }
+ 
+  function addItem(item)
+  {
+    db.assignItemToBook(item,this);
+  }
+
+  function removeItem(item)
+  {
+    db.removeItemFromBook(item,this);
+  }
+
+  // returns tags and item counts that contains tags used in this book
+  function getTagsMap(tagKind) {
+    var map = {};
+    for(var item in this.items) 
+    {
+      for(var tag in item.tags) 
+      {
+        if( tag.kind != tagKind ) continue;
+        var cnt = map[tag] || 0;
+        map[tag] = cnt + 1;
+      }
+    }
+    return map;
+  }
+  
+  property itemsCount(v) { get return this.items? this.items.length:0; }
+
+  property isDefault(v) { get return this.id == "0"; }
+
+  function update(props) {
+    if(props.name !== undefined) this.name = props.name;
+    if(props.color !== undefined) this.color = props.color.toInteger();
+    self.postEvent("book-updated", this);
+  }
+
+}

@@ -1,0 +1,291 @@
+
+include "canonicalize-dom.tis";
+include "../libs/dom.tis";
+
+class HtmlArea: Element 
+{
+  this var changed = false;
+  this var note = null;
+  this var isNew = true;
+  this var isBlank = false;
+
+  var instance;
+  
+  function attached() {
+    this.loadBlank(); 
+    this.isBlank = true;
+    instance = this;
+  }
+
+  function loadBlank() {
+    this.loadDocument(this.url("htmlarea/htmlarea-blank.htm"));
+  }
+
+  event pastehtml (evt) {
+    const params = {};
+    var docRoot = evt.source; // DOM element that usually contains: <html>,<body>,
+    var fromUrl = evt.data.url; // behavior:richtext passes {url:...} object with meta data 
+    var generatorFromDom = canonicalizeDOM(docRoot,params);
+    var generator = evt.data.generator || generatorFromDom;
+
+    if( this.isNew ) {
+      this.sourceUrl = fromUrl;
+      this.sourceGenerator = generator;
+    }
+    this.requestSave(20ms);
+    // do not consume the event so it will pasted
+  } 
+
+  event change {
+    this.changed = true;
+    this.isBlank = false;
+    this.requestSave(1s);
+  } 
+
+  function onRequest(rq) 
+  {
+    if( this.note ) {
+      var (data,mime) = this.note.getResource(rq.requestUrl);
+      if( data ) {
+        // fulfill the request by the data
+        rq.fulfill(data,mime);
+      }
+    }
+  }
+
+  // data request ended
+  function onRequestResponse(rq) 
+  {
+    //stdout.println("onRequestResponse", rq.isSucceeded, rq.requestUrl, rq.responseMimeType, rq.requestDataType);    
+    if(this.note && rq.isSucceeded && rq.requestDataType == Request.DATA_IMAGE) {
+      if(rq.requestUrl !like "data:*") 
+        this.note.addResource(rq.requestUrl, rq.responseMimeType, rq.responseData);
+      //if( rq.responseMimeType like "image/*" )
+      Tag.known("image").addItem(this.note);
+    }
+  }
+
+  function requestSave(delay = 20ms, cb) {
+    this.timer(delay, this.saveNote ); // throttle saving
+  }
+ 
+  property document(v) {
+    get return this[0];
+  }
+  property body(v) {
+    get return this[0].$(body) || this[0];
+  }
+
+  // trying to classify source by url this not was created from 
+  function postProcessPasting() {
+
+     //stdout.println("paste", generator, url );
+
+     switch(this.sourceGenerator) 
+     {
+       like "Microsoft Word *": Tag.known("word").addItem(this.note); return;  
+       like "Microsoft Excel *": Tag.known("excel").addItem(this.note); return; 
+     }
+
+     this.sourceGenerator = null;
+
+     // no luck with the generator, try source url
+     switch(this.sourceUrl) {
+        like "http://*":
+        like "https://*": { 
+           Tag.known("web").addItem(this.note); 
+           var domain = URL.parse(this.sourceUrl).hostname;
+           this.appendHtml("<p.urlfrom><a href='" + this.sourceUrl + "'>" + domain + "</a></p>");
+           break;
+         }
+        like "file://*.doc": 
+        like "file://*.docx": Tag.known("word").addItem(this.note); break;
+        like "file://*.xls": 
+        like "file://*.xlsx": Tag.known("excel").addItem(this.note); break;
+        //default: 
+        //  stdout.println("paste", generator, url );
+     } 
+     this.sourceUrl = null;
+  }
+
+  function appendHtml(html) {
+    var body = this.body;
+    function insertIt(transaction) 
+    {
+      // 'this' here is an htmlarea
+      var pos = [bookmark:body,body.lastNode.nodeIndex,true]; //insertion point at the end of body - will be inserted as last element;
+      var insertedNodes = transaction.insertHtml(pos, html);  // insert the html at pos
+      var table = insertedNodes[0];
+      var firstTextPos = insertedNodes.first.firstCaretPos;
+      var lastTextPos = insertedNodes.last.lastCaretPos;
+      this.state.focus = true;
+      this.selection.select(firstTextPos,lastTextPos); // move caret to pos
+      return true;
+    }
+    this.transact(insertIt,"insert url"); // do the action inside undoable transaction.    
+  }
+
+  event exec:insert-table (evt) 
+  {
+    const params = evt.data; 
+    const rows = params.rows;       assert rows;
+    const columns = params.columns; assert columns;
+    const width = params.width == "auto" ? "" : "width=100%";
+    const border = params.border ? "border" : "";    
+    var html = "<table "+ border + " " + width + ">";
+    for( var r in rows ) {
+      html += "<tr>";
+      for( var r in columns )
+          html += "<td />";
+      html += "</tr>";
+    }  
+    html += "</table>";
+    
+    function insertIt(transaction) {
+      // 'this' here is the htmlarea
+      var pos = transaction.removeRange();                    // delete selection if any
+      var container = DOM.blocksContainerOf(pos[0]);          // get container that can hold the <table>
+      pos = transaction.split(pos,container);                 // split the pos until the container
+      var insertedNodes = transaction.insertHtml(pos, html);  // insert the html at pos
+      assert insertedNodes.length && insertedNodes[0].tag == "table";
+      var table = insertedNodes[0];
+      var firstTextPos = table.$(td).firstCaretPos;
+      this.state.focus = true;
+      this.selection.select(firstTextPos);                    // move caret to pos
+      return true;
+    }
+    this.transact(insertIt,"insert table"); // do the action inside undoable transaction.
+  }
+
+
+  // returns (caption, shortText)
+  function essentials() {
+
+    const SHORT_TEXT_LENGTH = 64;
+
+    var body = this.body;
+
+    var caption = "";
+    var shortText = "";
+    
+    for( var el in DOM.descendantsOf(body,null) ) {
+      if( el.state.flowType == #text )
+      {
+        if( !caption ) {
+          caption = el.text;
+          continue;
+        }
+        if( shortText ) shortText += " ";
+        shortText += el.text;
+        if(shortText.length > SHORT_TEXT_LENGTH) 
+          break;
+      }  
+    }
+    if(!caption) {
+      var body = this.body;
+      if( body.length >= 2 ) {
+        caption = body[0].text.substr(0,64);
+        for( var el in DOM.descendantsOf(body,body[0]) ) {
+          if( el.state.flowType == #text )
+          {
+            shortText += el.text;
+            if(shortText.length > SHORT_TEXT_LENGTH) 
+              break;
+          }  
+        }
+      } else {
+        var text = body.text;
+        var lines = text.split("\n");
+        if( lines.length > 1 ) {
+          caption = lines.shift();
+          shortText = lines.join(" ");   
+        } else {
+          caption = shortText = body.text.substr(0,64);
+        }
+      }
+    }
+    return (caption,shortText);
+  }
+
+  function saveNote() {
+    if( !cb && !this.changed /* || !this.note*/) 
+      return;
+
+    if( !this.note ) {
+       this.note = this.parent.provideNote();
+       this.setDocumentUrl("note:" + this.note.id);
+       this.postProcessPasting();
+    }
+
+    var text = this.text;
+    var html = this.saveDocument(); // to instanceof Bytes
+    
+    var (caption,shortText) = this.essentials();
+
+    var body = this.body;
+    var (px1,py1,px2,py2) = body.box(#rect,#border,#inner)
+    var w = Integer.min(px1 + px2 + body.intrinsicWidthMax(),this.toPixels(800dip,#width));
+    var h = body.intrinsicHeight(w).limit(32, this.toPixels(1000dip,#height));
+
+    const PREVIEW_WIDTH = 80;
+    const PREVIEW_HEIGHT = 80;
+
+    var pvh = Integer.min(PREVIEW_HEIGHT, PREVIEW_WIDTH * h / w );
+
+    var previewImage = new Image(w, h, PREVIEW_WIDTH, pvh,this.body); // make snapshot of the body
+    this.note.setContent(html, text, caption, shortText, previewImage.toBytes());
+    previewImage.destroy();
+
+    //stdout.println("saveNote", this.isNew); 
+  }
+
+  function loadNote(n) {
+    this.save();
+    this.note = n;
+    if( n ) {
+      this.isNew = false;
+      this.isBlank = false;
+      this.loadDocument(n.html, "note:" + n.id);
+      this.document.state.readonly = this.state.readonly;
+    }
+    else {
+      this.isNew = true;
+      this.isBlank = true;
+      this.loadBlank();
+      this.document.state.readonly = false;
+    }
+    //this.state.focus = true;
+  }
+
+  event ~click $(a[href]) (evt) {
+     const url = evt.target.attributes["href"];
+     if( url && this.state.readonly ) {
+       Sciter.launch(url);
+       return true;
+     }
+  }
+
+}
+
+// used in note preview, applied to <htmlarea>
+/*class NotePreview : Element 
+{
+  // the document has issued data request
+  function onRequest(rq) 
+  {
+    if( this.note ) {
+      var (data,mime) = this.note.getResource(rq.requestUrl);
+      if( data ) {
+        // fulfill the request by the data
+        rq.fulfill(data,mime);
+      }
+    }
+  }
+
+  function loadNote(n) {
+    if( this.note = n ) this.loadDocument(n.html, "note:" + n.id);
+  }
+}*/
+
+
+

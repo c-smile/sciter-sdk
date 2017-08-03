@@ -1,0 +1,113 @@
+include "db/note.tis";
+include "htmlarea/toolbar.tis";
+include "books-view.tis";
+
+// Note view - represents single note
+
+class NoteView : Element 
+{
+  this var note = null;
+  this var htmlarea = null;
+  this var keywords = null; // keywords list 
+  this var bookSelector = null;
+
+  function attached() 
+  {
+    this.htmlarea = this.$(htmlarea);
+    this.tags = this.$(tags);
+    this.bookSelector = this.$(select.book);
+
+    var me = this;
+    self << event show-note (evt)      { me.showNote(evt.data); }
+    self << event start-new-note (evt) { me.showNote(null);
+                                         if(evt.data == #from-clipboard) {
+                                           me.htmlarea.state.focus = true;
+                                           me.htmlarea.execCommand("edit:paste");
+                                         }
+                                       }
+    self << event note-lock-changed() { me.updateLockedState(); }
+    self << event note-created()      { me.updateLockedState(); }
+
+    self << event book-changed() { me.populateBooks(); }
+    self << event book-assigned() { me.populateBooks(); }
+    self << event book-created() { me.populateBooks(); }
+    self << event book-removed() { me.populateBooks(); }
+    self << event book-updated() { me.populateBooks(); }
+
+    self << event book-selected() { if(!me.note) me.bookSelector.value = (currentBook ? currentBook : db.defaultBook()).id ; }
+
+    this.populateBooks(); 
+    EditingToolbar(this.htmlarea, this.$(band.editing));
+  }
+
+  // gets the note, ensures that note exists
+
+  function provideNote() 
+  {
+    if(!this.note) {
+      this.note = new Note();
+      db.addItem(this.note);
+      var book = db.getBook(this.bookSelector.value);
+      book.addItem(this.note);
+    }
+    return this.note;
+  }
+
+  function showNote(note) {
+    currentNote = note;
+    this.note = note;
+    if( note && (note.lock === undefined))
+        note.lock = true; // user did not express desire to lock it - lock it by default
+    this.updateLockedState();
+    this.htmlarea.loadNote(note);
+    this.tags.loadNote(note);
+    this.bookSelector.value = note ? note.book.id : db.defaultBook().id;
+  }
+
+  function populateBooks() {
+    var books = db.getBooks();
+    var options = this.bookSelector.options;
+    options.clear();
+
+    var fmt = BooksView.bookBriefHtml;
+
+    for( var book in books )
+      options.append(fmt(book));
+    if(this.note)
+      this.bookSelector.value = this.note.book.id;
+  }
+
+  function updateLockedState() {
+    if( this.note ) {
+      this.$(toolbar button.edit).state.disabled = false;
+      this.$(toolbar button.print).state.disabled = !platformSupportsPrinting;
+      this.$(toolbar).state.expanded = !this.note.lock;
+      this.htmlarea.state.readonly = !!this.note.lock; 
+      this.htmlarea.document.state.readonly = !!this.note.lock; 
+    } else {
+      this.$(toolbar button.edit).state.disabled = true;
+      this.$(toolbar button.print).state.disabled = true;
+      this.$(toolbar).state.expanded = true;
+      this.htmlarea.state.readonly = false; 
+      this.htmlarea.document.state.readonly = false; 
+    }
+  }
+
+  event click $(button.edit) (evt, button) { 
+    if( this.note ) {
+      this.note.setLock( !this.note.lock );
+      return true;
+    }
+  }
+
+  event change $(select.book) (evt) { 
+    if( this.note ) {
+      //this.note.setLock( !this.note.lock );
+      var book = db.getBook(evt.target.value);
+      book.addItem(this.note);
+      return true;
+    }
+  }
+
+}
+

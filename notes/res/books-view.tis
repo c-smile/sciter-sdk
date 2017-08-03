@@ -1,0 +1,172 @@
+
+class BooksView : Element 
+{
+  function attached() {
+    this.$content(<option#all><i color=0>&nbsp;</i><span.name>All</span><span.count>{ db.getBookItemsCount(null) }</span></option>);
+    var optionAll = this[0];
+    //this[0].data = null;
+    var me = this;
+    self << event book-selected { me.show(); } 
+    self << event notes-filter-changed { me.show(); } 
+    self << event book-assigned { me.updateCounters(); } 
+    self << event book-removed { me.show(); }
+    self << event book-updated (evt) { me.show(); }
+
+    this.show();
+    optionAll.execCommand("set-current");
+  }
+
+  function firstCharOf(text) {
+    for(var ucode in text)
+      return String.fromCharCode(ucode);
+  }
+
+  function bookHtml(book) {
+    if( book )
+      return String.$(<option><i color={book.color || 0}>{firstCharOf(book.name)}</i><span.name>{book.name.toHtmlString()}</span><span.count>{book.itemsCount}</span></option>);
+    else 
+      return "<option><i></i><span.name> </span><span.count></span></option>";       
+  }
+
+  function bookBriefHtml(book) {
+    return String.$(<option value="{book.id}"><span.name color={book.color || 0}>{book.name.toHtmlString()}</span></option>);
+  }
+
+  function show() 
+  {
+    var books = db.getBooks();
+    var i = 1;
+    for( var book in books) 
+    {
+      var elBook = this[i];
+      if( elBook && (elBook.data === book)) {
+        elBook.$(.name).text = book.name;
+        elBook.$(.count).text = book.itemsCount;
+        var icon = elBook.$(i);
+        icon.text = firstCharOf(book.name);
+        icon.attributes["color"] = book.color || 0;
+      }
+      else {
+        this.insert(bookHtml(book), i);  
+        this[i].data = book;
+      }
+      ++i;
+    }
+    while(i < this.length) this[i].remove();
+  }
+
+  event change (evt) {
+    if( evt.target !== this ) 
+      return;
+    var option = this.$(option:current);  
+    if( option.data )
+      setCurrentBook(option.data); 
+    else {
+      setCurrentBook(null);
+      setFilterTags(null);
+      setFilterText(null);
+    }
+    return true;
+  }
+
+  function updateCounters() {
+    for( var option in this )
+      option.$(.count).text = db.getBookItemsCount(option.data); 
+  }
+
+  function EditBookName(option) 
+  {
+    if( !option ) {
+      this.insert("<option><i></i><span.name> </span></option>",1);
+      option = this[1];
+    }
+    var book = option.data;
+    var caption = option.$(span.name);
+    caption.attributes.addClass("editing");
+    caption.post( function() { caption.state.focus = true; });
+    function commit(text) {
+      //stdout.println("commit", text);
+      caption.attributes.removeClass("editing"); 
+      caption.off(".booknameedit");
+      text = text.trim();
+      if( !book && text ) 
+        db.addBook( new Book(db.getUniqueBookName(text)) );
+      else if( book && text && book.name != text)
+        book.update{ name: db.getUniqueBookName(text) };
+      this super.show();
+    }
+    caption.on("focusout.booknameedit", function() { commit(this.value) });
+    caption.on("keydown.booknameedit", function(evt) { 
+      switch( evt.keyCode ) {
+        case Event.VK_RETURN: commit( this.value ); return true;
+        case Event.VK_ESCAPE: commit( book ? book.name: "" ); return true;
+      }
+    });
+  }
+
+  event popuprequest $(menu.context#book) (evt,menu) {
+
+    var option = evt.target.$o(option);
+    var thisbook = option.data;
+    var books = db.getBooks();
+
+    if( thisbook && books.length >= 2 && thisbook.itemsCount != 0) {
+      menu.$(li[name=move-notes]).state.disabled = false;
+      var moveMenu = menu.$(menu#move-notes-to);
+      moveMenu.clear();
+      for(var book in books) {
+        if( book !== thisbook )
+          moveMenu.$append(<li bookid={book.id}>{book.name}</li>);
+      }
+    } else
+      menu.$(li[name=move-notes]).state.disabled = true;
+
+    if( var ci = menu.$(li[color]:checked))
+       ci.state.checked = false;
+
+    if(thisbook)
+    {
+      menu.$(li[name=delete-book]).state.disabled = thisbook.itemsCount > 0;      
+      menu.$(li[color={thisbook.color || 0}]).state.checked = true; 
+    }
+  }
+
+  event click $(menu#move-notes-to > li[bookid]) (evt,li) {
+    //stdout.println(li, li.attributes["bookid"]);
+    var option = evt.target.$o(option);
+    var fromBook = option.data;
+    var toBook = db.getBook(li.attributes["bookid"]);
+    db.mergeBookItems(fromBook, toBook); 
+    this.updateCounters();
+  }
+
+  event click $(menu#book > li[name=rename-book]) (evt) {
+    var option = evt.target.$o(option);
+    this.EditBookName(option); 
+    return true;
+  }
+
+  event click $(menu#book li[color]) (evt,ic) {
+    var option = evt.target.$o(option);
+    var book = option.data;
+    if( book ) {
+      //stdout.println(book, ic.index);
+      book.update {color: ic.index}
+    }
+    return true;
+  }
+
+  event click $(menu#book > li[name=add-book])  (evt) {
+    this.EditBookName(null);
+    return true;
+  }
+
+  event click $(menu#book > li[name=delete-book]) (evt) {
+    var option = evt.target.$o(option);
+    var book = option.data;
+    db.deleteBook(book);
+    return true;
+  }
+
+
+}

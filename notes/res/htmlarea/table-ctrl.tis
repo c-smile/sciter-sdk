@@ -1,0 +1,81 @@
+
+function ButtonTableSelector()
+{
+    const DEF_TABLE_COLS = 8;
+    const DEF_TABLE_ROWS = 5;
+
+    var me = this;
+
+    var selTableCol = -1;
+    var selTableRow = -1;
+
+    const tableStyle = "<header>table width:<button|radio(tablewidth) value='auto' checked>auto</button>"
+                                           "<button|radio(tablewidth) value='full'>100%</button></header>";
+      // initialization    
+    var tableGrid = "<table>";
+      for( var r in DEF_TABLE_ROWS ) {
+        tableGrid += "<tr>";
+        for( var c in DEF_TABLE_COLS )
+          tableGrid += "<td/>";
+        tableGrid += "</tr>";
+      }
+    tableGrid += "</table>";
+    
+    this.append("<popup>" + tableStyle + tableGrid + "</popup>" );
+
+    var popup = this.$(popup);
+    var table = popup.$(table);
+    var header = popup.$(header);
+
+    function setSelection(R = -1,C = -1) {
+      if( C == selTableCol && R == selTableRow )
+        return;
+      for( var r in DEF_TABLE_ROWS )
+        for( var c in DEF_TABLE_COLS )
+              table[r][c].attributes.toggleClass("selected", r <= R && c <= C ); 
+      selTableCol = C;
+      selTableRow = R;              
+    }
+
+    table << event mousemove (evt)
+    {
+      var td = evt.target.$p(td);
+      if( !td ) return;
+      var C = td.index;
+      var R = td.parent.index;
+      setSelection(R,C);
+    }
+
+    table << event mouseleave {
+      setSelection();
+    }
+
+    table << event click $(td) 
+    {
+      var C = this.index;
+      var R = this.parent.index;
+      var width = header.value.tablewidth;
+
+      HtmlArea.instance.execCommand("insert-table",
+      {
+        rows: R + 1,
+        columns: C + 1,
+        width: width,
+        columnHeader: false,
+        rowHeader: false,
+        border:true
+      });
+      popup.state.popup = false; // closing it
+      return true; // handled
+    }
+
+    // binding event handlers to this [button] 
+    this << event popupready { setSelection(); }
+    this << event click { this.popup(popup); }
+
+}
+      
+ 
+
+  
+  

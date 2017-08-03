@@ -1,0 +1,71 @@
+
+include "libs/vlist.tis";
+
+class List : Element 
+{
+  function attached() { 
+
+    function setupNoteView(recordNo,note, el) {
+      el.attributes["color"] = note.book.color || 0; 
+    }
+
+     // item template
+    VirtualList{ container: this, setupItemView: setupNoteView, bufferSize:20 };
+    var records = [];
+    PopulteNotesList(records); 
+    this.value = records;
+    var me = this;
+    self << event note-created { UpdateNotesList(me.value) };
+    self << event notes-filter-changed { UpdateNotesList(me.value) };
+    self << event book-selected  { UpdateNotesList(me.value) };
+  }
+  property animating(v) {
+    get return this.state.animating;
+  }
+
+  event change {
+    var note = this.currentRecord;
+    this.postEvent("show-note", note);
+    return true;
+  }
+
+  event tooltiprequest $(li) (evt,item) {
+    // suppress tooltips 
+    return true;
+  }
+
+}
+
+class NotesView : Element 
+{
+  function attached() {
+
+    const list = this.$(notes-list);
+
+    const btnAddNew = this.$(knob#add-new-note);
+
+    self << event show-note (evt) { btnAddNew.state.disabled = false; list.currentRecord = evt.data; }  
+    self << event start-new-note (evt) { btnAddNew.state.disabled = true; list.currentRecord = null; }  
+    self << event note-updated (evt) { btnAddNew.state.disabled = false; list.currentRecord = evt.data; }  
+    self << event notes-filter-changed { 
+      var ln = $(input#lookup-note);
+      if( !ln.state.focus ) ln.value = filterText || "";
+    }
+  }
+
+  event click $(knob#add-new-note) { 
+    this.postEvent("start-new-note"); // relay the click as logical event
+    return true; // consume click
+  }
+  
+  event change $(input#lookup-note) {
+    this.timer(600ms, this.updateLookupText);
+  }
+
+  function updateLookupText() {
+    //stdout.println("lookup", this.$(input#lookup-note).value);
+    setFilterText(this.$(input#lookup-note).value);
+  }
+
+  
+}

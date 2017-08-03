@@ -1,0 +1,153 @@
+
+
+// called by 
+//   event pastehtml $(htmlarea) (evt) 
+// to normalize/preprocess pasted html: localize urls, clean styles, etc  
+// parameters: 
+//   elHtml - root element (<html>) of html being pasted. This DOM element is not yet in the editable document DOM.
+//            It may contain comment nodes with text "StartFragment" and "EndFragment" - they mark start/end of actual 
+//            content. Do not remove them (only if you really know what you are doing).
+//            The engine will remove these comments before pasting.
+//   params - configuration params - what to paste, etc.
+
+function canonicalizeDOM(elHtml, params) {
+  
+  //like <meta name=Generator content="Microsoft Excel 15">
+  var generator = elHtml.$(head > meta[name==generator]);
+  if( generator ) generator = generator.attributes["content"];
+  
+  /*function localizeUrls(attr) // make relative URLS
+  {
+    for(var el in elHtml.$$([{attr}])) 
+    {
+      var au = el.attributes[attr];
+      var ru = URL.relative(au,path); // make it relative to this document
+      if( au != ru ) el.attributes[attr] = ru; // update attribute
+    }
+  }*/
+
+  function cleanContent() 
+  {
+    const UNKNOWN_TAG = 0;      // unknown 
+    const INLINE_BLOCK_TAG = 1; // <img>, <input> ...
+    const BLOCK_TAG = 2;        // <div>,<ul>,<p> ... 
+    const INLINE_TAG = 3;       // <span>,<b>,<strong> ...
+    const TABLE_TAG = 4;        // <table>
+    const TABLE_BODY_TAG = 5;   // <thead>,<tbody>,<tfoot>
+    const TABLE_ROW_TAG = 6;    // <tr>
+    const TABLE_CELL_TAG = 7;   // <td>,<th>
+    const INFO_TAG = 8;         // <link>,<style>,<head> ...    
+
+    // process attributes
+    // returns true if element has no attributes
+
+    const requiredAttribute = [ "id",  "name",  "href",  "src",  "type",  
+                              "nowrap", "colspan", "rowspan", "valign", "align", "border" ];
+
+    function processAttributes(el) {
+       for( var n = el.attributes.length - 1; n >= 0; --n ) {
+         if( el.attributes.name(n) in requiredAttribute ) 
+           continue;
+         el.attributes.remove(n);
+       }
+       return el.attributes.length == 0;
+    }
+
+    // called for elements that have no attributes
+    function redundant(el) {
+      const tag = el.tag;
+      if( tag == "span" ) return true; 
+      if( tag == "head" ) return true; 
+      if( tag == "div" && !el.firstNode ) return true;
+      return false;
+    }
+
+    var nodeStartFragment = null; 
+    var nodeEndFragment = null;
+
+    const prohibitedElement = { "frame":true,"iframe":true,"style":true,"script":true,"link":true, "col":true, "colgroup":true};
+
+    function processNode(node) 
+    {
+      if( node.isText ) return;
+
+      //stdout.println("processing", node);
+
+      if( node.isComment ) { 
+        ////stdout.println("comment", node.text);
+        if( node.text == "StartFragment" )
+        { 
+          nodeStartFragment = node;
+          return;
+        } 
+        else if( node.text == "EndFragment" )
+        {
+          nodeEndFragment = node;
+          return;
+        }
+        //stdout.println("comment removed", node.text);
+        node.remove(); 
+        return; 
+      }
+      // else it is an element
+      if( node.tag == "svg" ) return; // let's trust SVG authors
+
+      if ( prohibitedElement[node.tag] )
+      {
+        //stdout.println("prohibited element removed", node.tag);
+        node.remove(); 
+        return;
+      }
+
+      for( var child in node.nodes() ) 
+        processNode(child);
+
+      const (tm,cm,pm) = Tokenizer.elementType(node.tag);
+      // check unknown elements
+      if( tm == UNKNOWN_TAG )  {
+        //stdout.println("unknown element removed", node.tag);
+        node.remove(#unwrap); // remove the element but keep its content in the DOM
+      }
+      // check attributes
+      else if(processAttributes(node) && redundant(node) )
+      { 
+        //stdout.println("redundant element removed", node.tag);
+        node.remove(#unwrap); // remove the element but keep its content in the DOM
+      }
+      
+    }
+
+    // process the DOM
+    processNode(elHtml);
+
+    // browsers are tend to put full context stack in DOM but we don't really need all that 
+    if( nodeStartFragment && nodeEndFragment ) {
+
+      const mandatoryParents = ["html","body"];
+      const tableParts = ["table","tbody","tfoot","thead","tr"];
+      const tableCells = ["td","th","caption"];
+      var p = nodeStartFragment.commonParent(nodeEndFragment);
+      //stdout.println("parent removing parent", p);
+      var mandatory = mandatoryParents;
+      var tdseen = false;
+      while(p) { 
+        var rp = p;
+        p = p.parent;
+        if( !p ) break;
+        const tag = rp.tag;
+        if( tag in mandatoryParents ) break;   
+        if( !tdseen && (tag in tableParts)) continue;
+        if( tag in tableCells  ) tdseen = true;
+        //stdout.println("parent removed", tag, rp.text);
+        rp.remove(#unwrap);
+      }
+    }
+
+    //stdout.println("elHtml:", elHtml.html);
+
+  }
+
+  cleanContent();
+
+  return generator;
+}

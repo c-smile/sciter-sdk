@@ -1,0 +1,105 @@
+//|
+//| Tag represents "tag" that can be assigned to 
+//| the Item, see: addItem/removeItem. 
+//|
+
+class Tag
+{
+  const KIND_CUSTOM = 1;
+  const KIND_SYSTEM = 2;
+
+  function this(tagName, iconId = "", colorId = 0, id = null)
+  {
+    this.id = id || String.UID();
+    this.name   = tagName;   // human readable name(caption)
+    this.items  = null;      // index item.id -> item
+    this.icon   = iconId;    // "&fa-film;" - FontAwesome icon name as an entity
+    this.color  = colorId;   // visual color type 0..9
+    this.kind   = KIND_CUSTOM;
+  }
+ 
+  function addItem(item)
+  {
+    if(!item.tags)
+      item.tags = [this]; // first tag
+    else if( this in item.tags )
+      return false;
+
+    item.tags.push( this ); // append us to theirs
+    if( !this.items ) this.items = db.createIndex(#string);
+    this.items[item.id] = item; // append their item to our collection.
+
+    self.postEvent("tag-assigned", [item,this]);
+    return true;
+  }
+
+  function removeItem(item)
+  {
+    if(!item.tags) return false;    // hmmm ... no tags, strange...
+    if( this in item.tags ) {
+      item.tags.removeByValue(this);  // remove tag from item.
+      this.items.remove(item.id);     // remove item from tag
+      self.postEvent("tag-removed", [item,this]);  
+    }
+    return true;
+  }
+
+  // returns tags and item counts that contains this tag and others
+  function getIntersections(book) {
+    var map = {};
+    for(var item in this.items) {
+      if( book && (item.book !== book) ) 
+        continue;
+      for(var tag in item.tags) {
+        if( tag === this ) continue;
+        var cnt = map[tag] || 0;
+        map[tag] = cnt + 1;
+      }
+    }
+    return map;
+  }
+
+  property hasIntersections(v) {
+    for(var item in this.items)
+      if( item.tags.length > 1 )
+        return true;
+    return false;
+  }
+
+  
+  property itemsCount(v) { get return this.items? this.items.length:0; }
+  property isCustom(v) { get return this.kind == KIND_CUSTOM; }
+  property isSystem(v) { get return this.kind == KIND_SYSTEM; }
+
+  function update(props) {
+    if(props.name !== undefined) this.name = props.name;
+    //if(props.color !== undefined) this.color = props.color.toInteger();
+    //if(props.icon !== undefined) this.icon = props.icon;
+    self.postEvent("tag-updated", tag);
+  }
+
+
+  // static method, returns standard "known" tag 
+  function known(name) {
+
+    function tag(name, iconId, colorId, id) 
+    {
+      var t = new Tag(name, iconId, colorId, id);
+      t.kind = KIND_SYSTEM;
+      db.addTag(t);
+      //stdout.printf("adding tag: %V %V\n",t, db.root.tags);
+      return t;
+    }
+
+    var id;
+    switch(name) {
+      case "web"   : id = "1"; return db.getTag(id) || tag("web","&fa-globe;",0, id);
+      case "image" : id = "2"; return db.getTag(id) || tag("image","&fa-image;",0, id);
+      case "word"  : id = "3"; return db.getTag(id) || tag("word","&fa-file-word-o;",0, id);
+      case "excel" : id = "4"; return db.getTag(id) || tag("excel","&fa-file-excel-o;",0, id);
+      case "email" : id = "5"; return db.getTag(id) || tag("email","&fa-envelope-o;",0, id);
+      default: return null;
+    }
+  }
+
+}

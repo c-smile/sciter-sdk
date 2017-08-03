@@ -1,0 +1,59 @@
+
+namespace DOM 
+{
+  // generator, walks through descendants of the root hierarchically  
+  // use it as 
+  //   for(var el in descendantsOf(body) )
+  //     el ....
+
+  function descendantsOf(root, from) 
+  {
+    function next( el )
+    {
+      var t = el.next;
+      if( t ) return t;
+      while(el)
+      {
+        el = el.parent;
+        if( el === root || !el) return null;
+        t = el.next;
+        if( t ) return t;
+      }
+      assert false;
+      return null;
+    }
+    function firstOrNext( el )
+    {
+      var t = el.first;
+      return t? t: next(el);
+    }
+    
+    var b = from ? next( from ) : root.first;
+    while(b)
+    {
+      yield b; 
+      //if((this function).skip) 
+      //{ 
+      //  (this function).skip = false; 
+      //  b = next(b); 
+      //} 
+      //else
+      b = firstOrNext( b );
+    }
+  }
+
+  // function returns nearest block container - element that contains blocks (<body>)
+  function blocksContainerOf(node) 
+  {
+    if( !node.isElement ) node = node.parent;
+    var body = node.$p(body) || node.root;
+    for(; node ; node = node.parent ) {
+      if( node === body ) return node;
+      if( node.state.flowType != #text ) return node;
+    }
+    return body;
+    
+  }
+
+
+}

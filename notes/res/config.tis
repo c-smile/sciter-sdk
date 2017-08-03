@@ -1,0 +1,22 @@
+
+
+function getArgv() {
+  try {
+    return view.argv(); // native method, defined in notes.cpp  
+  } catch(e) {
+    return [];
+  }
+}
+
+const argv = getArgv();
+
+function dbPathFromArgs() {
+  // notes.exe -db path-to-db 
+  const idx = argv.indexOf("-db");
+  if( idx >= 0 ) 
+    return argv[idx + 1];
+}
+
+const platformSupportsPrinting = view.mediaVar("supports-printing");
+
+

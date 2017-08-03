@@ -1,0 +1,144 @@
+include "libs/vtree.tis";
+include "libs/formation.tis";
+
+class TagsTree : Element 
+{
+
+  function attached() {
+
+    var kind = this.attributes["name"] == "tags" ? Tag.KIND_CUSTOM : Tag.KIND_SYSTEM;
+
+    function tagHtml(tag, items = undefined) {
+      var count = items ? items.length.toString() : "";
+      return String.printf("<span.tag.name>%s</span><span.count>%s</span>", tag.name, count );
+    }
+
+
+    function setupCaption(data,elCaption) {
+      if( typeof data == #array ) // tags intersection
+        elCaption.html = tagHtml(data[0], null);
+      else //if(data instanceof Tag) 
+        elCaption.html = tagHtml(data, data.items);
+    }
+
+    function eachRoot(cb) {
+
+      var tl = [];
+
+      if( currentBook ) {
+        var tagsMap = currentBook.getTagsMap(kind);
+        for(var (t,c) in tagsMap) tl.push(t);
+        tl.sort(:a,b: a.name.lexicalCompare(b.name) );
+        for( var t in tl ) {
+          var option = cb(t, true);
+          option.$(span.count).text = tagsMap[t].toString(); 
+        }
+      } else {
+        db.selectTags(:tag: tl.push(tag), kind );
+        tl.sort(:a,b: a.name.lexicalCompare(b.name) );
+        for( var t in tl )
+          cb(t, t.hasIntersections);
+      }
+
+    }
+
+    function eachChild(data,cb) 
+    {
+      var tl = [];
+
+      if( data instanceof Tag ) 
+      {
+        var andTags = data.getIntersections(currentBook);
+        for(var (t,c) in andTags) tl.push(t);
+        tl.sort(:a,b: a.name.lexicalCompare(b.name) );
+        for( var t in tl ) {
+          var option = cb([t,data], false);
+          option.$(span.count).text = andTags[t].toString(); 
+        }
+      }
+      else // data is array of tags
+      {
+        //db.selectTags(:tag: tl.push(tag), data.kind );
+        //tl.sort(:a,b: a.name.lexicalCompare(b.name) );
+        //for( var t in tl )
+        //  cb(t, t.hasIntersections);
+      }
+    }
+
+    var updater = VirtualTree {
+      container: this,
+      eachChild: eachChild,      
+      eachRoot: eachRoot,
+      setupOptionCaption: setupCaption,
+      autoExpandRoots: false
+    };
+
+    var me = this;
+
+    function throttledUpdate() { me.timer(100ms,updater); }
+
+    // in all these cases we need to update tags view
+    self << event tag-created { throttledUpdate(); }     
+    self << event tag-assigned { throttledUpdate(); }
+    self << event tag-removed { throttledUpdate(); } 
+    self << event tag-updated { throttledUpdate(); } 
+    self << event book-selected { throttledUpdate(); } 
+    self << event notes-filter-changed { 
+      if( var current = me.$(option:current)) {
+        if( current.data != filterTags ) 
+          me.value = undefined;
+      } 
+    }
+  }  
+
+  event change 
+  {
+     var current = this.$(option:current).data;
+     if( current instanceof Tag )
+       setFilterTags(current);
+     else if( typeof current == #array )
+       setFilterTags(current);
+     //else if(current.kind === null)
+     //  setFilterTags(null);
+  }
+
+
+  event click $(menu#tag > li[name=rename-tag]) (evt) {
+    var option = evt.target.$p(menu).owner.$p(option);
+    EditTag(option);
+  }
+
+  event click $(menu#tag > li[name=delete-tag]) {
+    //tag.extend( formation(menu).value );  
+    var option = evt.target.$p(menu).owner.$p(option);
+    var tag = option.data;
+  }
+
+  function EditTag(option) {
+    var tag = option.data;
+    var caption = option.$(span.name);
+    caption.attributes.addClass("editing");
+    caption.post( function() { /*caption.value = tag.name;*/ caption.state.focus = true; });
+    function commit(text) {
+      //stdout.println("commit", text);
+      caption.attributes.removeClass("editing"); 
+      caption.off(".tagedit");
+      if( text && (tag.name != text) )
+        tag.update { name: db.getUniqueTagName(text) };
+    }
+    //caption.on("mousedown.tagedit", function() { return true; });
+    //caption.on("mouseup.tagedit", function() { return true; });
+    caption.on("focusout.tagedit", function() { commit(this.value) });
+    caption.on("keydown.tagedit", function(evt) { 
+      switch( evt.keyCode ) {
+        case Event.VK_RETURN: commit( this.value ); return true;
+        case Event.VK_ESCAPE: commit( tag.name ); return true;
+      }
+    });
+
+  }
+
+}
+
+
+

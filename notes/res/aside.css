@@ -1,0 +1,107 @@
+@const ADUR: 400ms; // animation duration
+
+@import url(books-view.css);
+@import url(tags-view.css);
+
+aside {
+  flow:vertical;
+  height:*;
+  font-family:Verdana, sans-serif;
+  font-size:12dip;  
+  prototype: SidePanel url(aside.tis);  
+  overflow-x:hidden;
+}
+
+aside:collapsed {
+  max-width:38dip;
+  min-width:38dip;
+  transition: max-width(sine-in-out,@ADUR);
+}
+
+aside span.count { color:#888; }
+
+aside > header {
+   flow:horizontal;
+}
+
+aside > header > text {
+  width:*;
+  height:*;
+  font-size:16dip; 
+  color:#aaa;  
+  padding:0.5em;
+  overflow:hidden;
+}
+
+aside:collapsed > header > text {
+  padding:0.5em 0;
+  transition: padding(sine-in-out,@ADUR);
+}
+
+aside > header > hamburger 
+{
+  behavior:clickable; 
+  aspect: Hamburger(duration:@ADUR) url(libs/hamburger.tis);
+  display:block;
+  size:12dip;
+  stroke: #fff;
+  stroke-width: 2dip;
+  padding:13dip;
+  cursor:pointer;
+}
+
+
+// things that are shown only in expanded state are marked by @full
+aside [full] { 
+  vertical-align:bottom;
+}
+
+aside:collapsed [full] {
+  visibility:none;
+  height:0;
+  transition: height(sine-in-out,@ADUR) visibility(linear,@ADUR);
+}
+
+aside > section { overflow:hidden; height:max-content; }
+
+aside > section > header 
+{
+  flow:horizontal;
+  font-size:16dip; 
+  color:#aaa;  
+  padding:0.5em;
+  overflow:hidden;
+  height:max-content;
+  visibility:visible;
+/*  padding-left:2em;
+  foreground-size:1em;
+  foreground-position:0.5em 50%;
+  foreground-repeat:no-repeat;
+  fill:#ddd; */
+} 
+
+aside > section > header > span.name {
+  display:block;
+  width:max-content; 
+  margin-right:*;
+  white-space:pre;
+  padding:0;
+  line-height:38dip;
+}
+
+aside > section > header > span.count {
+  display:block;
+  width:max-content;
+  padding:0 6dip 0 0;
+  line-height:38dip;
+}
+
+aside > section > header > span.name::after { content:":"; }
+
+aside > section:collapsed > header > span.name::after { content:"\2026"; /*ellipsis*/ }
+
+aside > section > tags-view { margin-left: 1em; }
+
+/* when sidebar is collapsed it is not resizeable so we hide its splitter */
+aside:collapsed + splitter { visibility:collapse; }
+

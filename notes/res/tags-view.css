@@ -1,0 +1,92 @@
+
+@set tags-view < std-tree 
+{
+  tags-view {
+    prototype: TagsTree url(tags-view.tis);
+    display:block;
+    width:*;
+    height:max-content;
+    overflow-y: none;
+    overflow-x: hidden;
+    background: none;
+    border:none;
+    font: system;    
+    //font-family:Verdana, sans-serif;
+    font-size:14dip;
+    //background: #333;  
+    color: #fff;  
+  }
+
+  option {
+    line-height: 24dip;
+    min-height: 24dip;
+  }
+
+  option:not(:node) { max-width:auto; width:*; background:none; padding:0; }
+
+  // caption
+  option > text { flow:horizontal; width:*; background:none; padding:0 6dip; }
+
+  option:not(:node):current > text,
+  option:node:current > text 
+  {
+    background:var(selection-dark,#c2e5fe);
+  }
+
+  option > text:hover { foreground-color:var(selection-dark-hover,#0f0); }
+  
+  option > text > span.name {
+    display:block;
+    //font-weight:bold;
+    width:max-content; 
+    margin-right:*;
+    white-space:pre;
+    //padding:6dip;
+  }
+
+  option > text > span.name.editing {
+    behavior:edit;
+    background: #fff;
+    color:#000;
+    width:*; 
+    margin-right:4dip;
+    overflow-x: hidden-scroll;
+  }
+
+  option > text > span.count {
+    display:block;
+    width:max-content;
+  }
+
+  option:current span.count {
+    color:#fff;
+  }
+
+
+  option > text > i {
+    display:block;
+    margin-right:8dip;
+    size:1.4em 1em;
+    //text-align:center;
+    //font-size:120%;
+    //border-radius:0.4em;
+    //border-width:1px;
+    //border-style:solid;
+  }
+
+  option:node:expanded { foreground-position: 5dip 8dip; foreground-size:7dip 7dip; }
+  option:node:collapsed { foreground-position: 7dip 8dip; foreground-size:6dip 9dip; }
+
+  :root > option > text {
+     context-menu: selector(menu#tag);
+     color:#fff;
+  }
+
+}
+
+tags-view { 
+  style-set: tags-view; 
+}
+
+
+
