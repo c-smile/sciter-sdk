@@ -47,7 +47,7 @@
   <div>
     <table border="1" bordercolor="#fff2cc" cellspacing="0">
       <tr>
-        <td rowspan="20" valign="top"><strong>Font and paragraph properties</strong></td>
+        <td rowspan="23" valign="top"><strong>Font and paragraph properties</strong></td>
         <td nowrap="" align="right"><strong>font</strong></td>
         <td>
           <div>specifies up to six of the following space-delimited property values. Alternatively, sets or retrieves the six listed text fonts.</div>
@@ -156,7 +156,7 @@
             <tr>
               <td nowrap="" align="right"><strong>line-height</strong></td>
               <td>
-          <div><strong>specifies</strong> one of the following values:</div>
+          <div>specifies one of the following values:</div>
           <table>
             <tr>
               <td>normal</td>
@@ -174,7 +174,7 @@
             <tr>
               <td nowrap="" align="right"><strong>text-align</strong></td>
               <td>
-          <div><strong>specifies</strong> one of the following values:</div>
+          <div>specifies one of the following values:</div>
           <table>
             <tr>
               <td>left</td>
@@ -192,24 +192,22 @@
             <tr>
               <td nowrap="" align="right"><strong>text-decoration</strong></td>
               <td>
-          <div><strong>specifies</strong> one of the following values.</div>
-          <table>
-            <tr>
-              <td nowrap="" valign="middle">none</td>
-              <td>Default. Text has no decoration.</td></tr>
-            <tr>
-              <td nowrap="" valign="middle">underline</td>
-              <td>Text is underlined.</td></tr>
-            <tr>
-              <td nowrap="" valign="middle">overline</td>
-              <td>Text has a line over it.</td></tr>
-            <tr>
-              <td nowrap="" valign="middle">line-through</td>
-              <td>Text has a line drawn through it.</td></tr>
-            <tr>
-              <td nowrap="" valign="middle">blink</td>
-              <td>Not implemented.</td></tr></table>
-          <div>See: <a href="http://www.w3.org/TR/CSS1#text-decoration">Cascading Style Sheets, level 1</a></div></td></tr>
+          Shorthand, list of text-decoration-line, text-decoration-style and text-decoration-color values.</td></tr>
+          <tr><td nowrap="" align="right"><b>text-decoration-line</b></td>
+              <td>
+      					Position of text decoration:
+                <ul>  
+                 <li><i>none</i> - &nbsp;default, text has no decoration;</li>
+						<li><i>underline</i> -&nbsp;text is underlined;</li>
+						<li><i>overline</i> - text has a line over it;</li>
+						<li><i>line-through</i> - text has a line drawn through it.</li>
+                </ul></td></tr><tr><td nowrap="" align="right"><b>text-decoration-style</b></td><td>
+					Style of text decoration:<ul><li><i>solid</i> - &nbsp;default, solid line;</li>
+						<li><i>double</i> - doubled line;</li>
+						<li><i>dotted</i> - dotted line;</li>
+						<li><i>dashed</i> - dashed line;</li>
+						<li><i>wavy</i> - wavy line</li></ul></td></tr><tr><td nowrap="" align="right"><b>text-decoration-color</b></td><td>
+					Specifies color of text decoration.<p>color&nbsp;or <i>currentcolor</i> name token (default, current text color).</p></td></tr>
             <tr>
               <td nowrap="" align="right"><strong>text-indent</strong></td>
               <td>

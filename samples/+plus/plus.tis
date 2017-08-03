@@ -165,6 +165,9 @@ const Plus = function() {
               thing.state.disabled = !!v; break;
             case "enabled":
               thing.state.disabled = !v; break;
+            case "readonly":
+              stdout.println("readonly",!!v);
+              thing.state.readonly = !!v; break;
             default:
               thing.@[attr] = v;  
           }

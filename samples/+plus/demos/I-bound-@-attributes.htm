@@ -32,6 +32,7 @@
                              {name:"Comodo", image:"http://sciter.com/screenshots/slide-comodo.png"} ];
                              
         var isButtonEnabled = true;
+        var isEditReadonly = false;
         
         var isSectionExpanded = true;
         var isSectionCollapsed = true;
@@ -58,6 +59,12 @@
   <form>
     <button @enabled="isButtonEnabled">this button</button> <button|checkbox(isButtonEnabled)>is enabled</button> 
   </form>
+
+  <h3>@readonly attribute demo</h3> 
+  <form>
+    <textarea @readonly="isEditReadonly">Text</textarea> <button|checkbox(isEditReadonly)>is readonly</button> 
+  </form>
+
   
   <h3>@expanded attribute demo</h3> 
 

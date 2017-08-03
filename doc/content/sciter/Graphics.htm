@@ -63,8 +63,8 @@
       <p>Draws circle or ellipse using current lineColor/lineGradient and fillColor/fillGradient.</p></dd>
     <dt>arc</dt>
     <dd>
-      <div>( x1:<em>float</em>, y1:<em>float</em>, rx:<em>float</em>, ry:<em>float</em>, startAngle:<em>float</em>, endAngle:<em>float</em> ) : Graphics</div>
-      <p>Draws closed arc using current lineColor/lineGradient and fillColor/fillGradient.</p></dd>
+      <div>( x1:<em>float</em>, y1:<em>float</em>, rx:<em>float</em>, ry:<em>float</em>, startAngle:<em>float</em>, swipeAngle:<em>float</em> ) : Graphics</div>
+      <p>Draws arc or pie (if fill is set) using current lineColor/lineGradient and fillColor/fillGradient.</p></dd>
     <dt>star</dt>
     <dd>
       <div>( x1:<em>float</em>, y1:<em>float</em>, r1:<em>float</em>, r2:<em>float</em>, startAngle:<em>float</em>, numRays:<em>integer</em> ) : Graphics</div>
@@ -271,8 +271,9 @@
       <p>Draws vertical line and moves current drawing path position to (current)x, y. If <em>relative</em> is <em>true</em> then <em>y</em> is interpreted as a delta from the current path position.</p></dd>
     <dt>arcTo</dt>
     <dd>
-      <div>( x:<em>float</em>, y:<em>float,</em> angle:<em>float, </em>rx:<em>float</em>, ry:<em>float, </em>largeArc:<em>bool, </em>sweep: <em>bool </em>[, relative <em>= false</em> ] ) : Graphics.Path</div>
-      <p>(tbd)</p></dd>
+      <div>( x1:<em>float</em>, y1:<em>float,</em> x2:<em>float</em>, y2:<em>float</em>, radius: <em>float&nbsp;</em><em> </em>[, relative <em>= false</em> ] ) : Graphics.Path</div>
+      <p>Draws arc at the corner (point x1,y1) between two lines x0,y0 to x1,y1 and x1,y1 to x2,y2.  See: <a onmousedown="return rwt(this,'','','','3','AFQjCNEYwX0AEYPgDi7lZpmT-fu-hkXZDg','','0ahUKEwiIlomZyu7UAhUL4WMKHUIGC24QFgg1MAI','','',event)" href="https://www.google.ca/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=3&amp;ved=0ahUKEwiIlomZyu7UAhUL4WMKHUIGC24QFgg1MAI&amp;url=http%3A%2F%2Fwww.dbp-consulting.com%2Ftutorials%2Fcanvas%2FCanvasArcTo.html&amp;usg=AFQjCNEYwX0AEYPgDi7lZpmT-fu-hkXZDg" data-ctbtn="0" data-cthref="/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=3&amp;ved=0ahUKEwiIlomZyu7UAhUL4WMKHUIGC24QFgg1MAI&amp;url=http%3A%2F%2Fwww.dbp-consulting.com%2Ftutorials%2Fcanvas%2FCanvasArcTo.html&amp;usg=AFQjCNEYwX0AEYPgDi7lZpmT-fu-hkXZDg">Canvas 
+ArcTo Tutorial</a></p></dd>
     <dt>quadraticCurveTo</dt>
     <dd>
       <div>( xc:<em>float</em>, yc:<em>float</em> , x:<em>float</em>, y:<em>float</em> [, relative <em>= false</em> ] ) : Graphics.Path</div>

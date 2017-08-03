@@ -43,8 +43,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 {
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
-
-
+  
   OleInitialize(0); // for system drag-n-drop
 
   check_dpi_ready();
@@ -57,7 +56,9 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
   // SciterAppendMasterCSS test, adding <checkbox>text</checkbox> element.
   //const char* def = "checkbox { display:inline-block; display-model:inline-inside; style-set: \"std-checkbox\"; }";
   //SciterAppendMasterCSS((const byte*)def,UINT(strlen(def))); 
-    
+
+  //SciterSetOption(NULL, SCITER_SET_UX_THEMING, TRUE);
+      
   std::wstring file_name = L"res:default.htm";
   
   // command line parsing to handle invocation from Windows Explorer.

@@ -75,8 +75,29 @@
     <dd><font color="#999999">r</font> - integer, number of screen (monitor) on which this element is rendered at the moment. Note in can be different from view.screen for popup elements.</dd>
     <dt>awaitsDraw</dt>
     <dd><font color="#999999">rw</font> - boolean, flag indicating that the element is awaiting to be drawn after <code>Element.refresh()</code> was issued for it. Sciter sets this flag autmatically. It also resets it when the element gets drawn on the scree. In between you can set/reset it from code. </dd>
-    <h2>Methods</h2>
-    <dt>get</dt>
+		<dt>flowType</dt>
+		<dd>r - symbol, reports flow type used by the element, is one of: &nbsp;<p>
+#vertical,
+#horizontal,
+#horizontal-flow,
+#vertical-flow,
+#grid,
+#table,
+#table-fixed,
+#stack,
+#text,
+#table-row,
+#table-body,
+#columns,
+#null,
+#image,
+#svg,
+#svg-child or   
+    <code>undefined</code> (if element is inline or display-none).</p>
+    </dd>
+<h2>Methods</h2>
+
+<dt>get</dt>
     <dd>
       <div><strong>()</strong> returns: <em>int</em></div>
       <p>Returns integer - &quot;ORed&quot; set of Element.STATE_*** constants.</p></dd>

@@ -55,17 +55,19 @@
           
           gfx.strokeWidth(10)
              .strokeCap(#round)
-             .strokeDash([50,20])
+             .strokeDash([50,50])
              .strokeColor(color(0,0xAF,0))
              .fillRadialGradient( (x1+x2)/2, (y1+y2)/2, Integer.min(w,h) / 2, [color(0,0xFF,0,0.3), color(0xFF,0,0,0.5), color(0x7F,0xAF,0x7F)] )
              .triangle( (x1+x2)/2, y1, x2, y2, x1, y2 );
 
           gfx.strokeWidth(2)
              .strokeColor(color(0,0,0xFF))
+             .strokeDash([10,10])
              .line( x1, y1, x2, y2 );
 
           gfx.lineWidth(2)
              .strokeColor(color(0,0xFF,0))
+             .strokeDash(#solid)
              .fillColor(color(0,0x7F,0,0.5))
              .polygon( 0,0, 40,40, 40, 0, 0, 40);
 

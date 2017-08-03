@@ -203,8 +203,8 @@
 
       event click $(div#toolbar > button#inspector)
       {
-        if(!view.inspectorIsPresent()) // native function, defined in sciter.cpp
-          Sciter.launch( System.home("inspector.exe") );
+        //if(!view.inspectorIsPresent()) // native function, defined in sciter.cpp
+        Sciter.launch( System.home("inspector.exe") );
       
         if( var connectToInspector = view.connectToInspector ) 
           connectToInspector($(frame#content));

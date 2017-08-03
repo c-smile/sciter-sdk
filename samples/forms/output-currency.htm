@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+           form {
+              flow: row(label,output);
+              border-spacing: 0.5em;
+           } 
+
+           form > label { white-space:nowrap; }
+
+        </style>
+        <script type="text/tiscript">
+
+           function self.ready() {
+              $(#myform).value = {
+                cur: 2500.355456,  
+                dec: 2500.355456,
+                txt: String.printf("%.2f",2500.355456)
+              }
+           } 
+
+
+        </script>
+    </head>
+    <body>
+
+         <form #myform>
+           <label>currency:</label>
+              <output|currency(cur) />
+           <label>decimal with custom formatting:</label>
+              <output|decimal(dec) format="precision:2,grouping:3" />
+           <label>text formatting using String.printf():</label>
+              <output|text(txt) />
+
+         </form>
+
+    </body>
+</html>

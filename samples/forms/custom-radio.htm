@@ -8,6 +8,7 @@
         background-size:16dip 16dip; 
         background-position: 0 50%; 
         stroke:#333;
+        stroke-width:1dip;
       }
       button[type=radio]:checked { 
         // that fat dot inside:
@@ -20,6 +21,26 @@
       button[type=radio]:hover {
         stroke:#0af;
       }
+
+      button[type=checkbox] { 
+        background-image:url(stock:frame); 
+        background-size:16dip 16dip; 
+        background-position: 0 50%; 
+        stroke:red;
+        stroke-width:1dip;
+      }
+      button[type=checkbox]:checked { 
+        // that fat dot inside:
+        foreground-image:url(stock:checkmark); 
+        foreground-size:9dip 9dip; 
+        foreground-position: 4dip 50%; 
+        foreground-repeat: no-repeat; 
+      }
+      
+      button[type=checkbox]:hover {
+        stroke:#0af;
+      }
+
     
     </style>
     <script type="text/tiscript"></script>
@@ -28,6 +49,10 @@
 
   <button|radio(group) checked>first</button>
   <button|radio(group)>second</button>
+<hr>
+  <button|checkbox(a) checked>first</button>
+  <button|checkbox(b)>second</button>
+
 
 </body>
 </html>

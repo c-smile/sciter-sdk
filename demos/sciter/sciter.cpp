@@ -228,7 +228,6 @@ namespace sciter
     return json::value(hwnd != NULL);
   }
 
-
   json::value main_frame::get_native_functor_test()
   {
       // returns native function/functor callable from script

@@ -1,70 +1,68 @@
 
-/* lightbox shim */
-div#lightbox-shim 
-{
-  position: fixed;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  /*background-color:rgba(0,0,0,0.3); or this*/
-  background: url(images/shim-bg.png) repeat;
-  background-image-transformation:color-schema("system");
+body.dialog-shown {
+  filter: blur(15dip);
+  foreground-color:rgba(128,128,128,0.5);
+  transition: foreground-color(linear,400ms);
 }
 
 /* dialog "window" frame */
-div#lightbox-shim > div.dialog-frame 
+div.dialog-frame 
 {
+  position:absolute;
   font: system;
-  width: 300px;
+  width: 300dip;
+  height: max-content;
   min-width: min-content;
-  margin-left: 50%%;
-  margin-right: 50%%;
-  margin-top: 40%%;
+  left: *;
+  right: *;
+  top: 0.4*;
+  bottom: 0.6*;
   background-image: url(images/dialog2.png);/* square top / round bottom */
   background-repeat: expand;
-  background-position: 38px 20px 20px 20px;
+  background-position: 38 20 20 20;
   background-image-transformation:color-schema("system");
   
   //background-color: window;
-  //border-radius: 0 0 10px 10px; /* square top / round bottom */
+  //border-radius: 0 0 10dip 10dip; /* square top / round bottom */
   
   padding:10px;
 }
 
 /* dialog "window" caption */
-div#lightbox-shim > div.dialog-frame > caption 
+div.dialog-frame > caption 
 {
   font-weight: bold;
-  line-height: 28px;
+  line-height: 28dip;
   background-color: threedface threedface threedshadow threedshadow;
-  padding:0 10px;
+  padding:0 10dip;
 }
 
 /* dialog body element */
-div#lightbox-shim > div.dialog-frame > :nth-child(2) 
+div.dialog-frame > :nth-child(2) 
 {
   height: *;
-  padding: 10px;
+  padding: 10dip;
 }
 
 /* dialog button bar */
-div#lightbox-shim > div.dialog-frame > text.buttons
+div.dialog-frame > text.buttons
  {
-  margin:20px 10px 10px *;
+  margin:20dip 10dip 10dip *;
   width: max-intrinsic;
   white-space: nowrap;
+  border-spacing:10dip;
+  flow:horizontal;
   /*
-  border-top: 1px solid threedshadow;
-  padding-top: 10px;
+  border-top: 1dip solid threedshadow;
+  padding-top: 10dip;
   */
 }
 
 /* button on dialog button bar */
-div#lightbox-shim > div.dialog-frame > text.buttons > button 
+div.dialog-frame > text.buttons > button 
 {
-  width: 55px;
+  width: 55dip;
   text-align: center;
   vertical-align: middle;
-  padding: 5px 10px;
+  padding: 5dip 10dip;
 }

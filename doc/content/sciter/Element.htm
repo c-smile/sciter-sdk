@@ -220,6 +220,13 @@ var li3 = self.$( ul &gt; li:nth-child({n}) );
       <p>Returns first element in child/parent chain satisfying CSS selector.</p>
       <p>Note 1: this is a stringizer method - the <em>CSSselector</em> provided literally.</p>
       <p>Note 2: Function also inspects <em>this</em> element.</p></dd>
+    <dt>$o</dt>
+    <dd>
+      <div><strong>( </strong><em>CSSselector</em><strong> )</strong> returns: <em>Element</em></div>
+      <p>Returns first owner element in child/parent chain satisfying CSS selector.</p>
+      <p>Note 1: this is a stringizer method - the <em>CSSselector</em> provided literally.</p>
+      <p>Note 2: Function also inspects <em>this</em> element.</p></dd>
+      <p>Note 3: Most of the time element's owner is is its parent except of popup menus when the owner is the element requested the popup.</p></dd>
     <dt>selectParent</dt>
     <dd>
       <div><strong>(func , CSSselector</strong>: string<strong> [, argument1 [, argument2, ... ]])</strong> returns: <em>integer</em></div>
@@ -748,10 +755,11 @@ Calibri;mso-hansi-font-family:Calibri;mso-bidi-font-family:Calibri">popup-positi
         <li><code>&quot;edit:delete-next&quot;</code> - if there is a selection - delete selected content, otherwise delete next character;</li>
         <li><code>&quot;edit:delete-prev&quot;</code> - if there is a selection - delete selected content, otherwise delete previous character;</li>
         <li><code>&quot;edit:delete-word-next&quot;</code> - if there is a selection - delete selected content, otherwise delete next word;</li>
-        <li><code>&quot;edit:delete-word-prev&quot;</code> - if there is a selection - delete selected content, otherwise delete previous word;</li></ul>
-      <p>Editing commands supported by behavior richtext elements ( &lt;htmlarea&gt; ):</p>
+        <li><code>&quot;edit:delete-word-prev&quot;</code> - if there is a selection - delete selected content, otherwise delete previous word;</li>
+				<li><code>&quot;edit:insert-break&quot;</code> - essentially this is &quot;ENTER&quot; (VK_RETURN) command, actual DOM modification depends on context;</li>
+				<li><code>&quot;edit:insert-text&quot;</code> - inserts text at current caret position, <i>attributes</i> shall contain string to insert;</li></ul>
+      <p>Editing commands supported only by&nbsp;<code>behavior:richtext</code> elements ( &lt;htmlarea&gt; ):</p>
       <ul>
-        <li><code>&quot;edit:insert-break&quot;</code> - essentially this is &quot;ENTER&quot; (VK_RETURN) command, actual DOM modification depends on context;</li>
         <li><code>&quot;edit:insert-soft-break&quot;</code> - &quot;SHIFT+ENTER&quot; command, inserts <code>&lt;br&gt;</code> separator but actual DOM modification depends on context;</li>
         <li><code>&quot;format:apply-span:{tag-list}&quot;</code> - wrap selection into span element, if the selection contains one of tags they will be removed.</li>
         <ul>
@@ -879,11 +887,12 @@ Calibri;mso-hansi-font-family:Calibri;mso-bidi-font-family:Calibri">popup-positi
     <h4>Behavior specific events</h4>
     <dt>attached() : void</dt>
     <dd>Method of behavior class (type). If defined in the type definition then it will be invoked by the engine when DOM element will be subclassed by this class. Variable <em>this</em> inside this function is a reference to the DOM element this behavior was just attached to. Consider <em>attached</em>() as an equivalent of constructor function for other classes.</dd>
-    <dt>onTimer()</dt>
-    <dd>Timer tick. To start timer on the element use <em>element.timer(milliseconds)</em> call. Return <em>false</em> from this method to stop the timer.</dd>
     <dt>onSize()</dt>
     <dd>Size of the element was changed. To get dimensions use <em>this.box()</em> function.</dd>
-    <h4>Root specific events</h4>
+		<dt>onRequest(rq: <a href="Request.htm">Request</a>)</dt>
+		<dd><code>&lt;frame&gt;</code> and <code>&lt;htmlarea&gt;</code> specific callback methods.   When defined the method will be called before execution of the request. The handler can call <code>rq.fulfill()</code>&nbsp;to provide data for the request;</dd>
+		<dt>onRequestResponse(rq: <a href="Request.htm">Request</a>)</dt>
+		<dd><code>&lt;frame&gt;</code> and <code>&lt;htmlarea&gt;</code> specific callback methods.   The method will be called after completion (with success or failure) of the request.&nbsp;</dd>
     <dt>self.ready()</dt>
     <dd>Event is generated as a final step of document loading.</dd>
     <dt>self.closing(reason)</dt>

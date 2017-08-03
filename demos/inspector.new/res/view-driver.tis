@@ -43,6 +43,13 @@ class ViewDriver: Behavior
     me.breakpoints = [];
     socket.on("data",function( data ) 
     {
+      if( data == #activate ) // gets sent by another instance of the inspector
+      {
+        view.windowState = View.WINDOW_SHOWN;
+        me.active = false;
+        me.deeDetach();
+        return;
+      }  
       //stdout.printf("from dee: %V\n",data);
       const method = ViewDriver[data.shift()];
       assert(typeof method == #function);
@@ -123,9 +130,10 @@ class ViewDriver: Behavior
     this.deeUrl = url;
     this.label.$(text).text = title;
     log.clearMsgs();
-    var res = this.resources[url];
-    this.resources = {};
-    this.resources[url] = res;
+    this.resources = {};    
+    if(var res = this.resources[url]) {
+      this.resources[url] = res;
+    }
     this.postEvent("connected");     
     this.postEvent("resource-arrived"); 
     //stdout.printf("deeReattach %V\n", url);

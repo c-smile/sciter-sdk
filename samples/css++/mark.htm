@@ -1,0 +1,60 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+           textarea {
+             display:block;
+           }
+
+           textarea::mark(found) { 
+            color: brown; 
+            background-color:yellow;
+          }
+
+        </style>
+        <script type="text/tiscript">
+
+          var textToLookup = "bar"; 
+
+          function highlightFound(ta) 
+          {
+             var textNode = ta.firstNode; // getting text node of text area
+             var text = textNode.text;             
+             // clear mark 
+             {
+               var bookmarkStart = [bookmark:textNode, 0, false];
+               var bookmarkEnd = [bookmark:textNode, text.length, false];
+               Selection.clearMark(bookmarkStart,bookmarkEnd,"found");
+             }
+             // apply mark to first found word if any
+             var pos = text.indexOf(textToLookup);
+             if( pos >= 0) {
+               var bookmarkStart = [bookmark:textNode, pos, false];
+               var bookmarkEnd = [bookmark:textNode, pos + textToLookup.length, false];
+               Selection.applyMark(bookmarkStart,bookmarkEnd,"found");
+             }
+          }
+
+          // initial higlightion
+          highlightFound($(textarea));
+
+          // on change higlightion
+          event change $(textarea) { highlightFound(this); }
+          event change $(input#what) { textToLookup = this.value; highlightFound($(textarea)); }
+
+        </script>
+    </head>
+    <body>
+
+<h2>Demo of CSS ::mark(name) pseudo-element styling</h2>
+
+     Text to lookup: <input|text #what value="bar" />
+
+     <textarea>foo
+bar
+test</textarea>
+
+
+    </body>
+</html>

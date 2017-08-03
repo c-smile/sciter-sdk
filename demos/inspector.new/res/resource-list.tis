@@ -2,15 +2,6 @@
 
 // handles list of host resources
 class ResourceList: Behavior {
-
-  const DATA_HTML = 0;
-  const DATA_IMAGE = 1;
-  const DATA_STYLE = 2;
-  const DATA_CURSOR = 3;
-  const DATA_SCRIPT = 4;
-  const DATA_RAW_DATA = 5;    // raw data request
-  const DATA_FONT = 6;
-  const DATA_SOUND = 7; // wav bytes
     
   function attached() {
   
@@ -59,7 +50,7 @@ class ResourceList: Behavior {
     
     for( var (url,res) in this.driver.resources ) 
     {
-      var list = this.sections[res.type || DATA_HTML];
+      var list = this.sections[res.type || Request.DATA_HTML];
       if( !list ) list = this.othersList;
       var urlparts = res.url.match(URL_PARTS);
       if( !urlparts ) // wrong

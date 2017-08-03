@@ -20,7 +20,7 @@ int uimain(std::function<int()> run ) {
   // note: this:://app URL is dedicated to the sciter::archive content associated with the application
   pwin->load( WSTR("this://app/facade.htm") );
 
-  pwin->expand();
+  //pwin->expand(); - script will show it
 
   return run();
 

@@ -1,4 +1,4 @@
-<html>
+﻿<html>
   <head>
     <meta name="generator" content="h-smile:richtext"/>
   </head>
@@ -12,13 +12,13 @@
       
         <h2>Properties</h2>
     
-      <dt/>
+      <dt></dt>
       <dd>N/A</dd>
     
       
         <h2>Enumeration</h2>
     
-      <dt/>
+      <dt></dt>
       <dd>
         <div>N/A</div></dd>
     
@@ -37,7 +37,7 @@
     
       <dt>split</dt>
       <dd>
-        <div><strong>( pos</strong>:bookmark, <strong>until</strong>: Element <strong>)</strong> : <em>Transact</em></div>
+        <div><strong>( pos</strong>:bookmark, <strong>until</strong>: Element <strong>)</strong> : <em>Bookmark</em></div>
         <p>Split DOM elements at <em>pos</em> position until the element. Example, for the markup:</p>
         <pre>&lt;p id=test&gt;123&lt;b&gt;456&lt;/b&gt;789&lt;/p&gt;
 </pre>
@@ -48,8 +48,7 @@ var pos = [bookmark: b.nodes()[0], 1, false]; // start edge of character '5' in 
 transact.split( pos, p );
 </pre>
         <p>will change the DOM to this state:</p>
-        <pre>&lt;p id=test&gt;123&lt;b&gt;4&lt;/b&gt;&lt;b&gt;56&lt;/b&gt;789&lt;/p&gt;
-</pre></dd>
+        <pre>&lt;p id=test&gt;123&lt;b&gt;4&lt;/b&gt;&lt;b&gt;56&lt;/b&gt;789&lt;/p&gt;</pre><p>The function returns bookmark set to&nbsp;position  inside <i>until</i> element.</p></dd>
     
       <dt>wrap</dt>
       <dd>
@@ -85,6 +84,6 @@ transact.split( pos, p );
       <dd>
         <div><strong>( from</strong>:bookmark, <strong>to</strong>:bookmark <strong>)</strong> : <em>Transact</em></div>
         <p>TBD (removes range from the DOM).</p></dd></dl>
-  <p/>
+  <p></p>
 </body>
 </html>

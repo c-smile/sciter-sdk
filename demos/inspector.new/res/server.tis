@@ -13,10 +13,26 @@ function serve() {
  
   var serverSocket = DataSocket.listen(driver,PORT,"0.0.0.0");
   if( !serverSocket ) {
-    view.msgbox(#error, "Another instance of Inspector is running.");
-    view.close();
-  }
-  //else     
-  //  stdout.println("listening");
+    //view.msgbox(#error, "Another instance of Inspector is running.");
+    var socket = DataSocket.connect(PORT, "localhost");
+    if(!socket) 
+    {
+      view.msgbox(#error, "Inspector cannot establish connection with another instance.");
+      view.close();
+      return;
+    }
+    socket.on("connect",function() { 
+      socket.send( #activate );
+    });    
+    socket.on("sent",function() { 
+      // other instance have received #activate, so close this one
+      self.timer(100ms, function() {
+        socket.close(); 
+        view.close();
+      });
+    });    
+
+  } else
+    view.windowState = View.WINDOW_SHOWN;
 }
 

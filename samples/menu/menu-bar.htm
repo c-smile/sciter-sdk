@@ -61,6 +61,10 @@
         stdout.println("menu item click on ", this); 
       });
     
+      self.on("click", "button[name=just-a-button]", function() {
+         //this.$p(menu).state.popup = false;
+         view.msgbox("dialog from menu");
+      });
     
     </script>  
   

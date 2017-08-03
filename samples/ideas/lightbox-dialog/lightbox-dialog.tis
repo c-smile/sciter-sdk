@@ -39,16 +39,16 @@ function dialog(params)
   }
 
   
-  var html = "<div#lightbox-shim>"
+  var html = 
     "<div.dialog-frame>"
       "<caption>" + caption + "</caption>"
       + body_html + 
       "<text.buttons>" + buttons_html + "</text>"
-    "</div>"
-  "</div>";
-
-  //self.$(body).append(html);
+    "</div>";
+  
   self.append(html);
+
+  assert self.last.$is(div.dialog-frame);
   
   var dlg = self.last; // our dialog layer
   var prev_parent = null;
@@ -60,7 +60,7 @@ function dialog(params)
     // if we've got dialog body as a reference of existing Element 
     prev_parent = body.parent;
     prev_index = body.index;
-    dlg.$(div.dialog-frame).insert(body,1); // insert it after the <caption>
+    dlg.insert(body,1); // insert it after the <caption>
   }  
   
   var ret_val = null; // value to return
@@ -83,7 +83,7 @@ function dialog(params)
   // setup control event handler
   dlg.onControlEvent = function(evt)
   {
-    if( evt.type != Event.BUTTON_CLICK || !evt.target.$is(div#lightbox-shim > div.dialog-frame > text.buttons > button))
+    if( evt.type != Event.BUTTON_CLICK || !evt.target.$is(div.dialog-frame > text.buttons > button))
       return;
     //evt.target is a button on text.buttons bar
     var button_val = buttons[evt.target.index].value;
@@ -122,7 +122,9 @@ function dialog(params)
   
   body.state.expanded = true;
 
-  view.update(); 
+  //view.update(); 
+  var docBody = $(body);
+  docBody.attributes.addClass("dialog-shown");
 
   var sfocus = view.focus;
   view.eventsRoot = dlg;
@@ -135,7 +137,8 @@ function dialog(params)
     prev_parent.insert(body,prev_index);
   
   dlg.detach(); // remove it from the DOM
-  view.update(); 
+  docBody.attributes.removeClass("dialog-shown");
+  //view.update(); 
   
   if(params.returns == #values && ret_val == #ok)
     return body.value;

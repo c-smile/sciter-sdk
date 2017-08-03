@@ -1,0 +1,70 @@
+﻿<html>
+  <head>
+    <title>TIScript - Request object</title>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>Request object</h1>
+  <p>Object that represents issued  request for external data. Note it is &quot;then'able&quot;, promise alike  object&nbsp;that can be used with <code>await</code>.&nbsp;</p>
+  <dl>
+    <h2>Constants</h2>
+    <p>return values of <code>Request.requestedDataType</code> property</p>
+    <dt>DATA_HTML</dt>
+    <dd>- html document requested;</dd>
+    <dt>DATA_IMAGE</dt>
+    <dd>- image requested;</dd>
+    <dt>DATA_STYLE</dt>
+    <dd>- css requested;</dd>
+    <dt>DATA_CURSOR</dt>
+    <dd>- cursor requested;</dd>
+    <dt>DATA_FONT</dt>
+    <dd>- font data requested;</dd>
+		<dt>DATA_RAW_DATA</dt>
+		<dd>- any data requested, <code>view.request()</code> produces requests if this type.&nbsp;</dd>
+    <h2>Properties</h2>
+    <dt>status</dt>
+    <dd>- <em>integer</em>, response&nbsp;state - http response code: 200 - OK, 404 - not found, etc.</dd>
+    <dt>requestedDataType</dt>
+    <dd>- <em>integer</em>, one DATA_*** values above, type of requested data.</dd>
+		<dt>response</dt>
+		<dd>- string, value, stream or byte array - data requested. Particular type is depends on <code>output</code> parameter of <code>view.request()</code> method.</dd>
+		<dt>responseData&nbsp;</dt>
+		<dd>- Bytes (byte array) - data requested as it was returned by server.</dd>
+		<dt>responseMimeType</dt>
+		<dd>- string, mime type of server response data.</dd>
+		<dt>isConsumed</dt>
+		<dd>- boolean, true if the request is consumed (by destination element).</dd>
+		<dt>isSucceeded</dt>
+		<dd>- boolean, true if the request was completed with success.</dd>
+		<dt>destination</dt>
+		<dd>- Element or View objects,  that requested the data.&nbsp;</dd>
+    <h2>Methods</h2>
+    <dt>fulfill</dt>
+    <dd>
+      <strong>( data</strong>: Bytes ,<strong> mime</strong>: string&nbsp;<strong>)</strong> : this
+      <p>Fulfill the request as if the data was delivered from server.</p></dd>
+    <dt>reject</dt>
+    <dd>
+      <strong>( status</strong>: integer<strong> )</strong> : this
+      <p>Reject the request as if server fails to deliver the data.</p></dd>
+    <dt>then</dt>
+    <dd>
+      <strong>( onSuccess</strong>: function [, <b>onFailure</b>: function]<strong> )</strong> : this
+      <p>Subscribes these functions to <i>success</i> and <i>failure</i> events on this request.</p>
+			<p>Where:</p>
+			
+        <ul><li> <code>function onSuccess(data, status)</code> - receives response data and status code;</li><li><code>function onFailure(err)</code> - receives failure as an instance of Error object.</li></ul>   
+      <p>Both functions are called with <i>this</i> set to the request object.</p>   
+    </dd>
+		<dt>catch</dt>
+    <dd>
+      <strong>( </strong><strong>callback</strong>: function<strong> )</strong> : this
+      <p>Subscribes the <i>callback</i> to <i>failure</i> event.</p>
+      </dd>
+    <dt>finally</dt>
+    <dd>
+      <strong>( </strong><strong></strong><strong>callback</strong>: function<strong> )</strong> : this
+      <p>Subscribes the <i>callback</i> to <i>completion</i> event so the callback is called on either success or failure.</p></dd>
+    </dl>
+</body>
+</html>
