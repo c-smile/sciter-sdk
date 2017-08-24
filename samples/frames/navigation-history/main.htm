@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style></style>
+        <script type="text/tiscript">
+
+    $(frame#content).onControlEvent = function(evt)
+    {
+      if( evt.type == Event.HISTORY_STATE_CHANGED )
+      {
+        $(button#prev).state.disabled = !this.canGoBack();
+        $(button#next).state.disabled = !this.canGoForward();
+        this.first.postEvent("activated"); // notifying current content about activation
+        return true;
+      }
+    }
+
+    event click $(button#prev) { $(frame#content).goBack(); }
+    event click $(button#next) { $(frame#content).goForward(); }
+
+        </script>
+    </head>
+    <body>
+       <button#prev disabled>Back</button>
+       <button#next disabled>Forward</button>
+
+       <frame#content history src="1.htm"></frame>
+
+    </body>
+</html>

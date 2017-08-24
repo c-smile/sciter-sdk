@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style></style>
+        <script type="text/tiscript">
+           function self.ready() {
+             $(pre#out).text += "initialized\n";
+           }
+           var counter = 0; 
+           self << event activated {
+             $(pre#out).text += ("3 activated " + (++counter).toString() + "\n");
+           }           
+        </script>
+    </head>
+    <body>
+         <h2>This is Step 3</h2>
+         <a href="1.htm">Go step 1</a>  
+         <pre#out/>
+
+    </body>
+</html>
