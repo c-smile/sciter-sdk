@@ -1,0 +1,31 @@
+
+details {
+  aspect: SummaryDetails url(html5x.tis);
+  display:block;
+  flow:vertical;
+  width:*;
+  height:min-content;
+}
+
+summary {
+  behavior:clickable;
+  display:block;
+  width:*;  
+  height:auto;
+  padding-left: 1em;
+  foreground-image: url(stock:arrow-right);
+  foreground-size: 0.4em 0.7em;
+  foreground-repeat: no-repeat;
+  foreground-position: 0.1em 50%;
+}
+
+details:expanded > summary { 
+  foreground-position: 0em 50%;
+  foreground-size: 0.7em 0.4em; 
+  foreground-image: url(stock:arrow-down); 
+}
+
+details > *:not(summary) { visibility:none; }
+details:expanded > *:not(summary) { visibility:visible; }
+
+

@@ -5,6 +5,16 @@
         <script type="text/tiscript" src="main.tis" />
         <menu.context#tag>
           <li(rename-tag)>Rename tag</li>
+          <caption>Tag color:</caption>
+          <div.colors>
+            <li color=0/>
+            <li color=1/>
+            <li color=2/>
+            <li color=3/>
+            <li color=4/>
+            <li color=5/>
+            <li color=6/>
+          </div>
           <hr>
           <li(detach-notes)>Detach notes</li>          
           <li(delete-tag)>Delete tag</li>
@@ -33,26 +43,13 @@
                 <label>Address:</label><input|text(url) default /></form>
           <footer><button(insert) disabled>Insert</button></footer>
         </popup>
-    </head>
 
-    <window-header>
-    </window-header>    
+    </head>
+    <!--<window-header></window-header>-->
     <body>
       <frameset cols="200dip,300dip,*">
         <aside>
-          <header>
-            <text>Books:</text>
-            <hamburger/>            
-          </header>
-          <books-view/>
-          <section.collapsible full #test>
-            <header(tags)><span.name>Tags</span></header>
-            <tags-view(tags)/>
-          </section>
-          <section.collapsible full>
-            <header(atts)><span.name>Attributes</span></header>
-            <tags-view(atts)/>
-          </section>
+          <include src="aside-view.htm" />
         </aside>
         <splitter/>
         <notes-view>
@@ -65,4 +62,6 @@
       </frameset>
       <frame#overlay></frame>
     </body>
+    <frame#worker content-style="htmlarea/htmlarea.css" />
+    <notifications/>
 </html>

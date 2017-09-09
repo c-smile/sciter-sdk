@@ -6,11 +6,84 @@
 <body>
   <h3>Sciter 4.* logfile:</h3>
   <table border="1" cellpadding="3" cellspacing="1" width="100%">
-    <tr>
+    <tbody><tr>
       <td width="60" nowrap="" valign="top" align="center">Build#</td>
       <td width="78" nowrap="" valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FFFADA">4.0.2.5262</td><td nowrap="" valign="top" align="center">03-08-2017</td><td><p>fixes:</p>
+    <tr><td valign="top" bgcolor="#FFFADA">4.0.3.5348</td><td nowrap="" valign="top" align="center">09-09-2017</td><td>
+					<p>new:</p>
+					<ul>
+						<li><p>[script] <code>await/yield</code> syntax compatibility with JS:</p><p><code>await</code> is allowed to be in <code>async function()</code>&nbsp;only, see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function</p>
+							<p><code>yield</code> is allowed to be in <code>function*()</code>&nbsp;only, see: https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Statements/function* </p>
+							<p>Existing code that uses <code>await</code>/<code>yield</code> shall work as it is but with compile time warnings.</p></li><li>[osx] IME support (Far East languages input method in particular).</li>
+						<li>[win] support of mouse devices with MOUSE WHEEL deltas &lt; 120.</li>
+						<li>[config.h] <code>#define HTTP_SUPPORT</code>&nbsp; - enables/disables internal HTTP client. Without it no external resources are loaded and http client is excluded from compilation completely.</li>
+						<li>+ [html5] <code>&lt;mark&gt;</code> element support.</li>
+						<li>+ [gtk] notes project.</li>
+						<li>+ [gtk] HTML clipboard support.</li>
+						<li><code>behavior:frame</code> <code>saveDocument()</code> method implementation.</li>
+						<li>[API] <code>DOCUMENT_PARSED</code> event. Generated after parsing but before <code>DOCUMENT_READY</code>.</li>
+						<li><code>Element.popup()</code> update to support &quot;auto flip&quot; modes.</li>
+						<li>New samples:<ul><li>+ sdk/samples/ideas/effects/particles sample. See: <a href="https://sciter.com/forums/topic/particles-js/">https://sciter.com/forums/topic/particles-js/</a>&nbsp;</li><li>+ sdk/samples/games/flappy-bird &nbsp;by Ramon the Great. See: <a href="https://sciter.com/forums/topic/flappy-bird/">https://sciter.com/forums/topic/flappy-bird/</a>&nbsp;</li><li>+ sdk/samples/ideas/notifications/demo.htm - in window notifications.</li></ul></li>
+						
+						
+						
+						<li>[script] <code>bytes1 == bytes2</code>, comparison of two byte vectors works in the same way as <code>string1 == string2</code> - content equality.</li>
+						<li>[behavior:video] support of <code>video.style.foregroundImage</code> to access current frame.</li>
+						<li>[css and window-blurbehind attribute ] : </li>
+						<pre>@media blur-behind {} 
+@media !blur-behind {} 
+@media blur-behind=&quot;ultra-dark&quot; {} 
+@media blur-behind=&quot;dark&quot; {} 
+@media blur-behind=&quot;light&quot; {} 
+@media blur-behind=&quot;ultra-light&quot; {}
+</pre></ul><p>fixes:</p>
+					<ul>
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						<li>[DOM,script] <code>element.clone()</code> to preserve <code>:synthetic</code> state flag in cloned elements.</li><li>[win,printing] fix of printing on printers with device name larger than 31 characters. Thanks to Miloš Opálek</li><li>[css] <code>:nth-child(an+b)</code> selector fix.</li><li>[pager] documentation update at sdk/samples/printing/doc/pager-behavior.htm</li>
+						<li> [pager] restored printing functionality with GDI+ backend, thanks to Miloš Opálek</li><li>[win] fix of <code>view.windowState = WINDOW_FULL_SCREEN;</code> rendering.</li><li>[layout] handling of inline elements in <code>&lt;pre&gt;</code></li><li>[script] <code>&quot;abc\n&quot;.split(&quot;\n&quot;) == 2</code> fix to comply with JS.</li><li>[plaintext, textarea] Handling <code>ALTGR + Q</code> and the like combinations in national keyboards: <a href="https://sciter.com/forums/topic/bug-altgr-inputs-not-working-on-plaintext/">https://sciter.com/forums/topic/bug-altgr-inputs-not-working-on-plaintext/</a>&nbsp;</li><li>[CSS] Support of <code>@SOMECONST</code> in <code>calc()</code>'s inside style sets.</li><li>[richtext] insert inline images fix.&nbsp;</li>
+						<li>[script,storage] Fix of handling record deletion under iterator.</li>
+						<li>[script,storage.Index] + method <code>clear()</code> to remove all elements from index.</li><li>input|number focus handling fix.</li><li>[css] support of font: system, MyAwesome, sans-serif; constructs.</li><li>STATIC_LIB + plain C header compatibility.</li><li>[css] position:absolute element, width calculation fix.</li><li>[API] Generating <code>event_handler::detached()</code> call on window destruction (if it has DOM handlers set).</li>
+						<li>[API] <code>sciter::image::load()</code> implementation.</li><li>fix of ellipsis rendering.</li><li><code>&lt;frame|pager&gt;</code> fixes.</li><li>regression fix of <code>DOCUMENT_COMPLETE</code> event generation, introduced in r5273.</li><li>[win] fix of AV in samples/dialogs+windows/windowed-element.htm</li><li><p>[DOM, <code>&lt;table&gt;</code>], parser forces <code>&lt;tbody&gt;</code> insertion for <code>&lt;tr&gt;</code> containment (if not provided).<b>&nbsp;</b></p><p><b>Note:</b>&nbsp; could be a&nbsp;breaking change if selectors like: <code>table &gt; tr &gt; td</code> are used (to fix it use: table &gt; tbody&gt; tr &gt; td )&nbsp;</p></li><li>[richtext] + table editing commands: insert/delete row/column, merge cell range, split spanned cell.</li>
+						<li>[gtk] far east languages/fonts rendering.</li><li>[context menus] fix of getting focus back, see : <a href="https://sciter.com/forums/topic/input/">https://sciter.com/forums/topic/input/</a>&nbsp;</li><li>[win] Fix of crash on ALT+ENTER.
+</li><li>[win] fix of &quot;D3DGear bug&quot; - crash when D3DGear is running.</li><li><code>cr/lf</code> handling in plaintext editing.</li><li>Fix of click on <code>&lt;label&gt;</code> when bound input&nbsp;is disabled.&nbsp;</li><li>[tooltips] - better tooltips handling - now tooltip gets removed only when mouse leaves tooltip's owner element.&nbsp;</li><li>[osx] CMD+A handling fix.</li><li>[pager] fix of <code>Pager.onRequest()</code> handling.</li><li>[css] <code>min/max-width: 100%</code> fix.</li><li><code>&lt;select|dropdown&gt;</code>, fix of &quot;change&quot; event generation when popup is shown. &quot;change&quot; is postponed until popup dismissal.</li><li>[editing] fix of <code>VK_LEFT/VK_RIGHT</code> handling.</li><li>more responsive handling of set focus on element.</li><li>[editing] fix of surrogate pairs handling.</li>
+						<li>[textarea] fox of selection by mouse handling.</li>
+						<li>[textarea, edit] fix of dynamic @novalue handling</li>
+						</ul>
+					<p>NOTE: sciter.dlls, sciter.exe and notes.exe  Windows executables in SDK <b>are digitally signed</b> now. On MacOS you may need to run SDK executables directly from console as they are not signed too.</p></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.0.2.5262</td><td nowrap="" valign="top" align="center">03-08-2017</td><td><p>fixes:</p>
 				<ul><li>fixes internal <code>promise()</code> implementation;</li>
 					<li>[CSS] fix of column width calculation in <code>flow:vertical-wrap;</code> containers;</li></ul></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.0.2.5257</td><td nowrap="" valign="top" align="center">02-08-2017</td><td><p>new:</p>
 				<ul><li>new version numbering schema that includes SVN revision;</li>
@@ -44,7 +117,7 @@
 				<ul>
 					<li>samples/ideas/virtual-list - &quot;virtual tape&quot; implementation fixes;</li><li>[win] fix of child windows replacement artefacts;</li><li>[win] tooltip window screen order fix, see: <a href="https://sciter.com/forums/topic/popup-is-hidden-behind-another-popup-z-index-doesnt-work/">https://sciter.com/forums/topic/popup-is-hidden-behind-another-popup-z-index-doesnt-work/</a>&nbsp;</li><li>context menu, fix of keyboard handling;</li><li><code>style.documentRules { content:&quot;string&quot; }</code> fix, see <a href="https://sciter.com/forums/topic/assigning-css-content/">https://sciter.com/forums/topic/assigning-css-content/</a>&nbsp;</li><li><code>behavior:textarea</code>, fix of new line handling;</li><li>[sdk samples] <code>behavior:tabs</code> fix;</li><li>zlib upgrade to 1.2.11 ( CVE-2016-9840, CVE-2016-9842 );</li><li>[win] fix of popup rendering on Direct2D backend on &quot;Windows 10 build 16199 via RDP session&quot;;</li><li>[win,skia] fix of font handle leak;</li><li>[osx,xgl,skia] fix of memory leak on window creation/destruction;</li><li> [+plus] better notifications handling on secondary windows, see: <a href="https://sciter.com/forums/topic/plus-mode/">https://sciter.com/forums/topic/plus-mode/</a>&nbsp;</li><li>Fix of <code>border-collapse:collapse</code> in tables with cells that use paddings;</li>
 					</ul>
-				<p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10. On MacOS you may need to run SDK executables directly from console as they are not signed too.</p></td></tr></table>
+				<p><strong>NOTE</strong>: Windows executables in SDK <strong>are not signed</strong> so you may encounter security warnings on W8 and W10. On MacOS you may need to run SDK executables directly from console as they are not signed too.</p></td></tr></tbody></table>
 	<p>Previous log items: <a href="logfile-1.htm">logfile-1.htm</a>.</p>
 </body>
 </html>

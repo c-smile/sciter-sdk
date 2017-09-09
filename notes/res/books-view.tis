@@ -4,32 +4,17 @@ class BooksView : Element
   function attached() {
     this.$content(<option#all><i color=0>&nbsp;</i><span.name>All</span><span.count>{ db.getBookItemsCount(null) }</span></option>);
     var optionAll = this[0];
-    //this[0].data = null;
+    //this[0].book = null;
     var me = this;
     self << event book-selected { me.show(); } 
     self << event notes-filter-changed { me.show(); } 
     self << event book-assigned { me.updateCounters(); } 
     self << event book-removed { me.show(); }
-    self << event book-updated (evt) { me.show(); }
+    self << event book-updated { me.show(); }
+    self << event book-created { me.show(); }
 
     this.show();
     optionAll.execCommand("set-current");
-  }
-
-  function firstCharOf(text) {
-    for(var ucode in text)
-      return String.fromCharCode(ucode);
-  }
-
-  function bookHtml(book) {
-    if( book )
-      return String.$(<option><i color={book.color || 0}>{firstCharOf(book.name)}</i><span.name>{book.name.toHtmlString()}</span><span.count>{book.itemsCount}</span></option>);
-    else 
-      return "<option><i></i><span.name> </span><span.count></span></option>";       
-  }
-
-  function bookBriefHtml(book) {
-    return String.$(<option value="{book.id}"><span.name color={book.color || 0}>{book.name.toHtmlString()}</span></option>);
   }
 
   function show() 
@@ -39,17 +24,9 @@ class BooksView : Element
     for( var book in books) 
     {
       var elBook = this[i];
-      if( elBook && (elBook.data === book)) {
-        elBook.$(.name).text = book.name;
-        elBook.$(.count).text = book.itemsCount;
-        var icon = elBook.$(i);
-        icon.text = firstCharOf(book.name);
-        icon.attributes["color"] = book.color || 0;
-      }
-      else {
-        this.insert(bookHtml(book), i);  
-        this[i].data = book;
-      }
+      if( !elBook || (elBook.book !== book))
+        this.insert("<option/>", i);  
+      this[i].setBook(book);
       ++i;
     }
     while(i < this.length) this[i].remove();
@@ -59,8 +36,8 @@ class BooksView : Element
     if( evt.target !== this ) 
       return;
     var option = this.$(option:current);  
-    if( option.data )
-      setCurrentBook(option.data); 
+    if( option.book )
+      setCurrentBook(option.book); 
     else {
       setCurrentBook(null);
       setFilterTags(null);
@@ -71,34 +48,76 @@ class BooksView : Element
 
   function updateCounters() {
     for( var option in this )
-      option.$(.count).text = db.getBookItemsCount(option.data); 
+      option.updateCounter(); 
   }
 
-  function EditBookName(option) 
+  event click $(menu#book > li[name=add-book])  (evt) 
   {
-    if( !option ) {
-      this.insert("<option><i></i><span.name> </span></option>",1);
-      option = this[1];
+    this.insert("<option><i> </i><span.name> </span></option>",1);
+    var option = this[1];
+    this.post(::option.EditBookName());
+    return true;
+  }
+
+}
+
+// single book in book view
+class BookView : Element 
+{
+  this var book;
+
+  function firstCharOf(text) {
+    for(var ucode in text)
+      return String.fromCharCode(ucode);
+  }
+
+  function setBook(book) {
+    this.book = book;
+    if( book ) {
+      if(book.isDeleted) {
+        this.$content(<i.trash> </i><span.name>{book.name}</span><span.count>{book.itemsCount}</span>);
+        this.attributes.addClass("trash");
+      }
+      else
+        this.$content(<i color={book.color || 0}>{firstCharOf(book.name)}</i><span.name>{book.name}</span><span.count>{book.itemsCount}</span>);
     }
-    var book = option.data;
+    else 
+      this.html = "<i> </i><span.name> </span><span.count></span>";   
+  }
+
+  function updateCounter() {
+    this.$(.count).text = db.getBookItemsCount(this.book); 
+  }
+
+  // static method, used by NoteView.populateBooks()
+  function bookBriefHtml(book) {
+    if(book.id == DELETED_BOOK_ID)
+      return String.$(<option value="{book.id}"><span.name.deleted-notes>Deleted</span></option>);
+    else
+      return String.$(<option value="{book.id}"><span.name color={book.color || 0}>{book.name.toHtmlString()}</span></option>);
+  }
+
+  function EditBookName() 
+  {
+    var option = this;
+    var book = option.book;
     var caption = option.$(span.name);
     caption.attributes.addClass("editing");
     caption.post( function() { caption.state.focus = true; });
     function commit(text) {
-      //stdout.println("commit", text);
       caption.attributes.removeClass("editing"); 
       caption.off(".booknameedit");
       text = text.trim();
       if( !book && text ) 
-        db.addBook( new Book(db.getUniqueBookName(text)) );
+        db.addBook( option.book = book = new Book(db.getUniqueBookName(text)) );
       else if( book && text && book.name != text)
         book.update{ name: db.getUniqueBookName(text) };
-      this super.show();
+      option.parent.show();
     }
     caption.on("focusout.booknameedit", function() { commit(this.value) });
     caption.on("keydown.booknameedit", function(evt) { 
       switch( evt.keyCode ) {
-        case Event.VK_RETURN: commit( this.value ); return true;
+        case Event.VK_RETURN: commit( this.value ); option.execCommand("set-current"); setCurrentBook(book); return true;
         case Event.VK_ESCAPE: commit( book ? book.name: "" ); return true;
       }
     });
@@ -106,8 +125,8 @@ class BooksView : Element
 
   event popuprequest $(menu.context#book) (evt,menu) {
 
-    var option = evt.target.$o(option);
-    var thisbook = option.data;
+    var option = this;
+    var thisbook = option.book;
     var books = db.getBooks();
 
     if( thisbook && books.length >= 2 && thisbook.itemsCount != 0) {
@@ -133,40 +152,79 @@ class BooksView : Element
 
   event click $(menu#move-notes-to > li[bookid]) (evt,li) {
     //stdout.println(li, li.attributes["bookid"]);
-    var option = evt.target.$o(option);
-    var fromBook = option.data;
+    var option = this;
+    var fromBook = option.book;
     var toBook = db.getBook(li.attributes["bookid"]);
     db.mergeBookItems(fromBook, toBook); 
-    this.updateCounters();
+    db.commit();
+    this.parent.updateCounters();
   }
 
   event click $(menu#book > li[name=rename-book]) (evt) {
-    var option = evt.target.$o(option);
-    this.EditBookName(option); 
+    this.EditBookName(); 
     return true;
   }
 
   event click $(menu#book li[color]) (evt,ic) {
-    var option = evt.target.$o(option);
-    var book = option.data;
-    if( book ) {
-      //stdout.println(book, ic.index);
+    var option = this;
+    var book = option.book;
+    if( book ) 
       book.update {color: ic.index}
-    }
-    return true;
-  }
-
-  event click $(menu#book > li[name=add-book])  (evt) {
-    this.EditBookName(null);
     return true;
   }
 
   event click $(menu#book > li[name=delete-book]) (evt) {
-    var option = evt.target.$o(option);
-    var book = option.data;
+    var option = this;
+    var book = option.book;
     db.deleteBook(book);
     return true;
   }
 
 
+  // system D&D
+/* not yet 
+  event dragenter (evt) 
+  {
+    if(this.id == "all") return false;
+    if(evt.draggingDataType in [#file,#html,#text])
+    {
+      this.attributes.addClass("active-target");
+      return true;
+    }
+  };  
+
+  event dragleave (evt) 
+  {
+    this.attributes.removeClass("active-target");    
+    if(this.id == "all") return false;
+    return true;
+  }; 
+
+  event drag (evt) 
+  {
+    if(this.id == "all") return false;
+
+    return true;
+  };  
+
+  event drop (evt) 
+  {
+    this.attributes.removeClass("active-target");
+    if(this.id == "all") return false;
+
+    switch(evt.draggingDataType) {
+      case #file: {
+        var fn = evt.dragging;
+        view.msgbox(#information, String.printf("Dropped:%V",fn));
+        return true;
+      }
+      case #html:
+      case #text: break;
+    }
+
+    return true;
+  };  
+*/
+
 }
+

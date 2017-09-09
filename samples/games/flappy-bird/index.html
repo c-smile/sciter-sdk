@@ -1,0 +1,232 @@
+<!-- OmniView:on -->
+<html>
+<head>
+	<style>
+		@import url(style/global.css);
+	</style>
+
+	<script type="text/tiscript">
+		class Pipe
+		{
+			const IMG_PIPE_TOP = self.loadImage("img/pipe_top.png");
+			const IMG_PIPE_BOT = self.loadImage("img/pipe_bot.png");
+
+			const GAP_MIN = 50;
+			const GAP_RANGE = 250;
+			const GAP_HEIGHT = 200;
+			const PIPE_WIDTH = 87;
+			const SPEED = 4;
+
+			this var y;
+			this var x;
+			this var xmiddle;
+
+			function this()
+			{
+				var (w, h) = self#game.box(#dimension);
+				this.x = w;
+				this.xmiddle = this.x + PIPE_WIDTH/2;
+				this.y = GAP_MIN + rand(GAP_RANGE);
+			}
+
+			function Move()
+			{
+				this.x -= SPEED;
+				this.xmiddle = this.x + PIPE_WIDTH/2;
+				// returns if is inside left bound
+				return this.x + IMG_PIPE_TOP.width > 0;
+			}
+
+			function Collides(l, r, t, b)
+			{
+				// top pipe rect
+				var (tpl, tpr, tpt, tpb) = (this.x, this.x+PIPE_WIDTH, 0, this.y);
+				if(!(tpl > r || tpr < l || tpt > b || tpb < t))
+					return true;
+
+				// bot pipe rect
+				var (bpl, bpr, bpt, bpb) = (this.x, this.x+PIPE_WIDTH, this.y+GAP_HEIGHT, this.y+GAP_HEIGHT+9999);
+				if(!(bpl > r || bpr < l || bpt > b || bpb < t))
+					return true;
+			}
+
+			function Draw(gfx)
+			{
+				// top
+				gfx.blendImage(IMG_PIPE_TOP, this.x, this.y - IMG_PIPE_TOP.height);
+
+				// bottom
+				gfx.blendImage(IMG_PIPE_BOT, this.x, this.y + GAP_HEIGHT);
+			}
+		}
+
+		class Game : Element
+		{
+			const GRAVITY = 0.6;
+			const FPS = 60;
+			const PIPE_INTERVAL = 70;
+			const BIRD_WHALF = 52/2;
+			const BIRD_HHALF = 36/2;
+
+			var score = 0;
+			var playing = true;
+
+			var frm_count = 0;
+			var arr_pipes = [];
+			var bird_y;
+			var bird_yspeed = 0;
+
+			function attached()
+			{
+				var el_bird = self#bird;
+				var (x, y, w, h) = this.box(#rectw, #margin);
+				bird_y = h/2;
+				el_bird.style#left = w/2;
+				var background_x = 0; // background parallax
+
+				this.timer(1000 / FPS, function() {
+					if(!playing)
+						return false;
+
+					// move background - parallax
+   				this.parent.style["background-position-left"] = px(--background_x % 480); // that one too
+
+					bird_yspeed += GRAVITY;
+					bird_y += this.bird_yspeed;
+
+					// move bird and its facing
+					el_bird.style#visibility = "visible";
+					el_bird.style#top = bird_y.toInteger();
+					if(bird_yspeed <=0 )
+					{
+						el_bird.style#transform = "rotate(-20deg)";
+					}
+					else if(bird_yspeed > 2)
+					{
+						var angle = Float.min(90, bird_yspeed/6.5 * 90);
+						el_bird.style#transform = "rotate(" + angle + "deg)";
+					}
+
+					// create pipe
+					frm_count++;
+					if((frm_count % PIPE_INTERVAL) == 0)
+					{
+						arr_pipes.push(new Pipe());
+					}
+
+					// move pipes
+					var arr_to_rmv = [];
+					for(var pipe in arr_pipes)
+					{
+						var rmv = !pipe.Move();
+						if(rmv)
+							arr_to_rmv.push(rmv);
+
+						// score detection
+						if(pipe.has_scored==false && pipe.xmiddle < w/2)
+						{
+							score++;
+							pipe.has_scored = true;
+							self#score.text = score;
+						}
+					}
+
+					// rmv pipe
+					for(var pipe in arr_to_rmv)
+					{
+						arr_pipes.removeByValue(pipe);
+					}
+
+					// colision detection
+					var bird_left = w/2 - BIRD_WHALF;
+					var bird_right = w/2 + BIRD_WHALF;
+					var bird_top = bird_y - BIRD_HHALF;
+					var bird_bottom = bird_y + BIRD_HHALF;
+
+					for(var pipe in arr_pipes)
+					{
+						if(pipe.Collides(bird_left, bird_right, bird_top, bird_bottom)) 
+						{
+							this.OverIt();
+						}
+					}
+
+					// hit ground?
+					if(bird_y > h-18)
+					{
+						this.OverIt();
+					}
+
+					this.refresh();
+					return true;
+				});
+			}
+
+			function onMouse(evt)
+			{
+				if(evt.type == Event.MOUSE_DOWN || evt.type==Event.MOUSE_DCLICK)
+				{
+					bird_yspeed = -7;
+				}
+			}
+
+			function OverIt()
+			{
+				playing = false;
+				self#restart.style#visibility = "visible";
+			}
+
+
+			var fps = new Graphics.Text("", self);
+			var deltas = [1];
+	        var ptick = System.ticks;
+
+			function paintBackground(gfx)
+			{
+				gfx.pushLayer(#margin-box);
+				for(var pipe in arr_pipes)
+				{
+					//var (tpl, tpr, tpt, tpb) = (pipe.x, pipe.x+pipe.PIPE_WIDTH, 0, pipe.y);
+					//gfx.strokeWidth(2).strokeColor(color("red")).rectangle(tpl, tpt, pipe.PIPE_WIDTH, pipe.y);;
+					//trace(tpl, tpt, pipe.PIPE_WIDTH, pipe.y);
+					pipe.Draw(gfx);
+				}
+				gfx.popLayer();
+
+				// show FPS
+				{
+					var tick = System.ticks;
+					deltas.push( tick - ptick );
+					if( deltas.length > 10 ) deltas.shift();
+					ptick = tick;
+					var avdelta = deltas.reduce(:a,b: a + b) / deltas.length;
+					fps.chars = "FPS:" + (1000 / avdelta).toString();
+					
+					var (w,h) = this.box(#dimension,#inner);
+					gfx.fillColor(color(255,255,255)).drawText(fps, w - 10, 10, 9);
+				}
+			}
+		}
+
+		self#restart.onClick = function() {
+			self.reload();
+		}
+
+		function Element.reload() {
+			if( this.parent ) this.parent.load( this.url() );
+			else view.load(this.url());
+		}
+	</script>
+</head>
+
+<body>
+	<main>
+		<canvas #game>
+			<h1 #score>0</h1>
+			<img src="img/restart.png" #restart />
+			<img src="img/bird.png" #bird />
+		</canvas>
+		<platform />
+	</main>
+</body>
+</html>

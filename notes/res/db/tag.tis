@@ -73,9 +73,9 @@ class Tag
 
   function update(props) {
     if(props.name !== undefined) this.name = props.name;
-    //if(props.color !== undefined) this.color = props.color.toInteger();
+    if(props.color !== undefined) this.color = props.color.toInteger();
     //if(props.icon !== undefined) this.icon = props.icon;
-    self.postEvent("tag-updated", tag);
+    self.postEvent("tag-updated", this);
   }
 
 

@@ -8,17 +8,17 @@ class TagsTree : Element
 
     var kind = this.attributes["name"] == "tags" ? Tag.KIND_CUSTOM : Tag.KIND_SYSTEM;
 
-    function tagHtml(tag, items = undefined) {
-      var count = items ? items.length.toString() : "";
-      return String.printf("<span.tag.name>%s</span><span.count>%s</span>", tag.name, count );
-    }
-
-
-    function setupCaption(data,elCaption) {
+    function setupCaption(data,elCaption) 
+    {
+      var tag, nitems, name;
       if( typeof data == #array ) // tags intersection
-        elCaption.html = tagHtml(data[0], null);
+        { tag = data[0]; nitems = ""; name = data[1].name + " & " + data[0].name; }
       else //if(data instanceof Tag) 
-        elCaption.html = tagHtml(data, data.items);
+        { tag = data; nitems = tag.items.length.toString(); name = data.name }
+
+      elCaption.$content(<span.tag.name>{name}</span><span.count>{nitems}</span>);
+      elCaption.parent.attributes["color"] = (tag.color || 0).toString();
+      
     }
 
     function eachRoot(cb) {
@@ -106,13 +106,34 @@ class TagsTree : Element
   event click $(menu#tag > li[name=rename-tag]) (evt) {
     var option = evt.target.$p(menu).owner.$p(option);
     EditTag(option);
+    return true;
   }
 
-  event click $(menu#tag > li[name=delete-tag]) {
-    //tag.extend( formation(menu).value );  
+  event click $(menu#tag > li[name=delete-tag]) (evt) {
     var option = evt.target.$p(menu).owner.$p(option);
     var tag = option.data;
+    db.removeTag(tag);
   }
+
+  event click $(menu#tag > div.colors > li) (evt,li) {
+    var option = evt.target.$p(menu).owner.$p(option);
+    var tag = option.data;
+    tag.update { color: li.index };
+    return true;
+  }
+
+  event popuprequest $(menu#tag) (evt,menu) {
+
+    var option = evt.target.$p(menu).owner.$p(option);
+    var tag = option.data;
+
+    if( var ci = menu.$(li[color]:checked))
+       ci.state.checked = false;
+
+    menu.$(li[color={tag.color || 0}]).state.checked = true; 
+    menu.$(li[name=delete-tag]).state.disabled = tag.itemsCount > 0; 
+    
+  }  
 
   function EditTag(option) {
     var tag = option.data;

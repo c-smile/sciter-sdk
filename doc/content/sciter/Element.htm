@@ -226,7 +226,7 @@ var li3 = self.$( ul &gt; li:nth-child({n}) );
       <p>Returns first owner element in child/parent chain satisfying CSS selector.</p>
       <p>Note 1: this is a stringizer method - the <em>CSSselector</em> provided literally.</p>
       <p>Note 2: Function also inspects <em>this</em> element.</p></dd>
-      <p>Note 3: Most of the time element's owner is is its parent except of popup menus when the owner is the element requested the popup.</p></dd>
+      <p>Note 3: Most of the time element's owner is is its parent except of popup menus when the owner is the element requested the popup.</p>
     <dt>selectParent</dt>
     <dd>
       <div><strong>(func , CSSselector</strong>: string<strong> [, argument1 [, argument2, ... ]])</strong> returns: <em>integer</em></div>
@@ -292,10 +292,12 @@ some.selectParent(printel, &quot;div&quot;);
       <p>If <em>whenEnded</em> function is provided it will be called on the end of the animation.</p>
       <p>The <em>duration</em> is total duration of the animation in milliseconds. If it is provided then signature of the <em>nextStep</em> function is expected to be:</p>
 			
-			<pre>function nextStep(progress: float) {} </pre>
+			<pre>function nextStep(progress: float) {} 
+</pre>
 			
 			<p>where <i>progress</i> is a float number from 0.0 to 1.0 - progress of the animation. The <i>nextStep</i> function will always receive <i>progress</i> == 1.0 as the very last step.</p><p>Otherwise step callback function is expected to have no parameters:</p>
-			<pre>function nextStep() {} </pre></dd>
+			<pre>function nextStep() {} 
+</pre></dd>
     <dt>box</dt>
     <dd>
       <div><strong>( part</strong> [, <strong>edge</strong> [, <strong>relativeTo</strong> ]] <strong>) </strong>returns: integer, device pixels</div>
@@ -547,11 +549,12 @@ el.$content(This is item number <b>{ num }</b>);
         <li><code>8 &lt;&lt; 16</code> - popup top-center is at anchor point</li>
         <li><code>9 &lt;&lt; 16</code> - popup top-right is at anchor point</li></ul>
       <div>( see keyboard numpad to get an idea of numbering).</div>
-      <div></div>
-      <p class="MsoNormal"><span style="mso-ascii-font-family:Calibri;mso-hansi-font-family:
-Calibri;mso-bidi-font-family:Calibri"><em>placement</em> parameter is optional. The popup position can also be defined in CSS</span> &nbsp;by <i><span style="mso-ascii-font-family:
-Calibri;mso-hansi-font-family:Calibri;mso-bidi-font-family:Calibri">popup-position</span></i> property. </p>
-      <div></div></dd>
+			<p>Alternatively you can use &quot;popup auto flip&quot; positioning modes:</p>
+			<ul><li>0x19 - popup appears on the left of anchor by default. If space on screen does not allow then popup is replaced on the right of anchor (as 0x17). Vertical alignment - top of popup to the top of anchor.</li>
+				<li>0x17&nbsp;- popup appears on the right of anchor by default, otherwise on the left. Vertical alignment - top of popup to the top of anchor.</li>
+				<li>0x16&nbsp;- popup appears on the left of anchor by default. If space on screen does not allow then popup is replaced on the right of anchor (as 0x14). Vertical alignment - middle  of popup to the middle&nbsp;of anchor.</li>
+				<li>0x14&nbsp;- popup appears on the right of anchor by default, otherwise on the left. Vertical alignment - middle  of popup to the middle&nbsp;of anchor.</li></ul>
+      <p><em>placement</em> parameter is optional. The popup position can also be defined in CSS &nbsp;by <i>popup-position</i> property. </p></dd>
     <dt>popup</dt>
     <dd>
       <div><strong>( el</strong>: Element, <strong>x</strong>:int, <strong>y</strong>:int ) :void</div>

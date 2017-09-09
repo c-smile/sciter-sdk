@@ -1,0 +1,22 @@
+
+
+namespace Net {
+
+  const DOC_NOTES_LIST_FOLDER_URL = "http://notes.sciter.com/docs/";
+  const DOC_NOTES_LIST = "list.json";
+
+  async function importInitialNotes() 
+  {
+    const workerFrame = WorkerFrame;
+    try {
+      var notesList = await view.request { url: DOC_NOTES_LIST_FOLDER_URL + DOC_NOTES_LIST, output:#json };
+      for(var url in notesList) {
+        var bytes = await view.request { url: (DOC_NOTES_LIST_FOLDER_URL + url), output:#bytes }; 
+        workerFrame.createNoteFromFile(bytes);
+      }
+    }
+    catch(err) {
+      view.msgbox(#alert, "Cannot get notes from " + DOC_NOTES_LIST_FOLDER_URL);
+    }
+  } 
+}

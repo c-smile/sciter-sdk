@@ -1,0 +1,53 @@
+include "db/db.tis";
+include "libs/settings.tis";
+
+class SidePanel : Element 
+{
+  function attached() 
+  {
+    Settings.add(this);  
+  }  
+  event expand (evt) { if(evt.target === this) { Settings.enqueueSaveState(); this.doExpand(); } }
+  event collapse (evt) { if(evt.target === this) { Settings.enqueueSaveState(); this.doCollapse();} }
+
+  function doExpand() { this.$(books-view).state.expanded = this.state.expanded = true; } 
+  function doCollapse() { this.$(books-view).state.collapsed = this.state.collapsed = true; } 
+
+  function uiStateStore(data) 
+  {
+    data.sidebarCollapsed = this.state.collapsed;
+  }
+  function uiStateRestore(data) {
+    if( data.sidebarCollapsed ) {
+      this.doCollapse();
+    }
+  }
+}
+
+class Frameset : Element 
+{
+  function attached() 
+  {
+    Settings.add(this); 
+  }  
+
+  event statechange {
+    // resized so queue save state
+    Settings.enqueueSaveState();
+  }
+
+  function uiStateStore(data) 
+  {
+    data.frameset = this.framesetState();
+  }
+  function uiStateRestore(data) {
+    if( data.frameset )
+      this.framesetState(data.frameset);
+  }
+
+}
+
+
+
+
+

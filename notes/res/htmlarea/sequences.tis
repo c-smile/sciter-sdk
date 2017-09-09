@@ -1,0 +1,36 @@
+
+// "magic" char sequences - typed consecutive chars may trigger text tranformations
+// like "* "  at the beginning of paragraph shall trigger <ul><li> to be created
+
+namespace Sequences {
+  var sequences = []; 
+
+  function add(cssSelector,reStart,reEnd,func) 
+  {
+     sequences.push {
+       sel : cssSelector,
+       re1 : reStart,
+       re2 : reEnd, 
+       fun : func
+     };   
+  } 
+
+  function check(htmlarea,bm) {
+    var node = bm[0];
+    var elem = node.parent;
+    var lpos = bm[1] + (bm[2] ? 1 : 0); 
+    assert node.isText; 
+    var text = node.text;
+    var start = text.substr(0,lpos);
+    var end = text.substr(lpos);
+    for( var sr in sequences ) {
+      if( !elem.match(sr.sel) ) continue;
+      var res = sr.re1.exec(start);
+      if( !res ) continue;
+      if( sr.re2 && !sr.re2.test(end)) continue;
+      if( sr.fun(htmlarea,bm,start,end,res) )
+        return true; // handled 
+    }
+  }
+}
+

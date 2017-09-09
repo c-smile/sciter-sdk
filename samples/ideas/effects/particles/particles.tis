@@ -1,0 +1,80 @@
+
+function Particles()
+{
+    const pcolor = color(32,127,200,0.4); // particle color
+    const transcolor = color(0,0,0,0);    // transparent color
+    const psize = this.toPixels(4dip);
+    const pstroke = this.toPixels(1dip);
+    const FPS = 24; // the less the better for CPU - also affects particles speed
+    const stepDuration = 1000 / FPS;
+    const NPARTICLES = 100; // number of these things
+    const connectorDistance = this.toPixels(100dip);
+    const connectorDistanceOut = connectorDistance * 1.5;
+
+    var (width,height) = this.box(#dimension);
+
+    function makeParticle (x, y, vx = 0, vy = 0) {
+      return {
+        x : x, y : y,
+        vel : { x: Math.random() * 2 - 1, y: Math.random() * 2 - 1 }
+      };
+    }
+
+    function upadateParticle(p) {
+      if (p.x > width + 50 || p.x < -50) p.vel.x = -p.vel.x; 
+      if (p.y > height + 50 || p.y < -50) p.vel.y = -p.vel.y; 
+      p.x += p.vel.x; p.y += p.vel.y;
+    }
+
+    var all = [];
+
+    for ( var i in NPARTICLES ) 
+      all.push(makeParticle(Math.random() * width, Math.random() * height));
+
+    function distance(p1,p2) {
+      var dx = p2.x - p1.x; var dy = p2.y - p1.y;
+      return Math.sqrt(dx*dx + dy*dy);
+    }
+
+    function draw(gfx) 
+    {
+      gfx.fillColor(pcolor);
+
+      // draw particles
+      for (var p in all) 
+        gfx.ellipse(p.x,p.y,psize,psize); 
+
+      // draw connectors
+      gfx.strokeWidth(pstroke);
+      for (var (index,p) in all) 
+      {
+        for (var index2 = all.length - 1; index2 > index; --index2) 
+        {
+          var p2 = all[index2];
+          var dist = distance(p,p2);
+          if ( dist < connectorDistance) {
+            gfx.strokeColor(pcolor);
+            gfx.line(p.x,p.y,p2.x,p2.y);
+          }
+          else if( dist < connectorDistanceOut) {
+            gfx.strokeColor(Color.morph(pcolor,transcolor, (dist - connectorDistance) / (connectorDistanceOut-connectorDistance) ) );
+            gfx.line(p.x,p.y,p2.x,p2.y);
+          }
+        }
+      }
+    }
+
+    this.paintContent = draw;
+
+    // animation step
+    function step() 
+    {
+      (width,height) = this.box(#dimension);
+      for (var p in all) upadateParticle(p);
+      this.refresh();
+      return stepDuration; // keep running
+    }
+
+    // start
+    this.animate(step);
+}

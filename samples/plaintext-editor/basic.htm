@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+          @const CONTENT-OFFSET: 1em;
+
+          plaintext {
+            padding:0;
+            background:window;
+            border:1dip solid #999;
+            overflow-x: auto;
+            overflow-y: scroll;
+          } 
+          plaintext > text {
+            display:block;
+            margin:0 @CONTENT-OFFSET;
+          }
+          plaintext > text:first-child {margin-top:@CONTENT-OFFSET;}
+          plaintext > text:last-child {margin-bottom:@CONTENT-OFFSET;}
+
+        </style>
+        <script type="text/tiscript"></script>
+    </head>
+    <body>
+
+<plaintext tab-size=4>
+Line 1
+Line 2
+Line 3
+Line 4
+</plaintext>
+
+    </body>
+</html>

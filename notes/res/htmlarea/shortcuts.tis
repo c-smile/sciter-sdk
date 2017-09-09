@@ -1,0 +1,99 @@
+
+
+function setupKeyboardShortcutsOn(htmlarea) // shortcut kbd combinations cracker
+{
+
+  var shortcutDown = false;
+  var sequence = [];
+  var param = undefined;
+
+  function sendCommand(isShift) {
+    var cmd;    
+    switch(sequence) {
+      //case [Event.VK_S]: cmd = "document:save"; break; 
+      //case [Event.VK_O]: cmd = "document:open"; break; 
+      //case [Event.VK_N]: cmd = "document:new"; break; 
+
+      case [Event.VK_X]: cmd = "edit:cut"; break;
+      case [Event.VK_C]: cmd = "edit:copy"; break;
+      case [Event.VK_V]: cmd = "edit:paste"; break;
+      case [Event.VK_A]: cmd = "edit:selectall"; break;
+
+      case [Event.VK_Z]: cmd = isShift ? "edit:redo" : "edit:undo"; break; // if(System.PLATFORM == #OSX)
+      case [Event.VK_Y]: cmd = "edit:redo"; break;
+      
+      case [Event.VK_MULTIPLY]: cmd = "format:toggle-list:ol"; break;  // CTRL+'*' on NUMPAD
+      case [Event.VK_DECIMAL]:  cmd = "format:toggle-list:ul"; break;  // CTRL+'.' on NUMPAD
+      case [Event.VK_DIVIDE]:   cmd = "format:toggle-list:dl"; break;  // CTRL+'/' on NUMPAD
+      case [Event.VK_ADD]:      cmd = "format:indent";         break;  // CTRL+'+' on NUMPAD
+      case [Event.VK_SUBTRACT]: cmd = "format:unindent";       break;  // CTRL+'-' on NUMPAD
+
+      case [Event.VK_D]:        cmd = "format:toggle-span:code";      break;  // CTRL+D -> <code>...</code>
+      case [Event.VK_I]:        cmd = "format:toggle-span:i|em";      break;  // CTRL+I -> <em>...</em>
+      case [Event.VK_B]:        cmd = "format:toggle-span:b|strong";  break;  // CTRL+B -> <strong>...</strong>
+      case [Event.VK_U]:        cmd = "format:toggle-span:u";         break;  // CTRL+U -> <u>...</u>
+      case [Event.VK_S,Event.VK_B]:  cmd = "format:toggle-span:sub"; break;  // <sub>     
+      case [Event.VK_S,Event.VK_P]:  cmd = "format:toggle-span:sup"; break;  // <sup>     
+      case [Event.VK_E]:             cmd = "format:toggle-span:del|s|strike"; break;  // <del>
+      case [Event.VK_M, Event.VK_A]: cmd = "format:apply-span:mark"; param = {"class":"a"}; break;  // <mark.a>
+      case [Event.VK_M, Event.VK_B]: cmd = "format:apply-span:mark"; param = {"class":"b"}; break;  // <mark.b>
+      case [Event.VK_M, Event.VK_C]: cmd = "format:apply-span:mark"; param = {"class":"c"}; break;  // <mark.c>
+
+      case [Event.VK_NUMPAD0]:  cmd = "format:morph-block:p"; break;  
+      case [Event.VK_NUMPAD7]:  cmd = "format:morph-block:div"; break;  // a.k.a. <p compact>      
+      
+      case [Event.VK_NUMPAD1]: cmd = "format:morph-block:h1"; break; 
+      case [Event.VK_NUMPAD2]: cmd = "format:morph-block:h2"; break; 
+      case [Event.VK_NUMPAD3]: cmd = "format:morph-block:h3"; break; 
+      case [Event.VK_NUMPAD4]: cmd = "format:morph-block:h4"; break; 
+      case [Event.VK_NUMPAD5]: cmd = "format:morph-block:h5"; break; 
+      case [Event.VK_NUMPAD6]: cmd = "format:morph-block:h6"; break; 
+
+      case [Event.VK_NUMPAD9]: cmd = "format:toggle-pre"; break;  // a.k.a. <p compact>     
+
+      case [Event.VK_T,Event.VK_I,Event.VK_R,Event.VK_B]: cmd = "edit:insert-table-row:before"; break; 
+      case [Event.VK_T,Event.VK_I,Event.VK_R,Event.VK_A]: cmd = "edit:insert-table-row:after"; break;
+      case [Event.VK_T,Event.VK_I,Event.VK_C,Event.VK_B]: cmd = "edit:insert-table-column:before"; break;
+      case [Event.VK_T,Event.VK_I,Event.VK_C,Event.VK_A]: cmd = "edit:insert-table-column:after"; break;
+      case [Event.VK_T,Event.VK_M]:                       cmd = "edit:merge-table-cells"; break;
+      case [Event.VK_T,Event.VK_S]:                       cmd = "edit:split-table-cells"; break;
+      case [Event.VK_T,Event.VK_D,Event.VK_R]:            cmd = "edit:delete-table-rows"; break;
+      case [Event.VK_T,Event.VK_D,Event.VK_C]:            cmd = "edit:delete-table-columns"; break;
+
+      case [Event.VK_TAB]: cmd = isShift ? "edit:insert-table-column:before"
+                                         : "edit:insert-table-column:after" ; break;
+    }
+
+    return cmd && view.focus === htmlarea && htmlarea.execCommand(cmd,param); 
+  }
+
+
+  htmlarea << event keydown (evt) 
+  {
+    if( evt.keyCode == Event.VK_SHIFT )
+      return false;
+    if( evt.keyCode == Event.VK_SHORTCUT ) // either CONTROL or CMD on Mac
+    {
+      if(!shortcutDown) {
+        shortcutDown = true;
+        sequence.length = 0;
+      }
+    } else if( shortcutDown ) {
+      sequence.push(evt.keyCode);
+      //stdout.printf("keys: %V\n",sequence);
+      if(sendCommand(evt.shiftKey)) { // command has been consumed 
+        //stdout.printf("consumed keys: %V\n",sequence);
+        shortcutDown = false;
+        sequence.length = 0;
+        return true;
+      } else if( sequence.length > 1 )
+        return true; // consume CTRL+A+B+... sequences
+    }
+  }
+  htmlarea << event keyup (evt) {
+    if( evt.keyCode == Event.VK_SHORTCUT ) {
+      shortcutDown = false;
+      sequence.length = 0;
+    }
+  }
+}

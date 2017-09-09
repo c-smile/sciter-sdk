@@ -1,19 +1,26 @@
 include "config.tis";
 
 include "db/db.tis";
+include "libs/settings.tis";
+include "libs/net.tis";
 
 var currentBook = null; 
 var currentNote = null;
 
 var filterTags = null; 
-var filterText = ""; 
+var filterWords = null; // ["word1","word2"]
+
+const WorkerFrame = $(frame#worker); 
+
+// this user id
+const PRINCIPAL = String.$({Sciter.userName()}@{Sciter.machineName(true)});
 
 const RE_HTTP = /((?:https?:\/\/)?(([\da-z\\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)\/?))/;
 const RE_MAIL = /([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})/;
 
 function PopulteNotesList(array) {
   array.length = 0;
-  db.selectItems(:note: array.push(note), filterTags, filterText, currentBook);
+  db.selectItems(:note: array.push(note), filterTags, filterWords, currentBook);
 }
 
 function UpdateNotesList(array) {
@@ -25,7 +32,7 @@ function UpdateNotesList(array) {
       array.splice(idx,0,note);
     ++idx;
   }
-  db.selectItems(cb, filterTags, filterText, currentBook);
+  db.selectItems(cb, filterTags, filterWords, currentBook);
   array.length = idx; // prune the rest
 }
 
@@ -33,14 +40,23 @@ function setFilterTags(tags)
 {
   if(filterTags != tags) {
     filterTags = tags;
-    self.postEvent("notes-filter-changed");
+    self.postEvent("notes-filter-changed", #tags);
   }
 }
 function setFilterText(text)
 {
-  if(filterText != text) {
-    filterText = text;
-    self.postEvent("notes-filter-changed");
+  if( !text || text.trim() == "" ) {
+    if(filterWords) {
+      filterWords = null;
+      self.postEvent("notes-filter-changed", #words);
+    }
+  }
+  else {
+    var words = text.toLowerCase().split(/\s+/);
+    if(filterWords != words) {
+      filterWords = words;
+      self.postEvent("notes-filter-changed", #words);
+    }
   }
 }
 
@@ -55,14 +71,19 @@ function setCurrentBook(book)
 }
 
 function showOverlay(url) {
-  self.$(frame#overlay).loadDocument(url);
+  var overlay = self.$(frame#overlay);
+  overlay.loadDocument(url);
   self.$(body).attributes.addClass("overlay-shown");
+  return overlay.first; // return ref to root element (document)
 }
 
 function closeOverlay() {
-  self.$(frame#overlay).clear();
+  var overlay = self.$(frame#overlay);
+  overlay.clear();
   self.$(body).attributes.removeClass("overlay-shown");
 }
+
+event click $(#close-overlay) { closeOverlay(); }
 
 function highlight(element) {
   
@@ -72,20 +93,54 @@ event click $(#print-note) {
   showOverlay("printing/pager.htm");
 }
 
-event click $(#close-overlay) { closeOverlay(); }
 
 //function handleNewNoteHotkey() {
 //  self.timer(100ms, function() { self.postEvent("start-new-note", #from-clipboard) }); 
 //}
 
 event new-db-initialized {
-  showOverlay("initial/intro.htm");
+  showOverlay("overlays/intro.htm");
+}
+
+function importNotes(fn) 
+{
+
+  var noteframe = $(frame#worker);
+  if( typeof fn == #string ) {
+    var (note,action) = noteframe.createNoteFromFile(fn);
+    switch(action) {
+      case #created: Notifications.note("created:" + note.caption.toHtmlString()); break;
+      case #skipped: Notifications.info("already here:" + note.caption.toHtmlString()); break;
+      case #updated: Notifications.warning("updated:" + note.caption.toHtmlString()); break;
+    }
+  }
+  else if( typeof fn == #array ) {
+    var map = { created:0, skipped:0, updated:0 };
+    for(var f in fn) { 
+      var (note,action) = noteframe.createNoteFromFile(f);
+      ++map[action];
+    }
+    if( map.created ) Notifications.note("imported " + map.created.toString() + " notes"); 
+    if( map.skipped ) Notifications.info("already here " + map.skipped.toString() + " notes"); 
+    if( map.updated ) Notifications.warning("updated " + map.updated.toString() + " notes"); 
+  }
+}
+
+function exportNote(note,fn)
+{
+  var noteframe = $(frame#worker);
+  if( typeof fn == #string ) 
+    noteframe.saveNoteToFile(note,fn);
 }
 
 function self.ready() {
+  //db.purgeDeletedItems();
+
+  view.animationsEnabled = false; // disable CSS animations for initial setup
+  Settings.restore(); // restore UI layout
   // let's start with new note
-  this.postEvent("start-new-note");
-  this.postEvent("start");
+  this.sendEvent("start-new-note");
+  this.sendEvent("start");
 
   if( "-debug" in argv ) {
      const inspector = System.PLATFORM == "Windows" ? "inspector.exe" : "inspector";
@@ -99,8 +154,15 @@ function self.ready() {
   if(!this.parent)
     this.post(:: view.windowBlurbehind = #ultra-dark );
 
- 
+  view.animationsEnabled = true; // enable CSS animations
+  //self.postEvent("new-db-initialized");
+}
 
+
+function self.closing() {
+  this.sendEvent("shutdown");
+  db.commit();
+  db.close();
 }
 
 

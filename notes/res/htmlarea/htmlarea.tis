@@ -1,6 +1,22 @@
 
 include "canonicalize-dom.tis";
 include "../libs/dom.tis";
+include "magicsequences.tis";
+include "shortcuts.tis";
+include "htmlarea-ext-css.tis";
+
+const PREVIEW_WIDTH = 80;
+const PREVIEW_HEIGHT = 80;
+
+function previewImageOf(doc)
+{
+      var body = doc.$(body) || doc;
+      var (px1,py1,px2,py2) = body.box(#rect,#border,#inner)
+      var w = Integer.min(px1 + px2 + body.intrinsicWidthMax(),doc.toPixels(800dip,#width));
+      var h = body.intrinsicHeight(w).limit(32, doc.toPixels(1000dip,#height));
+      var pvh = Integer.min(PREVIEW_HEIGHT, PREVIEW_WIDTH * h / w );
+      return new Image(w, h, PREVIEW_WIDTH, pvh, body); // make snapshot of the body
+}
 
 class HtmlArea: Element 
 {
@@ -15,6 +31,7 @@ class HtmlArea: Element
     this.loadBlank(); 
     this.isBlank = true;
     instance = this;
+    setupKeyboardShortcutsOn(this);
   }
 
   function loadBlank() {
@@ -25,22 +42,35 @@ class HtmlArea: Element
     const params = {};
     var docRoot = evt.source; // DOM element that usually contains: <html>,<body>,
     var fromUrl = evt.data.url; // behavior:richtext passes {url:...} object with meta data 
-    var generatorFromDom = canonicalizeDOM(docRoot,params);
+    var (generatorFromDom, title) = canonicalizeDOM(docRoot,params);
     var generator = evt.data.generator || generatorFromDom;
 
     if( this.isNew ) {
       this.sourceUrl = fromUrl;
       this.sourceGenerator = generator;
+      this.sourceTitle = title;      
     }
     this.requestSave(20ms);
     // do not consume the event so it will pasted
   } 
 
-  event change {
+  event change (evt) {
     this.changed = true;
     this.isBlank = false;
     this.requestSave(1s);
-  } 
+
+    const CHANGE_BY_INS_CHAR = 0;  // single char insertion
+    const CHANGE_BY_INS_CHARS = 1; // character range insertion, clipboard
+    const CHANGE_BY_DEL_CHAR = 2;  // single char deletion
+    const CHANGE_BY_DEL_CHARS = 3; // character range deletion (selection)
+    const CHANGE_BY_UNDO_REDO = 4;
+    const CHANGE_BY_INS_CONSECUTIVE_CHAR = 5; // single char insertion, previous character was inserted in previous position  
+    const CHANGE_BY_CODE = 6; 
+
+    if(evt.reason == CHANGE_BY_INS_CONSECUTIVE_CHAR || evt.reason == CHANGE_BY_INS_CHAR)
+      Sequences.check(this,this.selection.caret);
+   
+  }
 
   function onRequest(rq) 
   {
@@ -56,8 +86,8 @@ class HtmlArea: Element
   // data request ended
   function onRequestResponse(rq) 
   {
-    //stdout.println("onRequestResponse", rq.isSucceeded, rq.requestUrl, rq.responseMimeType, rq.requestDataType);    
-    if(this.note && rq.isSucceeded && rq.requestDataType == Request.DATA_IMAGE) {
+    if(rq.isSucceeded && rq.requestDataType == Request.DATA_IMAGE) {
+      this.checkNote();
       if(rq.requestUrl !like "data:*") 
         this.note.addResource(rq.requestUrl, rq.responseMimeType, rq.responseData);
       //if( rq.responseMimeType like "image/*" )
@@ -65,7 +95,7 @@ class HtmlArea: Element
     }
   }
 
-  function requestSave(delay = 20ms, cb) {
+  function requestSave(delay = 20ms) {
     this.timer(delay, this.saveNote ); // throttle saving
   }
  
@@ -79,8 +109,6 @@ class HtmlArea: Element
   // trying to classify source by url this not was created from 
   function postProcessPasting() {
 
-     //stdout.println("paste", generator, url );
-
      switch(this.sourceGenerator) 
      {
        like "Microsoft Word *": Tag.known("word").addItem(this.note); return;  
@@ -90,22 +118,33 @@ class HtmlArea: Element
      this.sourceGenerator = null;
 
      // no luck with the generator, try source url
-     switch(this.sourceUrl) {
-        like "http://*":
-        like "https://*": { 
-           Tag.known("web").addItem(this.note); 
-           var domain = URL.parse(this.sourceUrl).hostname;
-           this.appendHtml("<p.urlfrom><a href='" + this.sourceUrl + "'>" + domain + "</a></p>");
-           break;
-         }
-        like "file://*.doc": 
-        like "file://*.docx": Tag.known("word").addItem(this.note); break;
-        like "file://*.xls": 
-        like "file://*.xlsx": Tag.known("excel").addItem(this.note); break;
-        //default: 
-        //  stdout.println("paste", generator, url );
-     } 
-     this.sourceUrl = null;
+     if( this.sourceUrl ) {
+       switch(this.sourceUrl) {
+          like "http://*":
+          like "https://*": { 
+             Tag.known("web").addItem(this.note); 
+             var domain = URL.parse(this.sourceUrl).hostname;
+             this.appendHtml("<p|urlfrom><a href='" + this.sourceUrl + "'>" + domain + "</a></p>");
+             this.note.updateMeta{ urlFrom: this.sourceUrl };
+             break;
+           }
+          like "file://*.doc": 
+          like "file://*.docx": Tag.known("word").addItem(this.note); break;
+          like "file://*.xls": 
+          like "file://*.xlsx": Tag.known("excel").addItem(this.note); break;
+          //default: 
+          //  stdout.println("paste", generator, url );
+       } 
+       this.sourceUrl = null;
+     }
+
+     if(this.sourceTitle) 
+     {
+       // if note text does not contain h1,h2 then we are generating h1 from <head><title>
+       if(!this.body.$(h1,h2))
+         this.body.$prepend(<h1>{this.sourceTitle}</h1>);
+       this.sourceTitle = null;
+     }
   }
 
   function appendHtml(html) {
@@ -125,21 +164,37 @@ class HtmlArea: Element
     this.transact(insertIt,"insert url"); // do the action inside undoable transaction.    
   }
 
+  // static method
+  function tableHtml(cols,rows,headerCols=0,headerRows=0,autoWidth = true) {
+    if( !rows || !cols )
+       return "";
+    const width = autoWidth ? "" : "width=100%";
+    var table = "<table "+ width +"><tbody>";
+    for( var r in rows ) {
+      table += "<tr>";
+      if( r < headerRows )  
+        for( var c in cols )
+          table += "<th></th>";
+      else
+        for( var c in cols ) 
+          table += c < headerCols ? "<th></th>" : "<td></td>";
+      table += "</tr>\r\n";
+     }
+     table += "</tbody></table>";
+     return table;
+  }
+
   event exec:insert-table (evt) 
   {
     const params = evt.data; 
     const rows = params.rows;       assert rows;
     const columns = params.columns; assert columns;
-    const width = params.width == "auto" ? "" : "width=100%";
-    const border = params.border ? "border" : "";    
-    var html = "<table "+ border + " " + width + ">";
-    for( var r in rows ) {
-      html += "<tr>";
-      for( var r in columns )
-          html += "<td />";
-      html += "</tr>";
-    }  
-    html += "</table>";
+    const autoWidth = params.autoWidth || true;
+    const columnHeaders = params.columnHeaders || 0;
+    const rowHeaders = params.rowHeaders || 0;
+
+    //const border = params.border ? "border" : "";    
+    var html = tableHtml(columns, rows, columnHeaders, rowHeaders, autoWidth);
     
     function insertIt(transaction) {
       // 'this' here is the htmlarea
@@ -157,86 +212,61 @@ class HtmlArea: Element
     this.transact(insertIt,"insert table"); // do the action inside undoable transaction.
   }
 
+  function highlightWords(words) {
 
-  // returns (caption, shortText)
-  function essentials() {
+      const clearMark = Selection.clearMark;
+      const applyMark = Selection.applyMark;
 
-    const SHORT_TEXT_LENGTH = 64;
-
-    var body = this.body;
-
-    var caption = "";
-    var shortText = "";
-    
-    for( var el in DOM.descendantsOf(body,null) ) {
-      if( el.state.flowType == #text )
-      {
-        if( !caption ) {
-          caption = el.text;
-          continue;
-        }
-        if( shortText ) shortText += " ";
-        shortText += el.text;
-        if(shortText.length > SHORT_TEXT_LENGTH) 
-          break;
-      }  
-    }
-    if(!caption) {
-      var body = this.body;
-      if( body.length >= 2 ) {
-        caption = body[0].text.substr(0,64);
-        for( var el in DOM.descendantsOf(body,body[0]) ) {
-          if( el.state.flowType == #text )
-          {
-            shortText += el.text;
-            if(shortText.length > SHORT_TEXT_LENGTH) 
-              break;
-          }  
-        }
-      } else {
-        var text = body.text;
-        var lines = text.split("\n");
-        if( lines.length > 1 ) {
-          caption = lines.shift();
-          shortText = lines.join(" ");   
-        } else {
-          caption = shortText = body.text.substr(0,64);
-        }
-      }
-    }
-    return (caption,shortText);
+      if( !words ) 
+        clearMark(this.body);
+      else 
+        for(var node in DOM.eachNodeIn(this.body))
+        {
+          if( !node.isText ) continue;
+          var text = node.text.toLowerCase();
+          clearMark(node);
+          for(var (index,word) in words) {       
+            var pos = text.indexOf(word);
+            if( pos < 0 ) continue;
+            var bookmarkStart = [bookmark:node, pos, false];
+            var bookmarkEnd = [bookmark:node, pos + word.length, false];
+            applyMark(bookmarkStart,bookmarkEnd,"found" + index);
+          }
+        } 
   }
 
-  function saveNote() {
-    if( !cb && !this.changed /* || !this.note*/) 
-      return;
 
+  function checkNote() {
     if( !this.note ) {
        this.note = this.parent.provideNote();
        this.setDocumentUrl("note:" + this.note.id);
        this.postProcessPasting();
+       return true;
     }
+    return false;
+  }
+
+  function saveNote() {
+    if( !this.changed /* || !this.note*/) 
+      return;
+
+    var isNew = this.checkNote();
 
     var text = this.text;
     var html = this.saveDocument(); // to instanceof Bytes
     
-    var (caption,shortText) = this.essentials();
+    var caption = DOM.caption(this.document);
 
-    var body = this.body;
-    var (px1,py1,px2,py2) = body.box(#rect,#border,#inner)
-    var w = Integer.min(px1 + px2 + body.intrinsicWidthMax(),this.toPixels(800dip,#width));
-    var h = body.intrinsicHeight(w).limit(32, this.toPixels(1000dip,#height));
-
-    const PREVIEW_WIDTH = 80;
-    const PREVIEW_HEIGHT = 80;
-
-    var pvh = Integer.min(PREVIEW_HEIGHT, PREVIEW_WIDTH * h / w );
-
-    var previewImage = new Image(w, h, PREVIEW_WIDTH, pvh,this.body); // make snapshot of the body
-    this.note.setContent(html, text, caption, shortText, previewImage.toBytes());
+    var previewImage = previewImageOf(this.document);
+    this.note.update { 
+      html:html, 
+      text:text, 
+      caption: caption, 
+      preview: previewImage.toBytes() 
+    };
     previewImage.destroy();
 
-    //stdout.println("saveNote", this.isNew); 
+    //this.postEvent("note-updated"); -- moved to DB layer
   }
 
   function loadNote(n) {
@@ -247,6 +277,7 @@ class HtmlArea: Element
       this.isBlank = false;
       this.loadDocument(n.html, "note:" + n.id);
       this.document.state.readonly = this.state.readonly;
+      if( filterWords ) this.highlightWords(filterWords);
     }
     else {
       this.isNew = true;
@@ -255,6 +286,11 @@ class HtmlArea: Element
       this.document.state.readonly = false;
     }
     //this.state.focus = true;
+  }
+  
+  // obsolete:
+  function saveNoteTo(fileName) {
+    return this.saveDocument(fileName);
   }
 
   event ~click $(a[href]) (evt) {
@@ -267,9 +303,10 @@ class HtmlArea: Element
 
 }
 
-// used in note preview, applied to <htmlarea>
-/*class NotePreview : Element 
+// used in note preview, applied to <frame>
+class NoteFrame : Element 
 {
+  var inlineCss;
   // the document has issued data request
   function onRequest(rq) 
   {
@@ -282,10 +319,164 @@ class HtmlArea: Element
     }
   }
 
+  property document(v) {
+    get return this.first;
+  }
+  property body(v) {
+    get return this.first.$(body) || this.first;
+  }
+
   function loadNote(n) {
     if( this.note = n ) this.loadDocument(n.html, "note:" + n.id);
   }
-}*/
+
+  // saves note to file with images inline
+  function saveNoteToFile(n,pathname) 
+  {
+    if( this.note = n ) this.loadDocument(n.html, "note:" + n.id);
+    
+    for(var img in this.document.$$(picture[src],img[src]))
+    {
+      var src = img.attributes["src"];
+      var (data,mime) = this.note.getResource(src);
+      var dataUrl = String.printf("data:%s;src=%s;base64,%s",mime, src.urlEscape(),data.toString());
+      img.attributes["src"] = dataUrl;
+    }
+
+    var tags = this.note.tags.map( :tag: tag.name ).join(",");
+
+    var head = this.document.$(head);
+    if( head ) head.remove();
+
+    this.document.$prepend(<head>
+      <title>{this.note.caption}</title>
+      <meta name="note-id" content="{this.note.id}" />
+      <meta name="note-cdate" content="{this.note.cdate.toISOString(true)}" />
+      <meta name="note-mdate" content="{this.note.mdate.toISOString(true)}" />
+      <meta name="note-created-by" content="{this.note.createdBy}" />
+      <meta name="note-modified-by" content="{this.note.modifiedBy}" />
+      <meta name="note-book" content="{this.note.book.name}" />
+      <meta name="note-tags" content="{tags}" />
+      <style>{INLINE_CSS}</style>
+    </head>);
+
+    this.saveDocument(pathname);
+  }
+
+
+  // loads note from file and stores it in DB
+  // function conflictResolver(existingNote, importingNote) returns:
+  //   #update - but keep changes history
+  //   #discard - discard changes as we have more recent changes
+  //   #merge - TODO
+  function createNoteFromFile(pathOrBytes) 
+  {
+    var note = null;
+    var doc = null;
+    var generator = null;
+
+    function crackDataUrl(durl) {
+      var head = durl ~/ ",";
+      var data = durl ~% ",";
+
+      data = Bytes.fromString(data);
+      assert data instanceof Bytes;
+     
+      if(data !instanceof Bytes) 
+        return durl;
+
+      var heads = head.split(";");
+      var mimetype;
+      var src = "cid:" + data.md5(); // default src 
+
+      if( heads.last != "base64" )
+         return durl; // not a base64 ?
+      if(heads.length == 2) 
+        mimetype = heads[0]; 
+      else if(heads.length >= 3) {
+        mimetype = heads[0]; 
+        if((heads[1] ~/ "=") == "src")
+          src = (heads[1] ~% "=").urlUnescape();
+      } else
+        return durl;
+
+      note.addResource(src, mimetype, data);
+      Tag.known("image").addItem(note);
+      return src;
+    }
+
+    function processDataUrls(doc) // make relative URLS
+    {
+      for( var el in doc.$$([src^="data:"]) ) 
+        el.attributes["src"] = crackDataUrl(el.attributes["src"]);
+    }
+
+    var noteId;
+    var noteCaption;
+    var noteCDate;
+    var noteMDate;
+    var noteBook; // name
+    var noteTags; // comma separated list
+    var noteCWho; 
+    var noteMWho; 
+
+    function processNote(evt)
+    {
+      this.note = note = new Note();
+      doc = evt.target;
+
+      noteId = DOM.getMeta(doc,"note-id") || note.id; 
+      noteCDate = Date.parse(DOM.getMeta(doc,"note-cdate"),note.cdate);
+      noteMDate = Date.parse(DOM.getMeta(doc,"note-mdate"),note.mdate); 
+      noteCWho =  DOM.getMeta(doc,"note-created-by") || note.createdBy;
+      noteMWho =  DOM.getMeta(doc,"note-modified-by") || note.modifiedBy;
+
+      noteCaption = DOM.getTitle(doc);
+
+      noteBook = DOM.getMeta(doc,"note-book") || db.defaultBook().name;
+      noteTags = DOM.getMeta(doc,"note-tags"); 
+
+      generator = canonicalizeDOM(doc,{});
+      processDataUrls(doc);
+    }
+
+    this.on("parsed",processNote);
+
+    var action;
+
+    if(this.loadDocument(pathOrBytes) && note) 
+    {
+      note.id = noteId; 
+      note.cdate = noteCDate;
+      note.mdate = noteMDate; 
+      note.createdBy = noteCWho;
+      note.modifiedBy = noteMWho;
+
+      var text = this.text;
+      var html = this.saveDocument(); // to Bytes
+
+      var caption = DOM.caption(doc);
+
+      note.html = html;
+      note.text = text;
+      note.caption = caption;
+
+      var book = db.getBookByName(noteBook,true);
+      var tags = noteTags.split(",").filter(:nt:!!nt).map(:tn: db.getTagByName(tn,true));
+
+      (note,action) = db.importItem(note,book,tags);
+
+      // TODO: reload if updated to get proper preview
+      var previewImage = previewImageOf(doc);
+      note.preview = previewImage.toBytes();
+      previewImage.destroy();
+    }
+    this.off(processNote);
+    return (note,action);
+  }
+
+
+}
 
 
 

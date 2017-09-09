@@ -1,0 +1,103 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+
+          widget[type=hsv] {
+            var(hue): #ff0000;
+            prototype: HSVSelector;
+            display:block;
+            size:max-content;
+          }
+
+          widget[type=hsv] > input.hue
+          {
+            display:block; 
+            border:none;
+            height: 3dip;
+            width:180dip;
+            margin:0 *;
+            background: linear-gradient(to right, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
+          }
+
+          widget[type=hsv] > div.layers { 
+            size:180dip;
+            flow:stack;
+            margin:*;
+          }
+
+          widget[type=hsv] > div.layers > div.value {
+            size:*;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.0) 0%, rgba(0,0,0,1.0) 100%); 
+          }
+          widget[type=hsv] > div.layers > div.saturation {
+            size:*;
+            background: linear-gradient(to right, var(hue,#ff0000) 0%, #ffffff 100%); 
+          }
+
+          widget[type=hsv] > div.layers > div.pointer {
+            border:2dip solid #fff;
+            size:7dip;
+            transform: translate(-50%,-50%);
+            border-radius:50%;
+          }
+
+        </style>
+        <script type="text/tiscript">
+
+          class HSVSelector: Element 
+          {
+            this var hue = 0; // 0..360
+            this var val = 0.0; // 0..1.0
+            this var sat = 0.0; // 0..1.0
+
+            function attached() {
+              var me = this;
+              $(div.value) << event mousedown(evt) {
+                 var (w,h) = this.box(#dimension);
+                 me.val = 1.0 - evt.y / h.toFloat(); 
+                 me.sat = 1.0 - evt.x / w.toFloat(); 
+                 me.postEvent("change");
+                 me.$(div.pointer).style.set {
+                   margin-left: evt.x,
+                   margin-top: evt.y,
+                 };
+              };
+            }
+
+            event change $(input.hue) (evt, elHue) {
+              this.hue = elHue.value;
+              var color = Color.hsv(this.hue,1,1);
+              this.style.variable("hue", color);
+              this.postEvent("change");
+            }
+
+            property value(v) {
+              get return Color.hsv( this.hue, this.sat, this.val );
+              set {
+                // left as an exercise for the reader 
+              }
+            }
+          }
+
+          event change $(widget#color) {
+            $(pre#out).text = this.value.toString();
+          }
+
+        </script>
+    </head>
+    <body>
+      <widget|hsv #color>
+        <div.layers>
+          <div.saturation/>
+          <div.value/>          
+          <div.pointer/>
+        </div>
+        <input|hslider.hue min=0 max=360 />
+      </widget>
+
+      <pre#out></pre>
+
+    </body>
+</html>

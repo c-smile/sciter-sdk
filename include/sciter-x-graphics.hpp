@@ -86,7 +86,7 @@ namespace sciter
         return image( himg );
       return image(0);
     }
-    static image load( aux::bytes data ) // loads image from png or jpeg enoded data
+    static image load( aux::bytes data ) // loads image from png or jpeg encoded data
     {
       HIMG himg;
       GRAPHIN_RESULT r = gapi()->imageLoad( data.start, data.length, &himg); assert(r == GRAPHIN_OK); (void)(r);

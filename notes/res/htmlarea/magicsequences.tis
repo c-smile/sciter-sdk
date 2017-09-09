@@ -1,0 +1,186 @@
+include "sequences.tis";
+
+// "* " at the beginning of <p>,<div> -> <ul><li>
+Sequences.add("p,div",/^\*\s$/,null, function(htmlarea,caret,start,end) 
+{
+   var anchor = [bookmark:caret[0],0,false];
+   return htmlarea.transact( function(transaction) 
+   {
+     caret = transaction.removeRange(anchor,caret); // remove
+     htmlarea.selection.select(caret); 
+     transaction.execCommand("format:toggle-list:ul"); // transform
+     return true; // commit
+   });
+});
+
+// "# " at the beginning of <p>,<div> -> <ol><li>
+Sequences.add("p,div",/^#\s$/,null, function(htmlarea,caret,start,end) 
+{
+   var anchor = [bookmark:caret[0],0,false];
+   return htmlarea.transact( function(transaction) 
+   {
+     caret = transaction.removeRange(anchor,caret); // remove
+     htmlarea.selection.select(caret); 
+     transaction.execCommand("format:toggle-list:ol"); // transform
+     return true; // commit
+   });
+});
+
+// "1. " at the beginning of <p>,<div> -> <ol><li>
+Sequences.add("p,div",/^\d\.\s$/,null, function(htmlarea,caret,start,end) 
+{
+   var anchor = [bookmark:caret[0],0,false];
+   return htmlarea.transact( function(transaction) 
+   {
+     caret = transaction.removeRange(anchor,caret); // remove
+     htmlarea.selection.select(caret); 
+     transaction.execCommand("format:toggle-list:ol"); // transform
+     return true; // commit
+   });
+});
+
+
+// "- " at the beginning of <p>,<div> -> <dl><dt>
+Sequences.add("p,div",/^-\s$/,null, function(htmlarea,caret,start,end) 
+{
+   var anchor = [bookmark:caret[0],0,false];
+   return htmlarea.transact( function(transaction) 
+   {
+     caret = transaction.removeRange(anchor,caret); // remove
+     htmlarea.selection.select(caret); 
+     transaction.execCommand("format:toggle-list:dl"); // transform
+     return true; // commit
+   });
+});
+
+// "^ " at the beginning of <p>,<div> -> <dir><li>
+Sequences.add("p,div",/^\^\s$/,null, function(htmlarea,caret,start,end) 
+{
+   var anchor = [bookmark:caret[0],0,false];
+   return htmlarea.transact( function(transaction) 
+   {
+     caret = transaction.removeRange(anchor,caret); // remove
+     htmlarea.selection.select(caret); 
+     transaction.execCommand("format:toggle-list:dir"); // transform
+     return true; // commit
+   });
+});
+
+
+// "> " at the beginning of <p>,<div> -> <blockquote>
+Sequences.add("p,div",/^>\s$/,null, function(htmlarea,caret,start,end) 
+{
+   var anchor = [bookmark:caret[0],0,false];
+   return htmlarea.transact( function(transaction) 
+   {
+     caret = transaction.removeRange(anchor,caret); // remove
+     htmlarea.selection.select(caret); 
+     transaction.execCommand("format:morph-block:blockquote"); // transform
+     return true; // commit
+   });
+});
+
+// "` " at the beginning of <p>,<div> -> <pre>
+Sequences.add("p,div",/^`\s$/,null, function(htmlarea,caret,start,end) 
+{
+   var anchor = [bookmark:caret[0],0,false];
+   return htmlarea.transact( function(transaction) 
+   {
+     caret = transaction.removeRange(anchor,caret); // remove
+     htmlarea.selection.select(caret); 
+     transaction.execCommand("format:morph-block:pre"); // transform
+     return true; // commit
+   });
+});
+
+// "h1 " ... "h6 " at the beginning of <p>,<div> -> <h1>...<h6>
+Sequences.add("p,div",/^[hH][123456]\s$/,null, function(htmlarea,caret,start,end) 
+{
+   var anchor = [bookmark:caret[0],0,false];
+   return htmlarea.transact( function(transaction) 
+   {
+     caret = transaction.removeRange(anchor,caret); // remove
+     htmlarea.selection.select(caret); 
+     transaction.execCommand("format:morph-block:" + start.trim()); // transform
+     return true; // commit
+   });
+});
+
+// "# " ... "###### " at the beginning of <p>,<div> -> <h1>...<h6>
+/*Sequences.add("p,div",/^(#{1,6})\s$/,null, function(htmlarea,caret,start,end,re) 
+{
+   var anchor = [bookmark:caret[0],0,false];
+   return htmlarea.transact( function(transaction) 
+   {
+     caret = transaction.removeRange(anchor,caret); // remove
+     htmlarea.selection.select(caret); 
+     transaction.execCommand("format:morph-block:" + "h" + re[1].length.toString()); // transform
+     return true; // commit
+   });
+});*/
+
+
+// "[c:r] " at the beginning of <p>,<div> -> <table> of r rows and c columns
+Sequences.add("p,div",/^\[(\d):(\d)\]\s$/,null, function(htmlarea,caret,start,end,re) 
+{
+   var anchor = [bookmark:caret[0],0,false];
+   //stdout.println(re[0],re[1],re[2]);
+   return htmlarea.transact( function(transaction) 
+   {
+     caret = transaction.removeRange(anchor,caret); // remove sequence
+     var p = caret[0].parent; // get parent <p>
+     htmlarea.selection.select(p); 
+
+     var rows = re[2].toInteger();
+     var cols = re[1].toInteger();
+
+     if( !rows || !cols )
+       return false;
+
+     var html = HtmlArea.tableHtml(cols, rows, 0, 0, true);      
+     transaction.insertHtml(htmlarea.selection.caret,html); 
+     return true; // commit
+   });
+});
+
+// "[c:r:ch:rh] " at the beginning of <p>,<div> -> <table> of r rows and c columns, with col/row headers 
+Sequences.add("p,div",/^\[(\d):(\d):(\d):(\d)\]\s$/,null, function(htmlarea,caret,start,end,re) 
+{
+   var anchor = [bookmark:caret[0],0,false];
+   return htmlarea.transact( function(transaction) 
+   {
+     caret = transaction.removeRange(anchor,caret); // remove sequence
+     var p = caret[0].parent; // get parent <p>
+     htmlarea.selection.select(p); 
+
+     var cols = re[1].toInteger();
+     var rows = re[2].toInteger();
+     var headerCols = re[3].toInteger();
+     var headerRows = re[4].toInteger();
+     if( !rows || !cols )
+       return false;
+     var html = HtmlArea.tableHtml(cols, rows, headerCols, headerRows, true);       
+     transaction.insertHtml(htmlarea.selection.caret,html); 
+     return true; // commit
+   });
+});
+
+const reURL = /((?:https?:\/\/)([a-zA-Z-]+)(\.[a-zA-Z-]+)([\/\w\.\?#&=%-]*)\/?)\s$/; // url with space at the end
+// [single space] typed after url - wrap it into <a href=url>url</a>
+Sequences.add(":not(a)",reURL,null, function(htmlarea,caret,start,end) 
+{
+   var url = start.match(reURL)[1];
+   caret[1] -= 1; // shift pos by 1 space back
+   // anchor - starting position of the URL text
+   var anchor = [bookmark:caret[0],caret[1] - url.length + 1,false];
+
+   return htmlarea.transact( function(transaction) 
+   {
+     htmlarea.selection.select(caret,anchor); // select url text
+     var a = new Element("a"); a.attributes["href"] = url; // new <a href=...>
+     transaction.wrap(htmlarea.selection.anchor,htmlarea.selection.caret,a); // wrap selection into it
+     htmlarea.selection.advance(#next); // advance caret to the position where it used to be visually
+     return true; // done,commit
+   });
+});
+

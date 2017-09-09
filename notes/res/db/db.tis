@@ -1,4 +1,7 @@
 
+const DELETED_BOOK_ID = "deleted-notes-book";
+const DEFAULT_BOOK_ID = "0";
+
 include "../config.tis";
 include "book.tis";
 include "tag.tis";
@@ -22,12 +25,15 @@ function openDatabase()
         tags      :{},  // map of tagid -> tag
         books     :{},  // map of bookid -> book; 
         version   :1,
-        deleted   :ndb.createIndex(#date, false),  // deleted items, item by date of creation index, item.cdate -> item, not unique
       };
   }
   ndb.path = pathname;
   if(ndb.root.id2item.length == 0)
     self.postEvent("new-db-initialized");
+  //else if("-purge-deleted-notes" in argv) {
+  //
+  // }
+
   return ndb;
 }
 
@@ -78,38 +84,67 @@ function db.addItem(item, tags = null)
   return item;
 }
 
-// this will not delete the item but rather move it to root.deleted index
-function db.deleteItem(item) 
+function db.getItem(id)
+{
+  return this.root.id2item[id];
+}
+
+// import item with the check for existence
+function db.importItem(item, book, tags ) 
 {
   var root = this.root;
-  var now; 
-  
-  var t = root.id2item[item.id];
-  assert t === item;
 
-  // add it to deleted list
-  root.deleted[item.cdate] = item;
-  
-  // remove it from alive lists
-  root.id2item.remove(item.id);
-  root.date2item.remove(item.cdate,item);
+  var action; // action taken
 
-  if(item.tags) {
-    for( var tag in item.tags )
-      tag.items.remove(item.id);     // remove item from tag
-    item.tags = null;
+  var existing = root.id2item[item.id];
+  if( !existing ) {
+    existing = db.addItem(item);
+    action = #created;
   }
-
-  if(item.book) {
-    item.book.remove(item.id);     // remove item from book
-    item.book = null;
+  // we have two notes sharing same note id (that is GUID)  
+  else if(existing.html == item.html) {  
+    action = #skipped;
   }
+  else //if(existing.html != item.html) 
+  {
+    var ourDate = existing.mdate.valueOf();
+    var theirDate = item.mdate.valueOf();
+    var modified; 
+    if( ourDate <= theirDate )
+      modified = existing.mergeContent(item,#theirs-on-top);
+    else
+      modified = existing.mergeContent(item,#ours-on-top); 
+    action = modified ? #updated : #skipped;
+  } 
 
-  item.store();
+  db.assignItemToBook(existing, book);
 
-  self.postEvent("note-deleted",item);
- 
-  return item;
+  for(var tag in tags)
+    if(!existing.containsTags(tag))
+      db.assignTagToItem(existing,tag);
+
+  return (existing,action);
+}
+
+function db.purgeDeletedItems() {
+  var root = this.root;
+
+  var delBook = db.getDeletedBook();
+  
+  for(var item in delBook.items ) {
+     //book.items.remove(item.id);     // remove item from tag
+    assert root.id2item.remove(item.id);
+    assert root.date2item.remove(item.cdate,item);
+    // remove it from tags
+    if(item.tags) {
+      for( var tag in item.tags )
+        tag.items.remove(item.id);     // remove item from tag
+      item.tags = null;
+    }
+  }
+  delBook.items.clear();
+  assert delBook.items.length == 0;
+  self.postEvent("book-assigned",delBook); // to update counters
 }
 
 function db.addTag(tag) 
@@ -170,6 +205,15 @@ function db.removeTagFromItem(item,tag)
   return tag.removeItem(item);
 }
 
+function db.removeTag(tag)
+{
+  if( tag.itemsCount )
+    return false;
+  this.root.tags.remove(tag.id);
+  self.postEvent("tag-removed", [null,tag]);
+  return true;
+}
+
 function db.totalItems() {
   return this.root.date2item.length;
 }
@@ -177,19 +221,21 @@ function db.totalItems() {
 // enumerate items in creation sequence order, calls callback if item.tags contain tags 
 // from the tags and text substring 
 
-function db.selectItems(callback, tags = null, text = null, book = null)
+function db.selectItems(callback, tags = null, words = null, book = null)
 {
   var root = this.root;
   var startDate = new Date(1000,1,1);
   var endDate = new Date(3000,1,1);
-  if( !tags && !text && !book )
+  if( !tags && !words && !book )
   {
-    for(var it in root.date2item.select(startDate,endDate,false))
-      callback(it);
+    for(var it in root.date2item.select(startDate,endDate,false)) {
+      if( !it.book.isDeleted )
+        callback(it);
+    }
   } else {
-    if( text ) text = "*" + text.toLowerCase() + "*";
+    //if( text ) text = "*" + text.toLowerCase() + "*";
     for(var it in root.date2item.select(startDate,endDate,false))
-      if( it.matches(tags,text,book) )
+      if( it.matches(tags,words,book) )
         callback(it);
   }
 }
@@ -214,18 +260,32 @@ function db.getBook(bookId)
 
 function db.getBooks() 
 {
-  var defbook = this.defaultBook();  
+  var defbook = this.defaultBook();
 
   var out = [];
-  for( var (key,book) in this.root.books )
-    out.push(book);
+  for( var (key,book) in this.root.books ) {
+    if( key != DELETED_BOOK_ID)
+      out.push(book);
+  }
    
   out.sort( :a,b {
     if( a === defbook ) return -2;
     if( b === defbook ) return 2;
     return a.name.lexicalCompare(b.name);
   });
+
+  out.push(this.getDeletedBook());
+
   return out;
+}
+
+// get book holding deleted notes
+function db.getDeletedBook()
+{
+  var delb = this.root.books[DELETED_BOOK_ID];
+  if( !delb )
+    this.root.books[DELETED_BOOK_ID] = delb = new Book("Deleted notes", DELETED_BOOK_ID);
+  return delb;
 }
 
 function db.getBookByName(name,create = false)
@@ -235,7 +295,7 @@ function db.getBookByName(name,create = false)
       return book;
   if( create ) {
     var book = new Book(name);
-    this.addBook(tag);     
+    this.addBook(book);     
     return book;
   }
   return null;
@@ -296,16 +356,17 @@ function db.deleteBook(book, bookToMoveItemsInto = null) {
 
 function db.mergeBookItems(fromBook, toBook) {
   var cnote = currentNote;
-  if( !toBook.items ) toBook.items = db.createIndex(#string);   
+  if( !toBook.items ) toBook.items = db.createIndex(#string);
   for( var item in fromBook.items ) {
-    fromBook.items.remove(item.id);
     toBook.items[item.id] = item; 
     item.book = toBook;
     if( cnote === item )
       self.postEvent("book-assigned", [toBook,item]);
   }
-  
+  fromBook.items.clear();
 }
+
+
 
 
 

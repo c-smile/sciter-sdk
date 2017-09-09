@@ -1,0 +1,48 @@
+<menu .context>
+  <li name="edit:undo" 
+		command="edit:undo"
+		><label>Undo</label><span class="accesskey">&platform-cmd-mod;Z</span></li>
+  <li name="edit:redo" 
+		command="edit:redo"
+		><label>Redo</label><span class="accesskey">&platform-cmd-mod;&platform-shift-mod;Z</span></li>
+  <hr/>
+  <li name="edit:cut" 
+		command="edit:cut" 
+		><label>Cut</label><span class="accesskey">&platform-cmd-mod;X</span></li>
+  <li name="edit:copy" 
+		command="edit:copy"
+		><label>Copy</label><span class="accesskey">&platform-cmd-mod;C</span></li>
+  <li name="edit:paste" 
+		command="edit:paste"
+		><label>Paste</label><span class="accesskey">&platform-cmd-mod;V</span></li>
+  <hr/>
+  <li name="edit:selectall" 
+		command="edit:selectall"
+		><label>Select All</label><span class="accesskey">&platform-cmd-mod;A</span></li>
+  <hr/>    
+  <li.table-operations disabled><label>Table operations</label>
+    <menu>
+      <li><label>Insert row</label>
+         <menu>
+           <li command="edit:insert-table-row:before"><label>Before</label><span class="accesskey">&platform-cmd-mod;T+I+R+B</span></li>
+           <li command="edit:insert-table-row:after"><label>After</label><span class="accesskey">&platform-cmd-mod;T+I+R+A</span></li>
+         </menu>
+      </li>
+      <li><label>Insert column</label>
+         <menu>
+           <li command="edit:insert-table-column:before"><label>Before</label><span class="accesskey">&platform-cmd-mod;SHIFT+TAB</span></li>
+           <li command="edit:insert-table-column:after"><label>After</label><span class="accesskey">&platform-cmd-mod;TAB</span></li>
+         </menu>
+      </li>
+      <li command="edit:merge-table-cells"><label>Merge cells</label><span class="accesskey">&platform-cmd-mod;T+M</span></li>
+      <li command="edit:split-table-cells"><label>Split cells</label><span class="accesskey">&platform-cmd-mod;T+S</span></li>
+      <li><label>Delete</label>
+           <menu>
+             <li command="edit:delete-table-rows"><label>Row(s)</label><span class="accesskey">&platform-cmd-mod;T+D+R</span></li>
+             <li command="edit:delete-table-columns"><label>Columns(s)</label><span class="accesskey">&platform-cmd-mod;T+D+C</span></li>
+           </menu>
+      </li>
+    </menu>    
+  </li>
+
+</menu>

@@ -19,7 +19,11 @@
       <p>See <a href="http://www.terrainformatica.com/htmlayout/cssmap.whtm">list of supported names of CSS attributes</a>.</p>
       <p>To clear value of style attribute assign <em>undefined</em> value to it:</p>
       <p><font face="Courier New">el.style#background-color = undefined;</font></p></dd>
-    <dt>backgroundImageWidth</dt>
+    
+		
+		<dt>backgroundImage</dt><dd><i>Image | null</i>, background image if it is defined in CSS.</dd>
+		<dt>foregroundImage</dt>
+		<dd><i>Image | null</i>, foreground image if it is defined in CSS or behaviors. For the <code>&lt;video&gt;</code> element, for example, it will return image representing current frame.&nbsp;</dd><dt>backgroundImageWidth</dt>
     <dd>
       <div><em>integer</em> | <em>undefined</em>, width in pixels of background image if it is available or <em>undefined</em> if background image is available.</div></dd>
     <dt>backgroundImageHeight</dt>
@@ -79,7 +83,7 @@ elem.style.height = ... ;
       <p>The only difference is when last parameter <em>delayed</em> = <code>true</code> is provided. With it the method changes dimensions of the element immediately and defers remeasurement of children for some later time. It makes sense to use this method if you need to update dimensions of the <em>overflow:auto | scroll</em> element with many children in response of some frequent events like MOUSE_MOVE (E.g. in custom splitter implementation). In this case mutiple MOUSE_MOVEs will end up in only one remeasurement of element's content.</p></dd>
     <dt>documentRules</dt>
     <dd>
-      <div>(<em> </em>[<em>callback</em>: function] [, <em>filter</em>: object ] ) : integer</div>
+      <div>(<em/>[<em>callback</em>: function] [, <em>filter</em>: object ] ) : integer</div>
       <p>Enumerates CSS rules defined and used by the document. Returns number of rules processed.</p>
       <p>Where:</p>
       <ul>

@@ -1,10 +1,13 @@
 
 /* default editing style */
 
+@import url(htmlarea-widgets.css);
+
 html { 
-       flow:vertical; 
-       background:none;
-     }
+  font:10pt Verdana,Helvetica,Roboto,sans-serif;
+  flow:vertical; 
+  background:none;
+}
 
 html > body { 
   margin:0 0.001*;
@@ -15,9 +18,16 @@ html > body {
 }
 
 table { border-collapse:collapse; }
-table td, table th {
+table td {
   border:1dip solid #ddd;
   padding:4dip 8dip;
+}
+table th {
+  //font-weight:normal;
+  color:#444;
+  border:1dip solid #ddd;
+  padding:4dip 8dip;
+  background:#eee; 
 }
 
 pre {
@@ -63,7 +73,16 @@ blockquote {
   padding-left:0.8em;
 }
 
-p.urlfrom {
+p[type=urlfrom] {
   text-align:right;
   border-top:1dip solid;
 }
+
+mark.a { background: #fcfc93; }  
+mark.b { background: #a0f7a3; }  
+mark.c { background: #e0a0f7; }
+
+// found words marks:
+*::mark(found0) { background-color:#ff0; }
+*::mark(found1) { background-color:#f8f; }
+*::mark(found2) { background-color:#8ff; }

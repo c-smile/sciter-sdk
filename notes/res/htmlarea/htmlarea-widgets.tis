@@ -1,0 +1,37 @@
+
+class CheckListItem : Element {
+
+  event mousedown (evt) {
+    if (evt.isOnIcon) {
+      this.toggle(!this.$is(.checked));
+      this.postEvent("change"); // notify document change
+      return true;
+    }
+  } 
+
+  function toggle(onOff) {
+    this.attributes.toggleClass("checked", !this.$is(.checked));
+    this.attributes.removeClass("mixed");
+    this.updateChildrenState(onOff);
+    for(var p = this.parent; p && p !== self; p = p.parent)
+      if(p instanceof CheckListItem) p.checkChildrenState();
+  }
+
+  function checkChildrenState()
+  {
+    var hasChecked = this.$(> dir>li.checked);
+    var hasUnchecked = this.$(> dir>li:not(.checked));
+    if( !hasChecked && !hasUnchecked ) { this.attributes.removeClass("mixed"); }
+    else if( hasChecked && !hasUnchecked ) { this.attributes.toggleClass("checked", true); this.attributes.removeClass("mixed");}
+    else if( !hasChecked && hasUnchecked ) { this.attributes.toggleClass("checked", false); this.attributes.removeClass("mixed");}
+    else { this.attributes.addClass("mixed", false); this.attributes.removeClass("checked"); }
+  }
+
+  function updateChildrenState( onOff ) {
+    for(var child in this.$$(dir > li)) {
+      child.attributes.toggleClass("checked", onOff);
+      child.attributes.removeClass("mixed");
+    }
+  }
+
+}

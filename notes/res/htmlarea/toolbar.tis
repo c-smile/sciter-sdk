@@ -68,15 +68,20 @@ function EditingToolbar(htmlarea,toolbar)
       assert false: "Bad cmd type";
   }
 
-  bind("button.bold",          "format:toggle-span:b|strong");    
-  bind("button.italic",        "format:toggle-span:i|em");
-  //bind("button.underline",     "format:toggle-span:u");
-  bind("button.strikethrough", "format:toggle-span:s|strike");
-  //bind("button.subscript",     "format:toggle-span:sub");
-  //bind("button.superscript",   "format:toggle-span:sup");
+  bind("button.span li.remove",     "format:remove-span:*");    
+  bind("button.span li.strong",     "format:toggle-span:b|strong");    
+  bind("button.span li.em",         "format:toggle-span:i|em");
+  bind("button.span li.underline",  "format:toggle-span:u");
+  bind("button.span li.del",        "format:toggle-span:del|s|strike");
+  bind("button.span li.sub",        "format:toggle-span:sub");
+  bind("button.span li.sup",        "format:toggle-span:sup");
+  bind("button.span li.mark.a",     "format:apply-span:mark",{"class":"a"});
+  bind("button.span li.mark.b",     "format:apply-span:mark",{"class":"b"});
+  bind("button.span li.mark.c",     "format:apply-span:mark",{"class":"c"});
                                
   bind("button.list-ul",       "format:toggle-list:ul");
   bind("button.list-ol",       "format:toggle-list:ol");
+  bind("button.list-dir",      "format:toggle-list:dir");
   bind("button.list-dl",       "format:toggle-list:dl");
   bind("button.pre",           "format:toggle-pre");
   bind("button.blockquote",    "format:toggle-block:blockquote");
@@ -84,7 +89,13 @@ function EditingToolbar(htmlarea,toolbar)
   bind("button.unindent",      "format:unindent");
   bind("button.indent",        "format:indent");
 
-  //bind("button.unlink",        "format:pull-element:a");
+  bind("button.paragraph li.p",   "format:morph-block:p");
+  bind("button.paragraph li.div", "format:morph-block:div");
+  bind("button.paragraph li.h1",  "format:morph-block:h1");
+  bind("button.paragraph li.h2",  "format:morph-block:h2");
+  bind("button.paragraph li.h3",  "format:morph-block:h3");
+  bind("button.paragraph li.h4",  "format:morph-block:h4");
+  bind("button.paragraph li.h5",  "format:morph-block:h5");
     
   /*bind("button.font-size li:nth-child(1)", "format:apply-span:font", {size:1});
   bind("button.font-size li:nth-child(2)", "format:apply-span:font", {size:2});

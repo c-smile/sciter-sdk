@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+        @import url(notifications.css);
+        </style>
+        <script type="text/tiscript">
+          
+          var counter = 0;
+          const messages = ["VENI,VIDI,VICI",
+                            "Per aspera ad astra",
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam non ante justo. Nulla efficitur imperdiet interdum."];
+
+          event click $(#add) {
+            Notifications.add( messages[ ++counter % messages.length] );
+          }
+
+
+        </script>
+    </head>
+    <body>
+       <button#add>Add notification</button>
+    </body>
+    <notifications/>
+</html>

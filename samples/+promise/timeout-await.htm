@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <title></title>
+    <style></style>
+    <script type="text/tiscript">
+    
+    function self.ready() {
+    
+      // promisified timeout, returns promise
+      function timeout(ms,rv = null) {
+        var oath = promise();
+        self.timer( ms, function() { oath(true, [rv]);} ) // fulfill the promise with optional param
+        return oath;
+      }
+        
+      const testEl = $(#test);
+    
+      function task() {
+         testEl.text = "waiting for 2 seconds ";
+         await timeout(2s);
+         testEl.text = "2 seconds passed!";
+      }
+
+      task(); // run asynchronous task() function (uses await inside)
+    
+    }
+    
+    </script>
+  </head>
+<body>
+  <p><code>timeout(1s)</code> demo, will change text of the block below in one second:</p>
+  <div#test>Huh?</div>
+
+</body>
+</html>

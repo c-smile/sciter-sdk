@@ -11,7 +11,7 @@
         return oath;
       }
     
-      function do_async_stuff()
+      async function do_async_stuff()
       {
           var result = await timeout(1s, 42); 
           stdout.println("A",result); //prints '42' 1 second after 'timeout' is invoked (as expected)

@@ -269,13 +269,19 @@ typedef ISciterAPI* (SCAPI *SciterAPI_ptr)();
 
     EXTERN_C ISciterAPI* SCAPI SciterAPI();
 
+#if defined(__cplusplus) && !defined(PLAIN_API_ONLY)
     inline ISciterAPI* SAPI( ISciterAPI* ext = nullptr ) {
+#else
+    inline ISciterAPI* SAPI(ISciterAPI* ext) {
+#endif
        static ISciterAPI* _api = nullptr;
        if( ext ) _api = ext;
        if( !_api )
        {
           _api = SciterAPI();
-          tiscript::ni( _api->TIScriptAPI() );
+#if defined(__cplusplus) && !defined(PLAIN_API_ONLY)
+          tiscript::ni(_api->TIScriptAPI());
+#endif
        }
        assert(_api);
        return _api;

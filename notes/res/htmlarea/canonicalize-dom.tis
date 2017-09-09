@@ -1,8 +1,8 @@
-
+// a.k.a. "canibalize DOM"  
 
 // called by 
 //   event pastehtml $(htmlarea) (evt) 
-// to normalize/preprocess pasted html: localize urls, clean styles, etc  
+// to normalize/preprocess pasted html: remove redundant elements and styles, etc  
 // parameters: 
 //   elHtml - root element (<html>) of html being pasted. This DOM element is not yet in the editable document DOM.
 //            It may contain comment nodes with text "StartFragment" and "EndFragment" - they mark start/end of actual 
@@ -10,12 +10,17 @@
 //            The engine will remove these comments before pasting.
 //   params - configuration params - what to paste, etc.
 
+// returns (generator,title) if any
+
 function canonicalizeDOM(elHtml, params) {
   
   //like <meta name=Generator content="Microsoft Excel 15">
   var generator = elHtml.$(head > meta[name==generator]);
   if( generator ) generator = generator.attributes["content"];
-  
+
+  var title = elHtml.$(title);
+  if( title ) title = title.text;
+
   /*function localizeUrls(attr) // make relative URLS
   {
     for(var el in elHtml.$$([{attr}])) 
@@ -42,7 +47,8 @@ function canonicalizeDOM(elHtml, params) {
     // returns true if element has no attributes
 
     const requiredAttribute = [ "id",  "name",  "href",  "src",  "type",  
-                              "nowrap", "colspan", "rowspan", "valign", "align", "border" ];
+                                "nowrap", "colspan", "rowspan", "valign", "align", "border" ];
+    // note, we deliberately exclude "class" and "style" attributes 
 
     function processAttributes(el) {
        for( var n = el.attributes.length - 1; n >= 0; --n ) {
@@ -57,7 +63,7 @@ function canonicalizeDOM(elHtml, params) {
     function redundant(el) {
       const tag = el.tag;
       if( tag == "span" ) return true; 
-      if( tag == "head" ) return true; 
+      //if( tag == "head" ) return true;
       if( tag == "div" && !el.firstNode ) return true;
       return false;
     }
@@ -65,7 +71,7 @@ function canonicalizeDOM(elHtml, params) {
     var nodeStartFragment = null; 
     var nodeEndFragment = null;
 
-    const prohibitedElement = { "frame":true,"iframe":true,"style":true,"script":true,"link":true, "col":true, "colgroup":true};
+    const prohibitedElement = { "frame":true,"iframe":true,"style":true,"script":true,"link":true, "col":true, "colgroup":true, "head":true};
 
     function processNode(node) 
     {
@@ -149,5 +155,6 @@ function canonicalizeDOM(elHtml, params) {
 
   cleanContent();
 
-  return generator;
+  return (generator,title);
 }
+

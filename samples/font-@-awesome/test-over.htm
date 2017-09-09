@@ -1,0 +1,37 @@
+<html>
+   <head>
+      <title></title>
+      <include src="font-awesome.inc.htm" />
+      <style>
+         @font-face {
+          font-family: MyAwesome;
+          src: url(fontawesome-webfont.ttf);
+         }
+
+         body {
+           font:system, MyAwesome, sans-serif; 
+         }
+
+
+         dl {
+          flow: horizontal;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+         }
+         dt { 
+          font-size: 19dip;
+         }
+
+         //dl > popup[role="overflow-tooltip"] { font-family: Verdana,MyAwesome,sans-serif; } 
+
+      </style>
+      <script type="text/tiscript"></script>
+   </head>
+   <body>
+      <dl>
+         <dt>&fa-address-book-o;</dt>
+         <dd>fa-address-book-o</dd>
+      </dl>
+   </body>
+</html>

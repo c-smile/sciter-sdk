@@ -37,7 +37,9 @@
   <h2>Methods</h2>
   <dl>
     <dt>loadDocument</dt>
-    <dd>([templateUrl:string], documentUrl:string) - initiates loading of the document and template from given URLs;</dd>
+    <dd>([<i>templateUrl</i>:string], <i>documentUrl</i>:string) - initiates loading of the document and template from given URLs;</dd>
+		<dt>loadHtml</dt>
+		<dd>(<i>html</i>:string | Bytes, <i>documentUrl</i>:string) - loads document from html string, documentUrl is an url&nbsp;to resolve relative urls (if any);</dd>
     <dt>pagesTotal</dt>
     <dd>() : integer, returns number of pages found;</dd>
     <dt>pageNo</dt>
@@ -46,10 +48,22 @@
     <dd>(number: integer), navigates view to page number;</dd>
     <dt>selectPrinter</dt>
     <dd>() : opens system select printer dialog to select target printer, configures page size accordingly, may start pagination process.</dd>
-    <dt>selectDefaultPrinter()</dt>
+    <dt>selectDefaultPrinter</dt>
     <dd>() : selects default printer as a print target, may start pagination process.</dd>
     <dt>print</dt>
-    <dd>() - prints current document on target printer.</dd></dl>
+    <dd>() - prints current document on target printer.</dd>
+		<dt>setDocumentName</dt>
+		<dd>(name:string) - sets name of print spooler job - this name will appear in&nbsp;print spooler queue view in Windows.&nbsp;</dd>
+		<dt>printers</dt>
+		<dd><div>() : array</div><p> The method returns array of printers registered in system. Each element of the array is an object: </p>
+			<pre>{ 
+  id: string,           // id of the printer to be used in setPrinter() method;
+  name: string,         // human readable name; 
+  location: string,     // printer location if available;
+  isDefault: true/false // true if that printer is the default one;
+} 
+</pre></dd>
+		<dt></dt></dl>
   <h2>Value</h2>
   <p>N/A</p>
   <h2>Frame events handling in script</h2>

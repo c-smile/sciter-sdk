@@ -1,6 +1,7 @@
 include "db/note.tis";
 include "htmlarea/toolbar.tis";
 include "books-view.tis";
+include "libs/utils.tis";
 
 // Note view - represents single note
 
@@ -8,12 +9,17 @@ class NoteView : Element
 {
   this var note = null;
   this var htmlarea = null;
+  this var toolbar = null;
+  //this var footer = null;
   this var keywords = null; // keywords list 
+  this var history = null;
   this var bookSelector = null;
 
   function attached() 
   {
     this.htmlarea = this.$(htmlarea);
+    this.toolbar = this.$(toolbar);
+    this.history = this.$(history);
     this.tags = this.$(tags);
     this.bookSelector = this.$(select.book);
 
@@ -25,8 +31,12 @@ class NoteView : Element
                                            me.htmlarea.execCommand("edit:paste");
                                          }
                                        }
-    self << event note-lock-changed() { me.updateLockedState(); }
-    self << event note-created()      { me.updateLockedState(); }
+    self << event note-lock-changed() { me.updateState(); }
+    self << event note-created()      { me.updateState(); }
+    self << event note-updated()      { me.updateState(); }
+    //self << event note-history()      { me.updateState(); }
+    self << event note-history-changed (evt) { if(this.note === evt.data) me.updateState(); }
+   
 
     self << event book-changed() { me.populateBooks(); }
     self << event book-assigned() { me.populateBooks(); }
@@ -34,7 +44,20 @@ class NoteView : Element
     self << event book-removed() { me.populateBooks(); }
     self << event book-updated() { me.populateBooks(); }
 
-    self << event book-selected() { if(!me.note) me.bookSelector.value = (currentBook ? currentBook : db.defaultBook()).id ; }
+    self << event book-selected() { 
+      if(!me.note && currentBook !== db.getDeletedBook() )
+        me.bookSelector.value = (currentBook ? currentBook : db.defaultBook()).id; 
+    }
+
+    self << event notes-filter-changed (evt) {
+      if(evt.data == #words)
+        me.htmlarea.highlightWords(filterWords);
+    }
+
+    self << event shutdown {
+      me.htmlarea.saveNote();
+      db.commit();
+    }
 
     this.populateBooks(); 
     EditingToolbar(this.htmlarea, this.$(band.editing));
@@ -54,11 +77,15 @@ class NoteView : Element
   }
 
   function showNote(note) {
+    if(this.note) {
+      this.htmlarea.saveNote();
+      db.commit();
+    }
     currentNote = note;
     this.note = note;
     if( note && (note.lock === undefined))
         note.lock = true; // user did not express desire to lock it - lock it by default
-    this.updateLockedState();
+    this.updateState();
     this.htmlarea.loadNote(note);
     this.tags.loadNote(note);
     this.bookSelector.value = note ? note.book.id : db.defaultBook().id;
@@ -69,27 +96,56 @@ class NoteView : Element
     var options = this.bookSelector.options;
     options.clear();
 
-    var fmt = BooksView.bookBriefHtml;
+    var fmt = BookView.bookBriefHtml;
 
     for( var book in books )
       options.append(fmt(book));
+    
     if(this.note)
       this.bookSelector.value = this.note.book.id;
   }
 
-  function updateLockedState() {
+  function updateState() {
     if( this.note ) {
-      this.$(toolbar button.edit).state.disabled = false;
-      this.$(toolbar button.print).state.disabled = !platformSupportsPrinting;
-      this.$(toolbar).state.expanded = !this.note.lock;
+      this.toolbar.$(button.edit).state.disabled = false;
+      this.toolbar.$(button.save).state.disabled = false;
+      this.toolbar.$(button.print).state.disabled = !platformSupportsPrinting;
+      this.toolbar.attributes["mode"] = this.note.lock ? "viewing" : "editing";
       this.htmlarea.state.readonly = !!this.note.lock; 
       this.htmlarea.document.state.readonly = !!this.note.lock; 
+      if(this.note.lock) {
+        var viewingBand = this.toolbar.$(band.viewing);
+        viewingBand.value = {
+          cdate: this.note.cdate,
+          mdate: this.note.mdate,
+          cwhom: this.note.createdBy,
+          mwhom: this.note.modifiedBy,
+        }
+        viewingBand.attributes.toggleClass("note-not-modified", sameDay(this.note.mdate,this.note.cdate));
+        viewingBand.attributes.toggleClass("note-created-by-me", this.note.createdBy == PRINCIPAL);
+        viewingBand.attributes.toggleClass("note-modified-by-me", this.note.modifiedBy == PRINCIPAL);
+      }
+
+      /*this.history.clear();
+      if( this.note.history ) {
+          this.history.$append(<span>changes:</span>);
+          for(var hi in this.note.history) {
+            if( hi.mwho == PRINCIPAL )
+              this.history.$append(<label>{hi.mdate.toLocaleString()}</label>);
+            else
+              this.history.$append(<label>{hi.mdate.toLocaleString()} by {hi.mwho}</label>);
+          }
+      }*/
+
     } else {
-      this.$(toolbar button.edit).state.disabled = true;
-      this.$(toolbar button.print).state.disabled = true;
-      this.$(toolbar).state.expanded = true;
-      this.htmlarea.state.readonly = false; 
+      this.toolbar.$(button.edit).state.disabled = true;
+      this.toolbar.$(button.save).state.disabled = true;      
+      this.toolbar.$(button.print).state.disabled = true;
+      this.toolbar.attributes["mode"] = "editing";
+      this.htmlarea.state.readonly = false;
       this.htmlarea.document.state.readonly = false; 
+      //this.footer.value = { cdate:null, mdate:null, deleted:null }; 
+      //this.footer.state.disabled = true; 
     }
   }
 
@@ -100,12 +156,41 @@ class NoteView : Element
     }
   }
 
+  event click $(button#export-note) (evt, button) { 
+
+    this.htmlarea.saveNote();
+
+    function safeToFileName(fn) { return fn.replace(/[\\\/\:\*\?\"<>|]/g," "); }
+
+    const filter = "HTML Files (*.htm,*.html)|*.htm;*.html|All Files (*.*)|*.*";
+    const defaultExt = "html";
+    const initialPath = System.path(#USER_DOCUMENTS,safeToFileName(this.note.caption) + ".html");
+    const caption = "Select file to save note";
+  
+    var fn = view.selectFile(#save, filter, defaultExt, initialPath, caption );
+    if( fn )
+       exportNote(this.note,fn);
+    return true;
+  }
+
+  event click $(button#import-note) (evt, button) { 
+
+    const filter = "HTML Files (*.htm,*.html)|*.htm;*.html|All Files (*.*)|*.*";
+    const defaultExt = "html";
+    const initialPath = System.path(#USER_DOCUMENTS,"/");
+    const caption = "Select note files to load";
+  
+    var fn = view.selectFile(#open-multiple, filter, defaultExt, initialPath, caption );
+    if( fn )
+       importNotes(fn);
+    return true;
+  }
+
+
   event change $(select.book) (evt) { 
     if( this.note ) {
-      //this.note.setLock( !this.note.lock );
       var book = db.getBook(evt.target.value);
       book.addItem(this.note);
-      return true;
     }
   }
 

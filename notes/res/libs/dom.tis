@@ -6,7 +6,7 @@ namespace DOM
   //   for(var el in descendantsOf(body) )
   //     el ....
 
-  function descendantsOf(root, from) 
+  function* descendantsOf(root, from) 
   {
     function next( el )
     {
@@ -32,15 +32,41 @@ namespace DOM
     while(b)
     {
       yield b; 
-      //if((this function).skip) 
-      //{ 
-      //  (this function).skip = false; 
-      //  b = next(b); 
-      //} 
-      //else
       b = firstOrNext( b );
     }
   }
+
+  // generator, walks through each node of the root
+  function* eachNodeIn(root) 
+  {
+    function next( el )
+    {
+      var t = el.next;
+      if( t ) return t;
+      while(el)
+      {
+        el = el.parent;
+        if( el === root) return null;
+        t = el.nextNode;
+        if( t ) return t;
+      }
+      assert false;
+      return null;
+    }
+    function firstOrNext( el )
+    {
+      var t = el.firstNode;
+      return t? t: next(el);
+    }
+    
+    var b = root.first;
+    while(b)
+    {
+      yield b; 
+      b = firstOrNext( b );
+    }
+  }
+
 
   // function returns nearest block container - element that contains blocks (<body>)
   function blocksContainerOf(node) 
@@ -54,6 +80,38 @@ namespace DOM
     return body;
     
   }
+
+  function getMeta(doc,metaName) {
+    var el = doc.$(head > meta[name=="{metaName}"]);
+    if( !el ) return "";
+    return el.attributes["content"];
+  }
+
+  function getTitle(doc) {
+    var el = doc.$(head > title);
+    if( !el ) return "";
+    return el.text;
+  }
+
+  // returns caption string of the document content
+  function caption(doc) 
+  {
+    var body = doc.$(body);
+
+    var header = body.$(h1,h2,h3);
+    if( header ) return header.text;
+
+    // no luck, getting first text container
+   
+    for( var el in DOM.descendantsOf(body,null) ) 
+      if( el.state.flowType == #text ) {
+        var text = el.text.trim();
+        if(text) return text;
+      }
+    
+    return doc.text;
+  }
+
 
 
 }

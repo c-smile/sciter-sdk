@@ -1,0 +1,60 @@
+@import url(fonts/Shumi-font.css);
+
+body
+{
+	flow: stack;
+	margin: 0;
+	background: #272B30;
+	vertical-align: middle;
+	horizontal-align: middle;
+}
+main
+{
+	flow: vertical;
+	size: 480px 640px;
+
+  background: url(../img/background.png);
+	background-repeat: repeat;
+	background-size: 480px 640px;
+
+}
+canvas
+{
+	flow: stack;
+
+	position: relative;
+	display: block;
+	height: 560px;
+	prototype: Game;
+}
+platform
+{
+	display: block;
+	size: *;
+	background: url(../img/ground.png);
+}
+
+#score
+{
+	padding: *;
+	width: min-content;
+	margin-bottom: 250px;
+	font-family: Shumi;
+	font-size: 30px;
+	color: white;
+}
+#restart
+{
+	visibility: none;
+	cursor: pointer;
+	margin: *;
+}
+#bird
+{
+	visibility: hidden;
+	display: block;
+	position: absolute;
+	width: 52px;
+	margin-left: -26px;
+	margin-top: -18px;
+}

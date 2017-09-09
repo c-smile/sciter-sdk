@@ -21,7 +21,7 @@ class NoteTags : Element
     });
 
     function updateTags(tag) { 
-      if(var note = this.note) 
+      if(var note = me.note) 
       {
         if( note.containsTags(tag) )
           me.loadNote(note); 
@@ -48,7 +48,7 @@ class NoteTags : Element
   }
 
   function tagHtml(tag) {
-    return String.printf("<label.tag.name>%s</label>", tag.name );
+    return String.printf("<label.tag.name color='%d'>%s</label>", tag.color || 0, tag.name );
   }
 
   function addTag(tag) {
@@ -88,11 +88,12 @@ class NoteTags : Element
 
   function getSuggestions(forText) {
     var note = this.note;
+    forText = forText.toLowerCase();
     var tags = db.getTags();
     var suggestions = [];
     for( var tag in tags ) {
       if( tag in note.tags ) continue;
-      if( tag.name.indexOf(forText) != 0 ) continue;
+      if( tag.name.toLowerCase().indexOf(forText) != 0 ) continue;
       suggestions.push(tag.name);
     }
     return suggestions;

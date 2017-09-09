@@ -1,103 +1,127 @@
 
+@const MARKER-SIZE: 3dip;
+
 notes-list 
 { 
-  font:system;
+  //font:system;
   display:block; 
   size:*;
   overflow: scroll-indicator;
   prototype: List url(notes-view.tis);
-  background: var(notes-list-back, #e8e8e8); 
   //padding-left:1dip;
   //border-spacing:1dip;
+
 }
 
 notes-list > li {
-  behavior:form; /* each repeated child is treated as a form so it can accept object values */
+  font-size:12dip;
+  prototype: ListNote url(notes-view.tis);
   display:block; 
-  padding:1em;
+  flow: horizontal;
+  width:*;
+  border-left:@MARKER-SIZE solid transparent;
+} 
+
+notes-list > li > div 
+{
+  width:*;
+  padding:1em 0 1em 1em;
   border-spacing: 0.5em;
   flow: grid(1 2,
              1 3);
-  width:*;
-  //border-bottom:1dip solid #aaa;
-
-  //border-left:6dip solid;
-  //border-right:6dip solid;
-/*  foreground-image: url(path: M1664 896q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z);
-  //foreground-image: url(path: M0 0 L10 0 L10 10z);
-  foreground-repeat:no-repeat;
-  foreground-position: 100% 0%;
-  foreground-size: 9dip 9dip;
-  stroke:none; */
-} 
-
-//notes-list > li:hover {
-//  background: linear-gradient(top, #fff, #bcd);
-//}
-
-notes-list > li[color=0] > picture { background-color: @BC0; }
-notes-list > li[color=1] > picture { background-color: @BC1; }
-notes-list > li[color=2] > picture { background-color: @BC2; }
-notes-list > li[color=3] > picture { background-color: @BC3; }
-notes-list > li[color=4] > picture { background-color: @BC4; }
-notes-list > li[color=5] > picture { background-color: @BC5; }
-notes-list > li[color=6] > picture { background-color: @BC6; }
+}
 
 notes-list > li:current {
   background:var(selection,#c2e5fe);
 }
 
-
-notes-list > li > picture {
+notes-list > li picture {
   display:inline-block;
   width:40dip;
   height:50dip;
   foreground-size:contain;
   foreground-position: 0% 0%;
   border:1px solid #aaa;
-  background: linear-gradient(80deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.7) 80%, rgba(255,255,255,1) 100%);
-  //background-color: #fff;
+  margin:*;
+  //background: linear-gradient(80deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.7) 80%, rgba(255,255,255,1) 100%);
+  background-color: #fff;
   image-rendering: crisp-edges;
 }
 
-notes-list > li > caption {
-  font-weight: bold; 
-  font-size:120%;
+notes-list > li caption {
+  //font-size:120%;
+  //overflow-x: hidden;
+  //white-space: nowrap;
+  //text-overflow:ellipsis;
+  overflow: hidden;
+  size:*;
+}
+
+notes-list > li text {
   overflow-x: hidden;
   white-space: nowrap;
-  text-overflow:ellipsis;
+  text-overflow: ellipsis;
   width:*;
+  height:max-content;
 }
 
-notes-list > li > text {
-  overflow: hidden;
-  white-space: prewrap;
-  //text-overflow: ellipsis;
-  width:*;
-  height:2.4em;
+notes-list > li text > span.www {
+  color:blue;
 }
 
-notes-list > li > output {
-  //font-size:60%;
-  width:max-content;
-  margin-left:*;
+notes-list > li tags {
+  display:block;
+  width:@MARKER-SIZE;
+  height:*;
+  flow:vertical;
+  overflow:hidden;
 }
 
+notes-list > li tags > tag {
+  display:block;
+  width:@MARKER-SIZE;
+  height:*;
+  color:transparent;
+}
+
+notes-list > li tags > tag[color=0] { background-color: transparent; }
+notes-list > li tags > tag[color=1] { background-color: @FC1; }
+notes-list > li tags > tag[color=2] { background-color: @FC2; }
+notes-list > li tags > tag[color=3] { background-color: @FC3; }
+notes-list > li tags > tag[color=4] { background-color: @FC4; }
+notes-list > li tags > tag[color=5] { background-color: @FC5; }
+notes-list > li tags > tag[color=6] { background-color: @FC6; }
+
+notes-list > li[book-color=0] { border-color: transparent; }
+notes-list > li[book-color=1] { border-color: @FC1; }
+notes-list > li[book-color=2] { border-color: @FC2; }
+notes-list > li[book-color=3] { border-color: @FC3; }
+notes-list > li[book-color=4] { border-color: @FC4; }
+notes-list > li[book-color=5] { border-color: @FC5; }
+notes-list > li[book-color=6] { border-color: @FC6; }
 
 notes-view 
 {
   prototype: NotesView url(notes-view.tis);
   display:block; 
   flow:vertical; 
-  background: var(notes-back, #ccc); 
+  background: var(notes-list-back, #e8e8e8);  
 }
 
 notes-view > header {
   flow:horizontal;
   vertical-align: middle;
-  border-bottom: 1px solid #ccc;
-  height:38dip;
+  @HEADER-BAND;
 }
+
+/*notes-view > footer {
+  @FOOTER-BAND;
+  behavior:form;
+}
+
+notes-view > footer > label { @FOOTER-BAND-LABEL; }
+notes-view > footer > output { @FOOTER-BAND-OUTPUT; }
+notes-view > footer > button { @FOOTER-BAND-CTL; }*/
 
 notes-view > header > input.search {
   display:block;
@@ -137,11 +161,15 @@ notes-view > header > knob {
   foreground-repeat:no-repeat;
   foreground-position:50% 50%;
   foreground-size:24dip 24dip;  
-  fill: #000;
+  fill: #444;
   stroke:none; 
 }
 
 notes-view > header > knob:disabled { fill:#ccc; }
+
+knob#add-new-note {
+  foreground-image: url(path:M1344 800v64q0 14-9 23t-23 9h-352v352q0 14-9 23t-23 9h-64q-14 0-23-9t-9-23v-352h-352q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h352v-352q0-14 9-23t23-9h64q14 0 23 9t9 23v352h352q14 0 23 9t9 23zm128 448v-832q0-66-47-113t-113-47h-832q-66 0-113 47t-47 113v832q0 66 47 113t113 47h832q66 0 113-47t47-113zm128-832v832q0 119-84.5 203.5t-203.5 84.5h-832q-119 0-203.5-84.5t-84.5-203.5v-832q0-119 84.5-203.5t203.5-84.5h832q119 0 203.5 84.5t84.5 203.5z);
+}
 
 /*popup#note-preview {
   background:#fffee2;

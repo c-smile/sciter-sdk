@@ -1,0 +1,18 @@
+
+// <details>/<summary> aspect
+function SummaryDetails() 
+{
+  if( this.attributes.exists("open") )
+    this.state.expanded = true;
+  else
+    this.state.collapsed = true;
+  
+  this.on("click", "summary", function() {
+    // toogle expanded state
+    if((this super).state.expanded)  
+      (this super).state.collapsed = true;
+    else 
+      (this super).state.expanded = true;
+  });
+
+}

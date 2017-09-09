@@ -1,0 +1,25 @@
+
+
+class Notifications : Element 
+{
+  var instance = null;
+
+  function attached() {
+     assert !instance : "Only one <notifications> please";
+     instance = this;
+  }
+
+  function add(html,lifetime = 8s) {
+    if( instance.length == 0 )
+      instance.state.expanded = true;
+    instance.append("<div><div>" + html + "</div></div>") ;
+    var el = instance.last;
+    el.timer(20ms, function() { el.state.expanded = true} );
+    el.timer(lifetime, ::dissolve(el));
+  }
+
+  function dissolve(item) {
+    item << event animationend { item.remove(); }
+    item.state.collapsed = true;
+  }
+}

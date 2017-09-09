@@ -29,7 +29,7 @@
       <p>E.g. <code>var str = bytes.toString(&quot;UTF-8&quot;);</code> returns a string from UTF-8 encoded bytes.</p></dd>
     <dt>fromString</dt>
     <dd>
-      <p><strong>( </strong><em>str</em>: string<strong> </strong>[, <em>encoding</em>:string] <strong>)</strong> returns: <em>Bytes</em></p>
+      <p><strong>( </strong><em>str</em>: string<strong/>[, <em>encoding</em>:string] <strong>)</strong> returns: <em>Bytes</em></p>
       <p>Static method, constructs Bytes object (byte array) &nbsp;from string using specified encoding.</p>
       <p>If encoding is not specified or is equal to &quot;base64&quot; then base64 encoding is used. Otherwise if encoding is one of supported encondings from IANA charset list <a href="http://www.iana.org/assignments/character-sets">http://www.iana.org/assignments/character-sets</a> the function returns encoded bytes.</p>
       <p>E.g. <code>var bytes = Bytes.fromString(&quot;Привет, мир!&quot;, &quot;utf-8&quot;);</code> returns utf-8 encoded bytes of the string.</p></dd>
@@ -40,7 +40,9 @@
     <dt>crc32</dt>
     <dd>
       <p><strong>( </strong>&nbsp;<strong>)</strong> returns: <em>integer</em></p>
-      <p>returns integer that is a result of CRC32 computation of given byte array.</p></dd>
+      <p>returns integer that is a result of CRC32 computation of given byte array.</p>
+			</dd><dt>compare</dt>
+		<dd>( other: Bytes&nbsp;) returns : integer, -1,0,1<p>Compares two Bytes object for content equality,  returns&nbsp;-1,0 or 1. Where 0 if these two byte vectors are equal.</p></dd>
     <dt>save</dt>
     <dd>
       <div><strong>( </strong><em>filename</em>:string <strong>)</strong> returns: <em>true|false</em></div>
@@ -48,6 +50,17 @@
     <dt>load</dt>
     <dd>
       <div><strong>( </strong><em>filename</em>:string <strong>)</strong> returns: <em>Bytes</em></div>
-      <p>Static method. Creates new Bytes object, loads file into it and returns that object.</p></dd></dl>
+      <p>Static method. Creates new Bytes object, loads file into it and returns that object.</p></dd>
+    <dt>compress</dt>
+    <dd>
+      <div><strong>( </strong><strong>)</strong> returns: <em>Bytes</em></div>
+      <p>Creates new Bytes object - compression version of original bytes array.</p></dd>
+    <dt>decompress</dt>
+    <dd>
+      <div><strong>( </strong><strong>)</strong> returns: <em>Bytes | null</em></div>
+      <p>Creates new Bytes object, restores previously compressed byte array. Returns <i>null</i> if the array was not previously compressed.</p></dd>
+
+
+</dl>
 </body>
 </html>

@@ -1,0 +1,34 @@
+
+
+class Notifications : Element 
+{
+  var instance = null;
+
+  function attached() {
+     assert !instance : "Only one <notifications> please";
+     instance = this;
+  }
+
+  // role = #note, #warning, #info 
+  function add(html,role = #note,lifetime = 8s) {
+    if( instance.length == 0 )
+      instance.state.expanded = true;
+    instance.append("<div." + role.toString() +"><div>" + html + "</div></div>") ;
+    var el = instance.last;
+    el.timer(20ms, function() { el.state.expanded = true} );
+    el.timer(lifetime, ::dissolve(el));
+  }
+
+  function note(html,lifetime = 8s) { add(html,#note,lifetime); }
+  function warning(html,lifetime = 8s) { add(html,#warning,lifetime); }
+  function info(html,lifetime = 8s) { add(html,#info,lifetime); }
+
+  function dissolve(item) {
+    item << event animationend { 
+      item.remove(); 
+      if( instance.length == 0 )  
+        instance.state.collapsed = true; 
+    };
+    item.state.collapsed = true;
+  }
+}

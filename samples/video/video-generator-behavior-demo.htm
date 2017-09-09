@@ -19,12 +19,18 @@
 		  var (w,h) = this.box(#dimension);
 			$(form).value = { width:w, height:h };
 		}
+
+    event click $(#snapshot) {
+      var frame = $(video).style.foregroundImage;
+      frame.toBytes().save("d:\\test.png");
+    }
 		
 		</script>
   </head>
 <body>
   <p>This demo simulates partial video frame update. See sdk/include/behaviors/behavior_video_generator.cpp source.
   On each frame (24 FPS) it updates portion of the frame.</p>
+  <button #snapshot>Save current frame</button>
   <form>pixels <output(width)/>x<output(height)/></form>
   <video.generator />
 </body>

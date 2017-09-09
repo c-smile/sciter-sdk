@@ -41,7 +41,9 @@
         $(#current-page).attributes["max"] = evt.reason;
       });
       
-      
+      $(button#load-from-mem).on("click", function() { 
+        pager.loadHtml( "<html><body>this is a test.</body></html", "about:blank"); 
+      });
       
       
       
@@ -52,6 +54,8 @@
   <button #select-printer>Select printer</button>
   <button #print>Print</button>
   <button #load-template-alt>set alt template</button>
+
+  <button #load-from-mem>Load HTML from memory</button>
   
   Load <select|dropdown #to-load>
     <option>samples/print-test.htm</option>

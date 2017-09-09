@@ -2,27 +2,22 @@
   <band.common>
     <select|dropdown.book as="string" title="Note's book"/>
     <tags></tags>
-    <button.print #print-note title="Print note"/>    
+    <button.open #import-note title="Import note(s) from file(s)"/>    
+    <button.save #export-note title="Export note(s) to file(s)"/>
+    <button.print #print-note title="Print note"/>
     <button.edit title="Edit note"/>    
   </band>
-  <band.editing>
-    <button.span.bold title="Strong emphasis"/>
-    <button.span.italic title="Emphasis"/>
-<!--    <button.span.subscript title="Subscript" />
-    <button.span.superscript title="Superscript" />
-    <button.span.underline title="Underline emphasis" /> -->
-    <button.span.strikethrough title="Strikethrough" />
-    <button.list-ol title="Ordered list"/>
-    <button.list-ul title="Unordered list"/>
-    <button.list-dl title="Definition list"/>
-    <button.unindent title="Unindent"/>
-    <button.indent title="Indent"/>
-    <button.blockquote title="Quote block"/>    
-    <button.pre title="preformatted text"><code>&lt;PRE&gt;</code></button>
-    <button.image title="Insert image"/>
-    <button.table title="Insert table"/>
-    <button.link title="Insert link"/>
-<!--    <button.unlink title="Remove link" hidden/>-->
-  </band>
+  <div.stack>
+    <band.editing>
+      <include src="htmlarea/editing-toolbar.htm" />
+    </band>
+    <band.viewing>
+      <label.created>created</label><output|date(cdate).created format="MMMM d, yyyy"/>
+      <label.created.person>by</label><output|text(cwhom).created.person />
+      <label.modified>modified</label><output|date(mdate).modified format="MMMM d, yyyy"/>      
+      <label.modified.person>by</label><output|text(mwhom).modified.person />
+    </band>
+  </div>
 </toolbar>
-<htmlarea content-style="htmlarea/htmlarea.css"></htmlarea>
+<htmlarea.dd.file-target.html-target.text-target content-style="htmlarea/htmlarea.css"></htmlarea>
+<history/>

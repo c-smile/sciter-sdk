@@ -6,7 +6,7 @@ class List : Element
   function attached() { 
 
     function setupNoteView(recordNo,note, el) {
-      el.attributes["color"] = note.book.color || 0; 
+      el.attributes["book-color"] = note.book.color || 0; 
     }
 
      // item template
@@ -15,9 +15,29 @@ class List : Element
     PopulteNotesList(records); 
     this.value = records;
     var me = this;
-    self << event note-created { UpdateNotesList(me.value) };
-    self << event notes-filter-changed { UpdateNotesList(me.value) };
-    self << event book-selected  { UpdateNotesList(me.value) };
+    self << event note-created { UpdateNotesList(records); me.navigateToStart(); };
+    self << event notes-filter-changed { UpdateNotesList(records); me.navigateToStart(); };
+    self << event book-selected  { UpdateNotesList(records); me.navigateToStart(); };
+    self << event book-updated (evt) { var book = evt.data; for(var item in me) item.onBookUpdate(book); }
+    self << event tag-updated (evt) { var tag = evt.data; for(var item in me) item.onTagUpdate(tag); }
+    self << event book-assigned (evt) { 
+      var data = evt.data;
+      var book = data[0]; 
+      var note = data[1];
+      if( book === db.getDeletedBook() && currentBook !== db.getDeletedBook()) 
+        // note "deleted" so
+        records.removeByValue(note);
+      else if( currentBook && book !== currentBook )
+        // note moved out of current book
+        records.removeByValue(note);
+      else 
+        for(var li in me) {
+          if( li.note === note ) {
+            li.onBookUpdate(book);
+            break;
+          }
+        }
+    }
   }
   property animating(v) {
     get return this.state.animating;
@@ -49,7 +69,7 @@ class NotesView : Element
     self << event note-updated (evt) { btnAddNew.state.disabled = false; list.currentRecord = evt.data; }  
     self << event notes-filter-changed { 
       var ln = $(input#lookup-note);
-      if( !ln.state.focus ) ln.value = filterText || "";
+      if( !ln.state.focus ) ln.value = filterWords.join(" ");
     }
   }
 
@@ -66,6 +86,44 @@ class NotesView : Element
     //stdout.println("lookup", this.$(input#lookup-note).value);
     setFilterText(this.$(input#lookup-note).value);
   }
+ 
+}
 
-  
+
+// that's represantation of single note in the list
+class ListNote : Element 
+{
+  property value(note) {
+    get { return this.note; } 
+    set { 
+      this.note = note;
+      this.$(picture).value = note.preview;
+      this.$(caption).value = note.caption;
+      if( var urlFrom = note.getMeta("urlFrom") )
+        this.$(text).$content(from:<span.www>{URL.parse(urlFrom).hostname}</span>);
+      else
+        this.$(text).clear();
+      this.onTagsChange(note);
+    } 
+  }
+
+  function onTagsChange(onNote) {
+    if( this.note !== onNote ) return;
+    var tags = this.$(tags);
+    tags.clear();
+    for( var tag in onNote.tags )
+      if(tag.isCustom && tag.color)
+        tags.$append(<tag color={tag.color}>{tag.name}</tag>);
+  }
+
+  function onTagUpdate(tag) {
+    if(this.note.containsTags(tag))
+      this.onTagsChange(this.note);
+  }
+  function onBookUpdate(book) {
+    if(this.note.book === book)
+      this.attributes["book-color"] = book.color || 0; 
+  }
+
+
 }

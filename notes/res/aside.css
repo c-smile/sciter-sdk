@@ -6,9 +6,9 @@
 aside {
   flow:vertical;
   height:*;
-  font-family:Verdana, sans-serif;
+  //font-family:Verdana,sans-serif;
   font-size:12dip;  
-  prototype: SidePanel url(aside.tis);  
+  prototype: SidePanel url(main-ui.tis);  
   overflow-x:hidden;
 }
 
@@ -62,9 +62,25 @@ aside:collapsed [full] {
   transition: height(sine-in-out,@ADUR) visibility(linear,@ADUR);
 }
 
-aside > section { overflow:hidden; height:max-content; }
+@set v-scroll-indicator {
+  .slider 
+  {
+    background:#fff;
+    border-radius:width(50%);
+    margin:2px; 
+  }
+}
 
-aside > section > header 
+aside > div.scrollable  
+{
+  size:*;
+  vertical-scrollbar: "v-scroll-indicator";  
+  overflow-y:scroll-indicator;
+}
+
+aside section { overflow:hidden; height:max-content; }
+
+aside section > header 
 {
   flow:horizontal;
   font-size:16dip; 
@@ -80,7 +96,7 @@ aside > section > header
   fill:#ddd; */
 } 
 
-aside > section > header > span.name {
+aside section > header > span.name {
   display:block;
   width:max-content; 
   margin-right:*;
@@ -89,18 +105,18 @@ aside > section > header > span.name {
   line-height:38dip;
 }
 
-aside > section > header > span.count {
+aside section > header > span.count {
   display:block;
   width:max-content;
   padding:0 6dip 0 0;
   line-height:38dip;
 }
 
-aside > section > header > span.name::after { content:":"; }
+aside section > header > span.name::after { content:":"; }
 
-aside > section:collapsed > header > span.name::after { content:"\2026"; /*ellipsis*/ }
+aside section:collapsed > header > span.name::after { content:"\2026"; /*ellipsis*/ }
 
-aside > section > tags-view { margin-left: 1em; }
+aside section > tags-view { margin-left: 1em; }
 
 /* when sidebar is collapsed it is not resizeable so we hide its splitter */
 aside:collapsed + splitter { visibility:collapse; }

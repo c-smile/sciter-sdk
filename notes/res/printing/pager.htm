@@ -103,15 +103,15 @@
     {
       // show printers list 
       var printers = $(div#printers);
+      var def;
 
       for(var printer in pager.printers()) 
       {
-         if(printer.isDefault)
-           printers.$append(<button|radio(printer) checked value="{printer.id}">{printer.name}</button>);     
-         else
-           printers.$append(<button|radio(printer) value="{printer.id}">{printer.name}</option>);   
+        printers.$append(<button|radio(printer) value="{printer.id}">{printer.name}</option>);   
+        if(printer.isDefault)  def = printers.last;
       }
-
+      if(def) 
+        def.state.checked = true;
     }
 
     //event click $(button#close) { closeOverlay(); /* defined in main.tis */  }     
@@ -138,7 +138,7 @@
             <span>of pages:</span><output|integer #numpages />
             <close-button #close-overlay/>
     </header>
-    <frame|pager cols=1 page-template="page-template.htm" />
+    <frame|pager cols=1 page-template="page-template.htm" content-style="note-printing.css" />
   </div>
   <knob#close-overlay />
 </body>

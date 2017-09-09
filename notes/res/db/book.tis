@@ -45,12 +45,15 @@ class Book
   
   property itemsCount(v) { get return this.items? this.items.length:0; }
 
-  property isDefault(v) { get return this.id == "0"; }
+  property isDefault(v) { get return this.id == DEFAULT_BOOK_ID; }
+  property isDeleted(v) { get return this.id == DELETED_BOOK_ID; }
 
   function update(props) {
     if(props.name !== undefined) this.name = props.name;
     if(props.color !== undefined) this.color = props.color.toInteger();
     self.postEvent("book-updated", this);
   }
+
+
 
 }

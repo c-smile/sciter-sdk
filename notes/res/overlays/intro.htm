@@ -1,0 +1,75 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+         @import url(overlay.css);
+         
+         footer { text-align:center; }
+
+         logo {
+           display:block;
+           size: 30vmin;
+           flow:stack;
+           margin: 0 *;
+         }
+
+         @const ADUR : 1200ms;
+
+         logo > div { size:20vmin; border:2dip solid #999; margin:*; transform-origin: 0 100%; transform:rotate(0deg);  }
+
+         [started] logo { transform:rotate(-45deg); transition: transform(cubic-out,@ADUR);  }
+
+         logo > div:nth-child(1) { background: #facaec; }
+         logo > div:nth-child(2) { background: #cdfcb8; }
+         logo > div:nth-child(3) { background: #fcfcb8; }
+
+         [started] logo > div:nth-child(1) { transform:rotate(-15deg); transition: transform(cubic-out,@ADUR); }
+         [started] logo > div:nth-child(2) { }
+         [started] logo > div:nth-child(3) { transform:rotate(15deg); transition: transform(cubic-out,@ADUR); }
+
+         input[name=dbpath] { width:max-content; }
+
+        </style>
+        <script type="text/tiscript">
+
+          function self.ready() {
+
+              const version = String.printf("%d.%d.%d.%d", 
+                (Sciter.VERSION >> 16) & 0xffff, Sciter.VERSION & 0xffff,
+                (Sciter.REVISION >> 16) & 0xffff, Sciter.REVISION & 0xffff);
+
+             $(form).value = {
+                version:version,
+                name: Sciter.userName(),
+                dbpath: db.path,
+             }; 
+             this.timer(20ms, function() { this.attributes["started"] = true; })
+          }
+
+          event click $(button#start) {
+
+            if( $(form).value.importdocs ) 
+              Net.importInitialNotes();
+
+            closeOverlay();
+          }
+
+        </script>
+  </head>
+  <body>
+    <form>
+      <h4>Hi <output(name)/>, welcome to Sciter Notes v.<output(version)/> !</h4>
+      <logo>
+        <div.n1/>
+        <div.n2/>
+        <div.n3/>
+      </logo>
+      <p>Your notebook data is stored in: <input|text(dbpath) readonly></p>
+      <p>Check this <input|checkbox(importdocs)/> if you want to import Sciter Notes documentation as content of <b>Docs</b> notebook.</p>
+    </form>
+    <footer>
+      <button#start>Start using Notes</button>
+    </footer>
+  </body>
+</html>

@@ -32,7 +32,8 @@
         &lt;p&gt;Line 3&lt;/p&gt;
       &lt;/body&gt;
    &lt;/html&gt;
-&lt;/htmlarea&gt;</pre><p>Content model is determined by content loaded in it.</p>
+&lt;/htmlarea&gt;
+</pre><p>Content model is determined by content loaded in it.</p>
 <h2>Events</h2>
   <p>Together with the standard set of events (mouse, keyboard, focus) <em>behavior: richtext</em> generates:</p>
   <ul>
@@ -88,7 +89,15 @@
         <li><code>&quot;format:indent&quot;</code> - &nbsp;wraps selected paragraphs into <code>&lt;blockquote&gt;</code> or sub-list.</li>
         <li><code>&quot;format:unindent&quot;</code> - &nbsp;unwraps selected paragraphs from <code>&lt;blockquote&gt;</code> or moves sub-list to one level up.</li>
         <li><code>&quot;format:morph-block:{tag}&quot;</code> - changes tags of selected block elements. This way current <code>&lt;blockquote&gt;</code> &nbsp;can be changed to <code>&lt;p&gt;</code> for example. Only block element that do not contain other <code>display:block</code> elements can be morphed.</li>
-			<li><code>&quot;format:unwrap-element:{tag}&quot;</code> - moves content of the element to element's parent and removes (now empty) element from the DOM.</li></ul>
+			<li><code>&quot;format:unwrap-element:{tag}&quot;</code> - moves content of the element to element's parent and removes (now empty) element from the DOM.</li>
+		</ul>
+	<p>Table editing operations. These operations are available only if selection is inside a table:</p>
+	<ul><li><code>edit:insert-table-row:{before|after}</code> - inserts row before of after selected cells;</li>
+		<li><code>edit:insert-table-column:{before|after}</code> - inserts column before of after selected cells;</li>
+		<li><code>edit:merge-table-cells</code> - merge selected cell range into single cell (will add rowspan/colspan to the cell);</li>
+		<li><code>edit:delete-table-rows</code> - deletes selected rows;</li>
+		<li><code>edit:delete-table-columns</code> - deletes selected columns;</li>
+		<li><code>edit:split-table-cells</code> - splits spanned cell into multiple cells.</li></ul>
   <h2>Methods</h2>
   <dl>
     <dt><code>loadDocument</code></dt>

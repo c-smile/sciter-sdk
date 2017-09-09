@@ -80,7 +80,7 @@ view.<u>eventsRoot</u> = null;
           <li><strong>#self</strong>, <em>default value</em> - all coordinates are relative to the origin of the client area of the view.</li></ul></ul></dd>
     <dt>screenBox</dt>
     <dd>
-      <div><strong>( </strong>[<strong>screenNo:</strong> integer,]<em> </em><strong>area</strong> [, <strong>part</strong> ] <strong>) </strong>returns: integer, device pixels</div>
+      <div><strong>( </strong>[<strong>screenNo:</strong> integer,]<em/><strong>area</strong> [, <strong>part</strong> ] <strong>) </strong>returns: integer, device pixels</div>
       <p>Returns screen(monitor) projection on cumulative desktop space. Parameters:</p>
       <ul>
         <li><strong>area</strong> - one of symbolic constants <strong>#frame </strong>- monitor screen dimension, <strong>#workarea</strong> - monitor workarea (dimension modulo task/menu bars). In device pixels.</li>
@@ -113,7 +113,7 @@ view.<u>eventsRoot</u> = null;
 			<p>If <i>newVars</i> is an object then the method will update view's media variables from properties of the object. Returns <i>undefined</i> in this case.</p></dd>
     <dt>selectFile</dt>
     <dd>
-      <div><strong>(</strong> <em>#save</em> | <em>#</em>open, <em>filter</em>:string , <em>ext</em>: string [,<em>initialPath</em>:string[, <em>dialogCaption</em>:string]] <strong>) </strong>: string | null</div>
+      <div><strong>(</strong> <em>#save</em> | <em>#</em>open | #open-multiple, <em>filter</em>:string , <em>ext</em>: string [,<em>initialPath</em>:string[, <em>dialogCaption</em>:string]] <strong>) </strong>: string | array(string) | null</div>
       <p>Methods shows system file selector modal dialog and returns full path name of the selected file or null if user cancels this dialog.</p>
       <ul>
         <li>First parameter is either #save or #open symbol. If #save is provided then dialog will have a caption <em>Save As...</em> otherwise (#open) it will have caption <em>Open...</em></li>
@@ -156,7 +156,7 @@ if( fn ) view.<strong>load</strong>(fn);
       <p>If <em>x</em>,<em>y</em> and <em>alignment</em> provided then x,y defines reference point and the alignment defines relative position of the window against that point.</p></dd>
     <dt>msgbox</dt>
     <dd>
-      <div><strong>( </strong><em>type</em>:symbol,<strong> </strong><em>text</em>: string, [ <em>title</em>: string, [ <em>buttons</em> В [, <em>onLoad</em>: function [, <em>onClose</em>: function ]]]] <strong>) </strong>: <em>undefined</em> | <em>symbol</em> of the button pressed to close dialog.</div>
+      <div><strong>( </strong><em>type</em>:symbol,<strong/><em>text</em>: string, [ <em>title</em>: string, [ <em>buttons</em> В [, <em>onLoad</em>: function [, <em>onClose</em>: function ]]]] <strong>) </strong>: <em>undefined</em> | <em>symbol</em> of the button pressed to close dialog.</div>
       <ul>
         <li><em>type</em> - symbol, one of the following values: <strong>#alert</strong>, <strong>#information</strong>, <strong>#question</strong> or <strong>#warning</strong> ;</li>
         <li><em>text</em> - string, either plain text or html ;</li>

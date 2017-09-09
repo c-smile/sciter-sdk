@@ -9,22 +9,24 @@ function ButtonTableSelector()
     var selTableCol = -1;
     var selTableRow = -1;
 
-    const tableStyle = "<header>table width:<button|radio(tablewidth) value='auto' checked>auto</button>"
-                                           "<button|radio(tablewidth) value='full'>100%</button></header>";
+    const tableStyle = "<header><label>table width:</label><div><button|radio(tablewidth) value='auto' checked>auto</button>"
+                                           "<button|radio(tablewidth) value='full'>100%</button></div>"
+                       "<label>headers:</label><div><button|checkbox(rowHeaders) value='1'>row</button>"
+                                       "<button|checkbox(columnHeaders) value='1'>column</button></div></header>";
       // initialization    
-    var tableGrid = "<table>";
+    var tableGrid = "<table><tbody>";
       for( var r in DEF_TABLE_ROWS ) {
         tableGrid += "<tr>";
         for( var c in DEF_TABLE_COLS )
           tableGrid += "<td/>";
         tableGrid += "</tr>";
       }
-    tableGrid += "</table>";
-    
+    tableGrid += "</tbody></table>";
+   
     this.append("<popup>" + tableStyle + tableGrid + "</popup>" );
 
     var popup = this.$(popup);
-    var table = popup.$(table);
+    var table = popup.$(table>tbody);
     var header = popup.$(header);
 
     function setSelection(R = -1,C = -1) {
@@ -54,16 +56,17 @@ function ButtonTableSelector()
     {
       var C = this.index;
       var R = this.parent.index;
-      var width = header.value.tablewidth;
+
+      var params = header.value;
+      var autoWidth = params.tablewidth == "auto";
 
       HtmlArea.instance.execCommand("insert-table",
       {
         rows: R + 1,
         columns: C + 1,
-        width: width,
-        columnHeader: false,
-        rowHeader: false,
-        border:true
+        autoWidth: autoWidth,
+        rowHeaders: params.rowHeaders || 0,
+        columnHeaders: params.columnHeaders || 0
       });
       popup.state.popup = false; // closing it
       return true; // handled

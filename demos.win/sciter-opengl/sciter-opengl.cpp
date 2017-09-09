@@ -69,6 +69,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		}
 		else /*if (needsDrawing)*/ {
 			needsDrawing = false;
+
+      //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Clear the screen and depth buffer
 		
 			/*{
 				// draw background layer
@@ -92,6 +94,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 				SCITER_X_MSG_PAINT pc(fore_layer, TRUE);
 				SciterProcX(hWnd, pc);
 			}
+      glFinish();
 			{
 				HDC dc = GetDC(hWnd);
 				SwapBuffers(dc);

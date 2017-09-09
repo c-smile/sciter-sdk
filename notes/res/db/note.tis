@@ -15,9 +15,19 @@ class Note
   this var html = null;
   this var text = null;
   this var caption = null;
-  this var shortText = null;    
   this var resources = null;
-  this var lock = undefined;    
+  this var lock = undefined;
+  this var preview = null; // review image bytes
+  this var cwho; // created by whom    
+  this var mwho; // modified by whom    
+  this var meta; // various metadata : 
+                 // { 
+                 //   urlFrom : ...pasted from this url ... 
+                 // } 
+  this var history; // history records, array of 
+                 // { mdate: Date, 
+                 //   mwho: String - whos version is that
+                 //   html: Bytes - content }
 
   function this(itemKind = "html") {
     var date = new Date();
@@ -25,6 +35,7 @@ class Note
     this.cdate = date;
     this.mdate = date;  
     this.kind = itemKind;
+    this.cwho = PRINCIPAL;
 //    this.tags = [];  
 //    this.html = null;
 //    this.text = null;
@@ -34,17 +45,55 @@ class Note
 //    this.lock = undefined;    
   }
 
-  function setContent(html, text, caption, shortText, preview) 
+  /*function setContent(html, text, caption, preview) 
   {
     this.html = html;
     this.text = text;
     this.caption = caption;
-    this.shortText = shortText;
     this.preview = preview;
     this.mdate = new Date();  
+    this.mwho = PRINCIPAL;  
     
     self.postEvent("note-updated",this);    
+  }*/
+
+  function update(params) 
+  {
+    // use with care - no check for field names!
+    var changes = false;
+    for(var (key,val) in params) {
+      if( this[key] != val ) {
+        this[key] = val;
+        changes = true;
+      }
+    }
+    if(changes) {
+      this.mdate = new Date();  
+      this.mwho = PRINCIPAL;  
+      self.postEvent("note-updated",this);    
+    }
+  }  
+
+  function updateMeta(params) 
+  {
+    var changes = false;
+    if( !this.meta ) this.meta = {};
+    for(var (key,val) in params) {
+      if( this.meta[key] != val ) {
+        this.meta[key] = val;
+        changes = true;
+      }
+    }
+    if(changes) {
+      this.mdate = new Date();  
+      this.mwho = PRINCIPAL;  
+      self.postEvent("note-updated",this);    
+    }
+  }  
+  function getMeta(name) {
+    return this.meta ? this.meta[name] : undefined;
   }
+
 
   function setLock(onOff) {
     if(this.lock !== onOff) {
@@ -65,7 +114,12 @@ class Note
   {
     if( !this.resources) return null;
     var r = this.resources[url];
-    //if( r ) stdout.println("getResource", url, typeof r, typeof r[0],r[0].length);
+    //if( r ) 
+    //   stdout.println("getResource", url, typeof r, typeof r[0],r[0].length);
+    //else {
+    //   stdout.println("getResource not found", url);
+    //   stdout.printf("in %V\n", this.resources);
+    //}
     if( typeof r == #array )
       return (r[0],r[1]);
   }
@@ -81,10 +135,21 @@ class Note
     return true;
   }
 
-  function matches(tags,text,book) {
+  function matches(tags,words,book) {
     if( tags && !this.containsTags(tags)) return false;
-    if( text && ((this.text || "").toLowerCase() !like text) ) return false;
-    if( book && (this.book !== book) ) return false;
+    if( book ) {
+      if(this.book !== book) 
+        return false;
+    } else { // !book
+       if( this.book.isDeleted ) // we are not showing notes from deleted book for "all notes"
+         return false;  
+    }
+    if( words ) {
+      var text = (this.text || "").toLowerCase();
+      for(var word in words) 
+        if(word && (text.indexOf(word) < 0))
+          return false;
+    }
     return true;
   }
 
@@ -99,6 +164,59 @@ class Note
 
   function getTags() {
     return this.tags;
+  }
+
+  property createdBy(v) {
+    get return this.cwho || PRINCIPAL;
+    set this.cwho = v;
+  }
+
+  property modifiedBy(v) {
+    get return this.mwho || this.cwho || PRINCIPAL;
+    set this.mwho = v;
+  }
+
+  /*function identical(other) {
+    if(this.id != other.id) { stdout.println("not identical ids"); return false; }
+    if(this.html != other.html) { stdout.println("not identical html"); return false; }
+    //if(this.cdate.toISOString(true) != other.cdate.toISOString(true)) return false;
+    //if(this.mdate.toISOString(true) != other.mdate.toISOString(true)) return false;
+    return true;
+  }*/
+
+  function pushToHistory(from)
+  {
+    if(!this.history) 
+      this.history = [];
+
+    if( this.history.last && this.history.last.html == from.html)
+      return false;
+
+    this.history.push {
+      mdate: from.mdate,
+      mwho: from.modifiedBy,
+      html: from.html;
+    };
+    if(this.history.length > 8) // we keep only this number of history items
+      this.history.shift();
+
+    self.postEvent("note-history-changed",this);
+    return true;
+  }
+
+  function mergeContent(other, how) {
+    // how #their-on-top or #ours-on-top
+    if( how == #theirs-on-top ) {
+      if(!this.pushToHistory(this))
+        return false;
+      this.mdate = other.mdate;
+      this.mwho = other.modifiedBy;
+      this.html = other.html;
+    }
+    else if( how == #ours-on-top ) 
+      if(!this.pushToHistory(other))
+        return false;
+    return true;        
   }
   
 }

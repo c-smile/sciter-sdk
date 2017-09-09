@@ -1,8 +1,0 @@
-include "db/db.tis";
-
-class SidePanel : Element 
-{
-  event expand (evt) { if(evt.target === this) this.$(books-view).state.expanded = this.state.expanded; }
-  event collapse (evt) { if(evt.target === this) this.$(books-view).state.collapsed = this.state.collapsed; }
-}
-

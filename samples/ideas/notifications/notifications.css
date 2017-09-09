@@ -1,0 +1,41 @@
+
+notifications 
+{
+  prototype: Notifications url(notifications.tis);
+  display:block;
+  visibility:none;
+  flow:vertical;
+  position:fixed;
+  top:0;
+  right:0;
+  bottom:0;
+  width:20em;
+  overflow:hidden;
+  vertical-align:bottom;
+  z-index:640; // "640K Ought to be Enough for Anyone" (c) that guy 
+}
+
+notifications:expanded {
+  visibility:visible;
+}
+
+notifications > div {
+  width:*;
+  height:0;
+  opacity:0.0; 
+  background-color:gold;
+  overflow:hidden;
+  border-bottom:1px solid #888;
+}
+
+notifications > div > div {
+  padding:0.5em 1em;
+}
+
+notifications > div:expanded {
+  height:min-content;
+  opacity:1.0;    
+  transition: height(linear,1s) opacity(linear,0.5s);
+}
+
+

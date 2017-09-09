@@ -1,0 +1,209 @@
+<html>
+  <head>
+  <title></title>
+  <style>
+@set vgrid {
+
+  table {
+   prototype: VGrid url(vlist.tis);
+   border: 1dip solid threedlightshadow;
+   flow:table-fixed;
+   border-spacing: 0;
+   padding: 0;
+   overflow-x: auto;
+   overflow-y: hidden;
+  }
+
+  table th
+  table td {
+   size: *;
+   text-align: left;
+  }
+  table th:nth-child(1),
+  table td:nth-child(1) {
+
+  }
+  table th:nth-child(2),
+  table td:nth-child(2) {
+   min-width: 50dip;
+   border-left: 1dip solid threedlightshadow;
+  }
+  table th:nth-child(3),
+  table td:nth-child(3) {
+   border-left: 1dip solid threedlightshadow;
+  }
+  table th:nth-child(4),
+  table td:nth-child(4) {
+   border-left: 1dip solid threedlightshadow;
+  }
+  table th:nth-child(5),
+  table td:nth-child(5) {
+   border-left: 1dip solid threedlightshadow;
+   width:*;
+   text-align: left;
+  }
+
+  table > thead {
+   border-spacing: 0;
+  }
+  table > thead > tr > th {
+    min-width: max-content;
+    padding: 5dip 15dip 5dip 5dip;
+    background-image: url(theme:column-header-normal);
+    background-repeat: expand stretch-left stretch-right stretch-middle;
+  }
+  table > thead > tr > th:hover {
+    background: url(theme:list-view-item-hover);
+  }
+  table > thead > tr > th:nth-child(2),
+  table > thead > tr > th:nth-child(5) {
+    behavior: column-resizer;
+  }
+  table > thead > tr > th[order=ascend] {
+   foreground-image: url(stock:arrow-down);
+   foreground-repeat: no-repeat;
+   foreground-position: 50% 3dip auto auto;
+  }
+  table > thead > tr > th[order=descend] {
+    foreground-image: url(stock:arrow-up);
+    foreground-repeat: no-repeat;
+    foreground-position: 50% 3dip auto auto;
+  }
+
+  table > tbody {
+   border-spacing: 0;
+   overflow-x: auto;
+   overflow-y: auto;
+   size: *;
+   max-height: max-content;
+  }
+  table > tbody > tr {
+   behavior: form;
+  }
+  table > tbody > tr:nth-child(odd) {
+   background-color: #FEFEFE;
+  }
+  table > tbody > tr:nth-child(even) {
+   background-color: #fcfcfc;
+  }
+  table > tbody > tr:current {
+   background-color: #efefff;
+  }
+  table > tbody > tr > td {
+   padding: 5dip;
+  }
+  table > tbody > tr > td:nth-child(1),
+  table > tbody > tr > td:nth-child(2),
+  table > tbody > tr > td:nth-child(5) {
+   overflow-x: hidden;
+   overflow-y: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+  }
+
+  table > tfoot {
+   height: 0.001*;
+   padding: 0;
+  }
+  table > tfoot > tr > td {
+   height: *;
+   padding: 0;
+  }
+
+}
+
+table {
+ style-set: vgrid;
+ width: *;
+ height: *;
+}
+  </style>
+  <script type="text/tiscript">
+
+var records = new Array(10);
+for(var i = 0; i < records.length; ++i)
+ records[i] = {col_1:"Item: " + i, col_2: "some text    some text " + i, col_3: i, col_4: i, col_5: i};
+
+  function self.ready() {
+
+    var n = records.length;
+    var p = 0;
+
+    var vlist = $(table);
+
+    vlist.value = records;
+    vlist.tbody.currentIndex = 0;
+
+    vlist << event change {
+      stdout.println("change", vlist.tbody.currentIndex)
+    }
+    vlist << event dblclick $(tr) {
+      stdout.println("dblclick", vlist.tbody.currentIndex)
+    }
+    vlist << event click $(th.sortable)
+    {
+      var name = this.attributes["name"];
+      var order = this.attributes["order"];
+      function cmpascend(a,b) {
+        if( a[name] > b[name] ) return 1;
+        else if (a[name] < b[name]) return -1;
+        return 0;
+      }
+      function cmpdescend(a,b) {
+        if( a[name] < b[name] ) return 1;
+        else if (a[name] > b[name]) return -1;
+        return 0;
+      }
+
+      if ( order == "ascend" ) {
+         this.attributes["order"] = "descend" ;
+         records.sort(cmpdescend);
+      } else if ( order == "descend" ){
+         this.attributes["order"] = "ascend" ;
+         records.sort(cmpascend);
+      } else {
+        if(var psort = this.parent.$(th[order]) )
+           psort.attributes["order"] = undefined;
+        this.attributes["order"] = "ascend";
+        records.sort(cmpascend);
+      }
+    }
+
+  }
+
+  </script>
+  </head>
+<body>
+
+<table resizeable>
+  <thead>
+    <tr>
+     <th .sortable>Col 1</th>
+     <th .sortable>Col 2</th>
+     <th .sortable>Col 3</th>
+     <th .sortable>Col 4</th>
+     <th .sortable>Col 5</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+     <td(col_1)></td>
+     <td(col_2)></td>
+     <td(col_3)></td>
+     <td(col_4)></td>
+     <td(col_5)></td>
+    </tr>
+  </tbody>
+  <tfoot>
+   <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+   </tr>
+  </tfoot>
+</table>
+
+</body>
+</html>

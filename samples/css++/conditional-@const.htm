@@ -16,11 +16,31 @@
     @const MAIN_COLOR:#00f;
    
     p { color: @MAIN_COLOR; }
-    
+
+    @set test {
+       @const MAIN_COLOR: #090;
+       p { color: @MAIN_COLOR; }
+    }
+
+    div.with-set { 
+      style-set:test;  
+    }
     
     </style>
+
+    <script type="text/tiscript"> 
+      function self.ready() {
+        // this shall print different colors:
+        for(var el in $$(p)) {
+          stdout.println(el.style.constant("MAIN_COLOR"));
+        }
+      }
+    </script>    
   </head>
 <body>
   <p>This text must be red on screen and black on print.</p>
+  <div.with-set>
+    <p>This text must be green.</p>
+  </div>
 </body>
 </html>

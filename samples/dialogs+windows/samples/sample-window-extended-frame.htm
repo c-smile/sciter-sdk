@@ -4,15 +4,15 @@
     <style>
     
       html { 
-        background: transparent;
-        padding:7dip; /* spacing for resizing */ 
+        background-color:window; 
+        //padding:7dip; /* spacing for resizing */ 
       }
       
-      html > body { background-color:window; border:1px solid #999; margin:0; }
+      html > body { border:1px solid #999; margin:0; }
       
-      html > header { flow:horizontal; margin-right: 116dip; overflow-x: hidden;}
+      html > header { flow:horizontal; background:gold; overflow-x: hidden;}
       html > header > caption { 
-        width:*; padding:2dip 0 * 10dip; 
+        width:*; padding:2dip; 
         text-shadow: 0 0 6dip #fff;
         white-space:nowrap;
         overflow-x: hidden;
@@ -33,6 +33,14 @@
         border-radius: 12dip;
         background: red;
       }
+
+      button.window { display:block; size:24dip; margin:0; padding:0; background:50% 50% no-repeat; background-size:24dip;  }
+      button.window:hover { background-color:orange; } 
+      button.window#minimize  { background-image:url(icons/icon-minimize.png); } 
+      button.window#maximize  { background-image:url(icons/icon-maximize.png); } 
+      button.window#maximize.restore  { background-image:url(icons/icon-restore.png); }
+      button.window#close     { background-image:url(icons/icon-close.png); }
+
       
       button#copy { foreground-image: url(sciter:copy.png); }
       button#cut { foreground-image: url(sciter:cut.png); }
@@ -41,7 +49,16 @@
       button#redo { foreground-image: url(sciter:redo.png); }
     
     </style>
-    <script type="text/tiscript"></script>
+    <script type="text/tiscript">
+
+    function self.ready() {
+      view.state = View.WINDOW_SHOWN;
+
+      view << event statechange {
+        $(button#maximize).attributes.toggleClass("restore", view.windowState == View.WINDOW_MAXIMIZED); 
+      } 
+    }
+    </script>
   </head>
 <header>
   <toolbar>
@@ -53,6 +70,9 @@
     <button#redo></button>
   </toolbar>
   <caption role="window-caption">Window caption</caption>
+  <button.window role="window-minimize" #minimize></button>
+  <button.window role="window-maximize" #maximize></button>
+  <button.window role="window-close" #close></button>
 </header>
 <body>
   Sample of toolbar replaced in window's chrome area.

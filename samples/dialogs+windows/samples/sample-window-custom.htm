@@ -12,7 +12,7 @@
       body > header { width:*; line-height:1.6em; background:gold; 
                       flow:horizontal; }
       body > header > caption { width:*; }
-      body > main { size:*; background:white;}
+      body > main { size:*; background:white; overflow:hidden;}
 
       button.window { display:block; size:24dip; margin:0; padding:0; background:50% 50% no-repeat; background-size:24dip;  }
       button.window:hover { background-color:orange; } 
@@ -23,6 +23,14 @@
     
     </style>
     <script type="text/tiscript">
+
+    var x = 0;
+
+    function change() {
+     x = x + 1;
+     $(p).value = x;
+     return true;
+    }
     
     function self.ready() {
       view.state = View.WINDOW_SHOWN;
@@ -30,9 +38,9 @@
       view << event statechange {
         $(button#maximize).attributes.toggleClass("restore", view.windowState == View.WINDOW_MAXIMIZED); 
       } 
-    }
     
-     
+      self.timer(1s, change);
+    }
 
     </script>
   </head>
@@ -44,7 +52,7 @@
     <button.window role="window-close" #close></button>
   </header>
   <main>  
-    Hello world!
+    <p/>
   </main>
 </body>
 </html>
