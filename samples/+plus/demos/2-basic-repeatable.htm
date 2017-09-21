@@ -29,7 +29,20 @@
           }
         }
         
-        function clear() { fruits.length = 0; }
+        function clear() { 
+          fruits.length = 0; 
+          var (total,free,used) = gc();
+          stdout.println(total,free,used);
+        }
+
+        function replace() {
+          fruits[0] = {name:"cherry", price:1.4}
+        }
+
+        function update() {
+          fruits[0].name = "sour cherry";
+        }
+
         
       }    
       
@@ -57,6 +70,8 @@
 
 
   <button click="clear()">Clear list</button> 
+  <button click="replace()">Replace first</button> 
+  <button click="update()">Update first</button> 
   
 </body>
 </html>

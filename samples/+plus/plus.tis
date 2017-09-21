@@ -10,7 +10,7 @@ const Plus = function() {
   }
 
 
-  const reIsExpression=/ *[-()+*&:?|=!^"']+ */;
+  const reIsExpression=/ *[-()+*&:?|=!^"'\<\>]+ */;
   const reVarName = /[a-zA-Z_][a-zA-Z0-9_]*/;
 
   // 'changed()' gets called when coll[key] value has changed (updated or removed)
@@ -26,7 +26,7 @@ const Plus = function() {
       //[3] - end of changed range (index, not inclusive) in arrays  
       if(changedef) switch(changedef[0]) {
         case #update: if( key == changedef[2] ) changed(coll[key]); break; // object-property
-        case #delete: if( key == changedef[2] ) changed(undefined); break; // object-property
+        case #delete: if( key == changedef[2] ) { changed(undefined); break; } // object-property
         case #update-range: if( key >= changedef[2] &&  key < changedef[3] ) changed(coll[key]); break; // vector-index
         case #delete-range: if( key >= changedef[2] &&  key < changedef[3] ) changed(undefined); break; // vector-index
       }
@@ -166,7 +166,7 @@ const Plus = function() {
             case "enabled":
               thing.state.disabled = !v; break;
             case "readonly":
-              stdout.println("readonly",!!v);
+              //stdout.println("readonly",!!v);
               thing.state.readonly = !!v; break;
             default:
               thing.@[attr] = v;  
@@ -373,10 +373,6 @@ const Plus = function() {
         if(nindex) repeatable_root[nindex] = idx; 
         repeatable_root.prototype = root; // repeatable root is derived from parent root
         domitem.$model = repeatable_root; // repeated element is holding local $model now for its descendannts.
-        
-        setupModelChangeHandler( coll, idx, 
-          function(val) { if(val) repeatable_root[nitem] = val; // this will propagate changes to record content
-                          else domitem.remove(); } );
         
         cont.insert(domitem,domItemIdx);
        
