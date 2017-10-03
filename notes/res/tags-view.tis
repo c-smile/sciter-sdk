@@ -14,7 +14,7 @@ class TagsTree : Element
       if( typeof data == #array ) // tags intersection
         { tag = data[0]; nitems = ""; name = data[1].name + " & " + data[0].name; }
       else //if(data instanceof Tag) 
-        { tag = data; nitems = tag.items.length.toString(); name = data.name }
+        { tag = data; nitems = tag.itemsCount.toString(); name = data.name; }
 
       elCaption.$content(<span.tag.name>{name}</span><span.count>{nitems}</span>);
       elCaption.parent.attributes["color"] = (tag.color || 0).toString();
@@ -93,15 +93,28 @@ class TagsTree : Element
 
   event change 
   {
-     var current = this.$(option:current).data;
-     if( current instanceof Tag )
-       setFilterTags(current);
-     else if( typeof current == #array )
-       setFilterTags(current);
-     //else if(current.kind === null)
-     //  setFilterTags(null);
+    var current = this.$(option:current);
+    if( !current )
+      setFilterTags(null);
+    else {
+      current = current.data;
+      if( current instanceof Tag )
+        setFilterTags(current);
+      else if( typeof current == #array )
+        setFilterTags(current);
+    }
   }
 
+  // code that allows to toggle current option in Tags
+  var currentOptionMouseDown;
+  event mousedown $(option) (evt, option) { currentOptionMouseDown = option.state.current ? option : null; }
+  event mouseup $(option) (evt, option) { 
+    if( currentOptionMouseDown === option) { // second click (mouse down and up) on current item 
+      this.value = undefined;  // unselect all selected items
+      setFilterTags(null);
+      currentOptionMouseDown = null;
+    }
+  }
 
   event click $(menu#tag > li[name=rename-tag]) (evt) {
     var option = evt.target.$p(menu).owner.$p(option);

@@ -1,0 +1,21 @@
+html {
+  prototype: PopupDialog url(popup-dialog.tis);
+  padding:1em;
+  background:#f8f8f8;
+  font:system;
+  cursor:default;
+  border-spacing: 1em;
+  size:max-content;
+}
+
+body { margin:0; padding:1em; }
+
+form { border-spacing: 1em; }
+
+form label { margin-left:*; vertical-align:baseline;}
+form input { vertical-align:baseline; }
+
+footer {
+  margin-top:1em;
+  text-align:right;
+}          

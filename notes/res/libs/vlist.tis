@@ -25,6 +25,7 @@ function VirtualList(params) {
         
     var   records = null; 
     var   template = list.first;
+          template.detach();
     var   item_height = 0;   // will be adjusted later
     var   buffer_start = 0;   // index of first buffer element in _records
     var   visible_items = 0;  // number of visible items in the view
@@ -190,7 +191,6 @@ function VirtualList(params) {
     function resetView() { 
     
       var sy = list.scroll(#top);
-      //buffer_start = 0;
 
       if(list.first) {
         list.first.style#margin-top = undefined;
@@ -198,7 +198,7 @@ function VirtualList(params) {
         if(item_height < 10)
           list.onSize();
       }
-      
+
       function findElementFor(rec) { 
         for(var el in list) { 
           if( el.data === rec )
@@ -381,8 +381,20 @@ function VirtualList(params) {
 
     list.navigateToStart = function() 
     { 
-      buffer_start = 0;   
-      list.scrollTo(0, 0, false); 
+      //buffer_start = 0;   
+      //list.scrollTo(0, 0, false); 
+      resetView(true);
+    };
+
+    list.reset = function(cb) 
+    { 
+      setupSetObserver(false);
+      cb(records);
+      setupSetObserver(true);      
+      list.clear(); 
+      if( records )
+         pumpAfter.call(list,0); 
+      list.scrollTo(0,0);      
     };
 
     list[#value] = property(v) 

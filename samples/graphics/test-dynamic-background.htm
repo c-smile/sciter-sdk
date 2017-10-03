@@ -43,26 +43,37 @@
       
       generate();
       
-      $(button#test).onClick = function()
+      event click $(button#test)
       {
         generate();
       }
       
-      $(button#save).onClick = function()
+      event click $(button#save-png)
       {
         var bytes = dynImage.toBytes();
-        var filter = "PNG Files (*.png)|*.PNG|All Files (*.*)|*.*";
+        var filter = "PNG Files (*.png)|*.png|All Files (*.*)|*.*";
         var ext = "png";
         var path = view.selectFile(#save, filter, ext);
         if( path )
            bytes.save(path);
       }
-      $(button#to-clipboard).onClick = function()
+      event click $(button#save-jpg)
+      {
+        var bytes = dynImage.toBytes(85); // 85% quality level
+        var filter = "JPEG Files (*.jpg)|*.jpg|All Files (*.*)|*.*";
+        var ext = "jpg";
+        var path = view.selectFile(#save, filter, ext);
+        if( path )
+           bytes.save(path);
+      }
+
+
+      event click $(button#to-clipboard)
       {
         view.clipboard(#put, dynImage);
       }
       
-      $(button#from-clipboard).onClick = function()
+      event click $(button#from-clipboard)
       {
         var img = view.clipboard(#get, #picture);
         if( img )
@@ -73,7 +84,8 @@
   </head>
 <body>
   <button #test>ReGenerate</button>
-  <button #save>Save image to file</button>
+  <button #save-png>Save as PNG image to file</button>
+  <button #save-jpg>Save as JPEG image to file</button>
   <button #to-clipboard>Save image to clipboard</button>
   <button #from-clipboard>Load image from clipboard</button>
   <div .test>Test</div>

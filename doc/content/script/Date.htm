@@ -47,7 +47,7 @@
     <h2>Methods</h2>
     <dt>[new Date]</dt>
     <dd>
-      <p><strong>( </strong>[<em>string</em><strong> </strong>| <em>float</em> | <em>Date</em> |<strong> </strong>&nbsp;[ year, month, day [, hour [, minute [, second [, millisecond ]]]]]] )</p>
+      <p><strong>( </strong>[<em>string</em><strong/>| <em>float</em> | <em>Date</em> |<strong/>&nbsp;[ year, month, day [, hour [, minute [, second [, millisecond ]]]]]] )</p>
       <p>Creates new date object. If no parameters were given then initializes date fields to the current time(UTC).<br/>If single <em>string</em> parameter provided then parses date contained in the string.<br/>If single <em>float</em> parameter provided then it is treated as number of <em>milliseconds</em> since midnight, January 1, 1970 UTC.<br/>If single <em>Date</em> parameter provided then copy of that date object is created.<br/>And if year, month, day, etc. provided uses these numeric values to initialize new Date instance. Note: values are in <strong>UTC</strong> timezone.</p>
       <p><code>new Date(string)</code> form recognizes date in RFC-822 date format ( <a href="http://www.w3.org/Protocols/rfc822/#z28">http://www.w3.org/Protocols/rfc822/#z28</a> ) and ISO 8601 ( <a href="http://www.w3.org/TR/NOTE-datetime">http://www.w3.org/TR/NOTE-datetime</a> ).</p></dd>
     <dt>utc</dt>
@@ -64,20 +64,24 @@
       <p>Use it as <code>var date = Date.local(1999,1,1);</code></p></dd>
     <dt>toString</dt>
     <dd>
-      <div><strong>()</strong> : string</div>
-      <p>Returns RFC-822 string representation of this date object.</p></dd>
+      <div><b>(</b> <code/>[<i/><i>format</i>:string [, <i/><i>utc</i>:bool ]]<b/><b>)</b> : string</div>
+      <p>By default it returns RFC-822 string representation of this date object.&nbsp;</p>
+			<p>If <i/><i>format</i> is provided then it gets interpreted by <a href="http://www.cplusplus.com/reference/ctime/strftime/">strftime rules</a>.</p>
+			<p>If <i>utc</i> is provided and is&nbsp;<i/>true then formatting is made without local timezone shift. &nbsp;</p></dd>
     <dt>toUTCString</dt>
     <dd>
       <div><strong>()</strong> : string</div>
       <p>Returns RFC-822 string representation of this date object as UTC date/time.</p></dd>
     <dt>toISOString</dt>
     <dd>
-      <div><strong>(</strong> [<em>asUTC</em>: <em>false|true </em>] <strong>)</strong></div>
+      <div><strong>(</strong> [<em>asUTC</em>: false|true ] <strong>)</strong></div>
       <p>Returns ISO 8601 string representation of this date object as either local or UTC date/time.</p></dd>
     <dt>toLocaleString</dt>
     <dd>
-      <p><strong>( </strong>[<em>longFormat</em>]<strong> )</strong> returns: string</p>
-      <p>Returns string representation of the date using current system settings. Local time.<br/>If <em>longFormat</em> is equal exactly <em>true</em> then formats date using system long date format.</p></dd>
+      <p><strong>( </strong>[<em>longFormat:</em>false|true[, <i>andTime</i>:false|true]]<strong> )</strong> returns: string</p>
+      <p>Returns string representation of the date using current system settings. Local time.</p>
+			<p>If&nbsp;<em>longFormat</em> is equal exactly <em>true</em> then formats date using system long date format.</p>
+			<p>If <i>andTime</i> is true then result string will also contain time.</p></dd>
     <dt>valueOf</dt>
     <dd>
       <div><strong>()</strong> returns: <em>float</em></div>

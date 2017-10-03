@@ -24,7 +24,7 @@ function VirtualList(params) {
     const BUFFER_SIZE = params.bufferSize || 100; // sliding buffer size, number of DOM elements in the view
         
     var   records = null; 
-    var   template = list.first;
+    var   template = list.first; template.detach();
     var   item_height = 10;   // will be adjusted later
     var   buffer_start = 0;   // index of first buffer element in _records
     var   visible_items = 0;  // number of visible items in the view

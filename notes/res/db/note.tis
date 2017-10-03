@@ -69,7 +69,8 @@ class Note
     }
     if(changes) {
       this.mdate = new Date();  
-      this.mwho = PRINCIPAL;  
+      this.mwho = PRINCIPAL; 
+      //stdout.println("note-updated",this.text); 
       self.postEvent("note-updated",this);    
     }
   }  
@@ -87,6 +88,7 @@ class Note
     if(changes) {
       this.mdate = new Date();  
       this.mwho = PRINCIPAL;  
+      //stdout.println("note-updated",this.text); 
       self.postEvent("note-updated",this);    
     }
   }  
@@ -218,5 +220,71 @@ class Note
         return false;
     return true;        
   }
+
+  // events is an array 
+  // [{ date: Date, warn: Date [, end: Date] }, ... ]
+  function setEvents( events ) 
+  {
+    if( events && (events.length == 0)) 
+      events = null;
+    this.updateMeta({events:events}); 
+    if( events ) {
+      this.addTag(Tag.known("event",true));
+      self.postEvent("events-changed",true);
+    }
+    else {
+      this.removeTag(Tag.known("event",true));
+      self.postEvent("events-changed",false);
+    }
+  }
+
+  property startDate( v ) {
+    get {
+      var events = this.getMeta(#events);
+      if(!events || events.length == 0)
+        return null;
+      return events[0].start;
+    }    
+  }
+
+  property endDate( v ) 
+  {
+    get {
+      var events = this.getMeta(#events);
+      if(!events)
+        return null;
+      var max = Float.MIN;
+      var dt = null;
+      for(var edef in events) {
+        var e = edef.end.valueOf();
+        if( e > max ) { max = e; dt = edef.end; }
+      }
+      return dt;
+    }
+  }
+
+  property activeStartDate(v) {
+    get {
+      var events = this.getMeta(#events);
+      if(!events)
+        return null;
+      var now = (new Date()).valueOf();
+      for(var edef in events) {
+        if( edef.end.valueOf() < now ) continue; // ended already
+        return edef.start;
+      }
+      return null;
+    }
+  }
+
+  // true if note contains active event (the one that has warn date < now)
+  property hasActiveEvent(v) {
+    get {
+      var dt = this.activeStartDate;
+      return dt && (dt.valueOf() <= (new Date()).valueOf());
+    }
+  }
+
+
   
 }

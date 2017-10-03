@@ -42,22 +42,26 @@
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-O2" />
+					<Add option="-Os" />
+					<Add option="-m64" />
 				</Compiler>
 				<Linker>
-					<Add option="-s" />
+					<Add option="-m64" />
 				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add option="-m64" />
 			<Add option="`pkg-config gtk+-3.0 --cflags` -std=c++11" />
 			<Add option="`pkg-config fontconfig --cflags`" />
 			<Add option="`pkg-config gl --cflags`" />
+			<Add option="-mtune=generic" />
 			<Add directory="../../include" />
 			<Add directory="." />
 		</Compiler>
 		<Linker>
+			<Add option="-m64" />
 			<Add option="`pkg-config gtk+-3.0 --libs` -ldl" />
 			<Add option="-pthread" />
 		</Linker>

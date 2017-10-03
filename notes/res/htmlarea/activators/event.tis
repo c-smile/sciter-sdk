@@ -1,0 +1,164 @@
+include "activator.tis";
+
+// this is inside namespace Activators
+
+namespace Activators {
+
+  class Event : Activator 
+  {
+
+    function magicTrigger() { 
+      
+      const RE = /\[((\d{4}-[01]\d-[0-3]\d)(\s[0-2]\d:[0-5]\d)?)(\s?-(\d)(h|d|w|m))?\]$/;
+      
+      function recognized(re,htmlarea,text) {
+
+        var dts = re[1]; // date/time
+        var ts = re[3];  // time
+        var wn = re[5];  // warn n
+        var wu = re[6];  // warn units
+
+        var date = Date.parse(dts, new Date());
+        var warnfor = 0;
+        if( wn ) {
+          warnfor = wn.toInteger();
+          switch(wu) {
+            case "m" : warnfor *= 24 * 30; break;
+            case "w" : warnfor *= 24 * 7; break;
+            case "d" : warnfor *= 24; break;
+          }
+        } 
+        var s = String.$(<input|event { ts?"has-time":"" } warn-for="{warnfor}" value="{date.toISOString(true)}" />);
+        htmlarea.execCommand("edit:insert-html",s);
+        htmlarea.state.focus = true;
+        return true;
+      }
+      return (RE,recognized);
+    } 
+     
+
+    function attached() {
+      this.text = this.hastime ? this.date.toString("%B %e, %Y %r") : this.date.toString("%B %e, %Y");
+      this.updateState();
+      var frame = this.parentFrame;
+      frame.registerActivator(Event, true);
+    }
+
+    function detached()
+    {
+      var frame = this.parentFrame;
+      if( frame )
+        frame.registerActivator(Event, false);
+    }
+
+    function updateState() {
+      if(this.warnfor) {
+        var now = Date.now().valueOf();
+        if(this.endDate.valueOf() > now) {
+          this.state.busy = true;
+          this.state.invalid = this.warningDate.valueOf() < Date.now().valueOf(); 
+        }
+        else {
+          this.state.busy = false;
+          this.state.invalid = true;
+        }
+      } else {
+        this.state.busy = false;
+        this.state.invalid = false;
+      }
+
+    }
+
+    property hastime(v) {
+      get return this.attributes.exists("has-time");
+      set this.attributes["has-time"] = v ? true : undefined; 
+    }
+
+    property warnfor(v) {
+      get return (this.attributes["warn-for"] || 0).toInteger();
+      set this.attributes["warn-for"] = v.toString(); 
+    }
+
+    property date(v) {
+      get {
+        var dt = this.attributes["value"] || "";
+        return Date.parse(dt,new Date());
+      }
+      set {
+        this.attributes["value"] = v.toISOString(true);
+      }
+    }
+
+    property warningDate(v) {
+      get {
+        var warnfor = this.warnfor;
+        if( !warnfor )
+          return null;
+        var date = this.date;
+        date.hour -= warnfor;
+        return date;
+      }
+    }
+
+    property endDate(v) {
+      get {
+        var dt = this.attributes["end"];
+        return dt ? Date.parse(dt,new Date()) : this.date;
+      }
+    }
+
+    // static method
+    function getMenuEntry() { return ("Event","calendar-icon",onMenuClick); }
+
+    function getEventsOn(thisDoc) {
+      var out = [];
+      for(var ec in thisDoc.$$(input[type=event])) 
+        if(var wd = ec.warningDate ) {
+          out.push {
+            start : wd,
+            end   : ec.endDate
+          };
+        }
+      out.sort(:dd1,dd2: dd1.start.valueOf() - dd2.start.valueOf());
+      return out;
+    }
+
+    // static method, called by HtmlArea
+    function onSaveNote(htmlarea,note) {
+      var events = getEventsOn(htmlarea.document);
+      note.setEvents(events);
+    }
+
+    function onMenuClick(li,htmlarea) 
+    { 
+      function callback(vals)
+      {
+        var s = String.$(<input|event { vals.hastime?"has-time":"" } warn-for="{vals.warnfor}" value="{vals.date.toISOString(true)}" />);
+        //stdout.println(s);
+        htmlarea.execCommand("edit:insert-html",s);
+        htmlarea.state.focus = true;
+      }
+      var dlg = loadDialog(__FOLDER__ + "event-dialog.htm");
+      dlg.showNew(htmlarea,callback);
+    }
+
+    event click (evt) {
+      if(evt.target === this) {
+        var dlg = loadDialog(__FOLDER__ + "event-dialog.htm");
+        dlg.showFor(this);
+      }
+    }
+
+    function reset(vals) {
+      this.attributes["warn-for"] = vals.warnfor;
+      this.attributes["value"] = vals.date.toISOString(true);
+      this.attributes["has-time"] = vals.hastime ? true : undefined;
+      this.text = vals.hastime ? vals.date.toString("%B %e, %Y %r") : vals.date.toString("%B %e, %Y");
+      this.updateState();
+      this.postEvent("change");
+    }
+    
+  }
+}
+
+Activators.Activator.all.push(Activators.Event);

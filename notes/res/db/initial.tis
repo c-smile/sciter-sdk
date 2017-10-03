@@ -1,0 +1,46 @@
+
+include "../config.tis";
+
+
+//|
+//| check database existence
+//|
+
+function checkDatabase(pathname)
+{
+  try 
+  {
+    var ndb = Storage.open(pathname, false, false);
+    ndb.close();
+    return true;
+  } catch(e) {
+    return false;
+  }
+}
+
+//|
+//| open database and initialze it if needed
+//|
+
+function openDatabase(pathname)
+{
+  //const DBNAME = "sciter-notes.db";
+  //const pathname = dbPathFromArgs() || System.path(#USER_DOCUMENTS,DBNAME);
+  var ndb = Storage.open(pathname);
+  if(!ndb.root) { 
+    // new db, initialize structure
+    ndb.root = 
+      {
+        id2item   :ndb.createIndex(#string, true), // main index, item.id -> item, unique
+        date2item :ndb.createIndex(#date, false),  // item by date of creation index, item.cdate -> item, not unique
+        tags      :{},  // map of tagid -> tag
+        books     :{},  // map of bookid -> book; 
+        version   :1,
+      };
+  }
+  ndb.path = pathname;
+  return ndb;
+}
+
+
+

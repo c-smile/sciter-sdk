@@ -61,6 +61,7 @@ class NoteView : Element
 
     this.populateBooks(); 
     EditingToolbar(this.htmlarea, this.$(band.editing));
+
   }
 
   // gets the note, ensures that note exists

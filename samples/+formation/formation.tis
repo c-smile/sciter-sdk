@@ -133,15 +133,15 @@ namespace formation {
           
       if( !name ) 
         return true; // go inside to collect others
-        
+
       // handle named items:
 
       if( el.tag in CONTAINERS ) { // <section id="something"> <section name="something">  
-                                                               // <div id="something">     <div name="something">
+                                   // <div id="something">     <div name="something">
         addNamedItem(f,name,formation(el)) ; // add its sub-hierachy
-        return false;                          // don't go inside it
+        return false;                        // don't go inside it
       }
-      if( el.tag in LISTS ) { 
+      if( el.tag in LISTS && el.prototype === Element ) { 
         addNamedItem(f,name,repeatable(el)) ; // theses are repeatable formations
         return false;                         // don't go inside it
       }

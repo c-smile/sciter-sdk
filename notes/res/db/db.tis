@@ -7,40 +7,23 @@ include "book.tis";
 include "tag.tis";
 include "note.tis";
 
-//|
-//| open database and initialze it if needed
-//|
-
-function openDatabase()
-{
-  const DBNAME = "sciter-notes.db";
-  const pathname = dbPathFromArgs() || System.path(#USER_DOCUMENTS,DBNAME);
-  var ndb = Storage.open(pathname);
-  if(!ndb.root) { 
-    // new db, initialize structure
-    ndb.root = 
-      {
-        id2item   :ndb.createIndex(#string, true), // main index, item.id -> item, unique
-        date2item :ndb.createIndex(#date, false),  // item by date of creation index, item.cdate -> item, not unique
-        tags      :{},  // map of tagid -> tag
-        books     :{},  // map of bookid -> book; 
-        version   :1,
-      };
-  }
-  ndb.path = pathname;
-  if(ndb.root.id2item.length == 0)
-    self.postEvent("new-db-initialized");
-  //else if("-purge-deleted-notes" in argv) {
-  //
-  // }
-
-  return ndb;
-}
 
 //|
 //| Global db object and its methods
-//|
-const db = openDatabase();
+//| 
+//| boot.htm code passes opened and initialized db via view.db variable
+//| 
+
+const db = view.db;
+
+!function() {
+  if(db.root.id2item.length == 0)
+    self.postEvent("new-db-initialized");
+  //else if("-purge-deleted-notes" in argv) {
+  //
+  //}
+}();
+
 
 //|
 //| db.addItem method - add item to the db with optional list of tags
@@ -218,27 +201,80 @@ function db.totalItems() {
   return this.root.date2item.length;
 }
 
-// enumerate items in creation sequence order, calls callback if item.tags contain tags 
-// from the tags and text substring 
-
-function db.selectItems(callback, tags = null, words = null, book = null)
+/*function db.selectItems(callback, tags = null, words = null, book = null, events = null)
 {
   var root = this.root;
   var startDate = new Date(1000,1,1);
   var endDate = new Date(3000,1,1);
-  if( !tags && !words && !book )
+
+  if( !tags && !words && !book  && !events)
   {
     for(var it in root.date2item.select(startDate,endDate,false)) {
       if( !it.book.isDeleted )
         callback(it);
     }
-  } else {
-    //if( text ) text = "*" + text.toLowerCase() + "*";
+  } 
+  else if(events)
+  {
+    var out = [];
+    var now = (new Date()).valueOf();
+    var eventTag = Tag.known("event");
+    if(eventTag) for(var it in eventTag.items)
+      if( it.matches(tags,words,book) ) {
+        var starts = it.activeStartDate;
+        if( !starts ) continue;
+        out.push(it);
+      }
+    out.sort(:note1, note2: note1.activeStartDate.valueOf() - note2.activeStartDate.valueOf());
+    for(var it in out)
+      callback(it);
+  } 
+  else 
+  {
     for(var it in root.date2item.select(startDate,endDate,false))
       if( it.matches(tags,words,book) )
         callback(it);
   }
+}*/
+
+// enumerate items in creation sequence order, returns generator 
+
+function* db.matchingItems(tags, words, book, events)
+{
+  var root = this.root;
+  var startDate = new Date(1000,1,1);
+  var endDate = new Date(3000,1,1);
+
+  if( !tags && !words && !book  && !events)
+  {
+    for(var it in root.date2item.select(startDate,endDate,false)) {
+      if( !it.book.isDeleted )
+        yield it;
+    }
+  } 
+  else if(events)
+  {
+    var out = [];
+    var now = (new Date()).valueOf();
+    var eventTag = Tag.known("event");
+    if(eventTag) for(var it in eventTag.items)
+      if( it.matches(tags,words,book) ) {
+        var starts = it.activeStartDate;
+        if( !starts ) continue;
+        out.push(it);
+      }
+    out.sort(:note1, note2: note1.activeStartDate.valueOf() - note2.activeStartDate.valueOf());
+    for(var it in out)
+      yield it;
+  } 
+  else 
+  {
+    for(var it in root.date2item.select(startDate,endDate,false))
+      if( it.matches(tags,words,book) )
+        yield it;
+  }
 }
+
 
 function db.selectTags(callback, tagKind ) {
   for(var (n,t) in this.root.tags)

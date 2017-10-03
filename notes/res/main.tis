@@ -9,6 +9,7 @@ var currentNote = null;
 
 var filterTags = null; 
 var filterWords = null; // ["word1","word2"]
+var filterEvents = false;
 
 const WorkerFrame = $(frame#worker); 
 
@@ -20,19 +21,29 @@ const RE_MAIL = /([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})/;
 
 function PopulteNotesList(array) {
   array.length = 0;
-  db.selectItems(:note: array.push(note), filterTags, filterWords, currentBook);
+  //db.selectItems(:note: array.push(note), filterTags, filterWords, currentBook, filterEvents);
+  for(var note in db.matchingItems(filterTags, filterWords, currentBook, filterEvents))
+    array.push(note);
 }
 
 function UpdateNotesList(array) {
   var idx = 0;
-  function cb(note) {
+  /*function cb(note) {
     if( idx >= array.length ) 
       array.push(note);    
     else if( array[idx] !== note )
       array.splice(idx,0,note);
     ++idx;
   }
-  db.selectItems(cb, filterTags, filterWords, currentBook);
+  db.selectItems(cb, filterTags, filterWords, currentBook,filterEvents);*/
+  for(var note in db.matchingItems(filterTags, filterWords, currentBook, filterEvents))
+  {
+    if( idx >= array.length ) 
+      array.push(note);    
+    else if( array[idx] !== note )
+      array.splice(idx,0,note);
+    ++idx;
+  }
   array.length = idx; // prune the rest
 }
 
@@ -43,6 +54,7 @@ function setFilterTags(tags)
     self.postEvent("notes-filter-changed", #tags);
   }
 }
+
 function setFilterText(text)
 {
   if( !text || text.trim() == "" ) {
@@ -59,6 +71,15 @@ function setFilterText(text)
     }
   }
 }
+
+function setFilterEvents(onOff)
+{
+  if(filterEvents != onOff) {
+    filterEvents = onOff;
+    self.postEvent("notes-filter-changed", #events);
+  }
+}
+
 
 function setCurrentBook(book)
 {
@@ -93,14 +114,9 @@ event click $(#print-note) {
   showOverlay("printing/pager.htm");
 }
 
-
 //function handleNewNoteHotkey() {
 //  self.timer(100ms, function() { self.postEvent("start-new-note", #from-clipboard) }); 
 //}
-
-event new-db-initialized {
-  showOverlay("overlays/intro.htm");
-}
 
 function importNotes(fn) 
 {
@@ -126,12 +142,29 @@ function importNotes(fn)
   }
 }
 
+event new-db-initialized {
+  //showOverlay("overlays/intro.htm");
+  if( view.importDocs ) // importDocs var is passed by boot.htm
+    Net.importInitialNotes();
+}
+
 function exportNote(note,fn)
 {
   var noteframe = $(frame#worker);
   if( typeof fn == #string ) 
     noteframe.saveNoteToFile(note,fn);
 }
+
+// loads dialog HTML/CSS/script into frame#loadable-dialogs
+// returns 'self' of loaded document
+function loadDialog(url) {
+  var holder = $(frame#loadable-dialogs);
+  var toload = self.url(url);
+  if( !holder.first || holder.first.url() != toload )
+    holder.load(toload);
+  return holder.first;
+}
+
 
 function self.ready() {
   //db.purgeDeletedItems();
@@ -143,11 +176,11 @@ function self.ready() {
   this.sendEvent("start");
 
   if( "-debug" in argv ) {
-     const inspector = System.PLATFORM == "Windows" ? "inspector.exe" : "inspector";
-     Sciter.launch( System.home(inspector) );
-     if( var connectToInspector = view.connectToInspector ) 
+      const inspector = System.PLATFORM == "Windows" ? "inspector.exe" : "inspector";
+      Sciter.launch( System.home(inspector) );
+      if( var connectToInspector = view.connectToInspector ) 
         connectToInspector();
-   }
+  }
 
   // this has to be delayed on Windows otherwise caption will be transparent too, why?
 
@@ -155,7 +188,59 @@ function self.ready() {
     this.post(:: view.windowBlurbehind = #ultra-dark );
 
   view.animationsEnabled = true; // enable CSS animations
-  //self.postEvent("new-db-initialized");
+
+  // events monitoring ++++
+  var previousTime = 0.0;
+  var previousActiveEvents = 0;
+  var previousTotalEvents = 0;
+
+  const EVENT_CHECK_PERIOD = 300s; // each 5 minutes
+
+  function checkEventsState() 
+  {
+    var now = (new Date()).valueOf();
+    var justStartedEvents = 0;
+    var activeEvents = 0;
+    var totalEvents = 0; // total pending events
+    for(var note in db.matchingItems(null, null, null, true))
+    {
+      if( note.hasActiveEvent)
+        ++activeEvents;
+      ++totalEvents;
+    }  
+
+    /*function cb(note) {
+      if( note.hasActiveEvent)
+        ++activeEvents;
+      ++totalEvents;
+    }
+    db.selectItems(cb,null, null, null, true); */
+
+    if( previousActiveEvents < activeEvents ) // the event started in between previous and this time.
+       justStartedEvents = activeEvents - previousActiveEvents;
+
+    // notify interested parties:
+    if( justStartedEvents > 0 || previousActiveEvents != activeEvents || previousTotalEvents != totalEvents) {
+      if(justStartedEvents && (view.windowState == View.WINDOW_HIDDEN || view.windowState == View.WINDOW_MINIMIZED)) 
+        view.windowState == View.WINDOW_SHOWN; // show it
+      self.postEvent("events-status-changed", { startedEvents: justStartedEvents, activeEvents: activeEvents, totalEvents : totalEvents });
+    }
+        
+    previousTotalEvents = totalEvents;
+    previousActiveEvents = activeEvents;
+    previousTime = now;
+    return totalEvents > 0; // keep checking
+  }
+
+  checkEventsState(); // check it now
+  self.timer(EVENT_CHECK_PERIOD,checkEventsState); // and in 5 minutes
+
+  self << event events-changed { // yet do the same if events were changed in editor
+    checkEventsState(); 
+    self.timer(EVENT_CHECK_PERIOD,checkEventsState); 
+  }  
+  // events monitoring ----
+
 }
 
 

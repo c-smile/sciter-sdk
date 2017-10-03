@@ -1,0 +1,33 @@
+<html>
+<head>
+  <script type="text/tiscript">
+  
+    
+    function self.ready()
+    {
+      const items = ["apple","orange","lime","lemon","pear","banan","kiwi","pineapple"];
+       
+      function* forward()
+      {
+        for( var i = 0; i < items.length; ++i )
+          yield items[i] + "0123456789012345678901234567890123456789012345678901234567890123456789";
+      }
+
+      const out = $(output);
+       
+      for(var n in 10000) {
+         for(var item in forward()) 
+           item = item;
+
+         out.value = n;
+         view.update();
+      }
+
+    }
+    
+  </script>
+</head>
+<body>
+   Iteration: <output|integer />  
+</body>
+</html>

@@ -52,6 +52,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="`pkg-config gtk+-3.0 --cflags` -std=c++11" />
+			<Add option="-mtune=generic" />
 			<Add directory="../../../include" />
 		</Compiler>
 		<Linker>

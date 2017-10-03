@@ -341,7 +341,7 @@ const Plus = function() {
       var hasBoundValue = !!this.attributes["name"];
       var that = this; 
       var thing = this.tag == "select"? that.options: that; 
-      var template = thing.first; 
+      var template = thing.first; template.detach();
       thing.clear();
       
       var renderList; // forward declaration

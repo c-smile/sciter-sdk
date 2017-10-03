@@ -1,3 +1,5 @@
+include "activators/activators.tis";
+
 function EditingToolbar(htmlarea,toolbar) 
 {
   var observers = [];  
@@ -18,25 +20,27 @@ function EditingToolbar(htmlarea,toolbar)
   }
 
   function showLinkDialog() {
+
     var (x,y,w,h) = htmlarea.box(#rectw,#caret,#view);
     var onSelection = !htmlarea.selection.isCollapsed;
 
-    var dialog = $(popup#link);
-    dialog.value = { text: onSelection ? "{selection}":"", url:"" };
-    dialog.$([name=text]).state.disabled = onSelection;
+    //var dialog = $(popup#link);
+    var dialog = loadDialog(__FOLDER__ + "link-dialog.htm");
+    
+    function doInsert(fields) {
+       if( onSelection ) 
+         htmlarea.execCommand("format:apply-span:a", { href: fields.url.trim() });
+       else 
+         htmlarea.execCommand("edit:insert-html", " <a href='"+ fields.url.trim() +"'>"+ fields.text +"</a> ");
+       return true; 
+    }
 
-    dialog.show {
+    dialog.showWith 
+    {
       x: x,
       y: y + h,
-      insert: function() {
-        var fields = this.value;
-        if( onSelection ) htmlarea.execCommand("format:apply-span:a", { href: fields.url.trim() });
-        else htmlarea.execCommand("edit:insert-html", " <a href='"+ fields.url.trim() +"'>"+ fields.text +"</a> ");
-        return true; },
-      change: function() {
-        var fields = this.value;
-        var urlValid = RE_HTTP.test(fields.url) || RE_MAIL.test(fields.url);
-        this.$(button[name=insert]).state.disabled = !fields.text.trim() || !urlValid; }
+      onSelection: onSelection,
+      insert: doInsert
     };
   }
 
@@ -132,5 +136,14 @@ function EditingToolbar(htmlarea,toolbar)
 
   htmlarea << event statechange { notifyObservers(); }
   htmlarea << event change { notifyObservers(); }
+
+  const activatorsMenu = toolbar.$(button.activators>menu);
+  Activators.setupActivatorsMenu(activatorsMenu);
+
+  activatorsMenu << event click $(li) {
+    return Activators.handleMenuClick(this,htmlarea);
+  }
+
+
 
 }

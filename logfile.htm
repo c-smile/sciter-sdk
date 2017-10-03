@@ -10,7 +10,46 @@
       <td width="60" nowrap="" valign="top" align="center">Build#</td>
       <td width="78" nowrap="" valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FFFADA">4.0.3.5348</td><td nowrap="" valign="top" align="center">09-09-2017</td><td>
+    <tr><td valign="top" bgcolor="#FFFADA">4.0.4.5413</td><td nowrap="" valign="top" align="center">02-10-2017</td><td><p>new:&nbsp;</p>
+					<ul><li>CTRL+INSERT (copy) and SHIFT+INSERT (paste) are back.&nbsp;</li>
+						</ul>
+					<p>fixes:</p>
+					<ul>
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						<li><p>[DOM,script] forcing deletion of html::element instance on removed elements (Element.remove(), Element.clear(), etc). Use Element.detach() if you want DOM element to be removed from DOM tree but preserved from deletion.</p><p>NOTE: this may affect existing code. plus.tis and vlist.tis are updated to use template.detach() in repeatables.</p></li><li>[drawing] fix of text color used while drawing of floats and other edge cases.&nbsp;</li>
+						<li>[svg] support of opacity as attribute.</li>
+						<li>fix of AV in <code>element.timer()</code> when the function is called on deleted element.</li>
+						<li><code>view.msgbox()</code> - host screen location</li>
+						<li>[gtk] &lt;circle&gt; rendering fix</li>
+						<li>[script] fix of GC issues related to async and generator functions</li>
+						<li>[script] Fix of Bytes.load(name) damages name content.&nbsp;</li>
+						<li>[DOM,layout] fix of layout re-calculation after dynamic &lt;td&gt; content update.</li>
+						<li>[win,touch screen] default handling of touch pan gesture on scrollables.</li>
+						<li>[richtext] IME is back.</li>
+						<li>[richtext, editing] fix of deletion of sequences of atomic boxes like &lt;br&gt;&lt;br&gt;&lt;br&gt; or &lt;img&gt;&lt;img&gt;&lt;img&gt;</li>
+						<li>[doc] Date.toLocaleString([longFormat[,andTime]]) is documented.&nbsp;</li>
+						<li><code>Date.parse(&quot;iso-date&quot;,now Date())</code> fix when ISO date contains timezone shift.</li>
+						<li>[CSS,DOM] fix of { content:attr(alt) } update on dynamic change of alt (or any other) attribute.</li><li>[script, DOM] forcing element removed from the DOM be invisible for GC.</li><li>[+plus] fix of memory buildup in repeatables, see: <a href="https://sciter.com/forums/topic/memory-leak-in-plus-repeatable/">https://sciter.com/forums/topic/memory-leak-in-plus-repeatable/</a>&nbsp;</li><li>html-to-text conversion &lt;img alt=&quot;:)&quot;&gt; tweak.</li><li>[windows] drawing artifacts on window-frame=&quot;extended&quot;, see: <a href="https://sciter.com/forums/topic/white-background-flash-to-screen-in-window-frameextended-2/">https://sciter.com/forums/topic/white-background-flash-to-screen-in-window-frameextended-2/</a>&nbsp;</li><li>[inspector] fix of the case then debugee is the view itself (but not document in frame as in sciter.exe)</li><li>[script] fix of GC issue: array with deleted elements prevents deleted elements from GC.&nbsp;&nbsp;</li><li>[+plus] fix to support <code>&lt;</code>,<code>&gt;</code> conditionals in @bound attributes like:&nbsp; &lt;input|decimal(val) min=&quot;0&quot; max=&quot;1.0&quot; step=&quot;0.1&quot; @disabled=&quot;val &lt; 0.5&quot;/&gt;</li><li>[windows,d2d] fix of transition:blend on transparent popups.</li><li>[richtext] fix of AV on &lt;pre&gt; on/off in empty paragraph.</li><li>[formation] making it friendlier to vlist&nbsp;</li><li>[windows,d2d] fix of color brush hash table overload issue: <a href="https://sciter.com/forums/topic/css-var-and-transition-have-memory-leak/">https://sciter.com/forums/topic/css-var-and-transition-have-memory-leak/</a>&nbsp;</li><li>[scrollbars] mouse hover handling fix.</li><li>[tooltip] removing tooltips before showing context menu.&nbsp;</li><li>[richtext] Fix of multiline text pasting.&nbsp;</li><li><code>Element.request()</code> fix of doubled request.</li><li>[select] fix of doubled onValueChanged notification.</li><li>[css] fix of vertical-align: middle; in flow:default|vertical;</li>
+						<li>&lt;input|decimal&gt; fix of value rendering.</li>
+						</ul>
+					<p>NOTE: sciter.dlls, sciter.exe and notes.exe  Windows executables in SDK <b>are digitally signed</b> now. MacOS SDK executables are also signed.</p></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.0.3.5348</td><td nowrap="" valign="top" align="center">09-09-2017</td><td>
 					<p>new:</p>
 					<ul>
 						<li><p>[script] <code>await/yield</code> syntax compatibility with JS:</p><p><code>await</code> is allowed to be in <code>async function()</code>&nbsp;only, see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function</p>
@@ -33,10 +72,10 @@
 						<li>[css and window-blurbehind attribute ] : </li>
 						<pre>@media blur-behind {} 
 @media !blur-behind {} 
-@media blur-behind=&quot;ultra-dark&quot; {} 
-@media blur-behind=&quot;dark&quot; {} 
-@media blur-behind=&quot;light&quot; {} 
-@media blur-behind=&quot;ultra-light&quot; {}
+@media blur-behind==&quot;ultra-dark&quot; {} 
+@media blur-behind==&quot;dark&quot; {} 
+@media blur-behind==&quot;light&quot; {} 
+@media blur-behind==&quot;ultra-light&quot; {}
 </pre></ul><p>fixes:</p>
 					<ul>
 						

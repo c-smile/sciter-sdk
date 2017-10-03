@@ -38,6 +38,18 @@ namespace Settings
                 persistable.uiStateRestore(data);
   }
 
+  //just reads the config data
+  function fetch() {
+    var data = {};
+    var stream = Stream.openFile(path,"ur");
+    if( !stream )
+      return data;
+    try      { data = parseData( stream ); }
+    catch(e) { stdout.printf("Restore error %s\n",e); }
+    finally { stream.close(); }
+    return data;
+  }
+
   function add(persistable) { list.push(persistable); }
 }
 

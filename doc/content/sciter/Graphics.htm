@@ -76,7 +76,7 @@
       <p>Draws polygon using current lineColor/lineGradient and fillColor/fillGradient.</p></dd>
     <dt>pointInPolygon</dt>
     <dd>
-      <div>( x:<em>float</em>, y:<em>float, </em>polyX1:<em>float</em>, polyY1:<em>float</em>, polyX2:<em>float</em>, polyY2:<em>float</em>, ....<em> </em>&nbsp;): <em>true</em> | <em>false</em> or</div>
+      <div>( x:<em>float</em>, y:<em>float, </em>polyX1:<em>float</em>, polyY1:<em>float</em>, polyX2:<em>float</em>, polyY2:<em>float</em>, ....<em/>&nbsp;): <em>true</em> | <em>false</em> or</div>
       <div>( x:<em>float</em>, y:<em>float, </em>polygon:<em>array</em> ): <em>true</em> | <em>false</em></div>
       <p>Checks if point (x,y) is inside the polygon.</p></dd>
     <dt>polyline</dt>
@@ -91,7 +91,7 @@
     <dd>
       <div>
         <div>Path primitives</div>
-        <div></div></div></dd>
+        <div/></div></dd>
     <dt>copyImage</dt>
     <dd>
       <div>( img:<a href="Image.htm">Image</a> , x:<em>float</em>, y:<em>float</em> [, xIimg:<em>integer</em>, yImg:<em>integer, </em>wIimg:<em>integer</em>, hImg:<em>integer</em> ] ) : Graphics</div>
@@ -103,7 +103,7 @@
       <p>Blends <em>img</em> onto the graphics surface. Operation takes in account per pixel alpha of the imeage and optional <em>alpha</em> value. alpha here is either float [ 0.0 .. 1.0 ] or integer [ 0 .. 255 ].</p></dd>
     <dt>drawImage</dt>
     <dd>
-      <div>( img:<a href="Image.htm">Image</a> , x:<em>float</em>, y:<em>float</em> [, w:<em>float</em>, h:<em>float</em>]<em> </em>[, xIimg:<em>integer</em>, yImg:<em>integer, </em>wIimg:<em>integer</em>, hImg:<em>integer</em> ] ) : Graphics</div>
+      <div>( img:<a href="Image.htm">Image</a> , x:<em>float</em>, y:<em>float</em> [, w:<em>float</em>, h:<em>float</em>]<em/>[, xIimg:<em>integer</em>, yImg:<em>integer, </em>wIimg:<em>integer</em>, hImg:<em>integer</em> ] ) : Graphics</div>
       <p>Draws <em>img</em> onto the graphics surface with current transformation applied (scale, rotation).</p></dd>
     <h4>Storke and Fill attributes</h4>
     <dt>strokeWidth</dt>
@@ -149,17 +149,23 @@
     <dt>fillLinearGradient</dt>
     <dd>
       <div>( x1: float, y1: float, x2: float, y2: float, color1: rgba, color2: rgba [, p: float] ) : Graphics</div>
-      <p>Setup parameters of gradient linear of lines.</p></dd>
-    <dt>lineRadialGradient</dt>
+      <p>Setup parameters of linear gradient fill using two end colors.</p></dd>
+    <dl><dt>fillLinearGradient</dt>
+    <dd>
+      <div>( x1: float, y1: float, x2: float, y2: float, colors: Array&nbsp;[, stops: Array] ) : Graphics</div>
+      <p>Setup parameters of linear&nbsp;gradient  fill using list of&nbsp;<i/><i>colors</i>. Optionally you can provide <i/><i>stop positions</i> - array of 0.0 ... 1.0 values. &nbsp;</p></dd></dl><dt>lineRadialGradient</dt>
     <dd>
       <div>( x1: float, y1: float, r: float, color1: rgba, color2: rgba [, p: float] ) : Graphics</div>
       <p>Setup parameters of gradient radial drawing of lines.</p></dd>
-    <dd></dd>
+    <dd/>
     <dt>fillRadialGradient</dt>
     <dd>
       <div>( x1: float, y1: float, r: float, color1: rgba, color2: rgba [, p: float] ) : Graphics</div>
-      <p>Setup parameters of gradient radial fills.</p></dd>
-    <dt>noFill</dt>
+      <p>Setup parameters of gradient radial fill.</p></dd>
+    <dl><dt>fillRadialGradient</dt>
+    <dd>
+      <div>( x1: float, y1: float, r: float, colors: Array&nbsp;[, stops: Array] ) : Graphics</div>
+      <p>Setup parameters of gradient radial fill using list of&nbsp;<i/><i>colors</i>. Optionally you can provide <i/><i>stop positions</i> - array of 0.0 ... 1.0 values.&nbsp;</p></dd></dl><dt>noFill</dt>
     <dd>
       <div>( ) : Graphics</div>
       <p>Disables fills for subsequent drawing operations.</p></dd>
@@ -271,7 +277,7 @@
       <p>Draws vertical line and moves current drawing path position to (current)x, y. If <em>relative</em> is <em>true</em> then <em>y</em> is interpreted as a delta from the current path position.</p></dd>
     <dt>arcTo</dt>
     <dd>
-      <div>( x1:<em>float</em>, y1:<em>float,</em> x2:<em>float</em>, y2:<em>float</em>, radius: <em>float&nbsp;</em><em> </em>[, relative <em>= false</em> ] ) : Graphics.Path</div>
+      <div>( x1:<em>float</em>, y1:<em>float,</em> x2:<em>float</em>, y2:<em>float</em>, radius: <em>float&nbsp;</em><em/>[, relative <em>= false</em> ] ) : Graphics.Path</div>
       <p>Draws arc at the corner (point x1,y1) between two lines x0,y0 to x1,y1 and x1,y1 to x2,y2.  See: <a onmousedown="return rwt(this,'','','','3','AFQjCNEYwX0AEYPgDi7lZpmT-fu-hkXZDg','','0ahUKEwiIlomZyu7UAhUL4WMKHUIGC24QFgg1MAI','','',event)" href="https://www.google.ca/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=3&amp;ved=0ahUKEwiIlomZyu7UAhUL4WMKHUIGC24QFgg1MAI&amp;url=http%3A%2F%2Fwww.dbp-consulting.com%2Ftutorials%2Fcanvas%2FCanvasArcTo.html&amp;usg=AFQjCNEYwX0AEYPgDi7lZpmT-fu-hkXZDg" data-ctbtn="0" data-cthref="/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=3&amp;ved=0ahUKEwiIlomZyu7UAhUL4WMKHUIGC24QFgg1MAI&amp;url=http%3A%2F%2Fwww.dbp-consulting.com%2Ftutorials%2Fcanvas%2FCanvasArcTo.html&amp;usg=AFQjCNEYwX0AEYPgDi7lZpmT-fu-hkXZDg">Canvas 
 ArcTo Tutorial</a></p></dd>
     <dt>quadraticCurveTo</dt>

@@ -1,0 +1,141 @@
+<html.event-dialog>
+    <head>
+        <title></title>
+        <style>
+          html.event-dialog {size:max-content; font:system; background:#eef; margin:0.5em;} 
+
+          html.event-dialog form {
+            flow: grid(1 2,
+                       3 3);
+            border-spacing:0.5em;
+          }
+          html.event-dialog form > select { height:*; overflow-y:scroll-indicator; border:none; }
+          //form > select > option[night] { background:#f4f4f4; }
+
+          //form > select:disabled { background:none; }
+          //form > select:disabled > option { background:none; color:gray; }
+
+          input td:current { background:highlight; color: highlighttext; }
+
+          select option:current { background:highlight; color: highlighttext; }
+
+
+          form > input { border:none; }
+
+          form > div { flow:horizontal; horizontal-align:center; border-spacing:0.25em; }
+
+          form i { 
+            display:block; 
+            size:1.2em;
+            background-size:1em;
+            background-repeat:no-repeat;
+            background-position:50% 50%;
+            fill:#000;
+            margin:* 0.5em;
+            //vertical-align:middle;
+          }
+
+          form i.warn { background-image:url(path:M1024 1375v-190q0-14-9.5-23.5t-22.5-9.5h-192q-13 0-22.5 9.5t-9.5 23.5v190q0 14 9.5 23.5t22.5 9.5h192q13 0 22.5-9.5t9.5-23.5zm-2-374l18-459q0-12-10-19-13-11-24-11h-220q-11 0-24 11-10 7-10 21l17 457q0 10 10 16.5t24 6.5h185q14 0 23.5-6.5t10.5-16.5zm-14-934l768 1408q35 63-2 126-17 29-46.5 46t-63.5 17h-1536q-34 0-63.5-17t-46.5-46q-37-63-2-126l768-1408q17-31 47-49t65-18 65 18 47 49z); }
+          //form i.time { background-image:url(path:M1024 544v448q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h224v-352q0-14 9-23t23-9h64q14 0 23 9t9 23zm416 352q0-148-73-273t-198-198-273-73-273 73-198 198-73 273 73 273 198 198 273 73 273-73 198-198 73-273zm224 0q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z); }
+
+          body > footer { text-align:center; visibility:none; }
+          body > footer:expanded { visibility:visible; }
+
+        </style>
+        <script type="text/tiscript">
+
+          var eventActivator = null;
+          var callback = null;
+
+          function self.ready() {
+            var hourOptions = $(select[name=hour]);
+            var date = new Date();
+            date.minute = 0; 
+            date.second = 0; 
+            hourOptions.$append(<option value=-1>no time</option>);
+            for(var h in 24) {
+               date.hour = h; 
+               hourOptions.$append(<option value={h}>{date.toString("%I %p")}</option>);
+            }
+          }
+
+          function self.showFor(elEvent)
+          {
+            eventActivator = elEvent;
+            callback = null;
+            var now = new Date();
+            $(form).value = {
+              date    : elEvent.date,
+              hour    : elEvent.hastime ? elEvent.date.hour : -1,
+              //minute  : elEvent.date.minute || 0,
+              warnfor : elEvent.warnfor 
+            };
+            $(body>footer).state.collapsed = true;
+            elEvent.popup(self,2 | (8 << 16)); 
+            return true;
+          }
+
+          function self.showNew(htmlarea,cb)
+          {
+            eventActivator = null;
+            callback = cb;
+            var now = new Date();
+            $(form).value = {
+              date    : now,
+              hour    : -1,
+              warnfor : 0
+            };
+            $(body>footer).state.expanded = true;
+            htmlarea.popup(self,5 | (5 << 16)); 
+            return true;
+          }
+
+
+          function gatherData() {
+            var vals = $(form).value;
+            var date = vals.date;
+            date.hour = vals.hour < 0 ? 0 : vals.hour;
+            date.minute = 0;
+            date.second = 0;
+
+            return {
+              date:date,
+              hastime: vals.hour >= 0,
+              warnfor: vals.warnfor,
+            };
+          }
+
+          event change $(form) { 
+            if(eventActivator)
+               eventActivator.reset(gatherData());
+            return true;
+          }
+
+          event click { return true; }
+          event mouseup { return true; }
+          event mousedown { return true; }
+
+          event click $(button#apply) {
+            callback(gatherData());
+            self.state.popup = false;
+          }
+
+        </script>
+    </head>
+    <body>
+        <form>
+          <input|calendar(date)/>
+          <select|list(hour) />
+<!--      <select|list(minute) disabled />-->
+          <div>
+            <i.warn />
+            <button|radio(warnfor) value="720">month</button>
+            <button|radio(warnfor) value="168">week</button>
+            <button|radio(warnfor) value="24" checked>day</button>
+            <button|radio(warnfor) value="1">hour</button>
+            <button|radio(warnfor) value="0" checked>none</button>
+          </div>
+        </form>
+        <footer><button#apply>Insert</button></footer>
+    </body>
+</html>

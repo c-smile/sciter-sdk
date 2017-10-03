@@ -40,7 +40,7 @@
     <dt>MOUSE_IDLE</dt>
     <dd>type of event, mouse timer event. Runtime sends this event when mouse is over the element, not pressed and not moving for some time. By default this event triggers popup of tooltip.</dd>
     <dt>MOUSE_DRAG_REQUEST</dt>
-    <dd>mouse pressed and moved by distance larger than some threshold. &nbsp;&lt;input|text&gt; and &lt;textarea&gt; strat draging selection while handling the event. To discard default handlers - consume the event by returning true.</dd>
+    <dd>mouse pressed and moved by distance larger than some threshold. &nbsp;&lt;input|text&gt; and &lt;textarea&gt; start dragging selection while handling the event. To discard default handlers - consume the event by returning true.</dd>
     <h3>Keyboard event codes</h3>
     <dt>KEY_DOWN</dt>
     <dd>type of event, key pressed when element or one of its children is in focus.</dd>
@@ -50,19 +50,19 @@
     <dd>type of event, character key pressed when element or one of its children is in focus.</dd>
     <h3>Scroll event codes</h3>
     <dt>SCROLL_HOME</dt>
-    <dd></dd>
+    <dd/>
     <dt>SCROLL_END</dt>
-    <dd></dd>
+    <dd/>
     <dt>SCROLL_STEP_PLUS</dt>
-    <dd></dd>
+    <dd/>
     <dt>SCROLL_STEP_MINUS</dt>
-    <dd></dd>
+    <dd/>
     <dt>SCROLL_PAGE_PLUS</dt>
-    <dd></dd>
+    <dd/>
     <dt>SCROLL_PAGE_MINUS</dt>
-    <dd></dd>
+    <dd/>
     <dt>SCROLL_POS</dt>
-    <dd></dd>
+    <dd/>
     <h3>Gesture (touch screen) event codes</h3>
     <dt>GESTURE_REQUEST</dt>
     <dd>The engine sends this event to request list of gestures that the element supports. Set &quot;ORed&quot; flags in Event.flags field. List of supported flags/gesture types:
@@ -93,36 +93,36 @@
         <li><code>Event.GESTURE_STATE_END</code> - is &quot;on&quot; for last event in the gesture sequence.</li></ul></dd>
     <h3>Focus event codes</h3>
     <dt>LOST_FOCUS</dt>
-    <dd></dd>
+    <dd/>
     <dt>GOT_FOCUS</dt>
-    <dd></dd>
+    <dd/>
     <h3>Logical event codes from builtin behaviors</h3>
     <dt>BUTTON_CLICK</dt>
-    <dd></dd>
+    <dd/>
     <dt>BUTTON_PRESS</dt>
-    <dd></dd>
+    <dd/>
     <dt>BUTTON_STATE_CHANGED</dt>
     <dd>Checkbox/radio state was changed. ( Not all <em>BUTTON_CLICK</em>s are changing state of those. )</dd>
     <dt>EDIT_VALUE_CHANGING</dt>
-    <dd></dd>
+    <dd/>
     <dt>EDIT_VALUE_CHANGED</dt>
-    <dd></dd>
+    <dd/>
     <dt>SELECT_SELECTION_CHANGED</dt>
-    <dd></dd>
+    <dd/>
     <dt>SELECT_STATE_CHANGED</dt>
-    <dd></dd>
+    <dd/>
     <dt>HYPERLINK_CLICK</dt>
-    <dd></dd>
+    <dd/>
     <dt>ACTIVATE_CHILD</dt>
-    <dd></dd>
+    <dd/>
     <dt>POPUP_REQUEST</dt>
-    <dd></dd>
+    <dd/>
     <dt>POPUP_READY</dt>
-    <dd></dd>
+    <dd/>
     <dt>POPUP_DISMISSED</dt>
-    <dd></dd>
+    <dd/>
     <dt>POPUP_DISMISSING</dt>
-    <dd></dd>
+    <dd/>
     <dt>MENU_ITEM_ACTIVE</dt>
     <dd>Mouse over the menu item, Event.target is a menu item, Event.owner - initiator of the menu &nbsp;</dd>
     <dt>MENU_ITEM_CLICK</dt>

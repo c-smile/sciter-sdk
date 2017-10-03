@@ -1,0 +1,262 @@
+<html>
+    <head>
+        <title>Sciter Notes</title>
+        <style>
+
+            html {
+              background:#888;
+            }
+
+            body.presented {
+              aspect: FlyingNotes;
+              behavior:form;
+              margin:0;
+              //font-size:12pt;
+              //font:system;
+            } 
+
+
+            section {
+              flow: grid(1 2,
+                         1 3,
+                         4 4,
+                         5 5,
+                         6 6,
+                         7 7);
+              background: #fcfcd7;
+              border-spacing:1em;
+              padding:1em 2em;
+              max-width:80vw;
+              width:24em;
+              margin:*;
+              //border-radius:1em;
+              //color:#555;
+              box-shadow: 0dip 0dip 1em rgba(0,0,0,0.7);
+            }
+
+            img#mascot { display:inline-block; margin:*; }
+
+            button { 
+              font:inherit;
+              display:block;
+              white-space:normal;
+              width:*;
+              padding:1em 2em;
+            }  
+
+            span {
+              width:max-content;
+            }
+
+            p { width:*; }
+
+        </style>
+        <script type="text/tiscript">
+
+          include "config.tis";
+          include "libs/settings.tis";
+          include "db/initial.tis";
+
+          var pathname;
+
+          const filter = "Sciter Notes Files (*.db,*.notes)|*.db;*.notes|All Files (*.*)|*.*";
+          const defaultExt = "db";
+          const initialPath = System.path(#USER_DOCUMENTS,DBNAME);
+          const caption = "Sciter Notes: Choose Notes Database File Name";
+
+
+          function tryOpenDatabase() {
+            if( View.db = openDatabase(pathname) ) 
+            {
+              View.importDocs = $(body).value.importdocs;
+              view.load(self.url("main.htm")); 
+            } else 
+              view.msgbox(#alert, "Cannot open " + pathname + "file, try another location.");
+            return true;              
+          }
+
+          event click $(button#defaultlocation) { 
+            var settings = Settings.fetch();
+            pathname = dbPathFromArgs() || settings.dbpath || System.path(#USER_DOCUMENTS,DBNAME);
+            return tryOpenDatabase(); 
+          }
+
+          event click $(button#otherlocation) {
+            pathname = view.selectFile(#save, filter, defaultExt, initialPath, caption );
+            if( !pathname )
+              return true;
+            return tryOpenDatabase(); 
+          }
+
+          event click $(button#existinglocation) {
+
+            pathname = view.selectFile(#open, filter, defaultExt, initialPath, caption );
+            if( !pathname )
+              return true;
+            return tryOpenDatabase(); 
+          }
+
+          function self.ready() 
+          {
+            var settings = Settings.fetch();
+            pathname = dbPathFromArgs() || settings.dbpath || System.path(#USER_DOCUMENTS,DBNAME);
+            if(checkDatabase(pathname)) 
+            {
+              if( View.db = openDatabase(pathname) ) {
+                view.load(self.url("main.htm")); 
+                return;
+              }
+            }
+            var body = $(body);
+            body.attributes.addClass("presented");
+            body.value = {
+              name: Sciter.userName(),
+              defloc: pathname.trim()
+            };
+          }
+
+        </script>
+
+        <script type="text/tiscript"> 
+
+
+          function FlyingNotes() 
+          {
+
+            // Create an array to store our particles
+            var particles = [];
+
+            var colors = [
+              color("#facaec"),
+              color("#cdfcb8"),
+              color("#fcfcb8"),
+            ];
+            
+            var back = color("#ccc");
+
+            const particleMaxSize = this.toPixels(120dip);
+            const particleMinSize = this.toPixels(60dip);
+
+            // The amount of particles to render
+            const particleCount = 40;
+
+            // The target frames per second (how often do we want to update / redraw the scene)
+            const targetFPS = 20;
+            
+            const minOpacity = 20;
+            const maxOpacity = 200;
+
+            // Set the dimensions of the canvas as variables so they can be used.
+            var (x1,y1, x2, y2) = this.box(#rectw,#border);
+
+            function random( min, max ) { return rand( max - min ) + min; }
+            
+            function createParticle() 
+            {
+              var size = random(particleMinSize,particleMaxSize);
+              var clr = colors[rand(colors.length)];
+              clr = Color.morph(back,clr, (size - particleMinSize ).toFloat() / (particleMaxSize - particleMinSize) );
+
+              return {
+                x : random(x1, x2),
+                y : random(y1, y2),
+                a : random(-1, 1) * 0.01,
+                xVelocity: random(-20, 20) * 0.05,
+                yVelocity: random(-10, 10) * 0.05,
+                aVelocity: random(-10, 10) * 0.001,
+                color: clr,
+                size: size,
+              };
+            }
+
+            //gfx.rectangle( 0, 0, dim, dim);          
+            
+            function moveParticle(particle) 
+            {
+              // Update the position of the particle with the addition of the velocity.
+              particle.x += particle.xVelocity;
+              particle.y += particle.yVelocity;
+              particle.a += particle.aVelocity;
+
+              // Check if has crossed the right edge
+              if (particle.x >= x2) {
+                  particle.xVelocity = -particle.xVelocity;
+                  particle.x = x2;
+              }
+              // Check if has crossed the left edge
+              else if (particle.x <= x1) {
+                  particle.xVelocity = -particle.xVelocity;
+                  particle.x = x1;
+              }
+
+              // Check if has crossed the bottom edge
+              if (particle.y >= y2) {
+                  particle.yVelocity = -particle.yVelocity;
+                  particle.y = y2;
+              }
+              
+              // check if has crossed the top edge
+              else if (particle.y <= y1) {
+                  particle.yVelocity = -particle.yVelocity;
+                  particle.y = y1;
+              }
+              
+            }
+            
+            function drawParticle(gfx,particle)
+            {
+              gfx.save();              
+              gfx.fillColor(particle.color);
+              gfx.translate(particle.x,particle.y);
+              gfx.rotate(particle.a);
+              gfx.rectangle( -particle.size / 2, -particle.size / 2, particle.size, particle.size);                                                            
+              //gfx.rectangle( particle.x - particle.size / 2, particle.y - particle.size / 2, particle.size, particle.size);                                                            
+              gfx.restore();              
+            }
+            
+            this.paintContent = function(gfx) {
+              for( var particle in particles )     
+                drawParticle(gfx,particle);
+            }
+            
+            this.animate( function() {
+
+              (x1,y1, x2, y2) = this.box(#rectw,#border);
+              
+              for( var particle in particles )
+                moveParticle(particle);
+
+              self.refresh();    
+              return 1000 / targetFPS;
+            });
+
+            // Initialize the scene
+            for( var n in particleCount )
+              particles.push(createParticle());
+
+            particles.sort( :a,b: a.size - b.size);
+
+          }
+
+        </script>
+
+
+    </head>
+    <body>
+
+      <section>
+        <img#mascot src="sciter-notes-mascot.png" />
+        <p>Hi <output(name)/>, welcome aboard!</p> 
+
+        <p>Your Sciter Notes database does not exist yet. Please choose one of options below to locate Sciter Notes file:</p>
+
+        <button#defaultlocation><text>Create database at</text><text(defloc)/></button>
+        <button#otherlocation>Create database at another location</button>
+        <button#existinglocation>Select exisiting database file</button>
+
+        <p>Check this <input|checkbox(importdocs) /> if you would like to create Doc notes with Sciter Notes documentation in your new database</p>
+ 
+      </section>
+
+    </body>
+</html>

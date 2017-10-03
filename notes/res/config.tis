@@ -1,5 +1,7 @@
 const APP_NAME = "Sciter.Notes";
 
+const DBNAME = "sciter-notes.db";
+
 function getArgv() {
   try {
     return view.argv(); // native method, defined in notes.cpp  

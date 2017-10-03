@@ -15,11 +15,17 @@ class List : Element
     PopulteNotesList(records); 
     this.value = records;
     var me = this;
-    self << event note-created { UpdateNotesList(records); me.navigateToStart(); };
-    self << event notes-filter-changed { UpdateNotesList(records); me.navigateToStart(); };
-    self << event book-selected  { UpdateNotesList(records); me.navigateToStart(); };
+
+    function resetList() { me.reset( :records: UpdateNotesList(records) ); }
+
+    self << event note-created { resetList() };
+    self << event notes-filter-changed { resetList() };
+    self << event book-selected  { resetList() };
     self << event book-updated (evt) { var book = evt.data; for(var item in me) item.onBookUpdate(book); }
     self << event tag-updated (evt) { var tag = evt.data; for(var item in me) item.onTagUpdate(tag); }
+
+    self << event events-changed(evt) {  }
+
     self << event book-assigned (evt) { 
       var data = evt.data;
       var book = data[0]; 
@@ -38,6 +44,7 @@ class List : Element
           }
         }
     }
+
   }
   property animating(v) {
     get return this.state.animating;
@@ -61,15 +68,19 @@ class NotesView : Element
   function attached() {
 
     const list = this.$(notes-list);
+    const me = this;
 
     const btnAddNew = this.$(knob#add-new-note);
 
     self << event show-note (evt) { btnAddNew.state.disabled = false; list.currentRecord = evt.data; }  
     self << event start-new-note (evt) { btnAddNew.state.disabled = true; list.currentRecord = null; }  
-    self << event note-updated (evt) { btnAddNew.state.disabled = false; list.currentRecord = evt.data; }  
+    self << event note-updated (evt) { btnAddNew.state.disabled = false; /*list.currentRecord = evt.data;*/ }  
     self << event notes-filter-changed { 
       var ln = $(input#lookup-note);
-      if( !ln.state.focus ) ln.value = filterWords.join(" ");
+      if( !ln.state.focus ) ln.value = filterWords? filterWords.join(" ") : "";
+    }
+    self << event events-status-changed (evt) {
+      me.attributes.toggleClass("has-events", evt.data.totalEvents > 0);
     }
   }
 
@@ -77,6 +88,13 @@ class NotesView : Element
     this.postEvent("start-new-note"); // relay the click as logical event
     return true; // consume click
   }
+
+  event change $(knob[name=order-toggle]) (evt,knob)
+  {
+    var on = knob.attributes["value"] == "edate";
+    setFilterEvents(on);
+    return true;
+  }  
   
   event change $(input#lookup-note) {
     this.timer(600ms, this.updateLookupText);
@@ -103,6 +121,7 @@ class ListNote : Element
         this.$(text).$content(from:<span.www>{URL.parse(urlFrom).hostname}</span>);
       else
         this.$(text).clear();
+      this.attributes.toggleClass("active-event", note.hasActiveEvent);
       this.onTagsChange(note);
     } 
   }
@@ -124,6 +143,50 @@ class ListNote : Element
     if(this.note.book === book)
       this.attributes["book-color"] = book.color || 0; 
   }
+}
 
+class EventsKnob : Element 
+{
+  this var breathing; // animating
+
+  function attached() 
+  {
+    var me = this;
+    self << event events-status-changed (evt) { me.onEventsStatusChanged(evt.data); }
+  }
+
+  function onEventsStatusChanged(desc) {
+    //desc is { startedEvents: int,  - num notes with just started events 
+    //          activeEvents: int,  - active event notes with note.startDate < now < note.endNote
+    //          totalEvents : int } - all pending events - with now < note.endNote including those in future
+
+    if( desc.startedEvents ) this.startHeartBeat();
+    if( desc.totalEvents == 0 ) 
+      this.clear();
+    else if( desc.activeEvents )
+      this.$content(<span.active>{desc.activeEvents}</span>
+                    <span.total>{desc.totalEvents}</span>);
+    else 
+      this.$content(<span.total>{desc.totalEvents}</span>);
+  }
+
+  function startHeartBeat() {
+    if(this.breathing) return;
+    this.breathing = true;
+    this.timer(1s,heartBeat);
+  }
+  // timer function
+  function heartBeat() {
+    if( !this.breathing )
+      return false; // stop
+    if( this.state.expanded ) this.state.expanded = false;
+    else this.state.expanded = true;
+    return true; // keep breathing
+  }
+
+  event click {
+    this.breathing = false;
+    this.state.expanded = false;
+  }
 
 }

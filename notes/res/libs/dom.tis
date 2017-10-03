@@ -41,7 +41,7 @@ namespace DOM
   {
     function next( el )
     {
-      var t = el.next;
+      var t = el.nextNode;
       if( t ) return t;
       while(el)
       {

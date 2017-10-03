@@ -2,9 +2,11 @@
 /* default editing style */
 
 @import url(htmlarea-widgets.css);
+@import url(activators/styles.css);
 
 html { 
   font:10pt Verdana,Helvetica,Roboto,sans-serif;
+  font-rendering-mode:snap-pixel; // so caret can be placed properly
   flow:vertical; 
   background:none;
 }

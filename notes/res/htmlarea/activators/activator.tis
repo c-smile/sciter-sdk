@@ -1,0 +1,19 @@
+namespace Activators {
+
+  class Activator: Element 
+  {
+    var all = [];
+    
+    function magicTrigger() { return ""; }  
+
+    // static method, shall return css path 
+    // function css() { return ""; }
+
+    function getMenuEntry() { return (null,null,null); }
+
+    // returns either editor or frame
+    property parentFrame(v) { get return this.root.parent; set assert false; }
+
+  }
+
+}

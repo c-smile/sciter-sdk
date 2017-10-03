@@ -24,12 +24,14 @@ input or button element marked by @default will get focus by default
 
 class PopupDialog : Element 
 {
+  this var params = {};
+  
   function show(params) 
   {
     this.params = params;
     var x = params.x || 0;
     var y = params.y || 0;
-    self.popup( this, x, y );
+    view.root.popup( self, x, y );
   }
 
   property value(v) {
@@ -41,7 +43,7 @@ class PopupDialog : Element
     var func = this.params[button.attributes["name"]];
     if( func instanceof Function) 
     {
-      if(func.call(this, button)) {
+      if(func.call(this, this.value)) {
         this.state.popup = false;
         return true;
       }

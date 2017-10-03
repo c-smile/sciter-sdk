@@ -13,7 +13,20 @@
 		49EBD8841F31558B0099EDF5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49EBD8831F31558B0099EDF5 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		491A0AA61F68970600D63865 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		491A0AA71F6898B800D63865 /* sciter-osx-64.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "sciter-osx-64.dylib"; sourceTree = "<group>"; };
 		492748921F322B5700FF0136 /* sciter-osx-main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "sciter-osx-main.mm"; path = "../../../include/sciter-osx-main.mm"; sourceTree = "<group>"; };
 		492748941F322BE000FF0136 /* notes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = notes.cpp; path = ../../notes.cpp; sourceTree = "<group>"; };
 		49EBD8771F31558B0099EDF5 /* SciterNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SciterNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -37,6 +50,7 @@
 		49EBD86E1F31558B0099EDF5 = {
 			isa = PBXGroup;
 			children = (
+				491A0AA71F6898B800D63865 /* sciter-osx-64.dylib */,
 				49EBD8791F31558B0099EDF5 /* notes */,
 				49EBD8781F31558B0099EDF5 /* Products */,
 			);
@@ -81,6 +95,7 @@
 				49EBD8731F31558B0099EDF5 /* Sources */,
 				49EBD8741F31558B0099EDF5 /* Frameworks */,
 				49EBD8751F31558B0099EDF5 /* Resources */,
+				491A0AA61F68970600D63865 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -103,7 +118,7 @@
 					49EBD8761F31558B0099EDF5 = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = 642T6M376L;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -246,14 +261,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = ../../bin.osx;
 				DEVELOPMENT_TEAM = 642T6M376L;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../include";
 				INFOPLIST_FILE = notes/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = sciter.notes;
+				PRODUCT_BUNDLE_IDENTIFIER = notes.sciter.com;
 				PRODUCT_NAME = SciterNotes;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
@@ -264,14 +279,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = ../../bin.osx;
 				DEVELOPMENT_TEAM = 642T6M376L;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../include";
 				INFOPLIST_FILE = notes/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = sciter.notes;
+				PRODUCT_BUNDLE_IDENTIFIER = notes.sciter.com;
 				PRODUCT_NAME = SciterNotes;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 			};

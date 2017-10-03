@@ -29,8 +29,8 @@ function setupKeyboardShortcutsOn(htmlarea) // shortcut kbd combinations cracker
       case [Event.VK_SUBTRACT]: cmd = "format:unindent";       break;  // CTRL+'-' on NUMPAD
 
       case [Event.VK_D]:        cmd = "format:toggle-span:code";      break;  // CTRL+D -> <code>...</code>
-      case [Event.VK_I]:        cmd = "format:toggle-span:i|em";      break;  // CTRL+I -> <em>...</em>
-      case [Event.VK_B]:        cmd = "format:toggle-span:b|strong";  break;  // CTRL+B -> <strong>...</strong>
+      case [Event.VK_I]:        cmd = "format:toggle-span:i|em";      break;  // CTRL+I -> <i>...</i>
+      case [Event.VK_B]:        cmd = "format:toggle-span:b|strong";  break;  // CTRL+B -> <b>...</b>
       case [Event.VK_U]:        cmd = "format:toggle-span:u";         break;  // CTRL+U -> <u>...</u>
       case [Event.VK_S,Event.VK_B]:  cmd = "format:toggle-span:sub"; break;  // <sub>     
       case [Event.VK_S,Event.VK_P]:  cmd = "format:toggle-span:sup"; break;  // <sup>     

@@ -151,7 +151,7 @@ Sequences.add("p,div",/^\[(\d):(\d):(\d):(\d)\]\s$/,null, function(htmlarea,care
    {
      caret = transaction.removeRange(anchor,caret); // remove sequence
      var p = caret[0].parent; // get parent <p>
-     htmlarea.selection.select(p); 
+    
 
      var cols = re[1].toInteger();
      var rows = re[2].toInteger();
@@ -165,7 +165,23 @@ Sequences.add("p,div",/^\[(\d):(\d):(\d):(\d)\]\s$/,null, function(htmlarea,care
    });
 });
 
-const reURL = /((?:https?:\/\/)([a-zA-Z-]+)(\.[a-zA-Z-]+)([\/\w\.\?#&=%-]*)\/?)\s$/; // url with space at the end
+/*Sequences.add("*",/^\{date\}\s$/,null, function(htmlarea,caret,start,end,re) 
+{
+   var anchor = [bookmark:caret[0],0,false];
+   return htmlarea.transact( function(transaction) 
+   {
+     caret = transaction.removeRange(anchor,caret); // remove sequence
+     var p = caret[0].parent; // get parent <p>
+     htmlarea.selection.select(p); 
+     const html = "<input type=event date='2017-09-28' />";
+     transaction.insertHtml(htmlarea.selection.caret,html); 
+     return true; // commit
+   });
+});*/
+
+
+
+const reURL = /((?:https?:\/\/)([a-zA-Z-]+)(\.[a-zA-Z-]+)([\/\w\.\?#&=%-\(\)]*)\/?)\s$/; // url with space at the end
 // [single space] typed after url - wrap it into <a href=url>url</a>
 Sequences.add(":not(a)",reURL,null, function(htmlarea,caret,start,end) 
 {
@@ -178,6 +194,26 @@ Sequences.add(":not(a)",reURL,null, function(htmlarea,caret,start,end)
    {
      htmlarea.selection.select(caret,anchor); // select url text
      var a = new Element("a"); a.attributes["href"] = url; // new <a href=...>
+     var (start,end) = transaction.wrap(htmlarea.selection.anchor,htmlarea.selection.caret,a); // wrap selection into it
+     htmlarea.selection.select(end); 
+     htmlarea.selection.advance(#next); // advance caret to the position where it used to be visually
+     return true; // done,commit
+   });
+});
+
+const reMail = /([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})/;
+// [single space] typed after url - wrap it into <a href=url>url</a>
+Sequences.add(":not(a)",reMail,null, function(htmlarea,caret,start,end) 
+{
+   var url = start.match(reMail)[1];
+   caret[1] -= 1; // shift pos by 1 space back
+   // anchor - starting position of the URL text
+   var anchor = [bookmark:caret[0],caret[1] - url.length + 1,false];
+
+   return htmlarea.transact( function(transaction) 
+   {
+     htmlarea.selection.select(caret,anchor); // select url text
+     var a = new Element("a"); a.attributes["href"] = "mailto:" + url; // new <a href=...>
      transaction.wrap(htmlarea.selection.anchor,htmlarea.selection.caret,a); // wrap selection into it
      htmlarea.selection.advance(#next); // advance caret to the position where it used to be visually
      return true; // done,commit

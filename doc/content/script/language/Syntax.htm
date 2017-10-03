@@ -32,7 +32,7 @@ otherwise
   <h2>Literals</h2>
   <h3>Integer literals</h3>
   <table cellspacing="1" cellpadding="3" border="0" bgcolor="black">
-    <tr valign="top">
+    <tbody><tr valign="top">
       <td bgcolor="white"><b>Pattern</b></td>
       <td bgcolor="white"><b>Example</b></td>
       <td bgcolor="white"><b>Description</b></td></tr>
@@ -51,10 +51,10 @@ otherwise
     <tr valign="top">
       <td bgcolor="white"><code>'.'</code></td>
       <td bgcolor="white">'A'</td>
-      <td bgcolor="white">Character code (integer)</td></tr></table>
+      <td bgcolor="white">Character code (integer)</td></tr></tbody></table>
   <h3>Float literals</h3>
   <table cellspacing="1" cellpadding="3" border="0" bgcolor="black">
-    <tr valign="top">
+    <tbody><tr valign="top">
       <td bgcolor="white"><b>Pattern</b></td>
       <td bgcolor="white"><b>Example</b></td>
       <td bgcolor="white"><b>Description</b></td></tr>
@@ -69,13 +69,13 @@ otherwise
     <tr valign="top">
       <td bgcolor="white"><code>-?[0-9]*\.[0-9]+[eE]-?[0-9]+</code></td>
       <td bgcolor="white">.22e-2</td>
-      <td bgcolor="white">0.0022</td></tr></table>
+      <td bgcolor="white">0.0022</td></tr></tbody></table>
   <h3>String literals</h3>
   <p>String literals are sequences of characters, enclosed by double quotes - <code>&quot;</code>, or back ticks (grave accent, character with code 0x60) - <code>`</code></p>
   <p><code>&quot;Hello world&quot;</code> and <code>`Hello world`</code> are valid string literals. The escapement symbol in string literals is the back slash - <code>\</code>.</p>
   <p>Escapement rules:</p>
   <table bgcolor="#000000" border="0" cellpadding="3" cellspacing="1">
-    <tr valign="top">
+    <tbody><tr valign="top">
       <td bgcolor="#ffffff"><strong>Sequence</strong></td>
       <td bgcolor="#ffffff"><strong>Character</strong></td></tr>
     <tr valign="top">
@@ -110,7 +110,7 @@ otherwise
       <td bgcolor="#ffffff">\4e - hexadecimal character code</td></tr>
     <tr valign="top">
       <td bgcolor="#ffffff"><code>\u[0-9a-fA-F]{4}</code></td>
-      <td bgcolor="#ffffff">\u004E - unicode character code</td></tr></table>
+      <td bgcolor="#ffffff">\u004E - unicode character code</td></tr></tbody></table>
   <p>Two or more string literals, separated by whitespaces or EOL characters, constitute a single string literal. Thus, the following two strings:</p>
   <pre>var str1 = &quot;The quick brown &quot;
            &quot;fox jumps over &quot;
@@ -128,7 +128,7 @@ var symBorder = #border;
 </pre>
   <h3>Special literals</h3>
   <table bgcolor="#000000" border="0" cellpadding="3" cellspacing="1">
-    <tr valign="top">
+    <tbody><tr valign="top">
       <td bgcolor="#ffffff"><strong>Literal</strong></td>
       <td bgcolor="#ffffff"><strong>Description</strong></td></tr>
     <tr valign="top">
@@ -142,7 +142,7 @@ var symBorder = #border;
       <td bgcolor="#ffffff">true value in logical operations. typeof <em>true</em> is #boolean</td></tr>
     <tr valign="top">
       <td bgcolor="#ffffff"><code>false</code></td>
-      <td bgcolor="#ffffff">false value in logical operations. typeof <em>false</em> is #boolean</td></tr></table>
+      <td bgcolor="#ffffff">false value in logical operations. typeof <em>false</em> is #boolean</td></tr></tbody></table>
   <h3>Array literals</h3>
   <p>Array literals allow to define (construct) arrays inline. The array literal is a list of expressions-initializers, separated by comma <code>,</code> and enclosed in <code>[</code> and <code>]</code> brackets (square brackets):</p>
   <pre>var a = [ 1, 2, 3, &quot;four&quot;, 5 ];
@@ -188,7 +188,8 @@ var symBorder = #border;
   <h3>Macro variables</h3>
   <p>There are three macro variables that can be used for logging and debugging purposes:</p>
   <ul>
-    <li><code>__FILE__</code> - name of current file;</li>
+    <li><code>__FILE__</code> - full path of current file;</li>
+		<li><code>__FOLDER__</code> - full path of current folder;</li>
     <li><code>__LINE__</code> - current line number in the file;</li>
     <li><code>__TRACE__</code> - actually is an instruction that creates current call trace snapshot as a vector of triplets. Each triplet is a vector of three elements where:</li>
     <ul>

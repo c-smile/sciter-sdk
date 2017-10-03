@@ -4,6 +4,7 @@ include "../libs/dom.tis";
 include "magicsequences.tis";
 include "shortcuts.tis";
 include "htmlarea-ext-css.tis";
+include "activators/activators.tis";
 
 const PREVIEW_WIDTH = 80;
 const PREVIEW_HEIGHT = 80;
@@ -24,6 +25,7 @@ class HtmlArea: Element
   this var note = null;
   this var isNew = true;
   this var isBlank = false;
+  this var activators = {}; // activator classes map, to trace activators state 
 
   var instance;
   
@@ -36,6 +38,7 @@ class HtmlArea: Element
 
   function loadBlank() {
     this.loadDocument(this.url("htmlarea/htmlarea-blank.htm"));
+    this.activators = {};
   }
 
   event pastehtml (evt) {
@@ -91,7 +94,7 @@ class HtmlArea: Element
       if(rq.requestUrl !like "data:*") 
         this.note.addResource(rq.requestUrl, rq.responseMimeType, rq.responseData);
       //if( rq.responseMimeType like "image/*" )
-      Tag.known("image").addItem(this.note);
+      Tag.known("image",true).addItem(this.note);
     }
   }
 
@@ -111,8 +114,8 @@ class HtmlArea: Element
 
      switch(this.sourceGenerator) 
      {
-       like "Microsoft Word *": Tag.known("word").addItem(this.note); return;  
-       like "Microsoft Excel *": Tag.known("excel").addItem(this.note); return; 
+       like "Microsoft Word *": Tag.known("word",true).addItem(this.note); return;  
+       like "Microsoft Excel *": Tag.known("excel",true).addItem(this.note); return; 
      }
 
      this.sourceGenerator = null;
@@ -122,16 +125,16 @@ class HtmlArea: Element
        switch(this.sourceUrl) {
           like "http://*":
           like "https://*": { 
-             Tag.known("web").addItem(this.note); 
+             Tag.known("web",true).addItem(this.note); 
              var domain = URL.parse(this.sourceUrl).hostname;
              this.appendHtml("<p|urlfrom><a href='" + this.sourceUrl + "'>" + domain + "</a></p>");
              this.note.updateMeta{ urlFrom: this.sourceUrl };
              break;
            }
           like "file://*.doc": 
-          like "file://*.docx": Tag.known("word").addItem(this.note); break;
+          like "file://*.docx": Tag.known("word",true).addItem(this.note); break;
           like "file://*.xls": 
-          like "file://*.xlsx": Tag.known("excel").addItem(this.note); break;
+          like "file://*.xlsx": Tag.known("excel",true).addItem(this.note); break;
           //default: 
           //  stdout.println("paste", generator, url );
        } 
@@ -266,10 +269,14 @@ class HtmlArea: Element
     };
     previewImage.destroy();
 
-    //this.postEvent("note-updated"); -- moved to DB layer
+    for(var (activator, dummy) in this.activators)
+      activator.onSaveNote(this,this.note);
+
   }
 
   function loadNote(n) {
+    this.loading = true;
+    this.activators = {};    
     this.save();
     this.note = n;
     if( n ) {
@@ -285,12 +292,17 @@ class HtmlArea: Element
       this.loadBlank();
       this.document.state.readonly = false;
     }
-    //this.state.focus = true;
+    this.loading = false;
   }
   
   // obsolete:
   function saveNoteTo(fileName) {
     return this.saveDocument(fileName);
+  }
+
+  function registerActivator(activator, attached) 
+  {
+    this.activators[activator] = true;
   }
 
   event ~click $(a[href]) (evt) {
@@ -301,12 +313,16 @@ class HtmlArea: Element
      }
   }
 
+
 }
 
-// used in note preview, applied to <frame>
+// used for note previews or for importing notes from files, applied to <frame>
 class NoteFrame : Element 
 {
+  this var activators = {}; // activator classes map, to trace activators state 
+  
   var inlineCss;
+
   // the document has issued data request
   function onRequest(rq) 
   {
@@ -327,7 +343,9 @@ class NoteFrame : Element
   }
 
   function loadNote(n) {
+    this.loading = true;    
     if( this.note = n ) this.loadDocument(n.html, "note:" + n.id);
+    this.loading = false;    
   }
 
   // saves note to file with images inline
@@ -401,7 +419,7 @@ class NoteFrame : Element
         return durl;
 
       note.addResource(src, mimetype, data);
-      Tag.known("image").addItem(note);
+      Tag.known("image",true).addItem(note);
       return src;
     }
 
@@ -475,6 +493,10 @@ class NoteFrame : Element
     return (note,action);
   }
 
+  function registerActivator(activator, attached) 
+  {
+    this.activators[activator] = true;
+  }
 
 }
 

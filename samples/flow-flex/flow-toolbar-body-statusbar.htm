@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <title>Basic window layout</title>
+        <style>
+
+          body { 
+            margin:0; 
+            background:white; 
+            size:*; // spans all space left from toolbar and statusbar
+          }
+
+          toolbar { 
+             display:block;
+             flow:horizontal;
+             background:#eee; 
+          }
+          toolbar > button { size:34dip; 
+                             foreground-repeat:no-repeat;
+                             foreground-position:50% 50%;
+                             foreground-size:16dip; }
+
+          toolbar > button.cut { foreground-image: url(sciter:cut.png); }
+          toolbar > button.copy { foreground-image: url(sciter:copy.png); }
+
+          statusbar { 
+             display:block;
+             flow:horizontal;
+             background:#f4f4f4; 
+          }
+
+          statusbar > span { padding:4dip; }
+          statusbar > span:last-child { margin-left:*; } // attached to the right 
+
+        </style>
+        
+    </head>
+
+    <toolbar><button.cut />
+             <button.copy /></toolbar>
+    <body>
+    </body>
+    <statusbar><span>left</span>
+               <span>right</span></statusbar>
+
+</html>

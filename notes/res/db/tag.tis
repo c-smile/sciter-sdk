@@ -80,10 +80,12 @@ class Tag
 
 
   // static method, returns standard "known" tag 
-  function known(name) {
+  function known(name,create = false) {
 
     function tag(name, iconId, colorId, id) 
     {
+      if(!create)
+        return null;
       var t = new Tag(name, iconId, colorId, id);
       t.kind = KIND_SYSTEM;
       db.addTag(t);
@@ -98,8 +100,8 @@ class Tag
       case "word"  : id = "3"; return db.getTag(id) || tag("word","&fa-file-word-o;",0, id);
       case "excel" : id = "4"; return db.getTag(id) || tag("excel","&fa-file-excel-o;",0, id);
       case "email" : id = "5"; return db.getTag(id) || tag("email","&fa-envelope-o;",0, id);
+      case "event" : id = "6"; return db.getTag(id) || tag("event","&fa-clock-o;",0, id);
       default: return null;
     }
   }
-
 }

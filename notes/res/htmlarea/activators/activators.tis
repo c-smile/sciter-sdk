@@ -1,0 +1,32 @@
+
+include "activator.tis";
+
+// Activators NS
+// 
+// activator is a field in note that makes it the note active 
+// 
+// All actual activators shall be included at the bottom of this file
+
+namespace Activators {
+
+  function setupActivatorsMenu(menu) {
+    var index = 0;
+    menu.clear();
+    for( var activator in Activator.all) {
+      var (caption,klass,method) = activator.getMenuEntry();
+      if(!caption) continue;
+      menu.$append(<li class={klass}><label>{caption}</label><span class="accesskey">&platform-cmd-mod;F{++index}</span></li>);
+      var li = menu.last;
+      li.exec = method;
+    }
+  }
+
+  function handleMenuClick( li, htmlarea )
+  {
+    return li.exec(li, htmlarea);
+  }
+
+}
+
+include "event.tis";
+

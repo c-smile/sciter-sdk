@@ -58,7 +58,6 @@
 @set m-checkbox {
   :root {
     behavior:check;
-    prototype: Material.Ripple url(material.tis); 
     display:block;
     width:max-content;
     line-height:1.4em;
@@ -83,7 +82,6 @@
 @set m-radio {
   :root {
     behavior:radio;
-    //prototype: Material.CheckBox url(material.tis); 
     display:block;
     width:max-content;
     line-height:1.4em;

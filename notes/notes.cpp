@@ -50,7 +50,7 @@ public:
     std::vector<sciter::value> vargs;
     for (auto& arg : sciter::application::argv())
       vargs.push_back(sciter::value(arg));
-    return sciter::value::make_array(vargs.size(), &vargs[0]);
+    return sciter::value::make_array(UINT(vargs.size()), &vargs[0]);
   }
 
   void on_new_note_hotkey() {
@@ -100,10 +100,7 @@ int uimain(std::function<int()> run ) {
   frame *pwin = new frame(needs_debugger);
 
   // note: this:://app URL is dedicated to the sciter::archive content associated with the application
-  pwin->load( WSTR("this://app/main.htm") );
-
-  //pwin->load( WSTR("file:///home/andrew/Desktop/test.htm") );
-
+  pwin->load( WSTR("this://app/boot.htm") );
 
   pwin->expand();
 

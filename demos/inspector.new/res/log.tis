@@ -59,7 +59,7 @@ class Log: Behavior
     }
     
     this.clearMsgs = function() {
-      var ed = this.last; 
+      var ed = this.last.detach(); 
       this.clear(); 
       this.append(ed);
       lastMsg = null;
