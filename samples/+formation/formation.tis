@@ -194,10 +194,10 @@ namespace formation {
       if( var filter = el.attributes["if"] ) {
         var c = parseData(filter);
         cond.push(c);
-        el.remove();
+        el.detach();
       } else {
         cond.push(null);
-        el.remove();
+        el.detach();
         break;
       }   
     }
