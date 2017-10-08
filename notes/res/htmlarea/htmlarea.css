@@ -46,7 +46,7 @@ code {
 
 dt { font-weight:bold; }
 
-:not(pre):not(code)::mark(misspell) { text-decoration:wavy underline red; }  
+:not(pre):not(code):not(a)::mark(misspell) { text-decoration:wavy underline red; }  
 
 // links in editor 
 html:not(:read-only) a:link { 
@@ -68,6 +68,7 @@ html:not(:read-only) br {
 }
 
 img { max-width:100%; }
+picture { max-width:100%; }
 
 blockquote {
   border-left:0.2em solid #84C5F4;

@@ -86,8 +86,9 @@ function setupKeyboardShortcutsOn(htmlarea) // shortcut kbd combinations cracker
         shortcutDown = false;
         sequence.length = 0;
         return true;
-      } else if( sequence.length > 1 )
-        return true; // consume CTRL+A+B+... sequences
+      } 
+      //else if( sequence.length > 1 )
+      //  return false; // consume CTRL+A+B+... sequences
     }
   }
   htmlarea << event keyup (evt) {

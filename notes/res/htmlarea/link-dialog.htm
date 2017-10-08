@@ -2,6 +2,13 @@
     <head>
         <style>
 
+
+         button[name=insert] { visibility:visible; }
+         button[name=update] { visibility:none; }
+       
+         html.for-existing button[name=insert] { visibility:none; }
+         html.for-existing button[name=update] { visibility:visible; }
+
           form {
             flow: row(label,input);
             border-spacing: 1em;
@@ -13,30 +20,43 @@
         //const RE_HTTP = /((?:https?:\/\/)?(([\da-z\\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)\/?))/;
         //const RE_MAIL = /([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})/;
 
-        var onInsert;
+        var button;
 
         function self.showWith(params) 
         {
-          onInsert = params.insert; //assert onInsert;
-
+          self.attributes.removeClass("for-existing");
           $(form).value = { text: params.onSelection ? "{selection}":params.text, url: params.url };
           $(input[name=text]).state.disabled = params.onSelection;
-
+          button = $(button[name=insert]);
+          button.state.disabled = true;
           self.show( params );
         }
+
+        function self.showFor(params) 
+        {
+          self.attributes.addClass("for-existing");
+          $(form).value = { text: params.text, url: params.url };
+          $(input[name=text]).state.disabled = false;
+          button = $(button[name=update]);
+          button.state.disabled = true;
+          self.show( params );
+        }        
 
         event change $(form)
         {
           var fields = $(form).value;
           var urlValid = RE_HTTP.test(fields.url) || RE_MAIL.test(fields.url);
-          $(button[name=insert]).state.disabled = !fields.text.trim() || !urlValid;
+          button.state.disabled = !fields.text.trim() || !urlValid;
         }
+        
+
 
         </script>
     </head>
     <body>
       <form><label>Text:</label><input|text(text) />
             <label>Address:</label><input|text(url) default /></form>
-      <footer><button(insert) disabled>Insert</button></footer>
+      <footer><button(insert) role="default-button">Insert</button>
+              <button(update) role="default-button">Update</button></footer>
     </body>
 </html>

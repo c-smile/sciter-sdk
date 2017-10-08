@@ -29,9 +29,14 @@ class PopupDialog : Element
   function show(params) 
   {
     this.params = params;
-    var x = params.x || 0;
-    var y = params.y || 0;
-    view.root.popup( self, x, y );
+
+    if(var el = params.element ) {
+      el.popup(self,2 | (8 << 16)); 
+    } else {
+      var x = params.x || 0;
+      var y = params.y || 0;
+      view.root.popup( self, x, y );
+    }
   }
 
   property value(v) {
@@ -49,6 +54,10 @@ class PopupDialog : Element
       }
     }
   }
+
+  //event keydown { return true; }
+  //event keypress { return true; }
+  //event keyup { return true; }
 
   event click $(footer button) (evt, button) {
     if( this.commit(button))

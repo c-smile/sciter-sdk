@@ -313,6 +313,74 @@ class HtmlArea: Element
      }
   }
 
+  event contextmenu $(a[href]) (evt, a) {
+     const url = a.attributes["href"];
+     if( url && !this.state.readonly ) {
+       evt.source = this.linkDialog(a);
+       return true;
+     }
+  }
+
+  function linkDialog(forElement) 
+  {
+    var dialog = loadDialog(__FOLDER__ + "link-dialog.htm");
+    var htmlarea = this;
+
+    if(forElement) 
+    {
+      var url = forElement.attributes["href"]; 
+      var text = forElement.text;
+
+      function doUpdate(fields) {
+
+        function exec(transaction) 
+        {
+          if( fields.url != url )
+            transaction.attr("href", fields.url);
+          if( fields.text != text )
+            transaction.text(forElement, fields.text);
+          this.selection.select(forElement); 
+          return true;
+        }
+        htmlarea.transact(exec,"update link"); // do the action inside undoable transaction.
+        return true; 
+      }      
+      dialog.showFor 
+      {
+        element: forElement,
+        url:url,
+        text:text,
+        update: doUpdate
+      };
+
+    } else {
+      var (x,y,w,h) = htmlarea.box(#rectw,#caret,#view);
+      var onSelection = !htmlarea.selection.isCollapsed;
+      function doInsert(fields) {
+         if( onSelection ) 
+           htmlarea.execCommand("format:apply-span:a", { href: fields.url.trim() });
+         else 
+           htmlarea.execCommand("edit:insert-html", " <a href='"+ fields.url.trim() +"'>"+ fields.text +"</a> ");
+         return true; 
+      }
+
+      dialog.showWith 
+      {
+        x: x,
+        y: y + h,
+        onSelection: onSelection,
+        insert: doInsert
+      };
+    }
+    return dialog;
+  }
+
+  event exec:insert-link (evt) {
+     this.linkDialog(null);  
+     return true;
+  }
+
+
 
 }
 

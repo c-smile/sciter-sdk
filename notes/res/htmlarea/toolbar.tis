@@ -18,31 +18,16 @@ function EditingToolbar(htmlarea,toolbar)
     if( toolbar.isVisible )
       toolbar.timer(100ms, doNotifyObservers);
   }
-
-  function showLinkDialog() {
-
-    var (x,y,w,h) = htmlarea.box(#rectw,#caret,#view);
-    var onSelection = !htmlarea.selection.isCollapsed;
-
-    //var dialog = $(popup#link);
-    var dialog = loadDialog(__FOLDER__ + "link-dialog.htm");
-    
-    function doInsert(fields) {
-       if( onSelection ) 
-         htmlarea.execCommand("format:apply-span:a", { href: fields.url.trim() });
-       else 
-         htmlarea.execCommand("edit:insert-html", " <a href='"+ fields.url.trim() +"'>"+ fields.text +"</a> ");
-       return true; 
-    }
-
-    dialog.showWith 
-    {
-      x: x,
-      y: y + h,
-      onSelection: onSelection,
-      insert: doInsert
-    };
+  
+  function showInsertPictureDialog() {
+    const filter = "Image Files|*.png;*.jpg;*.jpeg;*.gif;*.svg|All Files|*.*";
+    const defaultExt = "png";
+    const initialPath = System.path(#USER_DOCUMENTS,"/");
+    const caption = "Select picture to insert";
+    var fn = view.selectFile(#open-multiple, filter, defaultExt, initialPath, caption );
+    return fn;
   }
+
 
   // binds UI thing (e.g. toolbar button) with command|function to be executed on click
   function bind(selector, cmd, param = undefined) 
@@ -114,7 +99,7 @@ function EditingToolbar(htmlarea,toolbar)
 
   bind("button.link",  function(cmd,param,btn) {
     if( cmd == #query ) { 
-      if(this.queryCommand("format:pull-element:a") != DISABLED) {
+      if(this.queryCommand("format:remove-span:a") != DISABLED) {
         // we have <a> element already, so repurpose this button for link removal
         btn.attributes.addClass("unlink");
         btn.attributes["title"] = "Remove link";
@@ -128,11 +113,33 @@ function EditingToolbar(htmlarea,toolbar)
     }
     if( cmd == #exec ) { 
       if( btn.$is(.unlink) ) 
-        this.execCommand("format:pull-element:a");
+        this.execCommand("format:remove-span:a");
       else
-        showLinkDialog();  
+        this.execCommand("insert-link");
     }
   });
+
+  bind("button.image",  function(cmd,param,btn) {
+    if( cmd == #query ) { 
+      if(this.queryCommand("edit:insert-html") != DISABLED)
+        return AVAILABLE;
+    }
+    if( cmd == #exec ) { 
+      var pics = showInsertPictureDialog();
+      var html = "";
+      if( typeof pics == #array ) {
+        for(var pic in pics)
+          html += "<img src='" + pic + "'/>";
+      } else if( typeof pics == #string ) {
+          html += "<img src='" + pics + "'/>";
+      } else 
+        return true;
+      stdout.println("html",html);        
+      this.execCommand("edit:insert-html",html);
+      return true;
+    }
+  });
+
 
   htmlarea << event statechange { notifyObservers(); }
   htmlarea << event change { notifyObservers(); }

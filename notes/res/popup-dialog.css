@@ -1,11 +1,13 @@
 html {
   prototype: PopupDialog url(popup-dialog.tis);
-  padding:1em;
+  padding:0.5em;
   background:#f8f8f8;
   font:system;
   cursor:default;
-  border-spacing: 1em;
+  border-spacing: 0.5em;
   size:max-content;
+  border:1dip solid #ccc;
+  margin:0.5em;
 }
 
 body { margin:0; padding:1em; }
