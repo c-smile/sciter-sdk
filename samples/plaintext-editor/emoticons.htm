@@ -1,0 +1,77 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+          plaintext img { vertical-align:middle; }
+
+        </style>
+
+        <script type="text/tiscript">
+
+          function handleSmile(plaintext,caret,text,re) 
+          {
+             var sequence = re[0];
+             var anchor = [bookmark:caret[0],caret[1] - sequence.length + 1,false];
+             var imgsrc = this.img;
+
+             return plaintext.transact( function(transaction) 
+             {
+               plaintext.selection.select(caret,anchor); // select url text
+               var position = transaction.removeRange(anchor,caret); // remove
+               var insertedNodes = transaction.insertHtml(position,"<img src='"+ imgsrc +"'>");
+               position = [bookmark:insertedNodes.last,0,true];
+               plaintext.selection.select(position); // set caret on right edge of inserted image
+               return true; // done,commit
+             });
+          }
+
+          var sequences = [];
+
+          sequences.push { re: /\:\)$/, fun: handleSmile, img: "sciter:copy.png" };
+          sequences.push { re: /\:D$/, fun: handleSmile, img: "sciter:paste.png" };
+
+          function checkForReplacement(plaintext,bm)
+          {
+            var node = bm[0];
+            if(!node.isText)
+              return false;
+            var elem = node.parent;
+            var lpos = bm[1] + (bm[2] ? 1 : 0); 
+            
+            var text = node.text;
+            var start = text.substr(0,lpos);
+            var end = text.substr(lpos);
+            for( var sr in sequences ) {
+              var res = sr.re.exec(start);
+              if( !res ) continue;
+              if( sr.fun(plaintext,bm,start,res) )
+                return true; // handled 
+            }            
+          }
+
+          event change $(plaintext) (evt) {
+
+              const CHANGE_BY_INS_CHAR = 0;  // single char insertion
+              const CHANGE_BY_INS_CHARS = 1; // character range insertion, clipboard
+              const CHANGE_BY_DEL_CHAR = 2;  // single char deletion
+              const CHANGE_BY_DEL_CHARS = 3; // character range deletion (selection)
+              const CHANGE_BY_UNDO_REDO = 4;
+              const CHANGE_BY_INS_CONSECUTIVE_CHAR = 5; // single char insertion, previous character was inserted in previous position  
+              const CHANGE_BY_CODE = 6; 
+
+              if(evt.reason == CHANGE_BY_INS_CONSECUTIVE_CHAR || evt.reason == CHANGE_BY_INS_CHAR)
+                checkForReplacement(this,this.selection.caret);
+            }
+
+
+        </script>
+    </head>
+    <body>
+      Recognizes :) and :D emojis
+      <plaintext tab-size=4>Line 1
+Line 2
+Line 3
+Line 4</plaintext>    
+    </body>
+</html>

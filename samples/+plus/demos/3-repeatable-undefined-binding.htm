@@ -1,0 +1,34 @@
+<html>
+  <head>
+    <title>Plus: very basic sample</title>
+    <style>
+      @import url(../plus.css); /* the only thing needed to include Plus framework */
+      @import url(../../note.css); 
+      
+    </style>
+    
+    <script type="text/tiscript">
+  
+      namespace Data // our model
+      {  
+        var items = [];
+      }    
+      
+    </script>
+  </head>
+
+<body model="Data"> <!-- define data model we observe -->
+
+  <p>Viewing all <output(items.length) /> items</p>
+
+  <button click="items.length = 10">Show 10 items</button>
+  <button click="items.length = 0">Clear items</button>
+
+  <!-- the repeateable section -->
+  <div each="item in items">
+      <button disabled>Just a button</button> 
+  </div>
+ 
+  
+</body>
+</html>

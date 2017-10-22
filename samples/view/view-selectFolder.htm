@@ -7,7 +7,7 @@
       var out = $(pre#out);
     
       self.on("click","#select",function(){
-        var fn = view.selectFolder("Select your favorite folder");
+        var fn = view.selectFolder("Select your favorite folder" /*,"D:/" */); // uncomment last param if you need default folder
         out.text = fn || "{rejected}";
       });
       

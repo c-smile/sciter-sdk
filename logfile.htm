@@ -10,15 +10,61 @@
       <td width="60" nowrap="" valign="top" align="center">Build#</td>
       <td width="78" nowrap="" valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FFFADA">4.0.4.5428</td><td nowrap="" valign="top" align="center">07-10-2017</td><td>
+    <tr><td valign="top" bgcolor="#FFFADA">4.0.5.5482</td><td nowrap="" valign="top" align="center">22-10-2017</td><td><p>new:</p>
+					<ul><li>WebP image format support;</li>
+						<li><code>view.selectFolder(...,defaultFolder)</code> parameter;</li>
+						<li>[osx,CoreGraphics backend] RTL support and better font handling, on par with Windows implementation;</li>
+						<li>[css] + <code>@imixin</code>'s with parameters. See: <a href="https://sciter.com/forums/topic/parameters-for-mixin/">https://sciter.com/forums/topic/parameters-for-mixin/</a> and sample sdk/samples/css++/@mixin-with-params.htm</li>
+						<li>tiscript - standalone script compiler and&nbsp;VM, now on MacOS and Linux.
+</li>
+						</ul>
+					<p>fixes:</p>
+					<ul><li><code>&lt;input|text&gt;</code> - selects all text if got focus by TAB navigation;</li>
+						<li><code>&lt;input|masked&gt;</code> fix of value retrieval;</li>
+						<li><code>&lt;table&gt;</code>'s, fix of dynamic update of cell geometry: <a href="https://sciter.com/forums/topic/tds-width-not-work/">https://sciter.com/forums/topic/tds-width-not-work/</a>&nbsp;</li>
+						<li>[VM] GC/BrokenHeart issue in CsEventObjectFire;</li>
+						<li>[Windows] more responsive animations;</li>
+						<li>marquee, fix of dynamic behavior update;</li>
+						<li>Fix of <code>Element.text = &quot;something&quot;;</code> when element has behavior attached;</li>
+						<li>Fix of <code>Element.clone()</code> to preserve :disabled and :readonly state flags;</li>
+						<li>[+plus] allowing Repetable to be bound with undefined elements of array;</li>
+						<li>[css] fix of <code>:empty:disabled</code> state combination handling.</li>
+						<li>[richtext] AV on deletion in empty &lt;htmlarea&gt;</li>
+						<li><code>&lt;select|dropdown&gt;</code> event <code>change</code> generation fix (popup closed without changing selection);</li>
+						<li>+ cursor: copy, drag-copy, drag-move</li></ul></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.0.4.5428</td><td nowrap="" valign="top" align="center">07-10-2017</td><td>
 					
 					<p>new:</p>
 					<ul><li>[css] nested mixin support, see: https://sciter.com/forums/topic/nesting-mixin/</li></ul><p>fixes:</p><ul>
+						
+						
+						
+						
+						
+						
+						
 						<li>[richtext/plaintext] fix of keyboard handling when popup is present.</li><li>[notes] Insert image button functionality.</li><li><code>element.execCommand(&quot;edit:insert-html&quot;, html)</code> fix for single elements.</li><li>CTRL/CMD+RIGHT/LEFT in richtext and plaintext.</li><li>fix of <code>&lt;plaintext&gt;</code> empty strings while copy-pasting.</li><li>[popup] fix of closing popup while click on scrollbar.</li><li>[regression] popup positioning fix.</li><li>[+formation] repeatable fix.</li><li>[regression] fix of inline span styling of <code>&lt;a&gt;</code>'s, colorizer samples, etc.</li><li>[textarea] support of tabs in <code>ta.insertText(&quot;\t&quot;);</code></li></ul></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.0.4.5413</td><td nowrap="" valign="top" align="center">02-10-2017</td><td><p>new:&nbsp;</p>
 					<ul><li>CTRL+INSERT (copy) and SHIFT+INSERT (paste) are back.&nbsp;</li>
 						</ul>
 					<p>fixes:</p>
 					<ul>
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
 						<li><p>[DOM,script] forcing deletion of html::element instance on removed elements (Element.remove(), Element.clear(), etc). Use Element.detach() if you want DOM element to be removed from DOM tree but preserved from deletion.</p><p>NOTE: this may affect existing code. plus.tis and vlist.tis are updated to use template.detach() in repeatables.</p></li><li>[drawing] fix of text color used while drawing of floats and other edge cases.&nbsp;</li>
 						<li>[svg] support of opacity as attribute.</li>
 						<li>fix of AV in <code>element.timer()</code> when the function is called on deleted element.</li>
@@ -103,8 +149,7 @@
 						<li>[script,storage] Fix of handling record deletion under iterator.</li>
 						<li>[script,storage.Index] + method <code>clear()</code> to remove all elements from index.</li><li>input|number focus handling fix.</li><li>[css] support of font: system, MyAwesome, sans-serif; constructs.</li><li>STATIC_LIB + plain C header compatibility.</li><li>[css] position:absolute element, width calculation fix.</li><li>[API] Generating <code>event_handler::detached()</code> call on window destruction (if it has DOM handlers set).</li>
 						<li>[API] <code>sciter::image::load()</code> implementation.</li><li>fix of ellipsis rendering.</li><li><code>&lt;frame|pager&gt;</code> fixes.</li><li>regression fix of <code>DOCUMENT_COMPLETE</code> event generation, introduced in r5273.</li><li>[win] fix of AV in samples/dialogs+windows/windowed-element.htm</li><li><p>[DOM, <code>&lt;table&gt;</code>], parser forces <code>&lt;tbody&gt;</code> insertion for <code>&lt;tr&gt;</code> containment (if not provided).<b>&nbsp;</b></p><p><b>Note:</b>&nbsp; could be a&nbsp;breaking change if selectors like: <code>table &gt; tr &gt; td</code> are used (to fix it use: table &gt; tbody&gt; tr &gt; td )&nbsp;</p></li><li>[richtext] + table editing commands: insert/delete row/column, merge cell range, split spanned cell.</li>
-						<li>[gtk] far east languages/fonts rendering.</li><li>[context menus] fix of getting focus back, see : <a href="https://sciter.com/forums/topic/input/">https://sciter.com/forums/topic/input/</a>&nbsp;</li><li>[win] Fix of crash on ALT+ENTER
-.
+						<li>[gtk] far east languages/fonts rendering.</li><li>[context menus] fix of getting focus back, see : <a href="https://sciter.com/forums/topic/input/">https://sciter.com/forums/topic/input/</a>&nbsp;</li><li>[win] Fix of crash on ALT+ENTER.
 </li><li>[win] fix of &quot;D3DGear bug&quot; - crash when D3DGear is running.</li><li><code>cr/lf</code> handling in plaintext editing.</li><li>Fix of click on <code>&lt;label&gt;</code> when bound input&nbsp;is disabled.&nbsp;</li><li>[tooltips] - better tooltips handling - now tooltip gets removed only when mouse leaves tooltip's owner element.&nbsp;</li><li>[osx] CMD+A handling fix.</li><li>[pager] fix of <code>Pager.onRequest()</code> handling.</li><li>[css] <code>min/max-width: 100%</code> fix.</li><li><code>&lt;select|dropdown&gt;</code>, fix of &quot;change&quot; event generation when popup is shown. &quot;change&quot; is postponed until popup dismissal.</li><li>[editing] fix of <code>VK_LEFT/VK_RIGHT</code> handling.</li><li>more responsive handling of set focus on element.</li><li>[editing] fix of surrogate pairs handling.</li>
 						<li>[textarea] fox of selection by mouse handling.</li>
 						<li>[textarea, edit] fix of dynamic @novalue handling</li>

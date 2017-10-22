@@ -6,7 +6,7 @@
     
      function self.ready() {
 
-        function getRemoteTextTask(url) 
+        async function getRemoteTextTask(url) 
         {
           try {
             var text = await view.request { url: url, output: #string };

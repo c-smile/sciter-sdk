@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+
+    @mixin LIKE-BUTTON(basecolor) 
+    {
+      behavior:button;
+      background: linear-gradient(top, tint(basecolor,+0.3), basecolor, tint(basecolor,-0.4));
+      color: #ffffff;
+      width:max-content;
+      font-size: 20dip;
+      text-decoration: none;
+      border-radius: 0.5em;      
+      padding: 0.4em 0.8em 0.4em 0.8em;
+    }
+    
+    @mixin LIKE-BUTTON-HOVER(basecolor)  {
+      background: linear-gradient(top, tint(basecolor,+0.5), tint(basecolor,+0.25), basecolor);
+      color: #fffaf0;
+    }
+   
+    div { @LIKE-BUTTON(#f00); margin:1em; }
+    div:hover { @LIKE-BUTTON-HOVER(#f00); }
+    
+    a { @LIKE-BUTTON(#00f); display:inline-block; }
+    a:hover { @LIKE-BUTTON-HOVER(#00f); }
+
+
+
+    </style>
+    <script type="text/tiscript"></script>
+  </head>
+<body>
+
+  <h2>Demo of Sciter's @mixin CSS feature</h2>
+
+  <div>test</div>
+  
+  And <a>&lt;a&gt; based</a> button;
+  
+  <section>long long long text long long long text long long long text</section>
+
+</body>
+</html>

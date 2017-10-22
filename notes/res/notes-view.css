@@ -64,7 +64,9 @@ notes-list > li caption {
   //white-space: nowrap;
   //text-overflow:ellipsis;
   overflow: hidden;
-  size:*;
+  width:*;
+  line-height:1.1em;
+  height:3.3em;
 }
 
 notes-list > li text {
@@ -72,7 +74,9 @@ notes-list > li text {
   white-space: nowrap;
   text-overflow: ellipsis;
   width:*;
-  height:max-content;
+  line-height:1.1em;
+  height:1.2em;
+  //height:max-content;
 }
 
 notes-list > li text > span.www {

@@ -26,8 +26,13 @@
         font-style: italic;
         src: url("fonts/Roboto-BoldItalic.ttf");
       }
+
+      body { font:system; }
       
-      p { font-family: Roboto, sans-serif; font-size: 12pt; }
+      p { font-family:Roboto, sans-serif; font-size: 12pt; }
+
+      
+
     
     </style>
     <script type="text/tiscript"></script>
@@ -35,6 +40,13 @@
 <body>
 
   <p>Test of Roboto font: <i>italic</i>, <b>bold</b>, <i><b>bold-italic<b></i></p>
+
+  <svg width="500" height="40" viewBox="0 0 500 40" style="border:1dip solid">
+    <text x="0" y="35" style="font-family:Roboto; font-size:12pt; font-weight:bold; width:max-content">
+      Test of Roboto font
+    </text>
+  </svg>
+
 
 </body>
 </html>

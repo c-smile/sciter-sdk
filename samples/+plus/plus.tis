@@ -364,7 +364,8 @@ const Plus = function() {
             return; // record already bound with the DOM
           }  
           domitem.remove(); 
-          Object.removeObserver.call(elval, rqRenderList);
+          if(elval !== undefined && elval.removeObserver)
+            elval.removeObserver(rqRenderList);
         }
         //stdout.println("appendRepeatableItem", domItemIdx);
         domitem = template.clone();
@@ -398,8 +399,9 @@ const Plus = function() {
         while( thing.length > seqNo ) {
           var domitem = thing.last;
           var elval = domitem.$model[nitem]; 
-          domitem.remove(); 
-          Object.removeObserver.call(elval, rqRenderList);
+          if(elval !== undefined && elval.removeObserver)
+            elval.removeObserver(rqRenderList);
+          domitem.remove();          
         }
         if(hasBoundValue) // after rendering <select> items we need to reset value to match new options
           that.postEvent("set-value-postfactum.plus");

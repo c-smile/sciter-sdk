@@ -172,12 +172,12 @@ class EventsKnob : Element
 
   function startHeartBeat() {
     if(this.breathing) return;
-    this.breathing = true;
+    this.breathing = 20; // 10 cycles
     this.timer(1s,heartBeat);
   }
   // timer function
   function heartBeat() {
-    if( !this.breathing )
+    if( --this.breathing == 0 )
       return false; // stop
     if( this.state.expanded ) this.state.expanded = false;
     else this.state.expanded = true;
@@ -185,7 +185,7 @@ class EventsKnob : Element
   }
 
   event click {
-    this.breathing = false;
+    this.breathing = 0;
     this.state.expanded = false;
   }
 

@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+
+    @mixin LIKE-BUTTON(basecolor) 
+    {
+      behavior:button;
+      background: linear-gradient(top, tint(basecolor,+0.3), basecolor, tint(basecolor,-0.4));
+      width:max-content;
+      font-size: 20dip;
+      text-decoration: none;
+      border-radius: 0.5em;      
+      padding: 0.4em 0.8em 0.4em 0.8em;
+    }
+    
+    @mixin PRIMARY-BUTTON { @LIKE-BUTTON(#007bff); color:#fff; }
+    @mixin SECONDARY-BUTTON { @LIKE-BUTTON(#868e96); color:#fff; }
+    @mixin WARNING-BUTTON { @LIKE-BUTTON(#ffc107); color:#000;}
+   
+    div { @PRIMARY-BUTTON; margin:1em; }
+    
+    a.btn-primary { @PRIMARY-BUTTON; display:inline-block; }
+    a.btn-secondary { @SECONDARY-BUTTON; display:inline-block; }
+    a.btn-warning { @WARNING-BUTTON; display:inline-block; }
+
+
+    </style>
+    <script type="text/tiscript"></script>
+  </head>
+<body>
+
+  <h2>Demo of Sciter's @mixin CSS feature</h2>
+
+  <div>test</div>
+  
+  And &lt;a&gt; like buttons <a.btn-primary>primary</a> <a.btn-secondary>secondary</a> <a.btn-warning>warning</a> 
+
+
+</body>
+</html>
