@@ -226,7 +226,7 @@ const Plus = function() {
   const CLASS_RE = /(.*)\{\{(([-_a-z0-9]+) *\:)? *(.+)\}\}(.*)/i;
   //const CLASS_RE = /(.*)\{\{([-_a-z0-9]+)(\:)+(.+)\}\}(.*)/i;  
   
-  function ClassTerminal() {
+  function doClassTerminal() {
     var model = this.$model || thisModel(this);
     var thing = this; // the DOM thing
     var classattr = this.@["class"];
@@ -248,16 +248,19 @@ const Plus = function() {
     
     function classUpdater(thing,v) {
       thing.post(function() {
-        if( cname ) {           // case A 
-          //stdout.println("ClassTerminal case A", cname, v || false); 
+        if( cname )            // case A 
           thing.@.toggleClass(cname, v || false);  
-        }
         else if( sname != v )  // case B
           thing.@.removeClass(sname); thing.@.addClass(sname = v);  
       }, true);
-      //stdout.println("classUpdater", thing, v);            
     }
     setupTerminalBinding(model,thing,expr,false,classUpdater); 
+  }
+
+  function ClassTerminal() {
+    // due to possible nested templates (demos/F-tree-filtering.htm)
+    // processing needs to be postponed as it modifies @class.
+    this.post(doClassTerminal);
   }
   
   function AttrTerminal(attrname) {
