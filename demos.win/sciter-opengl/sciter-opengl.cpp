@@ -70,7 +70,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		else /*if (needsDrawing)*/ {
 			needsDrawing = false;
 
-      //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Clear the screen and depth buffer
 		
 			/*{
 				// draw background layer
@@ -85,6 +84,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			  ctx->mainGLRC = wglGetCurrentContext();
 			  sciter::thread(opengl_thread, ctx);
 			}
+
+      //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Clear the screen and depth buffer
 
 			ctx->event_draw.signal();
 			ctx->event_draw_complete.wait();
@@ -196,7 +197,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     switch (message)
     {
-	case WM_CREATE:
+	  case WM_CREATE:
 		{
 			SciterSetOption(hWnd, SCITER_SET_DEBUG_MODE, TRUE);
 			// 2. setup callback (resource loading, etc):

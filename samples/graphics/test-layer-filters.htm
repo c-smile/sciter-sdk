@@ -1,0 +1,52 @@
+<html>
+    <head>
+       <style type="text/css">
+          div#container {
+            size : 200dip;
+            background-color: yellow;
+            border-radius:10dip;
+          }
+          </style>
+           <script type="text/tiscript">
+              function self.ready() 
+              {
+
+                var canvas = $(#container);
+
+                const blurFilter = [blur:5dip]; // CSS: blur(5dip);
+                const dropShadowFilter = [#drop-shadow: 10dip, 10dip, 10dip, rgb(0,0,0)]; // CSS: drop-sahdow(...);
+
+                var filter = dropShadowFilter; 
+
+                $(form) << event change  {
+                  if(this.value.filter == "blur") 
+                    filter = blurFilter;
+                  else 
+                    filter = dropShadowFilter;
+                  canvas.refresh();
+                }
+              
+                function paint(gfx) {
+                   gfx.pushLayer(#inner-box,filter);
+                   gfx.fillColor(color(200,0,0));
+                   gfx.ellipse(130dip, 130dip, 50dip);
+                   gfx.fillColor(color(0,200,0));
+                   gfx.star(80dip, 80dip, 70dip, 35dip, 0.0, 5);
+                   gfx.popLayer();
+                }
+
+                canvas.paintContent = paint;
+                canvas.refresh();
+            }
+          </script>
+        </head>
+        <body>
+          <p><code>gfx.pushLayer(..., filter);</code> demo.</p>
+          <p>The star and circle should be on the same layer and the layer gets drawn with:</p>
+          <form>
+            <button|radio(filter) value="drop-shadow" checked>drop shadow</button> or 
+            <button|radio(filter) value="blur">blur</button>
+          </form>
+          <div id="container"></div>
+     </body>
+</html>

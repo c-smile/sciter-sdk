@@ -15,18 +15,16 @@
 </pre>
   <dl>
     <dt>Where:</dt>
-    <dd><em>&lt;function-name&gt;</em> is a function name, either: simple&nbsp;<em>&lt;nmtoken&gt;</em> , or<br/>compound name: <em>&lt;nmtoken1&gt;</em> [ <code>.</code> <em>&lt;nmtoken2&gt;</em> [ <code>.</code> <em>&lt;nmtoken3&gt;</em> [ <code>.</code> <em>&lt;nmtokenN&gt;</em> ]]] <sup><a href="#fn__1" name="fnt__1" id="fnt__1" class="fn_top">1)</a></sup><br/><em>&lt;parameters&gt;</em> is a list of formal function parameters:<br/>[<code> </code><em>&lt;parameter-name1&gt;</em> [ <code>,</code> <em>&lt;parameter-name2&gt;</em> [ <code>,</code> ... <em>&lt;parameter-nameN&gt;</em> ]]]</dd></dl>
+    <dd><em>&lt;function-name&gt;</em> is a function name, either: simple&nbsp;<em>&lt;nmtoken&gt;</em> , or<br/>compound name: <em>&lt;nmtoken1&gt;</em> [ . <em>&lt;nmtoken2&gt;</em> [ . <em>&lt;nmtoken3&gt;</em> [ . <em>&lt;nmtokenN&gt;</em> ]]] <sup><a href="#fn__1" name="fnt__1" id="fnt__1" class="fn_top">1)</a></sup><br/><em>&lt;parameters&gt;</em> is a list of formal function parameters:<br/>[<em>&lt;parameter-name1&gt;</em> [ , <em>&lt;parameter-name2&gt;</em> [ , ... <em>&lt;parameter-nameN&gt;</em> ]]]</dd></dl>
+  
   <h2><a name="anonymous-functions" id="anonymous-functions">Anonymous functions</a></h2>
   <p>Anonymous functions can be declared in-place by using the following forms:</p>
   <p>Classic JavaScript form:</p>
-  <pre>function ( &lt;parameters&gt; ) { &lt;statements&gt; } 
-</pre>
+  <pre>function ( &lt;parameters&gt; ) { &lt;statements&gt; }</pre>
   <p>Single expression lambda function form:</p>
-  <pre>: &lt;parameters&gt; : &lt;statement&gt;
-</pre>
+  <pre>: &lt;parameters&gt; : &lt;statement&gt;</pre>
   <p>Block lambda function form:</p>
-  <pre>: &lt;parameters&gt; { &lt;statements&gt; }
-</pre>
+  <pre>: &lt;parameters&gt; { &lt;statements&gt; }</pre>
   <p>Nested functions (functions inside of other functions) are allowed.</p>
 	<h2>Async functions</h2>
 	<pre><b>async function </b>( &lt;parameters&gt; ) 
@@ -42,9 +40,9 @@
   (&lt;statement&gt; | &lt;yield-statement&gt;)* 
 }
 </pre>
-	<p>Generator function is used in <code>for(var x in <i>generator</i>)</code>&nbsp; statement. Generators emit values by using&nbsp;<b>yield</b> statements.</p>
+	<p>Generator function is used in for(var x in <i>generator</i>)&nbsp; statement. Generators emit values by using&nbsp;<b>yield</b> statements.</p>
   <h2><a name="event-functions" id="event-functions">Event functions</a></h2>
-  <p>Event handling function is a variant of normal function but function name given as a string. Instead of <code>function</code> event functions are declared with <code>event</code> keyword:</p>
+  <p>Event handling function is a variant of normal function but function name given as a string. Instead of function event functions are declared with event keyword:</p>
   <pre>event name[.namespace] [$(selector)]  [( [eventObj [,element] ) ]
 {
   //... event handling function body
@@ -61,14 +59,14 @@
 </em> &nbsp;is a CSS selector. If provided, filters only events coming from satisfying DOM elements, optional.
 </li>
 		<li>call parameters are optional, if provided may contain one or two parameters:<ol>
-        <li><code>eventObj
-</code> is a name of parameter receiving reference to instance of Event object defining details of the event. Could be any valid name like: <em>evt
+        <li>eventObj
+ is a name of parameter receiving reference to instance of Event object defining details of the event. Could be any valid name like: <em>evt
 </em>, <em>eo
 </em> or <em>event
 </em>.
 </li>
-        <li><code>element
-</code> is a name of parameter receiving reference of DOM element.
+        <li>element
+ is a name of parameter receiving reference of DOM element.
 </li>
 </ol>
 </li>
@@ -83,24 +81,18 @@
 </h3>
   <p>Some parameters in the function declaration may have the default value defined, for example:
 </p>
-  <pre class="code tiscript"><code><code>function Foo(a, b, c = 12)
+  <pre class="code tiscript">function Foo(a, b, c = 12)
 {
   return a + b + c;
 }
-</code>
-</code>
 </pre>
   <p>Such a function can be called with either two:
 </p>
-  <pre class="code tiscript"><code><code>var r1 = Foo(1, 2);    // r1 = 15
-</code>
-</code>
+  <pre class="code tiscript">var r1 = Foo(1, 2);    // r1 = 15
 </pre>
   <p>or three actual parameters:
 </p>
-  <pre class="code tiscript"><code><code>var r2 = Foo(1, 2, 3); // r2 = 6
-</code>
-</code>
+  <pre class="code tiscript">var r2 = Foo(1, 2, 3); // r2 = 6
 </pre>
   <p>The parameter with the predefined value must not have non-optional parameters to its right in the parameter list. In other words, only the last (or all) parameters can have default values.
 </p>
@@ -111,117 +103,60 @@
 </p>
   <p>There are situations when you need to define functions with the number of parameters unknown upfront. Such functions can be declared as:
 </p>
-  <pre class="code tiscript"><code><code><code>function
-</code> Bar(a, b, rest..)
+  <pre class="code tiscript">function Bar(a, b, rest..)
 {
-  <code>var
-</code> total = a + b;
-  <code>f
-</code>or (<code>var
-</code> n <code>in
-</code> rest) total += n;
-  <code>return
-</code> total;
+  var total = a + b;
+  for (var n in rest) 
+    total += n;
+  return total;
 }
-</code>
-</code>
 </pre>
-  <p>At runtime, the variable <code>rest
-</code> will contain an array with actual parameters passed into the function. So, after
+  <p>At runtime, the variable rest
+ will contain an array with actual parameters passed into the function. So, after
 </p>
-  <pre class="code tiscript"><code><code><code>var
-</code> r1 = Bar(1, 2, 3, 4);
-</code>
-</code>
+  <pre class="code tiscript">var r1 = Bar(1, 2, 3, 4);
 </pre>
-  <p><code>r1
-</code> will contain value <code>10
-</code>, and after
+  <p>r1
+ will contain value 10
+, and after
 </p>
-  <pre class="code tiscript"><code><code><code>var
-</code> r2 = Bar(1, 2);
-</code>
-</code>
+  <pre class="code tiscript">var r2 = Bar(1, 2);
 </pre>
-  <p><code>r2
-</code> will contain value <code>3
-</code>
+  <p>r2
+ will contain value 3
+
 </p>
-  <h2>Stringizer functions
-</h2>
-  <p>Stringizer function is a normal function or method with the name starting from '<code>$
-</code>' (dollar) sign.
-</p>
-  <p>While parsing call of such a function tiscript treats everything inside '<code>(
-</code>' and '<code>)
-</code>' as a literal string. Example:
-</p>
-  <pre><code><code><code>var
-</code> bodyDiv = self.$( div#body );
-</code>
-</code>
-</pre>
-  <p>Such a call is a direct equivalent of the following:
-</p>
-  <pre><code><code><code>var
-</code> bodyDiv = self.$( &quot;div#body&quot; );
-</code>
-</code>
-</pre>
-  <p>If text inside '<code>(
-</code>' and '<code>)
-</code>' &nbsp;contains unpaired bracket symbols like &nbsp;&nbsp;'<code>)
-</code>' and '<code>}
-</code>' &nbsp;such symbols have to be escaped as <code>\)
-</code> &nbsp;and <code>\}
-</code>.
-</p>
-  <h3>Stringizer parameters
-</h3>
-  <p>The text text inside '<code>(
-</code>' and '<code>)
-</code>' can contain so called tiscript code injections - sequences of tiscript code that needs to be exexucted and its string result to be inserted inline. To include such a code inside the string it has to be enclosed into '<code>{
-</code>' and '<code>}
-</code>' brackets. Example:
-</p>
-  <pre><code><code>var n = 3;
-<code>var
-</code> nthDiv = self.$( div:nth-child(<code>{ n }
-</code>) );
-</code>
-</code>
-</pre>
-  <p>The $() call above will be translated by the parser into the following:
-</p>
-  <pre><code><code><code>var
-</code> nthDiv = self.$( <code>&quot;div:nth-child(&quot; 
-</code>, n , <code>&quot;)&quot;
-</code> );
-</code>
-</code>
-</pre>
+  <h2 id="Stringizer">Stringizer functions</h2>
+  <p>Stringizer function is a normal function or method with the name starting from '$' (dollar) sign.</p>
+  <p>While parsing call of such a function tiscript treats everything inside '(' and ')' as a literal string. Example:</p>
+  <pre>var bodyDiv = self.$( div#body );</pre>
+  <p>Such a call is a direct equivalent of the following:</p>
+  <pre>var bodyDiv = self.$( &quot;div#body&quot; );</pre>
+  <p>If text inside '(' and ')' &nbsp;contains unpaired bracket symbols like &nbsp;&nbsp;')' and '}' &nbsp;such symbols have to be escaped as \) &nbsp;and \}.</p>
+  <h3>Stringizer parameters</h3>
+  <p>The text inside '(' and ')' can contain so called tiscript code injections - sequences of tiscript code that needs to be executed and its string result to be inserted inline. To include such a code inside the string it has to be enclosed into '{' and '}' brackets. Example:</p>
+  <pre>var n = 3; 
+var nthDiv = self.$( div:nth-child({ n }) );</pre>
+  <p>The $() call above will be translated by the parser into the following:</p>
+  <pre>var nthDiv = self.$( &quot;div:nth-child(&quot;, n , &quot;)&quot; );</pre>
   <h3>Defining custom stringizer functions
 </h3>
   <p>Here is real life example of the stringizer function that can be used in Sciter for inserting HTML fragments:
 </p>
-  <pre><code><code>function Element.$append( params.. ) // accepts html fragments with inclusions as params vector
+  <pre>function Element.$append( params.. ) // accepts html fragments with inclusions as params vector
 {
   for( var i = 1; i &lt; params.length; i += 2 ) // each odd parameter is an inclusion - result of the correspondent { ... } expression.
     params[i] = params[i].toHtmlString();     // convert our inclusion into escaped HTML string for safety.
   this.insert( params.join(&quot;&quot;) );             // combine all params into single string and call Element.insert(html)
                                               // method of the DOM element in Sciter.
 }
-</code>
-</code>
 </pre>
   <p>Having such function in place we can use it now as:
 </p>
-  <pre><code><code>var arr = [1,2,3];
+  <pre>var arr = [1,2,3];
 var table = self.$( table#some );
 for( var n in arr )
   table.$append ( &lt;tr&gt;&lt;td&gt;Cell #{n}&lt;/td&gt;&lt;/td&gt; );
-</code>
-</code>
 </pre>
   <p>Code above will insert three rows/cells with texts: &quot;Cell #1&quot;, &quot;Cell #2&quot; and &quot;Cell #3&quot; into the table. Pretty convenient, isn't it?
 </p>
@@ -229,21 +164,17 @@ for( var n in arr )
 </h2>
   <p>If some function accepts single parameter-object then it can be called omitting '(' and ')' brackets like this:
 </p>
-  <pre><code><code>  foo { one:1, two:2 }
-</code>
-</code>
+  <pre>  foo { one:1, two:2 }
 </pre>
   <p>that is an exact equivalent of this standard JavaScript call:
 </p>
-  <pre><code><code>  foo ({ one:1, two:2 })
-</code>
-</code>
+  <pre>  foo ({ one:1, two:2 })
 </pre>
   <hr/>
   <p><sup><a href="#fnt__1" id="fn__1" name="fn__1">1)
 </a>
-</sup> Declaration of functions with compound names is a short form for the expression:<br/><code>name1.name2.name3. ... .nameN = function( &lt;parameters&gt; ) { &lt;statements&gt; }
-</code>
+</sup> Declaration of functions with compound names is a short form for the expression:<br/>name1.name2.name3. ... .nameN = function( &lt;parameters&gt; ) { &lt;statements&gt; }
+
 </p>
 </body>
 </html>

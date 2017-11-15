@@ -160,22 +160,37 @@
                ReferencedContainer = "container:../../notes/osx/notes.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "498105741F9C36AC00EDF553"
+               BuildableName = "tiscript"
+               BlueprintName = "tiscript"
+               ReferencedContainer = "container:../../../engine/tiscript/terrascript/tiscript.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "495189EE18DF683800844B99"
-            BuildableName = "sciter.app"
-            BlueprintName = "sciter"
-            ReferencedContainer = "container:sciter.xcodeproj">
+            BlueprintIdentifier = "49EBD8761F31558B0099EDF5"
+            BuildableName = "SciterNotes.app"
+            BlueprintName = "notes"
+            ReferencedContainer = "container:../../notes/osx/notes.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -185,6 +200,7 @@
       buildConfiguration = "Release"
       selectedDebuggerIdentifier = ""
       selectedLauncherIdentifier = "Xcode.IDEFoundation.Launcher.PosixSpawn"
+      language = ""
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"

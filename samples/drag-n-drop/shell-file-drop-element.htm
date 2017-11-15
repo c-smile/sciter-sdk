@@ -1,0 +1,76 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+      
+      body {
+        prototype: FileDropZone;
+      }
+      body.active-target { background:gold; }
+
+      popup { background: orange; size:max-content;}
+
+
+    </style>
+    <script type="text/tiscript">
+    
+    class FileDropZone : Element 
+    {
+      event dragenter (evt) 
+      {
+        if(evt.draggingDataType == #file)
+        {
+          this.attributes.addClass("active-target");
+          var fn = evt.dragging;
+          this.popup = $(popup);
+          this.popup.$(span).text = fn;
+
+          return true;
+        }
+      }  
+
+      event dragleave (evt) 
+      {
+        this.attributes.removeClass("active-target");
+        this.popup.move();
+        return true;
+      }  
+
+      event drag (evt) 
+      {
+        if(evt.draggingDataType == #file)
+        {
+          this.popup.move(evt.xView + 32,evt.yView + 32, #view, #detached-topmost-window );
+          return true;
+        }
+      }  
+
+      event drop (evt) 
+      {
+        if(evt.draggingDataType == #file)
+        {
+          this.attributes.removeClass("active-target");
+          this.popup.move();
+          //var fn = evt.dragging;
+          //view.msgbox(#information, String.printf("Dropped:%V",fn));
+          return true;
+        }
+      }  
+      
+    }
+    </script>
+
+
+  </head>
+<body>
+
+  <h2>IDropTarget demo, D&amp;D files from Windows Shell to DOM elements</h2> 
+
+  <p>Drop your files here</p>
+
+  <popup disabled>
+    filename:<span.fn/>
+  </popup>
+
+</body>
+</html>

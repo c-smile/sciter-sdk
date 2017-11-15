@@ -10,7 +10,40 @@
       <td width="60" nowrap="" valign="top" align="center">Build#</td>
       <td width="78" nowrap="" valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FFFADA">4.0.5.5482</td><td nowrap="" valign="top" align="center">22-10-2017</td><td><p>new:</p>
+    <tr><td valign="top" bgcolor="#FFFADA">4.0.5.5520</td><td nowrap="" valign="top" align="center">14-11-2017</td><td><p>new:</p>
+					<ul><li>[osx] tiscript - standalone script executable.</li>
+						<li>[CSS] support of <code>currentcolor</code> color value https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#currentColor_keyword;</li>
+						<li>mouse handling by scroll-indicator - it works now as normal scrollbar that is rendered on top of content.&nbsp;</li>
+						<li>css selector shortcut: recognizes <code>input(foo)</code> selector as <code>input[name=&quot;foo&quot;]</code>&nbsp;</li>
+						<li><code>&lt;table&gt;</code>, support of arbitrary block elements inside <code>&lt;tr&gt;</code>, see: /sdk/samples/flow-flex/flow-table-plus.htm&nbsp;</li>
+						<li><code>Element.update(callback, transitionParams)</code>, supports transitionParams parameter, see: /sdk/samples/effects/animated-content-change.htm</li>
+						<li><code>Graphics.pushLayer(...,filter);</code> - CSS filter: drop-shadow, blur, saturation, etc. See: /sdk/samples/graphics/test-layer-filters.htm
+</li><li>[script] switch statement - pattern  
+matching: <pre>  switch(v) {
+   case &lt;literal&gt; : ... break;
+   like &lt;regexp&gt; : ... break;
+   like {...} : ... break;
+   like [...] : ... break;
+   instanceof Integer: ... break;
+   in [...]: ... break;
+  }</pre></li>
+						</ul>
+					<p>fixes:</p>
+					<ul><li>[CSS] box-shadow, drawing optimization.</li>
+						<html> fix</html><li>fix of <code>Element.text = &quot;val&quot;;</code> implementation;</li>
+						<li>fix CSS filter bug: <a href="https://sciter.com/forums/topic/css3-filters-bug/">https://sciter.com/forums/topic/css3-filters-bug/</a>&nbsp;</li>
+						<li>Preventing <code>state.moved</code> element to be hit detectable. See: https://sciter.com/forums/topic/cant-receive-event-x_drag_leave-sometimes/</li>
+						<li>[osx,skia] RTL support with Skia backend.</li>
+						<li>[svg] fix of gradientTransform in Skia backend.&nbsp;</li>
+						<li>[script] <code>Storage.open()</code>&nbsp;accepts file urls: <code>Storage.open(&quot;file://some/path%20to%20storage/t.db&quot;)</code>;</li>
+						<li>[css] Fix of cascaded (multiple) text-decoration rendering;</li>
+						<li>Fix of <code>htmlarea.text</code> handling.</li>
+						<li>[html] <code>&lt;input|slider&gt;</code> - better mouse click handling.</li>
+						<li>[+plus] fix of &quot;class&quot; binding inside repeatables.&nbsp;</li>
+						<li>ux-theme fix on non-standard DPI.</li>
+						<li>[css] fix of <code>var()</code> usage in gradients and transforms.</li>
+						<li>[css selectors] fix of <code>:only-of-type</code> and <code>:has-child-of-type(TAG)</code> selectors.</li></ul>
+					<p/></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.0.5.5482</td><td nowrap="" valign="top" align="center">22-10-2017</td><td><p>new:</p>
 					<ul><li>WebP image format support;</li>
 						<li><code>view.selectFolder(...,defaultFolder)</code> parameter;</li>
 						<li>[osx,CoreGraphics backend] RTL support and better font handling, on par with Windows implementation;</li>
@@ -149,7 +182,8 @@
 						<li>[script,storage] Fix of handling record deletion under iterator.</li>
 						<li>[script,storage.Index] + method <code>clear()</code> to remove all elements from index.</li><li>input|number focus handling fix.</li><li>[css] support of font: system, MyAwesome, sans-serif; constructs.</li><li>STATIC_LIB + plain C header compatibility.</li><li>[css] position:absolute element, width calculation fix.</li><li>[API] Generating <code>event_handler::detached()</code> call on window destruction (if it has DOM handlers set).</li>
 						<li>[API] <code>sciter::image::load()</code> implementation.</li><li>fix of ellipsis rendering.</li><li><code>&lt;frame|pager&gt;</code> fixes.</li><li>regression fix of <code>DOCUMENT_COMPLETE</code> event generation, introduced in r5273.</li><li>[win] fix of AV in samples/dialogs+windows/windowed-element.htm</li><li><p>[DOM, <code>&lt;table&gt;</code>], parser forces <code>&lt;tbody&gt;</code> insertion for <code>&lt;tr&gt;</code> containment (if not provided).<b>&nbsp;</b></p><p><b>Note:</b>&nbsp; could be a&nbsp;breaking change if selectors like: <code>table &gt; tr &gt; td</code> are used (to fix it use: table &gt; tbody&gt; tr &gt; td )&nbsp;</p></li><li>[richtext] + table editing commands: insert/delete row/column, merge cell range, split spanned cell.</li>
-						<li>[gtk] far east languages/fonts rendering.</li><li>[context menus] fix of getting focus back, see : <a href="https://sciter.com/forums/topic/input/">https://sciter.com/forums/topic/input/</a>&nbsp;</li><li>[win] Fix of crash on ALT+ENTER.
+						<li>[gtk] far east languages/fonts rendering.</li><li>[context menus] fix of getting focus back, see : <a href="https://sciter.com/forums/topic/input/">https://sciter.com/forums/topic/input/</a>&nbsp;</li><li>[win] Fix of crash on ALT+ENTER
+.
 </li><li>[win] fix of &quot;D3DGear bug&quot; - crash when D3DGear is running.</li><li><code>cr/lf</code> handling in plaintext editing.</li><li>Fix of click on <code>&lt;label&gt;</code> when bound input&nbsp;is disabled.&nbsp;</li><li>[tooltips] - better tooltips handling - now tooltip gets removed only when mouse leaves tooltip's owner element.&nbsp;</li><li>[osx] CMD+A handling fix.</li><li>[pager] fix of <code>Pager.onRequest()</code> handling.</li><li>[css] <code>min/max-width: 100%</code> fix.</li><li><code>&lt;select|dropdown&gt;</code>, fix of &quot;change&quot; event generation when popup is shown. &quot;change&quot; is postponed until popup dismissal.</li><li>[editing] fix of <code>VK_LEFT/VK_RIGHT</code> handling.</li><li>more responsive handling of set focus on element.</li><li>[editing] fix of surrogate pairs handling.</li>
 						<li>[textarea] fox of selection by mouse handling.</li>
 						<li>[textarea, edit] fix of dynamic @novalue handling</li>

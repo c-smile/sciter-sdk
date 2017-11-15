@@ -182,6 +182,12 @@ function self.ready() {
         connectToInspector();
   }
 
+  view.windowCaption = String.printf("%s %d.%d.%d.%d", 
+      view.windowCaption,
+      (Sciter.VERSION >> 16) & 0xffff, Sciter.VERSION & 0xffff,
+      (Sciter.REVISION >> 16) & 0xffff, Sciter.REVISION & 0xffff);
+
+
   // this has to be delayed on Windows otherwise caption will be transparent too, why?
 
   if(!this.parent)

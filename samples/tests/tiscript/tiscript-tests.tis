@@ -1179,16 +1179,17 @@ function ForIn_test() {
 }
 
 function match_test() {
-
+  // pattern matching
   function match(val) {
     switch(val) {
-    
       like {one: "o*"} : return 1;
       like {one: String} : return 2;
       like {one: #any} : return 3;
       like [1,2] : return 4;
       like [1,#any] : return 5;
-      like Integer: return 6;
+      in [7,8,9] : return 6;
+      instanceof Integer: return 7;
+      instanceof Float : return 8;
     }
     return 0;
   }
@@ -1201,9 +1202,12 @@ function match_test() {
   assert match( [0,1,2] ) == 0; // does not match
   assert match( [1,2,3] ) == 4;
   assert match( [1,"one"] ) == 5;
-  
-  assert match( 12 ) == 6;
-  assert match( 12.0 ) == 0;
+
+  assert match( 8 ) == 6;
+  assert match( 12 ) == 7;
+  assert match( 12.0 ) == 8;
+
+  assert match( #foo ) == 0;
   
   assert { one: "one" } like {one: "o*"};
 

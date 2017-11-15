@@ -228,7 +228,7 @@
     <h4>Layers</h4>
     <dt>pushLayer</dt>
     <dd>
-      <div>( <strong>x</strong>: float, <strong>y</strong>: float, <strong>width</strong>: float, <strong>height</strong>: float [, <strong>opacity</strong>: 0.0... 1.0] ) : Graphics</div>
+      <div>( <strong>x</strong>: float, <strong>y</strong>: float, <strong>width</strong>: float, <strong>height</strong>: float [, <strong>opacity</strong>: 0.0... 1.0 | <b>filter</b>] ) : Graphics</div>
       <p>Sets rectangular clip region with optional opacity.</p></dd>
     <dt>pushLayer</dt>
     <dd>
@@ -240,7 +240,7 @@
       <p>Sets clip mask from image. If <em>mask1a</em> is true then all pixels corresponding mask alpha == 0 will <strong>not</strong> be rendered. If <em>mask1a</em> is false then it is an inverse mask - all pixels corresponding mask alpha == 0 will be rendered</p></dd>
     <dt>pushLayer</dt>
     <dd>
-      <div>( <strong>area</strong>: Symbol ) : Graphics</div>
+      <div>( <strong>area</strong>: Symbol [, <b>filter</b>] ) : Graphics</div>
       <p>Sets clip region equal to one of the following:</p>
       <ul>
         <li><code>#background-area</code> - background area of the element, including rounded borders if they are dclared for the element;</li>
@@ -248,7 +248,10 @@
         <li><code>#margin-box</code> - margin box of the element;</li>
         <li><code>#border-box</code> - border box of the element;</li>
         <li><code>#padding-box</code> - padding box of the element;</li>
-        <li><code>#inner-box</code> - inner, content box of the element;</li></ul></dd>
+        <li><code>#inner-box</code> - inner, content box of the element;</li>
+				</ul>
+			<p>The <i>filter</i> is one of CSS filter values (expressed as a tuple):</p>
+			<ul><li><code>[blur:</code> radius<code>]</code> - radius here is a length unit&nbsp;</li><li><code>[brightness:</code> 0.0...1.0<code>]</code></li><li><code>[contrast:</code> 0.0...1.0<code>]</code></li><li><code>[grayscale:</code> 0.0...1.0<code>]</code></li><li><code>[hue-rotate:</code> 0...360<code>]</code></li><li><code>[invert:]</code></li><li><code>[opacity:</code> 0.0...1.0<code>]</code></li><li><code>[saturate:</code> 0.0...1.0<code>]</code></li><li><code>[sepia:</code> 0.0...1.0<code>]</code></li><li><code>[drop-shadow:</code> color, dx, dy, radius, spread<code>]</code> - dx,dy,radius and spread are length units.</li><html>dx,dy,radius,spread</html><html>radius here is a length unit&nbsp;</html></ul></dd>
     <dt>popLayer</dt>
     <dd>
       <div>( ): Graphics</div>

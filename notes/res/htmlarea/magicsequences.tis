@@ -201,7 +201,7 @@ Sequences.add(":not(a)",reURL,null, function(htmlarea,caret,start,end)
    });
 });
 
-const reMail = /([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})/;
+const reMail = /(([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6}))\s$/;
 // [single space] typed after url - wrap it into <a href=url>url</a>
 Sequences.add(":not(a)",reMail,null, function(htmlarea,caret,start,end) 
 {

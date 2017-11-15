@@ -1,0 +1,119 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+          div#hoop {
+            prototype: Hoop;
+            width:300dip;
+            border:1px solid;
+            height:300dip;
+            overflow:hidden-scroll;
+            font-size:18dip;
+          }
+
+          div#hoop > text {
+            height:30px;
+          }
+
+          div#hoop > text:last-child { background:gold }
+
+        </style>
+        <script type="text/tiscript">
+
+
+         function inertia(el,cb) {
+            var speed = 0;
+            function step() {
+              //if( Math.abs(speed) < 0.4 ) { speed = 0; return false; }
+              speed *= 0.94;
+              var finishing = false;
+              if( speed >= -1.0 && speed < 0.0 ) {
+                speed = -1.0;
+                finishing = true;
+              }
+              else if( speed > 0 && speed <= 1.0 ) {
+                speed = 1.0;
+                finishing = true;
+              }
+              if(!cb(speed,finishing))  { speed = 0; return false; }
+              return true; 
+            }
+            function inc( d ) { 
+              speed += d; 
+              cb(speed,false);
+              if( !el.state.animating )
+                el.animate(step);
+            }
+            return inc; 
+         }
+         
+         class Hoop: Element 
+         {
+         
+            function attached() 
+            {
+              for(var i in 48) 
+                this.$append(<text>{i % 24}</text>);
+
+              var me = this;
+              
+              function upd(speed, finishing) { 
+                var sy,el;
+                sy = me.scroll(#top) + speed;
+                me.setPos(sy);
+                if( finishing && (sy.toInteger() % 30) == 0) 
+                  return false;
+                return true;
+
+                /*
+                if( speed < 0.0 ) {
+                  sy = me.scroll(#top) + speed; 
+                  if( speed > -3.0 ) {
+                    //el = me.find(0,sy); 
+                    //sy = el.box(#bottom, #border,#parent) + 1; 
+                    sy = (sy.toInteger() / 30 + 1) * 30;
+                    me.setPos(sy); 
+                    stdout.println("done",sy);
+                    return false;
+                  }
+                }
+                else {
+                  sy = me.scroll(#top) + speed; 
+                  if( speed < 3.0 ) {
+                    //el = me.find(0,sy.toInteger()); 
+                    sy = //el.box(#bottom, #border,#parent) + 1; 
+                         (sy.toInteger() / 30) * 30;
+                    me.setPos(sy); 
+                    stdout.println("done",sy);
+                    return false;
+                  }
+                }
+                me.setPos(sy); 
+                //stdout.println(speed,sy);
+                return true;*/
+              }
+              
+              this.inert = inertia(this,upd,pp); // returns func to update speed 
+            }
+
+            event mousewheel (evt) { this.inert(-5 * evt.wheelDelta); }
+
+            function setPos(sy) {
+              sy = sy.toInteger();
+              const viewHeight = this.scroll(#height); 
+              const contentHeight = this.box(#height,#content); 
+              const contentHeight2 = contentHeight / 2;
+              sy += contentHeight2;
+              sy %= contentHeight2;
+              this.scrollTo(0,sy);
+            }
+
+         }
+
+        </script>
+    </head>
+    <body>
+      <div#hoop></div>
+    </body>
+</html>

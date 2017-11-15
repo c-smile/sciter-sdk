@@ -1,0 +1,107 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+          form {
+            font:system;
+          }
+
+        </style>
+        <script type="text/tiscript">
+
+          const frame = $(frame);
+          const paths = [ "frames/base.htm", "frames/over.htm" ];  
+          var   index = 0;
+
+          var params = {
+            effect:"blend", 
+            ease:"sine-in-out",
+            duration:600ms
+          };
+
+          event change $(form) {
+            params.extend(this.value);  
+          }
+
+          event click $(button#go) {
+            function changer() { 
+              index = ++index % paths.length;
+              frame.load( self.url(paths[index]) ); 
+            }
+            frame.update(changer, params);
+          }
+
+
+        </script>
+    </head>
+    <body>
+      <form>
+        <label>Effect:</label>
+        <select|dropdown(effect)>
+          <option selected>blend</option>
+          <option>blend-atop</option>
+          <option>slide-top</option>
+          <option>slide-bottom</option>
+          <option>slide-left</option>
+          <option>slide-right</option>
+          <option>slide-over-top</option>
+          <option>slide-over-bottom</option>
+          <option>slide-over-left</option>
+          <option>slide-over-right</option>
+          <option>remove-top</option>
+          <option>remove-bottom</option>
+          <option>remove-left</option>
+          <option>remove-right</option>
+          <option>scroll-top</option>
+          <option>scroll-bottom</option>
+          <option>scroll-left</option>
+          <option>scroll-right</option>
+        </select>
+        <label>Ease function:</label>
+        <select|dropdown(ease)>
+          <option>linear</option>       
+          <option>quad-in</option>      
+          <option>quad-out</option>     
+          <option>quad-in-out</option>  
+          <option>cubic-in</option>     
+          <option>cubic-out</option>    
+          <option>cubic-in-out</option> 
+          <option>quart-in</option>     
+          <option>quart-out</option>    
+          <option>quart-in-out</option> 
+          <option>quint-in</option>     
+          <option>quint-out</option>    
+          <option>quint-in-out</option> 
+          <option>sine-in</option>      
+          <option>sine-out</option>     
+          <option selected>sine-in-out</option>  
+          <option>expo-in</option>      
+          <option>expo-out</option>     
+          <option>expo-in-out</option>  
+          <option>circ-in</option>      
+          <option>circ-out</option>     
+          <option>circ-in-out</option>  
+          <option>elastic-in</option>   
+          <option>elastic-out</option>  
+          <option>elastic-in-out</option>    
+          <option>back-in</option>      
+          <option>back-out</option>     
+          <option>back-in-out</option>  
+          <option>x-back-in</option>    
+          <option>x-back-out</option>   
+          <option>x-back-in-out</option>
+          <option>xx-back-in</option>   
+          <option>xx-back-out</option>  
+          <option>xx-back-in-out</option>    
+          <option>bounce-in</option>    
+          <option>bounce-out</option>   
+          <option>bounce-in-out</option>  
+        </select>
+        <button #go>Go!</button>
+      </form>
+
+      <frame src="frames/base.htm" />
+
+    </body>
+</html>

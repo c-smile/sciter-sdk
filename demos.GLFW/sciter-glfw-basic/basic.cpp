@@ -187,7 +187,7 @@ int main(int argc, char *argv[])
 
         back_layer = root.find_first("section#back-layer");
         fore_layer = root.find_first("section#fore-layer");
-        assert(back_layer && fore_layer);
+        //assert(back_layer && fore_layer);
     }
     // SCITER
 

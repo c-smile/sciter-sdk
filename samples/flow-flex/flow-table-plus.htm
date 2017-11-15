@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+          label {
+            margin:* 0 * *;
+            white-space:nowrap;
+          }
+          textarea { display:block; width:*; }
+
+        </style>
+    </head>
+    <body>
+
+<p>In Sciter any block/inline-block is treated as table cell and so to have colspan/rowspan attributes:</p>
+
+<ol>
+  <li>Elements with display:table-cell are replaced to cover whole cell box.</li>
+  <li>display:block/inline-block are replaced inside cell-box with respect of their margins, borders and paddings that can be given in flex units.</li>
+</ol>
+
+<table border>
+  <tbody>
+    <tr>
+      <td>Normal TD</td>
+      <td>Normal TD</td>
+      <td>Yet another normal TD</td>
+    </tr>
+    <tr class="foo">
+      <label>label</label>
+      <button>button</button>
+      <select><option>select</option></select>
+    </tr>
+    <tr>
+      <label>label 1</label>
+      <textarea rowspan=2 colspan=2>textarea with rowspan=2 and colspan=2</textarea>
+    </tr>
+    <tr>
+      <label>label 2</label>
+    </tr>      
+  </tbody>
+</table>
+
+
+    </body>
+</html>

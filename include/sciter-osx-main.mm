@@ -81,7 +81,7 @@ namespace sciter {
   }    
 
   void window::dismiss() {
-    if(_hwnd) [nswindow(_hwnd) close];
+    if(_hwnd) [nswindow(_hwnd) performClose: nswindow(_hwnd)];
     _hwnd = 0;
   }
 

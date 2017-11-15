@@ -36,8 +36,12 @@ pre {
   padding:4dip;
   border:1dip solid #ccc; 
   background: #F0F8FF;
-  max-width:100%;
+}
+
+html:read-only pre
+{
   overflow-x: scroll-indicator;
+  max-width:100%;
 }
 
 code {
