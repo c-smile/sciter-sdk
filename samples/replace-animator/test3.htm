@@ -3,21 +3,21 @@
   <title></title>
 <style>
 
-  #container { size:*; flow:horizontal; border-spacing: 10px; vertical-align:middle; }
+  #container { size:*; flow:horizontal; border-spacing: 10dip; vertical-align:middle; }
   #container > widget { 
     behavior: button;
-    size:* 200px; display:block; 
+    size:* 200dip; display:block; 
     vertical-align:middle; 
     text-align:center; 
     cursor:pointer;
     border-radius:8dip;
-    border:2px solid transparent;
+    border:2dip solid transparent;
   }
     
   #container > div { display:none; size:*; background:gold; vertical-align:middle; text-align:center; border-radius:8dip;}
   #container > widget > text:hover { color:white; }
   
-  #container[state] > widget { size:70px; }
+  #container[state] > widget { size:70dip; }
   #container[state] > widget > text { display:none; }
   
   #container[state=1]

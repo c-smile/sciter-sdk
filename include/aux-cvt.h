@@ -280,27 +280,12 @@ namespace utf8
           ++num_errors;
           continue;
         }
-#pragma warning( push )
-#pragma warning( disable : 4127 ) //  warning C4127: conditional expression is constant
-        //warning C4127: conditional expression is constant
-        if( sizeof(WCHAR) == 16 ) // Seems like Windows, WCHAR is utf16 code units sequence there.
-        {
-          outbuf.push( WCHAR(0xd7c0 + (b >> 10)) );
-          outbuf.push( WCHAR(0xdc00 | (b & 0x3ff)) );
-        }
-        else if( sizeof(WCHAR) >= 21 ) // WCHAR is full ucs-4
-        {
-          outbuf.push( WCHAR(b) );
-        }
-        else
-        {
-          assert(0); // what? WCHAR is single BYTE here?
-        }
-#pragma warning( pop )
+        outbuf.push( WCHAR(0xd7c0 + (b >> 10)) );
+        outbuf.push( WCHAR(0xdc00 | (b & 0x3ff)) );
       }
       else
       {
-        assert(0); //bad start for UTF-8 multi-BYTE sequence"
+        assert(0); //bad start of UTF-8 multi-BYTE sequence"
         ++num_errors;
         b = '?';
       }
@@ -309,12 +294,54 @@ namespace utf8
     return num_errors == 0;
   }
 
-  inline bool fromwcs(const WCHAR* wcs, size_t length, pod::byte_buffer& outbuf)
+  // gets full unicode code point from UTF16 sequence
+  inline bool get_ucp(aux::wchars &buf, unsigned int& ucp)
   {
-    const WCHAR *pc = wcs;
-    const WCHAR *end = pc + length;
+    if (buf.length == 0)
+      return false;
+    WCHAR c = *buf.start;
+    buf.prune(1);
+    if (c < 0xD800 || c > 0xDBFF) {
+      ucp = c;
+      return true; // not a surrogate pair
+    }
+    if (buf.length == 0) {
+      assert(false); // surrogate pair is not complete
+      ucp = c;
+      return false;
+    }
+    WCHAR nc = *buf.start;
+    buf.prune(1);
+    ucp = (c - 0xD800) * 0x400 + (nc - 0xDC00) + 0x10000;
+    return true;
+  }
+
+  // gets full unicode code point from UTF16 sequence
+  inline bool get_ucp(const WCHAR* &pc, unsigned int& ucp)
+  {
+    if (*pc == 0)
+      return false;
+    WCHAR c = *pc++;
+    if (c < 0xD800 || c > 0xDBFF) {
+      ucp = c;
+      return true; // not a surrogate pair
+    }
+    if (*pc == 0) {
+      assert(false); // surrogate pair is not complete
+      ucp = 0;
+      return false;
+    }
+    WCHAR nc = *pc++;
+    ucp = (c - 0xD800) * 0x400 + (nc - 0xDC00) + 0x10000;
+    return true;
+  }
+  
+  inline bool fromwcs(aux::wchars buf, pod::byte_buffer& outbuf)
+  {
     unsigned int  num_errors = 0;
-    for(unsigned int c = *pc; pc < end ; c = *(++pc))
+    unsigned int  c; // unicode code point
+
+    while(get_ucp(buf,c))
     {
       if (c < (1 << 7))
       {
@@ -379,8 +406,9 @@ namespace utf8
     // use UNICODE chars for value output
     ostream_t& operator << (const WCHAR* wstr)
     {
-      const WCHAR *pc = wstr;
-      for(unsigned int c = *pc; c ; c = *(++pc))
+      const WCHAR* p = wstr;
+      unsigned int c;
+      while(get_ucp(p,c))
       {
         if(X)
           switch(c)
@@ -526,17 +554,16 @@ namespace aux
     {
       if(wstr)
       {
-        size_t nu = wcslen(wstr);
-        utf8::fromwcs(wstr,nu,buffer);
+        utf8::fromwcs(chars_of(wstr),buffer);
       }
     }
     explicit w2utf(const std::basic_string<WCHAR>& str)
     {
-      utf8::fromwcs(str.c_str(),str.length(),buffer);
+      utf8::fromwcs(chars_of(str),buffer);
     }
     explicit w2utf(wchars str)
     {
-      utf8::fromwcs(str.start,str.length,buffer);
+      utf8::fromwcs(str, buffer);
     }
     ~w2utf() {}
     operator const BYTE*() const { return buffer.data(); }

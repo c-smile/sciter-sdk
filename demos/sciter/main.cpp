@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include <shellapi.h>
 #include "sciter.h"
 #include "sciter-x-dom.hpp"
@@ -64,7 +64,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
   // command line parsing to handle invocation from Windows Explorer.
   int n_args = 0;
   LPWSTR *args = CommandLineToArgvW(GetCommandLineW(), &n_args);
-  
+    
   if( args )
   {
       if( n_args >= 2 ) {

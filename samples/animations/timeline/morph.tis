@@ -123,7 +123,7 @@ function Array.morph(from/*Array*/, to/*Array*/, ratio = 0.0 )
       from[i] = tv;
       to[i] = typeof v == #function ? v(tv) : v;
     }
-    stdout.printf("%V->%V\n",from,to);
+    //stdout.printf("%V->%V\n",from,to);
     return from;
   } 
   else if( from && !to ) { // 'from' provided but 'to' - not, generate 'to' variables using current array state 

@@ -1,0 +1,90 @@
+﻿<html>
+<head>
+  <title></title>
+  <style>
+
+
+      html { background:url(res:starfield.jpg) no-repeat 50% 50%;
+             background-size:cover;
+             overflow:hidden;  }
+    
+      body { font:system; margin:0; padding:8dip;
+             background: radial-gradient(90% 90%, circle farthest-side, white, orange/25%, rgb(128,64,0)/40%, rgba(128,64,0,0)); }
+
+      a[href] { color:#000; }
+    
+      div#intro
+      { 
+        color: rgb(213,132,0);
+        padding:3px; 
+        margin-bottom:*;
+        behavior:htmlarea;
+        background: rgba(0,0,0,0.5);
+        border-radius:3dip;
+        width:max-content;
+      }
+      div#intro > img#arrow { vertical-align:middle; size:0.8em; color:brown; }  
+      
+      dl#info { flow:row(dt,dd); horizontal-align:right; }
+      dl#info > dt { width:max-intrinsic; text-align:right; }
+      dl#info > dd { width:max-intrinsic; margin:0; padding-left:0.6em; font-weight:bold; color:#444; }
+      dl#info > header  
+      {
+        font-weight:bold; 
+        color:orange; 
+        //border-bottom: 1px solid orange; 
+        text-align:center;
+        margin-top:0.5em; 
+        text-shadow: 2dip 2dip 2dip rgb(32,16,0) ;
+      }
+      
+      footer { font-size:85%; text-align:center; }
+      
+  </style>
+
+  <script type="text/tiscript">
+
+    $(#version).text = String.printf("%d.%d.%d.%d", 
+		  (Sciter.VERSION >> 16) & 0xffff, Sciter.VERSION & 0xffff,
+		  (Sciter.REVISION >> 16) & 0xffff, Sciter.REVISION & 0xffff);
+	  $(#user).text = Sciter.userName();
+	  $(#machine).text = Sciter.machineName();
+	  $(#domain).text = Sciter.machineName(true);
+	  //$(#home).text = System.home();
+	  $(#language).text = System.language;
+	  $(#country).text = System.country;
+	  $(#os-type).text = System.HANDHELD_OS? "handheld":"desktop";
+	  $(#os-version).text = System.OS;
+    $(#gfx-backend).text = view.backendName;
+
+    event click $(a[href]) {
+      Sciter.launch( this.attributes["href"] );
+      return true;
+    }
+  
+  </script>
+</head>
+<body>
+  <div #intro><img #arrow src="stock:arrow-left" > use this button to open HTML files...</div>
+  <dl #info>
+	  <header>Sciter</header>
+	  <dt>version:</dt>	   <dd #version></dd>
+    <header>System</header>
+	  <dt>OS type:</dt>	   <dd #os-type></dd>
+	  <dt>OS version:</dt> <dd #os-version></dd>
+    <dt>GFX backend:</dt><dd #gfx-backend></dd>
+	  <dt>user:</dt>		   <dd #user></dd>
+	  <dt>machine:</dt>	   <dd #machine></dd>
+	  <dt>domain:</dt>	   <dd #domain></dd>
+    <!--<dt>home:</dt>	     <dd #home></dd>-->
+	  <dt>country:</dt>	   <dd #country></dd>
+	  <dt>language:</dt>	 <dd #language></dd>
+  </dl>
+  <footer>Sciter contains: 
+    <ul><li>H-SMILE (HTML/CSS) and TIScript engines of <a href="http://terrainformatica.com/">Terra Informatica Software, Inc.</a></li>
+        <li><a href="https://skia.org/">Skia library</a>, sponsored and managed by Google. Skia is used for rendering when the engine is configured to do so.</li>
+        <li><a href="https://github.com/nucleic/kiwi/">KIWI Cassowary Constraint Solver</a> by Chris Colbert and The Nucleic Development Team.</li>
+        </ul>
+  </footer>
+</body>
+</html>

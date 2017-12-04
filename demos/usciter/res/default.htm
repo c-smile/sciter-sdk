@@ -4,7 +4,7 @@
     <style>
       
       @image-map icons {
-        src: url(icons-n.png) 200dpi,
+        src: url(icons-n.png) 190dpi,
              url(icons-h.png) ;
         cells:3 2; /* 3 columns, 2 rows */
         /* logical names of the parts, see toolbar-icons.png */ 
@@ -26,11 +26,13 @@
         width:max-content; 
         padding:3dip; 
         height:*;
+        background:transparent;
       }
       toolbar > button                   
       {
         foreground-position: 50% 50%; 
         foreground-repeat:no-repeat;
+        //foreground-size:auto;
         padding:0;
         size:46dip; 
       }
@@ -58,9 +60,12 @@
       
             
       /*div#intro { behavior:htmlarea; }*/
+
+      @media on-glass {
+        html { background-color:transparent; }
+        html > body > frame#content { background-image:none; }
+      }
       
-      html[glassy] { background-color:transparent; }
-      html[glassy] frame#content { background-image:none; }
       
       hr { margin:0; padding:0; height:0; border:none; border-top: 1px dashed #999; }
       
@@ -133,8 +138,10 @@
 
       $(button#glass).onClick = function()
       {
-        view.root.attributes["glassy"] = this.value ? true : undefined;
-        stdout.println(view.root.attributes["glassy"]);
+        if( this.value)
+          view.windowBlurbehind = #auto;
+        else
+          view.windowBlurbehind = undefined;      
       }
       
       $(button#help).onClick = function()

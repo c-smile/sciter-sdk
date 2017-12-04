@@ -10,7 +10,32 @@
       <td width="60" nowrap="" valign="top" align="center">Build#</td>
       <td width="78" nowrap="" valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FFFADA">4.0.5.5524</td><td nowrap="" valign="top" align="center">16-11-2017</td><td><p>fixes:</p>
+    <tr><td valign="top" bgcolor="#FFFADA">4.0.6.5590</td><td nowrap="" valign="top" align="center">03-12-2017</td><td>
+					<p>new:</p>
+					<ul><li>[DOM, script] view, &quot;close&quot; event: <code>window.on(&quot;close&quot;, function() {});</code></li>
+						<li>[DOM, script] view, &quot;closing&quot; event, generated before document destruction: <code>window.on(&quot;closing&quot;, function() { ... this.root ... });</code></li>
+						<li>[DirectX] sdk/demos.win/sciter-dx - one more DirectX demo, also shows FPS.&nbsp;</li>
+						<li>[CSS] <code>::marker</code> pseudo-element support;</li></ul><p>fixes:</p>
+					<ul>
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						<li>[osx] fix of <code>view.windowIcon</code> rendered upside down;</li><li>[css variables] fix of variables handling in font-size and line-height;</li><li>[css] fix of background/foreground image rendering when image position is in the middle of the pixel;</li><li>[d2d] fix of solid color brush management, overall rendering speed optimizations;&nbsp;</li>
+						<li>[d2d] more stable (frame rate) animations. VSYNC synchronised;</li><li>[css] <code>border-spacing</code> dynamic update fix, see: <a href="https://sciter.com/forums/topic/bug-dynamically-changing-css-border-spacing-doesnt-causes-relayout/">https://sciter.com/forums/topic/bug-dynamically-changing-css-border-spacing-doesnt-causes-relayout/</a>&nbsp;</li><li>[d2d] ALT+ENTER -&gt; full screen is muted. Functionality disabled.</li><li>[osx,linux] ux-theme refactoring to support high resolution;</li><li>[osx,SVG] <code>&lt;img src=&quot;some.svg&quot;&gt;</code> better resolution on Retina;</li><li><code>&lt;select|dropdown&gt;</code> fix of selection by touch pad;</li><li>reverting r5494 &quot;:moving not hit detectable&quot; - breaks existing code (D&amp;D in particular);&nbsp;</li><li>[css, drawing] fix of <code>{ outline : ...; transform : ... }</code> combination rendering. See: <a href="https://sciter.com/forums/topic/outline-not-affected-by-css-transform-with-positionabsolute/">https://sciter.com/forums/topic/outline-not-affected-by-css-transform-with-positionabsolute/</a>&nbsp;</li><li>[css] fix of <code>&lt;input|text novalue=&quot;...&quot;&gt;</code> positioning; &lt;input|text novalue&gt; reformulation as just&nbsp; <code>input:empty { content:attr(novalue); };</code>&nbsp;</li><li>fix of <code>html {min-width: xxx }</code> handling. See: <a href="https://sciter.com/forums/topic/min-width-min-height/">https://sciter.com/forums/topic/min-width-min-height/</a>&nbsp;</li><li>[sdk headers] aux-cvt w2utf conversion fix when utf16 contains characters out of BMP;</li><li>[osx] fix of setting focus on hidden window;</li><li>[d2d,windows] faster <code>background:repeat</code> drawing;</li><li>[API] <code>ValueToString(,XJSON)</code> fix of name output when name contains digits;</li><li>scrollbar handling, mouse capture fix;</li><li>fix of inline image rendering;</li></ul></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.0.5.5524</td><td nowrap="" valign="top" align="center">16-11-2017</td><td><p>fixes:</p>
 					<ul><li>SVG rendering&nbsp;</li>
 						<li>[DOM] fix of list item markers handling: <a href="https://sciter.com/forums/topic/plus-2/">https://sciter.com/forums/topic/plus-2/</a>&nbsp;</li></ul></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.0.5.5520</td><td nowrap="" valign="top" align="center">14-11-2017</td><td><p>new:</p>
 					<ul><li>[osx] tiscript - standalone script executable.</li>

@@ -27,14 +27,15 @@
       
       body {flow:horizontal; margin:0; }
       
-      div#toolbar  
+      toolbar  
       {
         flow:vertical; 
         width:max-content; 
         padding:3dip; 
         height:*;
+        background-color: transparent;
       }
-      div#toolbar > button                   
+      toolbar > button                   
       {
         foreground-position: 4 4 4 4; 
         foreground-repeat : expand stretch-left stretch-right stretch-middle;
@@ -45,12 +46,12 @@
         background-size:48dip 48dip;
         padding:0;
         size:56dip; 
-	                }
-	    div#toolbar > button:hover          {  foreground-image: @BUTTON_FORE_HOVER; transition:none; }
-	    div#toolbar > button:active         {  foreground-image: @BUTTON_FORE_ACTIVE; foreground-position:53% 53%; }
-	    div#toolbar > button:checked	      {  foreground-image: @BUTTON_FORE_CHECKED;  }
-	    div#toolbar > button:checked:hover  {  foreground-image: @BUTTON_FORE_CHECKED_HOVER; }
-	    div#toolbar > button:disabled       {  foreground-image: @BUTTON_FORE_DISABLED; opacity:0.5; }
+	    }
+	    toolbar > button:hover          {  foreground-image: @BUTTON_FORE_HOVER; transition:none; }
+	    toolbar > button:active         {  foreground-image: @BUTTON_FORE_ACTIVE; foreground-position:53% 53%; }
+	    toolbar > button:checked	      {  foreground-image: @BUTTON_FORE_CHECKED;  }
+	    toolbar > button:checked:hover  {  foreground-image: @BUTTON_FORE_CHECKED_HOVER; }
+	    toolbar > button:disabled       {  foreground-image: @BUTTON_FORE_DISABLED; opacity:0.5; }
 	    frame#content{ size:*; 
 	                   background :url(no-color.png) repeat; }
       frame#content > div#intro
@@ -66,12 +67,12 @@
           outline:2px orange solid -2px;
       }
             
-      div#toolbar > button#open         { background-image:image-map(icons,open); }
-      div#toolbar > button#reload       { background-image:image-map(icons,refresh); }
-      div#toolbar > button#help         { background-image:image-map(icons,help); }
-      div#toolbar > button#inspector    { background-image:image-map(icons,inspector); }
-      div#toolbar > button#open-in-view { background-image:image-map(icons,open-in-view); }
-      div#toolbar > button#glass        { background-image:image-map(icons,glass); margin-top:*; }
+      toolbar > button#open         { background-image:image-map(icons,open); }
+      toolbar > button#reload       { background-image:image-map(icons,refresh); }
+      toolbar > button#help         { background-image:image-map(icons,help); }
+      toolbar > button#inspector    { background-image:image-map(icons,inspector); }
+      toolbar > button#open-in-view { background-image:image-map(icons,open-in-view); }
+      toolbar > button#glass        { background-image:image-map(icons,glass); margin-top:*; }
             
       
       /*div#intro { behavior:htmlarea; }*/
@@ -231,7 +232,7 @@
 
   </head>
   <body aria-label="Sciter Frame Body">
-    <div #toolbar role="toolbar">
+    <toolbar role="toolbar">
       <button #open title="load html" aria-label="Load Document" />
       <button #open-in-view title="load html in view" aria-label="Load Document in View" />
       <button #reload title="reload html" disabled aria-label="Reload Document" />
@@ -239,8 +240,7 @@
       <hr>
       <button #inspector title="DOM inspector" aria-label="DOM inspector" />
       <button|checkbox #glass title="Glass mode" aria-label="Set Glass Mode"/> 
-
-    </div>
+    </toolbar>
     <frame #content src="sys-info.htm" aria-label="Content" ></frame>
   </body>
 </html>

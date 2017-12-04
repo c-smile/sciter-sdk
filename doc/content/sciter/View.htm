@@ -338,7 +338,12 @@ if( fn ) view.<strong>load</strong>(fn);
       <ul>
         <li><strong>false</strong> - window is deactivated;</li>
         <li><strong>true</strong> - window is activated somehow but not by mouse;</li>
-        <li><strong>#by-mouse</strong> - window is activated by mouse click on it.</li></ul></dd></dl>
+        <li><strong>#by-mouse</strong> - window is activated by mouse click on it.</li></ul></dd>
+
+    <dt>&quot;closing&quot;</dt>
+    <dd>The event is generated as a part of view(window) closing sequence, delivered before view's document gets destroyed.</dd></dl>
+    <dt>&quot;close&quot;</dt>
+    <dd>Very last event from view (window), delivered immediately before view (window) is destroyed.</dd></dl>
 </body>
 
 </html>

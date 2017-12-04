@@ -7,8 +7,6 @@
 #include "sciter-x-request.hpp"
 #include <process.h>
 
-//#pragma comment(lib, "dwmapi.lib")
-
 extern HINSTANCE ghInstance;
 
 namespace sciter

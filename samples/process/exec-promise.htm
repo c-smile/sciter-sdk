@@ -13,8 +13,7 @@
 
           include "exec.tis";
 
-          event click $(#exec) 
-          {
+          async function pingIt() {
             var out = $(plaintext);
             out.state.busy = true;            
             const EOL = System.EOL;
@@ -29,8 +28,9 @@
             }
             out.state.busy = false;
             for(var line in text.split(EOL)) out.$append(<text>{line}</text>);             
-
           }
+
+          event click $(#exec) {  pingIt(); }
 
         </script>
     </head>

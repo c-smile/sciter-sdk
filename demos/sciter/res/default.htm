@@ -27,14 +27,15 @@
       
       body { flow:horizontal; margin:0; }
       
-      div#toolbar  
+      toolbar  
       {
         flow:vertical; 
         width:max-content; 
         padding:3dip; 
         height:*;
+        background:transparent;
       }
-      div#toolbar > button                   
+      toolbar > button                   
       {
         foreground-position: 4 4 4 4; 
         foreground-repeat : expand stretch-left stretch-right stretch-middle;
@@ -46,11 +47,11 @@
         padding:0;
         size:46dip; 
       }
-	    div#toolbar > button:hover          {  foreground-image: @BUTTON_FORE_HOVER; transition:none; }
-	    div#toolbar > button:active         {  foreground-image: @BUTTON_FORE_ACTIVE; foreground-position:53% 53%; }
-	    div#toolbar > button:checked	      {  foreground-image: @BUTTON_FORE_CHECKED;  }
-	    div#toolbar > button:checked:hover  {  foreground-image: @BUTTON_FORE_CHECKED_HOVER; }
-	    div#toolbar > button:disabled       {  foreground-image: @BUTTON_FORE_DISABLED; opacity:0.5; }
+	    toolbar > button:hover          {  foreground-image: @BUTTON_FORE_HOVER; transition:none; }
+	    toolbar > button:active         {  foreground-image: @BUTTON_FORE_ACTIVE; foreground-position:53% 53%; }
+	    toolbar > button:checked	      {  foreground-image: @BUTTON_FORE_CHECKED;  }
+	    toolbar > button:checked:hover  {  foreground-image: @BUTTON_FORE_CHECKED_HOVER; }
+	    toolbar > button:disabled       {  foreground-image: @BUTTON_FORE_DISABLED; opacity:0.5; }
 	    frame#content{ size:*; 
 	                   background :url(res:no-color.png) repeat; }
       frame#content > div#intro
@@ -66,12 +67,12 @@
           outline:2px orange solid -2px;
       }
 
-      div#toolbar > button#open         { background-image:image-map(icons,open); }
-      div#toolbar > button#reload       { background-image:image-map(icons,refresh); }
-      div#toolbar > button#help         { background-image:image-map(icons,help); }
-      div#toolbar > button#inspector    { background-image:image-map(icons,inspector); }
-      div#toolbar > button#open-in-view { background-image:image-map(icons,open-in-view); }
-      div#toolbar > button#glass        { background-image:image-map(icons,glass); margin-top:*; }
+      toolbar > button#open         { background-image:image-map(icons,open); }
+      toolbar > button#reload       { background-image:image-map(icons,refresh); }
+      toolbar > button#help         { background-image:image-map(icons,help); }
+      toolbar > button#inspector    { background-image:image-map(icons,inspector); }
+      toolbar > button#open-in-view { background-image:image-map(icons,open-in-view); }
+      toolbar > button#glass        { background-image:image-map(icons,glass); margin-top:*; }
       
             
       /*div#intro { behavior:htmlarea; }*/
@@ -148,7 +149,7 @@
          }
       }
 
-      event click $(div#toolbar > button#open)
+      event click $(toolbar > button#open)
       {
         var fn = view.selectFile(#open,file_filter);
 		    if( fn ) 
@@ -161,7 +162,7 @@
             view.windowCaption = title.text; // calling native method defined in sciter.h 
         }
       }
-      event click $(div#toolbar > button#reload)
+      event click $(toolbar > button#reload)
       {
 		    if( filename ) {
           content.load(filename);
@@ -170,7 +171,7 @@
         }
       }
 
-      event click $(div#toolbar > button#open-in-view)
+      event click $(toolbar > button#open-in-view)
       {
         var fn = view.selectFile(#open,file_filter);
 		    if( fn ) 
@@ -179,7 +180,7 @@
         }
       }
 
-      event click $(div#toolbar > button#glass)
+      event click $(toolbar > button#glass)
       {
         if( this.value)
           view.windowBlurbehind = #auto;
@@ -187,7 +188,7 @@
           view.windowBlurbehind = undefined;
       }
       
-      event click $(div#toolbar > button#help)
+      event click $(toolbar > button#help)
       {
 		    //view.open("file://" + System.home("../doc/main.htm"));
         view.window 
@@ -201,7 +202,7 @@
         };
       }
 
-      event click $(div#toolbar > button#inspector)
+      event click $(toolbar > button#inspector)
       {
         //if(!view.inspectorIsPresent()) // native function, defined in sciter.cpp
         Sciter.launch( System.home("inspector.exe") );
@@ -218,7 +219,7 @@
 
   </head>
   <body aria-label="Sciter Frame Body">
-    <div #toolbar role="toolbar">
+    <toolbar>
       <button #open title="load html" aria-label="Load Document" />
       <button #open-in-view title="load html in view" aria-label="Load Document in View" />
       <button #reload title="reload html" disabled aria-label="Reload Document" />
@@ -227,7 +228,7 @@
       <button #inspector title="DOM inspector" aria-label="DOM inspector" />
       <button|checkbox #glass title="Glass mode" aria-label="Set Glass Mode"/> 
 
-    </div>
+    </toolbar>
     <frame #content src="res:sys-info.htm" aria-label="Content" ></frame>
   </body>
 </html>

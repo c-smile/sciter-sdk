@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+          @import url(toggle.css);
+
+          body { font:system; }
+
+          form { flow:row(label,toggle); border-spacing:0.5em; }
+          h2,label { width:max-content; }
+
+
+        </style>
+        <script type="text/tiscript">
+
+          event change $(form) {
+            $(pre).value = String.printf("%V",this.value);
+          }
+ 
+        </script>
+    </head>
+    <body>
+      <h1>&lt;toggle> element demo</h1>
+      <form>
+      <h2>A la checkbox</h2>
+        <label>With options:</label>
+        <toggle(foo)>
+           <option>No</option>
+           <option>Yes</option>
+        </toggle>
+        <label>No options:</label>
+        <toggle(bar) />
+        
+      <h2>A la radio (group)</h2>
+         <label>A option:</label><toggle|radio(group) value="A" />
+         <label>B option:</label><toggle|radio(group) value="B" />
+         <label>C option:</label><toggle|radio(group) value="C" />
+      </form>
+
+     <pre#out/>
+
+    </body>
+</html>
