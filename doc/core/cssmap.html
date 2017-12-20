@@ -46,13 +46,13 @@
   <p>List of CSS attributes supported by h-smile core:</p>
   <div>
     <table border="1" bordercolor="#fff2cc" cellspacing="0">
-      <tr>
+      <tbody><tr>
         <td rowspan="23" valign="top"><strong>Font and paragraph properties</strong></td>
         <td nowrap="" align="right"><strong>font</strong></td>
         <td>
           <div>specifies up to six of the following space-delimited property values. Alternatively, sets or retrieves the six listed text fonts.</div>
           <div>See: <a href="http://www.w3.org/TR/CSS1#font">Cascading Style Sheets, level 1</a></div>
-          <div></div>
+          <div/>
           <div>In h-smile core engine the <em>font</em> also supports names of following system fonts:</div>
           <ul>
             <li><font face="Courier New">system</font> - default system UI font used for input elements;</li>
@@ -65,19 +65,19 @@
         <td>
           <div>specifies one of the following values.</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td nowrap="" valign="middle">family-name</td>
               <td>Any of the available font families installed in the system. For example, Times, Helvetica, Zapf-Chancery, Western, or Courier.</td></tr>
             <tr>
               <td nowrap="" valign="middle">generic-name</td>
-              <td>Any of the following font families: serif, sans-serif, cursive, fantasy, or monospace.</td></tr></table>
+              <td>Any of the following font families: serif, sans-serif, cursive, fantasy, or monospace.</td></tr></tbody></table>
           <div>See: <a href="http://www.w3.org/TR/CSS1#font-family">Cascading Style Sheets, level 1</a></div></td></tr>
             <tr>
               <td nowrap="" align="right"><strong>font-size</strong></td>
               <td>
           <div>specifies one of the following values.</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td nowrap="" valign="middle">absolute-size</td>
               <td>Set of keywords that indicate predefined font sizes. Named font sizes scale according to the user's font setting preferences. Possible values include the following: xx-small, x-small, small, medium, large, x-large, xx-large.</td></tr>
             <tr>
@@ -88,14 +88,14 @@
               <td>Floating-point number, followed by an absolute units designator (cm, mm, in, pt, pc, or px) or a relative units designator (em or ex). For more information about the supported length units, see the <a href="http://www.w3.org/TR/CSS1#length-units">CSS Length Units Reference</a>.</td></tr>
             <tr>
               <td nowrap="" valign="middle">percentage</td>
-              <td>Integer, followed by a percent (%). The value is a percentage of the parent object's font size. In Internet Explorer 3.0, the value is calculated as a percentage of the default font size.</td></tr></table>
+              <td>Integer, followed by a percent (%). The value is a percentage of the parent object's font size. In Internet Explorer 3.0, the value is calculated as a percentage of the default font size.</td></tr></tbody></table>
           <div>See: <a href="http://www.w3.org/TR/CSS1#font-size">Cascading Style Sheets, level 1</a></div></td></tr>
             <tr>
               <td nowrap="" align="right"><strong>font-style</strong></td>
               <td>
           <div>specifies one of the following values.</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td>normal</td>
               <td>Default. Font is normal.</td></tr>
             <tr>
@@ -103,14 +103,14 @@
               <td>Font is italic.</td></tr>
             <tr>
               <td>oblique</td>
-              <td>Font is italic.</td></tr></table>
+              <td>Font is italic.</td></tr></tbody></table>
           <div>See: <a href="http://www.w3.org/TR/CSS1#font-style">Cascading Style Sheets, level 1</a></div></td></tr>
             <tr>
               <td nowrap="" align="right"><strong>font-weight</strong></td>
               <td>
           <div>specifies one of the following values.</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td>normal</td>
               <td>Default. Font is normal.</td></tr>
             <tr>
@@ -148,7 +148,7 @@
               <td>Font is at least as bold as the 700 weight and at least as light as the 900 weight.</td></tr>
             <tr>
               <td>900</td>
-              <td>Font is at least as bold as the 800 weight.</td></tr></table>
+              <td>Font is at least as bold as the 800 weight.</td></tr></tbody></table>
           <div>See: <a href="http://www.w3.org/TR/CSS1#font-variant">Cascading Style Sheets, level 1</a></div></td></tr>
             <tr>
               <td nowrap="" align="right"><strong>letter-spacing</strong></td>
@@ -158,7 +158,7 @@
               <td>
           <div>specifies one of the following values:</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td>normal</td>
               <td>Default. Default height.</td></tr>
             <tr>
@@ -169,14 +169,14 @@
               <td>Integer, followed by a percent sign (%). The value is a percentage of the height of the parent object.</td></tr>
             <tr>
               <td>calc(...)</td>
-              <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></table>
+              <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></tbody></table>
           <div>See: <a href="http://www.w3.org/TR/CSS1#line-height">Cascading Style Sheets, level 1</a></div></td></tr>
             <tr>
               <td nowrap="" align="right"><strong>text-align</strong></td>
               <td>
           <div>specifies one of the following values:</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td>left</td>
               <td>Default. Text is aligned to the left.</td></tr>
             <tr>
@@ -187,7 +187,7 @@
               <td>Text is centered.</td></tr>
             <tr>
               <td>justify</td>
-              <td>Text is justified.</td></tr></table>
+              <td>Text is justified.</td></tr></tbody></table>
           <div>See: <a href="http://www.w3.org/TR/CSS1#text-align">Cascading Style Sheets, level 1</a></div></td></tr>
             <tr>
               <td nowrap="" align="right"><strong>text-decoration</strong></td>
@@ -213,24 +213,24 @@
               <td>
           <div>indentation of the first line of text in the object.</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td>length</td>
               <td>Floating-point number, followed by an absolute units designator (cm, mm, in, pt, pc, or px) or a relative units designator (em or ex). For more information about the supported length units, see <a href="http://www.w3.org/TR/CSS1#length-units">CSS Length Units Reference</a>.</td></tr>
             <tr>
               <td>percentage</td>
-              <td>Integer, followed by a percent sign (%). This value is a percentage of the width of the parent object.</td></tr></table>
+              <td>Integer, followed by a percent sign (%). This value is a percentage of the width of the parent object.</td></tr></tbody></table>
           <div>See: <a href="http://www.w3.org/TR/CSS1#text-indent">Cascading Style Sheets, level 1</a></div></td></tr>
             <tr>
               <td nowrap="" bgcolor="#ffffdd" align="right"><strong>text-overflow</strong></td>
               <td bgcolor="#ffffdd">
           <div>specifies a value that indicates whether ellipses(...) display when text content has overflowed its given layout area.</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td>ellipsis</td>
               <td>Display ellipses(...) for text overflow.</td></tr>
             <tr>
               <td>clip</td>
-              <td>Default. Simply clip the content and do not display ellipses for text overflow.</td></tr></table></td></tr>
+              <td>Default. Simply clip the content and do not display ellipses for text overflow.</td></tr></tbody></table></td></tr>
             <tr>
               <td nowrap="" align="right"><strong>text-transform</strong></td>
               <td>
@@ -243,7 +243,7 @@
               <td>
           <div>specifies one of the following values.</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td>baseline</td>
               <td>Default. Aligns the contents of an object supporting VALIGN to the base line.</td></tr>
             <tr>
@@ -266,14 +266,14 @@
               <td>Vertically aligns the text of an object supporting <strong>VALIGN</strong> to the top of the object.</td></tr>
             <tr>
               <td>text-bottom</td>
-              <td>Vertically aligns the text of an object supporting <strong>VALIGN</strong> to the bottom of the object.</td></tr></table>
+              <td>Vertically aligns the text of an object supporting <strong>VALIGN</strong> to the bottom of the object.</td></tr></tbody></table>
           <div>See: <a href="http://www.w3.org/TR/CSS1#vertical-align">Cascading Style Sheets, level 1</a></div></td></tr>
             <tr>
               <td nowrap="" align="right"><strong>white-space</strong></td>
               <td>
           <div>specifies one of the following values:</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td valign="top">normal</td>
               <td>Lines may break at allowed break points, as determined by the line-breaking rules in effect</td></tr>
             <tr>
@@ -284,30 +284,30 @@
               <td>Line breaks and other whitespace are preserved.</td></tr>
             <tr>
               <td valign="top">prewrap</td>
-              <td bgcolor="#ffffdd" valign="top">Line breaks and other whitespace are preserved. Content may wrap to the next line if needed. This is the same mode &lt;textarea&gt; uses when it has wrap=&quot;on&quot; attribute defined. Non-standard.</td></tr></table>
+              <td bgcolor="#ffffdd" valign="top">Line breaks and other whitespace are preserved. Content may wrap to the next line if needed. This is the same mode &lt;textarea&gt; uses when it has wrap=&quot;on&quot; attribute defined. Non-standard.</td></tr></tbody></table>
           <div>See: <a href="http://www.w3.org/TR/CSS1#white-space">Cascading Style Sheets, level 1</a></div></td></tr>
             <tr>
               <td nowrap="" align="right"><strong>word-wrap</strong></td>
               <td>
           <div>specifies one of the following values:</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td valign="top">normal</td>
               <td>Lines may break at allowed break points only, e.g. on whitespace.</td></tr>
             <tr>
               <td valign="top">break-word</td>
-              <td>Normally unbreakable words may be broken at arbitrary points if there are no otherwise acceptable break points in the line.</td></tr></table>
+              <td>Normally unbreakable words may be broken at arbitrary points if there are no otherwise acceptable break points in the line.</td></tr></tbody></table>
           <div>See: <a href="http://www.w3.org/TR/css3-text/#text-wrap">Cascading Style Sheets, level 3</a></div></td></tr>
             <tr>
               <td nowrap="" align="right"><strong>word-break</strong></td>
               <td>specifies one of the following values:
           <table>
-            <tr>
+            <tbody><tr>
               <td valign="top">normal</td>
               <td>Use the default line break rule.</td></tr>
             <tr>
               <td valign="top">break-all</td>
-              <td>Word breaks may be inserted between any character.</td></tr></table></td></tr>
+              <td>Word breaks may be inserted between any character.</td></tr></tbody></table></td></tr>
             <tr>
               <td nowrap="" bgcolor="#ffffdd" align="right"><strong>text-selection-color</strong></td>
               <td bgcolor="#ffffdd">specifies color of selected text (in inputs and elements under behavior:htmlarea). Non-standard. Inheritable property.</td></tr>
@@ -325,9 +325,9 @@
             <tr>
               <td rowspan="10" valign="top">
           <div><strong>Color and background properties</strong></div>
-          <div></div>
-          <div></div>
-          <div></div></td>
+          <div/>
+          <div/>
+          <div/></td>
               <td nowrap="" align="right"><strong>background</strong></td>
               <td>
           <div><strong>specifies</strong> up to five of the following space-delimited values, in any order.</div>
@@ -337,18 +337,18 @@
               <td>
           <div><strong>specifies</strong> one of the following values.</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td>scroll</td>
               <td>Default. Background image scrolls with the object as the document is scrolled.</td></tr>
             <tr>
               <td>fixed</td>
-              <td>Background image stays fixed within the viewable area of the object.</td></tr></table></td></tr>
+              <td>Background image stays fixed within the viewable area of the object.</td></tr></tbody></table></td></tr>
             <tr>
               <td nowrap="" align="right"><a name="background-color-attribute"><strong>background-color</strong></a></td>
               <td>
           <div><strong>specifies</strong> one of the following values.</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td width="154">transparent</td>
               <td>Default. Color of the next parent object through which the background is visible.</td></tr>
             <tr>
@@ -356,18 +356,18 @@
               <td>Any color value, including those specified in the <a href="http://msdn.microsoft.com/workshop/author/dhtml/reference/colors/colors.asp">Color Table</a>.</td></tr>
             <tr>
               <td nowrap="" bgcolor="#ffffdd" valign="middle">color-left-top,<br/>color-right-top,<br/>color-right-bottom,<br/>color-left-bottom</td>
-              <td bgcolor="#ffffdd" valign="middle"><strong><font color="#ff0000">Gradient fill</font></strong>. Four corner colors for gradient background fill. Non standard. HTMLayout specific.</td></tr></table></td></tr>
+              <td bgcolor="#ffffdd" valign="middle"><strong><font color="#ff0000">Gradient fill</font></strong>. Four corner colors for gradient background fill. Non standard. HTMLayout specific.</td></tr></tbody></table></td></tr>
             <tr>
               <td nowrap="" align="right"><strong>background-image</strong></td>
               <td>
           <div><strong>specifies</strong> one of the following values.</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td>none</td>
               <td>Default. Color of the next parent through which the background is visible.</td></tr>
             <tr>
               <td>url(sUrl)</td>
-              <td>Location of the background image, where sUrl is an absolute or relative URL.</td></tr></table></td></tr>
+              <td>Location of the background image, where sUrl is an absolute or relative URL.</td></tr></tbody></table></td></tr>
             <tr>
               <td nowrap="" align="right"><strong>background-image-frame</strong></td>
               <td>
@@ -379,7 +379,7 @@
               <td>
           <div><strong>specifies</strong> one or two of the following values:</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td>length</td>
               <td>Floating-point number, followed by an absolute units designator (cm, mm, in, pt, pc, or px) or a relative units designator (em or ex). For more information about the supported length units, see <a href="http://www.w3.org/TR/CSS1#length-units">CSS Length Units Reference</a>.</td></tr>
             <tr>
@@ -390,7 +390,7 @@
               <td>
                 <div>Vertical alignment value. Possible values include the following:</div>
                 <table>
-                  <tr>
+                  <tbody><tr>
                     <td>top</td>
                     <td>Vertical alignment is at the top.</td></tr>
                   <tr>
@@ -398,13 +398,13 @@
                     <td>Vertical alignment is centered.</td></tr>
                   <tr>
                     <td>bottom</td>
-                    <td>Vertical alignment is at the bottom.</td></tr></table></td></tr>
+                    <td>Vertical alignment is at the bottom.</td></tr></tbody></table></td></tr>
                   <tr>
                     <td>left, center, right</td>
                     <td>
                 <div>Horizontal alignment value. Possible values include the following:</div>
                 <table>
-                  <tr>
+                  <tbody><tr>
                     <td>left</td>
                     <td>Horizontal alignment is to the left.</td></tr>
                   <tr>
@@ -412,17 +412,17 @@
                     <td>Horizontal alignment is centered.</td></tr>
                   <tr>
                     <td>right</td>
-                    <td>Horizontal alignment is to the right.</td></tr></table></td></tr>
+                    <td>Horizontal alignment is to the right.</td></tr></tbody></table></td></tr>
                   <tr>
                     <td nowrap="" bgcolor="#ffffdd" valign="middle"><font face="monospace">left</font>-side-length,<br/><font face="monospace">top</font>-side-length,<br/><font face="monospace">right</font>-side-length,<br/><font face="monospace">bottm</font>-side-length</td>
                     <td bgcolor="#ffffdd" valign="middle">
                 <div><strong><font color="#ff0000">Expandable filling</font></strong> image margins.</div>
                 <div>See <strong>Expandable tiling</strong> section in HtmLayout documentation.</div>
-                <div>To use extended fill background <strong>background-repeat</strong><em> </em>attribute should be equal to '<strong>expand</strong>'. Non standard. HTMLayout specific.</div>
-                <div></div></td></tr>
+                <div>To use extended fill background <strong>background-repeat</strong><em/>attribute should be equal to '<strong>expand</strong>'. Non standard. HTMLayout specific.</div>
+                <div/></td></tr>
                   <tr>
                     <td>calc(...)</td>
-                    <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></table></td></tr>
+                    <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></tbody></table></td></tr>
                   <tr>
                     <td nowrap="" align="right"><a name="background-position-attribute"><strong>background-position</strong></a><strong>-left<br/><a name="background-position-attribute">background-position</a>-right<br/><a name="background-position-attribute">background-position</a>-top<br/><a name="background-position-attribute">background-position</a>-bottom</strong></td>
                     <td>Used in <em>expand</em>, <em>stretch</em> and <em>no-repeat</em> modes. &nbsp;</td></tr>
@@ -431,7 +431,7 @@
                     <td>
           <div><strong>specifies</strong> one of the following values:</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td nowrap="">repeat</td>
               <td>Default. Image is repeated horizontally and vertically.</td></tr>
             <tr>
@@ -448,7 +448,7 @@
               <td bgcolor="#ffffdd" valign="middle"><strong><font color="#ff0000">Expandable filling</font></strong> mode.</td></tr>
             <tr>
               <td nowrap="" valign="top"><strong><em>stretch </em></strong>[<em>keep-ratio</em>]</td>
-              <td bgcolor="#ffffdd" valign="top">Image is stretched to fill background in full. This is the same mode as rendering of image in &lt;IMG&gt; element. If stretch is combined with <em>keep-ratio</em> then images is resized with preservation of aspect ratio. To position such an image use background-position attribute.</td></tr></table></td></tr>
+              <td bgcolor="#ffffdd" valign="top">Image is stretched to fill background in full. This is the same mode as rendering of image in &lt;IMG&gt; element. If stretch is combined with <em>keep-ratio</em> then images is resized with preservation of aspect ratio. To position such an image use background-position attribute.</td></tr></tbody></table></td></tr>
             <tr>
               <td nowrap="" align="right"><strong>color</strong></td>
               <td>Sets the color of the text of the object.</td></tr>
@@ -456,7 +456,7 @@
               <td nowrap="" align="right"><strong>image-rendering</strong></td>
               <td>The image-rendering property provides a hint about the algorithm it should use to scale images. Supports one of the following values:
           <table>
-            <tr>
+            <tbody><tr>
               <td nowrap="">inherit</td>
               <td>inherit value from parent</td></tr>
             <tr>
@@ -476,7 +476,7 @@
               <td bgcolor="#ffffdd" valign="middle">alias of auto</td></tr>
             <tr>
               <td nowrap="" valign="top"><strong>optimize-speed</strong></td>
-              <td bgcolor="#ffffdd" valign="top">alias of pixelated</td></tr></table>
+              <td bgcolor="#ffffdd" valign="top">alias of pixelated</td></tr></tbody></table>
           <p>Default value is <em>inherit</em> - once it defined on a container it is used by rendering background and foreground images of all children (if they do not override it).</p></td></tr>
             <tr>
               <td rowspan="9" bgcolor="#ffffdd" valign="top">
@@ -485,8 +485,8 @@
           <p><font size="1">Foreground image has the same set of attributes as background.</font></p>
           <p><font size="1">Sequence of drawing of block in HTMLayout:</font></p>
           <p><font size="1">1. background<br/>2. borders<br/>3. content<br/>4. outline<br/>5. foreground</font></p>
-          <div></div>
-          <div></div></td>
+          <div/>
+          <div/></td>
               <td nowrap="" bgcolor="#ffffdd" align="right"><strong>foreground</strong></td>
               <td bgcolor="#ffffdd">
           <div>specifies up to four of the following space-delimited values, in any order.</div>
@@ -500,23 +500,23 @@
               <td bgcolor="#ffffdd">
           <div>specifies one of the following values.</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td>scroll</td>
               <td>Default. Foreground image scrolls with the object as the document is scrolled.</td></tr>
             <tr>
               <td>fixed</td>
-              <td>Foreground image stays fixed within the viewable area of the object.</td></tr></table></td></tr>
+              <td>Foreground image stays fixed within the viewable area of the object.</td></tr></tbody></table></td></tr>
             <tr>
               <td nowrap="" bgcolor="#ffffdd" align="right"><strong>foreground-image</strong></td>
               <td bgcolor="#ffffdd">
           <div>specifies one of the following values.</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td>none</td>
               <td>Default. Color of the next parent through which the background is visible.</td></tr>
             <tr>
               <td>url(sUrl)</td>
-              <td>Location of the background image, where sUrl is an absolute or relative URL.</td></tr></table></td></tr>
+              <td>Location of the background image, where sUrl is an absolute or relative URL.</td></tr></tbody></table></td></tr>
             <tr>
               <td nowrap="" bgcolor="#ffffdd" align="right"><strong>foreground-image-frame</strong></td>
               <td bgcolor="#ffffdd">integer, for animated images (aPNG, GIF) that are collections of frames this property specifies number of frame to show.
@@ -527,7 +527,7 @@
               <td bgcolor="#ffffdd">
           <div><strong>specifies</strong> following values.</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td>length</td>
               <td>Floating-point number, followed by an absolute units designator (cm, mm, in, pt, pc, or px) or a relative units designator (em or ex). For more information about the supported length units, see <a href="http://www.w3.org/TR/CSS1#length-units">CSS Length Units Reference</a>.</td></tr>
             <tr>
@@ -538,7 +538,7 @@
               <td>
                 <div>Vertical alignment value. Possible values include the following:</div>
                 <table>
-                  <tr>
+                  <tbody><tr>
                     <td>top</td>
                     <td>Vertical alignment is at the top.</td></tr>
                   <tr>
@@ -546,13 +546,13 @@
                     <td>Vertical alignment is centered.</td></tr>
                   <tr>
                     <td>bottom</td>
-                    <td>Vertical alignment is at the bottom.</td></tr></table></td></tr>
+                    <td>Vertical alignment is at the bottom.</td></tr></tbody></table></td></tr>
                   <tr>
                     <td>left, center, right</td>
                     <td>
                 <div>Horizontal alignment value. Possible values include the following:</div>
                 <table>
-                  <tr>
+                  <tbody><tr>
                     <td>left</td>
                     <td>Horizontal alignment is to the left.</td></tr>
                   <tr>
@@ -560,17 +560,17 @@
                     <td>Horizontal alignment is centered.</td></tr>
                   <tr>
                     <td>right</td>
-                    <td>Horizontal alignment is to the right.</td></tr></table></td></tr>
+                    <td>Horizontal alignment is to the right.</td></tr></tbody></table></td></tr>
                   <tr>
                     <td nowrap="" bgcolor="#ffffdd" valign="middle"><font face="monospace">left</font>-side-length,<br/><font face="monospace">top</font>-side-length,<br/><font face="monospace">right</font>-side-length,<br/><font face="monospace">bottm</font>-side-length</td>
                     <td bgcolor="#ffffdd" valign="middle">
                 <div><strong><font color="#ff0000">Expandable filling</font></strong> image margins.</div>
                 <div>See <strong>Expandable tiling</strong> section in HtmLayout documentation.</div>
-                <div>To use extended fill background <strong>background-repeat</strong><em> </em>attribute should be equal to '<strong>expand</strong>'. Non standard. HTMLayout specific.</div>
-                <div></div></td></tr>
+                <div>To use extended fill background <strong>background-repeat</strong><em/>attribute should be equal to '<strong>expand</strong>'. Non standard. HTMLayout specific.</div>
+                <div/></td></tr>
                   <tr>
                     <td>calc(...)</td>
-                    <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></table>
+                    <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></tbody></table>
           <div><font face="monospace">.style1 { background-position:top center }</font></div>
           <div><font face="monospace">.style2 { background-position:0 0 }</font></div></td></tr>
                   <tr>
@@ -581,7 +581,7 @@
                     <td bgcolor="#ffffdd">
           <div><strong>specifies</strong> one of the following values.</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td nowrap="" valign="middle"><em>repeat</em></td>
               <td>Default. Image is repeated horizontally and vertically.</td></tr>
             <tr>
@@ -598,7 +598,7 @@
               <td bgcolor="#ffffdd" valign="middle"><strong><font color="#ff0000">Expandable filling</font></strong> mode.</td></tr>
             <tr>
               <td nowrap="" valign="middle"><strong><em>stretch</em></strong> [<em>keep-ratio</em>]</td>
-              <td bgcolor="#ffffdd" valign="middle">Image is stretched to fill background in full. This is the same mode as rendering of image in &lt;IMG&gt; element. If stretch is combined with <em>keep-ratio</em> then images is resized with preservation of aspect ratio. To position such an image use foreground-position attribute.</td></tr></table>
+              <td bgcolor="#ffffdd" valign="middle">Image is stretched to fill background in full. This is the same mode as rendering of image in &lt;IMG&gt; element. If stretch is combined with <em>keep-ratio</em> then images is resized with preservation of aspect ratio. To position such an image use foreground-position attribute.</td></tr></tbody></table>
           <div>See <a href="css-images-plus.htm">css-images-plus</a> for more details.</div></td></tr>
             <tr>
               <td nowrap="" bgcolor="#ffffdd" align="right"><strong>foreground-image-cursor</strong></td>
@@ -624,7 +624,7 @@
               <td>
           <div><strong>specifies</strong> one of the following values.</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td>none</td>
               <td>Default. Border is not drawn, regardless of any border width.</td></tr>
             <tr>
@@ -650,13 +650,13 @@
               <td>3-D inset is drawn in colors based on the value.</td></tr>
             <tr>
               <td>outset</td>
-              <td>3-D outset is drawn in colors based on the value.</td></tr></table></td></tr>
+              <td>3-D outset is drawn in colors based on the value.</td></tr></tbody></table></td></tr>
             <tr>
               <td nowrap="" align="right"><strong>border-bottom-width</strong></td>
               <td>
           <div>specifies one of the following values.</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td width="84">medium</td>
               <td>Default. &nbsp;</td></tr>
             <tr>
@@ -673,7 +673,7 @@
               <td bgcolor="#ffe4ca" valign="middle"><a href="fspu.whtm"><strong>Percents from free space</strong></a><strong>.</strong></td></tr>
             <tr>
               <td>calc(...)</td>
-              <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></table></td></tr>
+              <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></tbody></table></td></tr>
             <tr>
               <td nowrap="" align="right"><strong>border-collapse*</strong></td>
               <td>as per CSS</td></tr>
@@ -730,7 +730,7 @@
               <td>
           <div>specifies one of the following values.</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td>none</td>
               <td>Default. Object displays where it appears in the text.</td></tr>
             <tr>
@@ -738,7 +738,7 @@
               <td>Text flows to the right of the object.</td></tr>
             <tr>
               <td>right</td>
-              <td>Text flows to the left of the object.</td></tr></table></td></tr>
+              <td>Text flows to the left of the object.</td></tr></tbody></table></td></tr>
             <tr>
               <td nowrap="" align="right"><strong>margin</strong></td>
               <td>
@@ -749,7 +749,7 @@
               <td>
           <div>specifies one of the following values.</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td>auto</td>
               <td>Default. Bottom margin is set equal to the top margin.</td></tr>
             <tr>
@@ -763,7 +763,7 @@
               <td bgcolor="#ffe4ca" valign="middle"><strong>Percents from free space.</strong></td></tr>
             <tr>
               <td>calc(...)</td>
-              <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></table></td></tr>
+              <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></tbody></table></td></tr>
             <tr>
               <td nowrap="" align="right"><strong>margin-left</strong></td>
               <td><strong>--&quot;--</strong></td></tr>
@@ -779,7 +779,7 @@
           <div>Sets or retrieves the amount of space to insert between the object and its margin or, if there is a border, between the object and its border.</div>
           <div>specifies one of the following values.</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td>length</td>
               <td>Floating-point number, followed by an absolute units designator (cm, mm, in, pt, pc, or px) or a relative units designator (em or ex). For more information about the supported length units, see <a href="http://www.w3.org/TR/CSS1#length-units">CSS Length Units Reference</a>.</td></tr>
             <tr>
@@ -790,7 +790,7 @@
               <td bgcolor="#ffe4ca" valign="middle"><strong>Percents from free space.</strong></td></tr>
             <tr>
               <td>calc(...)</td>
-              <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></table></td></tr>
+              <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></tbody></table></td></tr>
             <tr>
               <td nowrap="" align="right"><strong>padding-bottom</strong></td>
               <td>--&quot;--</td></tr>
@@ -806,7 +806,7 @@
             <tr>
               <td rowspan="7" valign="top">
           <div><strong>Classification properties</strong></div>
-          <div></div></td>
+          <div/></td>
               <td nowrap="" align="right"><strong>list-style</strong></td>
               <td>
           <div><strong>specifies</strong> up to three of the following values, in any order: type, position, image.</div>
@@ -816,29 +816,29 @@
               <td>
           <div><strong>specifies</strong> one of the following values.</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td>none</td>
               <td>Default. No image is specified.</td></tr>
             <tr>
               <td>url(sURL)</td>
-              <td>Location of the image, where sURL is an absolute or relative URL.</td></tr></table></td></tr>
+              <td>Location of the image, where sURL is an absolute or relative URL.</td></tr></tbody></table></td></tr>
             <tr>
               <td nowrap="" align="right"><strong>list-style-position</strong></td>
               <td>
           <div><strong>specifies</strong> one of the following values.</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td>outside</td>
               <td>Default. Marker is placed outside the text, and any wrapping text is not aligned under the marker.</td></tr>
             <tr>
               <td>inside</td>
-              <td>Marker is placed inside the text, and any wrapping text is aligned under the marker.</td></tr></table></td></tr>
+              <td>Marker is placed inside the text, and any wrapping text is aligned under the marker.</td></tr></tbody></table></td></tr>
             <tr>
               <td nowrap="" align="right"><strong>list-style-type</strong></td>
               <td>
           <div><strong>specifies</strong> one of the following values.</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td nowrap="" valign="middle">disc</td>
               <td>Default. Solid circles.</td></tr>
             <tr>
@@ -867,7 +867,7 @@
               <td bgcolor="#ffe4ca" valign="middle">Draws tree lines</td></tr>
             <tr>
               <td nowrap="" valign="middle">none</td>
-              <td>No marker is shown.</td></tr></table></td></tr>
+              <td>No marker is shown.</td></tr></tbody></table></td></tr>
             <tr>
               <td nowrap="" bgcolor="#ffe4ca" align="right"><strong>list-marker-color</strong></td>
               <td bgcolor="#ffe4ca">Sets the color of the list marker (bullet, number or tree line)</td></tr>
@@ -879,7 +879,7 @@
               <td bgcolor="#ffe4ca">
           <div>For list-style-type:tree-line this attribute defines style of the tree line:</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td>none</td>
               <td>Default. Line is not drawn, regardless of any border width.</td></tr>
             <tr>
@@ -890,11 +890,11 @@
               <td>Dashed line.</td></tr>
             <tr>
               <td>solid</td>
-              <td>Border is a solid line.</td></tr></table></td></tr>
+              <td>Border is a solid line.</td></tr></tbody></table></td></tr>
             <tr>
               <td rowspan="19" valign="top">
           <div><strong>Positioning and dimensional properties</strong></div>
-          <div></div></td>
+          <div/></td>
               <td nowrap="" align="right"><strong>position</strong></td>
               <td>static | relative | absolute | fixed<br/>As per <a href="http://www.w3.org/TR/REC-CSS2/visuren.html#positioning-scheme">CSS2 recommendation</a>.</td></tr>
             <tr>
@@ -903,7 +903,7 @@
           <div>As per <a href="http://www.w3.org/TR/REC-CSS2/visuren.html#positioning-scheme">CSS2 recommendation</a>.</div>
           <div><strong>Value</strong> that specifies one of the following values.</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td>auto</td>
               <td>Default. &nbsp;</td></tr>
             <tr>
@@ -914,7 +914,7 @@
               <td>Integer followed by a percent sign (%). The value is a percentage of the height of the parent object, which must be specified explicitly. Negative values are not allowed.</td></tr>
             <tr>
               <td>calc(...)</td>
-              <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></table></td></tr>
+              <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></tbody></table></td></tr>
             <tr>
               <td nowrap="" align="right"><strong>right</strong></td></tr>
             <tr>
@@ -926,7 +926,7 @@
               <td>
           <div><strong>Value</strong> that specifies one of the following values.</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td valign="top">auto</td>
               <td>Default. &nbsp;</td></tr>
             <tr>
@@ -943,7 +943,7 @@
               <td bgcolor="#ffe4ca" valign="middle">Will set height as a percentage of width of the element itself. This allow element to maintain its aspect ratio.</td></tr>
             <tr>
               <td>calc(...)</td>
-              <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></table></td></tr>
+              <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></tbody></table></td></tr>
             <tr>
               <td nowrap="" align="right"><strong>z-index</strong></td>
               <td>As per <a href="http://www.w3.org/TR/REC-CSS2/visuren.html#z-index">CSS2</a>.</td></tr>
@@ -952,7 +952,7 @@
               <td valign="middle">
           <div>overflow-type [scroll-manner]. First overflow-type value specifies one of the following values. Shortcut attribute of overflow-x and overflow-y</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td>visible</td>
               <td>Default. Content is not clipped and scroll bars are not added.</td></tr>
             <tr>
@@ -972,14 +972,14 @@
               <td bgcolor="#ffe4ca" valign="middle">Element shows scroll position indicator when mouse is hovering this element</td></tr>
             <tr>
               <td bgcolor="#ffe4ca" valign="middle">none</td>
-              <td bgcolor="#ffe4ca" valign="middle">That's an equivalent of defining <code>{ overflow:visible; min-width:min-content; min-height:min-content; }</code></td></tr></table>
+              <td bgcolor="#ffe4ca" valign="middle">That's an equivalent of defining <code>{ overflow:visible; min-width:min-content; min-height:min-content; }</code></td></tr></tbody></table>
           <div>Second (optional) parameter is a definition of the scroll-manner() function, see defintion of the scroll-manner below.</div></td></tr>
             <tr>
               <td align="right"><strong>overflow-x<br/>overflow-y</strong></td>
               <td>
           <div>overflow-type [scroll-manner]. First overflow-type value specifies one of the following values:</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td>visible</td>
               <td>Default. Content is not clipped and scroll bars are not added.</td></tr>
             <tr>
@@ -999,7 +999,7 @@
               <td bgcolor="#ffe4ca" valign="middle">Element shows scroll position indicator when mouse is hovering this element</td></tr>
             <tr>
               <td bgcolor="#ffe4ca" valign="middle">none</td>
-              <td bgcolor="#ffe4ca" valign="middle">That's an equivalent of defining <code>{ overflow:visible; min-width:min-content; }</code> or<br/><code>{ overflow:visible; min-height:min-content; }</code>.</td></tr></table>
+              <td bgcolor="#ffe4ca" valign="middle">That's an equivalent of defining <code>{ overflow:visible; min-width:min-content; }</code> or<br/><code>{ overflow:visible; min-height:min-content; }</code>.</td></tr></tbody></table>
           <div>Second (optional) parameter is a definition of the scroll-manner() function, see defintion of the scroll-manner below.</div></td></tr>
             <tr>
               <td bgcolor="#ffe4ca" align="right">
@@ -1009,7 +1009,7 @@
               <td bgcolor="#ffe4ca">
           <div>These attributes accept either <em>inherit</em> value or &quot;function&quot; named <em>scroll-manner()</em> with the following named parameters:</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td nowrap="" valign="top"><em>inherit</em></td>
               <td>default value</td></tr>
             <tr>
@@ -1040,7 +1040,7 @@
             <tr>
               <td nowrap="" valign="top"><em>wheel-step</em> : length | percent | auto</td>
               <td>
-                <div>delta added to current scroll position on   each MOUSE_WHEEL event&nbsp;received.</div></td></tr></table>
+                <div>delta added to current scroll position on   each MOUSE_WHEEL event&nbsp;received.</div></td></tr></tbody></table>
           <div>Example of scroll manner style definition:</div>
           <div><font face="Courier New">div#scrollable {</font></div>
           <div><font face="Courier New">&nbsp;overflow:auto;</font></div>
@@ -1053,7 +1053,7 @@
               <td>
           <div>specifies one of the following values.</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td>auto</td>
               <td>Default. Default width of the object.</td></tr>
             <tr>
@@ -1067,13 +1067,13 @@
               <td bgcolor="#ffe4ca" valign="middle"><strong>Percentage of free space in the container.</strong></td></tr>
             <tr>
               <td>calc(...)</td>
-              <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></table></td></tr>
+              <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></tbody></table></td></tr>
             <tr>
               <td align="right"><strong>min-height</strong></td>
               <td>
           <div>specifies the minimum height for an element.</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td>length</td>
               <td>Floating-point number followed by an absolute units designator (cm, mm, in, pt, pc, or px) or a relative units designator (em or ex). For more information about the supported length units, see <a href="http://www.w3.org/TR/CSS1#length-units">CSS Length Units Reference</a>.</td></tr>
             <tr>
@@ -1084,13 +1084,13 @@
               <td bgcolor="#ffe4ca" valign="middle">Will set min-height as a percentage of width of the element itself. This allow element to maintain its aspect ratio.</td></tr>
             <tr>
               <td>calc(...)</td>
-              <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></table></td></tr>
+              <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></tbody></table></td></tr>
             <tr>
               <td align="right"><strong>min-width</strong></td>
               <td>
           <div>specifies the minimum width for an element.</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td>length</td>
               <td>Floating-point number followed by an absolute units designator (cm, mm, in, pt, pc, or px) or a relative units designator (em or ex). For more information about the supported length units, see <a href="http://www.w3.org/TR/CSS1#length-units">CSS Length Units Reference</a>.</td></tr>
             <tr>
@@ -1105,13 +1105,13 @@
                 <div>In HTMLayout all elements are getting this value by default to mimic Internet Explorer behavior. Non standard.</div></td></tr>
             <tr>
               <td>calc(...)</td>
-              <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></table></td></tr>
+              <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></tbody></table></td></tr>
             <tr>
               <td align="right"><strong>max-height</strong></td>
               <td>
           <div>specifies the maximum height for an element.</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td>length</td>
               <td>Floating-point number followed by an absolute units designator (cm, mm, in, pt, pc, or px) or a relative units designator (em or ex). For more information about the supported length units, see <a href="http://www.w3.org/TR/CSS1#length-units">CSS Length Units Reference</a>.</td></tr>
             <tr>
@@ -1124,13 +1124,13 @@
               <td bgcolor="#ffe4ca" valign="middle">Will set height as a percentage of width of the element itself. This allow element to maintain its aspect ratio.</td></tr>
             <tr>
               <td>calc(...)</td>
-              <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></table></td></tr>
+              <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></tbody></table></td></tr>
             <tr>
               <td align="right"><strong>max-width</strong></td>
               <td>
           <div>specifies the maximum width for an element.</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td>length</td>
               <td>Floating-point number followed by an absolute units designator (cm, mm, in, pt, pc, or px) or a relative units designator (em or ex). For more information about the supported length units, see <a href="http://www.w3.org/TR/CSS1#length-units">CSS Length Units Reference</a>.</td></tr>
             <tr>
@@ -1146,17 +1146,17 @@
                 <div>Non standard.</div>
                 <div>Example, table looks like as max-width:auto set:</div>
                 <table border="1" cellspacing="1">
-                  <tr>
-                    <td>This table has no width set.</td></tr></table></td></tr>
+                  <tbody><tr>
+                    <td>This table has no width set.</td></tr></tbody></table></td></tr>
                   <tr>
                     <td>calc(...)</td>
-                    <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></table></td></tr>
+                    <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></tbody></table></td></tr>
                   <tr>
                     <td bgcolor="#ffe4ca" align="right"><a name="flow-attribute"><strong>flow</strong></a></td>
                     <td bgcolor="#ffe4ca" valign="middle">
           <div>Flow direction of child elements in block containers (e.g. DIVs). This attribute defines type of <em>layout manager</em> (LM) used by the block container.</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td><strong>vertical</strong></td>
               <td>Default value. All child elements in block element placed from top to bottom. Standard behavior of DIV in HTML</td></tr>
             <tr>
@@ -1170,7 +1170,7 @@
               <td>Multiple columns. All child blocks placed from top to bottom. Overflowed blocks wrapped on the next column. width:100%% for blocks in this layout correspond to the width of the column.</td></tr>
             <tr>
               <td><strong>&quot;...template...&quot;</strong></td>
-              <td></td></tr></table>
+              <td/></tr></tbody></table>
           <div>See <a href="http://www.terrainformatica.com/w3/flex-layout/flex-layout.htm">Flow and Flex Units</a> document for more information.</div></td></tr>
             <tr>
               <td bgcolor="#ffe4ca" align="right"><a name="hit-margin"><strong>hit-margin</strong></a></td>
@@ -1209,7 +1209,7 @@
               <td nowrap="" valign="top">
           <div>Width of outline:</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td width="84" align="right"><em>medium</em></td>
               <td>Default. &nbsp;</td></tr>
             <tr>
@@ -1223,13 +1223,13 @@
               <td>Floating-point number, followed by an absolute units designator (cm, mm, in, pt, pc, or px) or a relative units designator (em or ex). For more information about the supported length units, see <a href="http://www.w3.org/TR/CSS1#length-units">CSS Length Units Reference</a>.</td></tr>
             <tr>
               <td>calc(...)</td>
-              <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></table></td></tr>
+              <td><a href="csss!-calc-function.htm">the calc function</a>.</td></tr></tbody></table></td></tr>
             <tr>
               <td align="right"><strong>outline-style</strong></td>
               <td nowrap="" valign="top">
           <div>specifies one of the following values.</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td align="right"><em>none</em></td>
               <td>Default. Border is not drawn, regardless of any border width.</td></tr>
             <tr>
@@ -1240,7 +1240,7 @@
               <td>outline is a dashed line.</td></tr>
             <tr>
               <td align="right"><em>solid</em></td>
-              <td>outline is a solid line.</td></tr></table></td></tr>
+              <td>outline is a solid line.</td></tr></tbody></table></td></tr>
             <tr>
               <td align="right"><strong>outline-color</strong></td>
               <td nowrap="" valign="top">color of the outline.</td></tr>
@@ -1250,7 +1250,7 @@
             <tr>
               <td rowspan="5" valign="top">
           <div><strong>Pseudo-classes and other properties</strong></div>
-          <div></div></td>
+          <div/></td>
               <td nowrap="" align="right"><strong>cursor</strong></td>
               <td><em>auto | crosshair | default | pointer | move | e-resize | ne-resize | nw-resize | n-resize | se-resize | sw-resize | s-resize | w-resize | text | wait | help |  drag-copy | drag-move&nbsp;</em> values or url of .cur or .ani file.</td></tr>
             <tr>
@@ -1260,7 +1260,7 @@
               <td nowrap="" align="right"><strong>visibility</strong></td>
               <td>
           <table>
-            <tr>
+            <tbody><tr>
               <td align="right"><em>visible</em></td>
               <td>Default. element is visible and takes space;</td></tr>
             <tr>
@@ -1271,7 +1271,7 @@
               <td bgcolor="#ffe4ca">Sciter specific, element is excluded from rendering tree in exactly the same way as display:none.</td></tr>
             <tr>
               <td align="right"><em>collapse</em></td>
-              <td>element takes no space and is invisible;</td></tr></table>
+              <td>element takes no space and is invisible;</td></tr></tbody></table>
           <p><font color="#990033">ATTN: meaning of <em>collapse</em> is extended to support of not only rows in tables as per standard CSS but it is applicable for all other elements. <em>visibility: collapse</em> is an equivalent of <em>display:none</em> but collapsed elements participate in computation of intrinsic widths of containers thus dynamic change of visibility:visible to visibility:collapse will not change computed width of container element.</font></p>
           <p><font color="#990033">Changing of visibility:visible/collapse is recommended for dynamic hide/show effects. It is easy to hide element by setting display:none to reenable its appearance is difficult - there many display values to choose from: block, inline-block, list-item, etc.</font></p></td></tr>
             <tr>
@@ -1279,7 +1279,7 @@
               <td bgcolor="#ffffdd">
           <div>specifies one of the following values.</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td>ltr</td>
               <td>Default. Content flows left to right.</td></tr>
             <tr>
@@ -1287,7 +1287,7 @@
               <td>Content flows right to left.</td></tr>
             <tr>
               <td>inherit</td>
-              <td>Content flow is inherited.</td></tr></table></td></tr>
+              <td>Content flow is inherited.</td></tr></tbody></table></td></tr>
             <tr>
               <td bgcolor="#ffffdd" align="right"><strong>transition</strong></td>
               <td bgcolor="#ffffdd">
@@ -1303,7 +1303,7 @@
               <td nowrap="" valign="top">
           <div>Value that specifies one of the following values:</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td>auto</td>
               <td>- default.</td></tr>
             <tr>
@@ -1311,13 +1311,13 @@
               <td>- always insert page break before this element.</td></tr>
             <tr>
               <td bgcolor="#ffe4ca" valign="middle">percentage</td>
-              <td bgcolor="#ffe4ca" valign="middle">- integer followed by a percent sign (%). <strong>Conditional page break</strong>. The value is a percentage of the height of the page. Engine will insert page break only if position of the element on the page is greater than this value.</td></tr></table></td></tr>
+              <td bgcolor="#ffe4ca" valign="middle">- integer followed by a percent sign (%). <strong>Conditional page break</strong>. The value is a percentage of the height of the page. Engine will insert page break only if position of the element on the page is greater than this value.</td></tr></tbody></table></td></tr>
             <tr>
               <td align="right"><strong>page-break-after</strong></td>
               <td nowrap="" valign="top">
           <div>Value that specifies one of the following values:</div>
           <table>
-            <tr>
+            <tbody><tr>
               <td>auto</td>
               <td>- default.</td></tr>
             <tr>
@@ -1325,7 +1325,7 @@
               <td>- always insert page break after this element.</td></tr>
             <tr>
               <td bgcolor="#ffe4ca" valign="middle">percentage</td>
-              <td bgcolor="#ffe4ca" valign="middle">- integer followed by a percent sign (%). <strong>Conditional page break</strong>. The value is a percentage of the height of the page. Engine will insert page break after this element only if bottom position of the element on the page is greater than this value.</td></tr></table></td></tr>
+              <td bgcolor="#ffe4ca" valign="middle">- integer followed by a percent sign (%). <strong>Conditional page break</strong>. The value is a percentage of the height of the page. Engine will insert page break after this element only if bottom position of the element on the page is greater than this value.</td></tr></tbody></table></td></tr>
             <tr>
               <td rowspan="3" bgcolor="#ffe4ca" valign="top"><strong>Behavioral &nbsp;attributes</strong></td>
               <td nowrap="" bgcolor="#ffe4ca" align="right"><strong>behavior</strong></td>
@@ -1398,7 +1398,7 @@ p.status[state=&quot;warning&quot;] { content: &quot;Warning!&quot;; foreground-
           <p>NOTE: zoom in Sciter is close to IE's zoom but is different in two aspects:</p>
           <ol>
             <li><em>zoom</em> in sciter defines multiplication factor for all length values expressed in any units <strong>but not px</strong>. px units are always resolved to physical pixels.</li>
-            <li>zoom defines scale of children of the element - but not element itself.</li></ol></td></tr></table></div>
+            <li>zoom defines scale of children of the element - but not element itself.</li></ol></td></tr></tbody></table></div>
   <h3>Length units</h3>
   <p>The engine supports following length units:</p>
   <ul>
@@ -1421,22 +1421,33 @@ p.status[state=&quot;warning&quot;] { content: &quot;Warning!&quot;; foreground-
   <h3>Colors</h3>
   <p>Engine supports following forms of defining color constants:</p>
   <ul>
-    <li><code>color: <strong>#f00</strong>; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- #rgb form.</code></li>
-    <li><code>color: <strong>#ff0000</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- #rrggbb form.</code></li>
+    <li><code>color: <strong>#f00</strong>; - #rgb form.</code></li>
+    <li><code>color: <strong>#ff0000</strong> - #rrggbb form.</code></li>
+    <li><code>color: <strong>#aaff0000</strong> - #aarrggbb form.</code></li>
     <li><code>color: <strong>rgb</strong>(255,0,0) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- rgb(0..255,0..255,0..255) form.</code></li>
     <li><code>color: <strong>rgb</strong>(100%,0%,0%) &nbsp;&nbsp;- rgb(0..100%,0..100%,0..100%) form.</code></li>
     <li><code>color: <strong>rgba</strong>(255,0,0,0.5) - rgba(0..255,0..255,0..255,0..1) form.</code></li>
     <li><code>color: <strong>hsl</strong>(300,0%,0%) &nbsp;&nbsp;&nbsp;- hsl(0..360,0..100%,0..100%) form - HSL color space.</code></li>
-    <li><code>color: <strong>tint</strong>(@base-color, 50%, 0%) - tint(base-color, -1.0..1.0 [, -1.0..1.0]) form.</code></li></ul>
-  <div><font face="monospace">tint(src-color, luminance-delta, saturation-delta)</font> function allows to define colors linked with some base color. Parameters:</div>
-  <ol>
-    <li><font face="monospace">src-color</font> is a literal color value or some color @constant defined before.</li>
-    <li><font face="monospace">luminance-delta</font> is a float value in range -1.0 .. +1.0 - relative increment of luminance value of original color:<br/><u><font face="monospace">if</font></u><font face="monospace"> luminance-delta &lt; 0 <u>then</u> final-luminance = src-luminance * abs(luminance-delta)<br/><u>if</u> luminance-delta &gt; 0 <u>then</u> final-luminance = (1.0 - src-luminance) * luminance-delta</font></li>
-    <li><font face="monospace">saturation-delta, optional, </font>is a float value in range -1.0 .. +1.0 - relative increment of saturation value of original color:<font face="monospace"><br/><u>if</u> luminance-delta &lt; 0 <u>then</u> final-luminance = src-luminance * abs(luminance-delta)<br/><u>if</u> luminance-delta &gt; 0 <u>then</u> final-luminance = (1.0 - src-luminance) * luminance-delta</font></li></ol>
-  <p>Example, after following declarations:</p>
-  <p><font face="monospace">@const <strong>BASE_COLOR</strong>: #FF0000; /*red*/<br/>li { border:1px solid tint( <strong>@BASE_COLOR</strong>, -0.5); }</font></p>
-  <p>&lt;li&gt; elements will have borders of dark red color - #7F0000.</p>
-  <pre>
-</pre>
-</body>
+    <li><code>color: <b>morph</b>(basecolor, ...)</code> - color morphing/transformation function:&nbsp;<p><i>basecolor</i> is either color constant or color variable.</p>
+
+<p>The function accepts one of several parameters:</p>
+	<ul>
+<li><code>hue:Adeg</code> - creates new color by changing H (Hue)&nbsp;component of basecolor in  HSL color space. A is new angle,&nbsp;degree number 0...360&nbsp;- absolute value of H component.&nbsp;</li>
+<li><code>rotate:Adeg</code> - changes H&nbsp;by relative rotation from base color, A is a rotation angle : -360deg ... +360deg.</li>
+<li><code>lightness:p%</code> - creates new color by changing Lightness component of basecolor in  HSL color space. <i>p</i> is a number 0...100 - absolute value of L component.</li>
+<li><code>lightness:p%</code> - creates new color by changing L (Lightness) component of basecolor in  HSL color space. <i>p</i> is a number 0...100 - absolute value of L component.</li>
+<li><code>lighten:p%</code> - changes Lightness component of basecolor in HSL color space by increasing basecolor::L component. <i>p</i> is a number 0...100 - relative increment of L component.</li>
+<li><code>darken:p%</code> - changes Lightness component of basecolor in HSL color space by decreasing basecolor::L component. <i>p</i> is a number 0...100 - relative decrement of L component.</li>
+<li><code>saturation:p%</code> - creates new color by changing S (Saturation)&nbsp;component of basecolor in  HSL color space. <i>p</i> is a number 0...100 - absolute value of S component.</li>
+<li><code>saturate:p%</code> - changes S by increasing Saturation component of basecolor in HSL color space. <i>p</i> is a number 0...100 - relative increment of S component.</li>
+<li><code>desaturate:p%</code> - changes S by decreasing Saturation component of basecolor in HSL color space. <i>p</i> is a number 0...100 - relative decrement of S component.</li>
+<li><code>opacity:p%</code> - creates new color by changing A (alpha)&nbsp;component of basecolor in  RGBA color space. <i>p</i> is a number 0...100 - absolute value of A component, if <code>100%</code> then color is opaque and if <code>0%</code> then color fully transparent.</li>
+<li><code>opacify:p%</code> - changes A (alpha) by increasing or decreasing current A value of basecolor. <i>p</i> is a number -100%...100% - relative increment/decrement of A component.</li>
+<li><code>color2,mix:p%</code> - creates color that is between basecolor and color2, <i>p</i> is a number 0%...100% - ratio of the mix. If p == 0% then result is basecolor and  if 100% - color2.</li>
+<li><code>grayscale:p%</code> - converts the basecolor to grayscale. If p is 100% then result is pure grayscale color (R == G == B).&nbsp; If p is 0% then result is original basecolor.</li>
+<li><code>sepia:p%</code> - converts the basecolor to sepia. If p is 100% then result is pure sepia color, if p is 0% then result is original basecolor.</li>
+</ul>
+</li></ul>
+
+  </body>
 </html>

@@ -282,6 +282,7 @@ namespace utf8
         }
         outbuf.push( WCHAR(0xd7c0 + (b >> 10)) );
         outbuf.push( WCHAR(0xdc00 | (b & 0x3ff)) );
+        continue;
       }
       else
       {

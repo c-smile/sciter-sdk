@@ -106,6 +106,11 @@ function String_test()
   
 }
 
+function* genNumbers(n) { // generates consecutive numbers [0..n)
+  for(var i in n)
+    yield i;
+}
+
 function Array_test()
 {
   var a0 = [1,2,3,4,5,6,7,8,9,10];
@@ -214,16 +219,17 @@ function Array_test()
 
   assert 8 in [8,9,10]; // NOTE: this is different from ES, ES treats arrays as objects!    
   assert 1 !in [8,9,10]; // NOTE: this is different from ES, ES treats arrays as objects!  
-  
-  // tagged arrays: "typed tuples"
-  /*var t1 = [abc: 0, 1, 2];
-  assert t1.tag == #abc 
-      && t1[0] == 0
-      && t1[1] == 1
-      && t1[2] == 2;
-  assert typeof t1 == #array;
-  assert t1 != [0,1,2];
-  assert t1 == [abc:0,1,2]; */  
+
+  // spread
+  const sx1 = [1,2,3];
+  const sx2 = [0, ..sx1];
+  assert sx2 == [0,1,2,3];
+  const sx3 = [5,6,7];
+  const sx4 = [0, ..sx1, 4, ..sx3];
+  assert sx4 == [0,1,2,3,4,5,6,7];
+
+  const sx5 = [..genNumbers(5)];
+  assert sx5 == [0,1,2,3,4];  
   
 }
 
@@ -237,10 +243,19 @@ function Tuple_test()
   assert a0[0] == 1 && a0[1] == 2 && a0[2] == 3;
   assert a0.tag == #test;
   assert a0.length == 3;
-  //stdout.printf("%v\n", a1);
-  //var x1 = [2,3,4];
-  //var x2 = [1,2,3];
-  //var x3 = [8,9,10];
+
+  // spread
+  const sx1 = [1,2,3];
+  const sx2 = [test1: 0, ..sx1];
+  assert sx2 == [test1:0,1,2,3];
+  const sx3 = [test2:5,6,7];
+  const sx4 = [test3:0, ..sx1, 4, ..sx3];
+  assert sx4 == [test3:0,1,2,3,4,5,6,7];
+
+  const sx5 = [test3:..genNumbers(5)];
+  assert sx5 == [test3:0,1,2,3,4];  
+
+
 }
 
 function Integer_test()
@@ -772,7 +787,12 @@ function Function_test()
   var func2 = new Function("return 2 + 2");
   if( typeof func2 != #function) throw "new Function(...) 4.3 failed !"; 
   if( func2() != 4) throw "new Function(...) 4.4 failed !"; 
-  
+
+  // parameters spread
+  function takeFive(args..) { assert args == [0,1,2,3,4]; }
+
+  takeFive(..genNumbers(5));
+
 }
 
 function TryCatchFinally_test()

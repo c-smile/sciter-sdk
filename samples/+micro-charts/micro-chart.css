@@ -10,16 +10,16 @@ svg.chart.pie {
 }
 
 svg.chart.donut { 
-  aspect: "MicroChart.Donut" url(micro-chart.tis);
+  aspect: MicroChart.Donut url(micro-chart.tis);
   size:16dip;
 }
 
 svg.chart.line { 
-  aspect: "MicroChart.Line" url(micro-chart.tis);
+  aspect: MicroChart.Line url(micro-chart.tis);
   size:32dip 16dip;
 }
 
 svg.chart.bar { 
-  aspect: "MicroChart.Bar" url(micro-chart.tis);
+  aspect: MicroChart.Bar url(micro-chart.tis);
   size:40dip 16dip;
 }

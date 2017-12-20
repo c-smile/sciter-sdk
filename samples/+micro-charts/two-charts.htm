@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <title></title>
+        <style>
+
+            @import url(micro-chart.css);
+
+            div.stack { flow:stack; size:50dip 30dip; }
+            div.stack > svg { display:block; background:transparent; /*border:1px solid; size:*;*/ }
+
+            svg.chart.custom1 { 
+                aspect: MicroChart.Line( fill: #c6d9fd, stroke: blue, stroke-width:3px ) url(micro-chart.tis);
+                size:50dip 30dip;
+            }
+
+            svg.chart.custom2 { 
+                aspect: MicroChart.Line( fill: gold, stroke: red, stroke-width:3px ) url(micro-chart.tis);
+                margin-top:*;
+                size:50dip 15dip;
+            }
+
+
+        </style>
+        <script type="text/tiscript">
+
+            $(#updating).timer(1s, function() {
+            var random = rand(10);
+            var values = this.value;
+            values.shift();
+            values.push(random);
+            this.value = values;
+            return true;
+            });
+            $(#updating1).timer(1s, function() {
+            var random = rand(10);
+            var values = this.value;
+            values.shift();
+            values.push(random);
+            this.value = values;
+            return true;
+            });
+
+        </script>
+    </head>
+    <body>
+        <p>Test:</p>
+
+        <div.stack>
+            <svg.chart.custom1 #updating value="5,3,9,6,5,9,7,3,5,2,5,3,9,6,5,9,7,3,5,2" />
+            <svg.chart.custom2 #updating1 value="5,3,9,6,5,9,7,3,5,2,5,3,9,6,5,9,7,3,5,2" />
+        </div>
+
+    </body>
+</html>

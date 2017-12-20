@@ -151,14 +151,22 @@ var symBorder = #border;
   <p>Any <code>,</code> (comma) appearing between the last element, and the <code>]</code> (closing square bracket) is ignored. Therefore, this is also a valid array declaration:</p>
   <pre>var a = [ 1, 2, 3, &quot;four&quot;, 5, ];
 </pre>
-  <p>The kind-of-formal definition of the array literal:</p>
+  
+	
+	<h4>Spread operator in Array literals</h4>
+	<p>Array literals may contain so called spread  expressions&nbsp;<code>.. &lt;iterable&gt;</code>&nbsp;where <code>&lt;iterable&gt;</code> is either an array, tuple or instance of a generator. Spreads allow array literal to be composed from other arrays and generated sequences. So this produces <code>true</code>:</p>
+	
+	
+	<pre>var a1 = [0,1,2];
+var a2 = [..a1, 3, 4];
+a2 == [0, 1, 2, 3, 4];</pre><p>The kind-of-formal definition of the array literal:</p>
   <p><code>[</code> ( <code>&lt;rs-expr&gt;</code> <code>,</code> )* &nbsp;<code>]</code></p>
   <p>Where &lt;rs-expr&gt; is the so-called right side expression - the expression that can appear on the right side of the <code>=</code> (assignment) operator.</p>
   <h3>Object literals</h3>
   <p>Object literals allow to define (construct) objects inline. The object literal is a list of key-value pairs separated by <code>,</code> (comma) or <code>;</code> (semicolon), and enclosed in <code>{</code> and <code>}</code> brackets (curled brackets). Each key-value pair consists of the key expression-initializer, and the value expression-initializer, separated by <code>:</code> (colon).</p>
   <pre>var obj = { one: 1, two: 2, three: &quot;three&quot;, four:4 };
 </pre>
-  <p>If the key is presented as a name token, it is interpretted as a symbol name. Thus, the following statement:</p>
+  <p>If the key is presented as a name token, it is interpreted as a symbol name. Thus, the following statement:</p>
   <pre>var obj = { #one: 1, #two: 2, #three: &quot;three&quot;, #four:4 };
 </pre>
   <p>is a precise equivalent of the statement above.</p>

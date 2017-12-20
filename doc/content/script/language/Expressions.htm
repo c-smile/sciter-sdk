@@ -4,7 +4,7 @@
     <meta name="generator" content="h-smile:richtext"/>
   </head>
 <body>
-  <h1>Expressions</h1><input type="checkbox"  checked=""  id="show-defintions" />&nbsp;show/hide defintions.
+  <h1>Expressions</h1><input type="checkbox" checked="" id="show-defintions"/>&nbsp;show/hide defintions.
   <h2>Assignment expressions</h2>
   <ol>
     <li>&lt;name&gt; <strong><code>=</code></strong> &lt;expression&gt;</li>
@@ -70,7 +70,9 @@
     <dt>&lt;expression&gt; <strong><code>[</code></strong> &lt;index-expression&gt; <strong><code>]</code></strong></dt>
     <dd>Retrieves the element value at the &lt;index-expression&gt; position in the &lt;expression&gt; - presumably an object, an array, or a class. If no such element exists, returns the <em>undefined</em> value.</dd>
     <dt>&lt;array-or-string&gt; <strong><code>[</code></strong> [&lt;int-expression-start&gt;] <strong><code>..</code></strong> [&lt;int-expression-end&gt;] <strong><code>]</code></strong></dt>
-    <dd>A slice of a string or an array. Returns the sub-array or the sub-string from &lt;start&gt; (inclusive) to &lt;end&gt; (exclusive). If &lt;int-expression-start&gt; is omitted, index <em>0</em> is used, and if &lt;int-expression-end&gt; is omitted, then the value of <em>.length</em> is used. Example, following fragment will print &quot;Spain&quot; in stdout:<br/><code>var str = &quot;The rain in Spain&quot;;<br/>stdout.println( str[12..] );</code></dd></dl>
+    <dd>A slice of a string or an array. Returns the sub-array or the sub-string from &lt;start&gt; (inclusive) to &lt;end&gt; (exclusive). If &lt;int-expression-start&gt; is omitted, index <em>0</em> is usde, and if &lt;int-expression-end&gt; is omitted, then the value of <em>.length</em> is used. Example, following fragment will print &quot;Spain&quot; in stdout:<pre>var str = &quot;The rain in Spain&quot;;
+stdout.println( str[12..] );</pre>
+</dd></dl>
   <dt>&lt;expression&gt; <strong><code>like</code></strong> &lt;pattern-expression&gt;<br/>&lt;expression&gt; <strong><code>!like</code></strong> &lt;pattern-expression&gt; (not like)</dt>
   <dd>&lt;pattern&gt; can be on of the following expressions:
     <ul>

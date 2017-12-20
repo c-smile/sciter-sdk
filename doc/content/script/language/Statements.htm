@@ -7,10 +7,12 @@
     <meta name="generator" content="h-smile:richtext"/>
   </head>
 <body>
-  <h1>Statements</h1><input type="checkbox" checked="" id="show-defintions"/>&nbsp;show/hide definitions.
+  <h1>Statements</h1>
   <dl class="flat">
     <dt><strong><code>{</code></strong> &lt;statements&gt; <strong><code>}</code></strong></dt>
     <dd>A sequence of statements, delimited by the curly brackets, '{' and '}', is called a <strong>block</strong>. A block is itself a statement. Each block establishes its own namespace for the variables declared by the <strong>var</strong> and <strong>const</strong> statements.</dd>
+		<dt>&lt;expression&gt; <code>(</code> [&lt;param-expression&gt;[&nbsp;<code>,</code> &lt;param-expression&gt;[&nbsp;<code>,</code> ... &lt;param-expression&gt;]]] <code>)</code> </dt>
+		<dd>function/method call. Expression on the left shall evaluate to function reference. List of param-expressions (if any) will be evaluated and passed to the function as arguments.<p><i>Param-expression</i> is either a normal expression or a spread operator <code>..</code>&lt;iterable&gt; where <i>iterable</i> is an array, tuple or generator instance. Iterable expands to sequence of arguments.</p></dd>
     <dt><strong><code>if</code></strong> <strong><code>(</code></strong> &lt;expression&gt; <strong><code>)</code></strong> &lt;statement&gt; [ <strong><code>else</code></strong> &lt;statement&gt; ]</dt>
     <dd>Conditionally executes a statement, depending on the result of the &lt;expression&gt;.</dd>
     <dt><strong><code>while</code></strong> [ <code><strong>:</strong></code> name ] <strong><code>(</code></strong> &lt;expression&gt; <strong><code>)</code></strong> &lt;statement&gt;</dt>

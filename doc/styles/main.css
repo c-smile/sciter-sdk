@@ -22,32 +22,28 @@ frameset#body
 
 frameset#body > splitter { width:4dip; }
 
-#toolbar 
+toolbar 
 {
   flow:horizontal;
+  background:transparent;
 }
-#toolbar > button
+toolbar > button
 {
   behavior:clickable;
-  width: 34px;
-  height: 34px;
-  padding:2px;
-  foreground-position:center center;
-  foreground-repeat:no-repeat;
-  background-image:none;  
+  size: 34dip;
+  padding:2dip;
+  background-position:center center;
+  background-repeat:no-repeat;
+  background-size:24dip;
+  fill:@INFO-COLOR;
 }
 
-#toolbar > button:hover
+toolbar > button:disabled 
 {
-  foreground-image-transformation: contrast-brightness-gamma(0.5,0.7, 1.3);
+  fill:morph(@INFO-COLOR,@BASE-COLOR,mix:75%); 
 }
-
-#toolbar > button:disabled 
-{ 
-  opacity:0.35;
-}
-#toolbar > button.back    { foreground-image:url(back.png); }
-#toolbar > button.forward { foreground-image:url(forward.png); }
+toolbar > button.back    { background-image:url(path: M1408 960v-128q0-26-19-45t-45-19h-502l189-189q19-19 19-45t-19-45l-91-91q-18-18-45-18t-45 18l-362 362-91 91q-18 18-18 45t18 45l91 91 362 362q18 18 45 18t45-18l91-91q18-18 18-45t-18-45l-189-189h502q26 0 45-19t19-45zm256-64q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z); }
+toolbar > button.forward { background-image:url(path: M1413 896q0-27-18-45l-91-91-362-362q-18-18-45-18t-45 18l-91 91q-18 18-18 45t18 45l189 189h-502q-26 0-45 19t-19 45v128q0 26 19 45t45 19h502l-189 189q-19 19-19 45t19 45l91 91q18 18 45 18t45-18l362-362 91-91q18-18 18-45zm251 0q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z); }
 
 #index
 {

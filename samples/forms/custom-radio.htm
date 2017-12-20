@@ -4,6 +4,7 @@
     <style>
     
       button[type=radio] { 
+        style-set: std-radio-base; // suppress default decoration styling
         background-image:url(stock:circle); 
         background-size:16dip 16dip; 
         background-position: 0 50%; 
@@ -11,6 +12,7 @@
         foreground:none;
         stroke:#333;
         stroke-width:1dip;
+        padding: 1dip 1dip 1dip 20dip;
       }
       button[type=radio]:checked { 
         // that fat dot inside:
@@ -25,6 +27,7 @@
       }
 
       button[type=checkbox] { 
+        style-set: std-checkbox-base; // suppress default decoration styling
         background-image:url(stock:frame); 
         background-size:16dip 16dip; 
         background-position: 0 50%; 
@@ -32,6 +35,7 @@
         foreground:none;
         stroke:red;
         stroke-width:1dip;
+        padding: 1dip 1dip 1dip 20dip;
       }
       button[type=checkbox]:checked { 
         // that fat dot inside:

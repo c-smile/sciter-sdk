@@ -30,8 +30,8 @@
       }
       toolbar > button                   
       {
-        foreground-position: 50% 50%; 
-        foreground-repeat:no-repeat;
+        background-position: 50% 50%; 
+        background-repeat:no-repeat;
         //foreground-size:auto;
         padding:0;
         size:46dip; 
@@ -51,12 +51,12 @@
           outline:2px orange solid -2px;
       }
 
-      toolbar > button#open         { foreground-image:image-map(icons,open); }
-      toolbar > button#reload       { foreground-image:image-map(icons,refresh); }
-      toolbar > button#help         { foreground-image:image-map(icons,help); }
-      toolbar > button#inspector    { foreground-image:image-map(icons,inspector); }
-      toolbar > button#open-in-view { foreground-image:image-map(icons,open-in-view); }
-      toolbar > button#glass        { foreground-image:image-map(icons,glass); margin-top:*; }
+      toolbar > button#open         { background-image:image-map(icons,open); }
+      toolbar > button#reload       { background-image:image-map(icons,refresh); }
+      toolbar > button#help         { background-image:image-map(icons,help); }
+      toolbar > button#inspector    { background-image:image-map(icons,inspector); }
+      toolbar > button#open-in-view { background-image:image-map(icons,open-in-view); }
+      toolbar > button#glass        { background-image:image-map(icons,glass); margin-top:*; }
       
             
       /*div#intro { behavior:htmlarea; }*/
@@ -149,7 +149,7 @@
 		    //view.open("file://" + System.home("../doc/main.htm"));
         view.window 
         {
-          url: "file://" + System.home("../doc/main.htm"),
+          url: "file://" + System.home("../../doc/main.htm"),
           type: View.FRAME_WINDOW,
           state: View.WINDOW_SHOWN,
           alignment:5,
@@ -207,6 +207,6 @@
       <button|checkbox #glass title="Glass mode" aria-label="Set Glass Mode"/> 
 
     </toolbar>
-    <frame #content src="sys-info.htm" aria-label="Content" ></frame>
+    <frame #content src="sys-info.htm" aria-label="Content"></frame>
   </body>
 </html>

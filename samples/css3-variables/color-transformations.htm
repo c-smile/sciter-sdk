@@ -2,16 +2,39 @@
     <head>
         <title>Test</title>
         <style>
+            html {
+              var(base): #f00;
+              //background:gold;
+            }
             input#hue
             {
               border:none;
               height: 3dip;
+              width: 100dip;
               background: linear-gradient(left, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
             }
 
-            div { size:100dip; vertical-align:middle; text-align:center; border-radius:50%; }
-            div#base { background-color: var(base,#f00); }
-            div#dependent { background-color: var(base50,#f00); }
+            div { width:300dip; padding:0.5em; margin:0.5em; color:#fff; }
+            div#base { background-color: color(base); }
+            div#lighten { background-color: morph(color(base),lighten:20%); }
+            div#darken { background-color: morph(color(base),darken:20%); }
+
+            div#saturate { background-color: morph(color(base),saturate:20%); }
+            div#desaturate { background-color: morph(color(base),desaturate:20%); }
+
+            div#rotatem { background-color: morph(color(base),rotate:-120deg); }
+            div#rotatep { background-color: morph(color(base),rotate:+120deg); }
+
+            div#mix { background-color: morph(color(base),#FFF,mix:50%); }
+
+            div#opacity50 { background-color: morph(color(base),opacity:50%); }
+            div#opacity75 { background-color: morph(color(base),opacity:75%); }
+
+            div#grayscale50 { background-color: morph(color(base),grayscale:50%); }
+            div#grayscale100 { background-color: morph(color(base),grayscale:100%); }
+
+            div#sepia100 { background-color: morph(color(base),sepia:100%); }
+
 
         </style>
         <script type="text/tiscript">
@@ -19,8 +42,7 @@
 
         function updateColors(angle) {
           self.style.variables { 
-            base: Color.hsv(360 + angle,1.0,1.0),
-            base50: Color.hsv(360 + angle,0.5,1.0)
+            base: Color.hsv(360 + angle,0.8,0.8),
           };
 
         } 
@@ -33,9 +55,26 @@
         </script>
     </head>
     <body>
+      <h2>Color functions in Sciter's CSS, a la LeSS </h2> 
+
       Base color <input|hslider#hue min=0 max=360 />
-      <div #base>Base color</div>
-      <div #dependent>Dependent color</div>        
+      <div #base>Base color - hsv(angle,80%,80%)</div>
+      <div #lighten>lighten:20%</div>
+      <div #darken>darken:20%</div>
+      <div #saturate>saturate:20%</div>
+      <div #desaturate>desaturate:20%</div>
+      <div #rotatem>rotate:-120deg</div>
+      <div #rotatep>rotate:+120deg</div>
+
+      <div #mix>mix(50%)</div>
+
+      <div #opacity50>opacity:50%</div>
+      <div #opacity75>opacity:75%</div>
+
+      <div #grayscale50>grayscale:50%</div>
+      <div #grayscale100>grayscale:100%</div>
+
+      <div #sepia100>sepia:100%</div>
 
     </body>
 </html>

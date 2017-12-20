@@ -1,5 +1,6 @@
 
 #include "sciter-x-window.hpp"
+#include "sciter-x-graphics.hpp"
 //#include "behaviors/behavior_video_generator.cpp"
 
 // native API demo
@@ -27,12 +28,23 @@ static sciter::value native_api() {
 
 }
 
+/*static sciter::value test_image_access(sciter::value vimg)
+{
+  sciter::image img = sciter::image::from(vimg); /// failed in this code
+  UINT w, h;
+  img.dimensions(w,h);
+  sciter::bytes_writer bw;
+  img.save(bw, SCITER_IMAGE_ENCODING_RAW);
+  return sciter::value();
+}*/
+
 class frame: public sciter::window {
 public:
   frame() : window(SW_TITLEBAR | SW_RESIZEABLE | SW_CONTROLS | SW_MAIN | SW_ENABLE_DEBUG) {}
 
   BEGIN_FUNCTION_MAP
     FUNCTION_0("nativeApi", native_api);
+/*    FUNCTION_1("testImageAccess", test_image_access);*/
   END_FUNCTION_MAP
 
 };

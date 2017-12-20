@@ -45,6 +45,13 @@ namespace sciter
     }
   };
 
+  struct bytes_writer: public writer // helper functor
+  {
+    pod::byte_buffer bb;
+    inline virtual bool write( aux::bytes data ) { bb.push(data.start, data.length); return true; }
+    aux::bytes bytes() const { return aux::bytes(bb.data(), bb.length()); }
+  };
+
   class graphics;
   class painter;
 
@@ -114,24 +121,11 @@ namespace sciter
 
     void paint( painter* p );
 
-    void save( writer& w, UINT quality = 0 /*JPEG qquality: 20..100, if 0 - PNG */ ) // save image as png or jpeg enoded data
+    void save( writer& w, SCITER_IMAGE_ENCODING encoding, UINT quality = 0 /*JPEG qquality: 20..100, if 0 - PNG */ ) // save image as png or jpeg enoded data
     {
-      GRAPHIN_RESULT r = gapi()->imageSave( himg, writer::image_write_function, &w, 24, quality ); 
+      GRAPHIN_RESULT r = gapi()->imageSave( himg, writer::image_write_function, &w, encoding, quality );
       assert(r == GRAPHIN_OK); (void)(r);
     }
-
-    /* example of use of the writer:
-    struct _: public writer // helper functor
-    {
-      pod::byte_buffer& bb;
-      inline _( pod::byte_buffer& abb ): bb(abb) {}
-      inline virtual bool write( aux::bytes data ) { bb.push(data.start, data.length); return true; }
-    };
-
-    void save( pod::byte_buffer& bb, UINT quality = 0)
-    {
-        save(_(bb),quality);
-    }*/
 
     ~image() 
     {

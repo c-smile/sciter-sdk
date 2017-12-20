@@ -29,9 +29,9 @@
       <p>Destroys underlying native bitmap. Use this method to force the image to release its bitmap (that can be pretty big) when it is not needed.</p></dd>
     <dt>toBytes</dt>
     <dd>
-      <div>( [<strong>compressionLevel</strong>:integer] &nbsp;) : <a href="../script/Bytes.htm">Bytes</a></div>
+      <div>( [<b>packaging</b>: #png |&nbsp;#jpeg | #webp | #raw] [,&nbsp;<strong>compressionLevel</strong>:integer] &nbsp;) : <a href="../script/Bytes.htm">Bytes</a></div>
       <p>Saves content of the image as a byte vector that can be used e.g. for uploading on the server.</p>
-      <p><em>compressionLevel</em> is a number in the range 10..100 - JPEG compression level. If it is omitted or zero then the image is saved using PNG encoding.</p></dd>
+      <p><em>compressionLevel</em> is a number in the range 10..100 - JPEG or WebP compression level. If <i>compressionLevel</i> is omitted or zero and no <i>packaging</i> provided then the image is saved using PNG encoding.</p></dd>
     <dt>fromBytes</dt>
     <dd>
       <div>( &nbsp;bytes : <a href="../script/Bytes.htm">Bytes</a> &nbsp;) : Image</div>

@@ -9,8 +9,8 @@
     include "toc.tis";
     include "indexer.tis";
     include "settings.tis";
-    var back      = self.$(#toolbar>button.back);
-    var forward   = self.$(#toolbar>button.forward);
+    var back      = self.$(toolbar>button.back);
+    var forward   = self.$(toolbar>button.forward);
     var frameset  = self.$(frameset#body);
     var contentFrame = self.$(frame#content);
     var toc = self.$(#toc);
@@ -24,53 +24,44 @@
       else toc.clear();
     }
    
-    frameset.onControlEvent = function(evt)
+    event historyStateChange 
     {
-      if( evt.type == Event.HISTORY_STATE_CHANGED )
-      {
-        back.state.disabled = !frameset.canGoBack();
-        forward.state.disabled = !frameset.canGoForward();
-        generateToc();
-        return true;
-      }
+      back.state.disabled = !frameset.canGoBack();
+      forward.state.disabled = !frameset.canGoForward();
+      generateToc();
     }
-    contentFrame.onControlEvent = function(evt)
+
+    event complete $(frame#content)
     {
-      if( evt.type == Event.DOCUMENT_COMPLETE )
-	  {
 		  generateToc();
-		  if(afterTocEvent)
-			afterTocEvent();
-		  afterTocEvent = undefined;
-	  }
-        
-      else if(evt.type == (Event.HYPERLINK_CLICK | Event.SINKING))
-      {
-        var url = evt.target.@["href"];
-        if( url like "http:*" || url like "https:*" )
-        {
-          Sciter.launch(url); // show external URLs in system browser.
-          return true;
-        }
+		  if(afterTocEvent) {
+			  afterTocEvent();
+		    afterTocEvent = null;
       }
+	  }
+
+    contentFrame << event ~click $(a[href^="http"]) (evt)
+    {
+      Sciter.launch(evt.target.@["href"]); // show external URLs in system browser.
+      return true;
     }
     
-	var afterTocEvent;
-	function GoToPage(pageurl, toc_entry)
-	{
-		if(contentFrame[0].url().indexOf(pageurl)!=-1)
-		{
-			goTocSection(toc_entry);
-		} else {
-			contentFrame.load(pageurl);
-			
-			afterTocEvent = function() {
-				goTocSection(toc_entry);
-			};
-		}
-	}
-	
-	View.SciterDocsGoToPage = GoToPage;
+  	var afterTocEvent;
+  	function GoToPage(pageurl, toc_entry)
+  	{
+  		if(contentFrame[0].url().indexOf(pageurl)!=-1)
+  		{
+  			goTocSection(toc_entry);
+  		} else {
+  			contentFrame.load(pageurl);
+  			
+  			afterTocEvent = function() {
+  				goTocSection(toc_entry);
+  			};
+  		}
+  	}
+  	
+  	View.SciterDocsGoToPage = GoToPage;
 
   // persistence of frameset state
   Settings.add {
@@ -92,10 +83,10 @@
   </script>
   </head>
   <body>
-  <div #toolbar>
+  <toolbar>
     <button accesskey="LEFT" .back disabled title="Go backward" />
     <button accesskey="RIGHT" .forward disabled title="Go forward" />
-  </div>
+  </toolbar>
   <frameset #body history>
     <div #index >
       <include src="help-index.htm">
