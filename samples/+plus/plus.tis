@@ -528,6 +528,7 @@ function @observing(func, paths..) {
               for(var i = start; i < end; ++i)
                 observeChanges(obj[i], onchange, spath);
             }
+            break;
             case #delete-range: spath = path + "[]"; break;
             default: return;
           }
@@ -567,26 +568,41 @@ function @observing(func, paths..) {
 
 // that is an equivalent of jQuery $.extend(deep) method.
 // it merges tree of objects and arrays without recreating exisiting objects
+
+
+function Array.merge(source) 
+{
+  for( var (i,v) in source ) 
+  {
+    if( i < this.length ) {
+      var rv = this[k];
+      if( typeof v == typeof rv && (typeof rv == #array || typeof rv == #object))
+        rv.merge(v);
+      else 
+        this[k] = v;
+    } else
+      this.push(v);
+  }
+  if( this.length > source.length )
+    this.length = source.length;
+}
+
 function Object.merge(objects..) 
 {
-  function merge1(reciever,source) {
+  function merge1(receiver,source) {
     var rv;
     for( var (k,v) in source ) 
     {
-      rv = reciever[k];
-      if( typeof v == #object && typeof rv == #object )
-        merge1(rv,v);
-      if( typeof v == #array && typeof rv == #array ) {
-        rv.length = v.length;
-        merge1(rv,v);
-      }
+      rv = receiver[k];
+      if( typeof v == typeof rv && (typeof rv == #array || typeof rv == #object))
+        rv.merge(v);
       else
-        reciever[k] = v;
+        receiver[k] = v;
     }
   }
 
   if(typeof this == #object)
-    for( var obj in objects ) // called as memeber function
+    for( var obj in objects ) // called as member function
       merge1(this,obj);
   else { 
     var _this = objects[0];
