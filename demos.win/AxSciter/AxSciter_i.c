@@ -6,7 +6,7 @@
 
 
  /* File created by MIDL compiler version 7.00.0555 */
-/* at Tue Dec 19 17:32:19 2017
+/* at Fri Dec 22 19:46:03 2017
  */
 /* Compiler settings for AxSciter.idl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 7.00.0555 

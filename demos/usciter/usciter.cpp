@@ -28,7 +28,7 @@ static sciter::value native_api() {
 
 }
 
-/*static sciter::value test_image_access(sciter::value vimg)
+static sciter::value test_image_access(sciter::value vimg)
 {
   sciter::image img = sciter::image::from(vimg); /// failed in this code
   UINT w, h;
@@ -36,7 +36,7 @@ static sciter::value native_api() {
   sciter::bytes_writer bw;
   img.save(bw, SCITER_IMAGE_ENCODING_RAW);
   return sciter::value();
-}*/
+}
 
 class frame: public sciter::window {
 public:
@@ -44,7 +44,7 @@ public:
 
   BEGIN_FUNCTION_MAP
     FUNCTION_0("nativeApi", native_api);
-/*    FUNCTION_1("testImageAccess", test_image_access);*/
+    FUNCTION_1("testImageAccess", test_image_access);
   END_FUNCTION_MAP
 
 };

@@ -36,7 +36,17 @@ toolbar > button
   background-repeat:no-repeat;
   background-size:24dip;
   fill:@INFO-COLOR;
+  cursor:pointer;
 }
+
+toolbar > button:hover {
+  fill: morph(@INFO-COLOR,lighten:20%); 
+}
+
+toolbar > button:active {
+  fill: morph(@INFO-COLOR,darken:20%); 
+}
+
 
 toolbar > button:disabled 
 {

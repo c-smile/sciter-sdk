@@ -25,25 +25,8 @@
     <li>
       <div><code>@include &quot;mime-type&quot; url(...) [media types list];</code> - inclusion of scripts from CSS. <br/>Example, this: <code>&lt;style&gt; @include &quot;text/tiscript&quot; url(script.tis) screen; &lt;/style&gt;</code><font face="Courier New"><br/></font>is an equivalent of <code>&lt;script type=&quot;text/tiscript&quot; src=&quot;script.tis&quot; /&gt;</code> except of media type condition.</div></li></ul>
   <p>Cascading: Sciter supports all CSS1 <a href="http://www.w3.org/TR/CSS1#basic-concepts">Basic concepts</a> and <a href="http://www.w3.org/TR/CSS1#cascading-order">Cascading orders</a>. HTMLayout also supports CSS 2.1 <a href="http://www.w3.org/TR/CSS21/selector.html#attribute-selectors">attribute selectors</a> and some essential selectors from CSS3 selector module.</p>
-  <h3>Custom CSS attributes</h3>
-  <p>Sciter (h-smile core) supports custom CSS attributes. All attributes with names starting with '-' are considered as custom attributes. Custom attributes are not inhereted from parent to child. Example of custom attribute declaration:</p>
-  <p>p { border: 1px solid red; <strong>-custom: &quot;value&quot;;</strong> &nbsp;&nbsp;}</p>
-  <p>After such a declaration all <strong>&lt;p&gt;</strong> elements will have style attribute <strong>-custom</strong> equals to &quot;value&quot;.</p>
-  <p>Value of custom attribute can be either:</p>
-  <ul>
-    <li>
-      <div>string (enclosed in &quot;&quot;), example: <em>&quot;string&quot;</em> ;</div></li>
-    <li>
-      <div>nmtoken, example: <em>some-token</em> ;</div></li>
-    <li>
-      <div>numeric value, example: <em>3.1415</em> ;</div></li>
-    <li>
-      <div>url, example: <em>url(http://something.com)</em>; &nbsp;</div></li>
-    <li>
-      <div>CSS selector, example: <em>selector(#id &gt; .cls)</em>;</div></li></ul>
   <div>Host application can use custom attributes for any purpose, engine does not interpret such attributes internally.</div>
-  <h3>Standard CSS attributes</h3>
-  <p>List of CSS attributes supported by h-smile core:</p>
+  <h3>List of CSS properties supported by Sciter</h3>
   <div>
     <table border="1" bordercolor="#fff2cc" cellspacing="0">
       <tbody><tr>
@@ -1448,6 +1431,55 @@ p.status[state=&quot;warning&quot;] { content: &quot;Warning!&quot;; foreground-
 <li><code>sepia:p%</code> - converts the basecolor to sepia. If p is 100% then result is pure sepia color, if p is 0% then result is original basecolor.</li>
 </ul>
 </li></ul>
+
+<h3>Custom CSS properties</h3>
+  <p>Sciter (h-smile core) supports custom CSS properties. All properties with names starting with '-' are considered as custom properties. Custom properties are not inhereted from parent to child. Example of custom property declaration:</p>
+  <p>p { border: 1px solid red; <strong>-custom: &quot;value&quot;;</strong> &nbsp;&nbsp;}</p>
+  <p>After such a declaration all <strong>&lt;p&gt;</strong> elements will have style attribute <strong>-custom</strong> equals to &quot;value&quot;.</p>
+  <p>Value of custom attribute can be either:</p>
+  <ul>
+    <li>
+      <div>string (enclosed in &quot;&quot;), example: <em>&quot;string&quot;</em> ;</div></li>
+    <li>
+      <div>nmtoken, example: <em>some-token</em> ;</div></li>
+    <li>
+      <div>numeric value, example: <em>3.1415</em> ;</div></li>
+    <li>
+      <div>url, example: <em>url(http://something.com)</em>; &nbsp;</div></li>
+    <li>
+      <div>CSS selector, example: <em>selector(#id &gt; .cls)</em>;</div></li></ul>
+
+<h3>Variables</h3>
+
+  <p>Variable is declared as a property but with name wrapped into <code>var(...)</code> construct, example:</p>
+
+  <pre>body {
+  var(back-color): #ccc;
+  var(text-color): #000;
+
+  var(base-width) : 100dip; 
+}</pre>
+
+  <p>Variables are inherited from parent to child. 
+     For example: if variable is declared on &lt;body&gt; element it will be available in all its children.</p>
+
+  <p>Variables can be used in other property value declarations
+     - all places where color or length units are expected by using either:</p>
+
+  <ul>
+     <li><code>var(name,defaultValue)</code> - substitutes the declaration by value of the name or, 
+     if it's not declared, by the defaultValue (color or length unit)</li> 
+     <li><code>length(name)</code> - substitutes the declaration by value of the name. 
+         If variable with that name is not declared or is not a length result is undefined.</li> 
+     <li><code>color(name)</code> - substitutes the declaration by value of the name. 
+         If variable with that name is not declared or is not a color result is undefined.</li></ul>
+
+    <p>Examples of variable use:</p>
+<pre>div {
+  background-color: color(back-color); /* #ccc */
+  width: length(base-width); /* 100dip */
+  height: var(base-height,80dip); /* 80dip as base-height was not defined */
+}</pre>
 
   </body>
 </html>

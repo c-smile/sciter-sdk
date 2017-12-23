@@ -257,7 +257,10 @@ template <typename T >
      slice<T> chars_of( const std::basic_string<T> &s ) {  return slice<T>(s.c_str(), s.length()); }
 
   template<typename T>
-     slice<T> elements_of( const std::vector<T> &s ) {  return slice<T>(s.cbegin(), s.size()); }
+     slice<T> elements_of(const T* s, size_t l) { return slice<T>(s, l); }
+
+  template<typename T>
+     slice<T> elements_of( const std::vector<T> &s ) {  return slice<T>(&s[0], s.size()); }
 
   template<typename T, int size>
      slice<T> elements_of(T (& arr)[size]){ return slice<T>(&arr[0],size);}
