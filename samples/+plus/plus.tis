@@ -570,21 +570,31 @@ function @observing(func, paths..) {
 // it merges tree of objects and arrays without recreating exisiting objects
 
 
-function Array.merge(source) 
+function Array.merge(arrays..) 
 {
-  for( var (i,v) in source ) 
-  {
-    if( i < this.length ) {
-      var rv = this[k];
-      if( typeof v == typeof rv && (typeof rv == #array || typeof rv == #object))
-        rv.merge(v);
-      else 
-        this[k] = v;
-    } else
-      this.push(v);
+  function merge1(receiver,source) {
+    for( var (i,v) in source ) 
+    {
+      if( i < receiver.length ) {
+        var rv = receiver[i];
+        if( typeof v == typeof rv && (typeof rv == #array || typeof rv == #object))
+          rv.merge(v);
+        else 
+          receiver[i] = v;
+      } else
+        receiver.push(v);
+    }
+    if( receiver.length > source.length ) receiver.length = source.length;
   }
-  if( this.length > source.length )
-    this.length = source.length;
+
+  if(typeof this == #array)
+    for( var arr in arrays ) // called as member function
+      merge1(this,arr);
+  else { 
+    var _this = arrays[0];
+    for( var arr in arrays.slice(1)) // called as static function
+      merge1(_this,arr);
+  }
 }
 
 function Object.merge(objects..) 
