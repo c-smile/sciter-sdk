@@ -15,10 +15,10 @@ AppSupportURL=https://notes.sciter.com/
 AppUpdatesURL=https://notes.sciter.com/
 DefaultDirName={pf}\SciterNotes
 DisableProgramGroupPage=yes
-LicenseFile=C:\sciter\stable\sdk\notes\license.txt
-OutputDir=C:\sciter\stable\sdk\notes\distributions
+LicenseFile=..\..\notes\license.txt
+OutputDir=..\..\notes\distributions
 OutputBaseFilename=sciter-notes-setup
-SetupIconFile=C:\sciter\stable\sdk\notes\windows\notes.ico
+SetupIconFile=..\..\notes\windows\notes.ico
 Compression=lzma
 SolidCompression=yes
 
@@ -30,8 +30,8 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: "C:\sciter\stable\sdk\bin\32\notes.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\sciter\stable\sdk\bin\32\sciter.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\bin\32\notes.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\bin\32\sciter.dll"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

@@ -3,18 +3,20 @@ include "settings.tis";
 
 function serve() {
 
-  const PORT = 0x0DEB;
- 
   function driver(socket) 
   {
     ViewDriver.create(socket);
     return true; // we accept this connection
   }
+
+  const PIPE_NAME = "sciter-inspector";
  
-  var serverSocket = DataSocket.listen(driver,PORT,"0.0.0.0");
-  if( !serverSocket ) {
-    //view.msgbox(#error, "Another instance of Inspector is running.");
-    var socket = DataSocket.connect(PORT, "localhost");
+  var serverSocket = Net.DataSocket.listen(driver,PIPE_NAME);
+  if( !serverSocket ) 
+  {
+    //debug stacktrace;
+    //view.msgbox(#error, "Yet another instance of Inspector is running.");
+    var socket = Net.DataSocket.connect(PIPE_NAME);
     if(!socket) 
     {
       view.msgbox(#error, "Inspector cannot establish connection with another instance.");
@@ -22,17 +24,21 @@ function serve() {
       return;
     }
     socket.on("connect",function() { 
+      //view.msgbox(#information, "Connected to other instance, sending activation event");
       socket.send( #activate );
     });    
-    socket.on("sent",function() { 
+    socket.on("send",function() { 
       // other instance have received #activate, so close this one
       self.timer(100ms, function() {
+        //view.msgbox(#information, "Activation being sent, quiting");
         socket.close(); 
         view.close();
       });
     });    
-
-  } else
+  } else {
+    view << event close() {  serverSocket.close(); }
+    $(#pipename).value = PIPE_NAME;
     view.windowState = View.WINDOW_SHOWN;
+  }
 }
 

@@ -1,0 +1,296 @@
+namespace Charts {
+
+  class Drawable : Object
+  {
+    this var x = 0;
+    this var y = 0;
+    this var w = 0;
+    this var h = 0;
+
+    function invalidate() { this.path = null; if(this.parent) this.parent.invalidate(); }
+    property canvas(v) { get return this.parent ? this.parent.canvas : null; }
+    
+    function morph( from/*Object?*/, to/*Object?*/, ratio = 0.0 )  
+    {
+      this.invalidate();
+      return super.morph(from, to, ratio, false /*do not clone*/); // delegate it to object.morph()
+    }
+  }
+  
+  // spans canvas from top to bottom
+  class VBand : Drawable
+  {
+    function this(canvas, label, index) {
+      canvas.add( this );
+      this.label = new Element("label",label);
+      this.label.attributes["class"] = "v";
+      this.index = index;
+      canvas.append(this.label);
+    }
+
+    property position(v) {
+      get return this.x + this.w / 2;
+    }
+
+    function render(canvas, gfx) {
+      var sw = canvas.axisLineWidth(this.index);
+      var x = this.x.toInteger() + (this.w.toInteger() / 2) + sw / 2.0;
+      gfx.strokeColor(color#ccc)
+         .strokeWidth(sw)
+         .line(x,this.y,x, this.y + this.h);
+    }
+
+    function replace(canvas,x,w) {
+      this.y = 0;
+      this.h = canvas.height - canvas.boff;
+      this.x = x;
+      this.w = w; 
+      var (lw,lh) = this.label.box(#dimension,#border);
+      this.label.style.set {
+        margin-left : px(x + (w - lw)/2);
+        margin-top : px(canvas.height - lh);
+      };      
+    }
+  }
+
+  // spans canvas from left to right
+  class HBand : Drawable 
+  {
+    function this(canvas, label) {
+      canvas.add( this );
+      this.label = new Element("label",label);
+      this.label.attributes["class"] = "h";
+      canvas.append(this.label);
+    }
+
+    property position(v) {
+      get return this.y + this.h / 2;
+    }
+
+    function render(canvas, gfx) 
+    {
+      var sw = canvas.axisLineWidth(this.index);
+      var y = this.y.toInteger() + (this.h.toInteger() / 2) + sw / 2.0;
+      gfx.strokeColor(color#ccc)
+         .strokeWidth(sw)
+         .line(this.x,y,this.x + this.w,y);
+    }
+
+    function replace(canvas,y,h) {
+      this.x = canvas.loff;
+      this.w = canvas.width - this.x;
+      this.y = y;
+      this.h = h;
+      var (lw,lh) = this.label.box(#dimension,#padding);
+      this.label.style.set {
+        margin-left : px(this.x - lw);
+        margin-top : px(y + (h - lh) /2);
+      };
+    }
+  }
+
+  // single chart in Line and Area Charts
+  class ChartArea : Drawable {
+    this var dataset;
+    this var datasetIndex;
+    this var linePath;
+    this var areaPath;
+    this var dots; // array of dots
+
+    function this(canvas, dataset, idx) {
+      this.dataset = dataset;
+      this.datasetIndex = idx;
+      canvas.add( this );
+    }
+
+    function render(canvas, gfx) 
+    {
+      var sw = canvas.datasetLineWidth(this.datasetIndex);
+
+      gfx.save();
+
+      var c = canvas.datasetColor(this.datasetIndex);
+
+      if( this.areaPath )
+        gfx.fillColor(c.opacify(0.5))
+           .drawPath(this.areaPath)
+      
+      gfx.noFill()      
+         .strokeColor(c)
+         .strokeWidth(sw)
+         .drawPath(this.linePath);
+
+      gfx.noStroke()
+         .fillColor(c);
+
+      const radius = canvas.datasetDotRadius(this.datasetIndex);
+
+      for(var dot in this.dots)
+        gfx.ellipse(dot[0],dot[1],radius);
+
+      gfx.restore();  
+
+    }
+
+    function replace(canvas) {
+
+      const fill = canvas.fillArea || false;
+
+      this.linePath = new Graphics.Path();
+      this.areaPath = fill ? new Graphics.Path() : null;
+      this.dots = [];
+
+      const scale = canvas.scale; 
+      const zerop = canvas.zerop;
+
+      for( var (i,val) in this.dataset.values ) {
+        const x = canvas.vbands[i].position;
+        const y = zerop - val * scale;
+        if(i) this.linePath.lineTo(x,y);
+        else this.linePath.moveTo(x,y);
+        if(fill) {
+          if(i) this.areaPath.lineTo(x,y);
+          else this.areaPath.moveTo(x,y);
+        }
+        this.dots.push([point:x,y]);
+      }
+      if(fill) {
+        this.areaPath.lineTo(canvas.rightPosition,zerop);
+        this.areaPath.lineTo(canvas.leftPosition,zerop);
+        this.areaPath.close();
+      }
+    }
+  }
+
+  // BarChart vband - renders corresponding dataset values as bars 
+  class BarsVBand : VBand {
+
+    function render(canvas, gfx) {
+      var sw = canvas.axisLineWidth(this.index);
+      var xtick = this.x.toInteger() + (this.w.toInteger() / 2) + sw / 2.0;
+      gfx.save()
+         .strokeColor(color#ccc)
+         .strokeWidth(sw)
+         .line(xtick,canvas.botPosition,xtick, this.y + this.h)
+         .restore();
+
+      const scale = canvas.scale; 
+      const zerop = canvas.zerop;
+
+      const datasets = canvas.data.datasets;
+
+      const index = this.index;
+      const nbars = canvas.data.datasets.length;
+      const uw = this.w / 2;
+      const barw = uw / nbars;
+      var x = uw / 2 + this.x;
+      for( var n in nbars ) {
+        var val = datasets[n].values[index];
+        var bart = this.y + zerop - val * scale;
+        var barb = this.y + zerop;
+        if( bart > barb ) (bart,barb) = (barb,bart);
+        gfx.fillColor( canvas.datasetColor(n) )
+           .rectangle(x,bart,barw,barb - bart);
+        x += barw;
+      }
+    }
+
+  }
+
+  // returns (mantissa:float(-1.0...1.0),exponent:integer)
+  function manexp(x, b = 10) {
+    var exp = 0;
+    var sgn = 1;
+    x = x.toFloat();
+    if (x == 0) return (0.0,0);
+    if (x < 0) { sgn = -1; x = -x; }
+    while (x < 1.0) { x *= b; --exp; }
+    while (x > 1.0) { x /= b; ++exp; }
+    return ( sgn, x, exp );
+  }
+
+  function Bubble()
+  {
+    const RADIUS = this.style["border-bottom-left-radius"] || 3dip;
+    const ARROW_SIZE = 5dip;
+    const BORDER_WIDTH = this.style["border-top-width"] || 0px;
+    const BORDER_COLOR = this.style["border-top-color"] || color(0,0,0);
+    const BACKGROUND_COLOR = this.style["background-color"] || color.gold;
+
+    var shape;
+    var width,height;
+  
+    function getShape()
+    {
+      if(!shape) 
+      {
+        shape = new Graphics.Path();
+        width = null;
+        height = null;
+      }
+
+      var (x,y,w,h) = this.box(#rectw,#border);
+     
+      if( width == w && height == h)
+        return shape; // nothing to do already calculated
+
+      width = w;
+      height = h;
+      
+      shape.reset();
+
+      const stoke_width = this.toPixels(BORDER_WIDTH,#width).toFloat();
+      
+      // lines shall go through pixels middles:
+      x += stoke_width / 2; y -= stoke_width / 2; w -= stoke_width; h -= stoke_width;
+      
+      const r = this.toPixels(RADIUS,#width);
+      const ah = this.toPixels(ARROW_SIZE,#height);
+
+      const arrowAtTop = false;
+
+      if(arrowAtTop)
+        shape          
+          .moveTo(x+r, y)
+          // that arrow
+          .lineTo(x+w/2-ah,y) 
+          .lineTo(x+w/2,y-ah)
+          .lineTo(x+w/2+ah,y)
+          // round rect
+          .arcTo(x+w, y,   x+w, y+h, r)
+          .arcTo(x+w, y+h, x,   y+h, r)
+          .arcTo(x,   y+h, x,   y,   r)
+          .arcTo(x,   y,   x+w, y,   r)              
+          .close();
+      else 
+        shape          
+          .moveTo(x+r, y+h-ah)
+          // that arrow
+          .lineTo(x+w/2-ah,y+h-ah) 
+          .lineTo(x+w/2,y+h)
+          .lineTo(x+w/2+ah,y+h-ah)
+          // round rect
+          .arcTo(x+w,y+h-ah,x+w,y, r)
+          .arcTo(x+w,y,x,y, r)
+          .arcTo(x,y,x,y+h-ah, r)
+          .arcTo(x,y+h-ah,x+ah, y+h-ah, r)
+          .close();
+
+      return shape; 
+    }      
+  
+    function drawBackground( gfx ) {
+      if(var shape = getShape.call(this)) 
+      {
+         if(BORDER_WIDTH) gfx.lineWidth(BORDER_WIDTH).lineColor(BORDER_COLOR);
+         gfx.fillColor(BACKGROUND_COLOR).drawPath( shape );
+         return true;
+      }
+
+    }
+
+    this.paintBackground = drawBackground;
+  }
+  
+
+}

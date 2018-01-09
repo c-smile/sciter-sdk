@@ -792,12 +792,12 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
     inline void attach_dom_event_handler(HWINDOW hwnd, event_handler* ph)
     {
       int r = SciterWindowAttachEventHandler( hwnd, &event_handler::element_proc, ph, HANDLE_ALL );
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
     }
     inline void detach_dom_event_handler(HWINDOW hwnd, event_handler* ph)
     {
       int r = SciterWindowDetachEventHandler( hwnd, &event_handler::element_proc, ph );
-      assert(r == SCDOM_OK); r;
+      assert(r == SCDOM_OK); (void)r;
     }
 
 #define BEGIN_FUNCTION_MAP \

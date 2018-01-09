@@ -1,0 +1,72 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+          form {
+            flow:row(input textarea, button, output);
+            border-spacing:0.5em;
+            size:*;
+          }
+
+          form > input,
+          form > textarea,
+          form > output { width:*; }
+
+          div#received {
+            
+            size:*;
+            border:1dip solid;
+          }
+
+        </style>
+        <script type="text/tiscript">
+
+          var socket = null;
+          
+          event click $(button#connect) {
+            var address = $(input#address).value;
+            if( !address ) {
+              $(input#address).state.focus = true;
+              return;
+            }
+            socket = Net.Socket.connect(address,0x0888);
+            socket << event connect {
+              $(output#connection-status).value = "connected";
+              $(button#connect).state.disabled = true;
+              $(input#address).state.disabled = true;
+              $(textarea#to-send).state.disabled = false;
+              $(button#send).state.disabled = false;
+            }
+
+            socket << event send {
+              $(output#sending-status).value = "data sent";
+            }
+
+            socket << event data (message) {
+              $(div#received).value = message;
+            }
+
+            socket << event error(error) {
+              $(div#received).value = "error:" + error;
+            }
+
+            $(button#send) << event click  {
+              var data = $(textarea#to-send).value;
+              socket.send(data);
+            }
+
+          }
+
+        </script>
+    </head>
+    <body>
+      <h1>Client</h1>
+      <h2>TCP sockets communication demo</h2>
+      <form>
+       <input|text #address value="localhost" /> <button #connect>Connect</button> <output #connection-status />
+       <textarea #to-send novalue="data to send" disabled/> <button #send disabled>Send</button> <output #sending-status />
+       <div #received></div> 
+      </form>
+    </body>
+</html>

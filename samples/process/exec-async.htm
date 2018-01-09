@@ -15,29 +15,34 @@
 
             const EOL = System.EOL;
 
-            var task = Process.proxy();
+            var cline;
+            var lt = null;
 
-            task.on("stdout",  function (text) { 
-              for(var line in text.split(EOL))
-                out.$append(<text>{line}</text>); 
-            });
+            function append(text, from) {
+              var lines = text.split(EOL);
+              if( from !== lt ) {
+                out.$append(<text.{from}>{ lines.shift() }</text>);
+                cline = out.last;
+              }
+              else
+                cline.append(lines.shift());
+              for(var line in lines) {
+                out.$append(<text.{from}>{ line }</text>);
+                cline = out.last;
+              }
+              lt = from;
+            }
 
-            task.on("stderr", function (text) { 
-              for(var line in text.split(EOL))
-                out.$append(<text.error>{line}</text>); 
-            });
+            var cmd = System.PLATFORM == #Windows ? "tracert" : "traceroute";
 
-            task.on("terminate", function (status) { 
-              out.$append(<text.done>Done:{status.toString()}</text>); 
-              out.state.busy = false;
-            });
+            var childProc = System.Process.exec(cmd, ["sciter.com"]);
 
-            // "ipconfig", "/all"
-
-            if( System.PLATFORM == #Windows )
-              task.exec("tracert", "sciter.com");
-            else
-              task.exec("traceroute", "sciter.com");
+            childProc  << event stdout (text) { append(text,#out) }
+                       << event stderr (text) { append(text,#error) }
+                       << event terminate (status) { 
+                            out.$append(<text.done>Done:{status.toString()}</text>); 
+                            out.state.busy = false;
+                          };
 
             out.state.busy = true;
           }

@@ -50,9 +50,6 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
   ghInstance = hInstance;
 
-  std::vector<unsigned char> vec = {1,2,3};
-  auto foo = aux::elements_of(vec);
-
   SciterClassName();
   sciter::debug_output debug;
 

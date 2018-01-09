@@ -31,7 +31,7 @@
       generateToc();
     }
 
-    event complete $(frame#content)
+    contentFrame << event complete
     {
 		  generateToc();
 		  if(afterTocEvent) {

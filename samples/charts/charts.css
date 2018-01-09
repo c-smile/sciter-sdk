@@ -1,0 +1,51 @@
+
+
+chart 
+{
+  prototype: Charts.LineChart url(charts.tis);
+  display:block;
+  flow:stack;
+  border:1px dashed;
+  font:system;
+  overflow:hidden;
+
+  // chart specific vars
+  var(line-width): 3dip;
+  var(dot-radius): 5dip;
+  var(axis-line-width): 1px;
+  // default colors of datasets 
+  var(color0): turquoise;
+  var(color1): violet;
+  var(color2): blue;
+  var(color3): mediumslateblue;
+  var(color4): mediumpurple;
+  var(color5): tomato;
+}
+
+chart[type=line] { prototype: Charts.LineChart url(charts.tis); }
+chart[type=area] { prototype: Charts.AreaChart url(charts.tis); }
+chart[type=bar]  { prototype: Charts.BarChart url(charts.tis); }
+
+chart > label { display:block; width:max-content; padding:4dip; }
+
+chart > popup {
+  visibility:none;
+  aspect: Charts.Bubble url(charts-parts.tis);
+  background-color:rgba(0,0,0,0.8);
+  border-radius:3dip;
+  color: #eee;
+  padding:0 0 10dip 0;
+}
+
+chart > popup > header { width:*; padding:2dip 4dip; }
+chart > popup > ul { flow:horizontal; margin:0; padding:0; }
+chart > popup > ul > li { margin:0; padding:0; border-top:solid 2dip; display:block;}
+chart > popup > ul > li > var { font:inherit; font-weight:bold; display:block; padding:2dip 4dip; }
+chart > popup > ul > li > caption { padding:2dip 4dip; }
+chart > popup > ul > li:nth-child(1) { border-color:var(color0,#fff); }
+chart > popup > ul > li:nth-child(2) { border-color:var(color1,#fff); }
+chart > popup > ul > li:nth-child(3) { border-color:var(color2,#fff); }
+chart > popup > ul > li:nth-child(4) { border-color:var(color3,#fff); }
+chart > popup > ul > li:nth-child(5) { border-color:var(color4,#fff); }
+chart > popup > ul > li:nth-child(6) { border-color:var(color5,#fff); }
+

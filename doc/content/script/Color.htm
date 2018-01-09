@@ -10,8 +10,17 @@
     <p>Color values are constructed by the global function color():</p>
     <dt>color</dt>
     <dd>(<strong>r</strong>: int, <strong>g</strong>: int, <strong>b</strong>: int [, <strong>opacity</strong>: int | float]) : color<br/>(<strong>s</strong>: string ) : color
-      <p>The <em>color</em> function constructs color value from red, green, blue and opacity components. Or by parsing the sting using CSS syntax rules.</p></dd>
-    <h2>Constants</h2>
+      <p>The <em>color</em> function constructs color value from red, green, blue and opacity components. Or by parsing the sting using CSS syntax rules.</p>
+			<p>Colors can be declared by using CSS alike color constants:</p>
+			<ul><li><code><b>color #rgb</b>;</code>&nbsp;</li><li><code><b>color #rrggbb</b>;</code></li><li><code><b>color #rrggbb</b><b>aa</b>;</code></li>
+				</ul>
+			<p>where <i>r</i>, <i>g</i>, <i>b</i> and <i>a</i> are hex digits 0...f.</p>
+			<p>Or by their HTML <a href="http://htmlcolorcodes.com/color-names/">color names</a>:</p>
+			<ul><li><code>color.violet;</code></li><li><code>color.red;</code></li><li><code>color.gold;</code></li></ul>
+			
+			</dd>
+    
+		<h2>Constants</h2>
     <dd><strong>N/A</strong></dd>
     <h2>Properties</h2>
     <dt>r</dt>
@@ -27,23 +36,63 @@
     <h2>Methods</h2>
     <dt>rgba</dt>
     <dd>
-      <p>(<strong>r</strong>: int, <strong>g</strong>: int, <strong>b</strong>: int [, <strong>opacity</strong>: int | float]) : color</p>
+      <div>(<strong>r</strong>: int, <strong>g</strong>: int, <strong>b</strong>: int [, <strong>opacity</strong>: int | float]) : color</div>
       <p>Static method (of the class), В constructs color value from red, green, blue and opacity components.</p></dd>
     <dt>hsv</dt>
     <dd>
-      <p>(<strong>hue</strong>: float | angle, <strong>saturation</strong>: float, <strong>value</strong>: float [, <strong>opacity</strong>: int | float]) : color</p>
+      <div>(<strong>hue</strong>: float | angle, <strong>saturation</strong>: float, <strong>value</strong>: float [, <strong>opacity</strong>: int | float]) : color</div>
       <p>Static method (of the class), В constructs the color from HSV values, see: <a href="http://en.wikipedia.org/wiki/HSL_color_space">http://en.wikipedia.org/wiki/HSL_color_space</a></p></dd>
     <dt>hsl</dt>
     <dd>
-      <p>(<strong>hue</strong>: float | angle, <strong>saturation</strong>: float, <strong>lightness</strong>: float [, <strong>opacity</strong>: int | float]) : color</p>
+      <div>(<strong>hue</strong>: float | angle, <strong>saturation</strong>: float, <strong>lightness</strong>: float [, <strong>opacity</strong>: int | float]) : color</div>
       <p>Static method (of the class), В constructs the color from HSL values, see: <a href="http://en.wikipedia.org/wiki/HSL_color_space">http://en.wikipedia.org/wiki/HSL_color_space</a></p></dd>
-    <dt>tint</dt>
+    <dt>hue</dt>
     <dd>
-      <p>( <strong>luminance</strong>: float [, <strong>saturation</strong>: float[, <strong>hue</strong>: float | angle]] ) : color</p>
-      <p>Returns color - tint of the color this method is applied to. luminance and saturation are float numbers in the range -1.0 ... +1.0. <em>hue</em> is either angle or float (degrees 0 .. 360)</p></dd>
+      <div>( <strong>hue</strong>: angle&nbsp;) : color</div>
+      <p>Returns new color by setting <em>hue</em> component of the color in HSL color space, hue is either angle or float, degrees 0 .. 360.</p></dd>
+    <dt>rotate</dt>
+    <dd>
+      <div>( <strong>hue</strong>: angle ) : color</div>
+      <p>Returns new color by incrementing/decrementing <em>hue</em> component of the color in HSL color space by the given angle</p></dd>
+    <dt>lightness</dt>
+    <dd>
+      <div>( <strong>lightness</strong>: 0.0...1.0 ) : color</div>
+      <p>Returns new color by setting <em>lightness</em> component of the color in HSL color space.</p></dd>
+    <dt>lighten</dt>
+    <dd>
+      <div>( <strong>dl</strong>: 0.0...1.0 ) : color</div>
+      <p>Returns new color by incrementing <em>lightness</em> component of the color in HSL color space.</p></dd>
+    <dt>darken</dt>
+    <dd>
+      <div>( <strong>dl</strong>: 0.0...1.0 ) : color</div>
+      <p>Returns new color by decrementing <em>lightness</em> component of the color in HSL color space.</p></dd>
+    <dt>saturation</dt>
+    <dd>
+      <div>( <strong>saturation</strong>: 0.0...1.0 ) : color</div>
+      <p>Returns new color by setting <em>saturation</em> component of the color in HSL color space.</p></dd>
+    <dt>saturate</dt>
+    <dd>
+      <div>( <strong>ds</strong>: 0.0...1.0 ) : color</div>
+      <p>Returns new color by incrementing <em>saturation</em> component of the color in HSL color space.</p></dd>
+    <dt>desaturate</dt>
+    <dd>
+      <div>( <strong>ds</strong>: 0.0...1.0 ) : color</div>
+      <p>Returns new color by decrementing <em>saturation</em> component of the color in HSL color space.</p></dd>
+    <dt>opacity</dt>
+    <dd>
+      <div>( <strong>opacity</strong>: 0.0...1.0 ) : color</div>
+      <p>Returns new color by changing <em>alpha</em> component of the color in RGBA color space.</p></dd>
+    <dt>opacify</dt>
+    <dd>
+      <div>( <strong>delta</strong>: 0.0...1.0 ) : color</div>
+      <p>Returns new color by incrementing/decrementing <em>alpha</em> component of the color in RGBA color space.</p></dd>
+    <dt>grayscale</dt>
+    <dd>
+      <div>( <strong>ratio</strong>: 0.0...1.0 = 1.0) : color</div>
+      <p>Returns new color by mixing the color with its pure grayscale version.</p></dd>
     <dt>parse</dt>
     <dd>
-      <p>( <strong>text</strong>: string )</p>
+      <div>( <strong>text</strong>: string )</div>
       <p>Static method (of the class), В parses the string and constructs the color value. Supported formats:</p>
       <ul>
         <li>&quot;#RGB&quot;</li>

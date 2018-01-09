@@ -2,7 +2,7 @@
 // persistable settings:
 namespace Settings
 {
-  const path = System.path(#USER_APPDATA, "sciter-inspector-new-settings.js");
+  const path = System.path(#USER_APPDATA, "sciter-inspector-settings.json");
   var   list = []; // list of persistable objects
 
   function store() 
@@ -22,11 +22,12 @@ namespace Settings
     stream.printf("%V\n",data);
     //stdout.printf("%V\n",data);
     stream.close();
+    //stdout.printf("saving to:%s\n",path);
   }
 
   function restore() 
   {
-    //stdout.printf("restoring\n");
+    //stdout.printf("restoring from:%s\n",path);
     var stream = Stream.openFile(path,"ur");
     if( !stream )
       return false;

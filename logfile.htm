@@ -10,7 +10,44 @@
       <td width="60" nowrap="" valign="top" align="center">Build#</td>
       <td width="78" nowrap="" valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FFFADA">4.0.8.5649</td><td nowrap="" valign="top" align="center">22-12-2017</td><td><p>fixes:</p>
+    <tr><td valign="top" bgcolor="#FFFADA">4.1.0.5687</td><td nowrap="" valign="top" align="center">08-01-2018</td><td><p>new:</p>
+					<ul><li>Sciter uses libuv for almost all asynchronous I/O tasks. New functions<ul><li><code>System.dir(...)</code>&nbsp;function - scan folder for files;</li>
+								<li><code>System.watch(...)</code> function - monitor changes in folder;</li>
+								<li><code>System.unlink(...)</code> function - delete file;</li>
+								<li><code>System.rmdir(...)</code> function - delete folder;</li>
+								<li><code>System.mkdir(...)</code> function - create folder;</li>
+								<li><code>System.rename(...)</code> function - rename file or folder;</li>
+								<li><code>System.copyFile(...)</code> function - copy file;</li>
+								<li><code>System.stat(...)</code> function - get file stats - times, permissions, etc.;</li>
+								<li><code>System.utime(...)</code> function - touch file&nbsp;- change file access times;</li>
+								<li><code>System.exec() : Process</code> - start process asynchronously catching its stdin, stdout, stderr.</li>
+								<li>+ samples/file-system/folder-watch.htm - demonstrates these file system operations.</li>
+								</ul></li><li>New <code>Net</code> namespace that includes:<ul><li><code>Net.Socket</code> - raw asynchronous TCP/IP socket or named pipe connection. Replaces old <code>Stream.openSocket();</code> that is obsolote now.</li>
+								<li><code>Net.DataSocket</code> -&nbsp;asynchronous TCP/IP socket or named pipe connection that sends/receives [binary]JSON data. Debugee and inspector communicates now using named pipe objects that increases speed of communication.</li>
+								<li><code>Net.WebSocket</code> - web socket over HTTP connection.&nbsp;</li>
+								<li>+ samples/net/sockets.htm - demonstrates sockets communications, client and server.</li>
+								</ul></li>
+						<li>[script] new color declarations:<ul><li><code>color #fe0; color #ffee00;</code> - CSS alike color declarations</li><li> <code>color.cyan; color.red; </code> etc. -  declaring colors using HTML color names.</li>
+								</ul></li><li>[script, Color] + methods to transform one color into another:<ul><li><code>Color.hue(...)</code>,</li><li><code>Color.rotate(...)</code>,</li><li><code>Color.lightness(...)</code>,</li><li><code>Color.lighten(...)</code>,</li><li><code>Color.darken(...)</code>,</li><li><code>Color.saturation(...)</code>,</li><li><code>Color.saturate(...)</code>,</li><li><code>Color.desaturate(...)</code>,</li><li><code>Color.opacity(...)</code>,</li><li><code>Color.opacify(...)</code>,</li><li><code>Color.grayscale(...)</code></li></ul></li>
+						
+						<li>[script] <code>Date</code> objects comparison follows object comparison  rules: <code>date1 == date2</code> is true if they are equal, and <code>date1 === date2</code> is false if these are two different instances.&nbsp;</li>
+						<li>+ samples/charts/ - simple Line, Area and Bar charts implementation. More chart types to come there.</li>
+						<li>[dom] <code>Element.popup(pel,<i>placement</i>,x,y)</code> case support.</li>
+						
+						
+						
+						
+						</ul>
+					<p>fixes:</p>
+					<ul><li>[skia backend] fix of font metrics calculation.</li>
+						<li>fix of <code>new Image(,,element)</code> drawing : <a href="https://sciter.com/forums/topic/new-image-has-problem/">https://sciter.com/forums/topic/new-image-has-problem/</a>&nbsp;</li>
+						<li>[css] fix of transition from undefined color.</li>
+						<li>[script] fix of Length, Duration and Angle comparisons, like <code>1px &lt; 2px</code>.</li>
+						<li>fix of <code>String.printf(&quot;%.*f&quot;)</code> case handling (correct '*' interpretation).</li>
+						<li>svg as background image fill, scaling fix: <a href="https://sciter.com/forums/topic/scaling-svg-background/">https://sciter.com/forums/topic/scaling-svg-background/</a>&nbsp;</li>
+						<li>[windows,clipboard] support of CF_HDROP - putting and getting list of files from clipboard.</li>
+						<li><code>&lt;input|time&gt;</code> fix of :empty state handling.</li>
+						<li>Element.prototype property handling fix, see: <a href="https://sciter.com/forums/topic/formation-with-nested-repeatable-sample-is-broken/">https://sciter.com/forums/topic/formation-with-nested-repeatable-sample-is-broken/</a>&nbsp;</li></ul></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.0.8.5649</td><td nowrap="" valign="top" align="center">22-12-2017</td><td><p>fixes:</p>
 					<ul><li>[DOM,script] fix of <code>element.style[&quot;font-size&quot;] = px(...);</code> (any non points value)</li>
 						<li><code>&lt;input|date&gt;</code> adjustment again, see: <a href="https://sciter.com/forums/topic/the-dropdown-date-is-incorrect/">https://sciter.com/forums/topic/the-dropdown-date-is-incorrect/</a>&nbsp;</li>
 						<li>cssmap.htm doc update by <code>var()</code>, <code>length()</code>,&nbsp;<code>color()</code> and <code>morph()</code> definitions;</li>

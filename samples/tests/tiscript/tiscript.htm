@@ -2,6 +2,7 @@
   <head>
     <style>
       #results li.failure { color:red; }   
+      #results li.pending { color:blue; } 
       text#behavior-test
       {
         prototype:bhvB;
@@ -17,8 +18,22 @@
       ulr.insert(li);
       try 
       {
-        TestFunc();
-        li.text = String.printf("%s passed", TestFunc );
+        var r = TestFunc();
+        if( typeof r == #function ) 
+        { // function returns promise
+          li.text = String.printf("%s running ...", TestFunc );
+          li.@#class = "pending";
+          r.then( function(v) { 
+              li.text = String.printf("%s passed", TestFunc ); 
+              li.@#class = "passed";
+          });
+          r.catch( function(err) { 
+              li.html = String.printf("%s failed with <pre>%s</pre>", TestFunc, err );
+              li.@#class = "failure";
+          }); 
+        }
+        else 
+          li.text = String.printf("%s passed", TestFunc );
       }
       catch(err)
       {

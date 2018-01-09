@@ -1,0 +1,309 @@
+include "charts-parts.tis";
+
+namespace Charts {
+
+  class Canvas: Element
+  {
+    function attached() {
+      this.paintContent = this.render;
+      this.reset();
+      this.replace();
+    }
+    
+    function add(drawable) // either one or list of drawables
+    {
+      function add1(me,drawable) {
+        me.drawables.push(drawable);
+        drawable.parent = me;
+        me.refresh();
+      }
+      if( typeof drawable == #array )
+        for(var item in obj) add1(this,item);
+      else
+        add1(this,drawable);
+    }
+
+    function reset() {
+      this.drawables = [];
+      this.clear();
+      this.refresh();
+    }
+
+    function onSize() { this.replace(); }
+
+    function replace() {
+      var (w,h) = this.box(#dimension);
+      this.width = w;
+      this.height = h;
+    }
+    
+    function render(gfx) {
+      for(var drawable in this.drawables)
+        drawable.render(this,gfx);
+    }
+    
+    function invalidate() {
+      this.refresh();
+    }
+    property canvas(v)  {
+      get return this;
+    }
+
+    property value(v)  {
+      get return this.data;
+      set {
+        this.data = v;
+        this.reset();
+      }
+    }
+
+    function getDataRange() {
+      var min = Integer.MAX;
+      var max = Integer.MIN;
+      for( var dataset in this.data.datasets )
+        for(var data in dataset.values ) {
+          if( data < min ) min = data;
+          if( data > max ) max = data;
+        }
+      return (min,max);
+    }
+
+    function datasetColor(index)     { return this.style.variable("color" + index); }
+    function datasetLineWidth(index) { return this.style.variable("line-width") || 3dip; }
+    function datasetDotRadius(index) { return this.style.variable("dot-radius") || 5dip; }
+    function axisLineWidth(index=0)  { return this.style.variable("axis-line-width") || 1px; }
+
+    event tooltiprequest { return this.showTooltip(); }
+    event popupdismissed(evt) { if(evt.target == this.tooltip) this.tooltiped = null; }
+    event mousemove  (evt) { this.onMouseMove(evt.x,evt.y); }
+    event mouseleave (evt) { this.onMouseMove(-1,-1); }
+    event mousedown  (evt) { return this.onMouseDown(evt.x,evt.y); }
+    event mouseup  (evt) { return this.onMouseUp(evt.x,evt.y); }
+
+    function onMouseMove(x,y) {}
+    function onMouseDown(x,y) {}
+    function onMouseUp(x,y) {}
+    function showTooltip() {}
+
+  }
+
+  class AxisCanvas : Canvas 
+  {
+      this var topValue; // 
+      this var botValue; // values at top and bottom axis
+      this var topPosition; // 
+      this var botPosition; // pixel positions of top/botValues 
+      this var zerop;       // pixel positions of zero
+
+      this var minDataValue;  
+      this var maxDataValue; // min max real data values minDataValue <= minValue
+
+      this var tooltiped; // vband that has tooltip shown
+      this var tooltip;   // <popup> element
+      this var selected;  // selected vband
+
+      function reset() 
+      {
+        this.tooltiped = null;
+        this.selected = null;
+        super.reset();
+        if(!this.data) return;
+
+        // = bands, each band contains label (on y axis)
+        var (vmin,vmax) = this.getDataRange();
+        this.minDataValue = vmin;
+        this.maxDataValue = vmax;
+
+        var (sign,m,e) = manexp(vmax - vmin);
+
+        var ndigits = e > 0 ? 0 : (-e + 1);
+        var dv = 0.1;
+        var nbands = (m * 10).toInteger() + 1;
+        if( nbands > 5 ) { nbands /= 2; dv = 0.2; }
+        var bdv = dv * Math.pow(10, e);  
+        var hbands = []; 
+        var v = Math.ceil(vmax / bdv) * bdv;
+        
+        this.topValue = v;
+
+        while(true) { 
+          var label = String.printf("%.*f",ndigits,v);
+          hbands.push(this.createHBand(label));
+          if(v <= vmin) break; 
+          v -= bdv;
+          this.botValue = v;          
+        } 
+
+        this.hbands = hbands;
+
+        // || vbands, each band contains label (on x axis) 
+        var vbands = [];
+        for( var (index,label) in this.data.labels )
+          vbands.push(this.createVBand(label,index));
+        this.vbands = vbands;
+
+      }
+
+      function replace() 
+      {
+        super.replace();
+        if(!this.data || !this.hbands || !this.vbands) return;
+
+       
+        // label dimensions: lw max width of labels on Y axis, lh max height of labels on X axis.
+        var llw = 0, llh = 0; for( var band in this.hbands ) { var (w,h) = band.label.box(#dimension,#border); if( w > llw ) llw = w; if( h > llh ) llh = h; }
+        var blh = 0; for( var band in this.vbands ) { var h = band.label.box(#height,#border); if( h > blh ) blh = h; }
+
+        this.loff = llw; // left offset
+        this.boff = blh; // bottom offset to accomodate bottom labels
+
+        var dh = (this.height - this.boff - llh) / (this.hbands.length - 1);
+
+        var x = llw;
+        var gw = (this.width - x) / this.vbands.length;
+
+        var y = 0;
+
+        for( var band in this.vbands ) { band.replace(this,x,gw); x += gw; }
+        for( var band in this.hbands ) { band.replace(this,y,llh); y += dh; }
+
+        this.topPosition = this.hbands.first.position;
+        this.botPosition = this.hbands.last.position;
+
+        this.leftPosition = this.vbands.first.position;
+        this.rightPosition = this.vbands.last.position;
+
+        this.scale = (this.botPosition - this.topPosition).toFloat() / (this.topValue - this.botValue); 
+        this.zerop = this.scale * this.topValue + this.topPosition;
+
+      }
+
+      function createHBand(labelText) {
+        return new HBand(this,labelText);
+      }
+      function createVBand(labelText,index) {
+        return new VBand(this,labelText,index);
+      }
+
+      function onMouseMove(x,y) {
+        var found = null; // band under the mouse
+        for( var band in this.vbands )
+          if( x >= band.x && x < band.x + band.w ) {
+            found = band;
+            break;
+          }
+        if(this.hovered !== found) {
+          this.hovered = found;
+          this.refresh();
+        }
+        if(this.tooltiped) {
+          if(!found)
+            this.hideTooltip();
+          else
+            this.showTooltip();
+        }
+      }
+
+      function onMouseDown(x,y) {
+        if(this.hovered) {
+          this.selected = this.hovered;
+          this.postEvent("click",this.hovered.index);
+          this.refresh();
+        } else {
+          this.selected = null;
+          this.refresh();
+        }
+        return true;
+      }
+
+      function onMouseUp(x,y) {
+        return true; 
+      }
+
+      function render(gfx) 
+      {
+        var h = this.box(#height);
+        var c = color.highlight;
+        if( var vband = this.selected ) {
+          const dips = self.toPixels(3dip);
+          gfx.save().fillColor(c).rectangle(vband.x,h-dips,vband.w,dips).restore();
+        }
+        if( var vband = this.hovered )
+          gfx.save().fillColor(c.opacity(0.05)).rectangle(vband.x,0,vband.w,h).restore();
+        super.render(gfx);
+      }
+
+      function showTooltip() {
+        if( !this.hovered ) return;
+        if( this.tooltiped === this.hovered ) return;
+        
+        if( !this.tooltip ) { this.tooltip = new Element("popup"); this.append(this.tooltip); }
+
+        var (vx,vy) = this.box(#position,#inner,#view);
+
+        var maxy = 0;
+        const index = this.hovered.index;
+        for( var dataset in this.data.datasets ) { var v = dataset.values[index]; if( v > maxy ) maxy = v; }
+
+        vy += this.zerop - maxy * this.scale;
+        vy -= this.toPixels(6dip,#height);
+        
+        this.tooltiped = this.hovered;
+        this.tooltip.html = this.tooltipContent(this.hovered.index);
+        this.popup(this.tooltip,2,vx + this.tooltiped.position,vy.toInteger());
+      }
+
+      function hideTooltip() {
+        if( var tt = this.tooltip ) {
+          tt.closePopup();
+          this.tooltiped = null;
+        }
+      }
+
+      function tooltipContent(index) {
+        var html = "<header>"+ this.data.labels[index].toHtmlString() +"</header>";
+            html += "<ul>";
+        for(var (n,dataset) in this.data.datasets)
+          html += "<li.dataset" + n + "><var>" + dataset.values[index] + "</var><caption>" + dataset.title.toHtmlString() + "</caption></li>";
+        html += "</ul>";
+        return html;
+      }
+
+  }
+
+  class LineChart : AxisCanvas {
+
+    function reset() 
+    {
+      if(!this.data)
+        return;
+      super.reset();
+      this.charts = [];
+      for( var (idx,dataset) in this.data.datasets )
+        this.charts.push( new ChartArea(this,dataset,idx) );
+    }
+
+    function replace() {
+      if(!this.data)
+        return;
+      super.replace();
+      for( var chart in this.charts )
+        chart.replace(this);
+    }
+  }
+
+  class AreaChart : LineChart 
+  {
+    property fillArea(v) {
+      get return true;  
+    }
+  }
+
+  class BarChart : AxisCanvas 
+  {
+    function createVBand(labelText,index) {
+        return new BarsVBand(this,labelText,index);
+    }
+  }
+
+}

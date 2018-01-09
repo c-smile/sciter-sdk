@@ -11,23 +11,25 @@
         </style>
         <script type="text/tiscript">
 
-          include "exec.tis";
-
           async function pingIt() {
             var out = $(plaintext);
-            out.state.busy = true;            
-            const EOL = System.EOL;
-            var text = "";
+            out.state.busy = true; 
+            const DOMAIN = "sciter.com";
+            var result;
             try { 
               if( System.PLATFORM == #Windows )
-                 text = await exec("ping", "-n", "1", "sciter.com");
+                 result = await System.Process.exec("ping", ["-n", "1", DOMAIN]);
               else
-                 text = await exec("ping", "-c", "1", "sciter.com");
+                 result = await System.Process.exec("ping", ["-c", "1", DOMAIN]);
+              if( result == 0 ) 
+                result = DOMAIN + " is accessible";
+              else
+                result = String.$({DOMAIN} is not accessible, ping command returns {result}); 
             } catch (err) {
-              text = err.toString();
+                result = err.toString();
             }
             out.state.busy = false;
-            for(var line in text.split(EOL)) out.$append(<text>{line}</text>);             
+            out.value = result;             
           }
 
           event click $(#exec) {  pingIt(); }
@@ -36,7 +38,7 @@
     </head>
     <body>
 
-      <button #exec>Show ping</button>
+      <button #exec>ping sciter.com</button>
 
       <plaintext></plaintext>
 

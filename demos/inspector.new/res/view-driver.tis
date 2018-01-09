@@ -47,7 +47,8 @@ class ViewDriver: Behavior
       {
         view.windowState = View.WINDOW_SHOWN;
         me.active = false;
-        me.deeDetach();
+        if(me.deeDetach)
+          me.deeDetach();
         return;
       }  
       //stdout.printf("from dee: %V\n",data);
@@ -58,7 +59,8 @@ class ViewDriver: Behavior
     });
     socket.on("close",function() {
       me.active = false;
-      me.deeDetach();
+      if(me.deeDetach)
+        me.deeDetach();
     });
     me.postEvent("connected");
   }

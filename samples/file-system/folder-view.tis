@@ -1,0 +1,115 @@
+
+
+include "../+lib/function.tis";
+
+class FolderView : Element 
+{
+    this var _path;
+
+    event dblclick $(option) { this.activateCurrent(); }
+
+    event keyup (evt) {
+      switch(evt.keyCode) {
+        case Event.VK_ESCAPE: 
+          this.path = this.parentPath; 
+          return true;
+        case Event.VK_RETURN: 
+          this.activateCurrent();
+          return true;
+      }
+    }
+
+    function activateCurrent() {
+      var (type,name,path) = this.current;
+      if( type == #dir )
+        this.path = path; 
+      //else
+        //this.path = path; 
+      return true;
+    }
+
+    // sort predicate
+    function foldersFirst(a,b) {
+      if( a.type == #dir && b.type != #dir) return -1;
+      if( a.type != #dir && b.type == #dir) return +1;
+      if( a.name == b.name ) return 0;
+      return a.name.lexicalCompare(b.name);
+    }
+
+    function render(path) 
+    {
+      var isNew = this._path != path;
+      var currentIndex = 0;
+
+      stdout.print(isNew, this._path, path);
+
+      this._path = path;
+      if(isNew)
+        this.watchChanges();
+      else if(var option = this.$(option:current))
+        currentIndex = option.index;
+
+      this.clear();
+
+      var list = [];
+
+      function entry(fileName, type, stat) {
+         stat.name = fileName;
+         stat.type = type;
+         list.push(stat); 
+         return true;
+      }
+      System.dir(this._path, entry);
+
+      if( this._path && this._path != "/"  )
+        this.$append(<option|dir.parent filename="{this.parentPath}" value="..">..</option>);
+
+      list.sort(foldersFirst);
+      for(var entry in list)
+        this.$append(<option|{entry.type} filename="{this._path + entry.name}">{entry.name}</option>);
+
+      if( var toSet = this[currentIndex] ) 
+        toSet.execCommand("set-current");
+    }
+
+    // throttled render
+    const update = render.throttle(200ms); 
+
+    function navigateTo(path) {
+        this.update(path);
+    }
+
+    function watchChanges() {
+      if(this.watcher) this.watcher.close();
+      this.watcher = System.watch(this._path)
+                   << event change (path) { this super.update(this.path) } 
+                   << event rename (path) { this super.update(this.path) };
+    }
+
+    function fullPath(localName) { return this._path + localName; } 
+
+    property current(v) { 
+      get {
+        if(var option = this.$(option:current))
+          return (symbol(option.attributes["type"]),
+                  option.text,
+                  option.attributes["filename"]);
+        return null;
+      }
+    }
+
+    property parentPath(v) { 
+      get return ((this._path /~ "/") /~ "/") + "/";
+    }
+
+    property path(v) {
+      get return this._path;
+      set {
+        var path = v; if(path like "file://*") path = crackUrl(path).filename;
+        if( path !like "*/" ) path += "/";
+        this.navigateTo(path);
+      }
+    }
+
+
+}

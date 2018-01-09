@@ -60,7 +60,7 @@
     <dt><u>attributes</u></dt>
     <dd><font color="#999999">c - </font><a href="Attributes.htm"><em>Attributes</em></a>, collection of html attributes of the element.</dd>
     <dt><u>@</u></dt>
-    <dd><font color="#999999">c -</font> short form to access<font color="#999999"> </font><a href="Attributes.htm"><em>Attributes</em></a>, collection of html attributes of the element. It is just an alias of the <em>attributes</em> above.<br/>Sample:<br/><code>this.@[&quot;selected&quot;] = true</code> // or<br/><code>this.@#selected = true</code><br/>is an equivalent of <br/><code>this.attributes[&quot;selected&quot;] = true</code></dd>
+    <dd><font color="#999999">c -</font> short form to access<font color="#999999"/><a href="Attributes.htm"><em>Attributes</em></a>, collection of html attributes of the element. It is just an alias of the <em>attributes</em> above.<br/>Sample:<br/><code>this.@[&quot;selected&quot;] = true</code> // or<br/><code>this.@#selected = true</code><br/>is an equivalent of <br/><code>this.attributes[&quot;selected&quot;] = true</code></dd>
     <dt><u>style</u></dt>
     <dd><font color="#999999">c - </font><a href="Style.htm">Style</a>, style attributes of the DOM element.</dd>
     <dt><u>state</u></dt>
@@ -350,7 +350,7 @@ some.selectParent(printel, &quot;div&quot;);
       <p>returns min-intrinsic height of the element for the given <em>forWidth</em>. min-intrinsic heigh is minimal height needed to show element without vertical scrollbar.</p></dd>
     <dt>toPixels</dt>
     <dd>
-      <div><strong>( length : </strong>length | string | symbol<strong> </strong>[, <strong>#width</strong> | <strong>#height</strong> ]<strong> ) :</strong> integer, device pixels</div>
+      <div><strong>( length : </strong>length | string | symbol<strong/>[, <strong>#width</strong> | <strong>#height</strong> ]<strong> ) :</strong> integer, device pixels</div>
       <p>returns the length value converted to the number of device pixels. Conversion is made in context of current element style so <code>el.toPixels( em(1.4) )</code> will number of pixel correspond to 1.4em that us dependent on current font size of the element.</p>
       <p>length is a string or symbol then this string is treated as a CSS length literal so it is possible to get values like: <code>el.toPixels(#xx-small)</code> В or <code>el.toPixels(#system-scrollbar-width)</code>,</p>
       <p>Second symbol parameter is used with the conversion from perecentage lengths:<br/><code>var h50p = el.toPixels( pr(50.0), #height );</code> - will calculate the same value as the following CSS declaration: <code>height:50%</code>.</p></dd>
@@ -461,7 +461,7 @@ el.$content(This is item number <b>{ num }</b>);
     <dt>loadImage</dt>
     <dd>
       <div><strong>( url</strong>: string [, <strong>callback</strong>: function [, useCache: true|<em>false</em> ] ] &nbsp;<strong>) </strong>returns: <em>Image | null</em></div>
-      <p>Loads image from the url.<em> </em>If <em>callback</em> is ommited then the engine will try to load image sycnhronously otherwise (if <em>callback</em> is a function) engine will issue asynchronous request and will call this function upon arrival.</p>
+      <p>Loads image from the url.<em/>If <em>callback</em> is ommited then the engine will try to load image sycnhronously otherwise (if <em>callback</em> is a function) engine will issue asynchronous request and will call this function upon arrival.</p>
       <p>If <em>useCache</em> is not false then the method will try to use image cache to get the image and on successful download the image will go to the cache too. By default useCache is <em>false</em>.</p>
       <p>Signature of the callback function is <font face="Courier New">function callback(image, status)</font> where <em>image</em> is an object of class Image or null in case of error, <em>status</em> is http status (200,404,etc).</p></dd>
     <dt>bindImage</dt>
@@ -557,9 +557,9 @@ el.$content(This is item number <b>{ num }</b>);
       <p><em>placement</em> parameter is optional. The popup position can also be defined in CSS &nbsp;by <i>popup-position</i> property. </p></dd>
     <dt>popup</dt>
     <dd>
-      <div><strong>( el</strong>: Element, <strong>x</strong>:int, <strong>y</strong>:int ) :void</div>
-      <p>Function will show element <em>el</em> as a popup window placed at x, y (view relative coordinates). <em>Placement</em> is '7'.</p>
-      <div>( see keyboard numpad to get an idea of numbering).</div></dd>
+      <div><strong>( el</strong>: Element, [ <b>placement</b>: 1..9,]<strong> x</strong>:int, <strong>y</strong>:int ) :void</div>
+      <p>Function will show element <em>el</em> as a popup window placed at x, y (view relative coordinates). <em>Placement</em> defines what point of the <i>el</i> shall be places at x,y. By default it is  7 (top/left corner).</p>
+      <p>( see keyboard numpad to get an idea of numbering).</p></dd>
     <dt>closePopup</dt>
     <dd>
       <div><strong>()</strong> :void</div>
@@ -577,7 +577,7 @@ el.$content(This is item number <b>{ num }</b>);
       <p>Swaps DOM positions of two elements - owner of the method and the <em>other</em>. Returns element whose method is called.</p></dd>
     <dt>sendEvent</dt>
     <dd>
-      <div><strong>( eventCode</strong>:int<em> </em>[<em>, </em><strong>reason</strong><em>:</em> int<em> </em>[, <strong>owner</strong>: Element | null [, <strong>data</strong>:value ]]]<strong> )</strong> : true | false | value</div>
+      <div><strong>( eventCode</strong>:int<em/>[<em>, </em><strong>reason</strong><em>:</em> int<em/>[, <strong>owner</strong>: Element | null [, <strong>data</strong>:value ]]]<strong> )</strong> : true | false | value</div>
       <p>traverse (send) bubbling event to the parent/child chain of <em>this</em> element. Events generated by this method can be handled by <em>onControlEvent</em>() methods of elements in the chain.</p>
       <ul>
         <li><em>eventCode</em> is either one of constants from <em>Logical event codes from builtin behaviors </em>( see: <a href="Event.htm">Event</a> ) or any integer value above 0x1000 (custom control events range).</li>
@@ -587,7 +587,7 @@ el.$content(This is item number <b>{ num }</b>);
       <div>The <em>sendEvent</em> does traversal so it returns <em>true</em> if the event was consumed - one of <em>onControlEvent</em>() handlers in parent/child chain returned <em>true</em> while handling this event. If some element in child-parent chain consumes the event (returns true) and sets the <em>data</em> field the value of this updated data field will be returned from the sendEvent() function.</div></dd>
     <dt>sendEvent</dt>
     <dd>
-      <div><strong>( event</strong>:string<em> </em>[, <strong>data</strong>:value ]<strong> )</strong> : true | false | value</div>
+      <div><strong>( event</strong>:string<em/>[, <strong>data</strong>:value ]<strong> )</strong> : true | false | value</div>
       <p>traverse (send) bubbling event to the parent/child chain of <em>this</em> element. Events generated by this method can be handled by <em>onControlEvent</em>() methods of elements in the chain.</p>
       <ul>
         <li><em>event</em> is an event name possibly with namespace, see Element.subscribe/unsubscribe() below.</li>
@@ -595,11 +595,11 @@ el.$content(This is item number <b>{ num }</b>);
       <div>The <em>sendEvent</em> does traversal so it returns <em>true</em> if the event was consumed - one of handlers in parent/child chain returned <em>true</em> while handling this event. If some element in child-parent chain consumes the event (returns true) and sets the <em>data</em> field the value of this updated data field will be returned from the sendEvent() function.</div></dd>
     <dt>postEvent</dt>
     <dd>
-      <div><strong>( event</strong>:string<em> </em>[, <strong>data</strong>:value ]<strong> )</strong> : true</div>
+      <div><strong>( event</strong>:string<em/>[, <strong>data</strong>:value ]<strong> )</strong> : true</div>
       <p>The <em>postEvent</em> places event into the internal queue of posted events for future traversal by <em>sendEvent</em>(name,data) and returns immediately.</p></dd>
     <dt>postEvent</dt>
     <dd>
-      <div><strong>( eventCode</strong>:int<em> </em>[<em>, </em><strong>reason</strong><em>:</em> int<em> </em>[, <strong>owner</strong>: Element | null [, <strong>data</strong>:value ]]]<strong> )</strong> : undefined</div>
+      <div><strong>( eventCode</strong>:int<em/>[<em>, </em><strong>reason</strong><em>:</em> int<em/>[, <strong>owner</strong>: Element | null [, <strong>data</strong>:value ]]]<strong> )</strong> : undefined</div>
       <p>The <em>postEvent</em> places event into the internal queue of posted events for future traversal by <em>sendEvent</em> and returns immediately.</p></dd>
     <dt>sendKeyEvent</dt>
     <dd>
@@ -645,7 +645,7 @@ el.$content(This is item number <b>{ num }</b>);
       <p>Method builds absolute url from the <em>relativeUrl</em> by using document url as a base. В If there is no <em>relativeUrl</em> then the method just returns url of the document this DOM element belongs to.</p></dd>
     <dt>sort</dt>
     <dd>
-      <div><strong>( comparator</strong>: function<strong> </strong>[, <strong>fromIndex</strong>: integer [, <strong>numOfElements</strong>:integer]]<strong> В )</strong> : void</div>
+      <div><strong>( comparator</strong>: function<strong/>[, <strong>fromIndex</strong>: integer [, <strong>numOfElements</strong>:integer]]<strong> В )</strong> : void</div>
       <p>Sorts children of the element by using <em>comparator</em> function. <em>comparator</em> function has to have following signature:</p>
       <pre>function cmp(el1: Element, el2: Element) : int
 </pre>
@@ -880,7 +880,7 @@ el.$content(This is item number <b>{ num }</b>);
     <dd>
       <div>Requests to scroll, typically are coming from &lt;input type=vscrollbar&gt; or &lt;input type=hscrollbar&gt;.</div>
       <div>In case of SCROLL_POS use <em>event.scrollPos</em> field to get requested position to scroll.</div>
-      <div></div></dd>
+      <div/></dd>
     <dt>Event.SCROLL_END</dt>
     <dt>Event.SCROLL_STEP_PLUS</dt>
     <dt>Event.SCROLL_STEP_MINUS</dt>

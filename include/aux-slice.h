@@ -54,12 +54,12 @@ template <typename T >
       slice(): start(0), length(0) {}
       slice(const T* start_, size_t length_) { start = start_; length = (unsigned int)length_; }
       slice(const slice& src): start(src.start), length(src.length) {}
-      slice(const std::basic_string<T>& src): start(src.c_str()), length((unsigned int)src.length()) {}
-      //slice(const T* start_, const T* end_): start(start_), length( max(end_-start_,0)) {}
 
       slice& operator = (const slice& src) { start = src.start; length = src.length; return *this; }
 
-      const T*      end() const { return start + length; }
+      // definitions to support for(auto a : slice) {} loops in C++11
+      const T* begin() const { return start; }
+      const T* end() const { return start + length; }
 
       bool operator == ( const slice& r ) const
       {
@@ -260,7 +260,7 @@ template <typename T >
      slice<T> elements_of(const T* s, size_t l) { return slice<T>(s, l); }
 
   template<typename T>
-     slice<T> elements_of( const std::vector<T> &s ) {  return slice<T>(&s[0], s.size()); }
+     slice<T> elements_of( const std::vector<T> &s ) {  return slice<T>(s.data(), s.size()); }
 
   template<typename T, int size>
      slice<T> elements_of(T (& arr)[size]){ return slice<T>(&arr[0],size);}

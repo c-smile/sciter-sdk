@@ -36,6 +36,16 @@
         var button = $(toolbar>button[href="{Plus.app.path}"]); 
         button.value = true;
       }
+
+      self << event keyup (evt) {
+        if( evt.keyCode == Event.VK_F5 ) {
+          if( self.parent ) // loaded in frame
+            self.parent.load(__FILE__);
+          else // loaded in view ...
+            view.load(__FILE__);
+          return true;
+        }
+      }
       
     </script>
   </head>

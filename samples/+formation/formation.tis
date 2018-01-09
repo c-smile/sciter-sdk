@@ -142,7 +142,7 @@ namespace formation {
         return false;                        // don't go inside it
       }
       if( el.tag in LISTS && el.prototype === Element ) { 
-        addNamedItem(f,name,repeatable(el)) ; // theses are repeatable formations
+        addNamedItem(f,name,repeatable(el)) ; // these are repeatable formations
         return false;                         // don't go inside it
       }
       

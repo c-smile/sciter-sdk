@@ -1,9 +1,9 @@
 
-type bhvA : Behavior 
+class bhvA : Element 
 {
 	function attached(){ this.text = "A";}
 }
-type bhvB : bhvA 
+class bhvB : bhvA 
 {
 	function attached(){ super.attached(); this.text += "B";}
 }

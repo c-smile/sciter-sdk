@@ -24,8 +24,7 @@ var server = http.createServer();
 var wss = new WebSocketServer({server: server, path: '/echo'});
     wss.on('connection', function(ws) {
         console.log('/echo connected');
-        ws.on('message', function(data, flags) {
-            if (flags.binary) return; 
+        ws.on('message', function(data) {
             
             if( data == "." ) { 
               ws.close(); 

@@ -127,8 +127,14 @@ namespace sciter
 
       LRESULT on_load_data(LPSCN_LOAD_DATA pnmld)
       {
+#ifdef _DEBUG
+//        auto console = debug_output::instance();
+//        if (console)
+//          console->printf("SC_LOAD_DATA:%S\n", pnmld->uri);
+#endif
         LPCBYTE pb = 0; UINT cb = 0;
         aux::wchars wu = aux::chars_of(pnmld->uri);
+
         if(wu.like(WSTR("res:*")))
         {
           // then by calling possibly overloaded load_resource_data method
@@ -146,7 +152,18 @@ namespace sciter
         return LOAD_OK;
       }
 
-      LRESULT on_data_loaded(LPSCN_DATA_LOADED pnmld)  { return 0; }
+      LRESULT on_data_loaded(LPSCN_DATA_LOADED pnmld)  { 
+#ifdef _DEBUG
+//        auto console = debug_output::instance();
+//        if (console) {
+//          if(!pnmld->data || !pnmld->dataSize)
+//            console->printf("SC_DATA_LOAD FAILURE (%d) :%S\n", pnmld->status, pnmld->uri);
+//          else
+//            console->printf("SC_DATA_LOADED:%S\n", pnmld->uri);
+//        }
+#endif
+        return 0; 
+      }
       LRESULT on_attach_behavior( LPSCN_ATTACH_BEHAVIOR lpab ) { return create_behavior(lpab); }
       LRESULT on_engine_destroyed( ) { return 0; }
       LRESULT on_posted_notification( LPSCN_POSTED_NOTIFICATION lpab ) { return 0; }

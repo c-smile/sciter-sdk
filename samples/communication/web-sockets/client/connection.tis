@@ -1,7 +1,7 @@
 
 function connection(params) {
  
-  var socket = WebSocket.connect(params.url,5s);
+  var socket = Net.WebSocket.connect(params.url,5s);
   
   socket.on("connect", function() { if(var cb = params.onConnect) cb(); })
         .on("close", function() { socket = null; if(var cb = params.onClose) cb(); })
@@ -21,7 +21,7 @@ function connection(params) {
     if(text === null)
       socket.close(); 
     else
-      socket.sendText(text); 
+      socket.send(text); 
   }
 
 }

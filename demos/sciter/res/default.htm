@@ -95,30 +95,30 @@
       const content = $(frame#content);
       const inspectorButton = $(button#inspector);
 
-	    var filename = null;
+      var filename = null;
       const file_filter = "files *.htm,*.html,*.svg,*.zip,*.scapp|*.HTM;*.HTML;*.SVG;*.ZIP;*.SCAPP|"
-				 "HTML files only(*.htm,*.html)|*.HTM;*.HTML|"
+         "HTML files only(*.htm,*.html)|*.HTM;*.HTML|"
          "SVG files only(*.svg)|*.SVG|"
-				 "SCAPP files only (*.zip,*.scapp)|*.ZIP;*.SCAPP|"
-				 "All Files (*.*)|*.*";
-         
-      var debugIsActive = false; 
+         "SCAPP files only (*.zip,*.scapp)|*.ZIP;*.SCAPP|"
+         "All Files (*.*)|*.*";
+
+      var debugIsActive = false;
 
       function loadFile(fn)
       {
-	      filename = fn;
-	      content.load(fn);
+        filename = fn;
+        content.load(fn);
         $(button#reload).state.disabled = false;
         var inspectorButton = $(button#inspector);
         inspectorButton.state.disabled = false;
         if(debugIsActive)
           view.launchDebugView();
         var croot = content[0];
-        var title = croot.$(head>title); 
+        var title = croot.$(head>title);
         if( title )
-          view.windowCaption =  title.text || "Sciter"; 
-        else 
-          view.windowCaption =  "Sciter"; 
+          view.windowCaption =  title.text || "Sciter";
+        else
+          view.windowCaption =  "Sciter";
       }
 
       function content.onExchange(evt)
@@ -144,11 +144,11 @@
            if(typeof evt.dragging == #array)
              fn = evt.dragging[0];
            else
-  		       fn = evt.dragging;
+             fn = evt.dragging;
            loadFile(fn);
            return true;
          }
-      }
+      }      
 
       event click $(toolbar > button#open)
       {
@@ -202,21 +202,23 @@
           height: 800
         };
       }
-
+      
       event click $(toolbar > button#inspector)
       {
         //if(!view.inspectorIsPresent()) // native function, defined in sciter.cpp
-        Sciter.launch( System.home("inspector.exe") );
-      
-        if( var connectToInspector = view.connectToInspector ) 
-          connectToInspector($(frame#content));
+        System.exec( System.home("inspector.exe") );
+        // give it a time to start ...
+        this.timer(200ms, function() {
+          if( var connectToInspector = view.connectToInspector )
+            connectToInspector($(frame#content));
+        });
       }
 
       function self.ready() {
         Settings.restore();
       }
-           
-    </script>
+
+  </script>
 
   </head>
   <body aria-label="Sciter Frame Body">

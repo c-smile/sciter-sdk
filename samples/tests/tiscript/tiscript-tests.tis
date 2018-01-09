@@ -696,6 +696,17 @@ function Date_test()
       
   stdout.printf("date is:%d-%d-%d %d:%d:%d\n", d.day, d.month+1, d.year,
       d.hour, d.minute, d.second );
+
+  // date comparisons:
+
+  var d1 = new Date(2017,12,28);
+  var d2 = new Date(2017,12,28);
+  var d3 = new Date(2017,12,29);
+
+  assert d1 == d2;
+  assert d1 !== d2;
+  assert d3 > d2;
+  assert d1 < d3;
 }
 
 function Function_test()
@@ -906,22 +917,25 @@ function Stream_test()
   
 }
 
-function SocketStream_test()
+function Socket_test()
 {
+  var oath = promise();
   // will print content of front page:
-  var sock = Stream.openSocket( "www.terrainformatica.com:80" );
-  sock.encoding = "utf-8";
-  sock.println("GET http://www.terrainformatica.com/tests/test-utf-8.txt HTTP/1.0");
-  sock.println("User-Agent: TiScript [en]");
-  sock.println("");
-  stdout.printf("-------http://www.terrainformatica.com/tests/test-utf-8.txt-----\n");
-  while( true )
-  {
-    var s = sock.readln();
-    if(s === undefined) break;
-    stdout.println(s);
+  var sock = Net.Socket.connect( "terrainformatica.com",80);
+
+  sock << event connect {
+    this.send("GET http://terrainformatica.com/tests/test-utf-8.txt HTTP/1.0\r\n"
+              "User-Agent: Sciter Engine [en]\r\n"
+              "\r\n");
   }
-  stdout.printf("--------EOF-----------------------------------------------------\n");
+
+  var resp = "";
+
+  sock << event data (message) { resp += message; stdout.println("response:", resp); }
+  sock << event close() { oath(true,[resp]); }  
+  sock << event error(err) { oath(false,[err]);  }
+
+  return oath;
 }
 
 namespace NS // namespace
@@ -1110,6 +1124,9 @@ function Units_test()
   assert 10cm + 4.5 == 14.5cm;
   assert 10pt - 4.5 == 5.5pt;
   assert 10pt % 4 == 2pt;
+
+  assert 2px > 1px;
+  assert 2dip < 3dip;
     
   assert 360deg == Math.PI * 2 * 1rad;
   assert 360deg == 400grad;
@@ -1294,7 +1311,7 @@ run( Object_test );
 run( Class_test );
 run( Date_test );
 run( Stream_test );
-run( SocketStream_test );
+run( Socket_test );
 run( Integer_test );
 run( Float_test );
 run( Function_test );

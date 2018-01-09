@@ -1,0 +1,116 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+        body { flow:horizontal; }
+        body > section { size:*; }
+
+        select#folder-view {
+          prototype: FolderView url(folder-view.tis);
+          display:block;
+          size:*;
+        }
+
+        select#folder-view > option 
+        {
+          foreground-repeat: no-repeat;
+          foreground-position: 2px 50%;
+          padding-left: 24dip;
+          width:max-intrinsic;
+        }
+
+        select#folder-view > option[type=file] { behavior:shell-icon; } 
+        select#folder-view > option[type=dir] { foreground-image:url(images/folder-icon-32.png); foreground-size:16dip; } 
+        select#folder-view > option[type=dir].parent { foreground-image:url(images/folder-open-icon-32.png); foreground-size:16dip; } 
+
+        section {
+          margin:1em;
+          flow: row(label,input pair,button);
+          border-spacing:0.5em; 
+        }  
+
+        section label { width:max-content; margin:* 0; }
+        section input { width:*; margin:* 0; }
+        section pair { display:block; flow:horizontal; width:*; margin:* 0; border-spacing:0.5em; }
+
+        </style>
+        <script type="text/tiscript">
+
+        const folderView = $(#folder-view);        
+
+        function self.ready() 
+        {
+          folderView.path = __FOLDER__ + "temp/";
+          $(output#path).value = folderView.path; 
+
+          folderView << event change {
+            var (type,name,path) = folderView.current;
+            if( type == #file ) 
+              for(var f in $$(input.file.current)) f.value = name;
+            else
+              for(var d in $$(input.dir.current)) d.value = name;
+          }
+        }
+
+        function ok() { view.msgbox(#information,"done"); }
+        function fail(r) { view.msgbox(#alert, r); }
+
+        event click $(button#delete-file) {
+          var fn = folderView.fullPath(this.prior.value);
+          System.unlink(fn).then( ok ).catch( fail );
+        }
+
+        event click $(button#touch-file) {
+          var fn = folderView.fullPath(this.prior.value);
+          var now = new Date();
+          System.utime(fn,now,now).then( ok ).catch( fail );
+        }
+
+
+        event click $(button#copy-file) {
+          var src = folderView.fullPath(this.prior[0].value);
+          var dst = folderView.fullPath(this.prior[1].value);
+          System.copyFile(src,dst).then( ok ).catch( fail );
+        }
+
+        event click $(button#delete-dir) {
+          var fn = folderView.fullPath(this.prior.value);
+          System.rmdir(fn).then( ok ).catch( fail );
+        }
+
+        event click $(button#make-dir) {
+          var fn = folderView.fullPath(this.prior.value);
+          System.mkdir(fn).then( ok ).catch( fail );
+        }
+
+
+        </script>
+    </head>
+    <body>
+      <section>
+        <p>Content of <output|text #path /> folder. It is monitored by <code>System.watch(path);</code> tracker:</p>
+        <select|list #folder-view>
+        </select>
+      </section>
+      <section>
+        <label>create file</label>
+        <input|text.file novalue="file name"> <button #create-file>Create</button>
+        <label>delete file</label>
+        <input|text.file.current novalue="file name"> <button #delete-file>Delete</button>
+        <label>touch file</label>
+        <input|text.file.current novalue="file name"> <button #touch-file>Touch</button>
+        
+        <label>copy file</label>
+        <pair><input|text.file.current novalue="from">
+              <input|text.file novalue="to"></pair> <button #copy-file>Copy</button>
+
+        <label>delete folder</label>
+        <input|text.dir.current novalue="folder name"> <button #delete-dir>Delete</button>
+        <label>make folder</label>
+        <input|text.dir novalue="folder name"> <button #make-dir>Create</button>
+        
+
+      </section>
+    </body>
+</html>
