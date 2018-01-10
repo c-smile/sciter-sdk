@@ -44,7 +44,23 @@
         }
 
         event click $(chart) (evt) {
-          $(p).text = "Clicked on " + evt.data;
+          $(p).text = "#" + evt.data + " selected";
+        }
+
+        event click $(#update) {
+
+          $(chart).value = {
+
+            labels: ["12am-3am", "3am-6am", "6am-9am", "9am-12pm", "12pm-3pm", "3pm-6pm", "6pm-9pm", "9pm-12am"],
+            datasets: [
+              {
+                title: "Some Data",
+                color: color.red,
+                values: [25.0, 40.9, 30.0, 35.0, 44.0, 52.0, 17.0, 34.5]
+              },
+            ]
+          };
+
         }
 
         </script>
@@ -55,6 +71,7 @@
       <button|radio(chart) value="line" checked>Line chart</button> 
       <button|radio(chart) value="area">Area chart</button>
       <button|radio(chart) value="bar">Bar chart</button>
+      <button#update>Update</button>
     </form>
 
     <chart|lines />

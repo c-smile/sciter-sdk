@@ -13,6 +13,8 @@ chart
   var(line-width): 3dip;
   var(dot-radius): 5dip;
   var(axis-line-width): 1px;
+  var(axis-line-color): #ccc;
+  var(highlight-color): highlight; // system::highlight by default
   // default colors of datasets 
   var(color0): turquoise;
   var(color1): violet;
@@ -31,15 +33,15 @@ chart > label { display:block; width:max-content; padding:4dip; }
 chart > popup {
   visibility:none;
   aspect: Charts.Bubble url(charts-parts.tis);
-  background-color:rgba(0,0,0,0.8);
+  background-color:#334;
   border-radius:3dip;
   color: #eee;
-  padding:0 0 10dip 0;
+  padding:0 5dip 5dip 5dip;
 }
 
 chart > popup > header { width:*; padding:2dip 4dip; }
 chart > popup > ul { flow:horizontal; margin:0; padding:0; }
-chart > popup > ul > li { margin:0; padding:0; border-top:solid 2dip; display:block;}
+chart > popup > ul > li { margin:0; padding:0 0 6dip 0; border-top:solid 2dip; display:block;}
 chart > popup > ul > li > var { font:inherit; font-weight:bold; display:block; padding:2dip 4dip; }
 chart > popup > ul > li > caption { padding:2dip 4dip; }
 chart > popup > ul > li:nth-child(1) { border-color:var(color0,#fff); }

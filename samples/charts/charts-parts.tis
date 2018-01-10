@@ -33,11 +33,14 @@ namespace Charts {
     }
 
     function render(canvas, gfx) {
-      var sw = canvas.axisLineWidth(this.index);
-      var x = this.x.toInteger() + (this.w.toInteger() / 2) + sw / 2.0;
-      gfx.strokeColor(color#ccc)
+      const sw = canvas.axisLineWidth(this.index);
+      const clr = canvas.axisLineColor(this.index);
+      const x = this.x.toInteger() + (this.w.toInteger() / 2) + sw / 2.0;
+      gfx.save()
+         .strokeColor(clr)
          .strokeWidth(sw)
-         .line(x,this.y,x, this.y + this.h);
+         .line(x,this.y,x, this.y + this.h)
+         .restore();
     }
 
     function replace(canvas,x,w) {
@@ -69,11 +72,14 @@ namespace Charts {
 
     function render(canvas, gfx) 
     {
-      var sw = canvas.axisLineWidth(this.index);
-      var y = this.y.toInteger() + (this.h.toInteger() / 2) + sw / 2.0;
-      gfx.strokeColor(color#ccc)
+      const sw = canvas.axisLineWidth(this.index);
+      const clr = canvas.axisLineColor(this.index);
+      const y = this.y.toInteger() + (this.h.toInteger() / 2) + sw / 2.0;
+      gfx.save()
+         .strokeColor(clr)
          .strokeWidth(sw)
-         .line(this.x,y,this.x + this.w,y);
+         .line(this.x,y,this.x + this.w,y)
+         .restore();
     }
 
     function replace(canvas,y,h) {
@@ -212,7 +218,7 @@ namespace Charts {
   function Bubble()
   {
     const RADIUS = this.style["border-bottom-left-radius"] || 3dip;
-    const ARROW_SIZE = 5dip;
+    const ARROW_SIZE = this.style["badding-bottom"] || 5dip;
     const BORDER_WIDTH = this.style["border-top-width"] || 0px;
     const BORDER_COLOR = this.style["border-top-color"] || color(0,0,0);
     const BACKGROUND_COLOR = this.style["background-color"] || color.gold;
@@ -229,7 +235,7 @@ namespace Charts {
         height = null;
       }
 
-      var (x,y,w,h) = this.box(#rectw,#border);
+      var (x,y,w,h) = this.box(#rectw);
      
       if( width == w && height == h)
         return shape; // nothing to do already calculated
@@ -282,8 +288,10 @@ namespace Charts {
     function drawBackground( gfx ) {
       if(var shape = getShape.call(this)) 
       {
+         gfx.pushLayer(#border-box,[#drop-shadow:color(0,0,0,0.6),2dip,2dip,2dip,0dip]); 
          if(BORDER_WIDTH) gfx.lineWidth(BORDER_WIDTH).lineColor(BORDER_COLOR);
          gfx.fillColor(BACKGROUND_COLOR).drawPath( shape );
+         gfx.popLayer();
          return true;
       }
 
