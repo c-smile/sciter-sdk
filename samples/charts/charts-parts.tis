@@ -218,7 +218,7 @@ namespace Charts {
   function Bubble()
   {
     const RADIUS = this.style["border-bottom-left-radius"] || 3dip;
-    const ARROW_SIZE = this.style["badding-bottom"] || 5dip;
+    const ARROW_SIZE = this.style["padding-bottom"] || 5dip;
     const BORDER_WIDTH = this.style["border-top-width"] || 0px;
     const BORDER_COLOR = this.style["border-top-color"] || color(0,0,0);
     const BACKGROUND_COLOR = this.style["background-color"] || color.gold;

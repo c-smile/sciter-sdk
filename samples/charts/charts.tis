@@ -150,6 +150,7 @@ namespace Charts {
 
       }
 
+
       function replace() 
       {
         super.replace();
@@ -268,8 +269,11 @@ namespace Charts {
       function tooltipContent(index) {
         var html = "<header>"+ this.data.labels[index].toHtmlString() +"</header>";
             html += "<ul>";
-        for(var (n,dataset) in this.data.datasets)
-          html += "<li.dataset" + n + "><var>" + dataset.values[index] + "</var><caption>" + dataset.title.toHtmlString() + "</caption></li>";
+        for(var (n,dataset) in this.data.datasets) {
+          const color = this.datasetColor(n).toCssString();
+          const fval = String.printf("%g",dataset.values[index]);
+          html += "<li.dataset style='border-color:" + color + "'><var>" + fval + "</var><caption>" + dataset.title.toHtmlString() + "</caption></li>";
+        }
         html += "</ul>";
         return html;
       }
