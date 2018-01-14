@@ -23,11 +23,25 @@ sciter::value window::exec_task(sciter::value taskId, sciter::value progressCb, 
 }
 
 // worker thread body, simulate time consuming task
+
+void thread_body(thread_params params)
+{
+  for (int i = 1; i <= 100; ++i) {
+    ::Sleep(100);
+    params.progressCb.call(i); // report task progress, function will be executed in GUI thread
+  }
+  // report task completion,
+  // we can pass some result data here, for now just taskId
+  params.doneCb.call(params.taskId);
+}
+
+
+#if 0 // equivalent of the above but with explicit GUI code sections
 void thread_body(thread_params params)
 {
   for(int i = 1; i <= 100; ++i) {
     ::Sleep(100);
-GUI_CODE_START
+GUI_CODE_START 
      params.progressCb.call(i); // report task progress
 GUI_CODE_END
   }
@@ -37,6 +51,7 @@ GUI_CODE_START
     params.doneCb.call(params.taskId);  
 GUI_CODE_END
 }
+#endif
 
 #if 0 // equivalent of the above but wihtout macro
   void thread_body(thread_params params)

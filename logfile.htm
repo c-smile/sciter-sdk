@@ -10,7 +10,18 @@
       <td width="60" nowrap="" valign="top" align="center">Build#</td>
       <td width="78" nowrap="" valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FFFADA">4.1.0.5687</td><td nowrap="" valign="top" align="center">08-01-2018</td><td><p>new:</p>
+    <tr><td valign="top" bgcolor="#FFFADA">4.1.1.5703</td><td nowrap="" valign="top" align="center">14-01-2018</td><td>
+					<p>new:</p>
+					<ul><li>[packfolder] <code>-i &quot;folder/*&quot;</code> option to explicitly include files or folders.&nbsp;</li></ul><p>fixes:</p>
+					<ul><li><code>&lt;textarea novalue&gt;</code> regression fix</li><li><code>tiscript::compile()</code> fix, see: <a href="https://sciter.com/forums/topic/tiscriptcompile-fail/">https://sciter.com/forums/topic/tiscriptcompile-fail/</a>&nbsp;</li>
+						<li>[charts] tooltip styling update.&nbsp;&nbsp;</li>
+						<li>[css,layout] handling vw,vh,vmin,vmax units in border-radius.</li>
+						<li>[script] proper escapement in <code>Element.$([value=&quot;{val}&quot;])</code> when val contains <code>&quot;</code>&nbsp;</li>
+						<li>[css] font-size handling fix in dynamic styles, see: <a href="https://sciter.com/forums/topic/bug-font-size/">https://sciter.com/forums/topic/bug-font-size/</a>&nbsp;</li>
+						<li><code>SC_POSTED_NOTIFICATION</code> is back</li>
+						<li>[column-resizer] fixes.</li>
+						<li>[win] support of multiple GUI threads in the same process.</li>
+						<li>[win] fix of API calls from external worker threads.</li></ul></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.1.0.5687</td><td nowrap="" valign="top" align="center">08-01-2018</td><td><p>new:</p>
 					<ul><li>Sciter uses libuv for almost all asynchronous I/O tasks. New functions<ul><li><code>System.dir(...)</code>&nbsp;function - scan folder for files;</li>
 								<li><code>System.watch(...)</code> function - monitor changes in folder;</li>
 								<li><code>System.unlink(...)</code> function - delete file;</li>

@@ -44,12 +44,12 @@ namespace sciter
 
     virtual void close() /* thread safe*/ { ::PostMessage(_hwnd,WM_CLOSE,0,0); };
 
-    json::string get_title();
-    void         set_title(const json::string& title);
+    sciter::string get_title();
+    void           set_title(const sciter::string& title);
 
-    void         enable_debugger(bool onoff) { SciterSetOption(NULL,SCITER_SET_DEBUG_MODE,onoff?TRUE:FALSE); }
+    void           enable_debugger(bool onoff) { SciterSetOption(NULL,SCITER_SET_DEBUG_MODE,onoff?TRUE:FALSE); }
 
-    json::value  debug(unsigned argc, const json::value* arg);
+    sciter::value  debug(unsigned argc, const sciter::value* arg);
     
   protected:
     frame();
@@ -97,20 +97,20 @@ namespace sciter
       CHAIN_FUNCTION_MAP(frame);
     END_FUNCTION_MAP
 
-    json::value get_title();
-    json::value set_title(json::value title);
-    json::value open(json::value url, json::value param = json::value());
-    json::value get_native_functor_test();
-    json::value inspector_is_present();
+    sciter::value get_title();
+    sciter::value set_title(sciter::value title);
+    sciter::value open(sciter::value url, sciter::value param = sciter::value());
+    sciter::value get_native_functor_test();
+    sciter::value inspector_is_present();
 
-    /*json::value testArray(const json::value& data)
+    /*sciter::value testArray(const sciter::value& data)
     {
         double vals[4] ={0};
         bool isObjArray = data.is_object_array();
         int length = data.length();
         for(int i1 = 0 ;i1 < length; i1++)
         {
-            json::value it = data.get_item(i1);
+            sciter::value it = data.get_item(i1);
             bool t0 = it.is_object();
             bool t1 = it.is_float();
             bool t2 = it.is_int();
@@ -118,7 +118,7 @@ namespace sciter
             bool t4 = it.is_object_array();
             vals[i1] = data.get_item(i1).get<double>();
         }
-        return json::value();
+        return sciter::value();
      }*/
 
   };

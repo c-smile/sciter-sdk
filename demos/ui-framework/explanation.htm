@@ -24,16 +24,12 @@ void thread_body(thread_params params)
 {
   for(int i = 1; i &lt;= 100; ++i) {
     ::Sleep(100);
-GUI_CODE_START
      params.progressCb.call(i); // report task progress
-GUI_CODE_END
   }
   // report task completion,
   // we can pass some result data here, for now just taskId
-GUI_CODE_START
-    params.doneCb.call(params.taskId);  
-GUI_CODE_END
+  params.doneCb.call(params.taskId);  
 }</pre>
-<p>As you see it calls passed callback functions in GUI thread</p>
+<p>As you see it calls passed callback functions. Note: these functions are executed in GUI thread.</p>
 
 

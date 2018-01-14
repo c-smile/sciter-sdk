@@ -6,6 +6,7 @@
 #include "sciter-x-dom.hpp"
 #include "sciter-x-request.hpp"
 #include <process.h>
+#include <vector>
 
 extern HINSTANCE ghInstance;
 
@@ -117,7 +118,7 @@ namespace sciter
   }
 
 
-  json::value frame::debug(unsigned argc, const json::value* argv)
+  sciter::value frame::debug(unsigned argc, const sciter::value* argv)
   {
     for(unsigned n = 0; n < argc; ++n)
     {
@@ -126,10 +127,9 @@ namespace sciter
       OutputDebugStringW(s.c_str());
     }
     OutputDebugStringW(L"\n");
-    return json::value();
+    return sciter::value();
   }
 
-  
   //
   //  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)
   //
@@ -196,22 +196,22 @@ namespace sciter
   }
 
 
-  json::value main_frame::open(json::value url, json::value param)
+  sciter::value main_frame::open(sciter::value url, sciter::value param)
   {
     if( !url.is_string() )
-      return json::value(false);
+      return sciter::value(false);
     sciter::main_frame* wnd = new sciter::main_frame(url.to_string().c_str());
-    return json::value(wnd != 0);
+    return sciter::value(wnd != 0);
   }
     
-  json::value main_frame::get_title()
+  sciter::value main_frame::get_title()
   {
-    return json::value(frame::get_title());
+    return sciter::value(frame::get_title());
   }
-  json::value main_frame::set_title(json::value title)
+  sciter::value main_frame::set_title(sciter::value title)
   {
     frame::set_title(title.to_string());
-    return json::value();
+    return sciter::value();
   }
   
   bool main_frame::on_message(UINT message, WPARAM wparam, LPARAM lparam, LRESULT& lresult) 
@@ -219,28 +219,28 @@ namespace sciter
     return false;
   }
 
-  json::value main_frame::inspector_is_present()
+  sciter::value main_frame::inspector_is_present()
   {
     HWND hwnd = FindWindow( WSTR("H-SMILE-FRAME"), WSTR("Sciter's Inspector"));
 
-    return json::value(hwnd != NULL);
+    return sciter::value(hwnd != NULL);
   }
 
-  json::value main_frame::get_native_functor_test()
+  sciter::value main_frame::get_native_functor_test()
   {
       // returns native function/functor callable from script
 
-      json::value message = json::value(L"native functor called");
+      sciter::value message = sciter::value(L"native functor called");
 
-      auto test_functor = [=](unsigned int argc, const json::value* argv ) -> json::value { 
+      auto test_functor = [=](unsigned int argc, const sciter::value* argv ) -> sciter::value { 
         return message;
       };
 /*
-      json::value nfv = json::value(test_functor);
-      json::value t = nfv.call();
+      sciter::value nfv = sciter::value(test_functor);
+      sciter::value t = nfv.call();
       assert( t == message ); 
 */
-      return json::value(test_functor);
+      return sciter::value(test_functor);
   }
 
 
