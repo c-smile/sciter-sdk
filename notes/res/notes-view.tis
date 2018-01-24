@@ -92,7 +92,7 @@ class NotesView : Element
   event change $(knob[name=order-toggle]) (evt,knob)
   {
     var on = knob.attributes["value"] == "edate";
-    setFilterEvents(on);
+    setFilterEvents(on, true);
     return true;
   }  
   
@@ -159,8 +159,8 @@ class EventsKnob : Element
     //desc is { startedEvents: int,  - num notes with just started events 
     //          activeEvents: int,  - active event notes with note.startDate < now < note.endNote
     //          totalEvents : int } - all pending events - with now < note.endNote including those in future
+    //if( desc.startedEvents ) this.startHeartBeat();
 
-    if( desc.startedEvents ) this.startHeartBeat();
     if( desc.totalEvents == 0 ) 
       this.clear();
     else if( desc.activeEvents )
@@ -170,23 +170,24 @@ class EventsKnob : Element
       this.$content(<span.total>{desc.totalEvents}</span>);
   }
 
-  function startHeartBeat() {
+  /*function startHeartBeat() {
     if(this.breathing) return;
-    this.breathing = 20; // 10 cycles
+    this.breathing = 20; // # of cycles
     this.timer(1s,heartBeat);
-  }
+  }*/
+
   // timer function
-  function heartBeat() {
+  /*function heartBeat() {
     if( --this.breathing == 0 )
       return false; // stop
     if( this.state.expanded ) this.state.expanded = false;
     else this.state.expanded = true;
     return true; // keep breathing
-  }
+  }*/
 
-  event click {
+  /*event click {
     this.breathing = 0;
     this.state.expanded = false;
-  }
+  }*/
 
 }

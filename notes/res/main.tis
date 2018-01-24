@@ -28,23 +28,31 @@ function PopulteNotesList(array) {
 
 function UpdateNotesList(array) {
   var idx = 0;
-  /*function cb(note) {
-    if( idx >= array.length ) 
-      array.push(note);    
-    else if( array[idx] !== note )
-      array.splice(idx,0,note);
-    ++idx;
-  }
-  db.selectItems(cb, filterTags, filterWords, currentBook,filterEvents);*/
-  for(var note in db.matchingItems(filterTags, filterWords, currentBook, filterEvents))
-  {
-    if( idx >= array.length ) 
-      array.push(note);    
-    else if( array[idx] !== note )
-      array.splice(idx,0,note);
-    ++idx;
-  }
+  var idxToGo = null;
+  if( filterEvents ) 
+    for(var note in db.matchingItems(filterTags, filterWords, currentBook, filterEvents))
+    {
+      if(idxToGo === null) {
+        if( note.hasActiveEvent )
+          idxToGo = idx;
+      }
+      if( idx >= array.length ) 
+        array.push(note);    
+      else if( array[idx] !== note )
+        array.splice(idx,0,note);
+      ++idx;
+    }
+  else
+    for(var note in db.matchingItems(filterTags, filterWords, currentBook, filterEvents))
+    {
+      if( idx >= array.length ) 
+        array.push(note);    
+      else if( array[idx] !== note )
+        array.splice(idx,0,note);
+      ++idx;
+    }
   array.length = idx; // prune the rest
+  return idxToGo;
 }
 
 function setFilterTags(tags)
@@ -72,10 +80,15 @@ function setFilterText(text)
   }
 }
 
-function setFilterEvents(onOff)
+function setFilterEvents(onOff, dropOtherFilters = false)
 {
   if(filterEvents != onOff) {
     filterEvents = onOff;
+    if( dropOtherFilters ) {
+      setFilterText(null);
+      setCurrentBook(null);
+      setFilterTags(null);
+    }
     self.postEvent("notes-filter-changed", #events);
   }
 }
@@ -177,9 +190,12 @@ function self.ready() {
 
   if( "-debug" in argv ) {
       const inspector = System.PLATFORM == "Windows" ? "inspector.exe" : "inspector";
-      Sciter.launch( System.home(inspector) );
-      if( var connectToInspector = view.connectToInspector ) 
-        connectToInspector();
+      System.exec( System.home("inspector.exe") );
+      // give it a time to start ...
+      this.timer(200ms, function() {
+        if( var connectToInspector = view.connectToInspector )
+            connectToInspector($(frame#content));
+        });
   }
 
   view.windowCaption = String.printf("%s %d.%d.%d.%d", 

@@ -1,0 +1,58 @@
+
+//|
+//| $x is JSX like parser - returns virtual DOM tree 
+//|
+
+class VE: Object { // virtual element
+  this var tag;       
+  this var atts = {}; // attributes 
+  this var states = {}; // states 
+  this var kids = []; // children
+  function this(tag) { this.tag = tag; }
+}
+
+function $x(parts..)
+{
+  var functions = {};
+  var idx = 1234;
+  for(var (i,p) in parts) {
+     if( typeof p == #function ) {
+        var key = "$" + (++idx) + "$";
+        functions[key] = p;
+        parts[i] = key;
+     }
+  }
+  
+  var stream = Stream.openString(parts.join(""));
+  
+  var scanner = new XMLScanner( stream );
+
+  var stack = [];
+  var root;
+
+  while:loop (var token = scanner.token())
+    switch( token )
+    {
+      case XMLScanner.EOF:            break loop;
+      case XMLScanner.ERROR:          throw String.$(error at line {scanner.lineNo});
+      case XMLScanner.TEXT:           if(stack.last) stack.last.kids.push(scanner.value); continue;
+      case XMLScanner.CDATA:          stack.last.kids.push(scanner.value); continue;
+      case XMLScanner.HEAD_END:       continue; 
+      case XMLScanner.EMPTY_HEAD_END: root = stack.pop(); continue; 
+      case XMLScanner.ATTR:           if(scanner.attribute !like ":*") stack.last.atts[symbol(scanner.attribute)] = scanner.value; 
+                                      else stack.last.states[symbol(scanner.attribute.substr(1))] = scanner.value; 
+                                      continue;
+      case XMLScanner.TAIL:           if( scanner.tag == stack.last.tag) root = stack.pop();
+                                      else throw String.$(Unexpected tail of {scanner.tag} at line {scanner.lineNo});
+                                      continue;
+      case XMLScanner.HEAD:           {
+                                        root = new VE(scanner.tag);
+                                        if(var top = stack.last) top.kids.push(root); 
+                                        stack.push(root); 
+                                      }
+                                      continue;
+    }
+  stream.close(); // as it is our temporary stream.
+  return root;
+}
+

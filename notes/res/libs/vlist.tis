@@ -389,12 +389,17 @@ function VirtualList(params) {
     list.reset = function(cb) 
     { 
       setupSetObserver(false);
-      cb(records);
+      var idxToGo = cb(records);
       setupSetObserver(true);      
       list.clear(); 
       if( records )
          pumpAfter.call(list,0); 
       list.scrollTo(0,0);      
+      if(typeof idxToGo == #integer) {
+        list.post(function() {
+          list.firstIndex = idxToGo;
+        });
+      }
     };
 
     list[#value] = property(v) 
@@ -495,6 +500,15 @@ function VirtualList(params) {
     {
       get return records.indexOf(current_record) >= 0? current_record : null;
       set { setCurrent(records.indexOf(v),false); }
+    } 
+
+    list.firstIndex = property(v) {
+      get { 
+        var sy = list.scroll(#top);
+        return sy / item_height;
+      }
+      set
+        list.scrollTo(0, v * item_height, false);
     } 
 
 

@@ -253,13 +253,13 @@ class Note
       var events = this.getMeta(#events);
       if(!events)
         return null;
-      var max = Float.MIN;
-      var dt = null;
+      var max = null;
       for(var edef in events) {
-        var e = edef.end.valueOf();
-        if( e > max ) { max = e; dt = edef.end; }
+        var e = edef.end;
+        if( !max || e > max ) 
+          max = e;
       }
-      return dt;
+      return max;
     }
   }
 
@@ -268,10 +268,10 @@ class Note
       var events = this.getMeta(#events);
       if(!events)
         return null;
-      var now = (new Date()).valueOf();
+      var now = new Date();
       for(var edef in events) {
-        if( edef.end.valueOf() < now ) continue; // ended already
-        return edef.start;
+        if( edef.end < now ) continue; // ended already
+          return edef.start;
       }
       return null;
     }
@@ -281,7 +281,7 @@ class Note
   property hasActiveEvent(v) {
     get {
       var dt = this.activeStartDate;
-      return dt && (dt.valueOf() <= (new Date()).valueOf());
+      return dt && (dt <= (new Date()));
     }
   }
 

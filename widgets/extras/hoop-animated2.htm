@@ -63,7 +63,7 @@
               {
                 var sy = me.scroll(#top);
                 if( speed > 0.0 ) {
-                  var nsy = (sy / 30 + 1) * 30;
+                  var nsy = (sy / 30) * 30;
                   var step = Float.min(THRESHOLD,(nsy - sy) / 2.0);
                   return step;
                 }

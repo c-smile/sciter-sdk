@@ -1,0 +1,236 @@
+include "jsx.tis";
+
+
+function app(state, actions, view, container) 
+{
+  var rootElement = (container && container[0]) || null;
+
+  function toVE(element) {
+
+    var kids = [];
+    for( var node in element.nodes() ) {
+      if( node.isText ) 
+        kids.push( node.text );
+      else if( node.isElement ) 
+        kids.push( toVE(element) );
+    }
+    var ve = new VE(symbol(element.tag));
+    ve.kids = kids;
+    return ve;
+  }
+
+  function copy(target, source = null) {
+    return source ? {}.extend(target,source) : {}.extend(target);
+  }
+
+  var renderLock = false;
+  var invokeLaterStack = [];
+  var lastNode = rootElement && toVE(rootElement);
+  
+  var globalState = copy(state);
+  var wiredActions = copy(actions);
+  var patch;
+
+  function render() {
+    renderLock = !renderLock;
+
+    var next = view(globalState, wiredActions);
+    if (container && !renderLock)
+      rootElement = patch(container, rootElement, lastNode, (lastNode = next));
+
+    while ((next = invokeLaterStack.pop())) next();
+  }
+
+  function scheduleRender() {
+    if (!renderLock) {
+      renderLock = true;
+      self.post(render);
+    }
+  }
+
+  function setPath(path, value, source) {
+    var target = {};
+    if (path.length) {
+      target[path[0]] = path.length > 1 ? setPath(path.slice(1), value, source[path[0]]) : value;
+      return copy(source, target);
+    }
+    return value;
+  }
+
+  function getPath(path, source) {
+    for (var el in path)
+      source = source[el];
+    return source;
+  }
+
+  function wireStateToActions(path, state, actions) 
+  {
+    function bind(key, action) {
+      actions[key] = function(data) {
+        if (typeof (data = action(data)) == #function) 
+          data = data(getPath(path, globalState), actions);
+        if ( data && data !== (state = getPath(path, globalState)) && !data.then )// Promise
+          scheduleRender(globalState = setPath(path, copy(state, data), globalState));
+        return data;
+      };
+    }
+    
+    for (var (key,action) in actions)
+      if(typeof action == #function)
+        bind(key, action);
+      else
+        wireStateToActions(path.concat(key),(state[key] = state[key] || {}),(actions[key] = copy(actions[key])));
+  }
+
+  function getKey(node) {
+    return node && node.atts ? node.atts.key : null
+  }
+
+  function setElementProp(element, name, value, oldValue) {
+    if (name == #key) {
+    } else if (name == #style) {
+      for (var i in copy(oldValue, value))
+        element[name][i] = value == null || value[i] == null ? "" : value[i];
+    } else {
+      if (typeof value == #function || name in element)
+        element[name] = value == null ? "" : value;
+      else if (value != null && value !== false) {
+        //stdout.println("attrname",name);
+        element.attributes[name] = value;
+      }
+      if (value == null || value === false)
+        element.attributes[name] = undefined;
+    }
+  }
+
+  function setElementState(element, name, value, oldValue) {
+    element.state[name] = value;
+  }
+
+  function createElement(node) {
+    var element = typeof node == #string || typeof node == #integer || typeof node == #float
+        ? Node.createText(node)
+        : Node.createElement(node.tag);
+
+    
+    if (node.atts) {
+      if (node.atts.oncreate)
+        invokeLaterStack.push(function() { node.atts.oncreate(element)});
+
+      for (var kid in node.kids)
+        element.append(createElement(kid));
+
+      for (var (aname, aval) in node.atts)
+        setElementProp(element, aname, aval, {});
+      for (var (sname, sval) in node.states)
+        setElementState(element, sname, sval, {});
+    }
+    return element;
+  }
+
+  function updateElement(element, old_atts, atts, old_states, states) {
+    for (var (name,val) in copy(old_atts, atts)) {
+      if (val !== (name == "value" || name == "checked" ? element[name]: oldProps[name])) 
+        setElementProp(element, name, atts[name], oldProps[name])
+    }
+    for (var (name,val) in copy(old_states, states))
+      setElementState(element, name, states[name], old_states[name]);
+
+    if (atts.onupdate)
+      invokeLaterStack.push(function() {atts.onupdate(element, oldProps)});
+  }
+
+  function removeChildren(element, node) {
+    if (var atts = node.atts) {
+      for (var i = 0; i < node.children.length; i++)
+        removeChildren(element.childNodes[i], node.children[i]);
+      if (atts.ondestroy)
+        atts.ondestroy(element);
+    }
+    return element;
+  }
+
+  function removeElement(parent, element, node, cb) {
+    function done() { parent.removeChild(removeChildren(element, node)) }
+    if (node.atts && (cb = node.atts.onremove))
+      cb(element, done);
+    else
+      done();
+  }
+
+  patch = function patch(parent, element, oldNode, node) {
+    var nextSibling;
+    if (node === oldNode) {
+    } else if (oldNode == null) {
+      if( element ) element = element.insertNodeBefore(createElement(node));
+      else container.append(element = createElement(node));
+    } else if (node.name && node.name === oldNode.name) {
+      updateElement(element,oldNode.atts,node.atts,oldNode.states,node.states);
+
+      var oldElements = [];
+      var oldKeyed = {};
+      var newKeyed = {};
+      var elementNodes = element.nodes();
+
+      for (var (i,oldChild) in oldNode.kids) {
+        oldElements.push(elementNodes[i]);
+        var oldKey = getKey(oldChild);
+        if (oldKey)
+          oldKeyed[oldKey] = [oldElements[i], oldChild];
+      }
+
+      var i = 0, j = 0;
+
+      while (j < node.kids.length) {
+        var oldChild = oldNode.kids[i];
+        var newChild = node.kids[j];
+
+        var oldKey = getKey(oldChild);
+        var newKey = getKey(newChild);
+
+        if (newKeyed[oldKey]) { ++i; continue; }
+
+        if (!newKey) {
+          if (!oldKey) {
+            patch(element, oldElements[i], oldChild, newChild);
+            ++j;
+          }
+          ++i;
+        } else {
+          var recyledNode = oldKeyed[newKey] || [];
+          if (oldKey == newKey) {
+            patch(element, recyledNode[0], recyledNode[1], newChild);
+            ++i;
+          } else if (recyledNode[0]) {
+            patch(element, oldElements[i].insertNodeBefore(recyledNode[0]), recyledNode[1], newChild);
+          } else {
+            patch(element, oldElements[i], null, newChild);
+          }
+          ++j;
+          newKeyed[newKey] = newChild;
+        }
+      }
+
+      while (i < oldNode.kids.length) {
+        var oldChild = oldNode.kids[i];
+        if (!getKey(oldChild))
+          removeElement(element, oldElements[i], oldChild);
+        ++i;
+      }
+
+      for (var pair in oldKeyed) 
+        if (!newKeyed[pair[1].atts.key])
+          removeElement(element, pair[0], pair[1]);
+    } else if (node.name == oldNode.name) {
+      element.nodeValue = node;
+    } else {
+      element = (nextSibling = element).insertNodeBefore(createElement(node));
+      removeElement(parent, nextSibling, oldNode);
+    }
+    return element;
+  }
+
+  scheduleRender(wireStateToActions([], globalState, wiredActions));
+  return wiredActions;
+
+}

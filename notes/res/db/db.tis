@@ -259,11 +259,11 @@ function* db.matchingItems(tags, words, book, events)
     var eventTag = Tag.known("event");
     if(eventTag) for(var it in eventTag.items)
       if( it.matches(tags,words,book) ) {
-        var starts = it.activeStartDate;
+        var starts = it.startDate;
         if( !starts ) continue;
         out.push(it);
       }
-    out.sort(:note1, note2: note1.activeStartDate.valueOf() - note2.activeStartDate.valueOf());
+    out.sort(:note1, note2: note1.startDate.valueOf() - note2.startDate.valueOf());
     for(var it in out)
       yield it;
   } 

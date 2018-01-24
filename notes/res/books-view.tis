@@ -6,7 +6,7 @@ class BooksView : Element
     var optionAll = this[0];
     //this[0].book = null;
     var me = this;
-    self << event book-selected { me.show(); } 
+    self << event book-selected { me.show();  } 
     self << event notes-filter-changed { me.show(); } 
     self << event book-assigned { me.updateCounters(); } 
     self << event book-removed { me.show(); }
@@ -21,15 +21,20 @@ class BooksView : Element
   {
     var books = db.getBooks();
     var i = 1;
+    var selopt = this[0];
     for( var book in books) 
     {
       var elBook = this[i];
       if( !elBook || (elBook.book !== book))
         this.insert("<option/>", i);  
       this[i].setBook(book);
+      if( book === currentBook ) 
+        selopt = this[i];
       ++i;
     }
     while(i < this.length) this[i].remove();
+    if( !selopt.state.current )
+      selopt.execCommand("set-current");
   }
 
   event change (evt) {
