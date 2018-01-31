@@ -73,8 +73,8 @@ namespace sciter
   }
 
 
-/** \struct notification_handler
- *  \brief standard implementation of SCITER_CALLBACK_NOTIFY handler.
+/** \struct host
+ *  \brief standard implementation of SCITER_CALLBACK_NOTIFICATION handler.
  *  Supposed to be used as a C++ mixin, see: <a href="http://en.wikipedia.org/wiki/Curiously_Recurring_Template_Pattern">CRTP</a>
  **/
 
