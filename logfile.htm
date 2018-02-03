@@ -10,7 +10,17 @@
       <td width="60" nowrap="" valign="top" align="center">Build#</td>
       <td width="78" nowrap="" valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FFFADA">4.1.2.5717</td><td nowrap="" valign="top" align="center">24-01-2018</td><td><p>fixes:</p>
+    <tr><td valign="top" bgcolor="#FFFADA">4.1.3.5728</td><td nowrap="" valign="top" align="center">02-02-2018</td><td>
+					<p>new:</p>
+					<ul><li>[script] &quot;That lambda&quot; function form: <code>|a,b| a + b;</code> - uses <code>this</code>&nbsp;of outer function.</li>
+						<li>[DOM] + <code>Graphics.transform(a,b,c,d,e,f)</code> method - canonical 2d affine transformation matrix.</li>
+						<li>+ <code>Graphics.Path.arc()</code> method.&nbsp;</li>
+						<li><code>System.Process.exec(,,#detached)</code> to start &quot;torn off&quot; child processes.&nbsp;</li></ul><p>fixes:</p>
+					<ul>
+						
+						
+						<li>[headers] <code>sciter::host&lt;T&gt;</code> and <code>sciter::window fixes</code> refactoring - proper window destruction sequence.</li><li>[script] <code>get</code>&nbsp;and <code>set</code>&nbsp;are treated as keywords only inside property declarations. Otherwise they are ordinary identifiers.</li><li>[css,rtl] fix of flow:vertical-wrap layout.</li><li>[script] for initialization fix, see: <a href="https://sciter.com/forums/topic/for-statement-initial-list-problem/">https://sciter.com/forums/topic/for-statement-initial-list-problem/</a>&nbsp;</li>
+						<li>[osx,linux] fix of <code>role=&quot;window-caption&quot;</code> mouse move handling.</li></ul></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.1.2.5717</td><td nowrap="" valign="top" align="center">24-01-2018</td><td><p>fixes:</p>
 					<ul><li>[css] <code>color:inherit;</code> is back.</li>
 						<li> <code>&lt;input|date&gt;</code> + method .showPopup();&nbsp;</li>
 						<li> <code>&lt;select|dropdown&gt;</code> + method .showPopup();</li>

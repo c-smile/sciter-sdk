@@ -17,6 +17,7 @@
 #define __sciter_x_host_callback_h__
 
 #include "sciter-x-api.h"
+#include "sciter-x-debug.h"
 #include <assert.h>
 
 #pragma warning(disable:4786) //identifier was truncated...

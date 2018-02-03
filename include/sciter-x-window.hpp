@@ -53,6 +53,7 @@ namespace sciter
                , public sciter::host<window>
                , public sciter::event_handler
   {
+    friend sciter::host<window>;
   public:
     window( UINT creationFlags, RECT frame = RECT() );
 
@@ -71,10 +72,10 @@ namespace sciter
     HINSTANCE get_resource_instance() const { return application::hinstance(); }
 
   protected:
-    virtual void detached  (HELEMENT /*he*/ ) override /*sciter::event_handler*/
-    {
-      // this happens when HWINDOW gets destroyed
-      _hwnd = 0; asset::release();
+    virtual LRESULT on_engine_destroyed() 
+    { 
+      _hwnd = 0; asset::release(); 
+      return 0; 
     }
 
 #if defined(WINDOWS)

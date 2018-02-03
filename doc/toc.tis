@@ -27,7 +27,7 @@ function makeToc( content, list )
   
   function showTree(tree)
   {
-	last_tree = tree;
+	  last_tree = tree;
 
     list.clear();
     for(var sect in tree)
@@ -46,6 +46,30 @@ function makeToc( content, list )
     }
   }
   showTree(makeTree());
+
+/*  function saveTree()
+  {
+    var sect_id;
+    for(var sect in last_tree)
+    {
+      if( !sect.items ) continue;
+      //var s = new Element("ul"); list.insert(s);
+      //var cap = new Element("caption", sect.caption); s.insert(cap); cap.target = sect.target; cap.onClick = onItemClick;
+      //sect.items.sort( :i1,i2: i1.caption < i2.caption? -1:1 );
+
+      sect_id = sect.caption;
+
+      for(var item in sect.items)
+      {
+        var id = sect_id + "-" + item.caption;
+        var cn;
+        if(var content = item.target.next) 
+          cn = content.html;
+        stdout.println(id,cn);
+      }
+    }
+  }
+  saveTree(last_tree);*/
 }
 
 function goTocSection(section)

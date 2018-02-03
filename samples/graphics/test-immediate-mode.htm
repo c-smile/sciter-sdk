@@ -95,6 +95,14 @@
           var x1 = 10, y1 = 10;
           var x2 = w - 10, y2 = h - 10;
           var w1 = w - 20, h1 = h - 20;
+
+
+          var path = new Graphics.Path();
+          // pie 
+          path.moveTo((x1+x2)/2, (y1+y2)/2)
+              .arc( (x1+x2)/2, (y1+y2)/2, w1/3, h1/3, 0, Math.PI / 2)
+              .lineTo((x1+x2)/2, (y1+y2)/2)
+              .close();
           
           //gfx.scale(0.5,0.5, w/2,h/2);
           
@@ -106,7 +114,8 @@
           gfx.strokeWidth(4)
              .strokeColor(color("gold"))
              .fillColor(color(0xFF,0xFF,0,0.3))
-             .arc( (x1+x2)/2, (y1+y2)/2, w1/3, h1/3, 0, Math.PI / 2);
+             //.arc( (x1+x2)/2, (y1+y2)/2, w1/3, h1/3, 0, Math.PI / 2);
+             .drawPath(path);
           
           gfx.strokeJoin(#round);
           

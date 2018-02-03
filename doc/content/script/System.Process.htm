@@ -13,8 +13,9 @@
     <h2>Methods</h2>
     <dt>exec</dt>
     <dd>
-      <div><strong>( exepath</strong>: string&nbsp;[, <b>arg1</b>: string, <b>arg2</b>: string, ...] <strong>)</strong> : Process</div>
-      <p>Static method, constructs new child process proxy object and starts process by running executable on path with command line parameters (optional).</p></dd>
+      <div><strong>( exepath</strong>: string&nbsp;[, <b>arg1</b>: string, <b>arg2</b>: string, ...] [,<b>#detached</b>] <strong>)</strong> : Process</div>
+      <p>Static method, constructs new child process proxy object and starts process by running executable on path with command line parameters (optional).</p>
+			<p>By default&nbsp;started process  will belong to the same process group - will be terminated by itself or on exit of this process. But if <b>#detached</b> parameter is provided the child process will survive this process termination -  torn off child process.</p></dd>
     <dt>on</dt>
     <dd>
       <div><strong>( event</strong>: string<strong>, callback</strong>: function<strong> )</strong> : this</div>

@@ -176,23 +176,28 @@
       <p>Rotate coordinate system on <em>radians</em> angle.</p></dd>
     <dt>scale</dt>
     <dd>
-      <div>( xsc: float, ysc: float ) : Graphics</div>
-      <p>Scale coordinate system. <code>xsc</code> is the scale factor in the horizontal direction and <code>ysc</code> is the scale factor in the vertical direction. Both parameters must be positive numbers. Values smaller than <code>1.0</code> reduce the unit size and values larger than <code>1.0</code> increase the unit size.</p></dd>
+      <div>( sx: float, sy: float ) : Graphics</div>
+      <p>Scale coordinate system. <code>sx</code> is the scale factor in the horizontal direction and <code>sy</code> is the scale factor in the vertical direction. Both parameters must be positive numbers. Values smaller than <code>1.0</code> reduce the unit size and values larger than <code>1.0</code> increase the unit size.</p></dd>
     <dt>translate</dt>
     <dd>
-      <div>( x: float, y: float ) : Graphics</div>
-      <p>Move origin of coordinate system to the (x,y) point.</p></dd>
+      <div>( tx: float, ty: float ) : Graphics</div>
+      <p>Move origin of coordinate system to the (tx,ty) point.</p></dd>
     <dt>skew</dt>
     <dd>
-      <div>( sx: float, sy: float ) : Graphics</div>
-      <p>Setup skewing (shearing) transformation.</p></dd>
+      <div>( shx: float, shy: float ) : Graphics</div>
+      <p>Setup skewing (shearing) transformation.</p>
+			</dd><dt>transform</dt>
+		<dd>( sx : float, shy : float, shx : float, sy : float, tx : float, ty : float&nbsp;) : Graphics<p>Sets transformation matrix described by&nbsp;</p>
+			<pre>  sx  shy tx
+[ shx sy  ty ]
+  0   0   1 </pre></dd>
     <dt>screenToWorld</dt>
     <dd>
       <div>(r: number) : float</div></dd>
     <dt>screenToWorld</dt>
     <dd>
       <div>(x: number, y: number) : (float, float)</div>
-      <p>These two functions translate coordinates from screen coordinate system to the one defined by rotate(),scale(), translate() and/or skew().</p></dd>
+      <p>These two functions translate coordinates from screen coordinate system to the one defined by rotate(),scale(), translate(), skew() and or transform().</p></dd>
     <dt>worldToScreen</dt>
     <dd>
       <div>(r: number) : float</div></dd>
@@ -283,6 +288,10 @@
       <div>( x1:<em>float</em>, y1:<em>float,</em> x2:<em>float</em>, y2:<em>float</em>, radius: <em>float&nbsp;</em><em/>[, relative <em>= false</em> ] ) : Graphics.Path</div>
       <p>Draws arc at the corner (point x1,y1) between two lines x0,y0 to x1,y1 and x1,y1 to x2,y2.  See: <a onmousedown="return rwt(this,'','','','3','AFQjCNEYwX0AEYPgDi7lZpmT-fu-hkXZDg','','0ahUKEwiIlomZyu7UAhUL4WMKHUIGC24QFgg1MAI','','',event)" href="https://www.google.ca/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=3&amp;ved=0ahUKEwiIlomZyu7UAhUL4WMKHUIGC24QFgg1MAI&amp;url=http%3A%2F%2Fwww.dbp-consulting.com%2Ftutorials%2Fcanvas%2FCanvasArcTo.html&amp;usg=AFQjCNEYwX0AEYPgDi7lZpmT-fu-hkXZDg" data-ctbtn="0" data-cthref="/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=3&amp;ved=0ahUKEwiIlomZyu7UAhUL4WMKHUIGC24QFgg1MAI&amp;url=http%3A%2F%2Fwww.dbp-consulting.com%2Ftutorials%2Fcanvas%2FCanvasArcTo.html&amp;usg=AFQjCNEYwX0AEYPgDi7lZpmT-fu-hkXZDg">Canvas 
 ArcTo Tutorial</a></p></dd>
+    <dt>arc</dt>
+    <dd>
+      <div>( cx:<em>float</em>, cy:<em>float,</em> radius:<em>float</em>[, radiusy:<em>float</em>], start: <em>float | angle&nbsp;</em><em/>, swipe : <i>float | angle</i> ) : Graphics.Path</div>
+      <p>Draws arc at center&nbsp;(point <i>cx</i>,<i>cy</i>) with <i>radius</i> and <i>start</i> and <i>swipe</i> angles. Swipe is a rotation angle - if it is positive then direction is clockwise, negative - counterclockwise.</p></dd>
     <dt>quadraticCurveTo</dt>
     <dd>
       <div>( xc:<em>float</em>, yc:<em>float</em> , x:<em>float</em>, y:<em>float</em> [, relative <em>= false</em> ] ) : Graphics.Path</div>

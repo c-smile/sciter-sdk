@@ -13,6 +13,12 @@
   <dl>
     <h2>Constants</h2>
     <h2>Methods</h2>
+		<dl><dt>getProperty</dt>
+			<dd>(<b>obj</b>:any,&nbsp;<b>name</b>:string | symbol): any | undefined<p>Gets property of <i>obj</i> by its <i>name.</i></p>
+				<p>Equivalent of <code>const name = &quot;...&quot;; var val = obj.(name);</code></p>
+				</dd><dt>setProperty</dt>
+			<dd>(<b>obj</b>:any,&nbsp;<b>name</b>:string | symbol, <b>val</b>: any): any | undefined<p>Sets property of <i>obj</i> by its <i>name.</i></p>
+				<p>Equivalent of <code>const name = &quot;...&quot;; obj.(name) = val;</code></p></dd></dl>
     <h2>Prperties</h2>
     <dt>unhandledExceptionHandler</dt>
     <dd>r/w, function - global unhandled exception handler. Accepts <code>function(err) : true | false</code> that will receive error object. If that function returns <em>true</em> then the exception is considered as handled and will not be output to stderr port.</dd></dl>

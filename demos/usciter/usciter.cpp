@@ -38,6 +38,22 @@ static sciter::value test_image_access(sciter::value vimg)
   return sciter::value();
 }
 
+static sciter::value test_image_generation()
+{
+  BYTE pixmap[10 * 10 * 4];
+  memset(pixmap, 0, sizeof(pixmap));
+  // image data
+  for (int i = 0; i < 10 * 10 * 4; i += 4)
+  {
+    pixmap[i] = i / 4;
+    pixmap[i + 1] = 255 - i / 4;
+    pixmap[i + 2] = 255;
+    pixmap[i + 3] = 255;
+  }
+  sciter::image img = sciter::image::create(10, 10, true, pixmap);
+  return img.to_value();
+}
+
 class frame: public sciter::window {
 public:
   frame() : window(SW_TITLEBAR | SW_RESIZEABLE | SW_CONTROLS | SW_MAIN | SW_ENABLE_DEBUG) {}
@@ -45,6 +61,7 @@ public:
   BEGIN_FUNCTION_MAP
     FUNCTION_0("nativeApi", native_api);
     FUNCTION_1("testImageAccess", test_image_access);
+    FUNCTION_0("testImageGeneration", test_image_generation);
   END_FUNCTION_MAP
 
 };
