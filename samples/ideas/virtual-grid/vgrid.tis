@@ -344,7 +344,7 @@ class VGrid: Element
     {
       case Event.MOUSE_WHEEL:
       {
-        this.show(this.firstRowNo - evt.wheelDelta * this.visibleRows / 4);
+        this.show(this.firstRowNo - (evt.wheelDelta * this.visibleRows / 4).toInteger());
         return true;
       }
       case Event.MOUSE_DCLICK:
