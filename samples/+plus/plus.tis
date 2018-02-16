@@ -1,6 +1,6 @@
 
 const Plus = function() {
-                        
+                          
   function thisModel(el) {
     for(var p = el; p; p = p.parent) {
       //p.style.display;
@@ -8,7 +8,14 @@ const Plus = function() {
     }
     return null;
   }
-
+  function thisNamespaceModel(el) {
+    for(var p = el; p; p = p.parent) {
+      var dr = p.$model;
+      if(dr && (typeof dr == #namespace || typeof dr == #class)) 
+        return dr;
+    }
+    return null;
+  }
 
   const reIsExpression=/ *[-()+*&:?|=!^"'\<\>]+ */;
   const reVarName = /[a-zA-Z_][a-zA-Z0-9_]*/;
@@ -310,16 +317,16 @@ const Plus = function() {
     return (ncoll, nitem, nindex, filter);
   }
   
-  function eachRecord(rec,filter) { return true; }
+  function eachRecord(rec,idx,filter,elRepeatable) { return true; }
 
-  function functionFilter(rec,idx,filter) {
-    if( filter(rec, idx) ) 
+  function functionFilter(rec,idx,filter,elRepeatable) {
+    if( filter.call(elRepeatable,rec, idx) ) 
       return true;
     else
       return false;
   }
 
-  function objectFilter(rec,idx,filter) {
+  function objectFilter(rec,idx,filter,elRepeatable) {
     for(var (k,v) in filter) {
       var rv = rec[k];
            if( typeof v == #string ) { if( rv.indexOf(v) < 0 ) return false; }
@@ -328,14 +335,12 @@ const Plus = function() {
     }
     return true;
   }
-  function textFilter(rec,idx,filter) {
+  function textFilter(rec,idx,filter,elRepeatable) {
     for(var (k,v) in rec) {
       if( typeof v == #string && v.indexOf(filter) < 0 ) return false;
     }
     return true;
   }
-  
-  
   
   function Repeater() {
       var (ncoll, nitem, nindex, filter) = crackEachExpression(this.@["each"]);
@@ -396,7 +401,7 @@ const Plus = function() {
         //debug stacktrace;
         var seqNo = 0;
         for(var (k,v) in coll)
-          if( ff(v,k,fs) )
+          if( ff(v,k,fs,thing) )
             appendRepeatableItem(thing,coll,k,v,seqNo++);
      
         while( thing.length > seqNo ) {
@@ -420,7 +425,7 @@ const Plus = function() {
           else if( !fs ) throw "Unknown filter " + fs.toString();
           renderList();
         }
-        setupTerminalBinding(root,thing,filter,false,updater); 
+        setupTerminalBinding(thisNamespaceModel(thing),thing,filter,false,updater); 
       }
       else 
         renderList();

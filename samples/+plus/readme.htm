@@ -1,6 +1,6 @@
-<html>
+﻿<html>
   <head>
-    <style></style>
+    <style/>
     <meta name="generator" content="h-smile:richtext"/>
   </head>
 <body>
@@ -40,7 +40,7 @@
     <li><code>@expanded=&quot;expression&quot;</code> - boolean expression is bound as element.state.expanded = expression;</li>
     <li><code>@collapsed=&quot;expression&quot;</code> - boolean expression is bound as element.state.collapsed = expression;</li></ul>
   <h2>Repeatables</h2>
-  <p>Any container may have attribute each=&quot;<em>item</em> in <em>items</em>&quot; defined. In this case initial content of the container is used as a template markup that will be repeated for each element in items collection. Format of the <em>each</em> attribute:</p>
+  <p>Any container may have attribute <b>each=&quot;<em>item</em> in <em>items</em>&quot;</b> defined. In this case initial content of the container is used as a template markup that will be repeated for each element in items collection. Format of the <em>each</em> attribute:</p>
   <pre>[{index},]{item} <strong>in</strong> {items-expression} [ <strong>|</strong> {filter-expression}
 </pre>
   <p>where:</p>
@@ -48,18 +48,25 @@
     <li><code>{item}</code> - arbitrary name of variable that represents current item in repeatable section;</li>
     <li><code>{index}</code> - optional, variable name that receives integer - index of the item in items array;</li>
     <li><code>{items-expression}</code> - name of variable in model or expression that resolves to some array - list of objects to render by this repeatable.</li>
-    <li><code>{filter-expression}</code> - optional, filter to apply to list of objects. Can be either:</li>
+    <li><code>{filter-expression}</code> - optional, literal or nametoken that is resolved to a filter. Filter can be either:</li>
     <ul>
-      <li><code>null</code> (or simply ommited) - no filter is set, all elements are rendered;</li>
+      <li><code>null</code> (or simply omitted) - no filter is set, all elements are rendered;</li>
       <li><code>object</code> (including object literal) - all elements matching that object are included into output;</li>
-      <li><code>function(item, index)</code> - function to be called for each item, if it returns <em>true</em> - record gets rendered;</li>
-      <li><code>&quot;string&quot;</code> - if any string property in the item contains the string - the item gets rendered.</li></ul></ul>
-  <p>Example of the list rendering myCustomers items as list items:</p>
+      <li><code>&quot;string&quot;</code> - if any string property in the item contains the string - the item gets rendered.</li>
+      <li><code>function</code> having signature <code>function(item, index)</code>. That&nbsp;function to be called for each item, if it returns <em>true</em> - record gets rendered;
+      <p>The function is called with its <code>this</code> variable set to the Repeatable container element (the one that has <i>each</i> attribute defined). This allows filter function to access DOM environment.</p></li>
+      </ul></ul>
+  <p>Example of the list that renders myCustomers items as list items:</p>
   <pre>  &lt;ol each=&quot;customer in myCustomers&quot;&gt;
       &lt;li&gt;&lt;picture @src=&quot;customer.image&quot; /&gt; &lt;output(customer.name)/&gt;&lt;/li&gt;
   &lt;/ol&gt;
 </pre>
-  <h2>Observing changes on data paths</h2><p>The Plus defines <code>@observing</code> decorator that can be used to subscribe functions on particular changes in model data tree. Syntax of declaring such subscriptions:</p>
+  <p>Example of list with filter function:</p>
+	<pre>  &lt;ol each=&quot;customer in myCustomers|myFilterFunction&quot;&gt;
+      &lt;li&gt;&lt;picture @src=&quot;customer.image&quot; /&gt; &lt;output(customer.name)/&gt;&lt;/li&gt;
+  &lt;/ol&gt;
+</pre>
+  <p>Note that myFilter name gets resolved to&nbsp;myFilter&nbsp;variable / function defined in closest <i>namespace</i> to&nbsp;<code>myCustomers</code>.&nbsp;</p><h2>Observing changes on data paths</h2><p>The Plus defines <code>@observing</code> decorator that can be used to subscribe functions on particular changes in model data tree. Syntax of declaring such subscriptions:</p>
 <pre>@observing &quot;path&quot; [&quot;path2&quot;[,&nbsp;... &quot;pathN&quot; ]] 
   function(path) {
       
