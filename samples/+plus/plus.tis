@@ -223,12 +223,11 @@ const Plus = function() {
         rebindSubtree(this super,val);
       });      
     }
-    else
+    else 
       this.$model = mo? eval(mo) : self.ns; 
 
     if(!this.$model) throw "Model {" + mo + "} not found!";
   }
-
     
   const CLASS_RE = /(.*)\{\{(([-_a-z0-9]+) *\:)? *(.+)\}\}(.*)/i;
   //const CLASS_RE = /(.*)\{\{([-_a-z0-9]+)(\:)+(.+)\}\}(.*)/i;  
@@ -486,6 +485,7 @@ const Plus = function() {
     Escape:Escape,
     FocusIn: FocusIn,
     FocusOut: FocusOut,
+    modelOf: thisModel
  };
  
 }();
