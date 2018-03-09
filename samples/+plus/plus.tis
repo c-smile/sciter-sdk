@@ -200,6 +200,10 @@ const Plus = function() {
       var path = element.@["name"];
       setupTerminalBinding(model,element,path,element.tag != #output, valueUpdater);
     }
+    boundUiElements = container.$$([each]);
+    for(var element in boundUiElements)
+      element.rebind();
+
     boundUiElements = container.$$(:has-bound-attributes);
     for(var element in boundUiElements) {
       bindAttributes(model,element);
@@ -343,8 +347,7 @@ const Plus = function() {
   
   function Repeater() {
       var (ncoll, nitem, nindex, filter) = crackEachExpression(this.@["each"]);
-      var root = thisModel(this); 
-      assert root;
+      var root;
       var hasBoundValue = !!this.attributes["name"];
       var that = this; 
       var thing = this.tag == "select"? that.options: that; 
@@ -359,6 +362,8 @@ const Plus = function() {
       function rqRenderList() { thing.post(renderList,true); } 
       var updateCollectionObserves;
       function rqUpdateCollectionObserves() { thing.post(updateCollectionObserves,true); } 
+
+      var parentNamespace;
      
       function appendRepeatableItem(cont, coll, idx, val, domItemIdx)
       {
@@ -374,12 +379,12 @@ const Plus = function() {
           if(elval !== undefined && elval.removeObserver)
             elval.removeObserver(rqRenderList);
         }
-        //stdout.println("appendRepeatableItem", domItemIdx);
         domitem = template.clone();
         var repeatable_root = {};
         repeatable_root[nitem] = val; 
+        repeatable_root[ncoll] = coll; 
         if(nindex) repeatable_root[nindex] = idx; 
-        repeatable_root.prototype = root; // repeatable root is derived from parent root
+        repeatable_root.prototype = parentNamespace;// repeatable namespace is derived from parent namespace
         domitem.$model = repeatable_root; // repeated element is holding local $model now for its descendannts.
         
         cont.insert(domitem,domItemIdx);
@@ -388,11 +393,8 @@ const Plus = function() {
         if( typeof val == #object && !val.eachObserver( :fun: fun.name == rqUpdateCollectionObserves) )
           val.addObserver(rqUpdateCollectionObserves);
       }
-    
-      var (rcoll,rkey) = Object.referenceOf(root, ncoll);
-      var coll = rcoll[rkey];
-                 //eval(ncoll,root);
-      assert(coll);
+
+      var rcoll, rkey, coll; 
       
       updateCollectionObserves = function() { coll.eachObserver( :fun: fun([null,null,null]) ) }
      
@@ -414,27 +416,41 @@ const Plus = function() {
           that.postEvent("set-value-postfactum.plus");
       }
       
-      if( filter ) {
-        function updater(thing,val) { 
-          fs = val;
-          if( fs === null || fs === undefined) ff = eachRecord;
-          else if( typeof fs == #function ) ff = functionFilter;
-          else if( typeof fs == #object ) ff = objectFilter;
-          else if( typeof fs == #string ) ff = textFilter;
-          else if( !fs ) throw "Unknown filter " + fs.toString();
-          renderList();
+      function doBind() 
+      {
+        root = thisModel(that);
+        parentNamespace = thisNamespaceModel(that);
+
+        (rcoll,rkey) = Object.referenceOf(root, ncoll);
+        coll = rcoll[rkey];
+        if( !coll )
+          return;
+
+        if( filter ) {
+          function updater(thing,val) { 
+            fs = val;
+            if( fs === null || fs === undefined) ff = eachRecord;
+            else if( typeof fs == #function ) ff = functionFilter;
+            else if( typeof fs == #object ) ff = objectFilter;
+            else if( typeof fs == #string ) ff = textFilter;
+            else if( !fs ) throw "Unknown filter " + fs.toString();
+            renderList();
+          }
+          setupTerminalBinding(thisNamespaceModel(thing),thing,filter,false,updater); 
         }
-        setupTerminalBinding(thisNamespaceModel(thing),thing,filter,false,updater); 
+        else 
+          renderList();
+
+        // and setup observer for future modifications:
+        setupCollectionChangeHandler(coll, rqRenderList ); 
+        setupModelChangeHandler(rcoll, rkey, function() { 
+           coll = rcoll[rkey];
+           setupCollectionChangeHandler(coll, rqRenderList ); 
+           rqRenderList();
+        });
       }
-      else 
-        renderList();
-        
-      // and setup observer for future modifications:
-      setupCollectionChangeHandler(coll, rqRenderList ); 
-      setupModelChangeHandler(rcoll, rkey, function() { 
-         this.$model = coll = rcoll[rkey];  
-         rqRenderList();
-      } );
+      doBind();
+      this.rebind = doBind;
   }
   
   function handleEvent(target,name, evt) {

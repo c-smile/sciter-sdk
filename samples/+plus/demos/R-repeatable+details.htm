@@ -1,0 +1,92 @@
+<html>
+  <head>
+    <title>Plus: very basic sample</title>
+    <style>
+      @import url(../plus.css); /* the only thing needed to include Plus framework */
+      @import url(../../note.css); 
+      
+      ol { width:*; }
+      ol > li { flow:horizontal; border-bottom:1px solid dotted;}
+      ol > li:hover { color:red; cursor:pointer; }
+      ol > li > label { display:inline-block;  }
+      
+      textarea { width:*; display:block; }
+      
+      div#details {
+        flow:row(label,input textarea);
+      }
+      
+
+    </style>
+    
+    <script type="text/tiscript">
+      
+  
+      namespace Data // our model
+      {  
+        var someCustomers = [{name:"Symantec", motto:"Stay ahead of tomorrow's threats.", deck:[{name:"J",num:5},{name:"J",num:1},{name:"J",num:0}]   },
+                             {name:"ESET", motto:"The best security money can buy", deck:[{name:"Q",num:4},{name:"J",num:2}]   },
+                             {name:"Comodo", motto:"Real time cloud protection when you are online. Containment protection when you are offline", deck:[{name:"K",num:4}]} ,
+                             {name:"BitDefender", motto:"Protect & optimize!", deck:[{name:"A",num:2},{name:"J",num:2}]}];
+        
+        var currentCustomer = {};
+
+       
+        // select current customer
+        function selectCustomer(object) { currentCustomer = object; }
+
+        function removeCard(index) {
+          currentCustomer.deck.remove(index);
+        }
+      }  
+      
+    </script>
+  </head>
+
+<body model="Data"> <!-- define data model we observe -->
+
+  <note><p>List below is bound with <code>Data.someCustomers</code> array and so it reflects list items in that array.</p>
+        <p>"Current record" below is bound with the currentCustomer variable</p>
+        <p>The currentCustomer variable gets set by @click handler</p>
+        <p>The currentCustomer contains bound sub repeatable</p>
+  </note>
+
+  <!-- the repeateable section -->
+  <ol each="customer in someCustomers">
+      <li click="selectCustomer(customer)">
+          <output(customer.name)/>: 
+          <output(customer.motto)/>,
+          deck items: <output|number(customer.deck.length)/>
+      </li>
+  </ol>
+  
+  <!-- current record -->
+  <div model="currentCustomer">
+    <h3>Details of <output(name)/>:</h3>  
+    <div#details>
+      <label>name</label><input(name)/>
+      <label>motto</label><textarea(motto) />   
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Index</th>
+                <th>Name</th>
+                <th>Number</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody each="index,item in deck">
+            <tr>
+                <td><output(index)/></td>
+                <td><output(item.name)/></td>
+                <td><output(item.num)/></td>
+                <td><button click="deck.remove(index)">remove</button></td>
+                <td><button click="removeCard(index)">remove (alt)</button></td>
+            </tr>
+        </tbody>
+    </table>
+  </div>
+  
+</body>
+</html>
