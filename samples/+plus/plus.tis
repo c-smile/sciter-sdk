@@ -219,11 +219,13 @@ const Plus = function() {
     {
       var (coll,key) = Object.referenceOf(pmo, mo);
       this.$model = coll[key];
+      this.$model.prototype = pmo; // object here behaves as namespace 
       setupModelChangeHandler( coll, key, function(val) { 
         assert typeof val == #object || 
                typeof val == #class  ||
                typeof val == #namespace : "data model must be an object ";
         this super.$model = val; 
+        this super.$model.prototype = pmo;
         rebindSubtree(this super,val);
       });      
     }
@@ -363,8 +365,6 @@ const Plus = function() {
       var updateCollectionObserves;
       function rqUpdateCollectionObserves() { thing.post(updateCollectionObserves,true); } 
 
-      var parentNamespace;
-     
       function appendRepeatableItem(cont, coll, idx, val, domItemIdx)
       {
         var domitem = cont[domItemIdx];
@@ -384,7 +384,7 @@ const Plus = function() {
         repeatable_root[nitem] = val; 
         repeatable_root[ncoll] = coll; 
         if(nindex) repeatable_root[nindex] = idx; 
-        repeatable_root.prototype = parentNamespace;// repeatable namespace is derived from parent namespace
+        repeatable_root.prototype = root;// repeatable namespace is derived from parent namespace
         domitem.$model = repeatable_root; // repeated element is holding local $model now for its descendannts.
         
         cont.insert(domitem,domItemIdx);
@@ -419,7 +419,6 @@ const Plus = function() {
       function doBind() 
       {
         root = thisModel(that);
-        parentNamespace = thisModel(that);
 
         (rcoll,rkey) = Object.referenceOf(root, ncoll);
         coll = rcoll[rkey];
