@@ -419,7 +419,7 @@ const Plus = function() {
       function doBind() 
       {
         root = thisModel(that);
-        parentNamespace = thisNamespaceModel(that);
+        parentNamespace = thisModel(that);
 
         (rcoll,rkey) = Object.referenceOf(root, ncoll);
         coll = rcoll[rkey];
