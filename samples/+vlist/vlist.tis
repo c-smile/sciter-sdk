@@ -55,9 +55,9 @@ function VirtualList(params) {
     list.onSize = function() 
     {
       if(list.first)
-        item_height = list.first.box(#height,#client); // adjust real item height
+        item_height = list.first.box(#height,#border); // adjust real item height
       var ch = list.box(#height,#client);
-      var vi = (ch + item_height - 1) / (item_height || 10);
+      var vi = ch / (item_height || 10);
       if( vi != visible_items )
         visible_items = vi;
     }
