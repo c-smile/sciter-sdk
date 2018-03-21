@@ -25,7 +25,7 @@ class Rotator : Behavior
     
     var progress = 0.0;
     
-    function xlat() { return Math.sin( progress * Math.PI ) * w / 2.6; }
+    function xlat() { return Math.sin( progress * Math.PI ) * w / 2; }
     function zoom() { return Math.cos( progress * Math.PI + Math.PI) * 0.5 + 0.5; }
     
     var showScale  = [scale: hiddenScale ];

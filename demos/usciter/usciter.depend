@@ -1,7 +1,38 @@
 # depslib dependency file v1.0
-1424632607 source:/home/andrew/Desktop/sciter.stable/sdk/include/sciter-gtk-main.cpp
+1518052881 source:/home/andrew/Desktop/sciter/stable/sdk/include/behaviors/behavior_drawing.cpp
+	"stdafx.h"
+	"sciter-x.h"
+	"sciter-x-behavior.h"
+	"sciter-x-graphics.hpp"
+	<time.h>
+	<cmath>
+
+1518052879 /home/andrew/Desktop/sciter/stable/sdk/demos/usciter/stdafx.h
+	"sciter-x.h"
+
+1518052882 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x.h
+	"sciter-x-types.h"
+	"sciter-x-def.h"
+	"sciter-x-dom.h"
+	"sciter-x-value.h"
+	"sciter-x-api.h"
+	"sciter-x-msg.h"
+	"sciter-x-dom.hpp"
+	"sciter-x-host-callback.h"
+	"sciter-x-debug.h"
+
+1521653629 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-types.h
+	<string>
+	<stdbool.h>
+	"TargetConditionals.h"
+	<specstrings.h>
+	<windows.h>
+	<oaidl.h>
+	<d2d1.h>
+	<dwrite.h>
 	<gtk/gtk.h>
-	"sciter-x-window.hpp"
+	<string.h>
+	<wctype.h>
 
 1491432418 /usr/include/gtk-3.0/gtk/gtk.h
 	<gdk/gdk.h>
@@ -377,7 +408,7 @@
 	<glib/gversionmacros.h>
 	<time.h>
 
-1411667511 /usr/lib/i386-linux-gnu/glib-2.0/include/glibconfig.h
+1483723821 /usr/lib/x86_64-linux-gnu/glib-2.0/include/glibconfig.h
 	<glib/gmacros.h>
 	<limits.h>
 	<float.h>
@@ -407,6 +438,10 @@
 
 1483723821 /usr/include/glib-2.0/glib/gquark.h
 	<glib/gtypes.h>
+
+1483723821 /usr/include/glib-2.0/glib/gutils.h
+	<glib/gtypes.h>
+	<stdarg.h>
 
 1483723821 /usr/include/glib-2.0/glib/gbacktrace.h
 	<glib/gtypes.h>
@@ -514,10 +549,6 @@
 1483723821 /usr/include/glib-2.0/glib/gunicode.h
 	<glib/gerror.h>
 	<glib/gtypes.h>
-
-1483723821 /usr/include/glib-2.0/glib/gutils.h
-	<glib/gtypes.h>
-	<stdarg.h>
 
 1483723821 /usr/include/glib-2.0/glib/gkeyfile.h
 	<glib/gerror.h>
@@ -638,6 +669,8 @@
 	<glib/gthread.h>
 	<sys/types.h>
 	<pthread.h>
+
+1483723821 /usr/include/glib-2.0/glib/glib-autocleanups.h
 
 1491432417 /usr/include/gtk-3.0/gdk/gdkversionmacros.h
 	<glib.h>
@@ -882,6 +915,8 @@
 1483723824 /usr/include/glib-2.0/gobject/gvaluetypes.h
 	<gobject/gvalue.h>
 
+1483723824 /usr/include/glib-2.0/gobject/gobject-autocleanups.h
+
 1483723825 /usr/include/glib-2.0/gio/gaction.h
 	<gio/giotypes.h>
 
@@ -959,6 +994,9 @@
 	<unistd.h>
 	<sys/types.h>
 
+1483723825 /usr/include/glib-2.0/gio/gdatagrambased.h
+	<gio/giotypes.h>
+
 1483723825 /usr/include/glib-2.0/gio/gdatainputstream.h
 	<gio/gbufferedinputstream.h>
 
@@ -1004,6 +1042,15 @@
 
 1483723825 /usr/include/glib-2.0/gio/gdrive.h
 	<gio/giotypes.h>
+
+1483723825 /usr/include/glib-2.0/gio/gdtlsclientconnection.h
+	<gio/gdtlsconnection.h>
+
+1483723825 /usr/include/glib-2.0/gio/gdtlsconnection.h
+	<gio/gdatagrambased.h>
+
+1483723825 /usr/include/glib-2.0/gio/gdtlsserverconnection.h
+	<gio/gdtlsconnection.h>
 
 1483723825 /usr/include/glib-2.0/gio/gemblemedicon.h
 	<gio/gicon.h>
@@ -1166,6 +1213,10 @@
 1483723825 /usr/include/glib-2.0/gio/gsimpleasyncresult.h
 	<gio/giotypes.h>
 
+1483723825 /usr/include/glib-2.0/gio/gsimpleiostream.h
+	<gio/giotypes.h>
+	<gio/giostream.h>
+
 1483723825 /usr/include/glib-2.0/gio/gsimplepermission.h
 	<gio/giotypes.h>
 
@@ -1310,6 +1361,14 @@
 1483723825 /usr/include/glib-2.0/gio/gnotification.h
 	<gio/giotypes.h>
 	<gio/gioenums.h>
+
+1483723825 /usr/include/glib-2.0/gio/glistmodel.h
+	<gio/giotypes.h>
+
+1483723825 /usr/include/glib-2.0/gio/gliststore.h
+	<gio/giotypes.h>
+
+1483723825 /usr/include/glib-2.0/gio/gio-autocleanups.h
 
 1491432417 /usr/include/gtk-3.0/gdk/gdktypes.h
 	<glib.h>
@@ -1474,11 +1533,6 @@
 	<gdk/gdkdnd.h>
 	<gdk/gdkdevice.h>
 
-1430510887 /usr/include/gtk-3.0/gdk/gdkcolor.h
-	<cairo.h>
-	<gdk/gdktypes.h>
-	<gdk/gdkversionmacros.h>
-
 1491432417 /usr/include/gtk-3.0/gdk/gdkdnd.h
 	<gdk/gdktypes.h>
 	<gdk/gdkdevice.h>
@@ -1498,6 +1552,11 @@
 	<gdk/gdkpixbuf.h>
 	<pango/pangocairo.h>
 
+1491432417 /usr/include/gtk-3.0/gdk/deprecated/gdkcolor.h
+	<cairo.h>
+	<gdk/gdktypes.h>
+	<gdk/gdkversionmacros.h>
+
 1491432417 /usr/include/gtk-3.0/gdk/gdkrgba.h
 	<gdk/gdktypes.h>
 	<gdk/gdkversionmacros.h>
@@ -1508,7 +1567,7 @@
 	<gdk/gdktypes.h>
 	<gdk/gdkversionmacros.h>
 
-1505413160 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf.h
+1515762838 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf.h
 	<glib.h>
 	<gdk-pixbuf/gdk-pixbuf-features.h>
 	<glib-object.h>
@@ -1521,41 +1580,43 @@
 	<gdk-pixbuf/gdk-pixbuf-enum-types.h>
 	<gdk-pixbuf/gdk-pixbuf-autocleanups.h>
 
-1505413160 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-features.h
+1515762838 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-features.h
 	<glib.h>
 
-1505413160 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-core.h
+1515762838 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-core.h
 	<glib.h>
 	<glib-object.h>
 	<gio/gio.h>
 
-1505413160 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-transform.h
+1515762838 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-transform.h
 	<glib.h>
 	<gdk-pixbuf/gdk-pixbuf-core.h>
 
-1505413160 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-animation.h
+1515762838 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-animation.h
 	<glib-object.h>
 	<gdk-pixbuf/gdk-pixbuf-core.h>
 
-1505413160 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-simple-anim.h
+1515762838 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-simple-anim.h
 	<gdk-pixbuf/gdk-pixbuf-animation.h>
 
-1505413160 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-io.h
+1515762838 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-io.h
 	<stdio.h>
 	<glib.h>
 	<gmodule.h>
 	<gdk-pixbuf/gdk-pixbuf-core.h>
 	<gdk-pixbuf/gdk-pixbuf-animation.h>
 
-1505413160 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-loader.h
+1515762838 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-loader.h
 	<glib.h>
 	<glib-object.h>
 	<gdk-pixbuf/gdk-pixbuf-core.h>
 	<gdk-pixbuf/gdk-pixbuf-animation.h>
 	<gdk-pixbuf/gdk-pixbuf-io.h>
 
-1505413160 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-enum-types.h
+1515762838 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-enum-types.h
 	<glib-object.h>
+
+1515762838 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-autocleanups.h
 
 1445636048 /usr/include/pango-1.0/pango/pangocairo.h
 	<pango/pango.h>
@@ -1580,6 +1641,10 @@
 1491432417 /usr/include/gtk-3.0/gdk/gdkframetimings.h
 	<glib-object.h>
 	<gdk/gdkversionmacros.h>
+
+1491432417 /usr/include/gtk-3.0/gdk/gdkglcontext.h
+	<gdk/gdkversionmacros.h>
+	<gdk/gdktypes.h>
 
 1491432417 /usr/include/gtk-3.0/gdk/gdkkeys.h
 	<gdk/gdkversionmacros.h>
@@ -1623,6 +1688,8 @@
 1491432417 /usr/include/gtk-3.0/gdk/gdkvisual.h
 	<gdk/gdktypes.h>
 	<gdk/gdkversionmacros.h>
+
+1491432417 /usr/include/gtk-3.0/gdk/gdk-autocleanup.h
 
 1491432418 /usr/include/gtk-3.0/gtk/gtkaboutdialog.h
 	<gtk/gtkdialog.h>
@@ -1700,6 +1767,9 @@
 	<atk/atkstate.h>
 	<atk/atkrelationtype.h>
 
+1445633774 /usr/include/atk-1.0/atk/atkversion.h
+	<glib.h>
+
 1445633774 /usr/include/atk-1.0/atk/atkstate.h
 	<glib-object.h>
 	<atk/atkversion.h>
@@ -1730,6 +1800,10 @@
 	<atk/atkobject.h>
 	<atk/atkutil.h>
 
+1445633774 /usr/include/atk-1.0/atk/atk-enum-types.h
+	<atk/atkversion.h>
+	<glib-object.h>
+
 1445633774 /usr/include/atk-1.0/atk/atkgobjectaccessible.h
 	<atk/atkobject.h>
 
@@ -1759,6 +1833,10 @@
 	<atk/atkobject.h>
 
 1445633774 /usr/include/atk-1.0/atk/atkplug.h
+	<atk/atkversion.h>
+
+1445633774 /usr/include/atk-1.0/atk/atkrange.h
+	<glib-object.h>
 	<atk/atkversion.h>
 
 1445633774 /usr/include/atk-1.0/atk/atkregistry.h
@@ -1792,6 +1870,9 @@
 1445633774 /usr/include/atk-1.0/atk/atktable.h
 	<atk/atkobject.h>
 
+1445633774 /usr/include/atk-1.0/atk/atktablecell.h
+	<atk/atkobject.h>
+
 1445633774 /usr/include/atk-1.0/atk/atkmisc.h
 	<glib-object.h>
 	<atk/atkversion.h>
@@ -1799,9 +1880,6 @@
 1445633774 /usr/include/atk-1.0/atk/atkvalue.h
 	<atk/atkobject.h>
 	<atk/atkrange.h>
-
-1445633774 /usr/include/atk-1.0/atk/atkversion.h
-	<glib.h>
 
 1445633774 /usr/include/atk-1.0/atk/atkwindow.h
 	<atk/atkobject.h>
@@ -1820,7 +1898,7 @@
 	<gtk/gtkwindow.h>
 	<gtk/gtkmenu.h>
 
-1430510888 /usr/include/gtk-3.0/gtk/gtkmisc.h
+1491432418 /usr/include/gtk-3.0/gtk/deprecated/gtkmisc.h
 	<gtk/gtkwidget.h>
 
 1491432418 /usr/include/gtk-3.0/gtk/gtkmenu.h
@@ -1841,12 +1919,12 @@
 	<glib-object.h>
 	<gdk/gdk.h>
 
+1491432418 /usr/include/gtk-3.0/gtk/gtkactionbar.h
+	<gtk/gtkbin.h>
+
 1491432418 /usr/include/gtk-3.0/gtk/gtkadjustment.h
 	<gdk/gdk.h>
 	<gtk/gtktypes.h>
-
-1430510888 /usr/include/gtk-3.0/gtk/gtkalignment.h
-	<gtk/gtkbin.h>
 
 1491432418 /usr/include/gtk-3.0/gtk/gtkappchooser.h
 	<glib.h>
@@ -1972,9 +2050,6 @@
 
 1491432418 /usr/include/gtk-3.0/gtk/gtkapplicationwindow.h
 	<gtk/gtkwindow.h>
-
-1430510888 /usr/include/gtk-3.0/gtk/gtkarrow.h
-	<gtk/gtkmisc.h>
 
 1491432418 /usr/include/gtk-3.0/gtk/gtkaspectframe.h
 	<gtk/gtkframe.h>
@@ -2102,6 +2177,11 @@
 1491432418 /usr/include/gtk-3.0/gtk/gtkeventbox.h
 	<gtk/gtkbin.h>
 
+1491432418 /usr/include/gtk-3.0/gtk/gtkeventcontroller.h
+	<gdk/gdk.h>
+	<gtk/gtktypes.h>
+	<gtk/gtkenums.h>
+
 1491432418 /usr/include/gtk-3.0/gtk/gtkexpander.h
 	<gtk/gtkbin.h>
 
@@ -2128,6 +2208,9 @@
 	<gtk/gtkfilechooser.h>
 	<gtk/gtkbox.h>
 
+1491432418 /usr/include/gtk-3.0/gtk/gtkflowbox.h
+	<gtk/gtkbin.h>
+
 1491432418 /usr/include/gtk-3.0/gtk/gtkfontbutton.h
 	<gtk/gtkbutton.h>
 
@@ -2139,6 +2222,43 @@
 
 1491432418 /usr/include/gtk-3.0/gtk/gtkfontchooserwidget.h
 	<gtk/gtkbox.h>
+
+1491432418 /usr/include/gtk-3.0/gtk/gtkgesture.h
+	<gtk/gtkeventcontroller.h>
+	<gtk/gtkenums.h>
+
+1491432418 /usr/include/gtk-3.0/gtk/gtkgesturedrag.h
+	<gtk/gtkwidget.h>
+	<gtk/gtkgesturesingle.h>
+
+1491432418 /usr/include/gtk-3.0/gtk/gtkgesturesingle.h
+	<gtk/gtkgesture.h>
+
+1491432418 /usr/include/gtk-3.0/gtk/gtkgesturelongpress.h
+	<gtk/gtkgesturesingle.h>
+
+1491432418 /usr/include/gtk-3.0/gtk/gtkgesturemultipress.h
+	<gtk/gtkwidget.h>
+	<gtk/gtkgesturesingle.h>
+
+1491432418 /usr/include/gtk-3.0/gtk/gtkgesturepan.h
+	<gtk/gtkenums.h>
+	<gtk/gtkgesturedrag.h>
+
+1491432418 /usr/include/gtk-3.0/gtk/gtkgesturerotate.h
+	<gtk/gtkwidget.h>
+	<gtk/gtkgesture.h>
+
+1491432418 /usr/include/gtk-3.0/gtk/gtkgestureswipe.h
+	<gtk/gtkwidget.h>
+	<gtk/gtkgesturesingle.h>
+
+1491432418 /usr/include/gtk-3.0/gtk/gtkgesturezoom.h
+	<gtk/gtkgesture.h>
+	<gtk/gtkwidget.h>
+
+1491432418 /usr/include/gtk-3.0/gtk/gtkglarea.h
+	<gtk/gtkwidget.h>
 
 1491432418 /usr/include/gtk-3.0/gtk/gtkgrid.h
 	<gtk/gtkcontainer.h>
@@ -2170,7 +2290,7 @@
 	<gtk/gtkenums.h>
 	<gtk/gtktypes.h>
 
-1431032358 /usr/include/gtk-3.0/gtk/gtkstyleproperties.h
+1491432418 /usr/include/gtk-3.0/gtk/deprecated/gtkstyleproperties.h
 	<glib-object.h>
 	<gdk/gdk.h>
 	<gtk/gtkenums.h>
@@ -2233,6 +2353,9 @@
 	<gtk/gtkmenu.h>
 	<gtk/gtkpopover.h>
 
+1491432418 /usr/include/gtk-3.0/gtk/gtkpopover.h
+	<gtk/gtkwindow.h>
+
 1491432418 /usr/include/gtk-3.0/gtk/gtkmenutoolbutton.h
 	<gtk/gtkmenu.h>
 	<gtk/gtktoolbutton.h>
@@ -2252,6 +2375,9 @@
 	<gtk/gtkdialog.h>
 	<gtk/gtkenums.h>
 
+1491432418 /usr/include/gtk-3.0/gtk/gtkmodelbutton.h
+	<gtk/gtkwidget.h>
+
 1491432418 /usr/include/gtk-3.0/gtk/gtkmodules.h
 	<gdk/gdk.h>
 
@@ -2259,10 +2385,6 @@
 
 1491432418 /usr/include/gtk-3.0/gtk/gtknotebook.h
 	<gtk/gtkcontainer.h>
-
-1430510888 /usr/include/gtk-3.0/gtk/gtknumerableicon.h
-	<gio/gio.h>
-	<gtk/gtkstylecontext.h>
 
 1491432418 /usr/include/gtk-3.0/gtk/gtkoffscreenwindow.h
 	<gtk/gtkwindow.h>
@@ -2285,6 +2407,9 @@
 
 1491432418 /usr/include/gtk-3.0/gtk/gtkplacessidebar.h
 	<gtk/gtkwidget.h>
+
+1491432418 /usr/include/gtk-3.0/gtk/gtkpopovermenu.h
+	<gtk/gtkpopover.h>
 
 1491432418 /usr/include/gtk-3.0/gtk/gtkprintcontext.h
 	<pango/pango.h>
@@ -2350,6 +2475,13 @@
 	<gtk/gtkrecentchooser.h>
 	<gtk/gtkbox.h>
 
+1491432418 /usr/include/gtk-3.0/gtk/gtkrender.h
+	<cairo.h>
+	<pango/pango.h>
+	<gdk/gdk.h>
+	<gtk/gtkenums.h>
+	<gtk/gtktypes.h>
+
 1491432418 /usr/include/gtk-3.0/gtk/gtkrevealer.h
 	<gtk/gtkbin.h>
 
@@ -2392,6 +2524,13 @@
 
 1491432418 /usr/include/gtk-3.0/gtk/gtkshow.h
 
+1491432418 /usr/include/gtk-3.0/gtk/gtkstacksidebar.h
+	<gtk/gtkbin.h>
+	<gtk/gtkstack.h>
+
+1491432418 /usr/include/gtk-3.0/gtk/gtkstack.h
+	<gtk/gtkcontainer.h>
+
 1491432418 /usr/include/gtk-3.0/gtk/gtksizerequest.h
 	<gtk/gtkwidget.h>
 
@@ -2401,19 +2540,12 @@
 1491432418 /usr/include/gtk-3.0/gtk/gtkspinner.h
 	<gtk/gtkwidget.h>
 
-1491432418 /usr/include/gtk-3.0/gtk/gtkstack.h
-	<gtk/gtkcontainer.h>
-
 1491432418 /usr/include/gtk-3.0/gtk/gtkstackswitcher.h
 	<gtk/gtkbox.h>
 	<gtk/gtkstack.h>
 
 1491432418 /usr/include/gtk-3.0/gtk/gtkstatusbar.h
 	<gtk/gtkbox.h>
-
-1430510888 /usr/include/gtk-3.0/gtk/gtkstatusicon.h
-	<gtk/gtkimage.h>
-	<gtk/gtkmenu.h>
 
 1491432418 /usr/include/gtk-3.0/gtk/gtkswitch.h
 	<gtk/gtkwidget.h>
@@ -2439,14 +2571,6 @@
 	<gtk/gtkimcontext.h>
 	<gtk/gtktextbuffer.h>
 	<gtk/gtkmenu.h>
-
-1430510888 /usr/include/gtk-3.0/gtk/gtkthemingengine.h
-	<glib-object.h>
-	<cairo.h>
-	<gtk/gtkborder.h>
-	<gtk/gtkenums.h>
-	<gtk/gtkstyleproperties.h>
-	<gtk/gtktypes.h>
 
 1491432418 /usr/include/gtk-3.0/gtk/gtktoolbar.h
 	<gtk/gtkcontainer.h>
@@ -2506,6 +2630,12 @@
 	<gtk/gtkenums.h>
 	<gtk/gtktypes.h>
 
+1491432418 /usr/include/gtk-3.0/gtk/gtkwindowgroup.h
+	"gtkwindow.h"
+
+1491432418 /usr/include/gtk-3.0/gtk/deprecated/gtkarrow.h
+	<gtk/deprecated/gtkmisc.h>
+
 1491432418 /usr/include/gtk-3.0/gtk/deprecated/gtkactivatable.h
 	<gtk/deprecated/gtkaction.h>
 
@@ -2518,6 +2648,9 @@
 
 1491432418 /usr/include/gtk-3.0/gtk/deprecated/gtkstock.h
 	<gdk/gdk.h>
+
+1491432418 /usr/include/gtk-3.0/gtk/deprecated/gtkalignment.h
+	<gtk/gtkbin.h>
 
 1491432418 /usr/include/gtk-3.0/gtk/deprecated/gtkcolorsel.h
 	<gtk/gtkdialog.h>
@@ -2568,6 +2701,10 @@
 1491432418 /usr/include/gtk-3.0/gtk/deprecated/gtkimagemenuitem.h
 	<gtk/gtkmenuitem.h>
 
+1491432418 /usr/include/gtk-3.0/gtk/deprecated/gtknumerableicon.h
+	<gio/gio.h>
+	<gtk/gtkstylecontext.h>
+
 1491432418 /usr/include/gtk-3.0/gtk/deprecated/gtkradioaction.h
 	<gtk/deprecated/gtktoggleaction.h>
 
@@ -2582,6 +2719,10 @@
 	<gtk/deprecated/gtkaction.h>
 	<gtk/gtkrecentmanager.h>
 
+1491432418 /usr/include/gtk-3.0/gtk/deprecated/gtkstatusicon.h
+	<gtk/gtkimage.h>
+	<gtk/gtkmenu.h>
+
 1491432418 /usr/include/gtk-3.0/gtk/deprecated/gtkstyle.h
 	<gdk/gdk.h>
 	<gtk/gtkenums.h>
@@ -2592,6 +2733,14 @@
 
 1491432418 /usr/include/gtk-3.0/gtk/deprecated/gtktearoffmenuitem.h
 	<gtk/gtkmenuitem.h>
+
+1491432418 /usr/include/gtk-3.0/gtk/deprecated/gtkthemingengine.h
+	<glib-object.h>
+	<cairo.h>
+	<gtk/gtkborder.h>
+	<gtk/gtkenums.h>
+	<gtk/deprecated/gtkstyleproperties.h>
+	<gtk/gtktypes.h>
 
 1491432418 /usr/include/gtk-3.0/gtk/deprecated/gtkuimanager.h
 	<gtk/gtkaccelgroup.h>
@@ -2617,607 +2766,9 @@
 1491432418 /usr/include/gtk-3.0/gtk/deprecated/gtkvseparator.h
 	<gtk/gtkseparator.h>
 
-1486600749 /home/andrew/Desktop/sciter.stable/sdk/include/sciter-x-window.hpp
-	"sciter-x-types.h"
-	"sciter-x.h"
-	"sciter-x-dom.h"
-	"sciter-x-api.h"
-	"sciter-x-dom.hpp"
-	"sciter-x-host-callback.h"
-	"aux-asset.h"
-	"aux-slice.h"
-	<algorithm>
-
-1493145585 /home/andrew/Desktop/sciter.stable/sdk/include/sciter-x-types.h
-	<string>
-	<stdbool.h>
-	"TargetConditionals.h"
-	<specstrings.h>
-	<windows.h>
-	<oaidl.h>
-	<d2d1.h>
-	<dwrite.h>
-	<gtk/gtk.h>
-	<string.h>
-	<wctype.h>
-
-1482698459 /home/andrew/Desktop/sciter.stable/sdk/include/sciter-x.h
-	"sciter-x-types.h"
-	"sciter-x-def.h"
-	"sciter-x-dom.h"
-	"sciter-x-value.h"
-	"sciter-x-api.h"
-	"sciter-x-msg.h"
-	"sciter-x-dom.hpp"
-	"sciter-x-host-callback.h"
-	"sciter-x-debug.h"
-
-1491335339 /home/andrew/Desktop/sciter.stable/sdk/include/sciter-x-def.h
-	"sciter-x-types.h"
-	"sciter-x-request.h"
-	"value.h"
-	"aux-cvt.h"
-	<iostream>
-	<stdio.h>
-	<stdarg.h>
-	<wchar.h>
-	"sciter-x-value.h"
-	"sciter-x-dom.h"
-	"sciter-x-behavior.h"
-
-1497224858 /home/andrew/Desktop/sciter.stable/sdk/include/value.h
-	"sciter-x-types.h"
-	"value.hpp"
-
-1497224858 /home/andrew/Desktop/sciter.stable/sdk/include/value.hpp
-	"value.h"
-	<string>
-	<functional>
-	"aux-slice.h"
-	"aux-cvt.h"
-
-1486600749 /home/andrew/Desktop/sciter.stable/sdk/include/aux-slice.h
-	<assert.h>
-	"limits.h"
-	<vector>
-	"sciter-x-types.h"
-
-1465230520 /home/andrew/Desktop/sciter.stable/sdk/include/aux-cvt.h
-	<assert.h>
-	<wchar.h>
-	<string.h>
-	<stdlib.h>
-	<stdio.h>
-	<algorithm>
-	"aux-platform.h"
-	"aux-slice.h"
-	<string>
-	<algorithm>
-
-1483918037 /home/andrew/Desktop/sciter.stable/sdk/include/aux-platform.h
-
-1449602616 /home/andrew/Desktop/sciter.stable/sdk/include/sciter-x-value.h
-	"value.h"
-	"value.hpp"
-
-1503089817 /home/andrew/Desktop/sciter.stable/sdk/include/sciter-x-dom.h
-	<assert.h>
-	<stdio.h>
-	"tiscript.h"
-	"sciter-x-behavior.h"
-
-1483918037 /home/andrew/Desktop/sciter.stable/sdk/include/tiscript.h
-
-1504664405 /home/andrew/Desktop/sciter.stable/sdk/include/sciter-x-behavior.h
-	"sciter-x-types.h"
-	"sciter-x-dom.h"
-	"sciter-x-value.h"
-	"sciter-x-graphics.h"
-
-1506986938 /home/andrew/Desktop/sciter.stable/sdk/include/sciter-x-api.h
-	"sciter-x-types.h"
-	"sciter-x-def.h"
-	"sciter-x-dom.h"
-	"sciter-x-request.h"
-	"sciter-x-msg.h"
-	"value.h"
-	"tiscript.hpp"
-	<stdlib.h>
-	<unistd.h>
-	<libproc.h>
-	<dlfcn.h>
-	<cstddef>
-	<libgen.h>
-	<dlfcn.h>
-
-1477881072 /home/andrew/Desktop/sciter.stable/sdk/include/tiscript.hpp
-	<assert.h>
-	"tiscript.h"
-	"tiscript-streams.hpp"
-
-1423871050 /home/andrew/Desktop/sciter.stable/sdk/include/tiscript-streams.hpp
-	"tiscript.h"
-	"aux-cvt.h"
-	<string>
-
-1485131405 /home/andrew/Desktop/sciter.stable/sdk/include/sciter-x-dom.hpp
-	"tiscript.hpp"
-	"sciter-x-dom.h"
-	<algorithm>
-	<vector>
-
-1497224858 /home/andrew/Desktop/sciter.stable/sdk/include/sciter-x-host-callback.h
-	"sciter-x-api.h"
-	<assert.h>
-
-1449602616 /home/andrew/Desktop/sciter.stable/sdk/include/sciter-x-debug.h
-	"sciter-x-api.h"
-
-1449602616 /home/andrew/Desktop/sciter.stable/sdk/include/sciter-x-threads.h
-	<specstrings.h>
-	<windows.h>
-	<stdio.h>
-	<assert.h>
-	<functional>
-	<mutex>
-	<condition_variable>
-	<thread>
-	<chrono>
-
-1497224858 /home/andrew/Desktop/sciter.stable/sdk/include/aux-asset.h
-	<windows.h>
-	<atomic>
-
-1482698458 source:/home/andrew/Desktop/sciter.stable/sdk/demos/usciter/usciter.cpp
-	"sciter-x-window.hpp"
-	"resources.cpp"
-
-1487042420 /home/andrew/Desktop/sciter.stable/sdk/demos/usciter/resources.cpp
-
-1483723821 /usr/lib/x86_64-linux-gnu/glib-2.0/include/glibconfig.h
-	<glib/gmacros.h>
-	<limits.h>
-	<float.h>
-
-1445633774 /usr/include/atk-1.0/atk/atk-enum-types.h
-	<atk/atkversion.h>
-	<glib-object.h>
-
-1445633774 /usr/include/atk-1.0/atk/atkrange.h
-	<glib-object.h>
-	<atk/atkversion.h>
-
-1445633774 /usr/include/atk-1.0/atk/atktablecell.h
-	<atk/atkobject.h>
-
-1491432418 /usr/include/gtk-3.0/gtk/gtkactionbar.h
-	<gtk/gtkbin.h>
-
-1491432418 /usr/include/gtk-3.0/gtk/gtkflowbox.h
-	<gtk/gtkbin.h>
-
-1491432418 /usr/include/gtk-3.0/gtk/gtkpopover.h
-	<gtk/gtkwindow.h>
-
-1483723821 /usr/include/glib-2.0/glib/glib-autocleanups.h
-
-1483723824 /usr/include/glib-2.0/gobject/gobject-autocleanups.h
-
-1483723825 /usr/include/glib-2.0/gio/gsimpleiostream.h
-	<gio/giotypes.h>
-	<gio/giostream.h>
-
-1483723825 /usr/include/glib-2.0/gio/glistmodel.h
-	<gio/giotypes.h>
-
-1483723825 /usr/include/glib-2.0/gio/gliststore.h
-	<gio/giotypes.h>
-
-1483723825 /usr/include/glib-2.0/gio/gio-autocleanups.h
-
-1491432417 /usr/include/gtk-3.0/gdk/deprecated/gdkcolor.h
-	<cairo.h>
-	<gdk/gdktypes.h>
-	<gdk/gdkversionmacros.h>
-
-1491432418 /usr/include/gtk-3.0/gtk/deprecated/gtkmisc.h
-	<gtk/gtkwidget.h>
-
-1491432418 /usr/include/gtk-3.0/gtk/gtkeventcontroller.h
-	<gdk/gdk.h>
-	<gtk/gtktypes.h>
-	<gtk/gtkenums.h>
-
-1491432418 /usr/include/gtk-3.0/gtk/gtkgesture.h
-	<gtk/gtkeventcontroller.h>
-	<gtk/gtkenums.h>
-
-1491432418 /usr/include/gtk-3.0/gtk/gtkgesturedrag.h
-	<gtk/gtkwidget.h>
-	<gtk/gtkgesturesingle.h>
-
-1491432418 /usr/include/gtk-3.0/gtk/gtkgesturesingle.h
-	<gtk/gtkgesture.h>
-
-1491432418 /usr/include/gtk-3.0/gtk/gtkgesturelongpress.h
-	<gtk/gtkgesturesingle.h>
-
-1491432418 /usr/include/gtk-3.0/gtk/gtkgesturemultipress.h
-	<gtk/gtkwidget.h>
-	<gtk/gtkgesturesingle.h>
-
-1491432418 /usr/include/gtk-3.0/gtk/gtkgesturepan.h
-	<gtk/gtkenums.h>
-	<gtk/gtkgesturedrag.h>
-
-1491432418 /usr/include/gtk-3.0/gtk/gtkgesturerotate.h
-	<gtk/gtkwidget.h>
-	<gtk/gtkgesture.h>
-
-1491432418 /usr/include/gtk-3.0/gtk/gtkgestureswipe.h
-	<gtk/gtkwidget.h>
-	<gtk/gtkgesturesingle.h>
-
-1491432418 /usr/include/gtk-3.0/gtk/gtkgesturezoom.h
-	<gtk/gtkgesture.h>
-	<gtk/gtkwidget.h>
-
-1491432418 /usr/include/gtk-3.0/gtk/gtkwindowgroup.h
-	"gtkwindow.h"
-
-1491432418 /usr/include/gtk-3.0/gtk/deprecated/gtkarrow.h
-	<gtk/deprecated/gtkmisc.h>
-
-1491432418 /usr/include/gtk-3.0/gtk/deprecated/gtkalignment.h
-	<gtk/gtkbin.h>
-
-1491432418 /usr/include/gtk-3.0/gtk/deprecated/gtknumerableicon.h
-	<gio/gio.h>
-	<gtk/gtkstylecontext.h>
-
-1491432418 /usr/include/gtk-3.0/gtk/deprecated/gtkstatusicon.h
-	<gtk/gtkimage.h>
-	<gtk/gtkmenu.h>
-
-1491432418 /usr/include/gtk-3.0/gtk/deprecated/gtkthemingengine.h
-	<glib-object.h>
-	<cairo.h>
-	<gtk/gtkborder.h>
-	<gtk/gtkenums.h>
-	<gtk/deprecated/gtkstyleproperties.h>
-	<gtk/gtktypes.h>
-
-1482698459 source:/home/andrew/Desktop/sciter.stable/sdk/include/behaviors/behavior_video_generator.cpp
-	"stdafx.h"
-	"sciter-x.h"
-	"sciter-x-behavior.h"
-	"sciter-x-threads.h"
-	"sciter-x-video-api.h"
-
-1418340809 /home/andrew/Desktop/sciter.stable/sdk/demos/usciter/stdafx.h
-	"sciter-x.h"
-
-1449602616 /home/andrew/Desktop/sciter.stable/sdk/include/sciter-x-video-api.h
-	"aux-asset.h"
-	"sciter-x-types.h"
-
-1447205378 /home/andrew/Desktop/sciter.stable/sdk/include/behaviors/behavior_video_generator.cpp
-	"stdafx.h"
-	"sciter-x.h"
-	"sciter-x-behavior.h"
-	"sciter-x-threads.h"
-	"sciter-x-video-api.h"
-
-1487712590 /home/andrew/Desktop/sciter.stable/sdk/include/sciter-x-graphics.h
-	"sciter-x-types.h"
-
-1479096524 source:/home/andrew/Desktop/sciter.stable/sdk/include/behaviors/behavior_drawing.cpp
-	"stdafx.h"
-	"sciter-x.h"
-	"sciter-x-behavior.h"
-	"sciter-x-graphics.hpp"
-	<time.h>
-	<cmath>
-
-1504664405 /home/andrew/Desktop/sciter.stable/sdk/include/sciter-x-graphics.hpp
-	"sciter-x-graphics.h"
-	"sciter-x-api.h"
-	"aux-slice.h"
-
-1487712590 /home/andrew/Desktop/sciter.stable/sdk/include/sciter-x-request.h
-	"sciter-x-types.h"
-
-1479945782 source:/home/andrew/Desktop/sciter.skia/sdk/include/behaviors/behavior_drawing.cpp
-	"stdafx.h"
-	"sciter-x.h"
-	"sciter-x-behavior.h"
-	"sciter-x-graphics.hpp"
-	<time.h>
-	<cmath>
-
-1466958689 /home/andrew/Desktop/sciter.skia/sdk/demos/usciter/stdafx.h
-	"sciter-x.h"
-
-1479945782 /home/andrew/Desktop/sciter.skia/sdk/include/sciter-x.h
-	"sciter-x-types.h"
-	"sciter-x-def.h"
-	"sciter-x-dom.h"
-	"sciter-x-value.h"
-	"sciter-x-api.h"
-	"sciter-x-msg.h"
-	"sciter-x-dom.hpp"
-	"sciter-x-host-callback.h"
-	"sciter-x-debug.h"
-
-1479946783 /home/andrew/Desktop/sciter.skia/sdk/include/sciter-x-types.h
-	<string>
-	"TargetConditionals.h"
-	<specstrings.h>
-	<windows.h>
-	<oaidl.h>
-	<d2d1.h>
-	<dwrite.h>
-	<gtk/gtk.h>
-	<string.h>
-	<wctype.h>
-
-1479945782 /home/andrew/Desktop/sciter.skia/sdk/include/sciter-x-def.h
-	"sciter-x-types.h"
-	"sciter-x-request.h"
-	"value.h"
-	"aux-cvt.h"
-	<iostream>
-	<stdio.h>
-	<stdarg.h>
-	<wchar.h>
-	"sciter-x-value.h"
-	"sciter-x-dom.h"
-	"sciter-x-behavior.h"
-
-1468948539 /home/andrew/Desktop/sciter.skia/sdk/include/sciter-x-request.h
-	"sciter-x-types.h"
-
-1479945782 /home/andrew/Desktop/sciter.skia/sdk/include/value.h
-	"sciter-x-types.h"
-	"value.hpp"
-
-1479945782 /home/andrew/Desktop/sciter.skia/sdk/include/value.hpp
-	"value.h"
-	<string>
-	<functional>
-	"aux-slice.h"
-	"aux-cvt.h"
-
-1466958689 /home/andrew/Desktop/sciter.skia/sdk/include/aux-slice.h
-	<assert.h>
-	"limits.h"
-	<vector>
-	"sciter-x-types.h"
-
-1466958689 /home/andrew/Desktop/sciter.skia/sdk/include/aux-cvt.h
-	<assert.h>
-	<wchar.h>
-	<string.h>
-	<stdlib.h>
-	<stdio.h>
-	<algorithm>
-	"aux-platform.h"
-	"aux-slice.h"
-	<string>
-	<algorithm>
-
-1466958689 /home/andrew/Desktop/sciter.skia/sdk/include/aux-platform.h
-
-1466958689 /home/andrew/Desktop/sciter.skia/sdk/include/sciter-x-value.h
-	"value.h"
-	"value.hpp"
-
-1479945782 /home/andrew/Desktop/sciter.skia/sdk/include/sciter-x-dom.h
-	<assert.h>
-	<stdio.h>
-	"tiscript.h"
-	"sciter-x-behavior.h"
-
-1466958689 /home/andrew/Desktop/sciter.skia/sdk/include/tiscript.h
-	"sciter-x-types.h"
-
-1479945782 /home/andrew/Desktop/sciter.skia/sdk/include/sciter-x-behavior.h
-	"sciter-x-types.h"
-	"sciter-x-dom.h"
-	"sciter-x-value.h"
-	"sciter-x-graphics.h"
-
-1479945782 /home/andrew/Desktop/sciter.skia/sdk/include/sciter-x-graphics.h
-	"sciter-x-types.h"
-
-1479945782 /home/andrew/Desktop/sciter.skia/sdk/include/sciter-x-api.h
-	"sciter-x-types.h"
-	"sciter-x-def.h"
-	"sciter-x-dom.h"
-	"sciter-x-request.h"
-	"sciter-x-msg.h"
-	"value.h"
-	"tiscript.hpp"
-	<stdlib.h>
-	<unistd.h>
-	<libproc.h>
-	<dlfcn.h>
-	<cstddef>
-	<libgen.h>
-	<dlfcn.h>
-
-1479945782 /home/andrew/Desktop/sciter.skia/sdk/include/tiscript.hpp
-	<assert.h>
-	"tiscript.h"
-	"tiscript-streams.hpp"
-
-1466958689 /home/andrew/Desktop/sciter.skia/sdk/include/tiscript-streams.hpp
-	"tiscript.h"
-	"aux-cvt.h"
-	<string>
-
-1479945782 /home/andrew/Desktop/sciter.skia/sdk/include/sciter-x-dom.hpp
-	"tiscript.hpp"
-	"sciter-x-dom.h"
-	<algorithm>
-
-1466958689 /home/andrew/Desktop/sciter.skia/sdk/include/sciter-x-host-callback.h
-	"sciter-x-api.h"
-	<assert.h>
-
-1466958689 /home/andrew/Desktop/sciter.skia/sdk/include/sciter-x-debug.h
-	"sciter-x-api.h"
-
-1479945782 /home/andrew/Desktop/sciter.skia/sdk/include/sciter-x-graphics.hpp
-	"sciter-x-graphics.h"
-	"sciter-x-api.h"
-	"aux-slice.h"
-
-1466958689 source:/home/andrew/Desktop/sciter.skia/sdk/include/sciter-gtk-main.cpp
-	<gtk/gtk.h>
-	"sciter-x-window.hpp"
-
-1466958689 /home/andrew/Desktop/sciter.skia/sdk/include/sciter-x-window.hpp
-	"sciter-x-types.h"
-	"sciter-x.h"
-	"sciter-x-dom.h"
-	"sciter-x-api.h"
-	"sciter-x-dom.hpp"
-	"sciter-x-host-callback.h"
-	"aux-asset.h"
-	"aux-slice.h"
-	<algorithm>
-
-1466958689 /home/andrew/Desktop/sciter.skia/sdk/include/aux-asset.h
-	<windows.h>
-	<atomic>
-
-1469573120 source:/home/andrew/Desktop/sciter.skia/sdk/demos/usciter/usciter.cpp
-	"sciter-x-window.hpp"
-	"resources.cpp"
-
-1469572863 /home/andrew/Desktop/sciter.skia/sdk/include/behaviors/behavior_video_generator.cpp
-	"stdafx.h"
-	"sciter-x.h"
-	"sciter-x-behavior.h"
-	"sciter-x-threads.h"
-	"sciter-x-video-api.h"
-
-1466958689 /home/andrew/Desktop/sciter.skia/sdk/include/sciter-x-threads.h
-	<specstrings.h>
-	<windows.h>
-	<stdio.h>
-	<assert.h>
-	<functional>
-	<mutex>
-	<condition_variable>
-	<thread>
-	<chrono>
-
-1466958689 /home/andrew/Desktop/sciter.skia/sdk/include/sciter-x-video-api.h
-	"aux-asset.h"
-	"sciter-x-types.h"
-
-1469035420 /home/andrew/Desktop/sciter.skia/sdk/demos/usciter/resources.cpp
-
-1483723825 /usr/include/glib-2.0/gio/gdatagrambased.h
-	<gio/giotypes.h>
-
-1483723825 /usr/include/glib-2.0/gio/gdtlsclientconnection.h
-	<gio/gdtlsconnection.h>
-
-1483723825 /usr/include/glib-2.0/gio/gdtlsconnection.h
-	<gio/gdatagrambased.h>
-
-1483723825 /usr/include/glib-2.0/gio/gdtlsserverconnection.h
-	<gio/gdtlsconnection.h>
-
-1505413160 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-autocleanups.h
-
-1491432417 /usr/include/gtk-3.0/gdk/gdkglcontext.h
-	<gdk/gdkversionmacros.h>
-	<gdk/gdktypes.h>
-
-1491432417 /usr/include/gtk-3.0/gdk/gdk-autocleanup.h
-
-1491432418 /usr/include/gtk-3.0/gtk/gtkglarea.h
-	<gtk/gtkwidget.h>
-
-1491432418 /usr/include/gtk-3.0/gtk/deprecated/gtkstyleproperties.h
-	<glib-object.h>
-	<gdk/gdk.h>
-	<gtk/gtkenums.h>
-
-1491432418 /usr/include/gtk-3.0/gtk/gtkmodelbutton.h
-	<gtk/gtkwidget.h>
-
-1491432418 /usr/include/gtk-3.0/gtk/gtkpopovermenu.h
-	<gtk/gtkpopover.h>
-
-1491432418 /usr/include/gtk-3.0/gtk/gtkrender.h
-	<cairo.h>
-	<pango/pango.h>
-	<gdk/gdk.h>
-	<gtk/gtkenums.h>
-	<gtk/gtktypes.h>
-
-1491432418 /usr/include/gtk-3.0/gtk/gtkstacksidebar.h
-	<gtk/gtkbin.h>
-	<gtk/gtkstack.h>
-
 1491432418 /usr/include/gtk-3.0/gtk/gtk-autocleanups.h
 
-1469572863 source:/home/andrew/Desktop/sciter.skia/sdk/include/behaviors/behavior_video_generator.cpp
-	"stdafx.h"
-	"sciter-x.h"
-	"sciter-x-behavior.h"
-	"sciter-x-threads.h"
-	"sciter-x-video-api.h"
-
-1479945782 /home/andrew/Desktop/sciter.skia/sdk/include/sciter-x-msg.h
-	"sciter-x-types.h"
-	"sciter-x-def.h"
-
-1487712590 /home/andrew/Desktop/sciter.stable/sdk/include/sciter-x-msg.h
-	"sciter-x-types.h"
-	"sciter-x-def.h"
-
-1511999091 source:/home/andrew/Desktop/sciter/stable/sdk/include/behaviors/behavior_drawing.cpp
-	"stdafx.h"
-	"sciter-x.h"
-	"sciter-x-behavior.h"
-	"sciter-x-graphics.hpp"
-	<time.h>
-	<cmath>
-
-1511999016 /home/andrew/Desktop/sciter/stable/sdk/demos/usciter/stdafx.h
-	"sciter-x.h"
-
-1511999093 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x.h
-	"sciter-x-types.h"
-	"sciter-x-def.h"
-	"sciter-x-dom.h"
-	"sciter-x-value.h"
-	"sciter-x-api.h"
-	"sciter-x-msg.h"
-	"sciter-x-dom.hpp"
-	"sciter-x-host-callback.h"
-	"sciter-x-debug.h"
-
-1514091342 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-types.h
-	<string>
-	<stdbool.h>
-	"TargetConditionals.h"
-	<specstrings.h>
-	<windows.h>
-	<oaidl.h>
-	<d2d1.h>
-	<dwrite.h>
-	<gtk/gtk.h>
-	<string.h>
-	<wctype.h>
-
-1511999093 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-def.h
+1518052882 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-def.h
 	"sciter-x-types.h"
 	"sciter-x-request.h"
 	"value.h"
@@ -3230,27 +2781,27 @@
 	"sciter-x-dom.h"
 	"sciter-x-behavior.h"
 
-1511999093 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-request.h
+1518052882 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-request.h
 	"sciter-x-types.h"
 
-1511999093 /home/andrew/Desktop/sciter/stable/sdk/include/value.h
+1518052882 /home/andrew/Desktop/sciter/stable/sdk/include/value.h
 	"sciter-x-types.h"
 	"value.hpp"
 
-1511999093 /home/andrew/Desktop/sciter/stable/sdk/include/value.hpp
+1518052882 /home/andrew/Desktop/sciter/stable/sdk/include/value.hpp
 	"value.h"
 	<string>
 	<functional>
 	"aux-slice.h"
 	"aux-cvt.h"
 
-1514091342 /home/andrew/Desktop/sciter/stable/sdk/include/aux-slice.h
+1518052881 /home/andrew/Desktop/sciter/stable/sdk/include/aux-slice.h
 	<assert.h>
 	"limits.h"
 	<vector>
 	"sciter-x-types.h"
 
-1513734220 /home/andrew/Desktop/sciter/stable/sdk/include/aux-cvt.h
+1518052881 /home/andrew/Desktop/sciter/stable/sdk/include/aux-cvt.h
 	<assert.h>
 	<wchar.h>
 	<string.h>
@@ -3262,30 +2813,30 @@
 	<string>
 	<algorithm>
 
-1511999093 /home/andrew/Desktop/sciter/stable/sdk/include/aux-platform.h
+1518052882 /home/andrew/Desktop/sciter/stable/sdk/include/aux-platform.h
 
-1511999093 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-value.h
+1518052882 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-value.h
 	"value.h"
 	"value.hpp"
 
-1511999091 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-dom.h
+1518052881 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-dom.h
 	<assert.h>
 	<stdio.h>
 	"tiscript.h"
 	"sciter-x-behavior.h"
 
-1511999091 /home/andrew/Desktop/sciter/stable/sdk/include/tiscript.h
+1518052881 /home/andrew/Desktop/sciter/stable/sdk/include/tiscript.h
 
-1514091342 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-behavior.h
+1518052881 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-behavior.h
 	"sciter-x-types.h"
 	"sciter-x-dom.h"
 	"sciter-x-value.h"
 	"sciter-x-graphics.h"
 
-1513734220 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-graphics.h
+1518052881 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-graphics.h
 	"sciter-x-types.h"
 
-1511999091 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-api.h
+1521652111 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-api.h
 	"sciter-x-types.h"
 	"sciter-x-def.h"
 	"sciter-x-dom.h"
@@ -3301,46 +2852,47 @@
 	<libgen.h>
 	<dlfcn.h>
 
-1511999093 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-msg.h
+1518052882 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-msg.h
 	"sciter-x-types.h"
 	"sciter-x-def.h"
 
-1511999093 /home/andrew/Desktop/sciter/stable/sdk/include/tiscript.hpp
+1518052882 /home/andrew/Desktop/sciter/stable/sdk/include/tiscript.hpp
 	<assert.h>
 	"tiscript.h"
 	"tiscript-streams.hpp"
 
-1511999093 /home/andrew/Desktop/sciter/stable/sdk/include/tiscript-streams.hpp
+1518052882 /home/andrew/Desktop/sciter/stable/sdk/include/tiscript-streams.hpp
 	"tiscript.h"
 	"aux-cvt.h"
 	<string>
 
-1511999093 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-dom.hpp
+1518052882 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-dom.hpp
 	"tiscript.hpp"
 	"sciter-x-dom.h"
 	<algorithm>
 	<vector>
 
-1515727172 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-host-callback.h
+1518052881 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-host-callback.h
 	"sciter-x-api.h"
+	"sciter-x-debug.h"
 	<assert.h>
 
-1515459688 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-debug.h
+1518052881 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-debug.h
 	"sciter-x-api.h"
 
-1513734220 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-graphics.hpp
+1518052881 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-graphics.hpp
 	"sciter-x-graphics.h"
 	"sciter-x-api.h"
 	"aux-slice.h"
 
-1511999091 source:/home/andrew/Desktop/sciter/stable/sdk/include/behaviors/behavior_video_generator.cpp
+1518052881 source:/home/andrew/Desktop/sciter/stable/sdk/include/behaviors/behavior_video_generator.cpp
 	"stdafx.h"
 	"sciter-x.h"
 	"sciter-x-behavior.h"
 	"sciter-x-threads.h"
 	"sciter-x-video-api.h"
 
-1511999093 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-threads.h
+1518052881 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-threads.h
 	<specstrings.h>
 	<windows.h>
 	<stdio.h>
@@ -3351,19 +2903,19 @@
 	<thread>
 	<chrono>
 
-1511999093 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-video-api.h
+1518052882 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-video-api.h
 	"aux-asset.h"
 	"sciter-x-types.h"
 
-1514091342 /home/andrew/Desktop/sciter/stable/sdk/include/aux-asset.h
+1518052881 /home/andrew/Desktop/sciter/stable/sdk/include/aux-asset.h
 	<windows.h>
 	<atomic>
 
-1511999093 source:/home/andrew/Desktop/sciter/stable/sdk/include/sciter-gtk-main.cpp
+1518052882 source:/home/andrew/Desktop/sciter/stable/sdk/include/sciter-gtk-main.cpp
 	<gtk/gtk.h>
 	"sciter-x-window.hpp"
 
-1511999093 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-window.hpp
+1518052881 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-window.hpp
 	"sciter-x-types.h"
 	"sciter-x.h"
 	"sciter-x-dom.h"
@@ -3374,10 +2926,10 @@
 	"aux-slice.h"
 	<algorithm>
 
-1513989808 source:/home/andrew/Desktop/sciter/stable/sdk/demos/usciter/usciter.cpp
+1518052879 source:/home/andrew/Desktop/sciter/stable/sdk/demos/usciter/usciter.cpp
 	"sciter-x-window.hpp"
 	"sciter-x-graphics.hpp"
 	"resources.cpp"
 
-1513734219 /home/andrew/Desktop/sciter/stable/sdk/demos/usciter/resources.cpp
+1518052879 /home/andrew/Desktop/sciter/stable/sdk/demos/usciter/resources.cpp
 

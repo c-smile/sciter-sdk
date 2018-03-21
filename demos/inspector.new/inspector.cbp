@@ -28,7 +28,12 @@
 				</Linker>
 			</Target>
 			<Target title="Release64">
-				<Option output="../../bin.gtk/inspector64" prefix_auto="1" extension_auto="1" />
+				<Option output="../../bin.gtk/x64/inspector" prefix_auto="1" extension_auto="1" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+			</Target>
+			<Target title="ReleaseARM">
+				<Option output="../../bin.gtk/arm/inspector" prefix_auto="1" extension_auto="1" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 			</Target>
@@ -36,7 +41,6 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="`pkg-config gtk+-3.0 --cflags` -std=c++11" />
-			<Add option="-mtune=generic" />
 			<Add directory="../../include" />
 		</Compiler>
 		<Linker>

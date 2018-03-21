@@ -997,6 +997,78 @@ function Namespace_test()
 }
 
 
+function Loop_test() {
+  var a = [1,2,3];
+
+  // basic for-in, inline var
+  {
+    var counter = 0;
+    for(var item in a)
+      counter += item;
+    assert counter == 1 + 2 + 3;
+  }
+
+  // for-in, ext var 
+  {
+    var counter = 0;
+    var item;
+    for(item in a)
+      counter += item;
+    assert counter == 1 + 2 + 3;
+  }
+
+  // index/value for-in, inline var
+  {
+    var counter = 0;
+    var icounter = 0;
+    for(var (idx,item) in a) {
+      counter += item;
+      icounter += idx;
+    }
+    assert counter == 1 + 2 + 3;
+    assert icounter == 0 + 1 + 2; 
+  }
+
+  // index/value for-in, ext var
+  {
+    var counter = 0;
+    var icounter = 0;
+    var idx,item;
+    for((idx,item) in a) {
+      counter += item;
+      icounter += idx;
+    }
+    assert counter == 1 + 2 + 3;
+    assert icounter == 0 + 1 + 2; 
+  }
+
+  // classic for(;;), inline vars
+  { 
+    var counter = 0;
+    var icounter = 0;
+    for(var i = 0, k = 1; i < 3; ++i,++k) {
+      counter += k;
+      icounter += i;
+    }
+    assert counter == 1 + 2 + 3;
+    assert icounter == 0 + 1 + 2; 
+  }
+
+  // classic for(;;), ext vars
+  { 
+    var i,k;
+    var counter = 0;
+    var icounter = 0;
+    for(i = 0, k = 1; i < 3; ++i,++k) {
+      counter += k;
+      icounter += i;
+    }
+    assert counter == 1 + 2 + 3;
+    assert icounter == 0 + 1 + 2; 
+  }
+
+}
+
 function ExtLoop_test()
 {
   var c = 0;
@@ -1167,13 +1239,16 @@ function JSON_test()
   const ISO_DATE = /^(\d\d\d\d)-0?(\d+)-0?(\d+)[T ]0?(\d+):0?(\d+):0?(\d+)$/;
   
   function string2date(k,v) {
-    if( typeof v == #string && v like ISO_DATE)
+    if( typeof v == #string && v like ISO_DATE) {
       v = new Date(v);
+    }
     return v;
   }
     
   t = JSON.parse("{\"x\":1,\"y\":\"2010-06-15T00:00:00\"}",string2date); 
+  stdout.println("DATE", t.x, t.y);  
   assert t.x == 1 && t.y.year == 2010 && t.y.month == 6 && t.y.day == 15; 
+
 }
 
 function errorThrown(exp) {
@@ -1316,6 +1391,7 @@ run( Integer_test );
 run( Float_test );
 run( Function_test );
 run( Namespace_test );
+run( Loop_test );
 run( ExtLoop_test );
 run( Super_test );
 run( ThisSuper_test );

@@ -75,30 +75,30 @@ namespace sciter
       rapi()->RequestUnUse( hrq ); 
     }
     
-    sciter::astring url() {
+    sciter::astring url() const {
       sciter::astring rv; 
       rapi()->RequestUrl( hrq, _LPCSTR2STRING, &rv ); 
       return rv;
     }
 
-    sciter::astring content_url() {
+    sciter::astring content_url()  const {
       sciter::astring rv; 
       rapi()->RequestContentUrl( hrq, _LPCSTR2STRING, &rv ); 
       return rv;
     }
     
-    SciterResourceType requested_type() {
+    SciterResourceType requested_type()  const {
       SciterResourceType rv = SciterResourceType();
       rapi()->RequestGetRequestedDataType( hrq, &rv );
       return rv;
     }
     
-    void succeeded( UINT status, LPCBYTE dataOrNull = NULL, UINT dataLength = 0 )
+    void succeeded( UINT status, LPCBYTE dataOrNull = NULL, UINT dataLength = 0 )  const
     {
       rapi()->RequestSetSucceeded( hrq, status, dataOrNull, dataLength);
     }
 
-    void failed( UINT status, LPCBYTE dataOrNull = NULL, UINT dataLength = 0 )
+    void failed( UINT status, LPCBYTE dataOrNull = NULL, UINT dataLength = 0 )  const
     {
       rapi()->RequestSetFailed( hrq, status, dataOrNull, dataLength);
     }

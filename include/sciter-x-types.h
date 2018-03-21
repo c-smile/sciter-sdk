@@ -247,12 +247,15 @@ enum GFX_LAYER
   #define LRESULT long
   #define HDC void*       // cairo_t
 
-  #ifdef __x86_64
+  #if defined(ARM) || defined(__arm__)
+    #define SCITER_DLL_NAME "libsciter-gtk-arm.so"
+    #define TARGET_ARM
+  #elif defined(__x86_64)
     #define TARGET_64
-    #define SCITER_DLL_NAME "libsciter-gtk-64.so"
+    #define SCITER_DLL_NAME "libsciter-gtk.so"
   #else
     #define TARGET_32
-    #define SCITER_DLL_NAME "libsciter-gtk-32.so"
+    #define SCITER_DLL_NAME "libsciter-gtk.so"
   #endif
 
 

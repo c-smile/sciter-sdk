@@ -270,11 +270,11 @@ typedef ISciterAPI* (SCAPI *SciterAPI_ptr)();
     EXTERN_C ISciterAPI* SCAPI SciterAPI();
 
 #if defined(__cplusplus) && !defined(PLAIN_API_ONLY)
-    inline ISciterAPI* SAPI( ISciterAPI* ext = nullptr ) {
+    inline ISciterAPI* SAPI( ISciterAPI* ext = NULL ) {
 #else
     inline ISciterAPI* SAPI(ISciterAPI* ext) {
 #endif
-       static ISciterAPI* _api = nullptr;
+       static ISciterAPI* _api = NULL;
        if( ext ) _api = ext;
        if( !_api )
        {
@@ -321,9 +321,9 @@ typedef ISciterAPI* (SCAPI *SciterAPI_ptr)();
 
     //typedef ISciterAPI* SCAPI (*SciterAPI_ptr)();
 
-    inline ISciterAPI* SAPI( ISciterAPI* ext = nullptr )
+    inline ISciterAPI* SAPI( ISciterAPI* ext = NULL )
     {
-        static ISciterAPI* _api = nullptr;
+        static ISciterAPI* _api = NULL;
         if( ext ) _api = ext;
         if( !_api ) {
             pid_t pid;
@@ -373,9 +373,9 @@ typedef ISciterAPI* (SCAPI *SciterAPI_ptr)();
 
     //typedef ISciterAPI* SCAPI (*SciterAPI_ptr)();
 
-    inline ISciterAPI* SAPI( ISciterAPI* ext = nullptr )
+    inline ISciterAPI* SAPI( ISciterAPI* ext = NULL )
     {
-        static ISciterAPI* _api = nullptr;
+        static ISciterAPI* _api = NULL;
         if( ext ) _api = ext;
         if( !_api ) {
 
@@ -387,14 +387,14 @@ typedef ISciterAPI* (SCAPI *SciterAPI_ptr)();
                //strcat  (pathbuf, "/");
             }
 
-            void* lib_sciter_handle = nullptr;
+            void* lib_sciter_handle = NULL;
 
             {
                 // 1. try to load from the same folder as this executable
                 const char* lookup_paths[] =
                 {
                     "/" SCITER_DLL_NAME,
-                    nullptr
+                    NULL
                 };
                 for( int n = 0; !lib_sciter_handle; ++n ) {
                     if( !lookup_paths[n] )
