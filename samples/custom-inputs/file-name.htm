@@ -20,7 +20,8 @@
         var path = this.path = this.$(.path);
         
         this.$(button.selector) << event click() {
-          var fn = view.selectFile(#open);
+          const filter = "HTML Files (*.htm,*.html)|*.htm;*.html|All Files (*.*)|*.*";
+          var fn = view.selectFile(#open,filter);
           if( fn ) path.value = fn;
           (this super).postEvent(Event.EDIT_VALUE_CHANGED);
         };
