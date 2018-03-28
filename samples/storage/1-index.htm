@@ -5,10 +5,12 @@
     <script type="text/tiscript">
    
       include "init-storage-1.tis";
+      
+      var storage;
     
       function self.ready() {
         const url = self.url("storage1.sdb");
-        var storage = Storage.open(url);
+        storage = Storage.open(url);
         var root = storage.root || initStorage(storage);
         
         var form = $(form);
@@ -31,6 +33,11 @@
         
         form.sendEvent("change");
         
+      }
+
+      function self.closing() {
+         storage.close();
+         stdout.println("closed");
       }
     
     </script>
