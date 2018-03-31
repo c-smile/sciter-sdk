@@ -9,49 +9,21 @@
     <tbody><tr>
       <td width="60" nowrap="" valign="top" align="center">Build#</td>
       <td width="78" nowrap="" valign="top" align="center">Date</td>
-      <td align="center">newUpdates</td></tr>
-    <tr><td valign="top" bgcolor="#FFFADA">4.1.4.5834</td><td nowrap="" valign="top" align="center">20-03-2018</td><td>
+      <td align="center">Updates</td></tr>
+    <tr><td valign="top" bgcolor="#FFFADA">4.1.5.5856</td><td nowrap="" valign="top" align="center">31-03-2018</td><td><p>fixes:</p>
+					<ul><li>[script,DOM] <code>view.selectFiles(#open)</code> shows all files by default;</li><li>[script] max number of simultaneously running <code>async function</code>s is limited by to 64.</li>
+						<li>[script] + <code>Array.some()</code>, <code>Array.every()</code>, <code>Array.find()</code>, <code>Array.findLast()</code>&nbsp; - not sure who&nbsp;needs these... Just for  compatibility with JS.</li>
+						<li>[css] <code>flow:stack</code> - transparent layers are mouse transparent now.&nbsp;See: sdk/samples/flow-flex/flow-stack.htm</li>
+						<li>[win,linux] Fix  potential &quot;purecall&quot; AV in http client&nbsp;see:&nbsp;<a href="https://sciter.com/forums/topic/appcrash/">https://sciter.com/forums/topic/appcrash/</a>&nbsp;</li>
+						<li><code>Element.move()</code> fix, see: <a href="https://sciter.com/forums/topic/few-bugs-in-4-1-4-5838/">https://sciter.com/forums/topic/few-bugs-in-4-1-4-5838/</a>&nbsp;</li></ul>
+					</td></tr><tr><td valign="top" bgcolor="#FFFADA">4.1.4.5834</td><td nowrap="" valign="top" align="center">20-03-2018</td><td>
 					<p>new:</p>
 					<ul>
 						<li><b>Raspbery Pi (ARM processor) experimental build at sdk/bin.gtk/arm/</b></li><li>[css] + &quot;like&quot; expressions in <code>@media</code> queries:&nbsp; <code>@media os like &quot;MacOS 10.7.*&quot; { ... }</code></li>
 						<li>[graphics] + <code>Path.bounds()</code> method;</li>
-						<li>[+plus] + <code>Plus.modelOf(domElement)</code></li></ul><p>fixes:</p>
+						<li>[+plus] + <code>Plus.modelOf(domElement)</code></li></ul>
 					<ul>
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
+          <p>fixes:</p>
 						<li>[script] fix of AV related to <code>async function</code> execution.</li><li>[win,d2d] fix of FarEast fonts handling: <a href="https://sciter.com/forums/topic/text-render-issue/">https://sciter.com/forums/topic/text-render-issue/</a>  and others.</li><li>[DOM,UI] Fix of <code>view.focus = element;</code> when the element is invisible or is disabled.</li><li>[skia] fix of rendering artefacts in <code>Graphics.arc();</code></li><li>[script] fix of multi-return values when expressions contain function calls.</li><li>[vlist] scrolling fix: <a href="https://sciter.com/forums/topic/vlist-scrolling/">https://sciter.com/forums/topic/vlist-scrolling/</a>&nbsp;</li><li>fix of AV on monitors with less than 96 DPI resolution.</li><li>[css] inline style parsing fix: see: <a href="https://sciter.com/forums/topic/the-parsing-bug-of-the-css-var-of-the-style-attribute/">https://sciter.com/forums/topic/the-parsing-bug-of-the-css-var-of-the-style-attribute/</a>&nbsp;</li><li>[+plus] fix of nested @model namespace handling;</li><li><code>&lt;frame content-style=&quot;...&quot;&gt;</code> loading fix: <a href="https://sciter.com/forums/topic/loading-resources-in-another-thread/">https://sciter.com/forums/topic/loading-resources-in-another-thread/</a>&nbsp;</li><li>[svg] fix of <code>&lt;use&gt;</code> handling;</li>
 						<li>[DOM] <code>self#someid</code>&nbsp;accessor, performance optimization.&nbsp;</li><li>[pager] fix of <code>pager.loadHtml(html)</code> method when html contains non-ascii characters.</li><li>[css, drawing] fix of <code>background: url(...svg) 50% 50%</code> pixel rounding.</li><li>[+plus] fix sub repeatable namespace handling. + master detail sample.</li><li>ValueCompare fix : <a href="https://sciter.com/forums/topic/inconsistency-in-comparison-between-object-and-value/">https://sciter.com/forums/topic/inconsistency-in-comparison-between-object-and-value/</a>&nbsp;</li><li>[script] fix of conflict of <code>view.doEvent()</code> and <code>stdout.println();</code></li><li>Fix of possible AV in DOM dynamic updates (related to +plus).</li><li>[script] multi-return assignment, throws error if there are not enough values returned by function.&nbsp;</li><li>[win,d2d] @font-face fix for the case when family name matches the font already installed in the system.</li><li>[d2d] CSS - @font-face, attempt to fix sporadic font rendering issue.</li><li>[script,css] fix of runtime CSS property clearance implementation: <code>element.style#someprop = undefined;</code>&nbsp;</li><li>[dom/css] fix of <code>Element.attributes[&quot;foo&quot;] = &quot;...&quot;</code> runtime update in case when foo is bound with content ( <code>content: attr(foo)</code> )&nbsp;</li><li>fix of <code>min-width:0</code> layout calculations when <code>width:*</code> (defined in flex units) .</li><li>[skia-backend] fix of problem with non-ascii font names.</li><li>[script] <code>Date.toString()</code> and <code>Date.dayOfWeekName()</code>, fix of weekday name.</li><li>[script] fix of &quot;var declaration may shadow function parameters&quot;, see: <a href="https://sciter.com/forums/topic/tiscript-variable-redefiniton/">https://sciter.com/forums/topic/tiscript-variable-redefiniton/</a>&nbsp;</li><li>[plus] Repeatable update: <a href="https://sciter.com/forums/topic/plus-filter-function-is-not-called-in-child-lists/">https://sciter.com/forums/topic/plus-filter-function-is-not-called-in-child-lists/</a>&nbsp;</li><li>[script] fix of mem-leak on premature Generator loop ending.</li><li>[osx, CoreGraphics] fix of <code>Image.toBytes();</code></li><li>[script] &quot;that&quot; lambda <code>|| statement;&nbsp;</code></li><li><code>&lt;select multiple&gt;</code> fix of CTRL+CLICK handling: <a href="https://sciter.com/forums/topic/bug-in-select-multiple/">https://sciter.com/forums/topic/bug-in-select-multiple/</a>&nbsp;</li><li>[DOM] fix of <code>element.style</code> updates.</li><li>[xgl/skia] better font substitution handling.</li><li>[svg] fix of runtime attribute updates.</li><li>[script] &quot;that&quot; lambda fix.</li><li>[css] fix of <code>@cons</code>t handling inside inactive <code>@media </code>sections.</li><li>[skia] fix of &quot;glyph not found&quot; issue on XP.</li></ul></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.1.3.5728</td><td nowrap="" valign="top" align="center">02-02-2018</td><td>
 					<p>new:</p>

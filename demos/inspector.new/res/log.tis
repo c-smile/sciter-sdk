@@ -33,6 +33,8 @@ class Log: Behavior
     this.addMsg = function(sub, sev, msg, vid = null)
     {
       var sx = this.scroll(#left);
+      if( msg.length > 32000 )
+        msg = msg.substr(0,32000) + "...";
       var text = crackText(msg);
             
       const cvid = ViewDriver.currentViewID;

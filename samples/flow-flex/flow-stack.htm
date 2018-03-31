@@ -1,0 +1,65 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+          main { flow:stack; size:*; background: gold; }  
+
+          main > section { // transparent layer
+            size:*;        // covers whole area.
+          }
+
+          main > section.n1 > div {
+            size:max-content;
+            background:orange;
+            margin-top:*;
+            margin-right:*; // bottom-left corner;
+          }
+
+          main > section.n2 > div {
+            size:max-content;
+            background:red; color:white;
+            margin-top:*;
+            margin-left:*; // bottom-right corner;
+          }
+
+          main > section > div:hover {
+            background-color:blue; color:white;
+          }
+
+          main > div {
+            size:max-content;
+            background:green; color:white;
+            margin:*; // in the middle
+          }
+
+          main > div:hover {
+            background-color:blue; color:white; 
+          }
+
+          #l2opaque:checked +
+             main > section.n2 
+          { 
+              background-color: rgba(0,0,0,0.2); // this will make non-transparent for the mouse events
+          }
+
+
+        </style>
+        <script type="text/tiscript"></script>
+    </head>
+    <body>
+      <p>Layers using flow:stack container. Note: if layer has any background defined it is not considered as "mouse transparent".</p>
+      <p>When the below is checked the element on layer 1 is not mouse sensible - it is below non-transparent layer.</p>
+      <button|checkbox #l2opaque>Layer 2 is not transparent</button>
+      <main>
+         <section.n1>
+            <div>on layer 1</div>
+         </section>  
+         <section.n2>
+            <div>on layer 2</div>
+         </section>  
+         <div>div-layer 3</div>
+      </main>
+
+    </body>
+</html>

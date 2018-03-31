@@ -114,16 +114,12 @@ class Note
 
   function getResource(url)
   {
-    if( !this.resources) return null;
-    var r = this.resources[url];
-    //if( r ) 
-    //   stdout.println("getResource", url, typeof r, typeof r[0],r[0].length);
-    //else {
-    //   stdout.println("getResource not found", url);
-    //   stdout.printf("in %V\n", this.resources);
-    //}
-    if( typeof r == #array )
-      return (r[0],r[1]);
+    if( this.resources) {
+      var r = this.resources[url];
+      if( typeof r == #array )
+        return (r[0],r[1]);
+    }
+    return (null,null);
   }
 
   function containsTags(tags) {

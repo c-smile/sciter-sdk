@@ -108,7 +108,7 @@
       <ul>
         <li><em>currentValue</em> is a value of array element at the <em>index</em> position;</li>
         <li><em>array</em> is the array to what this method applied.</li></ul>
-      <p>The <em>map</em> method<span class="Apple-converted-space"> </span>does not mutate the array on which it is called.</p>
+      <p>The <em>map</em> method<span class="Apple-converted-space"/>does not mutate the array on which it is called.</p>
       <p>If the callback function ends with nothing (without explicit return) then the element will not go to resulting array (as when filter() method below returns false). Note: this a la filter() behavior is non standard.</p>
       <p>Example:</p>
       <pre>var numbers = [1, 2, 3];
@@ -126,7 +126,7 @@ var squares = numbers.map(:el:el*el); // make new array of
         <li><em>previousValue</em> is either <em>initialValue</em> (on first run) or result of previous call of the callback function;</li>
         <li><em>currentValue</em> is a value of array element at the <em>index</em> position;</li>
         <li><em>array</em> is the array being scanned (reduced).</li></ul>
-      <p>The method returns result of last <em>callback</em> invocation. The method<span class="Apple-converted-space"> </span>does not mutate the array on which it is called.</p>
+      <p>The method returns result of last <em>callback</em> invocation. The method<span class="Apple-converted-space"/>does not mutate the array on which it is called.</p>
       <p>Example, this fragment calculates sum of all elements in the array:</p>
       <pre>var total = [0, 1, 2, 3].reduce( :a, b: a + b );
 // total is 6 at this point.
@@ -134,15 +134,48 @@ var squares = numbers.map(:el:el*el); // make new array of
     <dt>filter</dt>
     <dd>
       <p><strong>(</strong> <em>callback</em>: function [, <em>thisObject</em>] <strong>)</strong> : array</p>
-      <p>This method calls the <em>callback</em><span class="Apple-converted-space"> </span>function once for each element in the array, and constructs new array of all the values for which<span class="Apple-converted-space"> </span>the <em>callback</em> returns <em>true</em>.</p>The callback function may accept following parameters: <code>callback(currentValue, index, array)</code> where:
+      <p>This method calls the <em>callback</em><span class="Apple-converted-space"/>function once for each element in the array, and constructs new array of all the values for which<span class="Apple-converted-space"/>the <em>callback</em> returns <em>true</em>.</p>The callback function may accept following parameters: <code>callback(currentValue, index, array)</code> where:
       <ul>
         <li><em>currentValue</em> is a value of array element at the <em>index</em> position;</li>
         <li><em>array</em> is the array to what this method applied.</li></ul>
-      <p>The <em>filter</em> method<span class="Apple-converted-space"> </span>does not mutate the array on which it is called.</p>
+      <p>The <em>filter</em> method<span class="Apple-converted-space"/>does not mutate the array on which it is called.</p>
       <p>Example, this code creates new array from elements of source array that are greater than 10:</p>
       <pre>var filtered = [12, 5, 8, 130, 44].filter(:el: el &gt; 10);
 // filtered is [12, 130, 44] here
 </pre></dd>
+    <dt>find</dt>
+    <dd><strong>( </strong><b>predicate</b>:function [, <b>thisArg</b>: object]<strong> )</strong> : (index:integer, element: any)
+      <p>Calls predicate <i>function</i> for each element of the array until the predicate returns &quot;truthy&quot; value. Returns found element.</p>
+			<p>The predicate is a function with the following signature: </p>
+			<p><code>function (element:any [, index:integer [, arr: array ]] ) : true | false</code></p>
+			<p>where: </p>
+			<ul><li><i>element</i> - element of the array&nbsp;</li><li><i>index</i> - index of the element in the array</li><li><i>arr</i> - the array the find() was called with.</li>
+				</ul>
+			<p>If <i>thisArg</i> is provided then it is passed as <i>this</i> variable into the predicate calls.</p>
+			<p>The function returns as found index and as the element and so it can be used as:</p>
+			
+			<pre>var (i,v) = someArr.find(:el: el.id == &quot;foo&quot; ); // value and index, or
+var v = someArr.find(:el: el.id == &quot;foo&quot; ); // just value</pre>
+			
+			</dd>
+    <dt>some</dt>
+    <dd><strong>( </strong><b>predicate</b>:function [, <b>thisArg</b>: object]<strong> )</strong> :  true | false <p> Calls <i>predicate</i> function for each element of the array until the predicate returns &quot;truthy&quot; value and returns <i>true</i>. If there is no element in the array for which the predicate is true then the method returns <i>false</i>.</p>
+			<p>The predicate is a function with the following signature: </p>
+			<p><code>function (element:any [, index:integer [, arr: array ]] ) : true | false</code></p>
+			<p>where: </p>
+			<ul><li><i>element</i> - element of the array&nbsp;</li><li><i>index</i> - index of the element in the array</li><li><i>arr</i> - the array the find() was called with.</li>
+				</ul>
+			<p>If <i>thisArg</i> is provided then it is passed as <i>this</i> variable into the predicate calls.</p>
+      </dd>
+    <dt>every</dt>
+    <dd><strong>( </strong><b>predicate</b>:function [, <b>thisArg</b>: object]<strong> )</strong> :  true | false <p> Returns <i>true</i> if  for each element in the array&nbsp;<i>predicate</i> is&nbsp;<i>true</i>. If there is any element in the array for which the <i>predicate</i> is <i>false</i> the method returns&nbsp;<i>false</i>.</p>
+			<p>The predicate is a function with the following signature: </p>
+			<p><code>function (element:any [, index:integer [, arr: array ]] ) : true | false</code></p>
+			<p>where: </p>
+			<ul><li><i>element</i> - element of the array&nbsp;</li><li><i>index</i> - index of the element in the array</li><li><i>arr</i> - the array the find() was called with.</li>
+				</ul>
+			<p>If <i>thisArg</i> is provided then it is passed as <i>this</i> variable into the predicate calls.</p>
+      </dd>
     <dt>addObserver</dt>
     <dd><strong>( observer</strong>:function<strong> )</strong> : undefined
       <p>Attaches observer to the array - function that is called when the array changes. The observer here is a function that has following signature:</p>

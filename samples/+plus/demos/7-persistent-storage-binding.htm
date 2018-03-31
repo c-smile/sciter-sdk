@@ -26,10 +26,12 @@
     <script type="text/tiscript">
     
       include "../plus.tis"; // we use @observing so need to include plus.tis upfront.
+
+      var storage;
       
       function openStorage() {
         var dbpath = self.url("todo.db");
-        var storage = Storage.open(dbpath);
+        storage = Storage.open(dbpath);
         if( !storage.root )
           storage.root = { items: [] }; // brand new, initialize schema.
         return storage;
@@ -44,7 +46,11 @@
           items.unshift { subject:el.value, done:false }; // insert new item in front.
           el.value = undefined;
         }
-      }    
+      }   
+
+      function self.closing() {
+        storage.close();
+      } 
     
     </script>
   </head>

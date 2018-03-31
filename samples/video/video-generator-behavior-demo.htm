@@ -24,13 +24,38 @@
       var frame = $(video).style.foregroundImage;
       frame.toBytes().save("d:\\test.png");
     }
-		
+
+    var video = $(video);
+    var host;
+
+    event click $(#show-detached) {
+
+      if( this.value ) 
+      {
+        host = view.window {
+          type:View.TOOL_WINDOW,
+          url: self.url("sample-element-host-window.htm"),
+          width : 640,
+          height : 480,
+          alignment: 5
+        };
+        video.detach();
+        host.root.$(body).append(video);
+      } else {
+        video.detach();
+        self.$(body).append(video);
+        host.close();
+      }
+    }
+
+
 		</script>
   </head>
 <body>
   <p>This demo simulates partial video frame update. See sdk/include/behaviors/behavior_video_generator.cpp source.
   On each frame (24 FPS) it updates portion of the frame.</p>
   <button #snapshot>Save current frame</button>
+  <button|checkbox #show-detached>Show video in separate window</button>    
   <form>pixels <output(width)/>x<output(height)/></form>
   <video.generator />
 </body>

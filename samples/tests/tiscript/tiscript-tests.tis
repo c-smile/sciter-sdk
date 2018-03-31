@@ -229,7 +229,25 @@ function Array_test()
   assert sx4 == [0,1,2,3,4,5,6,7];
 
   const sx5 = [..genNumbers(5)];
-  assert sx5 == [0,1,2,3,4];  
+  assert sx5 == [0,1,2,3,4]; 
+
+
+  // addons:
+
+  assert sx1.some(:el: el == 2);
+  assert sx1.every(:el: el < 10);
+
+  assert !sx1.some(:el: el == 10);
+  assert !sx1.every(:el: el < 3);
+
+  assert sx1.find(:el: el == 3) == 3;
+  assert sx1.findLast(:el: el == 1) == 1;
+
+  // find element and index
+  {
+    var (idx,el) = sx1.find(:el: el == 2);
+    assert el == 2 && idx == 1;
+  }
   
 }
 

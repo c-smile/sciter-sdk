@@ -21,7 +21,7 @@
 	"sciter-x-host-callback.h"
 	"sciter-x-debug.h"
 
-1521653629 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-types.h
+1521672441 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-types.h
 	<string>
 	<stdbool.h>
 	"TargetConditionals.h"
@@ -2932,4 +2932,275 @@
 	"resources.cpp"
 
 1518052879 /home/andrew/Desktop/sciter/stable/sdk/demos/usciter/resources.cpp
+
+1521583245 source:/home/pi/Desktop/Sciter/stable/sdk/include/behaviors/behavior_drawing.cpp
+	"stdafx.h"
+	"sciter-x.h"
+	"sciter-x-behavior.h"
+	"sciter-x-graphics.hpp"
+	<time.h>
+	<cmath>
+
+1521583246 /home/pi/Desktop/Sciter/stable/sdk/demos/usciter/stdafx.h
+	"sciter-x.h"
+
+1521583245 /home/pi/Desktop/Sciter/stable/sdk/include/sciter-x.h
+	"sciter-x-types.h"
+	"sciter-x-def.h"
+	"sciter-x-dom.h"
+	"sciter-x-value.h"
+	"sciter-x-api.h"
+	"sciter-x-msg.h"
+	"sciter-x-dom.hpp"
+	"sciter-x-host-callback.h"
+	"sciter-x-debug.h"
+
+1521655932 /home/pi/Desktop/Sciter/stable/sdk/include/sciter-x-types.h
+	<string>
+	<stdbool.h>
+	"TargetConditionals.h"
+	<specstrings.h>
+	<windows.h>
+	<oaidl.h>
+	<d2d1.h>
+	<dwrite.h>
+	<gtk/gtk.h>
+	<string.h>
+	<wctype.h>
+
+1489965717 /usr/lib/arm-linux-gnueabihf/glib-2.0/include/glibconfig.h
+	<glib/gmacros.h>
+	<limits.h>
+	<float.h>
+
+1491693145 /usr/include/pango-1.0/pango/pango-version-macros.h
+	<pango/pango-features.h>
+	<glib.h>
+
+1502357078 /usr/include/gtk-3.0/gdk/gdkdevicetool.h
+	<gdk/gdkversionmacros.h>
+	<gdk/gdktypes.h>
+
+1502357078 /usr/include/gtk-3.0/gdk/gdkseat.h
+	<glib-object.h>
+	<gdk/gdkwindow.h>
+	<gdk/gdkevents.h>
+	<gdk/gdktypes.h>
+
+1502357078 /usr/include/gtk-3.0/gdk/gdkdrawingcontext.h
+	<gdk/gdkversionmacros.h>
+	<gdk/gdktypes.h>
+
+1502357078 /usr/include/gtk-3.0/gdk/gdkmonitor.h
+	<gdk/gdkversionmacros.h>
+	<gdk/gdkrectangle.h>
+	<gdk/gdktypes.h>
+
+1515971063 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-macros.h
+	<glib.h>
+	<gdk-pixbuf/gdk-pixbuf-features.h>
+
+1502357078 /usr/include/gtk-3.0/gdk/gdkdevicepad.h
+	<gdk/gdkversionmacros.h>
+	<gdk/gdktypes.h>
+
+1502357078 /usr/include/gtk-3.0/gtk/gtkshortcutswindow.h
+	<gtk/gtkwindow.h>
+
+1502357078 /usr/include/gtk-3.0/gtk/gtkdragdest.h
+	<gtk/gtkselection.h>
+	<gtk/gtkwidget.h>
+
+1502357078 /usr/include/gtk-3.0/gtk/gtkdragsource.h
+	<gtk/gtkselection.h>
+	<gtk/gtkwidget.h>
+
+1502357078 /usr/include/gtk-3.0/gtk/gtkfilechoosernative.h
+	<gtk/gtkfilechooser.h>
+	<gtk/gtknativedialog.h>
+
+1502357078 /usr/include/gtk-3.0/gtk/gtknativedialog.h
+	<gtk/gtkwindow.h>
+
+1502357078 /usr/include/gtk-3.0/gtk/gtkpadcontroller.h
+	<gdk/gdk.h>
+	<gtk/gtkeventcontroller.h>
+
+1502357078 /usr/include/gtk-3.0/gtk/gtkshortcutlabel.h
+	<gtk/gtkbox.h>
+
+1502357078 /usr/include/gtk-3.0/gtk/gtkshortcutsgroup.h
+	<gtk/gtkbox.h>
+
+1502357078 /usr/include/gtk-3.0/gtk/gtkshortcutssection.h
+	<gtk/gtkbox.h>
+	<gtk/gtkshortcutsgroup.h>
+
+1502357078 /usr/include/gtk-3.0/gtk/gtkshortcutsshortcut.h
+	<gtk/gtk.h>
+
+1521583245 /home/pi/Desktop/Sciter/stable/sdk/include/sciter-x-def.h
+	"sciter-x-types.h"
+	"sciter-x-request.h"
+	"value.h"
+	"aux-cvt.h"
+	<iostream>
+	<stdio.h>
+	<stdarg.h>
+	<wchar.h>
+	"sciter-x-value.h"
+	"sciter-x-dom.h"
+	"sciter-x-behavior.h"
+
+1521583245 /home/pi/Desktop/Sciter/stable/sdk/include/sciter-x-request.h
+	"sciter-x-types.h"
+
+1521583245 /home/pi/Desktop/Sciter/stable/sdk/include/value.h
+	"sciter-x-types.h"
+	"value.hpp"
+
+1521583245 /home/pi/Desktop/Sciter/stable/sdk/include/value.hpp
+	"value.h"
+	<string>
+	<functional>
+	"aux-slice.h"
+	"aux-cvt.h"
+
+1521583245 /home/pi/Desktop/Sciter/stable/sdk/include/aux-slice.h
+	<assert.h>
+	"limits.h"
+	<vector>
+	"sciter-x-types.h"
+
+1521583245 /home/pi/Desktop/Sciter/stable/sdk/include/aux-cvt.h
+	<assert.h>
+	<wchar.h>
+	<string.h>
+	<stdlib.h>
+	<stdio.h>
+	<algorithm>
+	"aux-platform.h"
+	"aux-slice.h"
+	<string>
+	<algorithm>
+
+1521583245 /home/pi/Desktop/Sciter/stable/sdk/include/aux-platform.h
+
+1521583245 /home/pi/Desktop/Sciter/stable/sdk/include/sciter-x-value.h
+	"value.h"
+	"value.hpp"
+
+1521583245 /home/pi/Desktop/Sciter/stable/sdk/include/sciter-x-dom.h
+	<assert.h>
+	<stdio.h>
+	"tiscript.h"
+	"sciter-x-behavior.h"
+
+1521583245 /home/pi/Desktop/Sciter/stable/sdk/include/tiscript.h
+
+1521583245 /home/pi/Desktop/Sciter/stable/sdk/include/sciter-x-behavior.h
+	"sciter-x-types.h"
+	"sciter-x-dom.h"
+	"sciter-x-value.h"
+	"sciter-x-graphics.h"
+
+1521583245 /home/pi/Desktop/Sciter/stable/sdk/include/sciter-x-graphics.h
+	"sciter-x-types.h"
+
+1521583245 /home/pi/Desktop/Sciter/stable/sdk/include/sciter-x-api.h
+	"sciter-x-types.h"
+	"sciter-x-def.h"
+	"sciter-x-dom.h"
+	"sciter-x-request.h"
+	"sciter-x-msg.h"
+	"value.h"
+	"tiscript.hpp"
+	<stdlib.h>
+	<unistd.h>
+	<libproc.h>
+	<dlfcn.h>
+	<cstddef>
+	<libgen.h>
+	<dlfcn.h>
+
+1521583245 /home/pi/Desktop/Sciter/stable/sdk/include/sciter-x-msg.h
+	"sciter-x-types.h"
+	"sciter-x-def.h"
+
+1521583245 /home/pi/Desktop/Sciter/stable/sdk/include/tiscript.hpp
+	<assert.h>
+	"tiscript.h"
+	"tiscript-streams.hpp"
+
+1521583245 /home/pi/Desktop/Sciter/stable/sdk/include/tiscript-streams.hpp
+	"tiscript.h"
+	"aux-cvt.h"
+	<string>
+
+1521583245 /home/pi/Desktop/Sciter/stable/sdk/include/sciter-x-dom.hpp
+	"tiscript.hpp"
+	"sciter-x-dom.h"
+	<algorithm>
+	<vector>
+
+1521583245 /home/pi/Desktop/Sciter/stable/sdk/include/sciter-x-host-callback.h
+	"sciter-x-api.h"
+	"sciter-x-debug.h"
+	<assert.h>
+
+1521583245 /home/pi/Desktop/Sciter/stable/sdk/include/sciter-x-debug.h
+	"sciter-x-api.h"
+
+1521583245 /home/pi/Desktop/Sciter/stable/sdk/include/sciter-x-graphics.hpp
+	"sciter-x-graphics.h"
+	"sciter-x-api.h"
+	"aux-slice.h"
+
+1521583245 source:/home/pi/Desktop/Sciter/stable/sdk/include/behaviors/behavior_video_generator.cpp
+	"stdafx.h"
+	"sciter-x.h"
+	"sciter-x-behavior.h"
+	"sciter-x-threads.h"
+	"sciter-x-video-api.h"
+
+1521583245 /home/pi/Desktop/Sciter/stable/sdk/include/sciter-x-threads.h
+	<specstrings.h>
+	<windows.h>
+	<stdio.h>
+	<assert.h>
+	<functional>
+	<mutex>
+	<condition_variable>
+	<thread>
+	<chrono>
+
+1521583245 /home/pi/Desktop/Sciter/stable/sdk/include/sciter-x-video-api.h
+	"aux-asset.h"
+	"sciter-x-types.h"
+
+1521583245 /home/pi/Desktop/Sciter/stable/sdk/include/aux-asset.h
+	<windows.h>
+	<atomic>
+
+1521583245 source:/home/pi/Desktop/Sciter/stable/sdk/include/sciter-gtk-main.cpp
+	<gtk/gtk.h>
+	"sciter-x-window.hpp"
+
+1521583245 /home/pi/Desktop/Sciter/stable/sdk/include/sciter-x-window.hpp
+	"sciter-x-types.h"
+	"sciter-x.h"
+	"sciter-x-dom.h"
+	"sciter-x-api.h"
+	"sciter-x-dom.hpp"
+	"sciter-x-host-callback.h"
+	"aux-asset.h"
+	"aux-slice.h"
+	<algorithm>
+
+1521583246 source:/home/pi/Desktop/Sciter/stable/sdk/demos/usciter/usciter.cpp
+	"sciter-x-window.hpp"
+	"sciter-x-graphics.hpp"
+	"resources.cpp"
+
+1521583246 /home/pi/Desktop/Sciter/stable/sdk/demos/usciter/resources.cpp
 

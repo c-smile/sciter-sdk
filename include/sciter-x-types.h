@@ -248,7 +248,7 @@ enum GFX_LAYER
   #define HDC void*       // cairo_t
 
   #if defined(ARM) || defined(__arm__)
-    #define SCITER_DLL_NAME "libsciter-gtk-arm.so"
+    #define SCITER_DLL_NAME "libsciter-gtk.so"
     #define TARGET_ARM
   #elif defined(__x86_64)
     #define TARGET_64
