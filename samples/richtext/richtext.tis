@@ -122,15 +122,10 @@ class Richtext: Behavior {
     switch( evt.type ) {
       case Event.UI_STATE_CHANGED: // caret position changed in htmlarea, update all observers (buttons).
       {
-        // simple binds:
-        for(var func in this.observers) func(); 
-        // menus
-        var noSelection = this.htmlarea.selection.isCollapsed;
-        for( var button in this.toolbar.$$(button.font-size,button.font-family))
-          button.state.disabled = noSelection; 
-
-        if( evt.target !== this ) // to avoid UI loop
+        if( evt.target !== this ) { // to avoid UI loop 
           this.postEvent("statechange.richtext");
+          this.timer(100ms, this.onStateChanged)
+        }
         return true; 
       }
       case Event.CONTENT_CHANGED: 
@@ -208,6 +203,15 @@ class Richtext: Behavior {
       
       //this.htmlarea
       
+  }
+
+  function onStateChanged() 
+  {
+    for(var func in this.observers) func(); 
+    // menus
+    var noSelection = this.htmlarea.selection.isCollapsed;
+    for( var button in this.toolbar.$$(button.font-size,button.font-family))
+      button.state.disabled = noSelection; 
   }
   
   function insertTable(rows, columns, width=undefined, border=undefined) 
