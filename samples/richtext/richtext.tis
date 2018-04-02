@@ -117,28 +117,17 @@ class Richtext: Behavior {
     this.SetupTableSelector(this.toolbar.$(button.table));
   }
   
-  function onControlEvent(evt) {
-    
-    switch( evt.type ) {
-      case Event.UI_STATE_CHANGED: // caret position changed in htmlarea, update all observers (buttons).
-      {
-        if( evt.target !== this ) { // to avoid UI loop 
-          this.postEvent("statechange.richtext");
-          this.timer(100ms, this.onStateChanged)
-        }
-        return true; 
-      }
-      case Event.CONTENT_CHANGED: 
-      {
-        //"value" change
-        //var undoStackNonEmpty = (this.execCommand("edit:undo") & ACTIVE) == ACTIVE;
-        if( evt.target !== this ) // to avoid UI loop  
-          this.postEvent("change.richtext" /*, undoStackNonEmpty */);
-        return true;
-      }
-    }
+  event statechange $(htmlarea) {
+    this.postEvent("statechange.richtext");
+    this.timer(100ms, this.onStateChanged)
+    return true;
   }
-  
+
+  event change $(htmlarea) { // value (html here) chnged
+    this.postEvent("change.richtext");
+    return true;
+  }
+
   function SetupTableSelector(button) 
   {
       const DEF_TABLE_COLS = 8;
@@ -148,24 +137,24 @@ class Richtext: Behavior {
       var selTableCol = -1;
       
       var me = this;
-      var menu = button.$(:root>menu);
+      var menu = button.$(>menu);
       
-      const tableStyle = "<header>table width:<button.radio name='tablewidth' value='' checked>auto</button>"
-                                             "<button.radio name='tablewidth' value='width=100%'>100%</button></header>";
+      const tableStyle = "<header>table width:<button|radio(tablewidth) value='false' checked>auto</button>"
+                                             "<button|radio(tablewidth) value='width=100%'>100%</button></header>";
 
         // initialization    
-      var tableGrid = "<table>";
+      var tableGrid = "<table><tbody>";
         for( var r in DEF_TABLE_ROWS ) {
           tableGrid += "<tr>";
           for( var c in DEF_TABLE_COLS )
             tableGrid += "<td/>";
           tableGrid += "</tr>";
         }
-      tableGrid += "</table>";
+      tableGrid += "</tbody></table>";
       
       menu.html = tableStyle + tableGrid;
           
-      var table = button.$(:root>menu>table);
+      var table = button.$(:root>menu>table>tbody);
       
       function setSelection(R = -1,C = -1) {
         if( C == selTableCol && R == selTableRow )
@@ -177,31 +166,30 @@ class Richtext: Behavior {
         selTableRow = R;
       }
       
-      table.onMouse = function(evt) 
+      table << event mousemove(evt) 
       {
-          if( evt.type == Event.MOUSE_MOVE ) {
-            var td = evt.target.$p(td);
-            if( !td || !evt.target.belongsTo(table)) return;
-            var C = td.index;
-            var R = td.parent.index;
-            setSelection(R,C);
-          } else if( evt.type == Event.MOUSE_LEAVE ) 
-            setSelection();
-      }
-      
-      button.onControlEvent = function(evt) {
-        if(evt.type == Event.POPUP_READY) 
-          setSelection();
-        else if(evt.type == Event.MENU_ITEM_CLICK) {
-          var C = evt.target.index;
-          var R = evt.target.parent.index;
-          //stdout.printf("%V\n",menu.$(header).value);
-          me.insertTable(R+1,C+1, menu.$(header).value.tablewidth);
-          return true; // handled
-        } 
-      }
-      
-      //this.htmlarea
+        var td = evt.target.$p(td);
+        if( !td || !evt.target.belongsTo(table)) return;
+        var C = td.index;
+        var R = td.parent.index;
+        setSelection(R,C);
+      };
+
+      table << event mouseleave(evt) {
+        setSelection();
+      };
+
+      table << event click $(td) {
+        var C = this.index;
+        var R = this.parent.index;
+        this.closePopup();
+        me.insertTable(R+1,C+1, menu.$(header).value.tablewidth);
+        return true; // handled
+      };
+
+      button << event popupready {
+        setSelection();
+      } 
       
   }
 
@@ -216,6 +204,7 @@ class Richtext: Behavior {
   
   function insertTable(rows, columns, width=undefined, border=undefined) 
   {
+    stdout.println("width", width, rows, columns);
     var html = "<table border " + (width || "") + ">";
     for( var r in rows ) {
       html += "<tr>";
@@ -224,21 +213,8 @@ class Richtext: Behavior {
       html += "</tr>";
     }  
     html += "</table>";
-    
-    function insertIt(transaction) {
-      // 'this' here is an htmlarea
-      var pos = transaction.removeRange();                    // delete selection if any
-      var container = (this super).blockContainerOf(pos[0]);  // get container that can hold the <table>
-      pos = transaction.split(pos,container);                 // split the pos until the container
-      var insertedNodes = transaction.insertHtml(pos, html);  // insert the html at pos
-      assert insertedNodes.length && insertedNodes[0].tag == "table";
-      var table = insertedNodes[0];
-      var firstTextPos = table.$(td).firstCaretPos;
-      this.state.focus = true;
-      this.selection.select(firstTextPos);                    // move caret to pos
-      return true;
-    }
-    this.htmlarea.transact(insertIt,"insert table"); // do the action inside undoable transaction.
+    this.htmlarea.execCommand("edit:insert-html",html);
+
   }
   
   function insertPicture(url) {
