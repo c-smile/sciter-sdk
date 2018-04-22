@@ -254,7 +254,7 @@ struct SciterGraphicsAPI
 // SECTION: affine tranformations:
 
   GRAPHIN_RESULT
-        SCFN(gRotate) ( HGFX hgfx, SC_ANGLE radians, SC_POS* cx /*= 0*/, SC_POS* cy /*= 0*/ );
+        SCFN(gRotate) ( HGFX hgfx, SC_ANGLE radians, const SC_POS* cx /*= 0*/, const SC_POS* cy /*= 0*/ );
 
   GRAPHIN_RESULT
         SCFN(gTranslate) ( HGFX hgfx, SC_POS cx, SC_POS cy );
