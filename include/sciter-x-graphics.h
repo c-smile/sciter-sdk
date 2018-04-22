@@ -309,19 +309,19 @@ struct SciterGraphicsAPI
 
   // setup parameters of linear gradient of lines.
   GRAPHIN_RESULT
-        SCFN(gLineGradientLinear)( HGFX hgfx, SC_POS x1, SC_POS y1, SC_POS x2, SC_POS y2, SC_COLOR_STOP* stops, UINT nstops );
+        SCFN(gLineGradientLinear)( HGFX hgfx, SC_POS x1, SC_POS y1, SC_POS x2, SC_POS y2, const SC_COLOR_STOP* stops, UINT nstops );
 
   // setup parameters of linear gradient of fills.
   GRAPHIN_RESULT
-        SCFN(gFillGradientLinear)( HGFX hgfx, SC_POS x1, SC_POS y1, SC_POS x2, SC_POS y2, SC_COLOR_STOP* stops, UINT nstops );
+        SCFN(gFillGradientLinear)( HGFX hgfx, SC_POS x1, SC_POS y1, SC_POS x2, SC_POS y2, const SC_COLOR_STOP* stops, UINT nstops );
 
   // setup parameters of line gradient radial fills.
   GRAPHIN_RESULT
-        SCFN(gLineGradientRadial)( HGFX hgfx, SC_POS x, SC_POS y, SC_DIM rx, SC_DIM ry, SC_COLOR_STOP* stops, UINT nstops );
+        SCFN(gLineGradientRadial)( HGFX hgfx, SC_POS x, SC_POS y, SC_DIM rx, SC_DIM ry, const SC_COLOR_STOP* stops, UINT nstops );
 
   // setup parameters of gradient radial fills.
   GRAPHIN_RESULT
-        SCFN(gFillGradientRadial)( HGFX hgfx, SC_POS x, SC_POS y, SC_DIM rx, SC_DIM ry, SC_COLOR_STOP* stops, UINT nstops );
+        SCFN(gFillGradientRadial)( HGFX hgfx, SC_POS x, SC_POS y, SC_DIM rx, SC_DIM ry, const SC_COLOR_STOP* stops, UINT nstops );
 
   GRAPHIN_RESULT
         SCFN(gFillMode) ( HGFX hgfx, BOOL even_odd /* false - fill_non_zero */ );
