@@ -352,8 +352,9 @@ struct SciterGraphicsAPI
   // draws img onto the graphics surface with current transformation applied (scale, rotation).
   GRAPHIN_RESULT
         SCFN(gDrawImage) ( HGFX hgfx, HIMG himg, SC_POS x, SC_POS y,
-                           SC_DIM* w /*= 0*/, SC_DIM* h /*= 0*/, UINT* ix /*= 0*/, UINT* iy /*= 0*/, UINT* iw /*= 0*/, UINT* ih, /*= 0*/
-                           float* opacity /*= 0, if provided is in 0.0 .. 1.0*/ );
+                           const SC_DIM* w /*= 0*/, const SC_DIM* h /*= 0*/, 
+                           const UINT* ix /*= 0*/, const UINT* iy /*= 0*/, const UINT* iw /*= 0*/, const UINT* ih, /*= 0*/
+                           const float* opacity /*= 0, if provided is in 0.0 .. 1.0*/ );
 
   // SECTION: coordinate space
 
