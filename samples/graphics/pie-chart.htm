@@ -40,7 +40,7 @@
              .arc(x,y,r,r, 360deg * start, 360deg * value);
         }  
         
-        this.paintContent = render;
+        this.paintBackground = render;
         
         // redefining property 'value' on that element
         this["value"] = property(v) {
@@ -54,14 +54,9 @@
         this.value = this.attributes["value"].toFloat(0.0);
       }
 
-      function self.ready() {
-      
-      	var chart = $(pie-chart);
-                  
-      	$(input) << event change {
-        	chart.value = this.value;
-      	}
-
+                 
+      event change $(input) {
+        $(pie-chart).value = this.value;
       }
       
     

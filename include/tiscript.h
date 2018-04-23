@@ -260,7 +260,8 @@ typedef struct tiscript_native_interface
    bool  (TISAPI *set_remote_std_streams)(tiscript_VM* pvm, tiscript_pvalue* input, tiscript_pvalue* output, tiscript_pvalue* error);
 
    // support of multi-return values from native fucntions, n here is a number 1..64
-   bool  (TISAPI *set_nth_retval)(tiscript_VM* pvm, int n, tiscript_value ns );
+   tiscript_value (TISAPI *make_val_list)(tiscript_VM* pvm, int valc, const tiscript_value* va);
+
    // returns number of props in object, elements in array, or bytes in byte array.
    int   (TISAPI *get_length)(tiscript_VM* pvm, tiscript_value obj );
    // for( var val in coll ) {...}

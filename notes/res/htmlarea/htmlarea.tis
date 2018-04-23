@@ -54,7 +54,7 @@ class HtmlArea: Element
       this.sourceTitle = title;      
     }
     this.requestSave(20ms);
-    // do not consume the event so it will pasted
+    // do not consume the event so it will be pasted
   } 
 
   event change (evt) {

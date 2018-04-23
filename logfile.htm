@@ -10,7 +10,26 @@
       <td width="60" nowrap="" valign="top" align="center">Build#</td>
       <td width="78" nowrap="" valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FFFADA">4.1.5.5856</td><td nowrap="" valign="top" align="center">31-03-2018</td><td><p>fixes:</p>
+    <tr><td valign="top" bgcolor="#FFFADA">4.1.6.5883</td><td nowrap="" valign="top" align="center">23-04-2018</td><td>
+					<p>new:</p>
+					<ul><li>[CSS] new '|' selector/combinator:&nbsp;<code>input|text { color:red }</code>&nbsp;&nbsp;</li>
+						<li>[script] anonymous async functions support: <code>var foo = async function() {...};</code></li>
+						<li>[CSS] flexes in <code>display:inline-block</code> elements are back;</li>
+						<li>[packfolder] + golang literal support, by Pravic;</li></ul><p>fixes:</p>
+					<ul>
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						<li>API fixes regarding &quot;const correctness&quot;;&nbsp;</li><li>[script] multi-return refactoring. Fixes <a href="https://sciter.com/forums/topic/bug-multiple-return/">https://sciter.com/forums/topic/bug-multiple-return/</a>  among other cases;</li><li>[script, regexp] Fix of <code>RegExp.exec()</code> method, see: <a href="https://sciter.com/forums/topic/regexp-global-matching/">https://sciter.com/forums/topic/regexp-global-matching/</a> ;</li><li>[skia backends] fix of&nbsp;font issue (AV in some cases);</li><li><code>&lt;select|tree multiple=&quot;checkmarks&quot;&gt;</code> fix: <a href="https://sciter.com/forums/topic/select-multiple-checkmarks-problems/">https://sciter.com/forums/topic/select-multiple-checkmarks-problems/</a>&nbsp;</li><li>Handling runtime update of <code>element.state.current = true;</code> see: <a href="https://sciter.com/forums/topic/bug-double-state-current/">https://sciter.com/forums/topic/bug-double-state-current/</a>&nbsp;</li><li>[css] fix of display:inline-block replacement: <a href="https://sciter.com/forums/topic/button-vertical-align-middle-bug/">https://sciter.com/forums/topic/button-vertical-align-middle-bug/</a>&nbsp;</li><li>[DOM] removing beep on VK_RETURN in &lt;input|text&gt;;</li><li>[CSS] font-weight dynamic update fix: <a href="https://sciter.com/forums/topic/current-font-weight-bug/">https://sciter.com/forums/topic/current-font-weight-bug/</a>  ;</li><li>[osx,linux] fix of drawing while animation issue;</li><li>[richtext] sample fixes;</li><li>[gtk] fix of window closure sequence;</li><li>fix of view closing when it contains dependent windows;</li><li>[win, pager] fix of remote document rendering: <a href="https://sciter.com/forums/topic/about-print-url/">https://sciter.com/forums/topic/about-print-url/</a>&nbsp;</li></ul></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.1.5.5856</td><td nowrap="" valign="top" align="center">31-03-2018</td><td><p>fixes:</p>
 					<ul><li>[script,DOM] <code>view.selectFiles(#open)</code> shows all files by default;</li><li>[script] max number of simultaneously running <code>async function</code>s is limited by to 64.</li>
 						<li>[script] + <code>Array.some()</code>, <code>Array.every()</code>, <code>Array.find()</code>, <code>Array.findLast()</code>&nbsp; - not sure who&nbsp;needs these... Just for  compatibility with JS.</li>
 						<li>[css] <code>flow:stack</code> - transparent layers are mouse transparent now.&nbsp;See: sdk/samples/flow-flex/flow-stack.htm</li>

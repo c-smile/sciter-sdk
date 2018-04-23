@@ -488,20 +488,9 @@ namespace tiscript
 
 // multi return macros. Used to return multiple values from native functions.
 
-#define TISCRIPT_RETURN_2(c,rv1,rv2) \
-  { tiscript::ni()->set_nth_retval(vm,1,(rv1)); \
-    return (rv2); }
-
-#define TISCRIPT_RETURN_3(c,rv1,rv2,rv3) \
-  { tiscript::ni()->set_nth_retval(vm,1,(rv2)); \
-    tiscript::ni()->set_nth_retval(vm,2,(rv1)); \
-    return (rv3); }
-
-#define TISCRIPT_RETURN_4(c,rv1,rv2,rv3,rv4) \
-  { tiscript::ni()->set_nth_retval(vm,1,(rv3)); \
-    tiscript::ni()->set_nth_retval(vm,2,(rv2)); \
-    tiscript::ni()->set_nth_retval(vm,3,(rv1)); \
-    return (rv4); }
+#define TISCRIPT_RETURN_2(c,rv1,rv2) { tiscript_value vs[] = {rv1, rv2}; return tiscript::ni()->make_val_list(c,2,vs); }
+#define TISCRIPT_RETURN_3(c,rv1,rv2,rv3) { tiscript_value vs[] = {rv1, rv2, rv3}; return tiscript::ni()->make_val_list(c,3,vs); }
+#define TISCRIPT_RETURN_4(c,rv1,rv2,rv3,rv4) { tiscript_value vs[] = {rv1, rv2, rv3, rv4}; return tiscript::ni()->make_val_list(c,4,vs); } 
 
 #endif
 

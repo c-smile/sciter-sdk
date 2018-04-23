@@ -134,7 +134,7 @@ function EditingToolbar(htmlarea,toolbar)
           html += "<img src='" + pics + "'/>";
       } else 
         return true;
-      stdout.println("html",html);        
+      //stdout.println("html",html);        
       this.execCommand("edit:insert-html",html);
       return true;
     }

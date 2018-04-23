@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+          div.card { flow:stack; size:max-content; }
+
+          div.card > div { width:200dip;  height:300dip; }
+          div.card > div > img { display:block; width:200dip; margin:*; }
+
+          // backface
+          div.card > div:nth-child(1) { 
+            background: #444; color:#fff; 
+            transform:scale(0.0,1.0); 
+            transition: transform(linear,400ms) visibility(linear,400ms);
+            visibility:none;
+          }
+
+          // frontface
+          div.card > div:nth-child(2) { 
+            background: gold; color:#000; 
+            transform:scale(1.0,1.0); 
+            transition: transform(linear,400ms,400ms);
+          }
+
+          div.card:hover > div:nth-child(1) {
+            visibility:visible;
+            transform:scale(1.0,1.0); 
+            transition: transform(linear,400ms,400ms) visibility(linear,800ms);
+          }
+
+          div.card:hover > div:nth-child(2) {
+            transform:scale(0.0,1.0); 
+            transition: transform(linear,400ms);
+          }
+
+        </style>
+        <script type="text/tiscript">
+        </script>
+    </head>
+    <body>
+
+     <div.card>
+       <div>
+         Back face
+         <img src="http://picsum.photos/200/300/?image=890"/>
+       </div>
+       <div>
+         Front face
+         <img src="http://picsum.photos/200/300/?image=320"/>
+       </div>
+     </div>
+
+    </body>
+</html>
