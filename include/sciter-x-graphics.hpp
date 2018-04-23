@@ -479,7 +479,7 @@ namespace sciter
     }
 
     // setup parameters of linear gradient of lines.
-    void line_linear_gradient( POS x1, POS y1, POS x2, POS y2, COLOR_STOP* stops, UINT nstops )
+    void line_linear_gradient( POS x1, POS y1, POS x2, POS y2, const COLOR_STOP* stops, UINT nstops )
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gLineGradientLinear( hgfx, x1, y1, x2, y2, stops, nstops ); 
@@ -487,12 +487,12 @@ namespace sciter
     }
     void line_linear_gradient( POS x1, POS y1, POS x2, POS y2, COLOR c1, COLOR c2 )
     {
-      COLOR_STOP stops[2] = { {c1, 0.0}, {c2, 1.0} };
+      const COLOR_STOP stops[2] = { {c1, 0.0}, {c2, 1.0} };
       fill_linear_gradient( x1, y1, x2, y2, stops, 2 );
     }
 
     // setup parameters of linear gradient of fills.
-    void fill_linear_gradient( POS x1, POS y1, POS x2, POS y2, COLOR_STOP* stops, UINT nstops )
+    void fill_linear_gradient( POS x1, POS y1, POS x2, POS y2, const COLOR_STOP* stops, UINT nstops )
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gFillGradientLinear( hgfx, x1, y1, x2, y2, stops, nstops); 
@@ -501,12 +501,12 @@ namespace sciter
 
     void fill_linear_gradient( POS x1, POS y1, POS x2, POS y2, COLOR c1, COLOR c2 )
     {
-      COLOR_STOP stops[2] = { {c1, 0.0}, {c2, 1.0} };
+      const COLOR_STOP stops[2] = { {c1, 0.0}, {c2, 1.0} };
       fill_linear_gradient( x1, y1, x2, y2, stops, 2 );
     }
 
     // setup parameters of line gradient radial fills.
-    void line_radial_gradient( POS x, POS y, DIM radiix, DIM radiiy, COLOR_STOP* stops, UINT nstops )
+    void line_radial_gradient( POS x, POS y, DIM radiix, DIM radiiy, const COLOR_STOP* stops, UINT nstops )
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gFillGradientRadial( hgfx, x, y, radiix, radiiy, stops, nstops); 
@@ -515,12 +515,12 @@ namespace sciter
 
     void line_radial_gradient( POS x, POS y, DIM radiix, DIM radiiy, COLOR c1, COLOR c2 )
     {
-      COLOR_STOP stops[2] = { {c1, 0.0}, {c2, 1.0} };
+      const COLOR_STOP stops[2] = { {c1, 0.0}, {c2, 1.0} };
       line_radial_gradient( x, y, radiix,radiiy, stops, 2 );
     }
 
     // setup parameters of gradient radial fills.
-    void fill_radial_gradient( POS x, POS y, DIM radiix, DIM radiiy, COLOR_STOP* stops, UINT nstops )
+    void fill_radial_gradient( POS x, POS y, DIM radiix, DIM radiiy, const COLOR_STOP* stops, UINT nstops )
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gFillGradientRadial( hgfx, x, y, radiix, radiiy, stops, nstops); 
@@ -529,7 +529,7 @@ namespace sciter
 
     void fill_radial_gradient( POS x, POS y, DIM radiix, DIM radiiy, COLOR c1, COLOR c2 )
     {
-      COLOR_STOP stops[2] = { {c1, 0.0}, {c2, 1.0} };
+      const COLOR_STOP stops[2] = { {c1, 0.0}, {c2, 1.0} };
       fill_radial_gradient( x, y, radiix, radiiy, stops, 2 );
     }
     

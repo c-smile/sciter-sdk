@@ -254,7 +254,7 @@ struct SciterGraphicsAPI
 // SECTION: affine tranformations:
 
   GRAPHIN_RESULT
-        SCFN(gRotate) ( HGFX hgfx, SC_ANGLE radians, SC_POS* cx /*= 0*/, SC_POS* cy /*= 0*/ );
+        SCFN(gRotate) ( HGFX hgfx, SC_ANGLE radians, const SC_POS* cx /*= 0*/, const SC_POS* cy /*= 0*/ );
 
   GRAPHIN_RESULT
         SCFN(gTranslate) ( HGFX hgfx, SC_POS cx, SC_POS cy );
@@ -309,19 +309,19 @@ struct SciterGraphicsAPI
 
   // setup parameters of linear gradient of lines.
   GRAPHIN_RESULT
-        SCFN(gLineGradientLinear)( HGFX hgfx, SC_POS x1, SC_POS y1, SC_POS x2, SC_POS y2, SC_COLOR_STOP* stops, UINT nstops );
+        SCFN(gLineGradientLinear)( HGFX hgfx, SC_POS x1, SC_POS y1, SC_POS x2, SC_POS y2, const SC_COLOR_STOP* stops, UINT nstops );
 
   // setup parameters of linear gradient of fills.
   GRAPHIN_RESULT
-        SCFN(gFillGradientLinear)( HGFX hgfx, SC_POS x1, SC_POS y1, SC_POS x2, SC_POS y2, SC_COLOR_STOP* stops, UINT nstops );
+        SCFN(gFillGradientLinear)( HGFX hgfx, SC_POS x1, SC_POS y1, SC_POS x2, SC_POS y2, const SC_COLOR_STOP* stops, UINT nstops );
 
   // setup parameters of line gradient radial fills.
   GRAPHIN_RESULT
-        SCFN(gLineGradientRadial)( HGFX hgfx, SC_POS x, SC_POS y, SC_DIM rx, SC_DIM ry, SC_COLOR_STOP* stops, UINT nstops );
+        SCFN(gLineGradientRadial)( HGFX hgfx, SC_POS x, SC_POS y, SC_DIM rx, SC_DIM ry, const SC_COLOR_STOP* stops, UINT nstops );
 
   // setup parameters of gradient radial fills.
   GRAPHIN_RESULT
-        SCFN(gFillGradientRadial)( HGFX hgfx, SC_POS x, SC_POS y, SC_DIM rx, SC_DIM ry, SC_COLOR_STOP* stops, UINT nstops );
+        SCFN(gFillGradientRadial)( HGFX hgfx, SC_POS x, SC_POS y, SC_DIM rx, SC_DIM ry, const SC_COLOR_STOP* stops, UINT nstops );
 
   GRAPHIN_RESULT
         SCFN(gFillMode) ( HGFX hgfx, BOOL even_odd /* false - fill_non_zero */ );
@@ -352,8 +352,9 @@ struct SciterGraphicsAPI
   // draws img onto the graphics surface with current transformation applied (scale, rotation).
   GRAPHIN_RESULT
         SCFN(gDrawImage) ( HGFX hgfx, HIMG himg, SC_POS x, SC_POS y,
-                           SC_DIM* w /*= 0*/, SC_DIM* h /*= 0*/, UINT* ix /*= 0*/, UINT* iy /*= 0*/, UINT* iw /*= 0*/, UINT* ih, /*= 0*/
-                           float* opacity /*= 0, if provided is in 0.0 .. 1.0*/ );
+                           const SC_DIM* w /*= 0*/, const SC_DIM* h /*= 0*/, 
+                           const UINT* ix /*= 0*/, const UINT* iy /*= 0*/, const UINT* iw /*= 0*/, const UINT* ih, /*= 0*/
+                           const float* opacity /*= 0, if provided is in 0.0 .. 1.0*/ );
 
   // SECTION: coordinate space
 
