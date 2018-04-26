@@ -262,7 +262,7 @@ namespace sciter
       HGFX hgfx;  
       GRAPHIN_RESULT r = gapi()->vUnWrapGfx(&valGfx, &hgfx); assert(r == GRAPHIN_OK); (void)(r);
       if (hgfx) {
-        gapi()->gAddRef(hgfx);
+        // gapi()->gAddRef(hgfx); // note: will gAddRef inside graphics ctor.
         return graphics(hgfx);
       }
       return graphics(0);
