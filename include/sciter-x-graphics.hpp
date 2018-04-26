@@ -654,7 +654,8 @@ namespace sciter
     void world_to_screen ( DIM& inout_length)
     {
       assert(hgfx);
-      GRAPHIN_RESULT r = gapi()->gWorldToScreen( hgfx, &inout_length, 0 ); 
+      DIM notnull = 0;
+      GRAPHIN_RESULT r = gapi()->gWorldToScreen( hgfx, &inout_length, &notnull ); 
       assert(r == GRAPHIN_OK); (void)(r);
     }
 
@@ -668,7 +669,8 @@ namespace sciter
     void screen_to_world ( DIM& inout_length)
     {
       assert(hgfx);
-      GRAPHIN_RESULT r = gapi()->gScreenToWorld( hgfx, &inout_length, 0 ); 
+      DIM notnull = 0;
+      GRAPHIN_RESULT r = gapi()->gScreenToWorld( hgfx, &inout_length, &notnull ); 
       assert(r == GRAPHIN_OK); (void)(r);
     }
 
