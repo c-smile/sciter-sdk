@@ -123,10 +123,6 @@
 
       function content.onExchange(evt)
       {
-         if( evt.type == Event.X_DRAG_ENTER )
-           stdout.println("!!!!!!!!!!!!!!!!!! content.onExchange",evt.type, evt.draggingDataType);
-
-
          if( evt.type == Event.X_DRAG_ENTER && evt.draggingDataType == #file)
          {
            this.@#allow-drop = true;

@@ -47,7 +47,7 @@ namespace UnitTest
 
     var onEnd = null;
     
-    function runOne() 
+    async function runOne() 
     {
       if(currentTestIndex >= testIds.length) {
         cbFinished(succ,fail);

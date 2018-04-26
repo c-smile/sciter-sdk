@@ -186,7 +186,6 @@ namespace sciter
       HPATH hpath;
       GRAPHIN_RESULT r = gapi()->vUnWrapPath(&valPath, &hpath); assert(r == GRAPHIN_OK); (void)(r);
       if (hpath) {
-        gapi()->pathAddRef(hpath);
         return path(hpath);
       }
       return path(0);
@@ -262,7 +261,7 @@ namespace sciter
       HGFX hgfx;  
       GRAPHIN_RESULT r = gapi()->vUnWrapGfx(&valGfx, &hgfx); assert(r == GRAPHIN_OK); (void)(r);
       if (hgfx) {
-        gapi()->gAddRef(hgfx);
+        //-- gapi()->gAddRef(hgfx); - ctor will do that
         return graphics(hgfx);
       }
       return graphics(0);
@@ -488,7 +487,7 @@ namespace sciter
     void line_linear_gradient( POS x1, POS y1, POS x2, POS y2, COLOR c1, COLOR c2 )
     {
       const COLOR_STOP stops[2] = { {c1, 0.0}, {c2, 1.0} };
-      fill_linear_gradient( x1, y1, x2, y2, stops, 2 );
+      line_linear_gradient( x1, y1, x2, y2, stops, 2 );
     }
 
     // setup parameters of linear gradient of fills.
@@ -509,7 +508,7 @@ namespace sciter
     void line_radial_gradient( POS x, POS y, DIM radiix, DIM radiiy, const COLOR_STOP* stops, UINT nstops )
     {
       assert(hgfx);
-      GRAPHIN_RESULT r = gapi()->gFillGradientRadial( hgfx, x, y, radiix, radiiy, stops, nstops); 
+      GRAPHIN_RESULT r = gapi()->gLineGradientRadial( hgfx, x, y, radiix, radiiy, stops, nstops); 
       assert(r == GRAPHIN_OK); (void)(r);
     }
 

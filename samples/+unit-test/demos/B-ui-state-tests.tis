@@ -4,7 +4,7 @@
   assert !section.state.collapsed; 
 }
 
-@unittest "click, toggle test" :
+@unittest "click, toggle test" async :
 {
   var section = $(section.collapsible);
   var sectionCaption = section.$(caption);

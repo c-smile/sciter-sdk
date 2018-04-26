@@ -4,7 +4,7 @@
   assert !section.state.collapsed; 
 }
 
-@unittest "click, toggle test" :
+@unittest "click, toggle test" async:
 {
   var section = $(section.collapsible);
   var sectionCaption = section.$(caption);
@@ -17,7 +17,7 @@
   assert await UnitTest.until(400ms, :: sectionContent.isVisible);
 }
 
-@unittest "UnitTest.until (shall fail)" :
+@unittest "UnitTest.until (shall fail)" async:
 {
   var section = $(section.collapsible);
   // asking for unknown property, shall fail when timeout expired
