@@ -1,0 +1,73 @@
+<html>
+<head>
+    <style>
+        @import "../plus.css";
+    </style>
+
+    <script type="text/tiscript">
+
+  namespace Data
+  {       
+
+      var Items1 =
+                  [
+                      {Name:"Level 1.1"},
+                      {Name:"Level 1.2"},
+                      {Name:"Level 1.3"}
+                  ];
+
+      var Items2 =
+                  [
+                      {Name:"Level 2.1"},
+                      {Name:"Level 2.2"},
+                      {Name:"Level 2.3"}
+                  ];
+
+      var Items3 =
+                  [
+                      {Name:"Level 3.1"},
+                      {Name:"Level 3.2"},
+                      {Name:"Level 3.3"}
+                  ];
+
+  }
+
+  event click $(#remove1) { Data.Items1.pop(); }
+  event click $(#append1) { Data.Items1.push {Name:"Level 1.****"} ; }
+
+  event click $(#remove2) { Data.Items2.pop(); }
+  event click $(#append2) { Data.Items2.push {Name:"Level 2.****"} ; }
+
+  event click $(#remove3) { Data.Items3.pop(); }
+  event click $(#append3) { Data.Items3.push {Name:"Level 3.****"} ; }
+
+
+    </script>
+</head>
+
+<button#remove1>Remove level 1 element</button>
+<button#append1>Append level 1 element</button>
+
+<button#remove2>Remove 2</button>
+<button#append2>Append 2</button>
+
+<button#remove3>Remove 3</button>
+<button#append3>Append 3</button>
+
+
+
+<body model="Data">
+    <select|tree multiple=checkmarks>
+      <option expand repeat="item1 in Data.Items1">
+        <caption><output|text(item1.Name) /></caption>
+        <option expand repeat="item2 in Data.Items2">
+          <caption><output|text(item2.Name) /></caption>
+          <option expand repeat="item3 in Data.Items3">
+              <caption><output|text(item3.Name) /></caption>
+          </option>
+       </option>
+      </option>
+   </select>
+</body>
+</html>
+

@@ -1,7 +1,8 @@
 
 /* principal handlers */
 [model] {aspect:"Plus.Model" url(plus.tis); }
-[model] [each], [model][each] { aspect:"Plus.Repeater"; } /* note repeater shall come first before [model] [name] for <select each="..." name="var"> */
+[model] [each], [model][each] { aspect:"Plus.EachRepeater"; } /* note repeater shall come first before [model] [name] for <select each="..." name="var"> */
+[model] [repeat] { aspect:"Plus.RepeatRepeater"; } /* note repeater shall come first before [model] [name] for <select each="..." name="var"> */
 [model] [name], [model][name] { aspect:"Plus.Terminal"; }
 [model] [class*='{{'], [model][class*='{{'] { aspect:"Plus.ClassTerminal"; }
 [model] [value*='{{'], [model][value*='{{'] { aspect:"Plus.valAttrTerminal"; }

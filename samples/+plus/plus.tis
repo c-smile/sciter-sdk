@@ -89,49 +89,56 @@ const Plus = function() {
       stdout.println("Model is not an object while binding ", path);
       return;      
     }
-    
-    var (coll,key) = Object.referenceOf(model, path);
-    if( key === null ) {
-      // it cannot be parsed as simple l-value 
-      // try treat it as an expression
-      if(reIsExpression.test(path)) { // looks like an expression, setup it as data observer
-        var parts = path.split(reIsExpression);
-        //stdout.printf("STB %s %V\n", path, parts );        
-        var expr = compileExpr(model,path);
-        for( var part in parts) {
-          if( part.match(reVarName) ) {
-            var (coll,key) = Object.referenceOf(model, part);
-            if(!key) continue;
-            //stdout.printf("setupTerminalBinding, expr part key %s in coll %V\n", key, coll);    
-            if(key == #length) setupModelLengthChangeHandler( coll, function(length) { if( !thing.parent ) throw undefined; updater(thing, expr()); } );
-            else setupModelChangeHandler( coll, key, function(val) { if( !thing.parent ) throw undefined; updater(thing, expr()); } ); 
+
+    function bind(model) {
+
+      thing.off(".plus");
+
+      var (coll,key) = Object.referenceOf(model, path);
+      if( key === null ) {
+        // it cannot be parsed as simple l-value 
+        // try treat it as an expression
+        if(reIsExpression.test(path)) { // looks like an expression, setup it as data observer
+          var parts = path.split(reIsExpression);
+          //stdout.printf("STB %s %V\n", path, parts );        
+          var expr = compileExpr(model,path);
+          for( var part in parts) {
+            if( part.match(reVarName) ) {
+              var (coll,key) = Object.referenceOf(model, part);
+              if(!key) continue;
+              //stdout.printf("setupTerminalBinding, expr part key %s in coll %V\n", key, coll);    
+              if(key == #length) setupModelLengthChangeHandler( coll, function(length) { if( !thing.parent ) throw undefined; updater(thing, expr()); } );
+              else setupModelChangeHandler( coll, key, function(val) { if( !thing.parent ) throw undefined; updater(thing, expr()); } ); 
+            }
           }
+          thing.post(::updater(thing,expr()));
         }
-        thing.post(::updater(thing,expr()));
+        return;
       }
-      return;
-    }
-    //stdout.printf("setupTerminalBinding: coll=%s key=%v\n", typeof coll, key);    
-    
-    if( key == #length ) { // special treatment for length computale property
-      setupModelLengthChangeHandler( coll, function(length) { if( !thing.parent ) throw undefined; updater(thing, length); } );
-      updater(thing,coll.length); // intial value
-    } 
-    else { // subscribe to model change notifications:
-      if( isInput ) { // setup DOM change event handler 
-        function on_ui_change(evt) { if(evt.target === this) coll[key] = thing.value; return false; } 
-        thing.subscribe("change.plus",on_ui_change); // subscribe to the element value change event
+      //stdout.printf("setupTerminalBinding: coll=%s key=%v\n", typeof coll, key);    
+      
+      if( key == #length ) { // special treatment for length computale property
+        setupModelLengthChangeHandler( coll, function(length) { if( !thing.parent ) throw undefined; updater(thing, length); } );
+        updater(thing,coll.length); // intial value
+      } 
+      else { // subscribe to model change notifications:
+        if( isInput ) { // setup DOM change event handler 
+          function on_ui_change(evt) { if(evt.target === this) coll[key] = thing.value; return false; } 
+          thing.on("change.plus",on_ui_change); // subscribe to the element value change event
+        }
+        setupModelChangeHandler( coll, key, function(val) { if( !thing.parent ) throw undefined; updater(thing,val); } );
+        if(thing.attributes["each"]) // if it has each then wee need to update the value after rendering its items
+        {
+          thing.on("set-value-postfactum.plus", function() { 
+            thing.post(::updater(thing,coll[key]));
+            return true; 
+          });
+        } //we need to post this thing as it may have other aspects and behaviors
+        thing.post(::updater(thing,coll[key])); // assign intial value to it;
       }
-      setupModelChangeHandler( coll, key, function(val) { if( !thing.parent ) throw undefined; updater(thing,val); } );
-      if(thing.attributes["each"]) // if it has each then wee need to update the value after rendering its items
-      {
-        thing.on("set-value-postfactum.plus", function() { 
-          thing.post(::updater(thing,coll[key]));
-          return true; 
-        });
-      } //we need to post this thing as it may have other aspects and behaviors
-      thing.post(::updater(thing,coll[key])); // assign intial value to it;
     }
+    thing.rebind = bind;
+    bind(model);
   }
 
   function valueUpdater(thing,v) 
@@ -173,7 +180,6 @@ const Plus = function() {
             case "enabled":
               thing.state.disabled = !v; break;
             case "readonly":
-              //stdout.println("readonly",!!v);
               thing.state.readonly = !!v; break;
             default:
               thing.@[attr] = v;  
@@ -194,7 +200,19 @@ const Plus = function() {
   
   function rebindSubtree(container, model)
   {
-    var boundUiElements = container.$$([name]);
+    model = model || thisModel(container);
+    for(var node = container.firstNode; node; node = node.nextNode)
+    {
+       if( node.isElement ) {
+          if(var rb = node.rebind) rb(model);
+          if(node.$is(:has-bound-attributes)) bindAttributes(model,node);
+          rebindSubtree(node,null);
+       } else if(node.isComment) {
+          if(var rb = node.rebind) rb(model);
+       }
+    }
+
+    /*var boundUiElements = container.$$([name]);
     for(var element in boundUiElements) {
       element.off(".plus");
       var path = element.@["name"];
@@ -207,7 +225,7 @@ const Plus = function() {
     boundUiElements = container.$$(:has-bound-attributes);
     for(var element in boundUiElements) {
       bindAttributes(model,element);
-    }    
+    }*/    
   }
 
   // setup model namespace binding, 'this' is the element
@@ -286,7 +304,6 @@ const Plus = function() {
     var expr  = attrval ~% "{{"; // expression part
     var suffix = expr %~ "}}"; // class name
     expr = expr /~ "}}";  // everything in between {{...}}
-    //stdout.println("A:", prefix, expr, suffix);
     
     function attrUpdater(thing,v) {
       thing.post(function() {
@@ -347,7 +364,10 @@ const Plus = function() {
     return true;
   }
   
-  function Repeater() {
+  // <thing each="">
+  //    <content element to be repeated>  
+  // </thing>
+  function EachRepeater() {
       var (ncoll, nitem, nindex, filter) = crackEachExpression(this.@["each"]);
       var root;
       var hasBoundValue = !!this.attributes["name"];
@@ -451,6 +471,116 @@ const Plus = function() {
       doBind();
       this.rebind = doBind;
   }
+
+  // <thing repeat="..."> - the thing will be replicated according repeat expr that uses same syntax as @each
+  function RepeatRepeater() {
+      var (ncoll, nitem, nindex, filter) = crackEachExpression(this.@["repeat"]);
+      var root = thisModel(this);
+      var thing = this; 
+      var thingParent = thing.parent;
+      var thingIndex = thing.index;
+      const placeholder = Node.createComment("");
+      thing.insertNodeAfter(placeholder);
+      thing.@["repeat"] = undefined;
+      thing.detach();
+
+      var renderList; // forward declaration
+
+      var ff = eachRecord; // filter function
+      var fs = null;       // filter value
+
+      function rqRenderList() { thingParent.post(renderList,true); } 
+      var updateCollectionObserves;
+      function rqUpdateCollectionObserves() { thingParent.post(updateCollectionObserves,true); } 
+
+      function appendRepeatableItem(coll, idx, val, lastNode)
+      {
+        var domitem = lastNode.nextNode;
+        if( domitem.isElement ) {
+          if( domitem && domitem.$model) {
+            var elval = domitem.$model[nitem];
+            if( elval === val) {
+              if(nindex && domitem.$model[nindex] != idx) 
+                domitem.$model[nindex] = idx;
+              return domitem; // record already bound with the DOM
+            }
+            domitem.remove(); 
+            if(elval !== undefined && elval.removeObserver)
+              elval.removeObserver(rqRenderList);
+          }
+        }
+        domitem = thing.clone();
+        var repeatable_root = {};
+        repeatable_root[nitem] = val; 
+        repeatable_root[ncoll] = coll; 
+        if(nindex) repeatable_root[nindex] = idx; 
+        repeatable_root.prototype = root;// repeatable namespace is derived from parent namespace
+        domitem.$model = repeatable_root; // repeated element is holding local $model now for its descendannts.
+        //thingParent.insert(domitem,domItemIdx + thingIndex);
+        lastNode.insertNodeAfter(domitem);
+        // if something in the record has changed we need to notify list observers
+        if( typeof val == #object && !val.eachObserver( :fun: fun.name == rqUpdateCollectionObserves) )
+          val.addObserver(rqUpdateCollectionObserves);
+        return domitem;
+      }
+
+      var coll; 
+      
+      updateCollectionObserves = function() { coll.eachObserver( :fun: fun([null,null,null]) ) }
+     
+      renderList = function () {
+        //debug stacktrace;
+        var node = placeholder;
+        for(var (k,v) in coll)
+          if( ff(v,k,fs,thing) )
+            node = appendRepeatableItem(coll,k,v,node);
+     
+        node = node.nextNode;
+        while( node ) {
+          var domitem = node;
+          if( !domitem.isElement ) break;
+          var elval = domitem.$model[nitem]; 
+          if(elval !== undefined && elval.removeObserver)
+            elval.removeObserver(rqRenderList);
+          node = domitem.nextNode;
+          domitem.remove();          
+        }
+      }
+
+      function bind(model) {
+        root = model;
+        var (rcoll,rkey) = Object.referenceOf(root, ncoll);
+        coll = rcoll[rkey];
+        if( !coll )
+          return;
+
+        if( filter ) {
+          function updater(thing,val) { 
+            fs = val;
+            if( fs === null || fs === undefined) ff = eachRecord;
+            else if( typeof fs == #function ) ff = functionFilter;
+            else if( typeof fs == #object ) ff = objectFilter;
+            else if( typeof fs == #string ) ff = textFilter;
+            else if( !fs ) throw "Unknown filter " + fs.toString();
+            renderList();
+          }
+          setupTerminalBinding(thisNamespaceModel(thing),thing,filter,false,updater); 
+        }
+        else 
+          renderList();
+
+        // and setup observer for future modifications:
+        setupCollectionChangeHandler(coll, rqRenderList ); 
+        setupModelChangeHandler(rcoll, rkey, function() { 
+           coll = rcoll[rkey];
+           setupCollectionChangeHandler(coll, rqRenderList ); 
+           rqRenderList();
+        });
+      }
+      placeholder.rebind = bind;
+      bind(root);
+  }
+
   
   function handleEvent(target,name, evt) {
     var model = target.$model || thisModel(target);
@@ -492,7 +622,8 @@ const Plus = function() {
     hrefAttrTerminal: function() { AttrTerminal.call(this,"href"); },
     srcAttrTerminal: function() { AttrTerminal.call(this,"src"); },
     boundAttributesTerminal: boundAttributesTerminal,
-    Repeater:Repeater,
+    EachRepeater:EachRepeater,
+    RepeatRepeater:RepeatRepeater,
     Click:Click,
     DblClick:DblClick,
     Change:Change,
@@ -520,7 +651,6 @@ function @observing(func, paths..) {
     {
       var typ = typeof obj;
       
-      //stdout.println("observing:", path);
       if( obj && (typ == #object || typ == #namespace)) {
         var spath = path? path + "." : "";
         for(var (k,v) in obj)

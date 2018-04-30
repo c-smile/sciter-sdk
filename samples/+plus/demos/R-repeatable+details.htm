@@ -33,7 +33,7 @@
 
        
         // select current customer
-        function selectCustomer(object) { currentCustomer = object; }
+        function selectCustomer(object) { currentCustomer = object; stdout.println("select"); }
 
         function removeCard(index) {
           currentCustomer.deck.remove(index);
@@ -76,8 +76,8 @@
                 <th>Action</th>
             </tr>
         </thead>
-        <tbody each="index,item in deck">
-            <tr>
+        <tbody>
+            <tr repeat="index,item in deck">
                 <td><output(index)/></td>
                 <td><output(item.name)/></td>
                 <td><output(item.num)/></td>
