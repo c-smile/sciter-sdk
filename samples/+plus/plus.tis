@@ -436,7 +436,7 @@ const Plus = function() {
           that.postEvent("set-value-postfactum.plus");
       }
       
-      function doBind() 
+      function bind(model) 
       {
         root = thisModel(that);
 
@@ -455,7 +455,7 @@ const Plus = function() {
             else if( !fs ) throw "Unknown filter " + fs.toString();
             renderList();
           }
-          setupTerminalBinding(thisNamespaceModel(thing),thing,filter,false,updater); 
+          setupTerminalBinding(thisModel(thing),thing,filter,false,updater); 
         }
         else 
           renderList();
@@ -468,8 +468,8 @@ const Plus = function() {
            rqRenderList();
         });
       }
-      doBind();
-      this.rebind = doBind;
+      this.rebind = bind;
+      bind(root);
   }
 
   // <thing repeat="..."> - the thing will be replicated according repeat expr that uses same syntax as @each
@@ -557,6 +557,7 @@ const Plus = function() {
         if( filter ) {
           function updater(dummy,val) { 
             fs = val;
+            stdout.println("set fs=",val,typeof val); 
             if( fs === null || fs === undefined) ff = eachRecord;
             else if( typeof fs == #function ) ff = functionFilter;
             else if( typeof fs == #object ) ff = objectFilter;
@@ -564,7 +565,7 @@ const Plus = function() {
             else if( !fs ) throw "Unknown filter " + fs.toString();
             renderList();
           }
-          setupTerminalBinding(thisNamespaceModel(thingParent),thingParent,filter,false,updater); 
+          setupTerminalBinding(thisModel(thingParent),thingParent,filter,false,updater); 
         }
         else 
           renderList();
