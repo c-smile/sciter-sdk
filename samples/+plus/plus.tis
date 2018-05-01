@@ -555,7 +555,7 @@ const Plus = function() {
           return;
 
         if( filter ) {
-          function updater(thing,val) { 
+          function updater(dummy,val) { 
             fs = val;
             if( fs === null || fs === undefined) ff = eachRecord;
             else if( typeof fs == #function ) ff = functionFilter;
@@ -564,7 +564,7 @@ const Plus = function() {
             else if( !fs ) throw "Unknown filter " + fs.toString();
             renderList();
           }
-          setupTerminalBinding(thisNamespaceModel(thing),thing,filter,false,updater); 
+          setupTerminalBinding(thisNamespaceModel(thingParent),thingParent,filter,false,updater); 
         }
         else 
           renderList();
