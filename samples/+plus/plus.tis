@@ -427,7 +427,7 @@ const Plus = function() {
      
         while( thing.length > seqNo ) {
           var domitem = thing.last;
-          var elval = domitem.$model[nitem]; 
+          var elval = domitem.$model ? domitem.$model[nitem] : undefined; 
           if(elval !== undefined && elval.removeObserver)
             elval.removeObserver(rqRenderList);
           domitem.remove();          
@@ -532,7 +532,7 @@ const Plus = function() {
         //debug stacktrace;
         var node = placeholder;
         for(var (k,v) in coll)
-          if( ff(v,k,fs,thing) )
+          if( ff(v,k,fs,thingParent) )
             node = appendRepeatableItem(coll,k,v,node);
      
         node = node.nextNode;
@@ -551,13 +551,13 @@ const Plus = function() {
         root = model;
         var (rcoll,rkey) = Object.referenceOf(root, ncoll);
         coll = rcoll[rkey];
+        //stdout.printf("bind %s, %V\n",ncoll,root);        
         if( !coll )
           return;
 
         if( filter ) {
           function updater(dummy,val) { 
             fs = val;
-            stdout.println("set fs=",val,typeof val); 
             if( fs === null || fs === undefined) ff = eachRecord;
             else if( typeof fs == #function ) ff = functionFilter;
             else if( typeof fs == #object ) ff = objectFilter;
