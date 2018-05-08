@@ -123,7 +123,12 @@ const Plus = function() {
       } 
       else { // subscribe to model change notifications:
         if( isInput ) { // setup DOM change event handler 
-          function on_ui_change(evt) { if(evt.target === this) coll[key] = thing.value; return false; } 
+          function on_ui_change(evt) { 
+            if(evt.target === this || // itself 
+              (evt.target.parent === this && evt.target.$is(caption))) // caption in editable list
+            coll[key] = thing.value; 
+            return false; 
+          } 
           thing.on("change.plus",on_ui_change); // subscribe to the element value change event
         }
         setupModelChangeHandler( coll, key, function(val) { if( !thing.parent ) throw undefined; updater(thing,val); } );
