@@ -608,16 +608,16 @@ const Plus = function() {
     return true;
   }
     
-  function Click()    { this.subscribe("click.plus", function(evt) { return handleEvent(this,"click",evt) }) }
-  function DblClick() { this.subscribe("dblclick.plus", function(evt) { return handleEvent(this,"dblclick",evt) }) }
+  function Click()    { this.subscribe("click.plus-events", function(evt) { return handleEvent(this,"click",evt) }) }
+  function DblClick() { this.subscribe("dblclick.plus-events", function(evt) { return handleEvent(this,"dblclick",evt) }) }
   
-  function Enter()    { this.subscribe("~keydown.plus", function(evt) { return handleKeyEvent(this,"enter", evt) }) }
-  function Escape()   { this.subscribe("~keydown.plus", function(evt) { return handleKeyEvent(this,"escape", evt) }) }
+  function Enter()    { this.subscribe("~keydown.plus-events", function(evt) { return handleKeyEvent(this,"enter", evt) }) }
+  function Escape()   { this.subscribe("~keydown.plus-events", function(evt) { return handleKeyEvent(this,"escape", evt) }) }
   
-  function FocusIn()  { this.subscribe("focusin.plus", function(evt) { return handleEvent(this,"focusin",evt); } ) }
-  function FocusOut() { this.subscribe("focusout.plus", function(evt) { return handleEvent(this,"focusout",evt); } ) }
+  function FocusIn()  { this.subscribe("focusin.plus-events", function(evt) { return handleEvent(this,"focusin",evt); } ) }
+  function FocusOut() { this.subscribe("focusout.plus-events", function(evt) { return handleEvent(this,"focusout",evt); } ) }
   
-  function Change()   { this.subscribe("change.plus", function(evt) { return handleEvent(this,"change",evt); } ) }
+  function Change()   { this.subscribe("change.plus-events", function(evt) { return handleEvent(this,"change",evt); } ) }
    
   return {
     Model:Model,
