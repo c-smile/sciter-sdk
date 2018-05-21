@@ -47,7 +47,7 @@ namespace sciter
     sciter::string get_title();
     void           set_title(const sciter::string& title);
 
-    void           enable_debugger(bool onoff) { SciterSetOption(NULL,SCITER_SET_DEBUG_MODE,onoff?TRUE:FALSE); }
+    void           enable_debugger(bool onoff) { SciterSetOption(get_hwnd(),SCITER_SET_DEBUG_MODE,onoff?TRUE:FALSE); }
 
     sciter::value  debug(unsigned argc, const sciter::value* arg);
     

@@ -1,0 +1,184 @@
+
+class ValueView : Element 
+{
+
+  function ShowEvalResult(container,val) {
+    var (caption,type) = formatVal(val, true);
+    switch(type) {
+      case #object: 
+        container.$append(<code.compound.object><caption>{caption}</caption></code> );
+        container.last.data = val;
+        break;
+      case #object-like:
+        container.$append(<code.compound.object><caption>{caption}</caption></code> );
+        container.last.data = val;
+        break;
+      case #array:
+        container.$append(<code.compound.array><caption>{caption}</caption></code> );
+        container.last.data = val;
+        break;
+      default: {
+          var cls = typeof varval || "undefined"; 
+          container.$append(<code.{cls}><caption>{caption}</caption></code> );
+        }
+        break;
+    }
+  }
+
+  const LOG_ITEM_TYPES = [#log,#info,#warning,#alert];
+
+  function markerColor(mode) {
+    var angle = hash(mode.toString()) % 360;
+    return Color.hsl(angle,0.4,0.75).toString(#RGB);
+  }
+
+  function ShowLogData(container,val,mode,location) {
+    if( mode ) {
+      if( mode in LOG_ITEM_TYPES )
+        container.$append(<span.log.{mode}>{mode}</span> );
+      else 
+        container.$append(<span.log.{mode} style="background-color:{markerColor(mode)}">{mode}</span> );
+    }
+    for(var v in val)
+      ShowEvalResult(container,v, true);
+  }
+
+  function formatVal(varval, exp = false) {
+
+    const ELLIPSIS = "\u2026";
+
+    function formatMap(val, exp) 
+    {
+      if( !exp )
+        return ELLIPSIS;
+      var out = "";
+      for (var (k,v) in val) {
+        if(out) out += ", ";
+        var (content,type) = formatVal(v,false);
+        out += String.$({k}:{content});
+      }
+      return out;
+    }
+
+    function formatArray(val, exp)
+    {
+      if( !exp )
+        return ELLIPSIS;
+      var out = "";
+      var n = 0;
+      for (var v in val) {
+        if(out) out += ", ";
+        if( ++n > 16 ) {
+          out += ELLIPSIS;
+          break;
+        }
+        var (content,type) = formatVal(v,false);
+        out += content;
+      }
+      return out;
+    }
+  
+    if( varval === null )
+      return ("null",false);
+    else if( varval === undefined )
+      return ("undefined",false);
+ 
+    switch( typeof varval ) {
+      case #boolean:
+        return (varval.toString(),false);
+      case #tuple:
+        if(varval.tag == #proxy) {
+          const typ = varval[0];
+          const cls = varval[1]; // or name
+          const props = varval[2];
+          switch(typ) {
+            case #Function:
+            case #function: 
+              if( props && props.length )
+                return (String.printf("function %s() {%s}", cls,formatMap(props,false)), #object-like);
+              else 
+                return (String.printf("function %s()",cls), #function);
+            case #NativeFunction:
+              return ("native-function()", #function);
+            default:
+              //if( cls )
+              //  return (String.printf("%s %s{%s}", typ, cls, formatMap(props,exp)), #object-like);
+              //else if( varval.tag == #proxy )
+              if( props && props.length)
+                return (String.printf("%s{%s}", typ, formatMap(props,false)), #object-like);
+              else
+                return (String.printf("%s", typ), false);
+          }
+        }
+        return (String.printf("[%s:%s]", varval.tag, formatArray(varval,exp)), #tuple);
+      case #object:
+        return (String.printf("{%s}",formatMap(varval,exp)), #object);
+      case #array:
+        return (String.printf("[%s]", formatArray(varval,exp)), #array);
+      case #date:
+        return (varval.toISOString(), false);
+      case #string:
+      case #integer:
+      case #float:
+        return (JSON.stringify(varval), false);
+      case #symbol: 
+        return ("#" + varval.toString(), false);
+      default:
+        return (varval.toString(), false);
+    }
+  }
+  
+  function renderVars(list, props)
+  {
+    for( var (varname,varval) in props ) {
+      var (caption, compound) = formatVal(varval,true);
+      if( compound == #object) {
+        list.$append(<dt>{varname}</dt><dd><code.compound.object><caption>{caption}</caption></code></dd>);
+        list.last.$(code).data = varval;
+      }
+      else if( compound == #object-like) {
+        list.$append(<dt>{varname}</dt><dd><code.compound.object><caption>{caption}</caption></code></dd>);
+        list.last.$(code).data = varval;
+      }
+      else if( compound == #array) {
+        list.$append(<dt>{varname}</dt><dd><code.compound.array><caption>{caption}</caption></code></dd>);
+        list.last.$(code).data = varval;
+      }
+      else 
+      {
+        var cls = typeof varval || "undefined"; 
+        list.$append(<dt>{varname}</dt><dd><code.{cls}><caption>{caption}</caption></code></dd>);
+      }
+    }
+  }
+
+  event mouseup { return true; }
+  event mousedown (evt) { return this.handleClick(evt); } 
+  event dblclick (evt) { return this.handleClick(evt); }
+
+  function handleClick(evt) 
+  {
+    if( !evt.target.belongsTo(this[0],false,true)) // not a caption
+      return true;
+    //stdout.println(this[0],evt.target);
+
+    if(this.state.expanded) {
+      var (content,type) = formatVal(this.data,true);    
+      this.html = "<caption>" + content + "</caption>";
+      this.state.collapsed = true;
+    }
+    else {
+      var (content,type) = formatVal(this.data,false);    
+      this.html = "<caption>" + content + "</caption>";
+      this.state.expanded = true;
+      var list = new Element("dl");
+      this.append(list);
+      if( type == #object-like )
+        renderVars(list, this.data[2]);
+      else
+        renderVars(list, this.data);
+    }
+    return true;
+  }
+
+}

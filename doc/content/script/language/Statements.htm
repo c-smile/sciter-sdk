@@ -55,14 +55,25 @@
     <dd>The <strong>await</strong> statement stops execution of current task-function until the promise gets resolved (either fulfilled or rejected). If promise gets rejected error will be thrown in context of the function. As a side effect appearance of first <strong>await</strong> statement declares current function as a Task. Invoication of task function ends immediately and returns with the a promise by itself.</dd>
     <dt><code><strong>yield</strong></code> &lt;expression&gt;;</dt>
     <dd>The <strong>yield</strong> statement stops execution of current generator-function and emits value of the expression. As a side effect appearance of first <strong>yield</strong> statement declares current function as a Generator - function-corroutine that has internal state.</dd>
-    <dt><strong><code>assert</code></strong> &lt;test-expression&gt; [ <strong><code>:</code></strong> &lt;info-expression&gt; ] <strong><code>;</code></strong></dt>
-    <dd>The <strong>assert</strong> statement allows you to test assumptions about your program. When the &lt;test-expression&gt; evalutes to <em>false</em> at runtime, an error is thrown with the source text of the &lt;test-expression&gt; and &lt;info-expression&gt; (if any).</dd>
     <dt><code><strong>include</strong></code> &lt;string-expression&gt; | &lt;stream-expression&gt; | &lt;bytes-expression&gt; <code>;</code></dt>
     <dd>The include statement defines script to be included (loaded and evaluated) into current namespace. Expression can be one of:
       <ul>
         <li>string literal or variable holding string - file name to include. File may contain script source or compiled bytecode;</li>
         <li>expression evaluated to stream;</li>
         <li>expression evaluated to Bytes array.</li></ul></dd>
+    <dt><strong><code>assert</code></strong> &lt;test-expression&gt; [ <strong><code>:</code></strong> &lt;space-separated-list-of-expressions&gt; ]&nbsp;<strong><code>;</code></strong></dt>
+    <dd><p>The <strong>assert</strong> statement allows you to test assumptions about your program. When the &lt;test-expression&gt; evaluates to <em>false</em> at runtime, an error is thrown with the source text of the &lt;test-expression&gt; and optional list of expressions. </p><p>Note: with no debugger attached, this statement has no effect&nbsp;(NOP - empty instruction);&nbsp;</p></dd>
+    <dt><code><strong>debug break;</strong></code></dt>
+    <dd>Defines explicit breakpoint in source code, with attached debugger code execution stops at that line. With no debugger attached, this statement has no effect&nbsp;(NOP - empty instruction);&nbsp;</dd>
+		<dt><code><strong>debug namespace;</strong></code></dt>
+
+    <dd>Outputs current chain of namespaces to debug console;</dd>
+    <dt><code><strong>debug stacktrace;</strong></code></dt>
+    <dd>Outputs stacktrace at the point;</dd>
+
+    <dt><code><strong>debug [info | warning | alert]:</strong></code> &lt;space-separated-list-of-expressions&gt; <code><strong>;</strong></code> </dt>
+    <dd><p>Log output: renders&nbsp;results of evaluation of expressions to the debug output.&nbsp;</p><p>Note: with no debugger attached, this statement has no effect&nbsp;(NOP - empty instruction);</p></dd>
+
     <dt>&lt;expression&gt;<strong> <code>;</code></strong></dt>
     <dd>Expressions that end with ';' constitute a single statement. Result of the &lt;expression&gt; is suppressed.</dd></dl>
 </body>

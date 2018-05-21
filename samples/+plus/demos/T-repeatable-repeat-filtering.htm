@@ -63,11 +63,11 @@
 
 <body model="Data">
     <select|tree multiple=checkmarks>
-      <option expanded repeat="item1 in Data.Items1">
+      <option expanded repeat="item1 in Items1">
         <caption><output|text(item1.Name) /></caption>
-        <option expanded repeat="item2 in Data.Items2|Filter(item1.type)">
+        <option expanded repeat="item2 in Items2|Filter(item1.type)">
           <caption><output|text(item2.Name) /></caption>
-          <option expanded repeat="item3 in Data.Items3">
+          <option expanded repeat="item3 in Items3">
               <caption><output|text(item3.Name) /></caption>
           </option>
        </option>

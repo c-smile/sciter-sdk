@@ -12,6 +12,7 @@
 
 static std::vector<sciter::string> _argv;
 
+#ifndef SKIP_MAIN
 int main (int argc, char *argv[])
 {
   /* Initialize GTK+ */
@@ -31,6 +32,8 @@ int main (int argc, char *argv[])
 
   return uimain(message_pump);
 }
+#endif
+
 
 namespace sciter {
 

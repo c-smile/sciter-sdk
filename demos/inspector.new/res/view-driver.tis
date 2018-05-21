@@ -86,8 +86,9 @@ class ViewDriver: Behavior
   }
   function detached() { 
   }
- 
-  @sinkingclick @on "[res]" : evt, target { 
+
+  event ~click $([res]) (evt,target)
+  { 
     var data = {};
     data.url = target.attributes["res"];
     var ln = target.attributes["line-no"];
@@ -95,7 +96,8 @@ class ViewDriver: Behavior
     this.postEvent("navigate-to-source", data);
     return true;
   }
-  @sinkingclick @on "[href][line]" : evt, target { 
+  event ~click $([href][line]) (evt,target)
+  { 
     var data = {
       url : target.attributes["href"],
       lineNo : target.attributes["line"].toInteger()
@@ -142,7 +144,9 @@ class ViewDriver: Behavior
   }
     
   //function deeActivate() { /*log("activate")*/; }
-  function deeLog(subsystem,severity,msg) { log.addMsg(subsystem,severity,msg, this.vid);  /*this.log.appendMsg(subsystem,severity,msg);*/ }
+  function deeLog(subsystem,severity,msg,mode = undefined,location = undefined) { 
+    log.addMsg(subsystem,severity,msg,mode,location,this.vid); 
+  }
   
   function deeElementHighlighted(stack) { this.postEvent("element-selected", stack); }
   function deeElementContentChanged(uid) { this.postEvent("element-content-changed", uid); }

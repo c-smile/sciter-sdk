@@ -1,5 +1,5 @@
-﻿include "decorators.tis";
-include "settings.tis";
+﻿include "settings.tis";
+include "value-view.tis";
 
 class Log: Behavior 
 {
@@ -30,9 +30,18 @@ class Log: Behavior
 
     var lastSub, lastSev, lastMsg, repeats; 
      
-    this.addMsg = function(sub, sev, msg, vid = null)
+    this.addMsg = function(sub, sev, msg, mode = undefined, location = undefined, vid = null)
     {
       var sx = this.scroll(#left);
+      var data = #nope;
+      var asLastOne = false;
+      if( typeof msg != #string) 
+        { data = msg; msg = ""; } 
+      else 
+        asLastOne = lastSub == sub && lastSev == sev && lastMsg == msg;
+
+      lastSub = sub; lastSev = sev; lastMsg = msg;
+
       if( msg.length > 32000 )
         msg = msg.substr(0,32000) + "...";
       var text = crackText(msg);
@@ -42,20 +51,29 @@ class Log: Behavior
      
       var insp = this.length - 2;
       // check for duplicates
-      if(lastSub == sub && lastSev == sev && lastMsg == msg && this.last) 
+      if(this.last && asLastOne) 
       {
         this[insp].remove();
         --insp;
-        msg = String.printf("<option class='%s %s %s' msg='%s'><var>%d</var>%s</option>", SUBSYSTEM[sub],SEVERITY[sev], (cvid == vid ? "current-view" : ""), msg.htmlEscape(),++repeats, text);
+        msg = String.printf("<option class='%s %s %s' msg='%s'><var>%d</var>%s</option>", SUBSYSTEM[sub],SEVERITY[sev], (cvid == vid ? "current-view" : ""), msg,++repeats, text);
       }
       else {
-        lastSub = sub; lastSev = sev; lastMsg = msg;
         repeats = 1;
-        msg = String.printf("<option class='%s %s %s' msg='%s'>%s</option>", SUBSYSTEM[sub],SEVERITY[sev], (cvid == vid ? "current-view" : ""), msg.htmlEscape(),text);
+        msg = String.printf("<option class='%s %s %s' msg='%s'>%s</option>", SUBSYSTEM[sub],SEVERITY[sev], (cvid == vid ? "current-view" : ""), msg,text);
       }
+
       this.insert(msg, insp + 1);
       var item = this[insp + 1];
       item.vid = vid;
+      if( data != #nope ) {
+        if( mode !== undefined) {
+          item.attributes.addClass("debug"); // produced by debug output
+          ValueView.ShowLogData(item,data,mode,location);
+        }
+        else
+          ValueView.ShowEvalResult(item,data);
+      }
+
       if( !this.state.focus )
         this.post( :: this.scrollTo(sx,10000) );
     }
@@ -75,9 +93,16 @@ class Log: Behavior
    
   }
   
-  @key Event.VK_C @CTRL : { this.selection2clipboard(); return true; }
+  event keydown (evt) {
+    if( evt.keyCode == Event.VK_C && evt.shortcutKey)
+    { 
+      this.selection2clipboard(); 
+      return true; 
+    }
+  }
   
-  @click @on "a[href][line]" : evt, target { 
+  event click $(a[href][line]) (evt, target)
+  { 
     var data = {
       url : target.attributes["href"],
       lineNo : target.attributes["line"].toInteger()
@@ -98,11 +123,11 @@ class Log: Behavior
     return true;
   }
 
-  @click @on "menu#for-log-list>li[command='edit:copy']"  : { this.selection2clipboard(); return true; }
-  @click @on "menu#for-log-list>li[command='edit:clear']" : { this.clearMsgs(); return true; }
+  event click $(menu#for-log-list>li[command='edit:copy']) { this.selection2clipboard(); return true; }
+  event click $(menu#for-log-list>li[command='edit:clear']) { this.clearMsgs(); return true; }
   
-  
-  @when Event.CONTEXT_MENU_SETUP @on "menu#for-log-list" :evt {
+  event contextmenusetup $(menu#for-log-list)  
+  {
     var menu = evt.source;
     // copy item is enabled if there are :current or :checked options.
     menu.$(li[command='edit:copy']).state.disabled = ! this.$(option:checked);
@@ -111,7 +136,8 @@ class Log: Behavior
 	  return true;
   }
   
-  @when (Event.CONTEXT_MENU_REQUEST | Event.SINKING ) @on "input.eval" :evt {
+  event ~contextmenu $(input.eval)  (evt)
+  {
     var menu = $(menu#for-input-eval);
     if(!mruListValid) {
       mruListValid = true;
@@ -144,23 +170,24 @@ class Log: Behavior
   }
   
   
-  @sinkingkey Event.VK_RETURN @on "input.eval" :evt, input { 
-    var text = input.value.trim();
-    if( text ) {
-      $(.view-driver:expanded).send(#evalIt, text);
-      this.addMsg(EVAL_MSG_TYPE, 1, text);
-      this.updateMru(text);
-      return true;
+  event ~keydown $(input.eval) (evt, input) {
+    if(evt.keyCode == Event.VK_RETURN) {
+      var text = input.value.trim();
+      if( text ) {
+        $(.view-driver:expanded).send(#evalIt, text);
+        this.addMsg(EVAL_MSG_TYPE, 1, text);
+        this.updateMru(text);
+        return true;
+      }
     }
   }
   
-  @click @on "menu#for-input-eval > li[command=paste-code]" : evt, menuItem { 
+  event click $(menu#for-input-eval > li[command=paste-code]) (evt, menuItem) {
     var input = this.$(input.eval);
     input.value = menuItem.$(code).text;
     input.state.focus = true;
     return true;
   }
-
 }
 
 Settings.add {

@@ -45,11 +45,18 @@
           "HTML Files (*.htm,*.html)|*.HTM;*.HTML|All Files (*.*)|*.*" , "html" );
      
       }); */
+
+      event keydown (evt) {
+        if( evt.keyCode == Event.VK_F5 ) {
+          view.load( view.root.url() ); // reload it
+        }
+      }
       
       function self.ready() {
         var w = self.intrinsicWidthMax();
         var h = self.intrinsicHeight(w);
         view.move(100,100,w,h,true);
+        view.connectToInspector(); // connect to inspector 
       }
     
     </script>
@@ -71,6 +78,9 @@
   <input|password #second novalue="{password}">
   
   <p>test of generated image: <img src="in-memory:test"> </p>
+  <p>Connects to inspector automatically, so inspector should be running.</p>
+  <p>Press F5 to reload the document in window.</p>
+
 
 </body>
 </html>

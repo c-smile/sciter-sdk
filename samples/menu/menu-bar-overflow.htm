@@ -1,0 +1,109 @@
+<html>
+  <head>
+    <title>Test</title>
+    <style>
+
+        menu.bar {
+          aspect: MenuBar;
+          width:*;
+          flow:horizontal;
+          border-spacing:3dip;
+          overflow:hidden;
+          margin:0;
+          padding:0 16dip 0 0; // to accommodate the arrow
+        }
+
+        menu.bar.overflows {
+          foreground-image: url(stock:chevron-down);
+          foreground-position-top: 50%;
+          foreground-position-right: 2dip;
+          foreground-repeat:no-repeat;
+          foreground-size: 12dip 10dip;
+        }
+
+        menu > li {
+          behavior:file-icon;
+          padding-left:20dip;
+          foreground-repeat: no-repeat;
+          foreground-position: 2dip 50%;
+          //foreground-image:url(images/unknown-icon.png);
+          color:black;
+        }
+
+        menu.bar > li {
+          behavior:clickable file-icon; // generates clicks
+          max-width:100dip;
+          width:max-intrinsic;
+          text-overflow:ellipsis;
+          overflow-x:hidden;
+          line-height:1.8em;
+        }
+
+        menu.bar > li:hover {
+          background:url(theme:list-view-item-selected) stretch;
+        }
+
+        menu.bar > li.over {
+          visibility:hidden;
+        }
+
+    </style>
+
+    <script type="text/tiscript">
+      function MenuBar() 
+      {
+        var extraItems = [];
+        var extraMenu = $(menu#for-menu-bar);
+        assert extraMenu;
+
+        var me = this;
+
+        this.onSize = function() 
+        {
+          extraItems.length = 0;
+          var w = this.box(#width,#inner);
+          for( var item in this ) {
+            var xr = item.box(#right,#border,#parent);
+            if( xr > w ) { // item is [partialy] invisible
+              item.attributes.addClass("over");
+              extraItems.push(item);
+            } else
+              item.attributes.removeClass("over");
+          }
+          this.attributes.toggleClass("overflows", extraItems.length > 0 );
+        }
+
+        function showMenu() {
+          extraMenu.clear();
+          for( var item in extraItems )
+            extraMenu.append(item.clone());
+          me.popup(extraMenu,9 << 16 | 3);
+        }
+
+        this << event mousedown (evt) {
+          if(evt.isOnIcon && extraItems.length > 0) {
+            showMenu();
+            return true;
+          }
+        }
+      }
+    </script>
+
+    <menu.popup #for-menu-bar/>
+
+  </head>
+  <body>
+
+    <menu.bar>
+      <li filename="c:\windows\notepad.exe" >notepad.exe</li>
+      <li filename="c:\windows\regedit.exe" >regedit.exe</li>
+      <li filename="c:\windows\system.ini"  >system.ini</li>
+      <li filename="c:\windows\explorer.exe">explorer.exe</li>
+      <li filename="c:\windows\twain.dll">twain.dll</li>
+      <li filename="c:\windows\nonexistent.dll">nonexistent.dll</li>
+    </menu>
+
+    <p>When not enough space to show all items the menu will show invisible items as a popup menu</p>
+
+  </body>
+</html>

@@ -20,7 +20,15 @@ class ResourcesView : Behavior
   function show(url, lineNo = null, setCurrent = false) 
   {
     var rd = this.driver.resources[url];
-    var tp;
+    if(!rd) {
+      var me = this;
+      this.driver.rq("getResource", url, function(resdef) {
+        me.driver.deeResourceArrived(resdef);
+        me.show(url,lineNo,setCurrent);
+      });
+      return;
+    }
+/*   var tp;
     if(!rd && (url like "sciter:*")) 
     {
       //stdout.printf("%s all %V\n", url, this.driver.resources);
@@ -34,10 +42,11 @@ class ResourcesView : Behavior
         rd = data;
         tp = RESOURCE_TYPE.IMAGE;
       }
-    }
+    } */
 
     //if(!rd)
-    //  stdout.printf("%s all %V\n", url, this.driver.resources);
+    //  return;
+    //stdout.printf("%s all %V\n", url, this.driver.resources);
     
     var requiredView = null;
     switch( tp || rd.type ) {

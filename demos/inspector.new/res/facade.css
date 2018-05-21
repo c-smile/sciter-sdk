@@ -221,7 +221,7 @@ select.log {
 select.log > option  
 {
   background-repeat: no-repeat;  
-  background-position: 9dip 3dip;
+  background-position: 8dip 6dip;
   background-size: 16dip;
   padding: 4dip 1dip 4dip 22dip;
   border-left: 3dip solid transparent;
@@ -229,6 +229,7 @@ select.log > option
   border-bottom: 1dip solid #eee;
   white-space :pre;
   font-family:monospace;
+  color:windowtext; background-color:window;
 }
 
 select.log > option > a { behavior:clickable; }
@@ -246,11 +247,11 @@ select.log > option.eval     { border-left-color: #ccc;
 select.log > option.eval.warning  { background-image:url(images/log-arrow-right-light.png); background-color: #fff; } 
 select.log > option.eval.info     { background-image:url(images/log-arrow-up-light.png); background-color: #fff; } 
 select.log > option.eval:checked,
-select.log > option:checked  { color:windowtext; background-color: #FED;}
+select.log > option:checked  { padding-left: 18dip; border-left-width:7dip; }
 select.log > option.eval:current,
-select.log > option:current  { color:windowtext; background-color: #FDC;}
-select.log > option > var { display:inline-block; background:#f44; color:#fff; border-radius:0.4em; padding:0 0.5em; margin-right:4dip; } /* repeat counter */
+select.log > option:current  { padding-left: 18dip; border-left-width:7dip; /*color:windowtext; background-color: #FDC; */}
 
+select.log > option > var { display:inline-block; background:#f44; color:#fff; border-radius:0.4em; padding:0 0.5em; margin-right:4dip; } /* repeat counter */
 select.log > option.current-view { border-right-color: highlight; }
 
 select.log > input  { 
@@ -268,6 +269,61 @@ select.log > input  {
   border-bottom: 1dip solid #eee;
   border-radius: 0;
   width:*;
+}
+
+code.compound {
+  prototype: ValueView url(value-view.tis);
+  display:block;
+  //max-width:max-content;
+  width:*;
+}
+
+code.compound > caption { 
+  cursor:pointer; 
+  background-image:url(stock:arrow-e-hollow); /* that arrow */
+  background-repeat: no-repeat;
+  background-position: 3dip 50%;
+  padding-left:1em;
+  background-size:5dip 7dip;
+}
+
+code.compound:expanded > caption { 
+  display:block;
+  background-image:url(stock:arrow-s-hollow); 
+  background-size:7dip 5dip;
+}
+
+option.debug > code.compound { display:inline-block; width:max-content; }
+option.debug > code.compound:expanded { display:block; width:*; }
+
+option.debug > span.log { display:inline-block; padding:0 0.25em; 
+  background:var(marker-color,#0f9960); 
+  color:#fff; width:4em; text-align:center; 
+  border-radius:2dip;
+}
+option.debug > span.log.alert { background: #db3737;}
+option.debug > span.log.warning { background: #FFD700; color:#000;}
+
+.compound dl {
+  flow:row(dt,dd);
+  margin:0;
+  border-top:1px solid #ccc;
+}
+
+.compound dl > dd {
+  white-space:nowrap;
+  width:*;
+  overflow-x:hidden;
+  text-overflow:ellipsis;
+  margin:0; padding:0 0 0 0.5em;
+  border-left:1px solid #ccc;
+}
+
+.compound dl > dt {
+  white-space:nowrap;
+  text-align:right;
+  font-weight:bold;
+  margin:0; padding:0 0.5em 0 0;
 }
 
 select.log > input:empty { color:#ccc; }
@@ -501,19 +557,21 @@ widget.element-details > section:expanded > dl > dd
 
 .debugger-area section > header { background: #eee; color:black; padding:2dip 4dip; }
 
-.debugger-area dl { flow: row(dt,dd); border-spacing:2px; margin:0; padding:0;}
+/*.debugger-area dl { flow: row(dt,dd); border-spacing:2dip; margin:0; padding:0;}
 .debugger-area dl > dt { text-align:right; font-weight:bold; width:max-content; white-space:nowrap; }
-.debugger-area dd { margin:0; padding-left:12px; width:*; white-space:nowrap; overflow-x:hidden; text-overflow:ellipsis;  }
+.debugger-area dd { margin:0; padding-left:12dip; width:*; white-space:nowrap; overflow-x:hidden; text-overflow:ellipsis;  }
 .debugger-area dd > caption { behavior:clickable; cursor: pointer; }
-.debugger-area dd.compound {  background-image:url(stock:arrow-e-hollow); /* that arrow */
+.debugger-area dd.compound {  background-image:url(stock:arrow-e-hollow); // that arrow 
                               background-repeat: no-repeat;
-                              background-position-top: 6px;
-                              background-position-left: 3px;
-                              padding-left:12px;
+                              background-position-top: 6dip;
+                              background-position-left: 3dip;
+                              padding-left:12dip;
+                              background-size:7dip;
                             }
 .debugger-area dd > dl { display:none; }
 .debugger-area dd:expanded > dl { display:block; }
 .debugger-area dd:expanded.compound { background-image:url(stock:arrow-s-hollow); }
+*/
 
 /*debugger-area > header { margin:0; height:auto; background:#DDD; padding: 2px 4px;  }*/
 

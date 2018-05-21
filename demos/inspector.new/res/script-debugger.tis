@@ -1,4 +1,5 @@
-﻿
+﻿include "value-view.tis";
+
 function ScriptDebugger() 
 {
   var me = this;
@@ -33,75 +34,14 @@ function ScriptDebugger()
                                    <span.path>{fileUrl /~ "/"}</span><span.file>/{fileUrl %~ "/"}</span></li>);
       }
   }
-  
-  function formatVal(varval) {
-  
-    if( varval === null )
-      return ("null",false);
-    else if( varval === undefined )
-      return ("undefined",false);
- 
-    switch( typeof varval ) {
-      case #boolean:
-        return (varval.toString(),false);
-      case #object:
-        if(varval.cname && varval.cname != varval.vtype)
-          return (String.printf("{...} (%s of %s)", varval.vtype, varval.cname), #object);
-        else
-          return (String.printf("{...} (%s)", varval.vtype), #object);
-      case #array:
-        return (String.printf("[...] (Array:%d)", varval.length), #array);
-      case #date:
-        return (varval.toISOString(), false);
-      case #string:
-      case #integer:
-      case #float:
-        return (JSON.stringify(varval), false);
-      case #symbol: 
-        return ("#" + varval.toString(), false);
-      default:
-        return (varval.toString(), false);
-    }
-  }
-  
-  function renderVars(list, props)
-  {
-    for( var (varname,varval) in props ) {
-      var (caption, compound) = formatVal(varval);
-      if( compound == #object) {
-        list.$append(<dt>{varname}:</dt><dd.compound.object><caption>{ caption }</caption><dl></dl></dd>);
-        list.last.data = varval.props;
-      }
-      else if( compound == #array) {
-        list.$append(<dt>{varname}:</dt><dd.compound.array><caption>{ caption }</caption><dl></dl></dd>);
-        list.last.data = varval;
-      }
-      else 
-        list.$append(<dt>{varname}:</dt><dd>{ caption }</dd>);
-    }
-  }
 
   function updateVars(locals)
   {
     varsList.clear();
     if(locals)
-      for( var frame in locals ) {
-        renderVars(varsList,frame);
-      }
+      for( var frame in locals )
+        ValueView.renderVars(varsList,frame);
   }
-  
-  varsList.subscribe("click","dd.compound > caption", function() {
-    var cont = this.parent; 
-    if(cont.state.expanded)
-      cont.state.collapsed = true; 
-    else {
-      var dl = cont[1];
-      if( dl.length == 0 && cont.data)
-        renderVars( dl, cont.data );
-      cont.state.expanded = true;
-    }
-    return true;
-  });
   
   function showCodePosition(fileUrl,lineNo) {
     //driver.navigateToSource(fileUrl,lineNo);
@@ -137,21 +77,26 @@ function ScriptDebugger()
     updateVars(envData.locals);
 	
     debugCommand = 0;
-    // run modal loop until we get next debugCommand response
-    while(!debugCommand && driver.active) 
-      view.doEvent();
-      
-    me.postEvent("debugger-leave");
 
-    //stdout.println("scriptDebugger_breakpointHit, got it");
-    if(driver.active) {
-      updateStacktrace(null);
-      updateVars(null);
-      debuggerToolbar.state.disabled = true;
-      driver.sendBreakpointHitResponse(debugCommand);
-    } else {
-      driver.sendBreakpointHitResponse(DEBUG_COMMAND.CONTINUE);
+    function loop() {
+      // run modal loop until we get next debugCommand response
+      while(!debugCommand && driver.active) 
+        view.doEvent();
+        
+      me.postEvent("debugger-leave");
+
+      //stdout.println("scriptDebugger_breakpointHit, got it");
+      if(driver.active) {
+        updateStacktrace(null);
+        updateVars(null);
+        debuggerToolbar.state.disabled = true;
+        driver.sendBreakpointHitResponse(debugCommand);
+      } else {
+        driver.sendBreakpointHitResponse(DEBUG_COMMAND.CONTINUE);
+      }
     }
+    me.post(loop);
+
   }
   
   me.$(.debug-continue).onClick = function() { debugCommand = DEBUG_COMMAND.CONTINUE; }
