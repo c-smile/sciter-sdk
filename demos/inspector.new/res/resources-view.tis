@@ -15,6 +15,12 @@ class ResourcesView : Behavior
       var bp = evt.data;
       me.show(bp.url, bp.lineNo, bp.setCurrent);
     }); 
+
+    this.driver.on("resource-arrived", function(evt) {
+      var url = evt.data;
+      if( url && (url == me.currentUrl))
+        me.show(url);
+    }); 
   }
 
   function show(url, lineNo = null, setCurrent = false) 
@@ -76,8 +82,8 @@ class ResourcesView : Behavior
       requiredView.state.expanded = true;
     }
     this.caption.text = url;
+    this.currentUrl = url;
   }
- 
   
 }
 
@@ -102,18 +108,14 @@ class SourceViewer : Behavior
   }
   function show(resDef, lineNo = null, setStopMarker = false) {
   
-    if(this.currentUrl != resDef.url)
-    {
-      var url = this.currentUrl = resDef.url; 
-      var text;
-      if(typeof resDef == #string)
-        text = resDef;
-      else 
-        text = resDef.data.toString( resDef.encoding || "utf-8" );
-      var sourceType = resDef.mimeType || (resDef.url %~ ".");
-      
-      this.plaintext.load(text,sourceType);
-    }
+    var url = this.currentUrl = resDef.url; 
+    var text;
+    if(typeof resDef == #string)
+      text = resDef;
+    else 
+      text = resDef.data.toString( resDef.encoding || "utf-8" );
+    var sourceType = resDef.mimeType || (resDef.url %~ ".");
+    this.plaintext.load(text,sourceType);
     
     for( var (n,bp) in this.driver.breakpoints )
       if((url == bp.url))

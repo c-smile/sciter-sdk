@@ -125,7 +125,11 @@ class ElementDetails : Behavior
       x : metrics.inner[0] || "-",
       y : metrics.inner[1] || "-",
       w : metrics.inner[2] || "-",
-      h : metrics.inner[3] || "-"
+      h : metrics.inner[3] || "-",
+      minx: metrics.intrinsics[0],
+      miny: metrics.intrinsics[1],
+      maxx: metrics.intrinsics[2],
+      maxy: metrics.intrinsics[3],
     };
   }
   

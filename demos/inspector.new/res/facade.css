@@ -575,8 +575,8 @@ widget.element-details > section:expanded > dl > dd
 
 /*debugger-area > header { margin:0; height:auto; background:#DDD; padding: 2px 4px;  }*/
 
-section.metrics { behavior:form; size:*;}
-section.metrics div.box {
+widget.element-details > section.metrics { behavior:form; size:*;}
+widget.element-details > section.metrics div.box {
   flow:grid(1 1 1,
             2 5 3,
             4 4 4);
@@ -584,15 +584,15 @@ section.metrics div.box {
   border: 1dip solid #777;
 }  
 
-section.metrics > div.box {
-  margin:*;
+widget.element-details > section.metrics > div.box {
+  margin:* * 0 *;
 }
 
-section.metrics div.padding { background-color:#C3DEB7; }
-section.metrics div.border { background-color:#FFEEBC; }
-section.metrics div.margin { background-color:#F9CC9D; }
+widget.element-details > section.metrics div.padding { background-color:#C3DEB7; }
+widget.element-details > section.metrics div.border { background-color:#FFEEBC; }
+widget.element-details > section.metrics div.margin { background-color:#F9CC9D; }
 
-section.metrics output {
+widget.element-details > section.metrics div.box output {
   display:block;
   width:*;
   min-width:2em;
@@ -600,7 +600,7 @@ section.metrics output {
   vertical-align:middle;
 }
 
-section.metrics div.inner {
+widget.element-details > section.metrics div.inner {
   width:max-content;
   background-color:#FFF;
   border: 1dip solid #777;
@@ -609,4 +609,11 @@ section.metrics div.inner {
   padding:4dip;
 }
 
-section.metrics div.inner > output { display:inline-block; margin:0 4dip; min-width:max-content; }
+widget.element-details > section.metrics div.inner > output { font-weight:bold; display:inline-block; margin:0 4dip; min-width:max-content; }
+
+widget.element-details > section.metrics > dl.intrinsics { 
+  flow:row(dt,dd,dt,dd);
+  margin:0 * * *; 
+} 
+widget.element-details > section.metrics > dl.intrinsics > dt { width:auto; max-width:auto; overflow:none; }
+widget.element-details > section.metrics > dl.intrinsics > dd { overflow:none; width:auto; max-width:auto; }
