@@ -305,14 +305,17 @@ function VirtualList(params) {
         var extra = (end - start) * item_height;
         var sy = list.scroll(#top);
         list.scrollTo(0, sy - extra);
-        list.first.style#margin-top = px(Integer.max(0,oldtop-extra));
+        if(list.first)
+          list.first.style#margin-top = px(Integer.max(0,oldtop-extra));
       }
       else if( start > buffer_start + BUFFER_SIZE ) {
         var extra = (records.length - buffer_start - list.length) * item_height;
-        if(extra > 0)
-          list.last.style#margin-bottom = px(extra);
-        else
-          list.last.style#margin-bottom = undefined;
+        if(list.last) {
+          if(extra > 0)
+            list.last.style#margin-bottom = px(extra);
+          else
+            list.last.style#margin-bottom = undefined;
+        }
       }
       else 
         resetView();
