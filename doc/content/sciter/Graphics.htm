@@ -265,8 +265,9 @@
   <dl>
     <dt>this</dt>
     <dd>
-      <div>( ) : Graphics</div>
-      <p>Constructor, starts new path. Use as <code>var path = new Graphics.Path();</code> &nbsp;to construct new path object.</p></dd>
+      <div>( [<b>d</b>:string] ) : Graphics</div>
+      <p>Constructor, starts new path. Use as <code>var path = new Graphics.Path();</code> &nbsp;to construct new path object.</p>
+			<p> <i>d</i> is a value of SVG's <code>&lt;path d=...&gt;</code> attribute that, if provided, will initialize the path.</p></dd>
     <dt>moveTo</dt>
     <dd>
       <div>( x:<em>float</em>, y:<em>float </em>[, relative <em>= false</em> ] ) : Graphics.Path</div>

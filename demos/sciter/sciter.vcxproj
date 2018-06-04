@@ -62,6 +62,7 @@
     <ProjectGuid>{3334B489-80D1-4749-87F6-17699CCDDDAC}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>sciter</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -428,6 +429,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>..\..\lib</AdditionalLibraryDirectories>
       <DelayLoadDLLs>MF.DLL; MFPLAT.DLL; MFREADWRITE.DLL; shlwapi.dll</DelayLoadDLLs>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
     <Manifest>
       <AdditionalManifestFiles>$(ProjectDir)res\dpi-aware.manifest %(AdditionalManifestFiles)</AdditionalManifestFiles>

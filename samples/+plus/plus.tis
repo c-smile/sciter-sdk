@@ -679,6 +679,7 @@ function @observing(func, paths..) {
             {
               var start = changedef[2], end = changedef[3];
               spath = path + "[]";
+              if(end > obj.length ) end = obj.length;
               for(var i = start; i < end; ++i)
                 observeChanges(obj[i], onchange, spath);
             }

@@ -76,7 +76,7 @@
     for( var el in self.$$( form button.show ) )
       el.onClick = showValues;
       
-    class Phone: Behavior
+    class Phone: Element
     {
       function attached()
       {
@@ -105,13 +105,13 @@
       }
     }
     
-    class IPAddress: Behavior
+    class IPAddress: Element
     {
       const ipmask = [
-            { type:"integer", width:3, min:0, max:255, #leading-zero:true }, ".",
-            { type:"integer", width:3, min:0, max:255, #leading-zero:true }, ".",
-            { type:"integer", width:3, min:0, max:255, #leading-zero:true }, ".",
-            { type:"integer", width:3, min:0, max:255, #leading-zero:true } ];
+            { type:"integer", width:3, min:0, max:255, leading-zero:true }, ".",
+            { type:"integer", width:3, min:0, max:255, leading-zero:true }, ".",
+            { type:"integer", width:3, min:0, max:255, leading-zero:true }, ".",
+            { type:"integer", width:3, min:0, max:255, leading-zero:true } ];
             
       function attached()
       {

@@ -99,7 +99,8 @@ LRESULT CALLBACK window::wnd_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
   else if( message == WM_KEYDOWN && wParam == VK_F9 )
   {
     window* self = ptr(hWnd);
-    self->load_file(L"http://terrainformatica.com/tests/test.htm");
+    //self->load_file(L"http://terrainformatica.com/tests/test.htm");
+    self->load_file(L"file://C:/sciter/sciter/sdk/demos/sciter/res/default.htm");
     return 0;
   }
   else if( message == WM_KEYDOWN && wParam == VK_F8 )

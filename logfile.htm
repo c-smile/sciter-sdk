@@ -10,7 +10,24 @@
       <td width="60" nowrap="" valign="top" align="center">Build#</td>
       <td width="78" nowrap="" valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FFFADA">4.1.8.5918</td><td nowrap="" valign="top" align="center">20-05-2018</td><td>
+    <tr><td valign="top" bgcolor="#FFFADA">4.1.9.5951</td><td nowrap="" valign="top" align="center">03-06-2018</td><td><p>new:</p>
+					<ul><li>[script] <code>view.focusable(#next|#prior|#first|#last [,from] )</code>&nbsp;- method that allows to traverse focusable elements in TAB order;</li>
+						<li>[Graphics.Path] + <code>new Graphics.Path(&quot;svg path&quot;);</code> -constructing paths using SVG's <code>&lt;path d=&quot;...&quot;&gt;</code> format. See: samples/graphics/test-graphics-path-ops.htm</li>
+						<li>[inspector] implementation of proper eval at breakpoint stop - it is possible to get local variables now.&nbsp;</li>
+						<li>[inspector] + min/max intrinsic dimensions.&nbsp;</li>
+						</ul>
+					<p>fixes:</p>
+					<ul>
+						<li>[animated gif and png] significantly reducing memory consumption;</li><li><code>flow:stack;</code> fix of <code>:hover</code> detection, see: <a href="https://sciter.com/forums/topic/flowstack-img-cursor-bug/">https://sciter.com/forums/topic/flowstack-img-cursor-bug/</a>&nbsp;</li>
+						<li><code>&lt;input|masked&gt;</code> fix of focusout rendering: <a href="https://sciter.com/forums/topic/masked-input-wont-pad-to-width-on-focusout/">https://sciter.com/forums/topic/masked-input-wont-pad-to-width-on-focusout/</a> &nbsp;</li>
+						<li>[scroll] screen update on &quot;manual&quot; scroll using SB thumbnail;</li>
+						<li>[layout] speed up and optimizations;</li>
+						<li>Fix of AV in &quot;no dedicated main window&quot; case : <a href="https://sciter.com/forums/topic/multi-window-destroy-engine-crash-problem/">https://sciter.com/forums/topic/multi-window-destroy-engine-crash-problem/</a>&nbsp;</li>
+						<li>[linux] <code>view.msgbox()</code> position fix;</li>
+						<li>Fix of <code>view.parameters</code> passing in <code>view.dialog</code> and <code>view.window</code> calls.</li>
+						<li>[API ]Fix of <code>tiscript::enumerator</code> functionality, see: <a href="https://github.com/c-smile/sciter-sdk/issues/84">https://github.com/c-smile/sciter-sdk/issues/84</a>&nbsp;</li>
+						<li>debug peer update to fix <a href="https://sciter.com/forums/topic/how-to-disconnect-from-inspector/">https://sciter.com/forums/topic/how-to-disconnect-from-inspector/</a>&nbsp;</li>
+						<li>[svg] regression fix of <code>&lt;path d=&quot;S...&quot; /&gt;</code> rendering.</li></ul></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.1.8.5918</td><td nowrap="" valign="top" align="center">20-05-2018</td><td>
 					<p>new:</p>
 					<ul>
 						<li>[script] <code>assert</code> and <code>debug:...;</code> - log output. See: <a href="https://sciter.com/revising-assert-and-debug-statements/">https://sciter.com/revising-assert-and-debug-statements/</a>&nbsp;</li><li>[css] + <code>display:contents</code> support, see: <a href="http://www.w3.org/TR/css-display-3/#valdef-display-contents">http://www.w3.org/TR/css-display-3/#valdef-display-contents</a>&nbsp;</li>

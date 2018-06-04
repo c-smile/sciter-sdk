@@ -246,7 +246,9 @@ if( fn ) view.<strong>load</strong>(fn);
     <dt>clipboard</dt>
     <dd>
       <div><strong>(#put</strong>, data: string | object | Image <strong>)</strong> : undefined;</div>
-      <p>Stores data to the clipboard.</p></dd>
+      <p>Stores data to the clipboard.</p>
+			</dd><dt>focusable</dt>
+		<dd>(<b>#next | #prior | #first | #last</b>, [<b>from</b>:Element]) : Element<p>The method returns next/previous/first/last focusable element in TAB order, either <i>from</i> element or from current element in focus.</p></dd>
     <dt>performDrag</dt>
     <dd>(<strong>element</strong>:Element, <strong>data</strong>:Object, ddMode: <strong>#any</strong> | <strong>#copy</strong> | <strong>#move</strong>) : <strong>null</strong> | <strong>#copy</strong> | <strong>#move</strong>
       <p>Performs system drag and drop operation.</p>
@@ -343,7 +345,7 @@ if( fn ) view.<strong>load</strong>(fn);
     <dt>&quot;closing&quot;</dt>
     <dd>The event is generated as a part of view(window) closing sequence, delivered before view's document gets destroyed.</dd></dl>
     <dt>&quot;close&quot;</dt>
-    <dd>Very last event from view (window), delivered immediately before view (window) is destroyed.</dd></dl>
+    <dd>Very last event from view (window), delivered immediately before view (window) is destroyed.</dd>
 </body>
 
 </html>

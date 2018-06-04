@@ -1,0 +1,82 @@
+﻿<html>
+  <head>
+    <meta name="source"/>
+    <meta name="source"/>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>behavior:masked-edit</h1>
+  <p>This behavior provides masked input editing functionality - editable &quot;islands&quot;  separated by static text.</p>
+  <h2>Elements</h2>
+  <p>that have this behavior applied by default to:</p>
+  <ul>
+    <li><code>&lt;input type=&quot;masked&quot;&gt;</code></li>
+    <li><code>&lt;input|masked&gt;</code></li>
+		<li><code>&lt;input|date&gt;/&lt;caption&gt;</code> - on caption sub-element of date input;</li>
+		<li><code>&lt;input|time&gt;/&lt;caption&gt;</code> - on caption sub-element of time input;</li></ul>
+  <h2>Model</h2>
+  <p>Upon initialization the input contains following structure:</p>
+  <pre>&lt;input|masked&gt;
+  &lt;span&gt;editable&lt;/span&gt;
+  separator
+  &lt;span&gt;editable&lt;/span&gt;
+  separator
+  ...
+&lt;/input&gt;
+</pre>
+  <p><code>&lt;span&gt;</code> elements represent editable text and text nodes represent static separators.</p>
+  <h2>Attributes</h2>
+  <ul><li> <code>value=&quot;text&quot;</code> -  initial text value;</li>
+		<li><code>mask=&quot;mask&quot;</code> - definition of mask that is a text that may contain special characters:<ul><li> <code>_</code> (underscore) - allows input of any alphanumeric character at this position;</li>
+				<li><code>@</code> -&nbsp;allows input of any alpha&nbsp;character at this position;</li>
+				<li><code>#</code> - allows input of any numeric character at this position;</li>
+				<li><code>0</code> - numeric input, the field will be zero padded  on set;</li>
+				<li>all other character in the mask will be rendered as a static separator text.</li></ul></li>
+		</ul>
+  <dl>
+    <h2>Methods</h2>
+    
+		<dl><dt>copy(exec:bool):bool</dt>
+			<dd>- if <i>exec</i> is <i>true</i> copies current content to clipboard else checks if the input field is filled in full - returns true in this case.</dd>
+			<dt>paste(exec:bool):bool</dt>
+			<dd>- if <i>true</i> makes an attempt to paste clipboard content into the input. Returns <i>true</i> on success.</dd>
+			<dt>selectAll(exec:bool)</dt>
+			<dd>- if&nbsp;<i>exec</i> is <i>true</i> selects all editable fields in the input.</dd>
+			<dt>mask(array of field definitions)&nbsp;</dt>
+			<dd><p>- allows to define structure of masked input &quot;manually&quot; and with more control.</p><p>Mask definition is an array of strings (rendered as static separators) and objects. Each object defines editable regions and may have following fields:</p>
+				<ul><li><code>type: #integer | #text | #enum </code> - defines type of the region, mandatory;</li>
+					<li><code>width: integer</code> - defines length of the region in characters, mandatory;</li>
+					<li><code>class: string | symbol</code> - defines CSS class of generated span element, optional;</li>
+					<li><code>min,max,step : integer</code> - define min/max/step values for type:#integer, optional;</li>
+					<li><code>leading-zero : true | false</code> - if true then this&nbsp;type:#integer&nbsp;field is prefixed by zeros&nbsp;</li>
+					<li><code>items:[&quot;case1&quot;,&quot;case2&quot;,...]</code> - defines list of enumerable cases for type:#enum - this region allows to input only those predefined cases. Mandatory for type:#enum fields.</li>
+					<li><code>filter: &quot;a~z&quot;</code> - defines filter of allowed characters in this type:#text field, optional.&nbsp;</li></ul></dd></dl>
+    
+<h2>Events</h2>
+    <dt>EDIT_VALUE_CHANGED / event change</dt>
+    <dd>- posted when value is changed.</dd></dl>
+  <h2>Value</h2>
+  
+	<p>Is either <code>string</code>  or <code>array of values</code>  whe mask was defined by <code>this.mask([definitions])</code> call.</p>
+  <h2>Examples</h2>
+  <p>Declaration of IP4 address input field:</p><pre>&lt;input|masked mask=&quot;000.000.000.000&quot;&gt;
+</pre>
+  
+	<p>More precise declaration of IP4 address input field using aspect function for initialization, markup:</p>
+	
+	<pre>&lt;input|masked.ip4 mask=&quot;000.000.000.000&quot;&gt;</pre><p>CSS:</p>
+	
+	<pre>input.ip4 { aspect:IP4 }</pre><p>Script:</p>
+	
+	
+	
+	<pre>function IP4() {
+  const ipmask = [
+            { type:&quot;integer&quot;, width:3, min:0, max:255, leading-zero:true }, &quot;.&quot;,
+            { type:&quot;integer&quot;, width:3, min:0, max:255, leading-zero:true }, &quot;.&quot;,
+            { type:&quot;integer&quot;, width:3, min:0, max:255, leading-zero:true }, &quot;.&quot;,
+            { type:&quot;integer&quot;, width:3, min:0, max:255, leading-zero:true } ];
+  this.mask(ipmask); // initialization of fields and separators
+}</pre>
+</body>
+</html>
