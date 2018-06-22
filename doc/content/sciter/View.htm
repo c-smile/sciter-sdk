@@ -250,9 +250,9 @@ if( fn ) view.<strong>load</strong>(fn);
 			</dd><dt>focusable</dt>
 		<dd>(<b>#next | #prior | #first | #last</b>, [<b>from</b>:Element]) : Element<p>The method returns next/previous/first/last focusable element in TAB order, either <i>from</i> element or from current element in focus.</p></dd>
     <dt>performDrag</dt>
-    <dd>(<strong>element</strong>:Element, <strong>data</strong>:Object, ddMode: <strong>#any</strong> | <strong>#copy</strong> | <strong>#move</strong>) : <strong>null</strong> | <strong>#copy</strong> | <strong>#move</strong>
+    <dd>((<strong>element</strong>:Element | <b>img</b>: Image, <b>xOffset</b>: integer, <b>yOffset</b>: integer), <strong>data</strong>:Object, ddMode: <strong>#any</strong> | <strong>#copy</strong> | <strong>#move</strong>) : <strong>null</strong> | <strong>#copy</strong> | <strong>#move</strong>
       <p>Performs system drag and drop operation.</p>
-      <p><em>element</em> is a DOM element that is used as a drag image.</p>
+      <p><em>element</em> is a DOM element that is used as a drag image, alternatively you can provide <i>image</i> and x/y icon offset as a drag image.</p>
       <p><em>data</em> is an object that contain following properties:</p>
       <ul>
         <li><code>{text: String}</code> - plain text string;</li>

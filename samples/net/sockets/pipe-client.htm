@@ -44,7 +44,7 @@
             }
 
             socket << event data (message) {
-              $(div#received).value = message;
+              $(div#received).$append(<div>{message}</div>);
             }
 
             socket << event error(error) {

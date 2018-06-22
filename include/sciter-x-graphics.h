@@ -337,6 +337,12 @@ struct SciterGraphicsAPI
         SCFN(textCreate)(HTEXT* ptext, LPCWSTR text, UINT textLength, const SCITER_TEXT_FORMAT* format );
 
   GRAPHIN_RESULT
+        SCFN(textAddRef) (HTEXT path);
+
+  GRAPHIN_RESULT
+        SCFN(textRelease) (HTEXT path);
+
+  GRAPHIN_RESULT
         SCFN(textGetMetrics)(HTEXT text, SC_DIM* minWidth, SC_DIM* maxWidth, SC_DIM* height, SC_DIM* ascent, SC_DIM* descent, UINT* nLines);
 
   GRAPHIN_RESULT

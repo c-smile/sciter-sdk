@@ -19,17 +19,18 @@
     <h2>Global functions</h2>
     <dt>eval</dt>
     <dd>
-      <div><strong>( </strong><em>input</em><strong> : </strong>string|stream [, <em>env</em> :object ]<strong> ) </strong>: <em>value</em></div>
+      <div><strong>( </strong><em>input</em><strong> : </strong>string|stream [, <em>namespace</em>&nbsp;:object | <i>namespaces</i>: array of objects&nbsp;]<strong> ) </strong>: <em>value</em></div>
       <p>Evaluates (interprets) <em>input</em> and returns its value. If <em>input </em>is a string then function tries to interpret it as if it contains script source code. If <em>input </em>is a <em>stream object</em> then it compiles and executes source code from it.</p>
       <p>Example: after execution of the following:</p>
       <pre>var obj = eval( <font color="#990099">&quot; ({ one:1, two:2 }) &quot;</font> );
 </pre>
       <p>variable <em>obj</em> will contain object having two fields: <em>one</em> and <em>two.</em></p>
-      <p><em>env</em> is an environment object - if provided then script execution takes place in the namespace of that object.</p>
+      <p><em>environment</em> is an environment object - if provided then script execution takes place in the namespace of that object.</p>
       <pre>var env = { one:1, two:2 };
 var res = eval( &quot;one + two&quot;, env);
 </pre>
       <div>After execution of two lines above variable <em>res</em> will contain integer 3.</div>
+			<p><i>environments</i> is a list of objects - environments - element with index 0 is inmost&nbsp;environment.&nbsp;</p>
       <p class="note">These functions available only if host application configured the engine to use them.</p></dd>
     <dt>parseData</dt>
     <dd>
@@ -47,7 +48,7 @@ var res = eval( &quot;one + two&quot;, env);
       <p>Main difference from the <em>eval</em> function is that <em>parseValue</em> will not parse and execute any function declarations or functions so it is safe to use this function when data is coming from unknown sources e.g. in AJAX like of interactions.</p></dd>
     <dt>emit</dt>
     <dd>
-      <div><strong>( </strong><em>input</em> :string|stream,<strong> </strong><em>output </em>:stream<strong> </strong>[, <em>env</em> :object ] <strong>)</strong> :value</div>
+      <div><strong>( </strong><em>input</em> :string|stream,<strong/><em>output </em>:stream<strong/>[, <em>env</em> :object ] <strong>)</strong> :value</div>
       <p>Evaluates the <em>input</em> stream in serverScript mode (see below) and emits result to the <em>output</em> stream. Function assumes that executable script at the <em>input</em> is contained in &lt;% %&gt; brackets. Function returns result of first standalone <em>return</em> statement in the input stream.</p>
       <p><em>env</em> is an environment object, it allows to pass parameters to the input script from the caller.</p></dd>
     <dt>load</dt>
@@ -69,15 +70,15 @@ var res = eval( &quot;one + two&quot;, env);
       <p>Loads compiled bytecodes defined by <em>source</em>. Source here either string - <strong>file name</strong> or <strong>stream object</strong>.</p></dd>
     <dt>compile</dt>
     <dd>
-      <div><strong>( </strong><em>input</em> : filename | Stream, <em>output</em>: filename | Stream<strong> [, </strong><em>asServerScript</em><strong> </strong>: true | false<strong> ] ) </strong>: true | false</div>
+      <div><strong>( </strong><em>input</em> : filename | Stream, <em>output</em>: filename | Stream<strong> [, </strong><em>asServerScript</em><strong/>: true | false<strong> ] ) </strong>: true | false</div>
       <p>Calls built-in compiler to compile <em>input. </em>Writes output bytecodes into<em> out </em>stream or file. Bytecodes can be loaded (executed) later by <em>loadbc</em> function.</p></dd>
     <dt>store</dt>
     <dd>
-      <div><strong>( </strong><em>filename</em> | <em>stream</em>, <em>value</em><strong> ) </strong>:<strong> </strong><em>true</em> | <em>false</em></div>
+      <div><strong>( </strong><em>filename</em> | <em>stream</em>, <em>value</em><strong> ) </strong>:<strong/><em>true</em> | <em>false</em></div>
       <p>Stores the <em>value</em> into file <em>filename </em>or <em>stream </em>in binary form<em>. </em>Returns <em>true</em> if data was stored successfully.</p></dd>
     <dt>fetch</dt>
     <dd>
-      <div><strong>( </strong><em>filename</em> | <em>stream</em><strong> ) </strong>:<strong> </strong>value | null</div>
+      <div><strong>( </strong><em>filename</em> | <em>stream</em><strong> ) </strong>:<strong/>value | null</div>
       <p>Restores value previously written into the file (<em>filename</em>) or <em>stream</em> by function <em>store.</em> Returns value or <em>null</em> if operation failed.</p></dd>
     <dt>hash</dt>
     <dd>
@@ -182,6 +183,7 @@ for(var (k,v) in Foo )
 		<dd>( str: string ) : string<p>The function encodes all non-url characters, space for example will be replaced by <code>%20</code> , etc.</p></dd><dt>URL.encodeParam</dt>
 		<dd>( str: string ) : string<p>The function encodes all characters&nbsp;except the following: alphabetic, decimal digits, <code>- _ . ! ~ * ' ( )</code></p>
 			</dd><dt>URL.decode</dt>
-		<dd>( str: string&nbsp;) : string<p>The function decodes URL encoded string to its original form.</p></dd></dl><p></p>
+		<dd>( str: string&nbsp;) : string<p>The function decodes URL encoded string to its original form.</p></dd></dl><p/>
 </body>
+
 </html>

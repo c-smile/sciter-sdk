@@ -10,7 +10,30 @@
       <td width="60" nowrap="" valign="top" align="center">Build#</td>
       <td width="78" nowrap="" valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FFFADA">4.1.9.5951</td><td nowrap="" valign="top" align="center">03-06-2018</td><td><p>new:</p>
+    <tr><td valign="top" bgcolor="#FFFADA">4.1.10.5987</td><td nowrap="" valign="top" align="center">21-06-2018</td><td>
+					<p>new:</p>
+					<ul><li>+ <code>view.performDrag(img,xOffset,yOffset,data[,mode])</code> - data drag with custom icon/image</li>
+						<li>[script] <code>eval(thisVar,text,[env0,env1,...envN]);</code></li>
+						<li>+ <code>element.style.set {    background-image: [url:&quot;images/mypath.png&quot;]  }</code></li>
+						<li><code>&lt;output|date format=&quot;short|long|...&quot;&gt;</code> and <code>&lt;output|time format=&quot;short|long|...&quot;&gt;</code></li>
+						<li><p>[API] + <code>sciter::graphics::draw_text(...)</code> implementation. </p><p><b>Note:</b> <code>struct SciterGraphicsAPI</code> interface has been changed, non-C++ wrappers that use SciterGraphicsAPI need to update SciterGraphicsAPI bindings due to new textAddRef, textRelease members.</p></li></ul><p>fixes:</p>
+					<ul>
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						<li>[osx] <code>view.parameters</code> passing fix, <code>view.msgbox() </code>and <code>view.dialog()&nbsp;</code></li><li>[script] more correct NaN handling, see: <a href="https://sciter.com/forums/topic/nan-in-sciter/">https://sciter.com/forums/topic/nan-in-sciter/</a>&nbsp;</li><li>Fix of MOUSE_TICK handling, see: <a href="https://sciter.com/forums/topic/a-strange-issuse/">https://sciter.com/forums/topic/a-strange-issuse/</a>&nbsp;</li><li>[layout] fix of dynamic element dimensions update;</li>
+						<li>[+plus] Fix of <code>obj.prototype</code> changes by Plus: <a href="https://sciter.com/forums/topic/plus-observed-data-loses-objects-methods/">https://sciter.com/forums/topic/plus-observed-data-loses-objects-methods/</a> </li>
+						<li>[osx] support of&nbsp;<code>window-frame=&quot;extended&quot;</code>, phase I.</li><li>[skia backend] fix of updates after window resize: <a href="https://sciter.com/forums/topic/sciter-layout-doesnt-adjust-on-window-maximize-restore/">https://sciter.com/forums/topic/sciter-layout-doesnt-adjust-on-window-maximize-restore/</a>&nbsp;</li><li><code>Net.Socket.send()</code> fix to support consecutive .send() calls (internal send queue implementation).&nbsp;</li><li>[css] fix of <code>cursor:inherit;</code>&nbsp;</li><li>API, final fix of<code> tiscript::enumerator</code> <a href="https://github.com/c-smile/sciter-sdk/issues/84#issuecomment-395171632">https://github.com/c-smile/sciter-sdk/issues/84#issuecomment-395171632</a>&nbsp;</li><li><code>Graphics.Path.bounds()</code> fix;</li><li>[script] <code>Element.$$p()</code> fix;</li><li><code>view.selectFolder(..., &quot;non existent path&quot;)</code>, see: <a href="https://sciter.com/forums/topic/view-selectfolderhey-cdirectorythatdontexists/">https://sciter.com/forums/topic/view-selectfolderhey-cdirectorythatdontexists/</a>&nbsp;</li><li>[osx,skia/opengl] fix of rendering artefacts on Retina;</li><li>&lt;input|masked&gt; fix;</li></ul>
+					</td></tr><tr><td valign="top" bgcolor="#FFFADA">4.1.9.5951</td><td nowrap="" valign="top" align="center">03-06-2018</td><td><p>new:</p>
 					<ul><li>[script] <code>view.focusable(#next|#prior|#first|#last [,from] )</code>&nbsp;- method that allows to traverse focusable elements in TAB order;</li>
 						<li>[Graphics.Path] + <code>new Graphics.Path(&quot;svg path&quot;);</code> -constructing paths using SVG's <code>&lt;path d=&quot;...&quot;&gt;</code> format. See: samples/graphics/test-graphics-path-ops.htm</li>
 						<li>[inspector] implementation of proper eval at breakpoint stop - it is possible to get local variables now.&nbsp;</li>

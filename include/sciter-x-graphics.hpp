@@ -247,6 +247,85 @@ namespace sciter
     }
   };
 
+
+  // graphic path object 
+  class text
+  {
+    friend class graphics;
+  protected:
+    HTEXT htext;
+
+    text(HTEXT h) : htext(h) { }
+  public:
+    text(aux::wchars chars, const SCITER_TEXT_FORMAT& format) : htext(0) { 
+      GRAPHIN_RESULT r = gapi()->textCreate(&htext,chars.start,UINT(chars.length),&format);
+      assert(r == GRAPHIN_OK); (void)(r);
+    }
+    text(aux::wchars chars, HELEMENT he) : htext(0) {
+      assert(he);
+      GRAPHIN_RESULT r = gapi()->textCreateForElement(&htext, chars.start, UINT(chars.length), he);
+      assert(r == GRAPHIN_OK); (void)(r);
+    }
+        
+    text(const text& pa) : htext(pa.htext) { if (htext) gapi()->textAddRef(htext); }
+
+    ~text()
+    {
+      if (htext) {
+        GRAPHIN_RESULT r = gapi()->textRelease(htext); assert(r == GRAPHIN_OK); (void)(r);
+      }
+    }
+
+    text& operator = (const text& pa)
+    {
+      if (htext) gapi()->textRelease(htext);
+      htext = pa.htext; gapi()->textAddRef(htext);
+      return *this;
+    }
+
+    bool is_valid() const { return htext != 0; }
+
+    // fetch text reference from sciter::value envelope
+    static text from(const sciter::value& valPath) {
+      HTEXT htext;
+      GRAPHIN_RESULT r = gapi()->vUnWrapText(&valPath, &htext); assert(r == GRAPHIN_OK); (void)(r);
+      if (htext) {
+        return text(htext);
+      }
+      return text(0);
+    }
+
+    sciter::value to_value() {
+      sciter::value v;
+      GRAPHIN_RESULT r = gapi()->vWrapText(htext, &v); assert(r == GRAPHIN_OK); (void)(r);
+      return v;
+    }
+
+    /*void bezier_curve_to(POS xc1, POS yc1, POS xc2, POS yc2, POS x, POS y, bool relative)
+    {
+      assert(hpath);
+      GRAPHIN_RESULT r = gapi()->pathBezierCurveTo(hpath, xc1, yc1, xc2, yc2, x, y, relative);
+      assert(r == GRAPHIN_OK); (void)(r);
+    }*/
+
+    void get_metrics(SC_DIM *minWidth,
+      SC_DIM *maxWidth,
+      SC_DIM *height,
+      SC_DIM *ascent,
+      SC_DIM *descent,
+      UINT *nLines) {
+      assert(htext);
+      GRAPHIN_RESULT r = gapi()->textGetMetrics(htext, minWidth, maxWidth, height, ascent, descent, nLines);
+      assert(r == GRAPHIN_OK); (void)(r);
+    }
+
+    void set_box(SC_DIM width, SC_DIM height) {
+      assert(htext);
+      GRAPHIN_RESULT r = gapi()->textSetBox(htext, width, height);
+      assert(r == GRAPHIN_OK); (void)(r);
+    }
+  };
+  
   class graphics
   {
     HGFX hgfx;  
@@ -638,6 +717,13 @@ namespace sciter
     {
       assert(hgfx);
       GRAPHIN_RESULT r = gapi()->gDrawImage( hgfx, pimg.himg, x, y, 0, 0, 0, 0, 0, 0, &opacity ); 
+      assert(r == GRAPHIN_OK); (void)(r);
+    }
+
+    void draw_text(const text& ptext, POS x, POS y, UINT ref = 7 /*x/y is top/left*/)
+    {
+      assert(hgfx);
+      GRAPHIN_RESULT r = gapi()->gDrawText(hgfx, ptext.htext, x, y, ref);
       assert(r == GRAPHIN_OK); (void)(r);
     }
 

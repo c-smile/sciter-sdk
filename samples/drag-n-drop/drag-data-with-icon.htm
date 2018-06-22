@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      div { size:100dip; background:gold; }
+    
+    </style>
+    <script type="text/tiscript">
+
+
+      $(div) << event mousedragrequest (evt) {
+
+        var img = self.loadImage("../animations/tutorial-parts/heart.png");
+
+        var data = {
+          text: "heart image",
+        };
+        
+        var r = view.performDrag( img, 20,20, data, #copy );
+        stdout.println(r);
+        return true;
+      };
+     
+      
+    </script>
+  </head>
+<body>
+  <div>Drag this one</div>
+  
+</body>
+</html>
