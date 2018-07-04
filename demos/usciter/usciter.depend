@@ -2768,7 +2768,7 @@
 
 1491432418 /usr/include/gtk-3.0/gtk/gtk-autocleanups.h
 
-1518052882 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-def.h
+1530701371 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-def.h
 	"sciter-x-types.h"
 	"sciter-x-request.h"
 	"value.h"
@@ -2833,7 +2833,7 @@
 	"sciter-x-value.h"
 	"sciter-x-graphics.h"
 
-1524496073 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-graphics.h
+1529624457 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-graphics.h
 	"sciter-x-types.h"
 
 1521652111 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-api.h
@@ -2880,7 +2880,7 @@
 1518052881 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-debug.h
 	"sciter-x-api.h"
 
-1524758359 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-graphics.hpp
+1529624457 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-graphics.hpp
 	"sciter-x-graphics.h"
 	"sciter-x-api.h"
 	"aux-slice.h"
@@ -2911,10 +2911,9 @@
 	<windows.h>
 	<atomic>
 
-1518052879 source:/home/andrew/Desktop/sciter/stable/sdk/demos/usciter/usciter.cpp
+1524949216 source:/home/andrew/Desktop/sciter/stable/sdk/include/sciter-gtk-main.cpp
+	<gtk/gtk.h>
 	"sciter-x-window.hpp"
-	"sciter-x-graphics.hpp"
-	"resources.cpp"
 
 1518052881 /home/andrew/Desktop/sciter/stable/sdk/include/sciter-x-window.hpp
 	"sciter-x-types.h"
@@ -2927,9 +2926,10 @@
 	"aux-slice.h"
 	<algorithm>
 
-1518052879 /home/andrew/Desktop/sciter/stable/sdk/demos/usciter/resources.cpp
-
-1524949216 source:/home/andrew/Desktop/sciter/stable/sdk/include/sciter-gtk-main.cpp
-	<gtk/gtk.h>
+1518052879 source:/home/andrew/Desktop/sciter/stable/sdk/demos/usciter/usciter.cpp
 	"sciter-x-window.hpp"
+	"sciter-x-graphics.hpp"
+	"resources.cpp"
+
+1518052879 /home/andrew/Desktop/sciter/stable/sdk/demos/usciter/resources.cpp
 

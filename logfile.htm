@@ -10,7 +10,18 @@
       <td width="60" nowrap="" valign="top" align="center">Build#</td>
       <td width="78" nowrap="" valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FFFADA">4.1.10.5987</td><td nowrap="" valign="top" align="center">21-06-2018</td><td>
+    <tr><td valign="top" bgcolor="#FFFADA">4.1.11.6037</td><td nowrap="" valign="top" align="center">04-07-2018</td><td><p>new:</p>
+					<ul><li>New option <code>SciterSetOption(NULL,SCITER_SET_INIT_SCRIPT,&quot;initial script source, utf encoded&quot;);</code> - ads an option to preload custom script into each window. See discussion: <a href="https://sciter.com/forums/topic/still-no-perfect-method-to-inject-global-tiscript/">https://sciter.com/forums/topic/still-no-perfect-method-to-inject-global-tiscript/</a>&nbsp;</li>
+						<li>[+plus] &nbsp;New sample: sharing data between views : /sdk/samples/+plus/demos/Y-test-window-data-sharing.htm</li>
+						
+						</ul>
+					<p>fixes:</p><ul><li><code>&lt;input|masked&gt;</code>,  
+<code>input|masked &gt; span:invalid</code> when numeric group is out of range.</li>
+						<li>[Windows10] dpi-aware.manifest update to support &lt;dpiAwareness&gt;PerMonitorV2&lt;/dpiAwareness&gt; modes. Check /sdk/demos/sciter/res/dpi-aware.manifest</li>
+						<li>[css] <code>el { margin-top:10 }</code> parsing fix, that's erroneous declaration (no units) but still shall be handled gracefully.</li>
+						<li>[osx] fix of AV on Japanese MacOS version.</li>
+						<li>[DOM] Fix of long standing issue of handling methods on elements created &quot;in the air&quot; and not yet connected to the DOM: <code>new Element(...)</code>, <code>Element.clone()</code>, etc. See: <a href="https://sciter.com/forums/topic/clone-element-bug/">https://sciter.com/forums/topic/clone-element-bug/</a> 
+</li></ul></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.1.10.5987</td><td nowrap="" valign="top" align="center">21-06-2018</td><td>
 					<p>new:</p>
 					<ul><li>+ <code>view.performDrag(img,xOffset,yOffset,data[,mode])</code> - data drag with custom icon/image</li>
 						<li>[script] <code>eval(thisVar,text,[env0,env1,...envN]);</code></li>

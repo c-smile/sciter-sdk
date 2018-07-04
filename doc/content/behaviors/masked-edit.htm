@@ -25,6 +25,7 @@
 &lt;/input&gt;
 </pre>
   <p><code>&lt;span&gt;</code> elements represent editable text and text nodes represent static separators.</p>
+	<p>Current editable span will&nbsp;have <code>:current</code> state flag. Numeric span with invalid value (more than <i>max</i> or less than <i>min</i>) is marked by  <code>:invalid</code> flag.</p>
   <h2>Attributes</h2>
   <ul><li> <code>value=&quot;text&quot;</code> -  initial text value;</li>
 		<li><code>mask=&quot;mask&quot;</code> - definition of mask that is a text that may contain special characters:<ul><li> <code>_</code> (underscore) - allows input of any alphanumeric character at this position;</li>
@@ -54,7 +55,9 @@
     
 <h2>Events</h2>
     <dt>EDIT_VALUE_CHANGED / event change</dt>
-    <dd>- posted when value is changed.</dd></dl>
+    <dd>- posted when value is changed.</dd>
+		<dt>UI_STATE_CHANGED / event statechange</dt>
+		<dd>- posted when editor will highlight other editable group.</dd></dl>
   <h2>Value</h2>
   
 	<p>Is either <code>string</code>  or <code>array of values</code>  whe mask was defined by <code>this.mask([definitions])</code> call.</p>

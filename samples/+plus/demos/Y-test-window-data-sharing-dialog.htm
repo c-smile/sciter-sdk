@@ -1,0 +1,38 @@
+<html>
+<head>
+    <title>The bound form</title>
+    <style>
+        @import url(../plus.css);
+        html {
+          font:system;
+          width:max-content;
+          height:max-content;
+        }
+        form { flow:row(label,input output); 
+               border-spacing:0.5em; }
+        form > label {width:max-content;}
+    </style>
+    <script type="text/tiscript">
+
+    namespace Data : View.Test // derive Data ns from global namespace
+    {
+      var a = "AAA";
+      var b = "BBB";
+      var c = new Date();
+    }
+
+    </script>
+
+</head>
+
+<body model="Data" tabindex=1>
+  <form>
+    <label>Bound counter:</label><output|number(counter) /> <!-- note: bound with View.Test.counter -->
+    <label>One (Ctrl+1):</label><input|text(a) accesskey="^1" />
+    <label>Two (Ctrl+2):</label><input|text(b) accesskey="^2" />
+    <label>Three (Ctrl+3):</label><input|date(c) accesskey="^3" /> 
+  </form>
+</body>
+</html>
+
+
