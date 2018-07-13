@@ -12,8 +12,8 @@
       
       html > header { flow:horizontal; background:gold; overflow-x: hidden;}
       html > header > caption { 
-        width:*; padding:2dip; 
-        text-shadow: 0 0 6dip #fff;
+        width:*; padding:0 2dip; 
+        line-height:24dip;
         white-space:nowrap;
         overflow-x: hidden;
         text-overflow: ellipsis;
@@ -25,6 +25,9 @@
         padding:0; margin:0; size:24dip; 
         foreground-repeat: no-repeat;
         foreground-position:50% 50%;
+        foreground-size:16dip;
+        fill:#000;
+        stroke:none;
       }
       
       html > header > toolbar > icon {
@@ -34,7 +37,7 @@
         background: red;
       }
 
-      button.window { display:block; size:24dip; margin:0; padding:0; background:50% 50% no-repeat; background-size:24dip;  }
+      button.window { display:block; size:24dip; margin:0; padding:0; border:none; border-radius:0; background:50% 50% no-repeat; background-size:24dip; }
       button.window:hover { background-color:orange; } 
       button.window#minimize  { background-image:url(icons/icon-minimize.png); } 
       button.window#maximize  { background-image:url(icons/icon-maximize.png); } 
@@ -42,11 +45,10 @@
       button.window#close     { background-image:url(icons/icon-close.png); }
 
       
-      button#copy { foreground-image: url(sciter:copy.png); }
-      button#cut { foreground-image: url(sciter:cut.png); }
-      button#paste { foreground-image: url(sciter:paste.png); }
-      button#undo { foreground-image: url(sciter:undo.png); }
-      button#redo { foreground-image: url(sciter:redo.png); }
+      button#copy { foreground-image: url(path:M1696 384q40 0 68 28t28 68v1216q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-288h-544q-40 0-68-28t-28-68v-672q0-40 20-88t48-76l408-408q28-28 76-48t88-20h416q40 0 68 28t28 68v328q68-40 128-40h416zm-544 213l-299 299h299v-299zm-640-384l-299 299h299v-299zm196 647l316-316v-416h-384v416q0 40-28 68t-68 28h-416v640h512v-256q0-40 20-88t48-76zm956 804v-1152h-384v416q0 40-28 68t-68 28h-416v640h896z); }
+      button#cut { foreground-image: url(path:M960 896q26 0 45 19t19 45-19 45-45 19-45-19-19-45 19-45 45-19zm300 64l507 398q28 20 25 56-5 35-35 51l-128 64q-13 7-29 7-17 0-31-8l-690-387-110 66q-8 4-12 5 14 49 10 97-7 77-56 147.5t-132 123.5q-132 84-277 84-136 0-222-78-90-84-79-207 7-76 56-147t131-124q132-84 278-84 83 0 151 31 9-13 22-22l122-73-122-73q-13-9-22-22-68 31-151 31-146 0-278-84-82-53-131-124t-56-147q-5-59 15.5-113t63.5-93q85-79 222-79 145 0 277 84 83 52 132 123t56 148q4 48-10 97 4 1 12 5l110 66 690-387q14-8 31-8 16 0 29 7l128 64q30 16 35 51 3 36-25 56zm-681-260q46-42 21-108t-106-117q-92-59-192-59-74 0-113 36-46 42-21 108t106 117q92 59 192 59 74 0 113-36zm-85 745q81-51 106-117t-21-108q-39-36-113-36-100 0-192 59-81 51-106 117t21 108q39 36 113 36 100 0 192-59zm178-613l96 58v-11q0-36 33-56l14-8-79-47-26 26q-3 3-10 11t-12 12q-2 2-4 3.5t-3 2.5zm224 224l96 32 736-576-128-64-768 431v113l-160 96 9 8q2 2 7 6 4 4 11 12t11 12l26 26zm704 416l128-64-520-408-177 138q-2 3-13 7z); }
+      button#paste { foreground-image: url(path:M768 1664h896v-640h-416q-40 0-68-28t-28-68v-416h-384v1152zm256-1440v-64q0-13-9.5-22.5t-22.5-9.5h-704q-13 0-22.5 9.5t-9.5 22.5v64q0 13 9.5 22.5t22.5 9.5h704q13 0 22.5-9.5t9.5-22.5zm256 672h299l-299-299v299zm512 128v672q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-160h-544q-40 0-68-28t-28-68v-1344q0-40 28-68t68-28h1088q40 0 68 28t28 68v328q21 13 36 28l408 408q28 28 48 76t20 88z); }
+      button#undo { foreground-image: url(path:M1664 896q0 156-61 298t-164 245-245 164-298 61q-172 0-327-72.5t-264-204.5q-7-10-6.5-22.5t8.5-20.5l137-138q10-9 25-9 16 2 23 12 73 95 179 147t225 52q104 0 198.5-40.5t163.5-109.5 109.5-163.5 40.5-198.5-40.5-198.5-109.5-163.5-163.5-109.5-198.5-40.5q-98 0-188 35.5t-160 101.5l137 138q31 30 14 69-17 40-59 40h-448q-26 0-45-19t-19-45v-448q0-42 40-59 39-17 69 14l130 129q107-101 244.5-156.5t284.5-55.5q156 0 298 61t245 164 164 245 61 298z); }
     
     </style>
     <script type="text/tiscript">
@@ -67,7 +69,6 @@
     <button#cut></button>
     <button#paste></button>
     <button#undo></button>
-    <button#redo></button>
   </toolbar>
   <caption role="window-caption">Window caption</caption>
   <button.window role="window-minimize" #minimize></button>

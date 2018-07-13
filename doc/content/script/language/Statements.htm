@@ -71,8 +71,9 @@
     <dt><code><strong>debug stacktrace;</strong></code></dt>
     <dd>Outputs stacktrace at the point;</dd>
 
-    <dt><code><strong>debug [info | warning | alert]:</strong></code> &lt;space-separated-list-of-expressions&gt; <code><strong>;</strong></code> </dt>
-    <dd><p>Log output: renders&nbsp;results of evaluation of expressions to the debug output.&nbsp;</p><p>Note: with no debugger attached, this statement has no effect&nbsp;(NOP - empty instruction);</p></dd>
+    <dt><code><strong>debug [log | info | warning | alert] :</strong></code> &lt;space-separated-list-of-expressions&gt; <code><strong>;<br/>debug [log | info | warning | alert] (</strong></code> &lt;stringizer-function-parameters&gt;&nbsp;<code><strong>)</strong></code></dt>
+    <dd><p>Log output: renders&nbsp;results of evaluation of expressions to the debug output.&nbsp; Second format supports stringizer parameters like:</p>
+			<pre>debug info ( object data {obj} );</pre><p>Note: with no debugger attached, this statement has no effect&nbsp;(NOP - empty instruction);</p></dd>
 
     <dt>&lt;expression&gt;<strong> <code>;</code></strong></dt>
     <dd>Expressions that end with ';' constitute a single statement. Result of the &lt;expression&gt; is suppressed.</dd></dl>

@@ -77,7 +77,16 @@ int uimain(std::function<int()> run ) {
   frame *pwin = new frame();
 
   // note: this:://app URL is dedicated to the sciter::archive content associated with the application
-  pwin->load( WSTR("this://app/default.htm") );
+#if defined(WINDOWS)
+  pwin->load(WSTR("this://app/default-win.htm"));
+#elif defined(OSX)
+  pwin->load(WSTR("this://app/default-osx.htm"));
+#else // too many of them differnt
+  pwin->load(WSTR("this://app/default-else.htm"));
+#endif // WINDOWS
+
+
+
 
   pwin->expand();
 

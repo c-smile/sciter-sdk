@@ -30,13 +30,16 @@ class Log: Behavior
 
     var lastSub, lastSev, lastMsg, repeats; 
      
-    this.addMsg = function(sub, sev, msg, mode = undefined, location = undefined, vid = null)
+    this.addMsg = function(sub, sev, msg, mode = undefined, location = undefined, asStringizer = false, vid = null)
     {
       var sx = this.scroll(#left);
       var data = #nope;
       var asLastOne = false;
       if( typeof msg != #string) 
-        { data = msg; msg = ""; } 
+      {
+         data = msg; 
+         msg = ""; 
+      } 
       else 
         asLastOne = lastSub == sub && lastSev == sev && lastMsg == msg;
 
@@ -68,7 +71,10 @@ class Log: Behavior
       if( data != #nope ) {
         if( mode !== undefined) {
           item.attributes.addClass("debug"); // produced by debug output
-          ValueView.ShowLogData(item,data,mode,location);
+          if(asStringizer)
+            ValueView.ShowLogData$(item,data,mode,location);
+          else 
+            ValueView.ShowLogData(item,data,mode,location);
         }
         else
           ValueView.ShowEvalResult(item,data);

@@ -33,15 +33,47 @@ class ValueView : Element
   }
 
   function ShowLogData(container,val,mode,location) {
+    var block = new Element("div");
+    container.append(block);
     if( mode ) {
       if( mode in LOG_ITEM_TYPES )
-        container.$append(<span.log.{mode}>{mode}</span> );
+        block.$append(<span.log.{mode}>{mode}</span> );
       else 
-        container.$append(<span.log.{mode} style="background-color:{markerColor(mode)}">{mode}</span> );
+        block.$append(<span.log.{mode} style="background-color:{markerColor(mode)}">{mode}</span> );
     }
     for(var v in val)
-      ShowEvalResult(container,v, true);
+      ShowEvalResult(block,v, true);
+
+    if(location) {
+      var path = location[2].toString();
+      var fn = path %~ "/";
+      var ln = location[0];
+      container.$append(<a href="{path}" line="{ln}">{fn}({ln})</a>);
+    }
   }
+  function ShowLogData$(container,val,mode,location) {
+    var block = new Element("div");
+    container.append(block);
+    if( mode ) {
+      if( mode in LOG_ITEM_TYPES )
+        block.$append(<span.log.{mode}>{mode}</span> );
+      else 
+        block.$append(<span.log.{mode} style="background-color:{markerColor(mode)}">{mode}</span> );
+    }
+    for(var (index,v) in val)
+      if( index & 1 )
+        ShowEvalResult(block,v, true);
+      else 
+        block.append(v.toHtmlString());
+    
+    if(location) {
+      var path = location[2].toString();
+      var fn = path %~ "/";
+      var ln = location[0];
+      container.$append(<a href="{path}" line="{ln}">{fn}({ln})</a>);
+    }
+  }
+
 
   function formatVal(varval, exp = false) {
 

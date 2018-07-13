@@ -1,0 +1,17 @@
+
+namespace Flat {
+
+  function Nullable() 
+  {
+    this << event ~mousedown(evt) {
+      if( evt.isOnIcon ) { 
+        if(this.execCommand("edit:selectall")) // to make it undoable
+          this.execCommand("edit:delete-next");
+        else 
+          this.value = undefined; 
+        return true;
+      }
+    }
+  }
+
+}

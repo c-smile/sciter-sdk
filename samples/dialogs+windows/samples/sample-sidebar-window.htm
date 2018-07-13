@@ -12,7 +12,7 @@
     
     body 
     {
-      background-color:rgba(0,0,0,0.8); 
+      background-color:rgba(0,0,0,0.6); 
       background-clip: padding-box;
       padding:8dip; margin:0;
       border-left:1dip solid rgba(150,150,150,0.25); 
@@ -21,7 +21,7 @@
     
     body[state="shown"] {
       transform: translate(0%,0);
-      transition: transform(quint-out,300ms);
+      transition: transform(expo-out,300ms);
     }
     
     section {
@@ -45,14 +45,14 @@
     var body = $(body);  
   
     view.expand = function() {
-      body.animate(function(p) { if( p >= 0.5 && !view.windowBlurbehind ) view.windowBlurbehind = #auto; }, 
+      body.animate(function(p) { if( p >= 0.25 && !view.windowBlurbehind ) view.windowBlurbehind = #auto; }, 
                    300ms);
       body.attributes["state"] = "shown";
       view.state = View.WINDOW_SHOWN;
     }
 
     view.collapse = function() {
-      body.animate(function(p) { if( p >= 0.5 && view.windowBlurbehind ) view.windowBlurbehind = undefined; }, 
+      body.animate(function(p) { if( p >= 0.75 && view.windowBlurbehind ) view.windowBlurbehind = undefined; }, 
                    function() { view.state = View.WINDOW_HIDDEN; },
                    300ms);
       body.attributes["state"] = "hidden";

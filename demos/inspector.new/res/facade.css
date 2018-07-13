@@ -232,7 +232,7 @@ select.log > option
   color:windowtext; background-color:window;
 }
 
-select.log > option > a { behavior:clickable; }
+select.log > option a { behavior:clickable; }
 
 select.log > option.error    { background-image:url(images/log-error.png); background-color: #FFF8F8;}  
 select.log > option.info     { background-image:url(images/log-info.png); background-color: #FFF; }  
@@ -251,7 +251,7 @@ select.log > option:checked  { padding-left: 18dip; border-left-width:7dip; }
 select.log > option.eval:current,
 select.log > option:current  { padding-left: 18dip; border-left-width:7dip; /*color:windowtext; background-color: #FDC; */}
 
-select.log > option > var { display:inline-block; background:#f44; color:#fff; border-radius:0.4em; padding:0 0.5em; margin-right:4dip; } /* repeat counter */
+select.log > option var { display:inline-block; background:#f44; color:#fff; border-radius:0.4em; padding:0 0.5em; margin-right:4dip; } /* repeat counter */
 select.log > option.current-view { border-right-color: highlight; }
 
 select.log > input  { 
@@ -293,16 +293,20 @@ code.compound:expanded > caption {
   background-size:7dip 5dip;
 }
 
-option.debug > code.compound { display:inline-block; width:max-content; }
-option.debug > code.compound:expanded { display:block; width:*; }
+option.debug { flow:horizontal; white-space:normal; } 
+option.debug > div { width:*; min-width:max-content; } 
+option.debug > a[line] { display:block; width:max-content; }
 
-option.debug > span.log { display:inline-block; padding:0 0.25em; 
+option.debug code.compound { display:inline-block; width:max-content; }
+option.debug code.compound:expanded { display:block; width:*; }
+
+option.debug span.log { display:inline-block; padding:0 0.25em; 
   background:var(marker-color,#0f9960); 
   color:#fff; width:4em; text-align:center; 
   border-radius:2dip;
 }
-option.debug > span.log.alert { background: #db3737;}
-option.debug > span.log.warning { background: #FFD700; color:#000;}
+option.debug span.log.alert { background: #db3737;}
+option.debug span.log.warning { background: #FFD700; color:#000;}
 
 .compound dl {
   flow:row(dt,dd);

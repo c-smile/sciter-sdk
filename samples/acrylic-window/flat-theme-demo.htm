@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+          @import url(flat-theme.css);
+
+          //html { background:color(back-color); color:color(text-color); }
+          //html { ; }
+
+          html[ui-size=compact] { font:system; }
+
+          form.toggles { flow:row(label,toggle); border-spacing:0.5em; }
+          h2,label { width:max-content; }
+
+
+        </style>
+        <script type="text/tiscript">
+
+          event click $(radio(size)) {
+            //$(pre).value = String.printf("%V",this.value);
+            self.attributes["ui-size"] = $(radio(size).normal).state.checked ? "normal" : "compact";
+          }
+
+
+ 
+        </script>
+    </head>
+    <body>
+    <form#config> 
+
+      Sizing: <radio(size).normal #test checked>Normal</radio> <radio(size).compact>Compact</radio>
+
+      <include src="flat-theme-elements.htm">
+
+    </body>
+</html>

@@ -10,7 +10,21 @@
       <td width="60" nowrap="" valign="top" align="center">Build#</td>
       <td width="78" nowrap="" valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FFFADA">4.1.11.6037</td><td nowrap="" valign="top" align="center">04-07-2018</td><td><p>new:</p>
+    <tr><td valign="top" bgcolor="#FFFADA">4.2.0.6064</td><td nowrap="" valign="top" align="center">13-07-2018</td><td><p>new:</p>
+					<ul><li>[Windows 10] Support of Windows 10 build 1803 &quot;<b>acrylic background</b>&quot;.&nbsp; In order to use it, the window should have a) <code>window-frame=&quot;extended&quot; window-blurbehind=&quot;[ultra-]light|dark&quot;</code> attributes and b) WS_EX_NOREDIRECTIONBITMAP extended style. Check <a href="https://sciter.com/sciter-4-2-support-of-acrylic-theming/">https://sciter.com/sciter-4-2-support-of-acrylic-theming/</a>  </li>
+						<li>[Windows 10] Windows created by&nbsp;<code>SciterCreateWindow</code> API are using WS_EX_NOREDIRECTIONBITMAP and <a href="https://docs.microsoft.com/en-us/windows/desktop/directcomp/directcomposition-portal">DirectComposition</a> by default. Secondary transparent windows created by the engine (e.g. popups) are not using WS_EX_LAYERED mechanism anymore. Transparency is made by composing window&nbsp;content into DWM visual tree directly.</li>
+						<li>+ /samples/acrylic-window/ folder. Contains sketch  of  typical UWP style window and UWP themed input elements (this may evolve into full master CSS schema).</li>
+						<li>usciter.exe demo redesign :&nbsp;<ul><li>It uses blurbehind now.  </li>
+								<li>Connect-to-inspector button starts inspector executable (if needed) on all platforms.</li></ul></li>
+						
+						<li>[CSS, popups] Support of <code>box-shadow</code> on popup windows. For example  <code>select &gt; popup {  box-shadow: 0 0 4dip #000 }</code> will work without the need to create additional container element.</li>
+						<li>[MacOS] enabling OpenGL based rendering on all types of windows.</li>
+						<li>[script/inspector] + <code>debug log (stringizer {alike} parameters);</code> variant of the log output.&nbsp;</li>
+						<li>[script/inspector] <code>debug log</code> shows file/lineno in inspectors console for one click navigation to source.&nbsp;</li>
+						</ul>
+					<p>fixes:</p>
+					<ul><li>[inspector, script debugger] fix of breakpoint and step navigation handling.</li>
+						<li><code>&lt;input|masked&gt;</code> tweaks. </li></ul></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.1.11.6037</td><td nowrap="" valign="top" align="center">04-07-2018</td><td><p>new:</p>
 					<ul><li>New option <code>SciterSetOption(NULL,SCITER_SET_INIT_SCRIPT,&quot;initial script source, utf encoded&quot;);</code> - ads an option to preload custom script into each window. See discussion: <a href="https://sciter.com/forums/topic/still-no-perfect-method-to-inject-global-tiscript/">https://sciter.com/forums/topic/still-no-perfect-method-to-inject-global-tiscript/</a>&nbsp;</li>
 						<li>[+plus] &nbsp;New sample: sharing data between views : /sdk/samples/+plus/demos/Y-test-window-data-sharing.htm</li>
 						

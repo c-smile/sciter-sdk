@@ -1,0 +1,172 @@
+<html window-frame="extended" window-blurbehind="light" theme="light">
+    <head>
+        <title>Foo</title>
+        <style>
+
+          @import url(flat-theme.css);
+
+          @const WINDOW-CAPTION-HEIGHT: window-caption-height;
+          @const WINDOW-BUTTON-WIDTH: window-button-width;
+          @const WINDOW-BUTTON-HEIGHT: window-button-height;
+
+          html { 
+            padding: window-frame-width;             
+          	background:transparent; /*border:2dip solid #aaa;*/; 
+          }
+
+          html > body { margin:0; }
+
+          html > header { position:fixed; top:window-frame-width; left:window-frame-width; right:window-frame-width; height:window-caption-height; /*border:1px solid red;*/ }
+
+          html > header { font:system; flow:horizontal; height:window-caption-height; margin:0;} 
+          html > header > window-caption { display:block; line-height:window-caption-height; width:*; padding:0 1em; }
+          html > header > window-buttons { display:block; flow:horizontal; width:max-content; height:2em; }
+          html > header > window-buttons > window-button { 
+            behavior:clickable; 
+            display:block; 
+            height:@WINDOW-BUTTON-HEIGHT; 
+            width:@WINDOW-BUTTON-WIDTH; 
+            foreground-size: 10dip;
+            foreground-repeat: no-repeat;
+            foreground-position:50% 50%;
+            stroke:color(text);
+            stroke-width:1dip;
+          }
+          html > header > window-buttons > window-button:hover { 
+            background:rgba(128,128,128,0.5); 
+            transition: background-color(linear,100ms);
+          }
+          html > header > window-buttons > window-button[role="window-close"] { foreground-image: url(path:M0 0 L9 10 M9 0 L0 9); }
+          html > header > window-buttons > window-button[role="window-close"]:hover { background:rgb(232,17,35); stroke:#fff; }
+
+          html > header > window-buttons > window-button[role="window-maximize"] { foreground-image: url(path:M0 0 H9 V9 H0 Z); }
+
+          html[state="maximized"] > header > window-buttons > window-button[role="window-maximize"] { foreground-image: url(path:M0 2 h8 v8 h-8 Z M2 2 v-2 h8 v8 h-2); }
+          html > header > window-buttons > window-button[role="window-minimize"] { foreground-image: url(path:M0 9 H9); }
+
+          @media platform == "OSX" {
+            html > header > window-buttons { display:none; }
+            html > header > window-caption { margin-left:6em; }
+          }
+
+          body {
+            flow:horizontal;
+            font:system;
+          }
+
+          body > section { padding-top: @WINDOW-CAPTION-HEIGHT; height:*;}
+
+          body > section.n1 {  width:0.2*; }
+          body > section.n2 {  width:0.3*; background:morph(color(back),opacity:0.6);}
+          body > section.n3 {  width:0.5*; background:color(back); padding:1em; }
+
+
+          icon {
+            display:block;
+            margin:*;
+            size:48dip;
+            background-color: var(accent,#00f);
+            border-radius: 24dip;
+            background-image: url(path:M1472 704v128q0 221-147.5 384.5t-364.5 187.5v132h256q26 0 45 19t19 45-19 45-45 19h-640q-26 0-45-19t-19-45 19-45 45-19h256v-132q-217-24-364.5-187.5t-147.5-384.5v-128q0-26 19-45t45-19 45 19 19 45v128q0 185 131.5 316.5t316.5 131.5 316.5-131.5 131.5-316.5v-128q0-26 19-45t45-19 45 19 19 45zm-256-384v512q0 132-94 226t-226 94-226-94-94-226v-512q0-132 94-226t226-94 226 94 94 226z);
+            background-position:50% 50%;
+            background-repeat:no-repeat;
+            background-size: 18dip;
+            fill:#fff;
+          }
+
+          .caption { color: var(accent,#00f); }
+
+          section.n2 > header {
+            margin:1em;
+            line-height:2em;
+            border-bottom: 1dip solid #aaa;
+          }
+
+          section.n2 li {
+            display:block;
+            behavior:radio;
+            border-left: 0.3em solid transparent;
+            padding:0.5em 0.5em 0.5em 0.7em;
+          }
+
+          section.n2 li:checked {
+            border-color: var(accent,#00f);
+            background-color: morph(color(back),opacity:0.4);
+          }
+
+          section.n2 li > caption { font-weight:bold; line-height:2em; }
+          section.n2 li:checked > caption { color: var(accent,#00f); }
+
+          section.n2 li > div { flow:horizontal; border-spacing:0.5em; }
+          section.n2 li > div > span { margin-left:*; }
+
+          //output {display:inline-block; width:4em;}
+
+          html > footer { 
+            //background:gold; 
+            position:fixed; 
+            height: @WINDOW-CAPTION-HEIGHT;
+            bottom:window-frame-width; 
+            left:window-frame-width; 
+            right:window-frame-width; 
+          }
+
+        </style>
+        <script type="text/tiscript">
+
+          //view.move(100,100,1280,960);
+
+          /*event click $(#test) {
+            stdout.println("test click");
+          }
+
+          view << event statechange {
+            stdout.println(self.style.variable("window-frame-width"));
+          }*/
+
+        </script>
+    </head>
+<header>
+  <window-caption role=window-caption>Foo</window-caption>
+  <window-buttons>
+    <window-button role="window-minimize"></window-button>
+    <window-button role="window-maximize"></window-button>
+    <window-button role="window-close"></window-button>
+  </window-buttons>
+</header>
+<body>
+
+   <section.n1><icon/></section>
+   <section.n2>
+      <header.caption>Today</header>
+      <li>
+        <caption.header>Remainder</caption>
+        <div>
+           <output|date value="2018-06-17" format="long" />
+           <output|time value="12:40" format="short" />
+           <span>007</span>
+        </div>
+      </li>
+      <li checked>
+        <caption.header>Server cutoff time</caption>
+        <div>
+           <output|date value="2018-06-16" format="long" />
+           <output|time value="8:00" format="short" />
+           <span>042</span>
+        </div>
+      </li>
+      <li>
+        <caption.header>Home inspection</caption>
+        <div>
+           <output|date value="2018-06-15" format="long" />
+           <output|time value="14:00" format="short" />
+           <span>044</span>
+        </div>
+      </li>
+   </section>
+   <section.n3>
+     <include src="flat-theme-elements.htm">
+   </section>
+</body>
+<!--<footer>Foo</footer>-->
+</html>

@@ -76,13 +76,26 @@
                ReferencedContainer = "container:../../notes/osx/notes.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "492B36C720EC59D400E479B4"
+               BuildableName = "usciter.app"
+               BlueprintName = "usciter"
+               ReferencedContainer = "container:../../demos/usciter/usciter/usciter.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
@@ -102,7 +115,6 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      language = ""
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
@@ -113,10 +125,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "495189EE18DF683800844B99"
-            BuildableName = "sciter.app"
-            BlueprintName = "sciter"
-            ReferencedContainer = "container:sciter.xcodeproj">
+            BlueprintIdentifier = "492B36C720EC59D400E479B4"
+            BuildableName = "usciter.app"
+            BlueprintName = "usciter"
+            ReferencedContainer = "container:../../demos/usciter/usciter/usciter.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>

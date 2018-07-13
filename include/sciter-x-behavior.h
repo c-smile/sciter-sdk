@@ -708,7 +708,7 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
       {
         event_handler* pThis = static_cast<event_handler*>(tag);
         if( pThis ) switch( evtg )
-          {
+        {
             case SUBSCRIPTIONS_REQUEST:
               {
                 UINT *p = (UINT *)prms; 
@@ -738,9 +738,9 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
             // call using tiscript::value's (from the script)
             case HANDLE_TISCRIPT_METHOD_CALL: { TISCRIPT_METHOD_PARAMS* p = (TISCRIPT_METHOD_PARAMS *)prms; return pThis->handle_scripting_call(he, *p ); }
 			      case HANDLE_GESTURE :  { GESTURE_PARAMS *p = (GESTURE_PARAMS *)prms; return pThis->handle_gesture(he, *p ); }
-			default:
+			      default:
               assert(false);
-          }
+        }
         return false;
       }
     };

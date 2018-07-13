@@ -1,0 +1,11 @@
+
+html { 
+  var(accent-color): window-accent-color; 
+}
+
+html > header { width:*; /*background-color: color(back-color);*/ }
+
+html > header { width:*; flow:horizontal; height:window-caption-height; margin:0; } 
+html > header > window-caption { display:block; line-height:window-caption-height; width:*; margin-left:3em; text-align:center;}
+
+frame { size:*; background-color: transparent; }

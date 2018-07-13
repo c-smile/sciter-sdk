@@ -51,7 +51,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
   ghInstance = hInstance;
 
   SciterClassName();
-  sciter::debug_output debug;
+  sciter::debug_output debug; // -- ouputs to VS debug console
+  //sciter::debug_output_console console; -- use this instead of the above to output data to console window - that black scarry thing.
 
   // SciterAppendMasterCSS test, adding <checkbox>text</checkbox> element.
   //const char* def = "checkbox { display:inline-block; display-model:inline-inside; style-set: \"std-checkbox\"; }";

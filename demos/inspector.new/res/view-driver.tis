@@ -144,8 +144,8 @@ class ViewDriver: Behavior
   }
     
   //function deeActivate() { /*log("activate")*/; }
-  function deeLog(subsystem,severity,msg,mode = undefined,location = undefined) { 
-    log.addMsg(subsystem,severity,msg,mode,location,this.vid); 
+  function deeLog(subsystem,severity,msg,mode = undefined,location = undefined,asStringizer = false) { 
+    log.addMsg(subsystem,severity,msg,mode,location,asStringizer,this.vid); 
   }
   
   function deeElementHighlighted(stack) { this.postEvent("element-selected", stack); }

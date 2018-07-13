@@ -1,0 +1,60 @@
+<h2>&lt;toggle> element demo</h2>
+
+<form.toggles>
+  <label>With options:</label>
+  <toggle(foo) checked>
+     <option>No</option>
+     <option>Yes</option>
+  </toggle>
+  <label>No options:</label>
+  <toggle(bar) />
+<!--        <h2>A la radio (group)</h2>
+  <label>A option:</label><toggle|radio(group) value="A" />
+  <label>B option:</label><toggle|radio(group) value="B" />
+  <label>C option:</label><toggle|radio(group) value="C" />-->
+</form>
+
+<h2>&lt;button> element</h2>
+
+<button>Do it!</button>
+<button role="default-button">Default</button>
+<button disabled>Disabled</button>
+
+<h2>&lt;radio> element</h2>
+
+<radio(rgroup) checked value="true">Yes</radio>
+<radio(rgroup) value="false">No</radio>
+<radio(rgroup) value="null">Undefined</radio>
+
+<radio(rgroupd) disabled checked value="a">Disabled(Checked)</radio>
+<radio(rgroupd) disabled value="b">Disabled</radio>
+
+<h2>&lt;checkbox> element</h2>
+
+<checkbox checked>Foo</checkbox>
+<checkbox>Bar</checkbox>
+<checkbox mixed>Mixed</checkbox>
+
+<checkbox disabled checked value="a">Disabled(Checked)</checkbox>
+<checkbox disabled value="b">Disabled</checkbox>
+
+
+<h2>&lt;editbox> element</h2>
+
+<div.hbox><editbox value="foo" />
+  <editbox novalue="input text here" />
+  <editbox nullable novalue="nullable" />
+  <editbox disabled value="disabled" />
+</div>
+
+<h2>&lt;select|dropdown> element</h2>
+<div.hbox>
+  <select|dropdown novalue="dropdown"><option>Apple</option><option>Apricot</option><option>Currant</option><option>Grapefruit</option>
+          <option>Peach</option><option>Pomegranate</option><option>Tamarind</option></select>
+
+  <select|dropdown editable><option>Apple</option><option>Apricot</option><option>Currant</option><option>Grapefruit</option>
+          <option>Peach</option><option>Pomegranate</option><option>Tamarind</option></select>
+
+  <select|dropdown novalue="disabled" disabled><option>Apple</option><option>Apricot</option><option>Currant</option><option>Grapefruit</option>
+          <option>Peach</option><option>Pomegranate</option><option>Tamarind</option></select>
+</div>        

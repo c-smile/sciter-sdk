@@ -1,0 +1,483 @@
+/*
+
+  Yet another <toggle> implementation.
+  Based on ::marker  
+
+*/
+
+html:theme(dark) {
+  var(panel-back): #383838; //#3f3834;
+  var(popup-panel-back): #555; 
+  var(panel-text): #eee;
+  var(back): #000;
+  var(text): #fff;
+  var(border): #aaa;
+  var(button-back):  #555;
+  var(button-pressed-back):#444;  
+  var(hover-border): #eee;
+  var(disabled-text): #888;
+  var(disabled-back): #444;
+  var(hover-option-cover): rgba(255,255,255,0.1);
+}
+
+html:theme(light) {
+  var(panel-back): #f8f8f8;
+  var(popup-panel-back): #f7f7f7; 
+  var(panel-text): #333;
+  var(back): #fff;
+  var(text): #000;
+  var(border): #888;
+  var(button-back):#d7d7d7;
+  var(button-pressed-back):#bbb;
+  var(hover-border): #000;
+  var(disabled-text): #888;
+  var(disabled-back): #eee;
+  var(hover-option-cover): rgba(0,0,0,0.1);
+}
+
+html {
+
+  font-family: "Segoe UI", Helvetica, sans-serif;
+  font-size:11pt;
+
+  var(accent): window-accent-color;  
+  var(accent-text): #fff;  
+  var(border-width): 0.14em;
+  var(border-double-width): 0.28em;
+  var(border-radius):0dip;
+  var(icon-size): window-icon-size;
+
+  background:color(panel-back);
+  color: color(panel-text);
+}
+
+.hbox { flow:horizontal-wrap; border-spacing:0.5em; }
+.vbox { flow:vertical; border-spacing:0.5em; }
+
+@set std-toggle {
+  
+  :root {
+    display:inline-block;
+    behavior:check;
+    flow:stack;
+    border:none;
+    background:none;
+    width:max-content;
+    height:1.4em;
+    padding:0 0 0 42dip;
+    cursor:pointer;
+  }
+
+  :root[type="radio"] { behavior:radio; }
+
+  :root::marker {
+    width:2.24em; 
+    height:1.05em;
+    background:var(back,threedlight);
+    border:length(border-width) solid color(border);
+    border-radius:height(50%);
+    margin:* * * 0.21em;
+    foreground-image:url(stock:disk);
+    foreground-repeat:no-repeat;
+    foreground-position:0.35em 50%;
+    foreground-size:0.7em;
+    fill:color(text);
+    stroke:none;
+  }
+  :root:checked::marker {
+    foreground-position:1.52em 50%;
+    background: color(accent); 
+    border:color(accent);
+    fill:color(accent-text);
+    transition:foreground-position(sine-in,120ms,sine-out,120ms) background-color(linear,120ms) fill(linear,120ms) border(linear,120ms);
+  }
+
+  :root > option:first-child { visibility:visible; }
+  :root > option:last-child { visibility:hidden; }
+  :root:checked > option:first-child { visibility:hidden; }
+  :root:checked > option:last-child { visibility:visible; }
+  
+  :root:tab-focus {
+    outline:0.14em solid color(accent) 0.14em;
+  }
+
+  :root:disabled {
+    background: color(accent); 
+    border:color(accent);
+    fill:color(accent-text);
+  }
+
+} 
+
+toggle {
+  style-set: std-toggle;
+}
+
+@mixin STD-BUTTON-NORMAL 
+{
+  color:color(text);
+  background: color(button-back);
+  border: color(button-back);
+  border-width: length(border-width);
+  border-style: solid;
+  border-radius: length(border-radius);
+  vertical-align:middle;
+}
+
+@mixin STD-BUTTON-HOVER 
+{
+  border-color:color(hover-border);
+}
+
+@mixin STD-BUTTON-PRESSED {
+  background-color:color(button-pressed-back);
+  color:color(text);
+  padding-top:2px;
+  padding-bottom:0px;
+}
+
+@mixin STD-BUTTON-FOCUS {
+  
+}  
+
+@mixin STD-TAB-FOCUS {
+ outline:2dip solid color(accent) 2dip;
+}  
+
+@mixin STD-BUTTON-DISABLED {
+  color:color(disabled-text);
+  background-color:color(disabled-back);
+  border:color(disabled-back);
+}
+
+@set std-button < std-button-base
+{
+  :root
+  { 
+    //font:system;
+    flow:vertical;
+    padding:1px 1em; 
+    height:2em;
+    line-height:height(100%);
+    white-space: nowrap;
+    @STD-BUTTON-NORMAL;
+  }
+
+  :root:active                  { @STD-BUTTON-PRESSED; }
+
+  :root[role="default-button"] {
+    background: color(accent);
+    color: color(accent-text);
+    border: color(accent);
+  }
+
+  :root:hover                   { @STD-BUTTON-HOVER; }
+  :root:focus                   { @STD-BUTTON-FOCUS; }
+  :root:disabled                { @STD-BUTTON-DISABLED; }
+  :root:tab-focus               { @STD-TAB-FOCUS; }
+}
+
+/* radio button */
+@set std-radio < std-radio-base
+{
+    input:root
+    { 
+      padding:0px; 
+      size:1.12em;
+      vertical-align:middle;
+    }
+
+    :root:not(input) 
+    {
+      white-space:nowrap;
+      line-height:1.4em;
+      height:1.4em;      
+      padding:0.25em 0.25em 0.25em 1.82em;
+      width:max-content;
+    }
+
+    :root::marker {
+      size:1.12em;
+      margin:*;
+      background: color(back) no-repeat 50% 50%;
+      border:0.14em solid color(accent);
+      border-radius:50%;
+    }
+
+    :root:not(input)::marker { margin:* * * 0.21em; }
+    :root:not(input)::marker:rtl { margin:* 0.21em * *; }
+
+    //:root:active::marker { background-color: @HIGHLIGHT-HOVER; }
+
+    :root:checked::marker {
+      background-image: url(stock:disk);
+      background-size:0.63em;
+      fill:color(panel-text);
+    }
+
+    :root:hover::marker { fill:color(text); }
+
+    :root:disabled {
+      color:color(disabled-text);
+    }
+
+    :root:disabled::marker { 
+      background-color: color(disabled-back);
+      fill:color(disabled-text);
+      border: color(disabled-text);
+    }
+    :root:tab-focus { @STD-TAB-FOCUS; }    
+}
+
+radio { display:inline-block; style-set: std-radio; }
+
+/* checkbox button */
+@set std-checkbox < std-checkbox-base
+{
+    :root
+    {
+      height:@SMALL-ICON-SIZE; 
+      width:@SMALL-ICON-SIZE; 
+      vertical-align:middle;
+    }
+
+    :root:not(input)
+    {
+      white-space:nowrap;
+      line-height:1.4em;
+      padding:0.25em 0.25em 0.25em 1.82em;
+      width:max-content;
+      height:1.4em;
+    }
+
+    :root::marker {
+      size:1.05em;
+      margin:*;
+      background: color(back) no-repeat 60% 50%;
+      border:0.14em solid color(border);
+    }
+
+    :root:not(input)::marker { margin:* * * 0.21em; }
+    :root:not(input)::marker:rtl { margin:* 0.21em * *; }
+
+    :root:active::marker { background-color: @HIGHLIGHT-HOVER; }
+
+    :root:checked::marker {
+      background-image: url(path:M 0 3 L 3 6 L 9 0);
+      background-size:0.93em;
+      stroke:color(accent-text);
+      stroke-width:0.14em; 
+      background-color: color(accent);
+      border: color(accent);
+    }
+
+    :root[mixed]:empty::marker {
+      background-image: url(path:M 0 0 H 9 V 9 H 0 Z);
+      background-size:0.63em;
+      background-position:54% 54%;
+      fill: color(panel-text);
+      stroke:none;
+    }
+
+    :root:hover::marker {
+      border-color:color(hover-border);
+    }          
+
+    :root:disabled {
+      color:color(disabled-text);
+    }
+
+    :root:disabled::marker { 
+      background-color: color(disabled-back);
+      stroke:color(disabled-text);
+      border: color(disabled-text);
+    }
+
+    :root:tab-focus { @STD-TAB-FOCUS; }
+
+}
+
+checkbox { display:inline-block; style-set: std-checkbox; }
+
+@mixin STD-BOX-NORMAL 
+{
+  color:color(text);
+  background: color(back);
+  border:0.14em solid color(border);
+  text-selection: color(text) transparent;
+  padding:0.2em 0.4em;
+  vertical-align:middle;
+}
+
+@mixin STD-BOX-HOVER 
+{
+  border-color:color(hover-border);
+}
+
+@mixin STD-BOX-FOCUS {
+  text-selection: color(accent-text) color(accent);
+}  
+
+@mixin STD-BOX-DISABLED {
+  background-color: color(disabled-back);
+  color:color(disabled-text);
+  border-color: color(disabled-text);
+}
+
+@mixin STD-BOX-EMPTY {
+  color:color(disabled-text);
+  font-style:italic;
+}
+
+@set std-edit < std-edit-base
+{
+  :root {
+    @STD-BOX-NORMAL;
+    padding:0.2em 0.4em;
+  }
+  
+  :root:owns-popup,
+  :root:focus       { @STD-BOX-FOCUS; }
+
+  :root:hover       { @STD-BOX-HOVER; }
+
+  :root:disabled    { @STD-BOX-DISABLED; }     
+
+  :root:empty       { @STD-BOX-EMPTY; }
+
+  :root:tab-focus   { @STD-TAB-FOCUS; }
+
+  :root[nullable] {
+    aspect: Flat.Nullable url(flat-theme.tis);
+    padding-right:1.2em;
+  }
+
+  :root[nullable]:not(:empty) {
+    stroke-width:1.44dip;
+    stroke:color(border);
+    foreground-position-top: 50%;
+    foreground-position-right: 0.5em;
+    foreground-repeat: no-repeat;
+    foreground-size:0.7em;
+    foreground-image-cursor: pointer;
+    foreground-image: url(path:M0 0 L9 9 M9 0 L0 9);     
+  }
+
+}
+
+editbox { display:inline-block; style-set:std-edit; }
+
+
+/* dropdown combobox */
+@set std-select-dropdown < std-select-dropdown-base
+{
+  :root
+  { 
+    white-space: nowrap;
+    @STD-BOX-NORMAL;
+    padding:0; 
+  }
+      
+  :root:hover                   { @STD-BOX-HOVER; }
+  :root:focus                   { @STD-BOX-FOCUS; }
+  :root:active                  { @STD-BOX-PRESSED; }
+  :root:disabled                { @STD-BOX-DISABLED; }
+  :root:tab-focus               { @STD-TAB-FOCUS; }  
+
+  /* caption portion of combobox */
+  :root > caption
+  { 
+    padding:0.2em 0.4em;
+    min-width : 2em;
+    color:inherit; 
+  }
+  
+  /* popup select element */
+  :root > popup.list
+  { 
+    margin:0;
+    padding:0; 
+    border:none;
+    background: color(popup-panel-back);
+    border:0.14em solid color(border);
+    margin-top:-0.14em;
+    //box-shadow: 0.1em 0.1em 0.5em #000;
+  }
+
+  :root:hover > popup.list {
+    border-color:color(hover-border);
+  }
+  
+  option { padding:0.2em 0.4em; color: color(text); background:transparent; fill:color(text); }
+  option:current
+  {
+    background-color:color(accent); color:color(accent-text); fill: color(accent-text);
+  }
+
+  option:hover {
+    foreground-color: color(hover-option-cover);
+  }
+  
+  optgroup > caption 
+  { 
+    font-weight:bold; 
+  }
+  optgroup > option 
+  { 
+    padding-left:1em; 
+  }
+  optgroup > option:rtl
+  { 
+    padding-right:1em; 
+    padding-left:0; 
+  }
+  
+  /* dropdown button of the combobox */
+  :root > button
+  {
+    display :block; 
+    width   :1.4em;
+    height  :*;
+    padding :0; 
+    background:transparent; 
+    border:none;
+    foreground-image:url(path:M 0 0 L 5 5 L 10 0); /* that arrow */
+    fill:none;
+    stroke-width:1.44dip;
+    stroke:color(border);
+    foreground-position: 50% 50%;
+    foreground-repeat: no-repeat;
+    foreground-size:0.77em 0.38em;
+  }
+  
+  :root[editable] > caption {
+    background: color(back);
+    text-selection: color(text) transparent;
+  }
+
+  :root:not([editable]):empty > caption { @STD-BOX-EMPTY; }
+
+  :root:owns-popup[editable] > caption,
+  :root[editable] > caption:focus
+  {  
+    text-selection: color(accent-text) color(accent); 
+  } 
+  
+  :root[editable] > button
+  {
+    background: color(button-back);
+    stroke:color(panel-text);
+  }
+
+  :root[multiple] > popup > option { padding-left:2em; }
+  :root:rtl[multiple] > popup > option { padding-right:2em; padding-left:0em;}
+
+  :root[multiple] > span.count 
+  {
+    padding:0 0.14em;
+    margin:0.14em;
+    border-left:0.07em color(border) solid;
+    border-right:0.07em color(border) solid;
+  }
+ 
+}

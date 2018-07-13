@@ -1,0 +1,136 @@
+const native = view.nativeApi();
+
+const content = $(frame#content);
+const inspectorButton = $(button#inspector);
+
+var filename = null;
+const file_filter = "files *.htm,*.html,*.svg,*.zip,*.scapp|*.htm;*.html;*.svg;*.zip;*.scapp|"
+   "HTML files only(*.htm,*.html)|*.htm;*.html|"
+   "SVG files only(*.svg)|*.svg|"
+   "SCAPP files only (*.zip,*.scapp)|*.zip;*.scapp|"
+   "All Files (*.*)|*.*";
+   
+var debugIsActive = false; 
+
+function loadFile(fn)
+{
+  filename = fn;
+  content.load(fn);
+  $(button#reload).state.disabled = false;
+  inspectorButton.state.disabled = false;
+  if(debugIsActive)
+    view.launchDebugView();
+  var croot = content[0];
+  var title = croot.$(head>title); 
+  // testing nativeApi:
+  var rootUid =  native.getElementUid(croot);
+  if( title )
+    view.caption =  String.printf("Sciter(%d):%s", rootUid, title.text || ""); 
+  else 
+    view.caption =  String.printf("Sciter(%d)",rootUid); 
+}
+
+event click $(button#open)
+{
+  var fn = view.selectFile(#open,file_filter);
+  if( fn ) 
+  {
+    loadFile(fn);
+    // getting root node of the frame
+    //var croot = content[0];
+    //var title = croot.$(head>title); 
+    //if( title )
+    //  view.title(title.text); // calling native method defined in sciter.h 
+  }
+}
+event click $(button#reload)
+{
+  if( filename ) {
+    content.load(filename);
+    if(debugIsActive)
+      view.launchDebugView();
+  }
+}
+
+event click $(button#open-in-view)
+{
+  var fn = view.selectFile(#open,file_filter);
+  if( fn ) 
+  {
+    view.load(fn);
+  }
+}
+
+event click $(button#glass)
+{
+  debug log: "print";
+  if( this.value) {
+    view.windowBlurbehind = #light;
+    self.attributes["theme"] = "light";
+  }
+  else {
+    view.windowBlurbehind = #dark;
+    self.attributes["theme"] = "dark";
+  }
+}
+
+event click $(button#help)
+{
+  //view.open("file://" + System.home("../doc/main.htm"));
+  view.window 
+  {
+    url: "file://" + System.home("../../doc/main.htm"),
+    type: View.FRAME_WINDOW,
+    state: View.WINDOW_SHOWN,
+    alignment:5,
+    width: 1024,
+    height: 800
+  };
+}
+
+function content.onExchange(evt)
+{
+   if( evt.type == Event.X_DRAG_ENTER && evt.draggingDataType == #file)
+   {
+     this.@#allow-drop = true;
+     return true;
+   }
+   else if( evt.type == Event.X_DRAG_LEAVE )
+   {
+     this.@#allow-drop = undefined;
+     return true;
+   }
+   else if( evt.type == Event.X_DRAG && evt.draggingDataType == #file)
+   {
+     return true;
+   }
+   else if( evt.type == Event.X_DROP && evt.draggingDataType == #file)
+   {
+     this.@#allow-drop = undefined;
+     var fn;
+     if(typeof evt.dragging == #array)
+       fn = evt.dragging[0];
+     else
+       fn = evt.dragging;
+     loadFile(fn);
+     return true;
+   }
+}
+
+event click $(button#inspector)
+{
+  if( var connectToInspector = view.connectToInspector ) {
+
+    const SUFFIX = { Windows: ".exe", OSX: ".app" };
+
+    var inspectorPath = System.home("inspector" + (SUFFIX[System.PLATFORM] || ""));
+    
+    if( !System.scanFiles(inspectorPath) ) {
+      view.msgbox(#alert, "Cannot find " + inspectorPath);
+      return;
+    }
+    Sciter.launch(inspectorPath);
+    self.timer(200ms, function() { connectToInspector($(frame#content)) });
+    
+  }
+}
