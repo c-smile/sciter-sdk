@@ -63,7 +63,6 @@ event click $(button#open-in-view)
 
 event click $(button#glass)
 {
-  debug log: "print";
   if( this.value) {
     view.windowBlurbehind = #light;
     self.attributes["theme"] = "light";
