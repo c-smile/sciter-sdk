@@ -206,8 +206,8 @@ function self.ready() {
 
   // this has to be delayed on Windows otherwise caption will be transparent too, why?
 
-  if(!this.parent)
-    this.post(:: view.windowBlurbehind = #ultra-dark );
+  //if(!this.parent)
+  //  this.post(:: view.windowBlurbehind = #ultra-dark );
 
   view.animationsEnabled = true; // enable CSS animations
 

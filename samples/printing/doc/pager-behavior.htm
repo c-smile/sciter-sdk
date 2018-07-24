@@ -45,15 +45,15 @@
     <dt>pageNo</dt>
     <dd>() : integer, returns first page number rendered in the view;</dd>
     <dt>pageNo</dt>
-    <dd>(number: integer), navigates view to page number;</dd>
+    <dd>(<i>number</i>: integer), navigates view to page number;</dd>
     <dt>selectPrinter</dt>
     <dd>() : opens system select printer dialog to select target printer, configures page size accordingly, may start pagination process.</dd>
     <dt>selectDefaultPrinter</dt>
     <dd>() : selects default printer as a print target, may start pagination process.</dd>
     <dt>print</dt>
-    <dd>() - prints current document on target printer.</dd>
+    <dd>( [<i>pageslist</i>:array]&nbsp;) - prints current document on target printer.<p><i>pageslist</i> - optional, is an array of page numbers. If provided defines numbers and&nbsp;order of pages to be printed. Note: page numbering starts from 1.</p></dd>
 		<dt>setDocumentName</dt>
-		<dd>(name:string) - sets name of print spooler job - this name will appear in&nbsp;print spooler queue view in Windows.&nbsp;</dd>
+		<dd>(<i>name</i>:string) - sets name of print spooler job - this name will appear in&nbsp;print spooler queue view in Windows.&nbsp;</dd>
 		<dt>printers</dt>
 		<dd><div>() : array</div><p> The method returns array of printers registered in system. Each element of the array is an object: </p>
 			<pre>{ 
@@ -63,7 +63,7 @@
   isDefault: true/false // true if that printer is the default one;
 } 
 </pre></dd>
-		<dt></dt></dl>
+		<dt/></dl>
   <h2>Value</h2>
   <p>N/A</p>
   <h2>Frame events handling in script</h2>

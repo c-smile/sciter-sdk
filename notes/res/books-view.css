@@ -37,6 +37,8 @@
     color:color(selection-dark-text);
   }
 
+  option:hover { foreground-color:var(selection-dark-hover,#0f0); }
+
   option > i {
     display:block;
     width: length(band-size);

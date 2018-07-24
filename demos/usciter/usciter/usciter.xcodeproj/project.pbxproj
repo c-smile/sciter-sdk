@@ -12,7 +12,6 @@
 		492B36D220EC59D500E479B4 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 492B36D020EC59D500E479B4 /* MainMenu.xib */; };
 		492B36DD20EC674300E479B4 /* usciter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 492B36DC20EC674300E479B4 /* usciter.cpp */; };
 		492B36DF20EC677500E479B4 /* sciter-osx-main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 492B36DE20EC677500E479B4 /* sciter-osx-main.mm */; };
-		492B36E820EC6FFF00E479B4 /* sciter-osx-64.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 492B36E720EC6FFF00E479B4 /* sciter-osx-64.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,7 +24,6 @@
 		492B36D620EC59D500E479B4 /* usciter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = usciter.entitlements; sourceTree = "<group>"; };
 		492B36DC20EC674300E479B4 /* usciter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = usciter.cpp; path = ../usciter.cpp; sourceTree = "<group>"; };
 		492B36DE20EC677500E479B4 /* sciter-osx-main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "sciter-osx-main.mm"; path = "../../../../include/sciter-osx-main.mm"; sourceTree = "<group>"; };
-		492B36E720EC6FFF00E479B4 /* sciter-osx-64.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = "sciter-osx-64.dylib"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,7 +31,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				492B36E820EC6FFF00E479B4 /* sciter-osx-64.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,7 +72,6 @@
 		492B36E620EC6FFF00E479B4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				492B36E720EC6FFF00E479B4 /* sciter-osx-64.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -301,17 +297,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
-				CODE_SIGN_ENTITLEMENTS = usciter/usciter.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = ../../../bin.osx;
 				DEVELOPMENT_TEAM = 642T6M376L;
 				INFOPLIST_FILE = usciter/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = terrainformatica.usciter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -322,17 +315,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
-				CODE_SIGN_ENTITLEMENTS = usciter/usciter.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = ../../../bin.osx;
 				DEVELOPMENT_TEAM = 642T6M376L;
 				INFOPLIST_FILE = usciter/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = terrainformatica.usciter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

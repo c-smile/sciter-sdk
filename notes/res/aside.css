@@ -62,19 +62,22 @@ aside:collapsed [full] {
   transition: height(sine-in-out,@ADUR) visibility(linear,@ADUR);
 }
 
-@set v-scroll-indicator {
+/*@set v-scroll-indicator {
   .slider 
   {
     background:#fff;
-    border-radius:width(50%);
     margin:2px; 
   }
-}
+  .base {
+    width:7dip;
+  }
+}*/
 
 aside > div.scrollable  
 {
   size:*;
-  vertical-scrollbar: "v-scroll-indicator";  
+  //vertical-scrollbar: "v-scroll-indicator";  
+  background:rgba(0,0,0,0.0);
   overflow-y:scroll-indicator;
 }
 

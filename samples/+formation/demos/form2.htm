@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style></style>
+        <script type="text/tiscript">
+
+          include "../formation.tis";
+      
+          var frm = formation( $(form) );
+
+          event click $(button#set) 
+          {
+            frm.value = {
+              credentials: {
+                un: "Olga",
+                pwd: "blondy"
+              },
+              persistLogin: false
+            };
+           }
+
+        event click $(button#show) 
+        {
+           var val = frm.value;
+           $(pre#out).value = JSON.stringify(val,"  ");
+         }
+
+        event click $(button#structure) 
+        {
+           $(div#structure).html = frm.toHtmlString();
+        }
+
+
+        </script>
+    </head>
+    <body>
+
+      <button#set>SetState</button>
+      <button#show>ShowState</button>
+      <button#structure>Formation structure</button>
+      
+      <form>
+         <div>
+           User name: <input|text name="credentials.un" value="Ivan">
+         </div>
+         Save login: <input|checkbox name="persistLogin" checked>
+         <div>
+            Password: <input|password name="credentials.pwd" value="12345">
+         </div>
+      </form>
+      <pre#out />
+      <div#structure />
+    </body>
+</html>

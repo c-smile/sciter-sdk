@@ -10,7 +10,24 @@
       <td width="60" nowrap="" valign="top" align="center">Build#</td>
       <td width="78" nowrap="" valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FFFADA">4.2.0.6064</td><td nowrap="" valign="top" align="center">13-07-2018</td><td><p>new:</p>
+    <tr><td valign="top" bgcolor="#FFFADA">4.2.1.6085</td><td nowrap="" valign="top" align="center">24-07-2018</td><td>
+					<p>new:</p>
+					<ul><li>+ media variables :<ul><li><code>ui-ambience: &quot;dark&quot; | &quot;light&quot;;</code> -OS/WM uses dark/light theme.</li><li><code>ui-blurbehind: true | false;</code>&nbsp;&nbsp; - OS/WM is capable and uses blurbehind (Aero, UWP alike blur, etc.)</li>
+								</ul></li>
+						<li>+ &quot;auto-glass&quot; mode in usciter.exe</li>
+						<li>usciter persists settings and window location.</li>
+						<li>[html] engine sets <code>window-state=&quot;shown&quot;|&quot;maximized&quot;|&quot;minimized&quot;|&quot;full-screen&quot;</code> attribute on the root element of the window on window state change.</li>
+						<li><code>overflow:scroll-indicator</code> - expansion to full size on mouse hover.</li>
+						<li>[printing] <code>page.print([pageNumberList])</code> - print specific pages.</li>
+						<li>[Win] enabling blurbehind on window-frame=&quot;standard&quot;.</li></ul><p>fixes:</p>
+					<ul>
+						
+						<li>[richtext/htmlarea] fix of MOUSE_DCLICK -&gt; select word handling.</li><li>[osx] workaround OSX bug&nbsp; when&nbsp;<code>[NSScreen screens]</code> returns empty array.</li><li>[drawing] fix of vector image&nbsp;rendering.</li>
+						<li>[Windows XP] support is back.</li>
+						<li>[win10] layered popups, fix of potential AV on some machines.</li>
+						<li>[DOM] fix of mouse hover handling on popups. Fixes: <a href="https://sciter.com/forums/topic/why-is-mouseleave-event-fired/">https://sciter.com/forums/topic/why-is-mouseleave-event-fired/</a>  and <a href="https://sciter.com/forums/topic/mouseleave-event-fired-even-if-hittest-returns-false/">https://sciter.com/forums/topic/mouseleave-event-fired-even-if-hittest-returns-false/</a>&nbsp;</li>
+						<li>mouse enter/leave handling fix: <a href="https://sciter.com/forums/topic/why-is-mouseleave-event-fired/">https://sciter.com/forums/topic/why-is-mouseleave-event-fired/</a>&nbsp;</li>
+						<li>[dom, update] regression fix related to elements created &quot;in the air&quot; (r6024)</li></ul></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.2.0.6064</td><td nowrap="" valign="top" align="center">13-07-2018</td><td><p>new:</p>
 					<ul><li>[Windows 10] Support of Windows 10 build 1803 &quot;<b>acrylic background</b>&quot;.&nbsp; In order to use it, the window should have a) <code>window-frame=&quot;extended&quot; window-blurbehind=&quot;[ultra-]light|dark&quot;</code> attributes and b) WS_EX_NOREDIRECTIONBITMAP extended style. Check <a href="https://sciter.com/sciter-4-2-support-of-acrylic-theming/">https://sciter.com/sciter-4-2-support-of-acrylic-theming/</a>  </li>
 						<li>[Windows 10] Windows created by&nbsp;<code>SciterCreateWindow</code> API are using WS_EX_NOREDIRECTIONBITMAP and <a href="https://docs.microsoft.com/en-us/windows/desktop/directcomp/directcomposition-portal">DirectComposition</a> by default. Secondary transparent windows created by the engine (e.g. popups) are not using WS_EX_LAYERED mechanism anymore. Transparency is made by composing window&nbsp;content into DWM visual tree directly.</li>
 						<li>+ /samples/acrylic-window/ folder. Contains sketch  of  typical UWP style window and UWP themed input elements (this may evolve into full master CSS schema).</li>

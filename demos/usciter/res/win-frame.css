@@ -18,7 +18,7 @@ html > header > window-buttons > window-button {
   display:block; 
   height:window-button-height; 
   width:window-button-width; 
-  foreground-size: 9dip;
+  foreground-size: 11dip;
   foreground-repeat: no-repeat;
   foreground-position:50% 50%;
   stroke:color(text-color);
@@ -28,12 +28,12 @@ html > header > window-buttons > window-button:hover {
   background:rgba(0,0,0,0.25); 
   transition: background-color(linear,100ms);
 }
-html > header > window-buttons > window-button[role="window-close"] { stroke-width:1.44dip; foreground-image: url(path:M0 0 L9 9 M9 0 L0 9); }
+html > header > window-buttons > window-button[role="window-close"] { stroke-width:1.44dip; foreground-image: url(path:M0 0 L10 10 M10 0 L0 10); }
 html > header > window-buttons > window-button[role="window-close"]:hover { background:rgb(232,17,35); stroke:#fff; }
 
-html > header > window-buttons > window-button[role="window-maximize"] { foreground-image: url(path:M0 0 H9 V9 H0 Z); }
+html > header > window-buttons > window-button[role="window-maximize"] { foreground-image: url(path:M0 0 H10 V10 H0 Z); }
 
-html[window-state="maximized"] > html > header > window-buttons > window-button[role="window-maximize"] { foreground-image: url(path:M0 2 h8 v8 h-8 Z M2 2 v-2 h8 v8 h-2); }
-html > header > window-buttons > window-button[role="window-minimize"] { foreground-image: url(path:M0 9 H9); }
+html[window-state="maximized"] > header > window-buttons > window-button[role="window-maximize"] { foreground-image: url(path:M0 2 h8 v8 h-8 Z M2 2 v-2 h8 v8 h-2); }
+html > header > window-buttons > window-button[role="window-minimize"] { foreground-image: url(path:M0 0 M0 5 H10 M10 10); }
 
 frame { size:*; background-color: transparent; }

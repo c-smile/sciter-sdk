@@ -3,7 +3,7 @@ include "plus.tis";
 // the routes thing
 function Plus.Application() {
 
-  assert !Plus.app : "only one instance allowed!"
+  assert !Plus.app : "only one instance allowed!";
 
   var main = $(main);
   assert main : "<main> shall exist";

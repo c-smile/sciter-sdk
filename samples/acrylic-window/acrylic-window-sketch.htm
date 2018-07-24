@@ -3,7 +3,8 @@
         <title>Foo</title>
         <style>
 
-          @import url(flat-theme.css);
+          //@import url(flat-theme.css);
+          @import url(unisex-theme.css);
 
           @const WINDOW-CAPTION-HEIGHT: window-caption-height;
           @const WINDOW-BUTTON-WIDTH: window-button-width;
@@ -42,7 +43,7 @@
           html > header > window-buttons > window-button[role="window-maximize"] { foreground-image: url(path:M0 0 H9 V9 H0 Z); }
 
           html[state="maximized"] > header > window-buttons > window-button[role="window-maximize"] { foreground-image: url(path:M0 2 h8 v8 h-8 Z M2 2 v-2 h8 v8 h-2); }
-          html > header > window-buttons > window-button[role="window-minimize"] { foreground-image: url(path:M0 9 H9); }
+          html > header > window-buttons > window-button[role="window-minimize"] { foreground-image: url(path:M0 0 M0 4.5 H9 M9 9); }
 
           @media platform == "OSX" {
             html > header > window-buttons { display:none; }

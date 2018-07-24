@@ -1,0 +1,104 @@
+/*
+
+  Yet another <toggle> implementation.
+  Based on ::marker  
+
+*/
+
+html:theme(dark) {
+  var(panel-back): #383838; //#3f3834;
+  var(popup-panel-back): #555; 
+  var(panel-text): #eee;
+  var(back): #000;
+  var(text): #fff;
+  var(border): #aaa;
+  var(button-back):  #555;
+  var(button-pressed-back):#444;  
+  var(hover-border): #eee;
+  var(disabled-text): #888;
+  var(disabled-back): #444;
+  var(hover-option-cover): rgba(255,255,255,0.1);
+}
+
+html:theme(light) {
+  var(panel-back): #f8f8f8;
+  var(popup-panel-back): #f7f7f7; 
+  var(panel-text): #333;
+  var(back): #fff;
+  var(text): #000;
+  var(border): #888;
+  var(button-back):#d7d7d7;
+  var(button-pressed-back):#bbb;
+  var(hover-border): #000;
+  var(disabled-text): #888;
+  var(disabled-back): #eee;
+  var(hover-option-cover): rgba(0,0,0,0.1);
+}
+
+html {
+
+  font-family: "Segoe UI", Helvetica, sans-serif;
+  font-size:11pt;
+
+  var(accent): window-accent-color;  
+  var(accent-text): #fff;  
+  var(border-width): 0.14em;
+  var(border-double-width): 0.28em;
+  var(border-radius):0dip;
+  var(icon-size): window-icon-size;
+
+  background:color(panel-back);
+  color: color(panel-text);
+}
+
+.hbox { flow:horizontal-wrap; border-spacing:0.5em; }
+.vbox { flow:vertical; border-spacing:0.5em; }
+
+@set std-toggle {
+  
+  :root {
+    display:inline-block;
+    behavior:check;
+    flow:stack;
+    border:none;
+    background:none;
+    width:max-content;
+    height:1.4em;
+    padding:0 0 0 38dip;
+    cursor:pointer;
+  }
+
+  :root[type="radio"] { behavior:radio; }
+
+  :root::marker {
+    width:28dip; 
+    height:15dip;
+    background:threedlight;
+    border-radius:7dip;
+    margin:* * * 3dip;
+    foreground-image:url(stock:disk);
+    foreground-repeat:no-repeat;
+    foreground-position:1dip 50%;
+    foreground-size:13dip;
+    fill:window;
+    stroke:threedshadow;
+    stroke-width:1dip;
+  }
+  :root:checked::marker {
+    foreground-position:14dip 50%;
+    background:highlight;
+    transition:foreground-position(quint-in,120ms,quint-out,120ms) background-color(linear,120ms);
+  }
+
+  :root > option:first-child { visibility:visible; }
+  :root > option:last-child { visibility:hidden; }
+  :root:checked > option:first-child { visibility:hidden; }
+  :root:checked > option:last-child { visibility:visible; }
+  
+} 
+
+toggle { style-set: std-toggle; }
+radio { display:inline-block; style-set: std-radio; }
+checkbox { display:inline-block; style-set: std-checkbox; }
+editbox { display:inline-block; style-set:std-edit; }
+slider { display:inline-block; style-set:std-hslider; }

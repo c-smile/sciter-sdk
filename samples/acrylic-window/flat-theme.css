@@ -481,3 +481,31 @@ editbox { display:inline-block; style-set:std-edit; }
   }
  
 }
+
+@set std-hslider < std-slider-base
+{
+  :root 
+  {
+    width:8em;
+    aspect: Flat.HSlider;
+    height:0.14em;
+    background: color(border);
+    background-clip: content-box;
+    padding:0.56em;
+    overflow:visible;
+  }
+      
+  :root > button.slider { 
+    width:0.56em; 
+    height:1.4em; 
+    foreground: none; 
+    background: color(accent); 
+    border:none;
+    border-radius:0.28em;
+  }
+  
+  :root:disabled { background: color(disabled-text); }
+  :root:disabled > button { background: color(disabled-text); }
+}
+
+slider { display:inline-block; style-set:std-hslider; }

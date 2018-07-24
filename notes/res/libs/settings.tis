@@ -57,8 +57,10 @@ namespace Settings
 Settings.add {
   uiStateStore: function(data) 
     {
-       var (x,y,w,h) = view.box(#rectw,#border,#screen);
-       data.window = {left:x,top:y,width:w,height:h};  
+      if( view.windowState == View.WINDOW_SHOWN) {
+        var (x,y,w,h) = view.box(#rectw,#border,#screen);
+        data.window = {left:x,top:y,width:w,height:h};
+      }
     },
   uiStateRestore: function(data) 
     {

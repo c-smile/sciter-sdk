@@ -18,7 +18,10 @@
       var contentUrl = self.url("samples/print-test.htm");
 
       $(button#select-printer).on("click",function() {  pager.selectPrinter(); });
-      $(button#print).on("click", function() { pager.print(); });
+      $(button#print).on("click", function() { 
+        pager.print(); // print all pages
+        //pager.print([1]); // print only first page
+      });
       
       $(select#to-load).on("change", function() { 
         contentUrl = self.url( this.value );

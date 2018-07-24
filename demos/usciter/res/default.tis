@@ -1,3 +1,7 @@
+
+const APP_NAME = "usciter.app";
+include "settings.tis";
+
 const native = view.nativeApi();
 
 const content = $(frame#content);
@@ -61,22 +65,77 @@ event click $(button#open-in-view)
   }
 }
 
-event click $(button#glass)
-{
-  debug log: "print";
-  if( this.value) {
-    view.windowBlurbehind = #light;
+function setTheme(lightAmbience, blurbehind) {
+  var bg = $(button#glass);
+  if( lightAmbience ) {
+    view.windowBlurbehind = blurbehind ? #light : #none;
     self.attributes["theme"] = "light";
+    bg.state.checked = true;
   }
   else {
-    view.windowBlurbehind = #dark;
+    view.windowBlurbehind = blurbehind ? #dark : #none;
     self.attributes["theme"] = "dark";
+    bg.state.checked = false;
   }
 }
 
+function onMediaChange() {
+  var blurbehind = view.mediaVar("ui-blurbehind"); // WM is blurbehind capable and uses it now
+  var lightAmbience = view.mediaVar("ui-ambience") == "light"; // WM uses light theme
+  setTheme(lightAmbience, blurbehind);
+}
+
+function setSystemGlass(onOff) {
+  var bg = $(button#glass);
+  var sbg = $(button#system-glass);
+  if(onOff) {
+    onMediaChange();
+    bg.state.disabled = true; 
+    sbg.state.checked = true;
+    view.on("mediachange", onMediaChange);
+  } else {
+    bg.state.disabled = false; 
+    sbg.state.checked = false;
+    view.off(onMediaChange);
+  }
+}
+
+event click $(button#system-glass)
+{
+  setSystemGlass(this.value);
+  saveState();
+}
+
+event click $(button#glass)
+{
+  setTheme(this.value, true);
+  saveState();
+}
+
+Settings.add 
+{
+  store: function(data) 
+    {
+      data.glass = {
+        useSystem : $(button#system-glass).state.checked;  
+        lightTheme : $(button#glass).state.checked; 
+      };
+    },
+  restore: function(data) 
+    {
+      if(data.glass) {
+        setSystemGlass(data.glass.useSystem);
+        if( !data.glass.useSystem ) {
+          var lightAmbience = data.glass.lightTheme;
+          setTheme(lightAmbience, view.mediaVar("ui-blurbehind"));
+        }
+      }
+    }
+};
+
+
 event click $(button#help)
 {
-  //view.open("file://" + System.home("../doc/main.htm"));
   view.window 
   {
     url: "file://" + System.home("../../doc/main.htm"),
@@ -133,4 +192,8 @@ event click $(button#inspector)
     self.timer(200ms, function() { connectToInspector($(frame#content)) });
     
   }
+}
+
+function self.ready() {
+  Settings.restore();
 }

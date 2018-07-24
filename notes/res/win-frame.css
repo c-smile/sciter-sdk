@@ -1,0 +1,40 @@
+
+html { 
+  var(accent-color): window-accent-color; 
+  border: window-frame-width solid transparent; 
+}
+
+html:owns-focus {
+  border-color: morph(color(accent-color), opacity:50%);   
+}
+
+html > header { width:*; /*background-color: color(back-color);*/ }
+
+html > header { width:*; flow:horizontal; height:window-caption-height; margin:0; } 
+html > header > window-icon { display:block; size:window-caption-height;}
+html > header > window-caption { display:block; line-height:window-caption-height; width:*; padding:0 1em; color:color(text-color); }
+html > header > window-buttons { display:block; flow:horizontal; width:max-content; height:2em; }
+html > header > window-buttons > window-button { 
+  behavior:clickable; 
+  display:block; 
+  height:window-button-height; 
+  width:window-button-width; 
+  foreground-size: 11dip;
+  foreground-repeat: no-repeat;
+  foreground-position:50% 50%;
+  stroke:color(text-color);
+  stroke-width:1dip;
+}
+html > header > window-buttons > window-button:hover { 
+  background:rgba(0,0,0,0.25); 
+  transition: background-color(linear,100ms);
+}
+html > header > window-buttons > window-button[role="window-close"] { stroke-width:1.44dip; foreground-image: url(path:M0 0 L10 10 M10 0 L0 10); }
+html > header > window-buttons > window-button[role="window-close"]:hover { background:rgb(232,17,35); stroke:#fff; }
+
+html > header > window-buttons > window-button[role="window-maximize"] { foreground-image: url(path:M0 0 H10 V10 H0 Z); }
+
+html[window-state="maximized"] > header > window-buttons > window-button[role="window-maximize"] { foreground-image: url(path:M0 2 h8 v8 h-8 Z M2 2 v-2 h8 v8 h-2); }
+html > header > window-buttons > window-button[role="window-minimize"] { foreground-image: url(path:M0 0 M0 5 H10 M10 10); }
+
+frame { size:*; background-color: transparent; }
