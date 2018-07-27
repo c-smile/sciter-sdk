@@ -23,8 +23,8 @@ const Plus = function() {
     obj.prototype = proto;
   }
 
-  const reIsExpression=/ *[-()+*&:?|=!^"'\<\>]+ */;
-  const reVarName = /[a-zA-Z_][a-zA-Z0-9_]*/;
+  const reIsExpression=/ *[-()+*&:?|=!^\<\>]+ */;
+  const reVarName = /^[a-zA-Z_][a-zA-Z0-9_]+(\.[a-zA-Z_][a-zA-Z0-9_]+)*$/;
 
   // 'changed()' gets called when coll[key] value has changed (updated or removed)
   function setupModelChangeHandler(coll,key,changed) 
@@ -82,35 +82,38 @@ const Plus = function() {
     Object.addObserver.call(coll,on_model_change); // subscribe to collection object changes
   }
   
-  
-  // compile expression into function
+  // compile expression into a function
   function compileExpr(model, expr) { 
-    var func = new Function("return " + expr); func.namespace = model; return func; 
+    var func = new Function("return " + expr); 
+    func.namespace = model; 
+    return func;
   }
   
   function setupTerminalBinding(model,thing,path,isInput,updater) 
   {
     if( typeof model != #object  && typeof model != #namespace)
     {
-      stdout.println("Model is not an object while binding ", path);
+      debug alert (Model is not an object while binding path:{path});
       return;      
     }
 
-    function bind(model) {
-
+    function bind(model) 
+    {
       var (coll,key) = Object.referenceOf(model, path);
       if( key === null ) {
         // it cannot be parsed as simple l-value 
         // try treat it as an expression
         if(reIsExpression.test(path)) { // looks like an expression, setup it as data observer
           var parts = path.split(reIsExpression);
-          //stdout.printf("STB %s %V\n", path, parts );        
           var expr = compileExpr(model,path);
+          var map = {};
           for( var part in parts) {
-            if( part.match(reVarName) ) {
+            if( !map[part] && part.match(reVarName) ) {
+              map[part] = true;
               var (coll,key) = Object.referenceOf(model, part);
+              //debug part: part,coll,key;
               if(!key) continue;
-              //stdout.printf("setupTerminalBinding, expr part key %s in coll %V\n", key, coll);    
+              //debug setupTerminalBinding : , expr part key %s in coll %V\n", key, coll);    
               if(key == #length) setupModelLengthChangeHandler( coll, function(length) { if( !thing.parent ) throw undefined; updater(thing, expr()); } );
               else setupModelChangeHandler( coll, key, function(val) { if( !thing.parent ) throw undefined; updater(thing, expr()); } ); 
             }
@@ -179,7 +182,7 @@ const Plus = function() {
       assert expr : "it should not be empty";
       function attrUpdater(thing,v) {
         thing.post(function() {
-          switch(attr) {
+          if( thing.parent ) switch(attr) {
             case "expanded":
               thing.state.expanded = !!v; break;
             case "collapsed":
@@ -220,21 +223,6 @@ const Plus = function() {
           if(var rb = node.rebind) rb(model);
        }
     }
-
-    /*var boundUiElements = container.$$([name]);
-    for(var element in boundUiElements) {
-      element.off(".plus");
-      var path = element.@["name"];
-      setupTerminalBinding(model,element,path,element.tag != #output, valueUpdater);
-    }
-    boundUiElements = container.$$([each]);
-    for(var element in boundUiElements)
-      element.rebind();
-
-    boundUiElements = container.$$(:has-bound-attributes);
-    for(var element in boundUiElements) {
-      bindAttributes(model,element);
-    }*/    
   }
 
   // setup model namespace binding, 'this' is the element
@@ -428,7 +416,6 @@ const Plus = function() {
       updateCollectionObserves = function() { coll.eachObserver( :fun: fun([null,null,null]) ) }
      
       renderList = function () {
-        //debug stacktrace;
         var seqNo = 0;
         for(var (k,v) in coll)
           if( ff(v,k,fs,thing) )
@@ -538,7 +525,6 @@ const Plus = function() {
       updateCollectionObserves = function() { coll.eachObserver( :fun: fun([null,null,null]) ) }
      
       renderList = function () {
-        //debug stacktrace;
         var node = placeholder;
         for(var (k,v) in coll)
           if( ff(v,k,fs,thingParent) )
