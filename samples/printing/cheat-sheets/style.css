@@ -1,0 +1,39 @@
+
+body {
+  width:8.5in;
+  height:11in;
+  padding-top:1em;
+  padding-left:1em;
+  font:9pt Verdana;
+  flow:vertical-wrap;
+  border-spacing:-1dip;
+  border:1px solid;
+  overflow:visible;
+}
+
+div#logo { height:12em; }
+div#logo > h1 { margin:0; }
+div#logo > h2 { margin:0; }
+div#logo > h3 { margin:0; }
+div#logo img { vertical-align:middle; }
+div#logo > dl { flow:row(dt,dd); width:*; font-size:85%; white-space:nowrap;}
+div#logo > dl > dt { font-weight:bold; text-align:right;}
+div#logo > dl > dd { width:*; margin-left:0.5em; padding:0; }
+
+var { font-style:italic; color: #999; font-size:85%;}
+
+section { border:1dip solid #bbb; margin-top:-1dip; }
+
+section > header { width:max-content; background: #bbb; color:#fff; line-height:1.4em; padding:0 0.5em;}
+
+section > pre { margin:0.25em 0.25em 0.25em 0.5em; }
+section caption { color:#999; }
+
+section > dl { flow:row(dt,dd); width:*; white-space:nowrap; margin:0 0 0.25em 0.5em; }
+section > dl > dt { font-family:monospace; text-align:right;}
+section > dl > dd { font-size:85%; width:*; margin-left:0.5em; padding:0; color:#888 }
+section > hlist { font-family:monospace; display:block; flow:horizontal-wrap; border-spacing:0.5em 0;}
+section > hlist > li { display:block; width:0.25*; }
+
+td { white-space:nowrap; padding:0 0.25em; }
+comment { display:inline; color:#6a6; font-style:italic; }

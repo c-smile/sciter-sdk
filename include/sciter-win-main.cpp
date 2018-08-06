@@ -111,9 +111,9 @@ namespace sciter {
 
   window::window( UINT creationFlags, RECT frame): _hwnd(NULL)
   {
+    add_ref();
     _hwnd = ::SciterCreateWindow(creationFlags,&frame,&msg_delegate,this,NULL);
     if( _hwnd ) {
-      add_ref();
       setup_callback();
       sciter::attach_dom_event_handler(get_hwnd(),this);
     }

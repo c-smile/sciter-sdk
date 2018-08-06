@@ -1,0 +1,147 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>@import url(style.css);</style>
+    </head>
+    <body>
+
+<div#logo>
+  <h1><img src="logo.png" width="64"> Sciter Script</h1>
+  <dl>
+    <dt>home</dt><dd>https://sciter.com</dd>
+    <dt>discussion</dt><dd>https://sciter.com/forums/</dd>
+    <dt>github</dt><dd>https://github.com/c-smile/sciter-sdk</dd>
+    <dt>wrappers</dt><dd>https://github.com/sciter-sdk</dd>
+  </dl>
+</div>
+
+<section>
+  <header>String</header>
+  <pre>typeof str == #string
+str instanceof String
+
+str.length; <comment>//UTF16 code units</comment>  
+<comment>//enum over UNICODE code points</comment>  
+for(var uniCP in str) {...}
+
+var s = "string";
+var s = new String(<var>size</var>,[<var>'char'</var>]);
+var s = String.fromCharCode('a','b','c',&hellip;);
+var s = String.printf(<var>"%f ormat"</var>[<var>,val1,val2,&hellip;</var>]);
+var s = String.$(<var>text {expr} </var>);
+
+str.toLocaleString() <comment>// returns this</comment> 
+str.toString()       <comment>// returns this</comment> 
+str.toHtmlString()   <comment>// HTML escaped</comment> 
+str.toUrlString()    <comment>// URL escaped</comment> 
+str.toCssString()    <comment>// CSS escaped</comment> 
+str.toSymbol() <var>:symbol</var>
+str.toFloat() str.toInteger() str.toNumber()
+str.toLowerCase(); str.toUpperCase()
+str.scanf(<var>"%f ormat"</var>) <var>:Array</var>
+
+str.substr(<var>start</var>,<var>length</var>)
+str.substring(<var>start</var>,<var>end</var>)
+str.splice(<var>start</var>,<var>count</var>)
+str.slice(<var>start</var>,<var>end</var>)
+
+str.charAt(<var>index</var>) <var>:String</var>
+str.charCodeAt(<var>index</var>) <var>:Integer</var>
+
+str.indexOf(<var>"str"</var>)
+str.lastIndexOf(<var>"str"</var>)
+str.compare(<var>"other"</var>)
+str.lexicalCompare(<var>"other"</var>)
+
+str.concat(<var>str1</var>[,<var>str2,...</var>])
+str.trim()
+
+str.replace(<var>"what"</var>|<var>/regexp/</var>,<var>"by"</var>)
+str.match(<var>"regexp"</var>|<var>/regexp/</var>)
+str.search(<var>"regexp"</var>|<var>/regexp/</var>)
+str.split(<var>"regexp"</var>|<var>/regexp/</var>[,<var>maxn</var>)
+
+str.valueOf() <comment>// returns this</comment> 
+
+String.UID() <comment>// generate GUID</comment></pre>  
+</section>
+
+<section>
+  <header>Array</header>
+  <pre>typeof obj == #array
+obj instanceof Array
+
+obj.length
+for(var item in obj) {...}
+for(var (index,item) in obj) {...}
+
+var obj = [0,1,2]
+var obj = new Array([<var>v1</var>,[<var>v2</var>, &hellip;]])
+
+obj.toLocaleString() <comment>// CSV string</comment>
+obj.toString()       <comment>// CSV string</comment>
+obj.join([<var>delimeter</var>])
+
+obj.clone([<var>deep:true</var>])
+
+obj.push([<var>v1</var>,[<var>v2</var>, &hellip;]])
+obj.shift() <comment>// removes first element</comment>
+obj.pop() <comment>// removes last element</comment>
+obj.unshift(<var>v</var>) <comment>inserts v at 0</comment>
+obj.concat(<var>arr1</var>,[<var>arr2</var>, &hellip;])<comment>// merge</comment>
+obj.slice(<var>start</var>,[<var>end</var>])
+obj.splice(index,count,[<var>v1</var>,[<var>v2</var>, &hellip;]])
+
+obj.reverse()
+obj.sort([<var>comparatorFunc</var>])
+
+obj.indexOf(v) obj.lastIndexOf(v)
+obj.remove(index)  obj.removeByValue(v)
+
+obj.map(<var>callback</var>,[<var>thisArg</var>])
+obj.reduce(<var>callback</var>,[<var>initialVal</var>])
+obj.filter(<var>callback</var>,[<var>thisArg</var>])
+obj.find(<var>predicate</var>,[<var>thisArg</var>])
+obj.some(<var>predicate</var>,[<var>thisArg</var>])
+obj.every(<var>predicate</var>,[<var>thisArg</var>])
+
+obj.addObserver(observerFunc)
+obj.removeObserver(observerFunc)</pre>
+</section>
+
+<section>
+  <header>Object</header>
+  <pre>typeof obj == #object
+obj instanceof Object
+
+obj.length <comment>// n of owned props</comment>
+for(var (key,val) in obj) {...}
+
+var obj = {a:0,b:1,c:2}
+var obj = new Object()
+
+obj.toLocaleString()<comment>// "[object <var>Class</var>]"</comment> 
+obj.toString()      <comment>// "[object <var>Class</var>]"</comment>  
+
+obj.clone([<var>deep:true</var>])
+
+obj.extend([<var>deep:true</var>][,<var>obj1</var>,[<var>obj2</var>, &hellip;]])
+obj.eval(<var>"script"|stream</var>[,<var>ns</var>])
+
+obj.propertyAt(<var>key</var>)
+obj.remove(<var>key</var>)
+
+obj.seal(<var>strict</var>)
+obj.isSealed(<var>strict</var>)
+obj.freeze(<var>strict</var>)
+obj.isFrozen(<var>strict</var>)
+
+obj.addObserver(<var>observerFunc</var>)
+obj.removeObserver(<var>observerFunc</var>)
+
+Object.referenceOf(<var>ns</var>,<var>"path"</var>):(<var>coll,key</var>)</pre>
+</section>
+
+
+    </body>
+</html>

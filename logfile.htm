@@ -1,7 +1,7 @@
 ﻿<html>
   <head>
     <title>4.* logfile</title>
-    <meta name="generator" content="blocknote.net v2.0"/>
+    <meta name="generator" content="blocknote.net v2.0">
   </head>
 <body>
   <h3>Sciter 4.* logfile:</h3>
@@ -10,7 +10,18 @@
       <td width="60" nowrap="" valign="top" align="center">Build#</td>
       <td width="78" nowrap="" valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FFFADA">4.2.2.6090</td><td nowrap="" valign="top" align="center">27-07-2018</td><td><p>fixes:</p>
+    <tr><td valign="top" bgcolor="#FFFADA">4.2.3.6108</td><td nowrap="" valign="top" align="center">06-08-2018</td><td>
+					<p>new:</p>
+					<ul><li>+ <code>SCROLL_EVENTS.SCROLL_SLIDER_PRESSED</code> - marks start of slider drag scrolling. <code>SCROLL_SLIDER_RELEASED</code> marks end of scroll by scrollbar's slider.</li>
+						<li>[Sciter as a child window] Fix of position changing on SciterLoadHtml.&nbsp;&nbsp;</li></ul><p>fixes:</p>
+					<ul><li>[win, direct] Fix of partial drawing: https://sciter.com/forums/topic/4-2-0-6064-and-ws_ex_noredirectionbitmap-window-not-painted/ &nbsp;</li>
+						<li>[script] <code>new String(sz,'*');</code> support of filled strings.</li>
+						<li>[richtext] fix of <code>RETURN</code> handling in empty <code>&lt;p&gt;</code>'s.</li>
+						<li>[&lt;input|masked&gt;]&nbsp;editing&nbsp;fix.</li>
+						<li>[SDK headers] <code>sciter::window::window()</code> add_ref fix.&nbsp;</li>
+						<li>[richtext,plaintext] fix of event change generation: <a href="https://sciter.com/forums/topic/change-event-is-unreliable/">https://sciter.com/forums/topic/change-event-is-unreliable/</a>&nbsp;</li>
+						<li>Fix of scroll issue: <a href="https://sciter.com/forums/topic/div-scrolling-bug/">https://sciter.com/forums/topic/div-scrolling-bug/</a>&nbsp;</li>
+						<li>[Sciter as a child window] Fix of position changing on SciterLoadHtml :  <a href="https://sciter.com/forums/topic/wrong-window-position/">https://sciter.com/forums/topic/wrong-window-position/</a>&nbsp;</li></ul></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.2.2.6090</td><td nowrap="" valign="top" align="center">27-07-2018</td><td><p>fixes:</p>
 					
 					<ul><li>[+plus] better (more optimal) bound attributes handling.</li><li>[win,direct] <code>window-frame=&quot;transparent&quot;</code>, mouse hit-test fix.</li>
 						<li>[DOM] regression fix of problems introduced with &quot;elements in the air&quot;.</li>
@@ -305,7 +316,7 @@ matching: <pre>  switch(v) {
 						<li>ux-theme fix on non-standard DPI.</li>
 						<li>[css] fix of <code>var()</code> usage in gradients and transforms.</li>
 						<li>[css selectors] fix of <code>:only-of-type</code> and <code>:has-child-of-type(TAG)</code> selectors.</li></ul>
-					<p/></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.0.5.5482</td><td nowrap="" valign="top" align="center">22-10-2017</td><td><p>new:</p>
+					<p></p></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.0.5.5482</td><td nowrap="" valign="top" align="center">22-10-2017</td><td><p>new:</p>
 					<ul><li>WebP image format support;</li>
 						<li><code>view.selectFolder(...,defaultFolder)</code> parameter;</li>
 						<li>[osx,CoreGraphics backend] RTL support and better font handling, on par with Windows implementation;</li>

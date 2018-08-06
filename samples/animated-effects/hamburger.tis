@@ -10,15 +10,15 @@ function Hamburger(params={})
                   [ 0.0 , 0.5, 1.0 , 0.5 ],
                   [ 0.5 , 1.0, 1.0 , 0.5 ]];
                   
-  const strokeWidth = this.toPixels( this.style#stroke-width, #width ) || 3;
-  const strokeColor = this.style#stroke;
-  
   const duration = params.duration || 400ms; 
   
   var r = 0.0; // ratio : 0.0 - burger, 1.0 - arrow
                 
   this.paintContent = function(gfx) 
   {
+    const strokeWidth = this.toPixels( this.style#stroke-width, #width ) || 3;
+    const strokeColor = this.style#stroke;
+
     var (w,h) = this.box(#dimension);
     gfx.strokeWidth(strokeWidth)
        .strokeCap(#round)

@@ -15,17 +15,13 @@
     <li>
       <div>Extended image fill, see <a href="#background-position-attribute">background-position</a> and background-repeat attribute definitions.</div></li>
     <li>
-      <div><a href="fspu.whtm">%% length units</a> - &quot;percents from free space&quot;.</div></li>
-    <li>
-      <div><a href="#flow-attribute">flow attribute</a>.</div></li>
+      <div><a href="http://sciter.com/docs/flex-flow/flex-layout.htm">flex length units and flow</a></div></li>
     <li>
       <div><a href="#foreground-position-attribute">Foreground images</a>.</div></li>
     <li>
       <div><a href="#hit-margin">hit-margin</a> attribute.</div></li>
     <li>
       <div><code>@include &quot;mime-type&quot; url(...) [media types list];</code> - inclusion of scripts from CSS. <br/>Example, this: <code>&lt;style&gt; @include &quot;text/tiscript&quot; url(script.tis) screen; &lt;/style&gt;</code><font face="Courier New"><br/></font>is an equivalent of <code>&lt;script type=&quot;text/tiscript&quot; src=&quot;script.tis&quot; /&gt;</code> except of media type condition.</div></li></ul>
-  <p>Cascading: Sciter supports all CSS1 <a href="http://www.w3.org/TR/CSS1#basic-concepts">Basic concepts</a> and <a href="http://www.w3.org/TR/CSS1#cascading-order">Cascading orders</a>. HTMLayout also supports CSS 2.1 <a href="http://www.w3.org/TR/CSS21/selector.html#attribute-selectors">attribute selectors</a> and some essential selectors from CSS3 selector module.</p>
-  <div>Host application can use custom attributes for any purpose, engine does not interpret such attributes internally.</div>
   <h3>List of CSS properties supported by Sciter</h3>
   <div>
     <table border="1" bordercolor="#fff2cc" cellspacing="0">
@@ -38,10 +34,10 @@
           <div/>
           <div>In h-smile core engine the <em>font</em> also supports names of following system fonts:</div>
           <ul>
-            <li><font face="Courier New">system</font> - default system UI font used for input elements;</li>
-            <li><font face="Courier New">system-menu</font> - system menu font;</li>
-            <li><font face="Courier New">system-caption</font> - window caption font;</li>
-            <li><font face="Courier New">system-status</font> - statusbar and tooltip system font.</li></ul>
+            <li><var>system</var> - default system UI font used for input elements;</li>
+            <li><var>system-menu</var> - system menu font;</li>
+            <li><var>system-caption</var> - window caption font;</li>
+            <li><var>system-status</var> - statusbar and tooltip system font.</li></ul>
           <div>Note: To be in effect these font names can be used only in the <em>font</em> attribute - in font-family such names are ignored. Rationale of this is simple, declaration <font face="Courier New">font:system-menu;</font> for example is a shortcut of four attributes of the font - font-family, font-size, font-weight and font-variant.</div></td></tr>
       <tr>
         <td nowrap="" align="right"><strong>font-family</strong></td>
@@ -1276,11 +1272,28 @@
             <tr>
               <td bgcolor="#ffffdd" align="right"><strong>transition</strong></td>
               <td bgcolor="#ffffdd">
-          <div>none | blend | slide | image</div>
-          <div>Defines transition effect of changing of element state. For example:</div>
-          <p>.mybutton:hover { color: red; <em>transition:blend</em> }</p>
-          <div>will render transition by gradually blending (mixing) original state and hover state.</div>
-          <div>Currently transition supported only for block and inline-block elements and tables.</div></td></tr>
+          <div>Defines transition effect of changing of element state, contains space separated list of animated property definitions in the form:</div>
+          <pre>propname(easeFunc,duration[,easeFuncRollback,durationRollback])</pre> 
+          <div>Where <i>propname</i> is a name of CSS property to animate and <i>easeFunc</i> is a name of ease curve function, one of:</div> 
+          <pre>none 
+linear 
+quad-in    quad-out    quad-in-out
+cubic-in   cubic-out   cubic-in-out
+quart-in   quart-out   quart-in-out
+quint-in   quint-out   quint-in-out
+sine-in    sine-out    sine-in-out
+expo-in    expo-out    expo-in-out
+circ-in    circ-out    circ-in-out
+elastic-in elastic-out elastic-in-out
+back-in    back-out    back-in-out
+x-back-in  x-back-out  x-back-in-out
+xx-back-in xx-back-out xx-back-in-out
+bounce-in  bounce-out  bounce-in-out</pre>
+          <div>Example:</div>
+          <pre>.mybutton:hover { color:red; border-color: white;
+                  transition: color(linear,200ms) border-color(linear,100ms); }</pre>
+          <div>Note that transition was implemented in H-SMILE core long before it was specified by W3C so are differences in notation.</div>
+          </td></tr>
             <tr>
               <td rowspan="2" valign="top">
           <div><strong>Paged media (printing)</strong></div></td>

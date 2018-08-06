@@ -1,0 +1,281 @@
+<html>
+    <head>
+        <title>DOM in Sciter Script</title>
+        <style>@import url(style.css);
+
+body { 
+  font-size:8.5pt;
+  padding-top:1em;
+  padding-left:0.25em;
+}
+
+        </style>
+    </head>
+    <body>
+
+<div#logo>
+  <h3><img src="logo.png" width="64"> DOM in Sciter Script </h3>
+  <dl>
+    <dt>home</dt><dd>https://sciter.com</dd>
+    <dt>discussion</dt><dd>https://sciter.com/forums/</dd>
+    <dt>github</dt><dd>https://github.com/c-smile/sciter-sdk</dd>
+    <dt>wrappers</dt><dd>https://github.com/sciter-sdk</dd>
+  </dl>
+</div>
+
+<section>
+  <header>DOM classes</header>
+<table>
+<tr><td><code>Node</code></td><td>text,comment,element</td></tr>
+<tr><td><code>Element:Node</code></td><td>Element</td></tr>
+<tr><td><code>View</code></td><td>DOM container - window</td></tr>
+</section>
+
+<section>
+  <header>Predefined elements</header>
+  <pre>self      <comment>// current document</comment>
+view.root <comment>// window's root document</comment></pre>  
+</section>
+
+<section>
+  <header>Element, creation</header>
+  <pre>new Element( "div" [,"<var>&hellip;text</var>&hellip;"])
+Element.create { &hellip; }
+elem.insert { &hellip; }</pre>  
+</section>
+
+<section>
+  <header>Element and Node traversal</header>
+<pre>elem.first  <comment>// first child</comment>
+elem.last   <comment>// last child</comment>
+elem.next   <comment>// next element</comment>
+elem.prior  <comment>// previous element</comment>
+
+elem.firstNode
+elem.lastNode
+node.nextNode
+node.priorNode
+
+node.parent        <comment>// parent element</comment>
+elem.owner      <comment>// owner element</comment>
+elem.layoutParent
+
+child = elem[<var>int</var>];<comment>// nth element</comment> 
+child = elem.nodes()[<var>int</var>];<comment>// nth node</comment> 
+
+nChildren = elem.length;
+nChildNodes = elem.nodes().length;
+
+for(var <var>child</var> in elem) {...}
+for(var <var>(index,child)</var> in elem) {...}
+</pre>  
+</section>
+
+<section>
+  <header>Element attributes</header>
+<pre>elem.id
+elem.tag
+
+elem.attributes.length
+elem.attributes[<var>int</var>|<var>"name"</var>]
+elem.attributes.clear()
+elem.attributes.remove(<var>int</var>|<var>"name"</var>)
+elem.attributes.exists(<var>int</var>|<var>"name"</var>)
+
+elem.attributes.addClass(<var>"name"</var>)
+elem.attributes.removeClass(<var>"name"</var>)
+elem.attributes.toggleClass(<var>"name"</var>,on)
+elem.attributes.hasClass(<var>"name"</var>)
+
+for(var <var>(name,val)</var> in el.attributes){&hellip;}</pre>  
+</section>
+
+<section>
+  <header>Element style, get/set</header>
+<pre>elem.style["background-color"]
+elem.style#background-color
+
+elem.style["background-color"] = "red";
+elem.style#background-color = "red";
+elem.style.set {
+  background-color : color(255,0,0),
+             color : color(255,255,255) 
+}
+</pre>  
+</section>
+
+<section>
+  <header>Element style extras</header>
+<pre>elem.style.backgroundImage : null|Image
+elem.style.foregroundImage : null|Image
+
+elem.style.all() <comment>// used style properties</comment>
+elem.style.clear() <comment>// drop runtime styles</comment> 
+elem.style.rules() <comment>// applied style rules</comment>
+self.style.documentRules()
+
+elem.style.constant(<var>"name"</var>) <comment>// style const</comment>
+elem.style.variable(<var>"name"</var>) 
+elem.style.variable(<var>"name"</var>,<var>newVal</var>) 
+elem.style.variables() : object
+elem.style.variables{var1:val1,&hellip;};</pre>
+</section>
+
+<section>
+  <header>Select DOM elements</header>
+<pre>elem.select(<var>"selector"</var>):Element|null
+elem.selectAll(<var>"selector"</var>):Array
+elem.selectParent(<var>"selector"</var>):Element|null
+elem.match(<var>"selector"</var>):true|false
+
+elem.$(<var>selector</var>):Element|null
+elem.$$(<var>selector</var>):Array
+elem.$p(<var>selector</var>):Element|null
+elem.$$p(<var>selector</var>):Array
+elem.$o(<var>selector</var>):Element|null <comment>// owner</comment>
+elem.$is(<var>selector</var>):true|false</pre>
+<caption>Global selector functions:</caption>
+<pre>$(<var>selector</var>):Element|null
+$$(<var>selector</var>):Array</pre>
+</section>
+
+<section>
+  <header>DOM content and mutation</header>
+<pre>elem.text; elem.text = "new text";
+elem.html; elem.html = "inner html";
+elem.outerHtml; elem.outerHtml = "html";
+
+elem.append(<var>"html"</var>|<var>elem</var>|<var>Array</var>);
+elem.prepend(<var>"html"</var>|<var>elem</var>|<var>Array</var>);
+
+elem.insert(<var>"html"</var>|<var>elem</var>|<var>Array</var>,<var>atIndex</var>);
+
+elem.content(<var>elem1[,elem2,&hellip;]</var>|<var>Array</var>);
+
+elem.$append(<var>html {expr}</var>);
+elem.$prepend(<var>html {expr}</var>);
+elem.$content(<var>html {expr}</var>);
+elem.$after(<var>html</var>); elem.$before(<var>html</var>);
+elem.$replace(<var>outer html {expr}</var>);
+
+elem.remove();
+var temp = elem.detach();
+<comment>//for frames as for other elements:</comment>
+elem.load(<var>"url" [,headers]</var>); 
+elem.load(<var>"html"</var>,<var>"url"</var>);
+</pre>
+</section>
+
+<section>
+  <header>DOM position</header>
+<pre>elem.belongsTo(<var>parent</var><var>[,useUITree[,andThis]]</var>) 
+elem.commonParent(otherElem)<var>: Element</var>
+elem.find(x,y)<var>: Element</var>
+elem.mapLocalToView(x,y)<var>:(xView,yView)</var>
+elem.mapViewToLocal(xView,yView)<var>:(x,y)</var></pre>
+</section>
+<section>
+  <header>Popups and "windowed" elements</header>
+<pre>elem.popup(<var>popupToShow</var>,<var>placement[,x,y]</var>);
+elem.closePopup();
+
+elem.move(<var>x,y</var>[<var>,w,h</var>][<var>,relto</var>][<var>,mode</var>][<var>,rerTo</var>])
+</pre>
+</section>
+
+<section>
+  <header>Timers, animations and updates</header>
+<pre>elem.timer(300ms,<var>function</var>);
+elem.animate(<var>stepFunc</var><var>[,endFunc]</var><var>[,300ms]</var>);
+
+elem.refresh(<var>[x,y,w,h]</var>);
+elem.update();
+elem.update(<var>stateUpdateFunc</var>);</pre>
+</section>
+
+
+<section>
+  <header>DOM Indicators</header>
+<pre>elem.index <comment>    // in parent</comment>
+node.nodeIndex <comment>// in parent.nodes()</comment>
+
+elem.root<var>:Element</var><comment> // parent document</comment>
+elem.view<var>:View</var><comment>    // parent window</comment>
+
+elem.isVisible <var>:true|false</var>
+elem.isEnabled <var>:true|false</var>
+node.isElement <var>:true|false</var>
+node.isText <var>:true|false</var>
+node.isComment <var>:true|false</var>
+
+var v = elem.value;
+elem.value = <var>newVal</var>;
+
+elem.url(<var>["relativePath"]</var>)</pre>
+</section>
+
+<section>
+  <header>Layout position</header>
+<pre>elem.box(<var>what</var>,<var>edge</var>,<var>relTo</var>)</pre>
+<dl>
+<caption>where <i>what</i> is:</caption>
+<dt>#left</dt><dd>returns x1 pos</dd>
+<dt>#top</dt><dd>returns y1 pos</dd>
+<dt>#right</dt><dd>returns x2 pos</dd>
+<dt>#bottom</dt><dd>returns y2 pos</dd>
+<dt>#width</dt><dd></dd>
+<dt>#height</dt><dd></dd>
+<dt>#rect</dt><dd>(x1,y1,x2,y2)</dd>
+<dt>#rectw</dt><dd>(x1,y1,width,height)</dd>
+<dt>#dimension</dt><dd>(width,height)</dd>
+<dt>#position</dt><dd>(x1,y1)</dd></dl>
+<caption><i>edge</i> is one of:</caption>
+<pre>#margin  #border #padding #inner
+#content #icon</pre>
+<caption><i>relTo</i> is one of:</caption>
+<pre>#self #view #root #parent #screen
+#content #container</pre>
+</section>
+
+<section>
+  <header>Event handlers</header>
+<pre>elem.on(<var>"event"</var>[,<var>"selector"</var>],<var>func</var>);
+elem.off(<var>"event"</var>[,<var>"selector"</var>] | <var>func</var>);
+
+elem &lt;&lt; event <var>event</var> [<var>$(sel)</var>] [<var>(evt)</var>]{&hellip;}
+
+<comment>Free standing (global) event handler</comment>
+event <var>event</var> [<var>$(sel)</var>][<var>(evt[,that])</var>]{&hellip;}
+
+elem.capture(<var>onOff[,#strict]</var>);
+</pre>
+</section>
+
+<section>
+  <header>Event generation and post</header>
+<pre>elem.sendEvent(<var>"event"</var>[,<var>data</var>]);
+elem.postEvent(<var>"event"</var>[,<var>data</var>]);
+
+elem.post(<var>func</var>[,<var>ifNotThere</var>]);
+
+elem.sendKeyEvent(<var>eventDef</var>);
+elem.sendMouseEvent(<var>eventDef</var>);</pre>
+</section>
+
+<section>
+  <header>Element state</header>
+<pre>elem.state.<var>stateName</var></pre>
+<caption>where <i>stateName</i> is a bool prop, one of:</caption>
+<pre>link hover active focus ownsfocus 
+visited current checked unchecked 
+selected disabled readonly expanded 
+collapsed incomplete invalid 
+animating focusable anchor 
+synthetic ready popup ownspopup 
+tabfocus empty busy dragover 
+droptarget moving copying dragsource 
+pressed value screen</pre>
+</section>
+
+    </body>
+</html>

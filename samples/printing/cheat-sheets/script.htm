@@ -1,0 +1,250 @@
+<html>
+    <head>
+        <title>Sciter Script</title>
+        <style>@import url(style.css);</style>
+    </head>
+    <body>
+
+<div#logo>
+  <h1><img src="logo.png" width="64"> Sciter Script</h1>
+  <dl>
+    <dt>home</dt><dd>https://sciter.com</dd>
+    <dt>discussion</dt><dd>https://sciter.com/forums/</dd>
+    <dt>github</dt><dd>https://github.com/c-smile/sciter-sdk</dd>
+    <dt>wrappers</dt><dd>https://github.com/sciter-sdk</dd>
+  </dl>
+</div>
+
+<section>
+  <header>Control</header>
+  <pre>if (...) 
+if (...) ... else ...
+
+for[:label]( ... ;... ; ... ) ...
+for[:label](... in ...) ...
+
+while[:label](...) ...
+
+do[:label] ... while(...);
+
+break [label];
+continue [label];
+
+switch(...) {
+  case <var>const</var> : ... break;
+  like <var>template</var> : ... break;
+  instanceof <var>class</var> : ... break;
+  in <var>collection</var> : ... break;
+  default: ... break;
+}
+
+with(<var>object</var>) {...}
+
+try {...} catch(e) {...}
+try {...} catch(e) {...} finally {...}
+try {...} finally {...}
+
+await <var>promise-expr</var>;
+
+yield <var>expr</var>;
+
+return;
+return <var>expr</var>;
+return (<var>expr1</var>,<var>expr2</var>,...);</pre>  
+</section>
+
+<section>
+  <header>Declarations</header>
+<pre>var <var>name</var> [= <var>expr</var>];
+const <var>name</var> = <var>expr</var>;
+
+var (<var>nm1</var>,<var>nm2</var>,...) = <var>multi-ret-expr</var>;
+const (<var>nm1</var>,<var>nm2</var>,...) = <var>multi-ret-expr</var>;</pre>
+</section>
+
+<section>
+  <header>Types and literals</header>
+<table>
+<tr><th>literal</th><th>type</th></tr>
+<tr><td><code>42, 'A' <comment>//char code</comment></code></td><td>Integer</td></tr>
+<tr><td><code>42.0</code></td><td>Float</td></tr>
+<tr><td><code>"string"</code></td><td>String</td></tr>
+<tr><td><code>#symbol</code></td><td>Symbol</td></tr>
+<tr><td><code>/ab+c/</code></td><td>RegExp</td></tr>
+<tr><td><code>[0,1,2]</code></td><td>Array</td></tr>
+<tr><td><code>{a:0, b:1, c:2}</code></td><td>Object</td></tr>
+<tr><td><code>[<var>name</var>: 0,1,2]</code></td><td>Tuple</td></tr>
+<tr><td><code>12.5in</code></td><td>Length</td></tr>
+<tr><td><code>45deg</code></td><td>Angle</td></tr>
+<tr><td><code>200ms</code></td><td>Duration</td></tr>
+<tr><td><code>color(0xFF,0,0)</code></td><td>Color</td></tr>
+<tr><td><code>new Date(2009,7,15)</code></td><td>Date</td></tr>
+<tr><td><code>Bytes.fromBase64("&hellip;")</code></td><td>Bytes</td></tr>
+</table></section>
+
+<section>
+  <header>Modules and classes</header>
+<pre>include <var>"rel-path"</var>;
+include <var>string-expr</var>;
+
+namespace <var>name</var> [:<var>parentns</var>] {
+  var <var>name</var>; 
+  const <var>name</var>;
+  function <var>name</var>(...) {...}
+  event <var>name</var> ... { ... }  
+  namespace <var>subns</var> {...}
+  class <var>subcls</var> {...}
+}
+
+class <var>name</var> [:<var>parentcls</var>] {
+  var <var>name</var>[= <var>expr</var>]; 
+  this var <var>name</var> [= <var>expr</var>]; 
+  const <var>name</var> = <var>expr</var>;
+  function <var>name</var>(...) {...}
+  property <var>name</var>(v){get{<var>&hellip;</var>} set{<var>&hellip;</var>}}
+  event <var>name</var> ... { ... }  
+  namespace <var>subns</var> { ...}
+  class <var>subcls</var> {...}
+}</pre></section>
+
+
+<section>
+  <header>Expressions</header>
+<pre><var>expr</var> + <var>expr</var>
+<var>expr</var> - <var>expr</var>
+<var>expr</var> * <var>expr</var>
+<var>expr</var> / <var>expr</var>
+<var>int-expr</var> % <var>int-expr</var>
+<var>expr</var> += <var>expr</var>
+<var>expr</var> -= <var>expr</var>
+<var>expr</var> *= <var>expr</var>
+<var>expr</var> /= <var>expr</var>
+<var>expr</var> %= <var>expr</var>
+++<var>expr</var> <var>expr</var>++
+--<var>expr</var> <var>expr</var>--
+<var>expr</var> == <var>expr</var>
+<var>expr</var> === <var>expr</var>
+<var>expr</var> != <var>expr</var>
+<var>expr</var> !== <var>expr</var>
+<var>expr</var> &lt; <var>expr</var> <var>expr</var> &lt;= <var>expr</var>
+<var>expr</var> &gt; <var>expr</var> <var>expr</var> &gt;= <var>expr</var>
+<var>expr</var> && <var>expr</var>
+<var>expr</var> || <var>expr</var>
+!<var>expr</var>
+<var>int-expr</var> & <var>int-expr</var>
+<var>int-expr</var> &= <var>int-expr</var>
+<var>int-expr</var> | <var>int-expr</var>
+<var>int-expr</var> |= <var>int-expr</var>
+<var>int-expr</var> ^ <var>int-expr</var>
+<var>expr</var> &lt;&lt; <var>expr</var>
+<var>expr</var> &lt;&lt;= <var>expr</var>
+<var>expr</var> &lt;&lt;&lt; <var>expr</var>
+<var>expr</var> &gt;&gt; <var>expr</var>
+<var>expr</var> &gt;&gt;= <var>expr</var>
+<var>expr</var> &gt;&gt;&gt; <var>expr</var></pre></section>
+<section>
+  <header>String Expressions</header>
+<pre><var>"a,b,c,d"</var> ~/ <var>","</var> <comment>// "a"</comment>
+<var>"a,b,c,d"</var> ~% <var>","</var> <comment>// "b,c,d"</comment>
+<var>"a,b,c,d"</var> /~ <var>","</var> <comment>// "a,b,c"</comment>
+<var>"a,b,c,d"</var> %~ <var>","</var> <comment>// "d"</comment></pre></section>
+<section>
+  <header>Auxiliary Expressions</header>
+<pre>typeof <var>expr</var>
+new <var>classname</var>
+<var>expr</var>[<var>expr</var>]
+<var>expr</var> like <var>expr</var>
+<var>expr</var> !like <var>expr</var>
+<var>expr</var> instanceof <var>class</var>
+<var>expr</var> !instanceof <var>class</var>
+<var>expr</var> in <var>collection</var>
+<var>expr</var> !in <var>collection</var></pre></section>
+<section>
+  <header>Function calls</header>
+<pre><var>func</var>()
+<var>func</var>(p1,p2,&hellip;)</pre>
+<caption>Stringizier calls:</caption>
+<pre>$<var>func</var>(&hellip;<var>text</var>&hellip;)
+$<var>func</var>(&hellip;{<var>expr</var>}&hellip;{<var>expr</var>})</pre>
+<caption>Object passing calls:</caption>
+<pre><var>func</var>{ a:1, b:2, &hellip; }</pre>
+<caption>Method calls:</caption>
+<pre><var>expr</var>.<var>name</var>(p1,p2,&hellip;)
+<var>expr</var>.$<var>name</var>(&hellip;<var>text</var>&hellip;)
+<var>expr</var>.<var>name</var>{ a:1, b:2, &hellip; }</pre>
+</section>
+
+<section>
+  <header>Function declarations</header>
+<pre>function <var>name</var>() {&hellip;}
+function <var>name</var>(p1,p2,&hellip;) {&hellip;}</pre>
+<caption>Addon methods</caption>
+<pre>function <var>class</var>.<var>name</var>() {&hellip;}
+function <var>obj</var>.<var>name</var>(p1,p2,&hellip;) {&hellip;}
+</pre>
+<caption>Optional parameters</caption>
+<pre>function <var>name</var>(p1=1,p2=2) {&hellip;}
+function <var>name</var>(p1,rest..) {&hellip;}
+</pre>
+</section>
+
+<section>
+  <header>Lambda functions</header>
+<caption>"This" lambdas</caption>  
+<pre>: p1,p2 : <var>statement</var>
+: p1,p2 { <var>statements&hellip;</var> }</pre>
+<caption>"That" lambdas</caption>  
+<pre>| p1,p2 | <var>statement</var>
+| p1,p2 { <var>statements&hellip;</var> }</pre>
+</section>
+
+<section>
+  <header>Async functions</header>
+<pre>async function (p1,p2) {
+  <var>statements&hellip;</var>
+  var r = await <var>promise</var>;
+  <var>statements&hellip;</var>
+}</pre>
+</section>
+
+<section>
+  <header>Generator functions</header>
+<pre>function* (p1,p2) {
+  <var>statements&hellip;</var>
+  yield <var>expr</var>;
+  <var>statements&hellip;</var>
+}</pre>
+</section>
+
+<section>
+  <header>Event handlers</header>
+<pre>event <var>name</var> { &hellip; }
+event <var>name</var> $(<var>selector</var>) { &hellip; }
+event <var>name</var> $(<var>selector</var>) (evt) { &hellip; }
+event <var>name</var> $(<var>selector</var>) (evt,that) { &hellip; }</pre>
+</section>
+
+<section>
+  <header>Macro constants</header>
+<pre>__FILE__   <comment>// full path of the file</comment>
+__FOLDER__ <comment>// path of the file's folder</comment>
+__LINE__   <comment>// current line number</comment>
+__TRACE__  <comment>// stack trace</comment>
+</pre>
+</section>
+
+<section>
+  <header>Debug</header>
+<pre>assert <var>expr</var>;
+assert <var>expr</var> : <var>expr1</var> <var>expr2</var> ...; 
+
+debug [<var>channel</var>] : <var>expr1</var> <var>expr2</var> ...; 
+debug [<var>channel</var>] ( ... {<var>expr1</var>} ... ); 
+
+debug break; 
+debug namespace; 
+debug stacktrace;</pre></section>
+
+
+    </body>
+</html>
