@@ -227,12 +227,32 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
       SCROLL_SLIDER_PRESSED,
   };
 
+  enum SCROLL_SOURCE {
+    SCROLL_SOURCE_UNKNOWN,
+    SCROLL_SOURCE_KEYBOARD,  // SCROLL_PARAMS::reason <- keyCode
+    SCROLL_SOURCE_SCROLLBAR, // SCROLL_PARAMS::reason <- SCROLLBAR_PART 
+    SCROLL_SOURCE_ANIMATOR,
+  };
+
+  enum SCROLLBAR_PART {
+    SCROLLBAR_BASE,       
+    SCROLLBAR_PLUS,       
+    SCROLLBAR_MINUS,      
+    SCROLLBAR_SLIDER,     
+    SCROLLBAR_PAGE_MINUS, 
+    SCROLLBAR_PAGE_PLUS,  
+    SCROLLBAR_CORNER,     
+  };
+
+
   struct SCROLL_PARAMS
   {
       UINT      cmd;          // SCROLL_EVENTS
       HELEMENT  target;       // target element
       INT       pos;          // scroll position if SCROLL_POS
       BOOL      vertical;     // true if from vertical scrollbar
+      UINT      source;       // SCROLL_SOURCE
+      UINT      reason;       // key or scrollbar part
   };
 
   enum GESTURE_CMD
