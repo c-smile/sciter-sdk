@@ -123,6 +123,7 @@ int CALLBACK WinMain(HINSTANCE hInstance,
     
 	::SciterLoadFile(wnd, GetUrl());
 	::ShowWindow(wnd, SW_SHOWNORMAL);
+  //::SciterLoadFile(wnd, GetUrl());
 
 /*  sciter::value undefined, map = sciter::value::from_string(aux::chars_of(L"{'0': 0, '1': 1, '2': 2, '3': 3}"), CVT_JSON_LITERAL);
   map.set_item(L"1", undefined);

@@ -67,7 +67,8 @@ function colorize()
     var firstElement;
     var lastElement;
    
-    while:loop(var tt = tz.token()) {
+    while:loop(var tt = tz.token()) 
+    {
       var el = tz.element;
       if( !firstElement ) firstElement = el;
       lastElement = el;

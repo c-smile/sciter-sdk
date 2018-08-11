@@ -53,10 +53,10 @@
       }
       
       function self.ready() {
-        var w = self.intrinsicWidthMax();
-        var h = self.intrinsicHeight(w);
-        view.move(100,100,w,h,true);
-        view.connectToInspector(); // connect to inspector 
+        //var w = self.intrinsicWidthMax();
+        //var h = self.intrinsicHeight(w);
+        //view.move(100,100,w,h,true);
+        self.post(::view.connectToInspector()); // connect to inspector 
       }
     
     </script>
