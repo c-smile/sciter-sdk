@@ -127,6 +127,12 @@
       for(var (n,record) in records)
         record.highlighted = (n & 1) != 0;
     }
+
+    $(#goToRecord) << event click() {
+      var rn = $(#recordToGo).value;
+      vlist.firstIndex = rn;
+    }
+
     
   }
   
@@ -149,6 +155,8 @@
   <p>test custom setupItemView() function</p>
   <button #updateHighlighted>Highlight (set 'record.highlighted = true') to odd items</button> 
   <button #removeHighlighted>Remove highlightion</button> 
+
+  <input|integer #recordToGo value=25 step=1> <button #goToRecord>Go To Record</button> 
 
   <vlist>
     <li><span(index)/> <span(caption)>???</span></li>

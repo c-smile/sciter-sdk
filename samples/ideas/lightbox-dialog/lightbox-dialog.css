@@ -1,7 +1,7 @@
 
 body.dialog-shown {
-  filter: blur(15dip);
-  foreground-color:rgba(128,128,128,0.5);
+  filter: blur(25dip);
+  foreground-color:rgba(0,0,0,0.1);
   transition: foreground-color(linear,400ms);
 }
 
@@ -24,7 +24,7 @@ div.dialog-frame
   
   //background-color: window;
   //border-radius: 0 0 10dip 10dip; /* square top / round bottom */
-  
+  cursor:default;
   padding:10px;
 }
 

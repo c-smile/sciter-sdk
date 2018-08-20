@@ -59,7 +59,7 @@ function dialog(params)
   else {
     // if we've got dialog body as a reference of existing Element 
     prev_parent = body.parent;
-    prev_index = body.index;
+    prev_index = body.nodeIndex;
     dlg.insert(body,1); // insert it after the <caption>
   }  
   
@@ -136,9 +136,8 @@ function dialog(params)
   if(prev_parent) //we were using existing DOM element so put it back
     prev_parent.insert(body,prev_index);
   
-  dlg.detach(); // remove it from the DOM
+  dlg.remove(); // remove it from the DOM
   docBody.attributes.removeClass("dialog-shown");
-  //view.update(); 
   
   if(params.returns == #values && ret_val == #ok)
     return body.value;

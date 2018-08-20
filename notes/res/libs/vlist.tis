@@ -507,10 +507,12 @@ function VirtualList(params) {
         var sy = list.scroll(#top);
         return sy / item_height;
       }
-      set
-        list.scrollTo(0, v * item_height, false);
+      set {
+        var y = v * item_height;
+        list.scrollTo(0, y, false);
+        onScrollTo(v); 
+      }
     } 
-
 
     
     // returns "record view" - DOM element that represents nth record.

@@ -1,0 +1,70 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+//plaintext { overflow:scroll-indicator; }
+
+        </style>
+        <script type="text/tiscript">
+
+function crackScrollReason(reason) {
+  var vertical = (reason & 0x80000000) != 0;
+  var cause = (reason & 0x7FFF0000) >> 16;
+  var part = (reason & 0xFFFF);
+
+  cause = [#SCROLL_SOURCE_UNKNOWN,
+           #SCROLL_SOURCE_WHEEL,
+           #SCROLL_SOURCE_KEYBOARD,
+           #SCROLL_SOURCE_SCROLLBAR,
+           #SCROLL_SOURCE_ANIMATOR][cause];
+
+  if( cause == #SCROLL_SOURCE_SCROLLBAR ) 
+    part = [ #BASE,
+             #PLUS,
+             #MINUS,
+             #SLIDER, 
+             #PAGE_MINUS,
+             #PAGE_PLUS,
+             #CORNER] [part];
+  return (vertical,cause,part);
+}
+
+function self.ready() {
+  var plaintext = $(plaintext);
+  plaintext.value = self.outerHtml;
+
+
+  const SCROLL_CMD = 
+  [ #SCROLL_HOME,
+    #SCROLL_END,
+    #SCROLL_STEP_PLUS,
+    #SCROLL_STEP_MINUS,
+    #SCROLL_PAGE_PLUS,
+    #SCROLL_PAGE_MINUS,
+    #SCROLL_POS,
+    #SCROLL_SLIDER_RELEASED,
+    #SCROLL_CORNER_PRESSED,
+    #SCROLL_CORNER_RELEASED,
+    #SCROLL_SLIDER_PRESSED ];
+
+  plaintext.onScroll = function(evt) {
+    if( evt.type == Event.SCROLL_POS)
+    {
+      var (vertical,cause,part) = crackScrollReason(evt.reason);
+      debug scroll: vertical, cause, part;
+    }
+    else {
+      var (vertical,cause,part) = crackScrollReason(evt.reason);
+      debug scroll: SCROLL_CMD[evt.type], vertical, cause, part; 
+    }
+  }
+}
+        </script>
+    </head>
+    <body>
+
+    <plaintext/>
+
+    </body>
+</html>

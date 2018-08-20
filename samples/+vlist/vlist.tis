@@ -419,7 +419,7 @@ function VirtualList(params) {
       if(generateEvent)
         list.postEvent("change");
     }
-                
+               
     list.onMouse = function(evt) {
       if( evt.type == Event.MOUSE_DOWN )
       {
@@ -454,6 +454,18 @@ function VirtualList(params) {
       get return records.indexOf(current_record) >= 0? current_record : null;
       set { setCurrent(records.indexOf(v),false); }
     } 
+
+    list.firstIndex = property(v) {
+      get { 
+        var sy = list.scroll(#top);
+        return sy / item_height;
+      }
+      set {
+        var y = v * item_height;
+        list.scrollTo(0, y, false);
+        onScrollTo(v); 
+      }
+    }     
     
     // returns "record view" - DOM element that represents nth record.
     //         or null if the record is out of the sliding window 
