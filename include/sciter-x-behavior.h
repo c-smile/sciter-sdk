@@ -304,6 +304,7 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
       DRAW_BACKGROUND = 0,
       DRAW_CONTENT = 1,
       DRAW_FOREGROUND = 2,
+      DRAW_OUTLINE = 3,
   };
 
   typedef struct SCITER_GRAPHICS SCITER_GRAPHICS;

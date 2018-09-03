@@ -85,9 +85,6 @@ int uimain(std::function<int()> run ) {
   pwin->load(WSTR("this://app/default-else.htm"));
 #endif // WINDOWS
 
-
-
-
   pwin->expand();
 
   return run();
