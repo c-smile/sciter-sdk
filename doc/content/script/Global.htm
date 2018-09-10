@@ -1,11 +1,12 @@
 ﻿<html>
   <head>
-    <meta name="generator" content="h-smile:richtext"/>
+    <meta name="generator" content="h-smile:richtext">
   </head>
 <body>
   <h1>Global namespace</h1>
   <p>Following functions and variables that &quot;live&quot; in global namespace so they accessible in script without any namespace designator, e.g.</p>
-  <pre>var r = <em>eval</em>( <font color="#990099">&quot; 348.0 / 23.7 &quot;</font> );<br/><em>stdout</em>.printf( <font color="#990099">&quot;%f&quot;</font> , r );
+  <pre>var r = <em>eval</em>( <font color="#990099">&quot; 348.0 / 23.7 &quot;</font> );<em>
+stdout</em>.printf( <font color="#990099">&quot;%f&quot;</font> , r );
 </pre>
   <dl>
     <h2>Global variables</h2>
@@ -22,7 +23,7 @@
       <div><strong>( </strong><em>input</em><strong> : </strong>string|stream [, <em>namespace</em>&nbsp;:object | <i>namespaces</i>: array of objects&nbsp;]<strong> ) </strong>: <em>value</em></div>
       <p>Evaluates (interprets) <em>input</em> and returns its value. If <em>input </em>is a string then function tries to interpret it as if it contains script source code. If <em>input </em>is a <em>stream object</em> then it compiles and executes source code from it.</p>
       <p>Example: after execution of the following:</p>
-      <pre>var obj = eval( <font color="#990099">&quot; ({ one:1, two:2 }) &quot;</font> );
+      <pre>var obj = eval( <font color="#990099">&quot;({ one:1, two:2 })&quot;</font> );
 </pre>
       <p>variable <em>obj</em> will contain object having two fields: <em>one</em> and <em>two.</em></p>
       <p><em>environment</em> is an environment object - if provided then script execution takes place in the namespace of that object.</p>
@@ -38,29 +39,29 @@ var res = eval( &quot;one + two&quot;, env);
       <p>a.k.a. JSON++ data parser.</p>
       <p>Evaluates (interprets) data literal at the <em>input</em> and returns its value. Input shall contain valid data literal expression otherwise parsing exception will be thrown.</p>
       <p>Example 1: after execution of the following:</p>
-      <pre>var obj = parseValuel( <font color="#990099">&quot; { one:1, two:2 } &quot;</font> );
+      <pre>var obj = parseData( <font color="#990099">&quot; { one:1, two:2 } &quot;</font> );
 </pre>
       <p>variable <em>obj</em> will contain object having two fields: <em>one</em> and <em>two.</em></p>
       <div>Example 2: after execution of the following:</div>
-      <pre>var v = parseValuel( <font color="#990099">&quot;3.1415926&quot;</font> );
+      <pre>var v = parseData( <font color="#990099">&quot;3.1415926&quot;</font> );
 </pre>
       <p>variable <em>v</em> will contain float number 3.1415926 - parsed value of the string<em>.</em></p>
-      <p>Main difference from the <em>eval</em> function is that <em>parseValue</em> will not parse and execute any function declarations or functions so it is safe to use this function when data is coming from unknown sources e.g. in AJAX like of interactions.</p></dd>
+      <p>Main difference from the <em>eval</em> function is that <em>parseData</em> will not parse and execute any function declarations or functions so it is safe to use this function when data is coming from unknown sources e.g. in AJAX like of interactions.</p></dd>
     <dt>emit</dt>
     <dd>
-      <div><strong>( </strong><em>input</em> :string|stream,<strong/><em>output </em>:stream<strong/>[, <em>env</em> :object ] <strong>)</strong> :value</div>
+      <div><strong>( </strong><em>input</em> :string|stream,<strong></strong><em>output </em>:stream<strong></strong>[, <em>env</em> :object ] <strong>)</strong> :value</div>
       <p>Evaluates the <em>input</em> stream in serverScript mode (see below) and emits result to the <em>output</em> stream. Function assumes that executable script at the <em>input</em> is contained in &lt;% %&gt; brackets. Function returns result of first standalone <em>return</em> statement in the input stream.</p>
       <p><em>env</em> is an environment object, it allows to pass parameters to the input script from the caller.</p></dd>
     <dt>load</dt>
     <dd>
       <div><strong>( </strong><em>source</em> [, <em>asServerScript</em>]<strong> )</strong> :true|false</div>
       <p>Loads (compiles and executes) <em>source</em>. Source here either string - <strong>file name</strong> or <strong>stream object</strong>. If <em>asServerScript</em> provided and equals to <em>true </em>then source is interpreted as a text with embedded script like PHP or ASP web page:</p>
-      <p>&lt;html&gt; ... <font color="#990099">&lt;%</font> =some_script_function(); <font color="#990099">%&gt;</font>... &lt;/html&gt;</p>
-      <p>These two fragments:</p>
-      <pre><strong>load</strong>( <font color="#990099">&quot;c:/myscripts/test.js&quot;</font> );
+      
+      <pre>&lt;html&gt; ... &lt;% =some_script_function(); %&gt;... &lt;/html&gt;</pre><p>These two fragments:</p>
+      <pre><strong>load</strong>( <font color="#990099">&quot;c:/myscripts/test.tis&quot;</font> );
 </pre>
       <p>and</p>
-      <pre>var s = Stream.openFile(<font color="#990099">&quot;c:/myscripts/test.js&quot;</font>,<font color="#990099">&quot;r&quot;</font>); <strong>load</strong>( s );
+      <pre>var s = Stream.openFile(<font color="#990099">&quot;c:/myscripts/test.tis&quot;</font>,<font color="#990099">&quot;r&quot;</font>); <strong>load</strong>( s );
 </pre>
       <p>are equivalent.</p>
       <p>Script execution takes place in the namespace of the caller of the function.</p></dd>
@@ -70,15 +71,15 @@ var res = eval( &quot;one + two&quot;, env);
       <p>Loads compiled bytecodes defined by <em>source</em>. Source here either string - <strong>file name</strong> or <strong>stream object</strong>.</p></dd>
     <dt>compile</dt>
     <dd>
-      <div><strong>( </strong><em>input</em> : filename | Stream, <em>output</em>: filename | Stream<strong> [, </strong><em>asServerScript</em><strong/>: true | false<strong> ] ) </strong>: true | false</div>
+      <div><strong>( </strong><em>input</em> : filename | Stream, <em>output</em>: filename | Stream<strong> [, </strong><em>asServerScript</em><strong></strong>: true | false<strong> ] ) </strong>: true | false</div>
       <p>Calls built-in compiler to compile <em>input. </em>Writes output bytecodes into<em> out </em>stream or file. Bytecodes can be loaded (executed) later by <em>loadbc</em> function.</p></dd>
     <dt>store</dt>
     <dd>
-      <div><strong>( </strong><em>filename</em> | <em>stream</em>, <em>value</em><strong> ) </strong>:<strong/><em>true</em> | <em>false</em></div>
+      <div><strong>( </strong><em>filename</em> | <em>stream</em>, <em>value</em><strong> ) </strong>:<strong></strong><em>true</em> | <em>false</em></div>
       <p>Stores the <em>value</em> into file <em>filename </em>or <em>stream </em>in binary form<em>. </em>Returns <em>true</em> if data was stored successfully.</p></dd>
     <dt>fetch</dt>
     <dd>
-      <div><strong>( </strong><em>filename</em> | <em>stream</em><strong> ) </strong>:<strong/>value | null</div>
+      <div><strong>( </strong><em>filename</em> | <em>stream</em><strong> ) </strong>:<strong></strong>value | null</div>
       <p>Restores value previously written into the file (<em>filename</em>) or <em>stream</em> by function <em>store.</em> Returns value or <em>null</em> if operation failed.</p></dd>
     <dt>hash</dt>
     <dd>
@@ -93,7 +94,7 @@ var res = eval( &quot;one + two&quot;, env);
 Foo.bar = 1; // adding property 'bar' to the
              // Foo function (that is an object too)
 for(var (k,v) in Foo )
-  ... // here you should see k equal to #bar <br/>      // on some iteration
+  ... // here you should see k equal to #bar <br>      // on some iteration
 </pre></dd>
     <dt>rand</dt>
     <dd>
@@ -125,7 +126,7 @@ for(var (k,v) in Foo )
       <div>( <em>string</em> ) : symbol</div>
       <p>Function returns symbol of the string. Internally symbol is 32bit value so symbol space is limited - it makes no sense to &quot;symbolize&quot; arbitrary strings.</p></dd>
     <dt>color</dt>
-    <dd>(<strong>r</strong>: int, <strong>g</strong>: int, <strong>b</strong>: int [, <strong>opacity</strong>: int | float]) : color <br/>( colorStr: string ) : color
+    <dd>(<strong>r</strong>: int, <strong>g</strong>: int, <strong>b</strong>: int [, <strong>opacity</strong>: int | float]) : color <br>( colorStr: string ) : color
       <p>The <em>color</em> function constructs color value from red, green, blue and opacity components or by parsing colorStr that can be #RRGGBB or name of the CSS color.</p></dd>
     <dt>em</dt>
     <dd>(<strong> v</strong>: int | float ) : length, these functions constructs length values of correspondent type.</dd>
@@ -155,7 +156,7 @@ for(var (k,v) in Foo )
     <dt>JSON.parse</dt>
     <dd>(<strong>text</strong>:string[, <strong>reviver</strong>]) : value
       <p>Parses JSON string. &nbsp;The <em>reviver</em> is a <code>function (key, value): value</code> or <code>function (key, value): (key,value</code>) - allows to transform parsed into another value or key/value pair.</p></dd></dl>
-	<p>URL namespace</p>
+	<h2>URL namespace</h2>
 	<p>Contains functions designated to work with URLs:</p>
 	<dl><dt>URL.parse</dt>
 		<dd>(<b>url</b>:string) : object<p>The function parses url and returns object containing URL components:</p>
@@ -180,10 +181,14 @@ for(var (k,v) in Foo )
 			</dd><dt>URL.absolute</dt>
 		<dd>( <b>relUrl</b>: string, <b>baseUrl</b>: string ) : string<p>The function combines relative URL with base (absolute) URL.</p>
 			</dd><dt>URL.encode</dt>
-		<dd>( str: string ) : string<p>The function encodes all non-url characters, space for example will be replaced by <code>%20</code> , etc.</p></dd><dt>URL.encodeParam</dt>
-		<dd>( str: string ) : string<p>The function encodes all characters&nbsp;except the following: alphabetic, decimal digits, <code>- _ . ! ~ * ' ( )</code></p>
+		<dd>( <b>str</b>: string ) : string<p>The function encodes all non-url characters, space for example will be replaced by <code>%20</code> , etc.</p></dd><dt>URL.encodeParam</dt>
+		<dd>( <b>str</b>: string ) : string<p>The function encodes all characters&nbsp;except the following: alphabetic, decimal digits, <code>- _ . ! ~ * ' ( )</code></p>
 			</dd><dt>URL.decode</dt>
-		<dd>( str: string&nbsp;) : string<p>The function decodes URL encoded string to its original form.</p></dd></dl><p/>
+		<dd>( <b>str</b>: string&nbsp;) : string<p>The function decodes URL encoded string to its original form.</p></dd>
+		<dt>URL.toPath</dt>
+		<dd>( <b>fileUrl</b>: string ) : string<p>The function converts <code>&quot;file://...&quot;</code> string to a path to file - path string suitable for target platform.&nbsp;</p></dd>
+		<dt>URL.fromPath</dt>
+		<dd>( <b>path</b>: string ) : string<p>The function converts&nbsp;path (like <code>C:\User\Desktop</code>) to file URL (like <code>file://C:/User/Desktop</code>).</p></dd></dl><p></p>
 </body>
 
 </html>
