@@ -603,7 +603,7 @@ enum SCITER_CREATE_WINDOW_FLAGS {
    SW_RESIZEABLE = (1 << 2), // has resizeable frame
    SW_TOOL       = (1 << 3), // is tool window
    SW_CONTROLS   = (1 << 4), // has minimize / maximize buttons
-   SW_GLASSY     = (1 << 5), // glassy window ( DwmExtendFrameIntoClientArea on windows )
+   SW_GLASSY     = (1 << 5), // glassy window - supports "Acrylic" on Windows and "Vibrant" on MacOS. 
    SW_ALPHA      = (1 << 6), // transparent window ( e.g. WS_EX_LAYERED on Windows )
    SW_MAIN       = (1 << 7), // main window of the app, will terminate the app on close
    SW_POPUP      = (1 << 8), // the window is created as topmost window.

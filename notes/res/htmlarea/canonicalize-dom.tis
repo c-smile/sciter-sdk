@@ -41,7 +41,10 @@ function canonicalizeDOM(elHtml, params) {
     const TABLE_BODY_TAG = 5;   // <thead>,<tbody>,<tfoot>
     const TABLE_ROW_TAG = 6;    // <tr>
     const TABLE_CELL_TAG = 7;   // <td>,<th>
-    const INFO_TAG = 8;         // <link>,<style>,<head> ...    
+    const INFO_TAG = 8;         // <link>,<style>,<head> ... 
+
+    const inputElements = ["input","textarea","button","widget"];
+   
 
     // process attributes
     // returns true if element has no attributes
@@ -51,12 +54,14 @@ function canonicalizeDOM(elHtml, params) {
     // note, we deliberately exclude "class" and "style" attributes 
 
     function processAttributes(el) {
-       for( var n = el.attributes.length - 1; n >= 0; --n ) {
-         if( el.attributes.name(n) in requiredAttribute ) 
-           continue;
-         el.attributes.remove(n);
-       }
-       return el.attributes.length == 0;
+      if( el.tag in inputElements )
+        return false; // do not reduce attributes in inputs
+      for( var n = el.attributes.length - 1; n >= 0; --n ) {
+        if( el.attributes.name(n) in requiredAttribute ) 
+          continue;
+        el.attributes.remove(n);
+      }
+      return el.attributes.length == 0;
     }
 
     // called for elements that have no attributes

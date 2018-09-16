@@ -12,7 +12,6 @@ static int native_get_element_uid(sciter::value vel) {
   return (int)el.get_element_uid();
 }
 
-
 static sciter::value native_api() {
 
   sciter::value api_map;
@@ -56,7 +55,7 @@ static sciter::value test_image_generation()
 
 class frame: public sciter::window {
 public:
-  frame() : window(SW_TITLEBAR | SW_RESIZEABLE | SW_CONTROLS | SW_MAIN | SW_ENABLE_DEBUG) {}
+  frame() : window(SW_TITLEBAR | SW_RESIZEABLE | SW_CONTROLS | SW_MAIN | SW_GLASSY | SW_ENABLE_DEBUG) {}
 
   BEGIN_FUNCTION_MAP
     FUNCTION_0("nativeApi", native_api);
