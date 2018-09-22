@@ -10,7 +10,19 @@
 
 #include "sciter-x.h"
 
-bool get_layered_resource(const char* name, const byte* &data, size_t& data_length);
+#include "resources.cpp"
+
+bool load_resource_data(LPCWSTR uri, LPCBYTE& pbytes, UINT& nbytes ) {
+    aux::wchars wu = aux::chars_of(uri);
+    if(wu.like(WSTR("this://app/*"))) {
+        // try to get them from archive first
+        aux::bytes adata = sciter::archive::instance().get(wu.start+11);
+        pbytes = adata.start;
+        nbytes = adata.length;
+        return true;
+    }
+    return false;
+}
 
 UINT SciterViewCallback( LPSCITER_CALLBACK_NOTIFICATION pns, LPVOID callbackParam )
 {
@@ -18,16 +30,7 @@ UINT SciterViewCallback( LPSCITER_CALLBACK_NOTIFICATION pns, LPVOID callbackPara
         case SC_LOAD_DATA:
         {
             LPSCN_LOAD_DATA pc = LPSCN_LOAD_DATA(pns);
-            aux::w2a auri(pc->uri);
-            if( auri().like( "res:*" ) ) {
-                LPCBYTE pdata; size_t data_length;
-                if( get_layered_resource( auri.c_str() + 4, pdata, data_length ) )
-                {
-                    pc->outData = pdata;
-                    pc->outDataSize = UINT(data_length);
-                    return LOAD_OK;
-                }
-            }
+            load_resource_data(pc->uri,pc->outData,pc->outDataSize);
             return LOAD_OK;
         }
         case SC_DATA_LOADED: break;
@@ -45,9 +48,11 @@ extern "C" HWINDOW startup()
     frame.right = 100 + 500 + 1;
     frame.bottom = 100 + 500 + 1;
     
+    sciter::archive::instance().open(aux::elements_of(resources)); // bind resources[] (defined in "resources.cpp") with the archive
+    
     HWINDOW hw = SciterCreateWindow(SW_MAIN | SW_ALPHA | SW_TOOL, &frame, 0,0,0);
     SciterSetCallback(hw, &SciterViewCallback, nullptr);
-    SciterLoadFile(hw, WSTR("res:default.htm"));
+    SciterLoadFile(hw, WSTR("this://app/default.htm"));
     
     return hw;
 }
