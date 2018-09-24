@@ -136,9 +136,17 @@ Settings.add
 
 event click $(button#help)
 {
+  var path = System.home("../doc/main.htm");
+  if(!System.scanFiles(path))
+    path = System.home("../../doc/main.htm");
+  if(!System.scanFiles(path)) {
+    view.msgbox(#alert, path + " not found");
+    return true;
+  }
+
   view.window 
   {
-    url: "file://" + System.home("../../doc/main.htm"),
+    url: URL.fromPath(path),
     type: View.FRAME_WINDOW,
     state: View.WINDOW_SHOWN,
     alignment:5,
