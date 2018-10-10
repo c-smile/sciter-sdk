@@ -5,9 +5,10 @@
     
     widget[type="auto-complete"] {
       prototype:AutoComplete;
+      display:block;
       flow:stack;
-      border:1px solid red;
-      padding:2px;
+      border:1dip solid red;
+      padding:2dip;
       width:8em;
       font:system;
     }
@@ -15,16 +16,11 @@
     widget[type="auto-complete"] > span { 
       background: none;
       border:none;
-      padding:0;
+      padding:1dip;
       margin:0;
       display:block;
-      size:*
-    }
-    
-    widget[type="auto-complete"] > input {
-      width: max-content;
-      min-width:1px;
-      background:white;
+      height:1.2em;
+      width:*
     }
     
     widget[type="auto-complete"] > span {
@@ -37,6 +33,10 @@
       display:none;
       background:infobackground;
       border:1px solid black;
+    }
+
+    widget[type="auto-complete"] > popup > text {
+      behavior:clickable;  // generates click events
     }
 
     widget[type="auto-complete"] > popup > text:hover {
@@ -52,23 +52,26 @@
       
         function attached() {
           this.candidate = this.$(span);
-          var input = this.input = this.$(input);
+          this.input = this.$(input);
           this.candidates = this.$(popup);
-          this.subscribe("change","input", :: (this super).onTextChange() );
-          this.subscribe("mouseup","span", :: input.state.focus = true );
-          this.subscribe("click","popup>text", :: (this super).setText(this.text) );
         }
+
+        event change $(input) { this.onTextChange(); }
+        event change $(mouseup) { this.input.state.focus = true; }
+        event click  $(popup>text) (evt,elText) { this.setText(elText.text, elText.attributes["data-id"]) }
         
         function onTextChange()
         {
           var text = this.input.value;
           if( text )
           {
+            var caretPos = this.input.selectionStart();
             this.input.value = text = text.toUpperCase();
+            this.input.setSelection(caretPos,caretPos); 
             var list = this.getCandidates(text);
             this.candidates.clear();
             for(var li in list) 
-              this.candidates.$append(<text>{li}</text>);
+              this.candidates.$append(<text data-id="{li.id}">{li.text}</text>);
             this.candidate.value = list.length ? list[0] : "";
             this.popup( this.candidates , (8 << 16) | 2);
             this.input.state.focus = true;
@@ -85,19 +88,21 @@
           var pattern = forText + "*";
         
           return [
-            "ABCDEF",
-            "ABCDEFG",
-            "BCDEFG",
-            "BCDEFGH",
-            "CDEFGH",
-            "DEFGHI",
-          ].filter(:item: item like pattern) ;
+            {text:"ABCDEF", id:1 },
+            {text:"ABFOO", id:2 },
+            {text:"BCDEFG", id:3 },
+            {text:"BCDEFGH", id:4 },
+            {text:"CDEFGH", id:5 },
+            {text:"DEFGHI", id:6 },
+          ].filter(:item: item.text like pattern) ;
         }
         
-        function setText(txt) {
+        function setText(txt,id) {
           this.candidates.state.popup = false;
           this.input.value = txt;
+          this.input.setSelection(0,txt.length); 
           this.input.state.focus = true;
+          debug item: text, id;
         }
         
       }
@@ -108,10 +113,9 @@
 <body>
   Type "AB" or "CD" or "D":
   <widget|auto-complete>
-    <span></span>
-    <input|text></text>
-    <popup />
+    <span/>
+    <input|text/>
+    <popup/>
   </widget>
-
 </body>
 </html>

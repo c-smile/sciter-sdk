@@ -4,7 +4,8 @@
     <style></style>
     <script type="text/tiscript">
     
-      var out = $(pre#out);
+      var outUrl = $(pre#out-url);
+      var outPath = $(pre#out-path);
     
       self.on("click","#open",function(){
       
@@ -13,8 +14,15 @@
         const initialPath = System.path(#USER_DOCUMENTS);
         const caption = "Select file to open";
       
-        var fn = view.selectFile(#open, filter, defaultExt, initialPath, caption );
-        out.text = fn || "{rejected}";
+        var url = view.selectFile(#open, filter, defaultExt, initialPath, caption );
+        if( url ) {
+          outUrl.text = url;
+          outPath.text = URL.toPath(url);
+        } else {
+          outUrl.text = "{rejected}";
+          outPath.text = "";
+        }
+        
         return true;
       });
       
@@ -25,9 +33,14 @@
         const initialPath = System.path(#USER_DOCUMENTS,"newdoc");
         const caption = "Select file to save";
       
-        var fn = view.selectFile(#save, filter, defaultExt, initialPath, caption );
-        out.text = fn || "{rejected}";
-        return true;
+        var url = view.selectFile(#save, filter, defaultExt, initialPath, caption );
+        if( url ) {
+          outUrl.text = url;
+          outPath.text = URL.toPath(url);
+        } else {
+          outUrl.text = "{rejected}";
+          outPath.text = "";
+        }
       });
       
       
@@ -37,8 +50,10 @@
   <h2>view.selectFile() demo</h2>
   <button #open>Open</button>
   <button #save>Save</button>
-  <pre#out>
-  </pre>
+  <p>URLs:</p>
+  <pre#out-url></pre>
+  <p>Paths:</p>
+  <pre#out-path></pre>
 
 </body>
 </html>

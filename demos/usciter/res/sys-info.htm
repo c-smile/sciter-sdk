@@ -86,6 +86,7 @@
       $(#version).text = String.printf("%d.%d.%d.%d", 
   		  (Sciter.VERSION >> 16) & 0xffff, Sciter.VERSION & 0xffff,
   		  (Sciter.REVISION >> 16) & 0xffff, Sciter.REVISION & 0xffff);
+      $(#revision).text = Sciter.BUILD.toString();      
   	  $(#user).text = Sciter.userName();
   	  $(#machine).text = Sciter.machineName();
   	  $(#domain).text = Sciter.machineName(true);
@@ -109,7 +110,7 @@
 
   <section.info #info>
     <ul>
-      <header>Sciter contains:</header>  
+      <header>Sciter Engine contains:</header>  
       <li><b>H-SMILE</b> (HTML/CSS) and <b>TIScript</b> engines<br>of <a href="http://terrainformatica.com/">Terra Informatica Software, Inc.</a></li>
       <li><a href="https://skia.org/">Skia library</a>, sponsored and developed by Google.<br>Skia is used for rendering when the engine<br>is asked to do so.</li>
       <li><a href="https://github.com/nucleic/kiwi/">KIWI Cassowary Constraint Solver</a><br>by Chris Colbert and The Nucleic Development Team.</li>
@@ -119,8 +120,9 @@
   </section>
 
   <dl.info #system>
-	  <header#sciter>Sciter</header>
+	  <header#sciter>The Sciter</header>
 	  <dt>version:</dt>	   <dd #version></dd>
+    <dt>revision:</dt>   <dd #revision></dd>
     <header>System</header>
 	  <dt>OS type:</dt>	   <dd #os-type></dd>
 	  <dt>OS version:</dt> <dd #os-version></dd>

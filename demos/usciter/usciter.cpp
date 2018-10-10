@@ -69,11 +69,20 @@ public:
 
 int uimain(std::function<int()> run ) {
 
-  //sciter::debug_output_console console; - uncomment it if you will need console window
+  SciterSetOption(NULL, SCITER_SET_SCRIPT_RUNTIME_FEATURES, 
+                          ALLOW_FILE_IO | 
+                          ALLOW_SOCKET_IO |
+                          ALLOW_EVAL |
+                          ALLOW_SYSINFO );
+
+  //sciter::debug_output_console console; //- uncomment it if you will need console window
 
   sciter::archive::instance().open(aux::elements_of(resources)); // bind resources[] (defined in "resources.cpp") with the archive
 
   frame *pwin = new frame();
+
+  // example, setting "usciter" media variable, check https://sciter.com/forums/topic/debugging-issues/  
+  SciterSetMediaType(pwin->get_hwnd(), WSTR("desktop,usciter"));
 
   // note: this:://app URL is dedicated to the sciter::archive content associated with the application
 #if defined(WINDOWS)

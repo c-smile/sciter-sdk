@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style></style>
+        <script type="text/tiscript">
+
+include "../formation.tis";
+
+const data = [
+  {
+    name : "Type 1",
+    items: [
+      { name: "Type 1 Item 1" },
+      { name: "Type 1 Item 2" },
+    ]
+  },
+  {
+    name: "Type 2",
+    items: [
+      { name: "Type 2 Item 1" },
+      { name: "Type 2 Item 2" },
+    ]
+  },
+];
+     
+var root = formation( self );
+
+event click $(#show) { 
+  // show the formation structure:
+  view.msgbox( #information, root.toHtmlString());
+}
+
+event click $(#set) { 
+  root.value = { item_types: data};
+}
+
+        </script>
+    </head>
+    <body>
+
+<button#show>Show</button> <button#set>Set</button>
+
+<ul(item_types)>
+  <li>
+    <caption(name)/>
+    <ul(items)>
+      <li><text(name) /></li>
+    </ul>
+  </li>
+</ul>
+
+    </body>
+</html>

@@ -2,20 +2,20 @@
   <head>
     <meta name="generator" content="behavior:richtext">
   </head>
-<body id="test">
+<body>
   <h1>Sciter Architecture</h1>
   <p>Sciter is not using DOM model like <a href="http://www.w3.org/DOM">W3C DOM</a> as we have found it too complicated (<a href="http://www.w3.org/TR/1998/REC-DOM-Level-1-19981001/ecma-script-language-binding.html">76 different classes</a>, sic!).</p>
   <h2>DOM and Window classes</h2>
   <p>Sciter provides following 8 DOM and Window specific classes accessible in script:</p>
   <ul>
-    <li><em>Element</em> - DOM element. All HTML elements including document(root), frame, inputs, etc. are Element's in the Sciter.<ul>
-      <li><em>Attributes</em> - collection of named attributes of the html element.</li>
-      <li><em>Style</em> - collection of style attributes applied to the element.</li></ul></li>
-    <li><em>Image</em> - image object. Represents bitmap image. You can draw on the image using Graphics methods.</li>
-    <li><em>Graphics</em> - object wrapping drawing primitives. You can draw on surface of any Element and Image in the Sciter.</li>
-    <li><em>View</em> - represents Sciter window. Main Sciter window and Dialog are views.</li>
-    <li><em>Event</em> - represents current UI event.</li>
-    <li><em>Sciter</em> - is a global object holding Sciter application specific methods.</li></ul>
+    <li> <em>Element</em> - DOM element. All HTML elements including document(root), frame, inputs, etc. are Element's in the Sciter.<ul>
+      <li> <em>Attributes</em> - collection of named attributes of the html element.</li>
+      <li> <em>Style</em> - collection of style attributes applied to the element.</li></ul></li>
+    <li> <em>Image</em> - image object. Represents bitmap image. You can draw on the image using Graphics methods.</li>
+    <li> <em>Graphics</em> - object wrapping drawing primitives. You can draw on surface of any Element and Image in the Sciter.</li>
+    <li> <em>View</em> - represents Sciter window. Main Sciter window and Dialog are views.</li>
+    <li> <em>Event</em> - represents current UI event.</li>
+    <li> <em>Sciter</em> - is a global object holding Sciter application specific methods.</li></ul>
   <h2>View, document, frame and the root element.</h2>
   <p>Window that Sciter is attached to is represented by the View objects in script.</p>
   <p>Each view has <em>root</em> property - reference of the document loaded into the view. This is a root element of the loaded document. Root element in the Sciter is <code>&lt;html&gt;</code> element of the loaded document and there is no dedicated Document class. Document is really root node of element tree - <code>&lt;html&gt;</code> element and its children.</p>
@@ -40,9 +40,9 @@
 </pre>
   <p>go to that global document namespace. <em>self</em> and <em>view</em> global variables are members of this namespace.</p>
   <dl>
-    <dt><em>self</em></dt>
+    <dt> <em>self</em></dt>
     <dd>is a reference to the document (&lt;html&gt; node)</dd>
-    <dt><em>view</em></dt>
+    <dt> <em>view</em></dt>
     <dd>is a reference to the view object (usually it is a Sciter window)</dd></dl>
   <h3>Script execution</h3>
   <p>Sciter executes scripts as a last step of document loading - after &lt;/html&gt; tag is being parsed. So at the moment of any script execution DOM is established and scripts can refer to it.</p>

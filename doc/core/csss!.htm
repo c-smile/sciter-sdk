@@ -1,10 +1,10 @@
-<html>
+﻿<html>
   <head>
-    <meta name="generator" content="h-smile:richtext"/>
+    <meta name="generator" content="h-smile:richtext">
   </head>
 <body>
   <h1>H-SMILE core. CSSS! (css-script) language.</h1>
-  <h2>Intorduction</h2>
+  <h2>Introduction</h2>
   <p>CSSS! is an extension of classic CSS (Cascading Style Sheets) by the scripting to give it the ability to define some basic behavioral styles of elements.</p>
   <p>CSSS! script can appear in a) attributes with names ending with '!' (exclamation) mark and b) inside the <a href="csss!-calc-function.htm"><code>calc()</code></a> function.</p>
   <p>Here is <a href="csss!-events.htm">list of <em>active</em> CSS attributes</a> supported by h-smile core engine intrinsically.</p>
@@ -33,7 +33,7 @@
   <p>CSSS! has following keywords:</p>
   <pre>true   false   null   self
 </pre>
-  <h3><a name="operators" id="operators">Operators</a></h3>
+  <h3> <a name="operators" id="operators">Operators</a></h3>
   <pre class="code">&lt;     &gt;     &lt;=    ==    !=    &gt;=    &amp;&amp;    ||
 +     -     *     /     %     ^     |     &amp;
 </pre>
@@ -44,18 +44,18 @@
   <p>Ternary operator: &nbsp;</p>
   <pre>&lt;condition&gt; <strong>?</strong> &lt;true-part&gt; [ <strong>#</strong> &lt;false-part&gt; ]
 </pre>
-  <p>Note that ternary operators can be used as conditional statements (if ... then ... else ...):</p><code>self:value &gt; 12 ?( self:current = true, self.scroll-to-view())</code>; - if value of <em>self</em> element is larger than 12 make self current and scroll it to the view.
+  <p>Note that ternary operators can be used as conditional statements (if ... then ... else ...):</p><p> <code>self:value &gt; 12 ?( self:current = true, self.scroll-to-view())</code>; - if value of <em>self</em> element is larger than 12 make self current and scroll it to the view.</p>
   <h3>Data types</h3>
   <p>CSSS! is a typeless language. All variables can hold following values:</p>
   <ul>
     <li>null - no value;</li>
-    <li><em>boolean</em> that has two values: <em>true</em> and <em>false</em>;</li>
-    <li><em>integer</em> - 32bit signed integer;</li>
-    <li><em>float</em> - 64bit float number;</li>
-    <li><em>string</em> - string of UNICODE characters;</li>
-    <li><em>object</em> - reference to the DOM element;</li>
-    <li><em>object-set</em> - special object that represent set of DOM elements. Function $() returns such values.</li>
-    <li><em>function-reference</em> - references to functions declared in CSSS!</li></ul>
+    <li> <em>boolean</em> that has two values: <em>true</em> and <em>false</em>;</li>
+    <li> <em>integer</em> - 32bit signed integer;</li>
+    <li> <em>float</em> - 64bit float number;</li>
+    <li> <em>string</em> - string of UNICODE characters;</li>
+    <li> <em>object</em> - reference to the DOM element;</li>
+    <li> <em>object-set</em> - special object that represent set of DOM elements. Function $() returns such values.</li>
+    <li> <em>function-reference</em> - references to functions declared in CSSS!</li></ul>
   <p>No aggregate types (like array) are supported. Intentionally.</p>
   <h3>Literals</h3>
   <p>accepts integer numbers, floating point numbers, stings literals, <strong>length units</strong> and regexp literals:</p>
@@ -68,7 +68,7 @@
                    followed by one of:
                    'pt' | 'px' | 'pc' | '%' | 'em' | 'ex' | 'in' | 'cm' | 'mm'
 </pre>
-  <p><em>Key-code-literal</em> is a single character enclosed by single quote or one of the following:</p><code>'RETURN' | 'LEFT' | 'RIGHT' | 'UP' | 'DOWN' | 'PRIOR' | 'NEXT' | 'TAB' | 'HOME' | 'END' | 'DELETE' | 'INSERT' | 'BACK'</code>
+  <p> <em>Key-code-literal</em> is a single character enclosed by single quote or one of the following:</p><code>'RETURN' | 'LEFT' | 'RIGHT' | 'UP' | 'DOWN' | 'PRIOR' | 'NEXT' | 'TAB' | 'HOME' | 'END' | 'DELETE' | 'INSERT' | 'BACK'</code>
   <p>To define key combinations Ctrl+X like prepend name of the key with symbol <code>'^'</code>.</p>
   <p> Examples:</p>
   <pre class="code">            34 - Integer
@@ -85,7 +85,7 @@
   key-code() == '^A'? ... # // Ctrl+A pressed
   key-code() == '^NEXT'? ... ; // Ctrl+PgDown pressed
 </pre>
-  <h3><a name="comments" id="comments">Comments</a></h3>
+  <h3> <a name="comments" id="comments">Comments</a></h3>
   <p> Comment is a sequence of characters ignored by compiler. There are two types of comments:</p>
   <ul>Single line comment:</ul>
   <pre class="code">'//' &lt;text-no-crlf&gt; end-of-line
@@ -93,7 +93,7 @@
   <ul>Multi line comment:</ul>
   <pre class="code">'/*' &lt;text&gt; '*/'
 </pre>
-  <h2><a name="statements" id="statements">Statements</a></h2>
+  <h2> <a name="statements" id="statements">Statements</a></h2>
   <p>CSSS! program is a sequence of statements separated by <code>','</code> (comma) symbols. And ends by symbol <code>';'</code>. Following statements are supported by the CSSS! script:</p>
   <h4>Assignment:</h4>
   <pre>&lt;left-side-expression&gt; '=' &lt;expression&gt;.
@@ -103,8 +103,8 @@
 </pre>
   <h4>Block</h4>
   <p>Block is a list of comma separated expressions:</p>
-  <pre><strong>'('</strong> &lt;expression&gt; [, &lt;expression&gt;]* <strong>')'
-</pre></strong>
+  <pre> <strong>'('</strong> &lt;expression&gt; [, &lt;expression&gt;]* <strong>')'
+</strong></pre>
   <p>Value of the block equals to the value of last expression executed in the list.</p>
   <h4>Conditional</h4>
   <pre>&lt;logical-expresion&gt; <strong>'?'</strong> &lt;when-true-expression&gt; [ <strong>'#'</strong> &lt;when-false-expression&gt; ]
@@ -113,7 +113,7 @@
   <h4>Loops</h4>
   <p>No loops in CSSS!. Intentionally. (But there is a tail recursion in functions for that purposes)</p>
   <h4>Return</h4>
-  <p><code>return</code> statement is used for returning values from functions:</p>
+  <p> <code>return</code> statement is used for returning values from functions:</p>
   <pre>return &lt;expression-or-value-to-return&gt;
 </pre>
   <h4>For each, enumeration</h4>
@@ -175,7 +175,7 @@
   <h4>Invocation</h4>
   <p>Invocation of functions is as usual</p>
   <pre>&lt;variable&gt; <strong>'('</strong> &lt;expression-1&gt; , ... &lt;expression-n&gt; <strong>')'
-</pre></strong>
+</strong></pre>
   <p>Example, following will invoke function <em>foo</em> above and assign its return value to variable <em>bar</em>:</p>
   <pre>bar = foo(1,2)
 </pre>
@@ -183,26 +183,26 @@
   <h3>Selector functions</h3>
   <p>There are two global selector functions:</p>
   <ol>
-    <li><code><strong>$</strong>(selector)</code><strong> - </strong>select elements globally with the <code>:root</code> set to the root node of the document.</li>
-    <li><code><strong>$1</strong>(selector)</code> - returns <a href="csss!-dom-object.htm">object</a> - first element matching the selector with the :root set to the root node of the document.</li></ol>
+    <li> <code> <strong>$</strong>(selector)</code><strong> - </strong>select elements globally with the <code>:root</code> set to the root node of the document.</li>
+    <li> <code> <strong>$1</strong>(selector)</code> - returns <a href="csss!-dom-object.htm">object</a> - first element matching the selector with the :root set to the root node of the document.</li></ol>
   <p>Function $() return set (possible empty) of DOM element selected. $1() function returns single DOM element - first element that matches the selector.</p>
-  <p>Selector functions support value concatenation in the form <code>$( ... &lt;value&gt; ... )</code> where '&lt;' and '&gt;' parameter inclusion brackets. <br/>Example, followng statemets:</p>
+  <p>Selector functions support value concatenation in the form <code>$( ... &lt;value&gt; ... )</code> where '&lt;' and '&gt;' parameter inclusion brackets. <br>Example, followng statemets:</p>
   <pre>ncol = 2, $( table td:nth-child(&lt; ncol &gt;)).some-attr = &quot;hi!&quot;;
 </pre>
   <p>will set &quot;hi!&quot; to attribute <em>some-attr</em> for all elements satisfying the selector: <code>table td:nth-child(2)</code></p>
   <h3>Other functions</h3>
   <ul>
-    <li><code><strong>int</strong>(val)</code>- converts value val into integer;</li>
-    <li><code><strong>float</strong>(val)</code>- converts value val into float number;</li>
-    <li><code><strong>length</strong>(val)</code> - converts value val into length unit number;</li>
-    <li><code><strong>min</strong>(val1, val2 ... valN)</code>- returns minimal value of parameters passed;</li>
-    <li><code><strong>max</strong>(val1, val2 ... valN)</code>- returns maximum value of parameters passed;</li>
-    <li><code><strong>limit</strong>(val, minval, maxval)</code> - returns val if it is inside [minval...maxval] range, minval if val is less than minval or maxval otherwise.</li></ul>
+    <li> <code> <strong>int</strong>(val)</code>- converts value val into integer;</li>
+    <li> <code> <strong>float</strong>(val)</code>- converts value val into float number;</li>
+    <li> <code> <strong>length</strong>(val)</code> - converts value val into length unit number;</li>
+    <li> <code> <strong>min</strong>(val1, val2 ... valN)</code>- returns minimal value of parameters passed;</li>
+    <li> <code> <strong>max</strong>(val1, val2 ... valN)</code>- returns maximum value of parameters passed;</li>
+    <li> <code> <strong>limit</strong>(val, minval, maxval)</code> - returns val if it is inside [minval...maxval] range, minval if val is less than minval or maxval otherwise.</li></ul>
   <h3>String object properties and methods</h3>
   <ul>
-    <li><code><em>string</em><strong>.length</strong></code> - property, &nbsp;length of the <em>string</em> object;</li>
-    <li><code><em>string</em><strong>.toUpper()</strong></code> - &nbsp;method, returns upper case version of the string;</li>
-    <li><code><em>string</em><strong>.toLower()</strong></code> - &nbsp;method, returns lover case version of the string;</li>
-    <li><code><em>string</em><strong>.substr(</strong>start[, length = -1]<strong>)</strong></code> - &nbsp;method, returns fragment of the string, if length is less than zero returns rest of the string.</li></ul>
+    <li> <code> <em>string</em><strong>.length</strong></code> - property, &nbsp;length of the <em>string</em> object;</li>
+    <li> <code> <em>string</em><strong>.toUpper()</strong></code> - &nbsp;method, returns upper case version of the string;</li>
+    <li> <code> <em>string</em><strong>.toLower()</strong></code> - &nbsp;method, returns lover case version of the string;</li>
+    <li> <code> <em>string</em><strong>.substr(</strong>start[, length = -1]<strong>)</strong></code> - &nbsp;method, returns fragment of the string, if length is less than zero returns rest of the string.</li></ul>
 </body>
 </html>

@@ -6,12 +6,13 @@
     
     function self.ready() {
       view.state = View.WINDOW_SHOWN;
+      debug params: view.parameters;
     }
     
-    function self.closed() {
-      if( view.parameters && view.parameters.onClose) {
+    function self.closing() {
+      if( view.parameters.onClose) {
         view.parameters.onClose();
-      }
+      } 
     }
     
     </script>

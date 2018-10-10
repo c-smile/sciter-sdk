@@ -37,7 +37,7 @@ class frame: public sciter::window
   UINT hk_ticks = 0; // hot key ticks used to detect CTRL+C->C sequence
 public:
 
-  frame(bool needs_debugger) : window(SW_TITLEBAR | SW_RESIZEABLE | SW_CONTROLS | SW_MAIN | (needs_debugger ? SW_ENABLE_DEBUG:0)) 
+  frame(bool needs_debugger) : window(SW_TITLEBAR | SW_RESIZEABLE | SW_CONTROLS | SW_GLASSY | SW_MAIN | (needs_debugger ? SW_ENABLE_DEBUG:0)) 
   {
     //register_hotkey();
   }
@@ -91,6 +91,12 @@ public:
 #include "resources.cpp"
 
 int uimain(std::function<int()> run ) {
+
+  SciterSetOption(NULL, SCITER_SET_SCRIPT_RUNTIME_FEATURES,
+    ALLOW_FILE_IO |
+    ALLOW_SOCKET_IO |
+    ALLOW_EVAL |
+    ALLOW_SYSINFO);
 
   sciter::archive::instance().open(aux::elements_of(resources)); // bind resources[] (defined in "resources.cpp") with the archive
 

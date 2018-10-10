@@ -81,6 +81,11 @@ BOOL CSciterMfcApp::InitInstance()
 	// such as the name of your company or organization
 	SetRegistryKey(_T("Local AppWizard-Generated Applications"));
 
+  SciterSetOption(NULL, SCITER_SET_SCRIPT_RUNTIME_FEATURES,
+    ALLOW_FILE_IO |
+    ALLOW_SOCKET_IO |
+    ALLOW_EVAL |
+    ALLOW_SYSINFO);
 
 	// To create the main window, this code creates a new frame window
 	// object and then sets it as the application's main window object

@@ -1,7 +1,8 @@
 <html>
 <head>
   <style>
-    body { flow:horizontal; }
+
+    body > section { flow:horizontal; size:*; }
   
     div.marquee-h 
     {
@@ -45,17 +46,39 @@
     { 
       -marquee-style: alternate;
     }    
+
+    span#blinker {
+      display: inline-block;
+      vertical-align:middle;
+      size:1.2em;
+      background:red;
+    }
+
+    span#blinker:checked {
+      background:green; 
+    }
   
   </style>  
   <script type="text/tiscript">
     event click $(button) {
       view.msgbox(#information,"I am here");
     }
+
+    function self.ready() {
+      var blinker = $(span#blinker);
+      blinker.timer(1s, function() {
+        blinker.state.checked = !blinker.state.checked;
+        return true;
+      });
+    }
+
   </script>
 </head>
 <body>
 
-  <button>test: Show message box</button>
+  <button>test: Show message box</button> and this <span#blinker /> shall blink with near 1s interval (test of timers using permanent animations). 
+
+  <section>
   
   <div #horizontal>
     <h1>-marquee: horizontal</h1> 
@@ -172,6 +195,8 @@
       <p>Abrakadabra</p>
     </div>
   </div>  
+
+</section>  
 
 </body>
 </html>

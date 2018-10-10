@@ -2,24 +2,25 @@
 class ValueView : Element 
 {
 
-  function ShowEvalResult(container,val) {
+  function ShowEvalResult(container,val,forStringizer = false) {
     var (caption,type) = formatVal(val, true);
+    const separator = forStringizer ? "" : " ";
     switch(type) {
       case #object: 
-        container.$append(<code.compound.object><caption>{caption}</caption></code> );
+        container.$append(<code.compound.object><caption>{caption}</caption></code>{separator});
         container.last.data = val;
         break;
       case #object-like:
-        container.$append(<code.compound.object><caption>{caption}</caption></code> );
+        container.$append(<code.compound.object><caption>{caption}</caption></code>{separator});
         container.last.data = val;
         break;
       case #array:
-        container.$append(<code.compound.array><caption>{caption}</caption></code> );
+        container.$append(<code.compound.array><caption>{caption}</caption></code>{separator});
         container.last.data = val;
         break;
       default: {
           var cls = typeof varval || "undefined"; 
-          container.$append(<code.{cls}><caption>{caption}</caption></code> );
+          container.$append(<code.{cls}><caption>{caption}</caption></code>{separator});
         }
         break;
     }
@@ -42,7 +43,7 @@ class ValueView : Element
         block.$append(<span.log.{mode} style="background-color:{markerColor(mode)}">{mode}</span> );
     }
     for(var v in val)
-      ShowEvalResult(block,v, true);
+      ShowEvalResult(block,v, false);
 
     if(location) {
       var path = location[2].toString();

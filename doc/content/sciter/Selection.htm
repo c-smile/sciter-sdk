@@ -9,58 +9,58 @@
   <dl>
     <h2>Properties</h2>
     <dt>type</dt>
-    <dd><em>null | symbol</em>, read-only property. Reports type of the selection: #text, #cells, #blocks.</dd>
+    <dd> <em>null | symbol</em>, read-only property. Reports type of the selection: #text, #cells, #blocks.</dd>
     <dt>isCollapsed</dt>
-    <dd><em>true</em> | <em>false</em>, read-only property. true if the selection is represented by only caret so selection.start == selection.end.</dd>
+    <dd> <em>true</em> | <em>false</em>, read-only property. true if the selection is represented by only caret so selection.start == selection.end.</dd>
     <dt>anchor</dt>
-    <dd><em>null | </em><a href="#bookmark">bookmark</a>, read-only property. DOM position of selection anchor.</dd>
+    <dd> <em>null | </em><a href="#bookmark">bookmark</a>, read-only property. DOM position of selection anchor.</dd>
     <dt>caret</dt>
-    <dd><em>null | </em><a href="#bookmark">bookmark</a>, read-only property. DOM position of selection caret.</dd>
+    <dd> <em>null | </em><a href="#bookmark">bookmark</a>, read-only property. DOM position of selection caret.</dd>
     <dt>start</dt>
-    <dd><em>null | </em><a href="#bookmark">bookmark</a>, read-only property. DOM position of either caret or anchor, whichever is lower in DOM order.</dd>
+    <dd> <em>null | </em><a href="#bookmark">bookmark</a>, read-only property. DOM position of either caret or anchor, whichever is lower in DOM order.</dd>
     <dt>end</dt>
-    <dd><em>null | </em><a href="#bookmark">bookmark</a>, read-only property. DOM position of either caret or anchor, whichever is greater in DOM order.</dd>
+    <dd> <em>null | </em><a href="#bookmark">bookmark</a>, read-only property. DOM position of either caret or anchor, whichever is greater in DOM order.</dd>
     <dt>text</dt>
-    <dd><em>string</em>, read-only property. text contained in the selection.</dd>
+    <dd> <em>string</em>, read-only property. text contained in the selection.</dd>
     <dt>html</dt>
-    <dd><em>string</em>, read-only property. selected html fragment.</dd>
+    <dd> <em>string</em>, read-only property. selected html fragment.</dd>
     <h2>Enumeration</h2>
     <dt>for ... in</dt>
     <dd>
-      <div>for(var<strong> <em>(pos,char)</em></strong> in<strong> <em>element</em></strong>.<strong><em>selection</em></strong>)<strong> { </strong>/* loop body */<strong> }</strong></div>
+      <div>for(var<strong> <em>(pos,char)</em></strong> in<strong> <em>element</em></strong>.<strong> <em>selection</em></strong>)<strong> { </strong>/* loop body */<strong> }</strong></div>
       <p>TBD. (enumerates caret positions and characters in the selection)</p></dd>
     <h2>Methods</h2>
     <dt>collapse</dt>
     <dd>
-      <div><strong>( towhat</strong>:symbol<strong> )</strong> returns: <em>bookmark</em>.</div>
+      <div> <strong>( towhat</strong>:symbol<strong> )</strong> returns: <em>bookmark</em>.</div>
       <p>Collapse selection range to single caret position. <em>towhat</em> is one of: <strong>#toCaret</strong>, <strong>#toAnchor</strong>,<strong>#toStart</strong> or <strong>#toEnd</strong></p></dd>
     <dt>select</dt>
     <dd>
-      <div><strong>( caret</strong>:<em>bookmark</em> [<strong> , anchor</strong>:bookmark ]<strong> ) </strong>returns: <em>true | false</em></div>
+      <div> <strong>( caret</strong>:<em>bookmark</em> [<strong> , anchor</strong>:bookmark ]<strong> ) </strong>returns: <em>true | false</em></div>
       <p>Set's selection to the range or single caret position.</p></dd>
     <dt>select</dt>
     <dd>
-      <div><strong>( el</strong>:<em>element</em> [<strong> , how</strong>: #content | #element ]<strong> ) </strong>returns: <em>true | false</em></div>
+      <div> <strong>( el</strong>:<em>element</em> [<strong> , how</strong>: #content | #element ]<strong> ) </strong>returns: <em>true | false</em></div>
       <p>Set's selection to either the element <i>el</i> itself (<i>what</i> is <code>#element</code>) or to its content - its first and last caret positions.</p></dd>    <dt>advance</dt>
     <dd>
-      <div><strong>( step</strong>:symbol [, <strong>target</strong>:symbol] <strong>)</strong> returns: <em>true | false</em>.</div>
+      <div> <strong>( step</strong>:symbol [, <strong>target</strong>:symbol] <strong>)</strong> returns: <em>true | false</em>.</div>
       <p>Advances <em>target</em> to new position by <em>step</em>. The <em>target</em> defines what end of selection to advance, can be one of:</p>
       <ul>
-        <li><strong>#both</strong> - default, caret and anchor is moved to new position, collapses the selection;</li>
-        <li><strong>#caret</strong> - caret position, changes the selection;</li>
-        <li><strong>#anchor</strong> - anchor position, changes the selection;</li>
-        <li><strong>#start</strong> - start position (either anchor or caret), changes the selection;</li>
-        <li><strong>#end</strong> - end position (either anchor or caret), changes the selection</li></ul>
+        <li> <strong>#both</strong> - default, caret and anchor is moved to new position, collapses the selection;</li>
+        <li> <strong>#caret</strong> - caret position, changes the selection;</li>
+        <li> <strong>#anchor</strong> - anchor position, changes the selection;</li>
+        <li> <strong>#start</strong> - start position (either anchor or caret), changes the selection;</li>
+        <li> <strong>#end</strong> - end position (either anchor or caret), changes the selection</li></ul>
       <p>The step is one of:</p>
       <ul>
-        <li><strong>#next</strong> - next caret position;</li>
-        <li><strong>#prior</strong> - previous caret position;</li>
-        <li><strong>#wordStart</strong> - start of the word;</li>
-        <li><strong>#wordEnd</strong> - end of the word;</li>
-        <li><strong>#lineStart</strong> - start of the line;</li>
-        <li><strong>#lineEnd</strong> - end of the line;</li>
-        <li><strong>#first</strong> - first caret position of the element having the selection;</li>
-        <li><strong>#last</strong> - last caret position of the element having the selection.</li></ul></dd>
+        <li> <strong>#next</strong> - next caret position;</li>
+        <li> <strong>#prior</strong> - previous caret position;</li>
+        <li> <strong>#wordStart</strong> - start of the word;</li>
+        <li> <strong>#wordEnd</strong> - end of the word;</li>
+        <li> <strong>#lineStart</strong> - start of the line;</li>
+        <li> <strong>#lineEnd</strong> - end of the line;</li>
+        <li> <strong>#first</strong> - first caret position of the element having the selection;</li>
+        <li> <strong>#last</strong> - last caret position of the element having the selection.</li></ul></dd>
     <dt>applyMark</dt>
     <dd>(<strong>start</strong>: <em>bookmark</em>, <strong>end</strong>: <em>bookmark</em>, <strong>markName</strong>: string): returns: integer
       <p>marks region of text from <em>start</em> to <em>end</em> by mark name that can be styled in CSS by <code>::mark(markName) { ... }</code> selector/rule.</p>
@@ -68,15 +68,23 @@
     <dt>clearMark</dt>
     <dd>(<strong>start</strong>: <em>bookmark</em>, <strong>end</strong>: <em>bookmark</em>, <strong>markName</strong>: string): returns: integer
       <p>clears mentioned mark from the region.</p>
-			<p>The function returns number of changes made.</p></dd></dl>
+			<p>The function returns number of changes made.</p>
+			</dd><dt>box</dt>
+		<dd>(<b>part</b>: <i>symbol</i>)
+			<p>Returns view relative coordinates of:</p><p> <strong>part</strong> - one of symbolic constants <strong>#left</strong>, <strong>#top</strong>, <strong>#right</strong>, <strong>#bottom</strong>, <strong>#width</strong> or <strong>#height</strong>. Defines part of box (rectangle) to return.</p>
+        <ul>
+          <li>If <em>part</em> is <strong>#rect</strong> then the function returns four values - left, top, right, bottom. Use it for example as<pre> var (x1,y1,x2,y2) = this.box(#rect);</pre></li>
+          <li>If <em>part</em> is <strong>#rect</strong>w then the function returns four values - left, top, width and height. Use it for example as <pre>var (x,y,w,h) = this.box(#rectw);</pre></li>
+          <li>If part is <strong>#dimension</strong> the function returns two values - width and height. Use it as: <pre>var (w,h) = this.box(#dimension);</pre></li>
+          <li>If part is <strong>#position</strong> the function returns two values - left and top. Use it as:<pre>var (x,y) = this.box(#position);</pre></li></ul></dd></dl>
   <h2 id="bookmark">Bookmark</h2>
   <p>Some methods above use so called bookmark object that is a tuple (of length 3) having tag #bookmark. Usually you will get ready to use bookmarks from various properties or &nbsp;methods but if needed bookmarks can be constructed literally as:</p>
   <pre>var bm = [bookmark: node, index, after];
 </pre>
   <p>Where:</p>
   <ul>
-    <li><em>node</em> - Element or Node object.</li>
-    <li><em>index</em> - index of the position inside the <em>node</em>. В for Element it is <em>nodeIndex</em> of its child node and for Nodes it is character index.</li>
-    <li><em>after</em> - true | false, if true then this bookmark marks &quot;past edge&quot; of the entity marked by node/index pair.</li></ul>
+    <li> <em>node</em> - Element or Node object.</li>
+    <li> <em>index</em> - index of the position inside the <em>node</em>. В for Element it is <em>nodeIndex</em> of its child node and for Nodes it is character index.</li>
+    <li> <em>after</em> - true | false, if true then this bookmark marks &quot;past edge&quot; of the entity marked by node/index pair.</li></ul>
 </body>
 </html>

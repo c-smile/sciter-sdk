@@ -50,6 +50,12 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
   ghInstance = hInstance;
 
+  SciterSetOption(NULL, SCITER_SET_SCRIPT_RUNTIME_FEATURES,
+    ALLOW_FILE_IO |
+    ALLOW_SOCKET_IO |
+    ALLOW_EVAL |
+    ALLOW_SYSINFO);
+
   SciterClassName();
   sciter::debug_output debug; // -- ouputs to VS debug console
   //sciter::debug_output_console console; -- use this instead of the above to output data to console window - that black scarry thing.

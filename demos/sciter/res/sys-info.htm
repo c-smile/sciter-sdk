@@ -44,31 +44,34 @@
 
   <script type="text/tiscript">
 
-    $(#version).text = String.printf("%d.%d.%d.%d", 
-		  (Sciter.VERSION >> 16) & 0xffff, Sciter.VERSION & 0xffff,
-		  (Sciter.REVISION >> 16) & 0xffff, Sciter.REVISION & 0xffff);
-	  $(#user).text = Sciter.userName();
-	  $(#machine).text = Sciter.machineName();
-	  $(#domain).text = Sciter.machineName(true);
-	  //$(#home).text = System.home();
-	  $(#language).text = System.language;
-	  $(#country).text = System.country;
-	  $(#os-type).text = System.HANDHELD_OS? "handheld":"desktop";
-	  $(#os-version).text = System.OS;
-    $(#gfx-backend).text = view.backendName;
+  $(#version).text = String.printf("%d.%d.%d.%d",
+    (Sciter.VERSION >> 16) & 0xffff, Sciter.VERSION & 0xffff,
+    (Sciter.REVISION >> 16) & 0xffff, Sciter.REVISION & 0xffff);
+  $(#revision).text = Sciter.BUILD.toString();
 
-    event click $(a[href]) {
-      Sciter.launch( this.attributes["href"] );
-      return true;
-    }
-  
+  $(#user).text = Sciter.userName();
+  $(#machine).text = Sciter.machineName();
+  $(#domain).text = Sciter.machineName(true);
+  //$(#home).text = System.home();
+  $(#language).text = System.language;
+  $(#country).text = System.country;
+  $(#os-type).text = System.HANDHELD_OS? "handheld":"desktop";
+  $(#os-version).text = System.OS;
+  $(#gfx-backend).text = view.backendName;
+
+  event click $(a[href]) {
+    Sciter.launch( this.attributes["href"] );
+    return true;
+  }
+
   </script>
 </head>
 <body>
   <div #intro><img #arrow src="stock:arrow-left" > use this button to open HTML files...</div>
   <dl #info>
 	  <header>Sciter</header>
-	  <dt>version:</dt>	   <dd #version></dd>
+	  <dt>version:</dt>	 <dd #version></dd>
+    <dt>revision:</dt> <dd #revision></dd>
     <header>System</header>
 	  <dt>OS type:</dt>	   <dd #os-type></dd>
 	  <dt>OS version:</dt> <dd #os-version></dd>

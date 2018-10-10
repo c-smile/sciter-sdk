@@ -207,64 +207,78 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)sdk\bin\$(PlatformArchitecture)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <CustomBuildBeforeTargets>PrepareForBuild</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='XpDebug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)sdk\bin\$(PlatformArchitecture)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <CustomBuildBeforeTargets>PrepareForBuild</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='SkDebug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)sdk\bin\$(PlatformArchitecture)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <CustomBuildBeforeTargets>PrepareForBuild</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)sdk\bin\$(PlatformArchitecture)\</OutDir>
+    <CustomBuildBeforeTargets>PrepareForBuild</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='XpDebug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)sdk\bin\$(PlatformArchitecture)\</OutDir>
+    <CustomBuildBeforeTargets>PrepareForBuild</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='SkDebug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)sdk\bin\$(PlatformArchitecture)\</OutDir>
+    <CustomBuildBeforeTargets>PrepareForBuild</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)sdk\bin\$(PlatformArchitecture)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <CustomBuildBeforeTargets>PrepareForBuild</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Tools|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)sdk\bin\$(PlatformArchitecture)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <CustomBuildBeforeTargets>PrepareForBuild</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='XpRelease|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)sdk\bin\xp$(PlatformArchitecture)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <CustomBuildBeforeTargets>PrepareForBuild</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='SkRelease|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)sdk\bin\skia$(PlatformArchitecture)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <CustomBuildBeforeTargets>PrepareForBuild</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)sdk\bin\$(PlatformArchitecture)\</OutDir>
+    <CustomBuildBeforeTargets>PrepareForBuild</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Tools|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)sdk\bin\$(PlatformArchitecture)\</OutDir>
+    <CustomBuildBeforeTargets>PrepareForBuild</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='XpRelease|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)sdk\bin\xp$(PlatformArchitecture)\</OutDir>
+    <CustomBuildBeforeTargets>PrepareForBuild</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='SkRelease|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)sdk\bin\$(PlatformArchitecture)\</OutDir>
+    <CustomBuildBeforeTargets>PrepareForBuild</CustomBuildBeforeTargets>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -283,6 +297,23 @@
       <AdditionalManifestFiles>win-res/dpi-aware.manifest</AdditionalManifestFiles>
       <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
     </Manifest>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>
+      </Message>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>$(ProjectDir)..\..\bin\packfolder.exe $(ProjectDir)res $(ProjectDir)resources.cpp -v "resources"</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>$(ProjectDir)resources.cpp;%(Outputs)</Outputs>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <TreatOutputAsContent>true</TreatOutputAsContent>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='XpDebug|Win32'">
     <ClCompile>
@@ -301,6 +332,23 @@
       <AdditionalManifestFiles>win-res/dpi-aware.manifest</AdditionalManifestFiles>
       <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
     </Manifest>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>
+      </Message>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>$(ProjectDir)..\..\bin\packfolder.exe $(ProjectDir)res $(ProjectDir)resources.cpp -v "resources"</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>$(ProjectDir)resources.cpp;%(Outputs)</Outputs>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <TreatOutputAsContent>true</TreatOutputAsContent>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='SkDebug|Win32'">
     <ClCompile>
@@ -320,6 +368,23 @@
       <AdditionalManifestFiles>win-res/dpi-aware.manifest</AdditionalManifestFiles>
       <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
     </Manifest>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>
+      </Message>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>$(ProjectDir)..\..\bin\packfolder.exe $(ProjectDir)res $(ProjectDir)resources.cpp -v "resources"</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>$(ProjectDir)resources.cpp;%(Outputs)</Outputs>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <TreatOutputAsContent>true</TreatOutputAsContent>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -338,6 +403,23 @@
       <AdditionalManifestFiles>win-res/dpi-aware.manifest</AdditionalManifestFiles>
       <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
     </Manifest>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>
+      </Message>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>$(ProjectDir)..\..\bin\packfolder.exe $(ProjectDir)res $(ProjectDir)resources.cpp -v "resources"</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>$(ProjectDir)resources.cpp;%(Outputs)</Outputs>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <TreatOutputAsContent>true</TreatOutputAsContent>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='XpDebug|x64'">
     <ClCompile>
@@ -356,6 +438,23 @@
       <AdditionalManifestFiles>win-res/dpi-aware.manifest</AdditionalManifestFiles>
       <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
     </Manifest>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>
+      </Message>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>$(ProjectDir)..\..\bin\packfolder.exe $(ProjectDir)res $(ProjectDir)resources.cpp -v "resources"</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>$(ProjectDir)resources.cpp;%(Outputs)</Outputs>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <TreatOutputAsContent>true</TreatOutputAsContent>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='SkDebug|x64'">
     <ClCompile>
@@ -374,6 +473,23 @@
       <AdditionalManifestFiles>win-res/dpi-aware.manifest</AdditionalManifestFiles>
       <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
     </Manifest>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>
+      </Message>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>$(ProjectDir)..\..\bin\packfolder.exe $(ProjectDir)res $(ProjectDir)resources.cpp -v "resources"</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>$(ProjectDir)resources.cpp;%(Outputs)</Outputs>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <TreatOutputAsContent>true</TreatOutputAsContent>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -397,6 +513,23 @@
       <AdditionalManifestFiles>win-res/dpi-aware.manifest</AdditionalManifestFiles>
       <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
     </Manifest>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>
+      </Message>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>$(ProjectDir)..\..\bin\packfolder.exe $(ProjectDir)res $(ProjectDir)resources.cpp -v "resources"</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>$(ProjectDir)resources.cpp;%(Outputs)</Outputs>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <TreatOutputAsContent>true</TreatOutputAsContent>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Tools|Win32'">
     <ClCompile>
@@ -420,6 +553,23 @@
       <AdditionalManifestFiles>win-res/dpi-aware.manifest</AdditionalManifestFiles>
       <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
     </Manifest>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>
+      </Message>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>$(ProjectDir)..\..\bin\packfolder.exe $(ProjectDir)res $(ProjectDir)resources.cpp -v "resources"</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>$(ProjectDir)resources.cpp;%(Outputs)</Outputs>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <TreatOutputAsContent>true</TreatOutputAsContent>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='XpRelease|Win32'">
     <ClCompile>
@@ -443,6 +593,23 @@
       <AdditionalManifestFiles>win-res/dpi-aware.manifest</AdditionalManifestFiles>
       <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
     </Manifest>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>
+      </Message>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>$(ProjectDir)..\..\bin\packfolder.exe $(ProjectDir)res $(ProjectDir)resources.cpp -v "resources"</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>$(ProjectDir)resources.cpp;%(Outputs)</Outputs>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <TreatOutputAsContent>true</TreatOutputAsContent>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='SkRelease|Win32'">
     <ClCompile>
@@ -466,6 +633,23 @@
       <AdditionalManifestFiles>win-res/dpi-aware.manifest</AdditionalManifestFiles>
       <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
     </Manifest>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>
+      </Message>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>$(ProjectDir)..\..\bin\packfolder.exe $(ProjectDir)res $(ProjectDir)resources.cpp -v "resources"</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>$(ProjectDir)resources.cpp;%(Outputs)</Outputs>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <TreatOutputAsContent>true</TreatOutputAsContent>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -489,6 +673,23 @@
       <AdditionalManifestFiles>win-res/dpi-aware.manifest</AdditionalManifestFiles>
       <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
     </Manifest>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>
+      </Message>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>$(ProjectDir)..\..\bin\packfolder.exe $(ProjectDir)res $(ProjectDir)resources.cpp -v "resources"</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>$(ProjectDir)resources.cpp;%(Outputs)</Outputs>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <TreatOutputAsContent>true</TreatOutputAsContent>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Tools|x64'">
     <ClCompile>
@@ -512,6 +713,23 @@
       <AdditionalManifestFiles>win-res/dpi-aware.manifest</AdditionalManifestFiles>
       <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
     </Manifest>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>
+      </Message>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>$(ProjectDir)..\..\bin\packfolder.exe $(ProjectDir)res $(ProjectDir)resources.cpp -v "resources"</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>$(ProjectDir)resources.cpp;%(Outputs)</Outputs>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <TreatOutputAsContent>true</TreatOutputAsContent>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='XpRelease|x64'">
     <ClCompile>
@@ -535,6 +753,23 @@
       <AdditionalManifestFiles>win-res/dpi-aware.manifest</AdditionalManifestFiles>
       <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
     </Manifest>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>
+      </Message>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>$(ProjectDir)..\..\bin\packfolder.exe $(ProjectDir)res $(ProjectDir)resources.cpp -v "resources"</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>$(ProjectDir)resources.cpp;%(Outputs)</Outputs>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <TreatOutputAsContent>true</TreatOutputAsContent>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='SkRelease|x64'">
     <ClCompile>
@@ -558,6 +793,23 @@
       <AdditionalManifestFiles>win-res/dpi-aware.manifest</AdditionalManifestFiles>
       <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
     </Manifest>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>
+      </Message>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>$(ProjectDir)..\..\bin\packfolder.exe $(ProjectDir)res $(ProjectDir)resources.cpp -v "resources"</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>$(ProjectDir)resources.cpp;%(Outputs)</Outputs>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <TreatOutputAsContent>true</TreatOutputAsContent>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="win-res\sciter-small.ico" />
@@ -568,6 +820,22 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\include\sciter-win-main.cpp" />
+    <ClInclude Include="resources.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='XpDebug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='SkRelease|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='SkDebug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Tools|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='XpRelease|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='XpDebug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='SkRelease|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='SkDebug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Tools|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='XpRelease|x64'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClCompile Include="usciter.cpp" />
   </ItemGroup>
   <ItemGroup>

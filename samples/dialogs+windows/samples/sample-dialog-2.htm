@@ -10,7 +10,7 @@
       overflow:hidden; 
     }
     
-    form { flow: row(label,input); border-spacing: 4dip; }
+    form { flow: row(label,input select); border-spacing: 4dip; }
     form > label { white-space:nowrap; text-align:right; vertical-align:baseline; }
     
   </style>
@@ -32,6 +32,11 @@
   <label>One (Ctrl+1):</label><input type="text" name="one" accesskey="^1" />
   <label>Two (Ctrl+2):</label><input type="text" name="two" accesskey="^2" />
   <label>Three (Ctrl+3):</label><input type="date" value="today" accesskey="^3" /> 
+  <label>Four (Ctrl+4):</label><select|dropdown(tplacement) accesskey="^4">
+                                <option value="top">at top</option>  
+                                <option value="bottom">at bottom</option>
+                                <option value="hide" selected>hide</option>  
+                              </select>  
 </form>
 Animation test <img src="sciter:busy.png">
 <p style="text-align:center">

@@ -37,7 +37,7 @@ class Log: Behavior
       var asLastOne = false;
       if( typeof msg != #string) 
       {
-         data = msg; 
+         data = msg;
          msg = ""; 
       } 
       else 
@@ -68,7 +68,7 @@ class Log: Behavior
       this.insert(msg, insp + 1);
       var item = this[insp + 1];
       item.vid = vid;
-      if( data != #nope ) {
+      if( data !== #nope ) {
         if( mode !== undefined) {
           item.attributes.addClass("debug"); // produced by debug output
           if(asStringizer)

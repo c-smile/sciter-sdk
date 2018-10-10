@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+      @import url(video-controls.css);
+
+      a[href] {behavior:button;}
+    
+      video { size:*; 
+              image-rendering:optimize-quality;}
+    
+    </style>
+    <script type="text/tiscript">
+
+event click $(a[href]) {
+  Sciter.launch(this.attributes["href"]);
+  return true;
+}
+
+    </script>
+  </head>
+<body>
+
+Check this <a href="https://sciter.com/forums/topic/embedding-videos-in-html-with-sciter/#post-58383">discussion</a> first.
+
+<video controls src="https://youtu.be/XGcX5wopq3M" />
+
+
+</body>
+</html>

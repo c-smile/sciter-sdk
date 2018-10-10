@@ -1,8 +1,8 @@
 ﻿<html>
   <head>
-    <meta name="generator" content="h-smile:richtext"/>
+    <meta name="generator" content="h-smile:richtext">
   </head>
-<body>
+<body class="root">
   <h1>Bytes object</h1>
   <p>Bytes is an array of bytes.</p>
   <dl>
@@ -20,26 +20,28 @@
     <h2>Methods</h2>
     <dt>this</dt>
     <dd>
-      <p>( <em>numBytes</em>: integer )</p>
+      ( <em>numBytes</em>: integer )
       <p>Constructs object of type Bytes - sequence of bytes of <em>numBytes</em> length.</p></dd>
     <dt>toString</dt>
     <dd>
-      <p><strong>( </strong>[<em>encoding</em>:string] <strong>)</strong> returns: <em>string</em></p>
+      <strong>( </strong>[<em>encoding</em>:string] <strong>)</strong> returns: <em>string</em>
       <p>If encoding is not provided or is equal to &quot;base64&quot; then the method returns <em>base64</em> representation of the byte vector. Otherwise if encoding is one of supported encondings from IANA charset list <a href="http://www.iana.org/assignments/character-sets">http://www.iana.org/assignments/character-sets</a> the function returns decoded string.</p>
       <p>E.g. <code>var str = bytes.toString(&quot;UTF-8&quot;);</code> returns a string from UTF-8 encoded bytes.</p></dd>
     <dt>fromString</dt>
     <dd>
-      <p><strong>( </strong><em>str</em>: string<strong/>[, <em>encoding</em>:string] <strong>)</strong> returns: <em>Bytes</em></p>
+      <strong>( </strong><em>str</em>: string<strong></strong>[, <em>encoding</em>:string] <strong>)</strong> returns: <em>Bytes</em>
       <p>Static method, constructs Bytes object (byte array) &nbsp;from string using specified encoding.</p>
-      <p>If encoding is not specified or is equal to &quot;base64&quot; then base64 encoding is used. Otherwise if encoding is one of supported encondings from IANA charset list <a href="http://www.iana.org/assignments/character-sets">http://www.iana.org/assignments/character-sets</a> the function returns encoded bytes.</p>
+      <p>If encoding is not specified or is equal to &quot;base64&quot; then base64 encoding is used. Otherwise if encoding is one of supported encodings from IANA charset list <a href="http://www.iana.org/assignments/character-sets">http://www.iana.org/assignments/character-sets</a> the function returns encoded bytes.</p>
       <p>E.g. <code>var bytes = Bytes.fromString(&quot;Привет, мир!&quot;, &quot;utf-8&quot;);</code> returns utf-8 encoded bytes of the string.</p></dd>
     <dt>md5</dt>
     <dd>
-      <p><strong>( </strong>&nbsp;<strong>)</strong> returns: <em>string</em></p>
+      <strong>( </strong>
+      <strong>)</strong> returns: <em>string</em>
       <p>returns 32 chars string that represents MD-5 digest of the byte array.</p></dd>
     <dt>crc32</dt>
     <dd>
-      <p><strong>( </strong>&nbsp;<strong>)</strong> returns: <em>integer</em></p>
+      <strong>( </strong>
+      <strong>)</strong> returns: <em>integer</em>
       <p>returns integer that is a result of CRC32 computation of given byte array.</p>
 			</dd><dt>compare</dt>
 		<dd>( other: Bytes&nbsp;) returns : integer, -1,0,1<p>Compares two Bytes object for content equality,  returns&nbsp;-1,0 or 1. Where 0 if these two byte vectors are equal.</p></dd>
@@ -54,7 +56,7 @@
     <dt>compress</dt>
     <dd>
       <div><strong>( </strong><strong>)</strong> returns: <em>Bytes</em></div>
-      <p>Creates new Bytes object - compression version of original bytes array.</p></dd>
+      <p>Creates new Bytes object - compression version of original bytes object.</p></dd>
     <dt>decompress</dt>
     <dd>
       <div><strong>( </strong><strong>)</strong> returns: <em>Bytes | null</em></div>

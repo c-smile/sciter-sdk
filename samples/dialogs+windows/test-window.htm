@@ -121,8 +121,8 @@
 
      $(#with-params).onClick = function() {
      
-        function onClose() {
-          stdout.println("other window closed");
+        function onCloseCallback() {
+          debug log: "other window closed";
         }
      
         // opening window with passing additional onClose callback parameter
@@ -133,7 +133,7 @@
           width : 200,
           height : 200,
           parameters: { // view.parameters inside new window
-            onClose: onClose 
+            onClose: onCloseCallback 
           }
         };
       }      

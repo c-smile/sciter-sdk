@@ -103,7 +103,14 @@ function String_test()
   assert $("the string") == "\"the string\"";
   assert $(x{ 1 + 2 }y) == "x3y";
   assert $(x({1 + 2})y) == "x(3)y";
-  
+
+  // distance test
+  assert "foo".distance("foo") == 0;
+  assert "foo".distance("foa") == 1;
+  assert "foo".distance("faa") == 2;
+  assert "foo".distance("food") == 1;
+  assert "foo".distance("dfoo") == 1;
+
 }
 
 function* genNumbers(n) { // generates consecutive numbers [0..n)

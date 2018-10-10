@@ -9,6 +9,12 @@ public:
 
 int uimain(std::function<int()> run ) {
 
+  SciterSetOption(NULL, SCITER_SET_SCRIPT_RUNTIME_FEATURES,
+    ALLOW_FILE_IO |
+    ALLOW_SOCKET_IO |
+    ALLOW_EVAL |
+    ALLOW_SYSINFO );
+
 #ifdef _DEBUG
   sciter::debug_output_console console;
 #endif
