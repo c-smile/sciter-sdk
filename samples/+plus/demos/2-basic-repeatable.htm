@@ -46,6 +46,18 @@
         function prune() {
           fruits.length = 2;
         }
+
+        
+        function populate() {
+          // memory consumption test
+          var cnt = 0;
+          self.timer(500, function() {
+            ++cnt;
+            fruits = [{name:"apple" + cnt, price:1.2},
+                      {name:"orange" + cnt, price:1.0}];
+            return true;                      
+          });
+        }
         
       }    
       
@@ -76,6 +88,8 @@
   <button click="replace()">Replace first</button> 
   <button click="update()">Update first</button> 
   <button click="prune()">Prune list to contain only 2 entries</button> 
+
+  <button click="populate()">Populate</button> 
   
 </body>
 </html>
