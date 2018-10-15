@@ -907,7 +907,7 @@ el.$content(This is item number <b>{ num }</b>);
     <dd>Event is generated as a final step of document loading.</dd>
     <dt>self.closing(reason)</dt>
     <dd>Document is about to be closed. Event handler can prevent unloading by returning <em>false</em> value. The reason parameter is one of following symbols:<br><strong>- #by-chrome</strong> - user clicked close button on window;<br><strong>- #by-code</strong> - view.close() issued;<br><strong>- #by-load</strong> - document gets unloaded by loading new document.</dd></dl>
-  <h2 align="left"> <a name="object-template">Element.create and Element.insert object-template microformat.</a></h2>
+  <h2 align="left" id="object-template">Element.create and Element.insert object-template microformat.</h2>
   <div>Object-template is an object literal used for generation of new elements. It shall obey following rules:</div>
   <pre>{
   div, <font face="monospace" color="#336600">// mandatory, first property and without value - tag name of the DOM element.

@@ -10,7 +10,16 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FFFADA">4.2.5.1</td><td nowrap valign="top" align="center">11-10-2018</td><td class="root">fixes:
+    <tr><td valign="top" bgcolor="#FFFADA">4.2.5.2</td><td nowrap valign="top" align="center">15-10-2018</td><td class="root">fixes:
+					<ul><li>[DOM,script] support <code>view.request {noCache:true}</code> mode - no caching.</li>
+						<li>[richtext, plaintext] <ul><li>fix of &quot;line content&quot; removal.</li><li>fix of double click handling to select word.</li></ul></li>
+						
+						
+						<li>[DOM, script, timers] fix of &quot;re-entrant timer&quot; issue.</li>
+						<li>fix of layered dialogs z-index issue: <a href="https://sciter.com/forums/topic/sciter-version-4-2-5-1%ef%bc%8cwindow-frametransparent/">https://sciter.com/forums/topic/sciter-version-4-2-5-1%ef%bc%8cwindow-frametransparent/</a></li>
+						<li>[view] fix of detached windows handling. + /samples/dialogs+windows/owned-detached as a test case and demo.</li>
+						<li>[osx] fix of <code>role=window-caption</code> handling on complex elements.</li>
+						<li>[richtext] handling of loading HTMLs having non-canonical structure.</li></ul></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.2.5.1</td><td nowrap valign="top" align="center">11-10-2018</td><td class="root">fixes:
 					<ul>
 						<li><b>CRITICAL</b>: fix of memory build-up after frequent content changes.</li>
 						<li>[plaintext] fix of problems with VK_END handling and multiline text insertion: <a href="https://github.com/c-smile/sciter-sdk/issues/93#issuecomment-422068713">https://github.com/c-smile/sciter-sdk/issues/93#issuecomment-422068713</a>&nbsp;</li><li>[scapp] Adding <code>SciterSetOption(NULL, SCITER_SET_SCRIPT_RUNTIME_FEATURES, ...)</code> there too.</li>

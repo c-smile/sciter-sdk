@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <title>W1</title>
+        <style></style>
+        <script type="text/tiscript">
+
+          event click $(button#w2) {
+            View.window { // note 'View' - name of class
+              url: self.url("w2.htm"),
+              type: View.FRAME_WINDOW,
+              state: View.WINDOW_SHOWN,
+              client: true,
+              alignment:2,
+              width: 800,
+              height: 600
+            };
+          }
+
+          event click $(button#w3) {
+            view.window { // note 'view' - this window instance
+              url: self.url("w3.htm"),
+              type: View.FRAME_WINDOW,
+              state: View.WINDOW_SHOWN,
+              client: true,
+              alignment:8,
+              width: 800,
+              height: 600
+            };
+          }
+
+        </script>
+    </head>
+    <body>
+       <button#w2>Create W2 window</button> 
+       <button#w3>Create W3 (owned) window</button> 
+
+       <p>Click on these two buttons to create two windows. Close this one. W2 shall stay on the screen, W3 shall be closed as it is owned by this one.</p>
+
+    </body>
+</html>

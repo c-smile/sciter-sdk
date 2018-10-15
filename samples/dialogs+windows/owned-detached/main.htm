@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <title>MAIN</title>
+        <style></style>
+        <script type="text/tiscript">
+
+          event click $(button) {
+            View.window {
+              url: self.url("w1.htm"),
+              type: View.FRAME_WINDOW,
+              state: View.WINDOW_SHOWN,
+              client: true,
+              alignment:5,
+              width: 800,
+              height: 600
+            };
+          }
+        </script>
+    </head>
+    <body>
+       <button>Create W1 window</button> 
+    </body>
+</html>

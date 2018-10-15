@@ -1,0 +1,54 @@
+<html theme="dark">
+    <head>
+        <title>Test</title>
+        <style>
+
+  html:theme(dark) {
+    var(panel-background): #666;
+    var(input-background): #000;
+    var(panel-text): #eee;
+    var(input-text): #fff;
+  }
+
+  html:theme(light) {
+    var(panel-background): #eee;
+    var(input-background): #fff;
+    var(panel-text): #555;
+    var(input-text): #000;
+  }
+
+section {
+  background: color(panel-background);
+  color: color(panel-text);
+  padding:1em;
+}
+
+div {
+  background: color(input-background);
+  color: color(input-text);
+}
+
+        </style>
+        <script type="text/tiscript">
+
+event change $(form) {
+  self.attributes["theme"] = this.value.theme;
+}
+
+        </script>
+    </head>
+    <body>
+
+    <form>
+      <button|radio(theme) value="dark" checked>Dark</button>
+      <button|radio(theme) value="light">Light</button>
+    </form>
+
+    <section>
+      Some text  
+      <div>Some div</div>
+    </section>
+
+
+    </body>
+</html>
