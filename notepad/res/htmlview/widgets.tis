@@ -1,0 +1,431 @@
+
+
+// Callout background drawing aspect
+function Callout(params)
+{          
+  var shape;
+  var width,height;  
+
+  const borderRadius = params.borderradius || 3dip;
+  const arrowSize = params.arrowsize || 6dip;
+  const borderWidth = params.borderwidth || 1dip;
+  const shadowColor = params.shadowcolor || rgba(0, 0, 0, 0.6);
+  const shadowX = params.shadowx || 0dip;
+  const shadowY = params.shadowy || 0dip;
+  const shadowBlur = params.shadowblur || 10dip;
+  const borderColor = params.bordercolor || color.blue;
+  const backColor = params.backcolor || color.white;
+  const orientation = params.orientation || "at-bottom";
+
+  function getShape()
+  {
+      if(!shape) 
+      {
+          shape = new Graphics.Path();
+          width = null;
+          height = null;
+      }
+
+      var (x,y,w,h) = this.box(#rectw,#inner);
+  
+      if( width == w && height == h)
+          return shape; // nothing to do already calculated
+
+      width = w;
+      height = h;
+      shape.reset();
+
+      const stoke_width = this.toPixels(borderWidth,#width).toFloat();
+      x += stoke_width / 2; 
+      y -= stoke_width / 2; 
+      w -= stoke_width; 
+      h -= stoke_width;
+  
+      const r = this.toPixels(borderRadius,#width);
+      const ah = this.toPixels(arrowSize,#height);
+
+      switch(orientation) 
+      {
+        case "at-bottom":
+          shape          
+            .moveTo(x+r, y)
+            .lineTo(x+w/2-ah,y) 
+            .lineTo(x+w/2,y-ah)
+            .lineTo(x+w/2+ah,y)
+            .arcTo(x+w, y,   x+w, y+h, r)
+            .arcTo(x+w, y+h, x,   y+h, r)
+            .arcTo(x,   y+h, x,   y,   r)
+            .arcTo(x,   y,   x+w, y,   r)              
+            .close();
+          break;
+        case "at-right":
+          shape          
+            .moveTo(x, y+h-r)
+            .lineTo(x, y+h/2+ah) 
+            .lineTo(x-ah, y+h/2)
+            .lineTo(x, y+h/2-ah)
+            .arcTo(x,   y,   x+w, y,   r)
+            .arcTo(x+w, y,   x+w, y+h, r)
+            .arcTo(x+w, y+h, x,   y+h, r)
+            .arcTo(x,   y+h, x,   y,   r)
+            .close();
+          break;
+      }
+      return shape; 
+  }  
+  
+  function drawBackground( gfx ) {        
+      if(var shape = getShape.call(this)) 
+      {      
+          gfx.pushLayer(#border-box,[#drop-shadow:shadowColor,shadowX,shadowY,shadowBlur]); 
+          gfx.lineWidth(borderWidth).lineColor(borderColor);
+          gfx.fillColor(backColor).drawPath( shape );
+          gfx.popLayer();
+          return true;
+      }
+  }
+  this.paintBackground = drawBackground;
+}
+
+
+// popup element consumes all UI events (isolation from editor)
+class Popup: Element 
+{
+  event mousedown { return true; }
+  event mouseup { return true; }
+  event mousemove { return true; }
+
+  event keydown (evt) {
+    switch(evt.keyCode) {
+      case Event.VK_ESCAPE: this.onEscape(); break;
+      case Event.VK_RETURN: this.onEnter(); break;
+    }
+    return true; // consume, do not propagate it further.
+  }
+
+  event keyup {
+    return true; // consume, do not propagate it further.
+  }
+  event keypress {
+    return true; // consume, do not propagate it further.
+  }
+
+  function onEnter() { }
+  function onEscape() { this.closePopup(); }
+}
+
+class HyperlinkEditor: Popup {
+  var instance; // singleton, element popup#hyperlink
+  var commit;   // commit function called to apply
+  var elCaption;
+  var elUrl;
+  var elRemove;
+  var currentLink;
+
+  function attached() {
+    instance = this;
+    elCaption = this.$(input(caption));
+    elUrl     = this.$(input(url));
+    elRemove  = this.$(button(remove));
+  }
+
+  function init(vals) {
+    this.$(form).value = vals;
+    this.state.collapsed = true;
+    this.checkState();
+    this.$(button(apply)).state.disabled = true;
+    elCaption.state.disabled = !vals.isText;
+  }
+
+  function showForSelection(htmlarea) {
+    var (vx,vy,w,h) = htmlarea.selection.box(#rectw);
+    var textOnly = (htmlarea.selection.caret[0] === htmlarea.selection.anchor[0]) && htmlarea.selection.caret[0].isText;     
+    var caption = textOnly ? htmlarea.selection.text : "{selection}";
+    currentLink = null;
+    instance.init {
+      caption: caption,
+      url:"",
+      local-links-switch:false,
+      isText: textOnly
+    };
+    elRemove.state.disabled = true;
+    htmlarea.popup(instance, 8, vx + w / 2, vy + h); // underneath of the selection
+    view.eventsRoot = instance;
+    commit = function() {
+      var vals = this.$(form).value;
+      if( htmlarea.selection.isCollapsed || textOnly) {
+        var html = String.$(<a href="{vals.url}">{vals.caption}</a>);
+        htmlarea.execCommand("edit:insert-html",html);
+      }
+      else {
+        var anchor, caret;
+        htmlarea.transact( function(transaction) 
+        {
+          var a = new Element("a");
+          a.attributes["href"] = elUrl.value;
+          (anchor, caret) = transaction.wrap(htmlarea.selection.caret,htmlarea.selection.anchor,a);
+          return true; // commit
+        });
+        htmlarea.selection.select(caret,anchor);
+      }
+      this.close();
+      return true;
+    };
+  }
+  function showForElement(htmlarea,elLink) {
+    const isOnlyText = elLink.length == 0 // it has no sub-elements
+    const caption = elLink.text;
+    currentLink = elLink;
+    instance.init {
+      caption: caption,
+      url: elLink.attributes["href"],
+      local-links-switch:false,
+      isText: isOnlyText
+    };
+    elRemove.state.disabled = false;
+    elLink.popup(instance, (8 << 16) | 2); // top center of popup at bottom center of the element 
+    view.eventsRoot = instance;
+    commit = function() {
+      htmlarea.transact( function(transaction) 
+      {
+        if( caption != elCaption.value && isOnlyText )
+          transaction.text(elLink,elCaption.value);
+        transaction.attr(elLink,"href", elUrl.value);
+        return true; // commit
+      });
+      this.close();
+      HTMLView.current.selection.select(elLink.lastCaretPos,elLink.firstCaretPos);
+      return true;
+    };
+  }
+
+  function onEscape() { this.close(); }
+  function onEnter() { this.commit(); }
+
+  function close() {
+    view.eventsRoot = null;
+    HTMLView.current.state.focus = true;
+    this.closePopup();
+  }
+
+  event popupdismissed {
+    view.eventsRoot = null;
+  }
+
+  function checkState() {
+    this.$(button(check)).state.disabled = elUrl.state.empty || elUrl.state.invalid; 
+    for(var input in this.$$(form input))
+      if( !input.value || input.state.invalid)
+      {
+        this.$(button(apply)).state.disabled = true; 
+        return true;
+      }
+    this.$(button(apply)).state.disabled = false;       
+  }
+
+  event click $(button(apply)) {
+    return this.commit();  
+  }
+
+  event click $(button(check)) {
+    const url = elUrl.value;
+    if( url like /^#.+$/ )
+      Sciter.launch(Editor.current.url + url);
+    return true;  
+  }
+
+  event click $(button(remove)) {
+    var start, end;
+    HTMLView.current.transact( function(transaction) 
+    {
+      (start, end) = transaction.unwrap(currentLink);
+      return true; // commit
+    });
+    HTMLView.current.selection.select(start,end); 
+    this.close();  
+    HTMLView.current.state.focus = true;
+    return true;
+  }
+
+
+  event change $(input) {
+    this.checkState();
+    return true;
+  }
+
+  event change $(button(local-links-switch)) (evt,button) {
+    this.state.expanded = button.state.checked;
+    if(this.state.expanded)
+      this.fillLocalLinks();
+  }
+
+  function fillLocalLinks() {
+    var select = this.$(select(local-links)>tbody);
+    select.clear();
+    for(var target in HTMLView.current[0].$$([name],[id])) {
+      const nm = target.attributes["name"] || target.attributes["id"];
+      const tx = target.text;
+      select.$append(<option><span.anchor>#{nm}</span><span.text>{tx}</span><span.path></span></option>);
+    }
+  }
+
+  event dblclick $(select(local-links) option) (evt,option)
+  {
+    const anchor = option.$(span.anchor).text;
+    const text   = option.$(span.text).text;
+    const path   = option.$(span.path).text;
+    const url    = path + anchor;
+    if(!elCaption.value) 
+      elCaption.value = text;
+    elUrl.value = url;
+    this.checkState();
+    return true;
+  }
+
+}
+
+event edit-hyperlink (evt) {
+  HyperlinkEditor.showForElement(HTMLView.current,evt.target);
+  return true;
+}
+
+// applied to <input|text> to support URL input validation 
+class Hyperlink : Element 
+{
+
+  const RE_HTTP = /((?:https?:\/\/)([a-zA-Z-]+)(\.[a-zA-Z-]+)([-\/\w\.\?#&=%\(\)]*)\/?)$/i; 
+  const RE_FILE = /^(?:file\:\/\/\/?)?(([-\/\w \.]*)\/?)([-\?\=\w%#]+)?$/i;
+  const RE_MAIL = /(([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6}))$/i;
+  function attached() { this.validate(); }
+  event change() { this.validate(); }
+  function validate() {
+    var text = this.value;
+    const isHttp = text like RE_HTTP;
+    const isFile = text like RE_FILE;
+    const isMail = text like RE_MAIL;
+    this.state.invalid = text && !isHttp && !isFile && !isMail; 
+    //debug URL: isHttp isFile isMail;
+    return !this.state.invalid;
+  }
+}
+
+class TableGenerator : Element 
+{
+
+  function attached() 
+  {
+    const me = this;
+    var selTableRow = -1;
+    var selTableCol = -1;
+
+    var headerRows = 0;
+    var headerCols = 0;
+            
+    const table = this.$(table>tbody);
+
+    const DEF_TABLE_COLS = table[0].length;
+    const DEF_TABLE_ROWS = table.length;
+
+    function setSelection(R = -1,C = -1) {
+      if( C == selTableCol && R == selTableRow )
+        return;
+      for( var r in DEF_TABLE_ROWS )
+        for( var c in DEF_TABLE_COLS )
+              table[r][c].attributes["selected"] = r <= R && c <= C ? true : undefined; 
+      selTableCol = C;
+      selTableRow = R;
+    }
+
+    function updateHeaders() {
+      for( var r in DEF_TABLE_ROWS )
+        for( var c in DEF_TABLE_COLS )
+          table[r][c].attributes.toggleClass("header", (r < headerRows) || (c < headerCols)); 
+    }
+    
+    table << event mousemove(evt) 
+    {
+      var td = evt.target.$p(td);
+      if( !td || !evt.target.belongsTo(table)) return;
+      var C = td.index;
+      var R = td.parent.index;
+      setSelection(R,C);
+    };
+
+    table << event mouseleave(evt) {
+      setSelection();
+    };
+
+    table << event click $(td) {
+      var C = this.index;
+      var R = this.parent.index;
+      me.closePopup();
+      const params = { 
+        rows: R+1,
+        columns: C+1, 
+        hrows: headerRows,
+        hcolumns: headerCols,
+        width: me.$(header).value.tablewidth
+      };
+
+      var html = tableHtml(params) ;
+      HTMLView.current.execCommand("edit:insert-html",html); // this will left caret at the end of the table
+      // set caret into first cell:
+      var table = HTMLView.current.selection.caret[0];
+      assert table instanceof Element && table.tag == "table";
+      HTMLView.current.selection.select(table.$(td,th).firstCaretPos);
+      return true; // handled
+    };
+
+    this << event popupready {
+      setSelection();
+    } 
+
+    this << event change $(input(hrows)) (evt) { headerRows = evt.target.value; updateHeaders(); }
+    this << event change $(input(hcols)) (evt) { headerCols = evt.target.value; updateHeaders(); }
+  }
+
+
+  function tableHtml(params) 
+  {
+    const rows = params.rows || 1;
+    const columns = params.columns || 1; 
+    const hrows = params.hrows || 0;
+    const hcolumns = params.hcolumns || 0; 
+
+    const width = params.width || "";
+    const border = params.border || "border";
+
+    var html = "<table " + border + " " +(width || "") + ">";
+    html += "\n\t<tbody>";
+    for( var r in rows ) {
+      html += "\n    <tr>";
+      for( var c in columns ) {
+        const cell = ((r < hrows) || (c < hcolumns)) ? "th":"td";
+        html += "\n      <"+ cell + " />";
+      }
+      html += "</tr>";
+    }  
+    html += "\n\t</tbody>";
+    html += "\n</table>\n";
+    return html;
+  }
+
+}
+
+// floating popup toolbar
+class TableCells : Popup {
+  var instance;
+
+  function attached() {
+    instance = this;
+  }
+   
+  function showForSelection(htmlarea) {
+    var table = htmlarea.selection.caret[0].parent.$p(table); 
+    var (x1,y1,x2,y2) = htmlarea.selection.box(#rect);
+    var (tx1,ty1,tx2,ty2) = table.box(#rect,#border,#view);
+    htmlarea.first.popup(instance,4,tx2,(y1 + y2) / 2);
+  }
+
+  event ~click  { this.closePopup(); }
+}

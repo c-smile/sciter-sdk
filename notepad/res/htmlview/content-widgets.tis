@@ -1,0 +1,41 @@
+//
+// Widgets instantiated inside editable document
+// 
+
+
+// applied to ::marker of named or IDed elements in htmlarea 
+class LinkMarker 
+{
+  event click {
+    const name = this.owner.attributes["id"] || this.owner.attributes["name"];
+    const text = this.owner.text;
+    const url = self.url() + "#" + name.toUrlString();
+    view.clipboard(#put, {
+      text: text,
+      html: String.$(<a href="{url}">{text}</a>),
+      link: {caption: text, url:url }
+    });
+    this.attributes.addClass("highlighted");
+  }
+  event animationend {
+    this.attributes.removeClass("highlighted"); 
+  }
+}
+
+class MetaEditor {
+
+  function attached() {
+    var text = "<" + this.owner.tag;
+    if( var id = this.owner.id ) 
+       text += "#" + id;
+    if( var cl = this.owner.attributes["class"] )
+      text += "." + cl.split(" ").join(".");
+    this.text = text +  ">";
+  }
+
+  event click {
+    self.postEvent("show-source");
+    return true;
+  }
+
+}

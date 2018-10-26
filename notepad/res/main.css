@@ -1,0 +1,234 @@
+
+@import url(common.css);
+
+@mixin LIST-ITEM-NORMAL  { color:color(text-color); border-radius: 2dip; }
+@mixin LIST-ITEM-HOVER   { color:color(text-color); background-color:color(paper-color-dimmed); }
+@mixin LIST-ITEM-CURRENT { color:color(text-color); background-color:color(paper-color); }
+@mixin LIST-ITEM-FOCUS   { color:color(text-color); background-color:color(paper-color); }
+
+@import url(editor.css);
+@import url(textview/textview.css);
+@import url(htmlview/htmlview.css);
+@import url(foldersview/folders-and-files.css);
+
+html {
+  prototype: ConnectorsCanvas url(utils/utils.tis);
+}
+
+body { 
+  margin:0; padding:0; 
+  flow:horizontal;
+}
+
+splitter { 
+  background:color(splitter-color); 
+  hit-margin:2dip;
+  width:1dip;
+}
+
+main {
+  prototype: MainController;
+  height:*;
+}
+
+main.allow-drop {
+  foreground-color: color(accent-dimmed);
+}
+
+main.allow-drop::marker {
+  content: "Drop this file here to open it for editing";
+  font-size:150%;
+  color: color(selection-text-color);
+  size:max-content;
+  margin:*;
+  z-index:1;
+}
+
+aside { 
+  height:*;
+}
+
+section#editors { 
+  flow:stack; size:*; 
+}
+
+
+section#editors.allow-drop::marker {
+  content: "Drop files here to open them";
+  margin:*;
+  size:max-content;
+}
+
+section#editors > editor { visibility:none; }
+section#editors > editor:current { visibility:visible; }
+
+body header {
+  flow:horizontal;
+  border-bottom: 1dip solid color(splitter-color);
+  background-color: color(paper-color-dimmed);
+}
+
+body header > toolbar { 
+  display:block;
+  flow:horizontal; border-spacing:2dip; 
+  padding:0;
+  background:transparent;
+  width:max-content;
+  margin:0;
+}
+
+header > toolbar > button { 
+  size:21dip; 
+  padding:0;
+  hit-margin: 2dip;
+  margin: 2dip;
+  padding:3dip; 
+  //transition:none;
+  foreground-position:50% 50%;
+  foreground-repeat:no-repeat;
+  foreground-size:10dip;
+  color:color(icon-color);
+  fill:color(icon-color);
+  stroke: none;
+  //border-radius:0;
+}
+
+header > toolbar > button[type=menu] {
+  behavior:clickable popup-menu; 
+}
+
+header > toolbar > button:disabled {
+  color:color(icon-color-dimmed);
+  fill:color(icon-color-dimmed);
+}
+
+header > toolbar > splitter {
+  background: color(splitter-color);  
+  width:1dip;
+  height:*;
+  border: none;
+}
+
+body footer {
+  //flow:horizontal;
+  border-top: 1dip solid color(splitter-color);
+  width:*;
+  height:1.2em;
+  background-color: color(paper-color-dimmed);
+}
+
+footer#fkeys > toolbar {
+  height:1.2em;
+  background:none;
+}
+
+footer#fkeys > toolbar > button { 
+  flow:horizontal;
+  width:*;
+  padding:0 0.5em;
+  line-height:1em;
+  border-spacing:0.4em; 
+}
+
+footer#fkeys > toolbar > button > span.key { color: #8B0000; }
+footer#fkeys > toolbar > button > span.func { color: color(text-color); }
+
+
+kbd { 
+  display:inline-block;
+  font-size:8.5pt;
+  font-weight:bold;
+  min-width:1em;
+  vertical-align:middle;
+  text-transform: uppercase;
+  text-align: center;
+  padding:3dip 5dip;
+  line-height:1.2em;
+  height:max-content;
+  background-image:url(images/kbd-back.png);
+  background-repeat:expand stretch-top stretch-bottom stretch-left stretch-right stretch-middle;
+  background-position:4dip 4dip 4dip 4dip;
+}
+
+row { display:block; flow:horizontal; }
+
+span.accesskey { font-family:monospace; text-transform: uppercase;}
+
+popup[role=tooltip] {
+  text-align: start;
+  line-height:2em;
+}
+
+toolbar.textview { visibility:none; }
+toolbar.htmlview { overflow-x:hidden; width:100*; max-width:max-content; }
+
+main[mode="wysiwyg"] toolbar.htmlview { visibility:visible; }
+main[mode="source"] toolbar.textview { visibility:visible; }
+main[mode="source"] toolbar.htmlview { visibility:none; }
+
+toolbar.file { margin:0; }
+toolbar.file-ops { margin:0; margin-right:*; }
+toolbar.document { margin:0; margin-left:*; }
+
+toolbar.document .source { foreground-size:15dip; foreground-image: url(path:M278.9 511.5l-61-17.7c-6.4-1.8-10-8.5-8.2-14.9L346.2 8.7c1.8-6.4 8.5-10 14.9-8.2l61 17.7c6.4 1.8 10 8.5 8.2 14.9L293.8 503.3c-1.9 6.4-8.5 10.1-14.9 8.2zm-114-112.2l43.5-46.4c4.6-4.9 4.3-12.7-.8-17.2L117 256l90.6-79.7c5.1-4.5 5.5-12.3.8-17.2l-43.5-46.4c-4.5-4.8-12.1-5.1-17-.5L3.8 247.2c-5.1 4.7-5.1 12.8 0 17.5l144.1 135.1c4.9 4.6 12.5 4.4 17-.5zm327.2.6l144.1-135.1c5.1-4.7 5.1-12.8 0-17.5L492.1 112.1c-4.8-4.5-12.4-4.3-17 .5L431.6 159c-4.6 4.9-4.3 12.7.8 17.2L523 256l-90.6 79.7c-5.1 4.5-5.5 12.3-.8 17.2l43.5 46.4c4.5 4.9 12.1 5.1 17 .6z)}  
+toolbar.document .markdown { foreground-size:19dip; foreground-image: url(path:M593.85 452.92H46.15C20.7 452.92 0 432.22 0 406.77V105.23c0-25.45 20.7-46.15 46.15-46.15h547.69c25.45 0 46.15 20.7 46.15 46.15v301.54c.01 25.45-20.69 46.15-46.14 46.15zm-440-92.3v-120l61.54 76.92 61.54-76.92v120h61.54V151.38h-61.54l-61.54 76.92-61.54-76.92H92.31v209.23h61.54zM566.15 256h-61.54V151.38h-61.54V256h-61.54l92.31 107.69L566.15 256z)}  
+
+toolbar.file button#new-file { foreground-size:17dip 18dip; foreground-image: url(path:M 4.5 2 C 3.6774686 2 3 2.6774686 3 3.5 L 3 12.5 C 3 13.322531 3.6774686 14 4.5 14 L 11.5 14 C 12.322531 14 13 13.322531 13 12.5 L 13 5.2929688 L 12.853516 5.1464844 L 9.7070312 2 L 4.5 2 z M 4.5 3 L 9 3 L 9 6 L 12 6 L 12 12.5 C 12 12.781469 11.781469 13 11.5 13 L 4.5 13 C 4.2185314 13 4 12.781469 4 12.5 L 4 3.5 C 4 3.2185314 4.2185314 3 4.5 3 z M 10 3.7070312 L 11.292969 5 L 10 5 L 10 3.7070312 z); }
+toolbar.file button#open-file { foreground-size:17dip 18dip; foreground-image: url(path:M 4.5 2 C 3.6774686 2 3 2.6774686 3 3.5 L 3 12.5 C 3 13.322531 3.6774686 14 4.5 14 L 11.5 14 C 12.322531 14 13 13.322531 13 12.5 L 13 5.2929688 L 12.853516 5.1464844 L 9.7070312 2 L 4.5 2 z M 4.5 3 L 9 3 L 9 6 L 12 6 L 12 12.5 C 12 12.781469 11.781469 13 11.5 13 L 4.5 13 C 4.2185314 13 4 12.781469 4 12.5 L 4 3.5 C 4 3.2185314 4.2185314 3 4.5 3 z M 10 3.7070312 L 11.292969 5 L 10 5 L 10 3.7070312 z M 6 8 L 6 9 L 6.5 9 L 9.5 9 L 10 9 L 10 8 L 9.5 8 L 6.5 8 L 6 8 z M 6 10 L 6 11 L 6.5 11 L 8.5 11 L 9 11 L 9 10 L 8.5 10 L 6.5 10 L 6 10 z);}
+
+toolbar.file-ops button#save-file { foreground-size:17dip; foreground-image: url(path:M 5 3 C 3.9 3 3 3.9 3 5 L 3 19 C 3 20.1 3.9 21 5 21 L 19 21 C 20.1 21 21 20.1 21 19 L 21 6 L 18 3 L 5 3 z M 8 4 L 16 4 L 16 9 L 8 9 L 8 4 z M 13 5 L 13 8 L 15 8 L 15 5 L 13 5 z M 7 12 L 17 12 C 17.6 12 18 12.4 18 13 L 18 18 C 18 18.6 17.6 19 17 19 L 7 19 C 6.4 19 6 18.6 6 18 L 6 13 C 6 12.4 6.4 12 7 12 z);}
+toolbar.file-ops button#print-file { foreground-size:17dip; foreground-image: url(path:M448 1536h896v-256h-896v256zm0-640h896v-384h-160q-40 0-68-28t-28-68v-160h-640v640zm1152 64q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128 0v416q0 13-9.5 22.5t-22.5 9.5h-224v160q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-160h-224q-13 0-22.5-9.5t-9.5-22.5v-416q0-79 56.5-135.5t135.5-56.5h64v-544q0-40 28-68t68-28h672q40 0 88 20t76 48l152 152q28 28 48 76t20 88v256h64q79 0 135.5 56.5t56.5 135.5z);}
+//toolbar.file button#save-file-as { foreground-size:20dip; foreground-position:50% 4dip; foreground-image: url(path:M 5 3 C 3.9 3 3 3.9 3 5 L 3 19 C 3 20.1 3.9 21 5 21 L 17.3125 21 L 15.3125 19 L 7 19 C 6.4 19 6 18.6 6 18 L 6 13 C 6 12.4 6.4 12 7 12 L 17 12 C 17.6 12 18 12.4 18 13 L 18 14.3125 L 21 17.3125 L 21 6 L 18 3 L 5 3 z M 8 4 L 16 4 L 16 9 L 8 9 L 8 4 z M 13 5 L 13 8 L 15 8 L 15 5 L 13 5 z M 16 16 L 16 17.59375 L 21.1875 22.8125 L 22.8125 21.1875 L 17.59375 16 L 16 16 z M 23.1875 21.59375 L 21.59375 23.1875 L 22.3125 23.90625 C 22.4125 24.00625 22.70625 24.00625 22.90625 23.90625 L 23.90625 22.90625 C 24.10625 22.70625 24.10625 22.5125 23.90625 22.3125 L 23.1875 21.59375 z);}
+
+toolbar.folders-and-files button#open-folder { 
+  margin-left:*;
+  foreground-size:17dip; 
+  foreground-image: url(path:M464 128H272l-64-64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V176c0-26.51-21.49-48-48-48zm-96 168c0 8.84-7.16 16-16 16h-72v72c0 8.84-7.16 16-16 16h-16c-8.84 0-16-7.16-16-16v-72h-72c-8.84 0-16-7.16-16-16v-16c0-8.84 7.16-16 16-16h72v-72c0-8.84 7.16-16 16-16h16c8.84 0 16 7.16 16 16v72h72c8.84 0 16 7.16 16 16v16z);
+}
+
+/*toolbar.folders-and-files button#close-all { 
+  margin-left:*;
+  foreground-size:19dip; 
+  foreground-image: url(path:M 6 6.0039062 C 4.346 6.0039062 3 7.3499063 3 9.0039062 L 3 15 L 3.0117188 15 L 3.0117188 41 C 3.0117188 42.103 3.9087187 43 5.0117188 43 L 30.464844 43 C 31.747182 47.045551 35.544504 50 40 50 C 45.5 50 50 45.5 50 40 C 50 37.219827 48.847586 34.697941 47 32.880859 L 47 15 C 47 13.897 46.103 13 45 13 L 14 13 L 14 9.0039062 C 14 7.3499063 12.654 6.0039062 11 6.0039062 L 6 6.0039062 z M 19 6.0039062 C 17.346 6.0039062 16 7.3499063 16 9.0039062 L 16 11 L 27 11 L 27 9.0039062 C 27 7.3499063 25.654 6.0039062 24 6.0039062 L 19 6.0039062 z M 32 6.0039062 C 30.346 6.0039062 29 7.3499063 29 9.0039062 L 29 11 L 40 11 L 40 9.0039062 C 40 7.3499063 38.654 6.0039062 37 6.0039062 L 32 6.0039062 z M 40 32 C 44.4 32 48 35.6 48 40 C 48 44.4 44.4 48 40 48 C 35.6 48 32 44.4 32 40 C 32 35.6 35.6 32 40 32 z M 36.5 35.5 C 36.25 35.5 36.000781 35.600781 35.800781 35.800781 C 35.400781 36.200781 35.400781 36.799219 35.800781 37.199219 L 38.599609 40 L 35.800781 42.800781 C 35.400781 43.200781 35.400781 43.799219 35.800781 44.199219 C 36.000781 44.399219 36.3 44.5 36.5 44.5 C 36.7 44.5 36.999219 44.399219 37.199219 44.199219 L 40 41.400391 L 42.800781 44.199219 C 43.000781 44.399219 43.3 44.5 43.5 44.5 C 43.7 44.5 43.999219 44.399219 44.199219 44.199219 C 44.599219 43.799219 44.599219 43.200781 44.199219 42.800781 L 41.400391 40 L 44.199219 37.199219 C 44.599219 36.799219 44.599219 36.200781 44.199219 35.800781 C 43.799219 35.400781 43.200781 35.400781 42.800781 35.800781 L 40 38.599609 L 37.199219 35.800781 C 36.999219 35.600781 36.75 35.5 36.5 35.5 z);
+}*/
+
+toolbar.folders-and-files button#theme {
+  foreground-size:17dip; 
+  foreground-image: url(path:M 4 2 C 2.9 2 2 2.9 2 4 L 2 12 C 2 13.1 2.9 14 4 14 L 5 14 L 5 12 L 4 12 L 4 6 L 16 6 L 16 9 L 18 9 L 18 4 C 18 2.9 17.1 2 16 2 L 4 2 z M 6 7 L 6 9.78125 C 6.532 9.30225 7.229 9 8 9 L 8.65625 9 L 9 9 L 9 7 L 6 7 z M 11 7 L 11 9 L 14 9 L 14 7 L 11 7 z M 8 10 C 6.9 10 6 10.9 6 12 L 6 20 C 6 21.1 6.9 22 8 22 L 20 22 C 21.1 22 22 21.1 22 20 L 22 12 C 22 10.9 21.1 10 20 10 L 8 10 z M 8 12 L 20 12 L 20 14 L 8 14 L 8 12 z M 10 16 L 13 16 L 13 19 L 10 19 L 10 16 z M 15 16 L 18 16 L 18 19 L 15 19 L 15 16 z);
+}
+
+// app state management
+frame#front { visibility:visible; }
+section#editors { visibility:none; } 
+
+html[has-document] frame#front { visibility:none; }
+html[has-document] section#editors { visibility:visible; } 
+
+html[shows-dialog] {
+  foreground-color: color(dialog-shim-color);
+  transition: foreground-color(linear,400ms);
+}
+
+// not yet: menu { background-color: color(paper-color); color: color(text-color); }
+menu > li:checked { background-color: color(paper-color-highlight); }
+
+menu#text-editing-menu {
+  flow:horizontal;
+}
+
+menu#text-editing-menu > .suggestions {
+  width:max-content;
+  border-left:1dip solid #ccc;
+  height:*;
+  flow:vertical-wrap;
+  max-height:20em;
+}
+
+menu#text-editing-menu > .suggestions:empty { visibility:none; }
+menu#text-editing-menu > .suggestions > li { padding-left:1em; }
+
+menu#text-editing-menu hr {
+  background:none;
+  border:none;
+  border-top:1dip solid #ccc;
+}

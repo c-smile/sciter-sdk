@@ -1,0 +1,53 @@
+<head>
+  <title>html-notepad</title>
+  <style src="main.css" />
+  <script type="text/tiscript" src="main.tis" />
+  <include src="editing-context-menu.htm"/>
+</head>
+<body>
+  <frameset cols="*,200dip">
+    <main>
+      <header>
+        <toolbar.file.permanent>
+          <button#new-file accesskey="^N" tooltip="new file: <kbd>&platform-cmd-mod;</kbd>+<kbd>N</kbd>"></button>
+          <button#open-file accesskey="^O" tooltip="open file: <kbd>&platform-cmd-mod;</kbd>+<kbd>O</kbd>"></button>
+        </toolbar>
+        <toolbar.file-ops>
+          <button#save-file accesskey="^S" tooltip="save file: <kbd>&platform-cmd-mod;</kbd>+<kbd>S</kbd><br>save file as: <kbd>&platform-cmd-mod;</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd>"></button>
+          <splitter/>
+          <button#print-file accesskey="^P" tooltip="print file: <kbd>&platform-cmd-mod;</kbd>+<kbd>P</kbd>"></button>          
+        </toolbar>
+        <toolbar.htmlview><include src="htmlview/toolbar.htm" /></toolbar>
+        <toolbar.textview></toolbar>
+        <toolbar.document>
+          <button|checkbox.markdown #markdown accesskey="!F9" tooltip="Markdown source"/>
+          <button|checkbox.source #source accesskey="!F10" tooltip="HTML source"/>
+        </toolbar>
+      </header>
+      <section#editors>
+        <!-- multiple <editor src="..."/> will be injected here -->
+      </section>
+      <frame #front src="docs/intro.htm"/>
+      <footer#fkeys><include src="fkeys.htm"/></footer>
+    </main>
+    <splitter/>
+    <aside>
+      <header>
+        <toolbar.folders-and-files.permanent>
+          <button|checkbox #theme tooltip="Day or night theme"></button>
+          <!--<button #close-all tooltip="close all documents"></button>-->
+          <button #open-folder tooltip="open folder"></button>
+        </toolbar>
+      </header>
+      <open-files></open-files>
+      <folder filter="*.htm,*.html,*.xhtml,*.png,*.gif,*.jpg,*.jpeg">
+          <p.connected with="button#open-folder">Click to open folder(s) (a.k.a. Project) with your HTML files.</p>
+      </folder>
+      <folders-list></folders-list>
+      <footer></footer>
+    </aside>
+  </frameset>
+  <include src="htmlview/popup-hyperlink.htm" />
+  <include src="htmlview/popup-cell-range.htm" />
+  <include src="foldersview/file-context-menu.htm" />
+</body>

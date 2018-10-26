@@ -1,0 +1,15 @@
+function NullableEdit()
+{
+  this << event mousedown (evt) {
+    if( evt.isOnIcon && !this.state.readonly) {
+      var defval = this.attributes["clearvalue"] || "";
+      if( this.value != defval ) {
+        //These two instead of this.value = defval; to make the change undoable
+        this.execCommand("edit:selectall");
+        this.execCommand("edit:paste",defval);
+        this.postEvent("change");
+      }
+      return true;
+    }
+  }
+}

@@ -1,0 +1,184 @@
+
+//|
+//| Create a function bound to a given object (assigning this, and arguments, optionally).
+//|
+
+function Function.bind(context, bindargs..) 
+{
+    return function(args..) {
+      if(bindargs.length)
+        return (this super).apply(context, bindargs.concat(args));
+      else
+        return (this super).apply(context, args);
+    };
+}
+
+//| 
+//| Memoize an expensive function by storing its results.
+//| 
+
+function Function.memoize(hasher = null) 
+{
+  assert !hasher || typeof hasher == #function;
+  var memo = {};
+  return function(args..) {
+    var key = hasher ? hasher.apply(this, args) : args;
+    var val = memo[key];
+    if( val === undefined )
+      memo[key] = val = (this super).apply(this, args);
+    return val;
+  };
+}
+
+//| 
+//| Partially apply a function by creating a version that has had 
+//| some of its arguments pre-filled, without changing its dynamic this context.
+//| 
+
+function Function.partial(pargs..) {
+    return function(args..) {
+      return (this super).apply(this, pargs.concat(args));
+    };
+  };
+
+
+//|
+//| Delays this function for the given number of milliseconds, 
+//| and then calls it with the arguments supplied.
+//|
+function Function.delay(milliseconds, args..) {
+  self.timer(milliseconds, :: (this super).apply(null, args), true );
+}
+
+//|
+//| Defers a function, scheduling it to run after the current call stack has cleared.
+//|
+function Function.defer(args..) {
+  var func = this;
+  self.post( :: func.apply(null, args) );
+}
+
+//|
+//| Returns a function, that, when invoked, will only be triggered 
+//| at most once during a given window of time. Normally, the throttled 
+//| function will run as much as it can, without ever going more than once 
+//| per milliseconds duration; but if you'd like to disable the execution on 
+//| the leading edge, pass {leading: false}. To disable execution on 
+//| the trailing edge, ditto.
+//| 
+
+function Function.throttle(milliseconds, options = {}) {
+    var context, args, result;
+    var running = false;
+    var previous = 0;
+    var func = this;
+    milliseconds = milliseconds.toInteger();
+    function later() {
+      previous = options.leading === false ? 0 : Date.ticks();
+      running = false;
+      result = func.apply(context, args);
+    };
+    return function(arguments..) {
+      var now = Date.ticks();
+      if (!previous && options.leading === false) previous = now;
+      var remaining = milliseconds - (now - previous);
+      context = this;
+      args = arguments;
+      if (remaining <= 0) {
+        self.timer(0,later,true);
+        running = false;
+        previous = now;
+        result = func.apply(context, args);
+      } else if (!running && options.trailing !== false) {
+        running = true;
+        self.timer(remaining, later,true);
+      }
+      return result;
+    };
+  }
+
+//| 
+//| Returns a function, that, as long as it continues to be invoked, 
+//| will not be triggered. The function will be called after it stops 
+//| being called for N milliseconds. If immediate is passed, trigger 
+//| the function on the leading edge, instead of the trailing.
+//| 
+
+ function Function.debounce(milliseconds, immediate = false) {
+    var running = false, args, context, timestamp, result;
+    milliseconds = milliseconds.toInteger();
+    var func = this;
+    return function(arguments..) 
+    {
+      context = this;
+      args = arguments;
+      timestamp = Date.ticks();
+      var later = function() 
+      {
+        var last = Date.ticks() - timestamp;
+        if (last < milliseconds) {
+          running = true;
+          self.timer(milliseconds - last, later, true);
+        } else {
+          running = false;
+          if (!immediate) result = func.apply(context, args);
+        }
+      };
+      var callNow = immediate && !running;
+      if (!running) {
+        running = true;
+        self.timer(milliseconds, later, true);
+      }
+      if (callNow) result = func.apply(context, args);
+      return result;
+    };
+  }
+
+//| 
+//| Returns a function that will be executed at most one time, 
+//| no matter how often you call it. Useful for lazy initialization.
+//| 
+
+function Function.once() {
+    var ran = false, memo;
+    return function(args..) {
+      if (!ran) {
+        ran = true;
+        memo = (this super).apply(this, args);
+      }
+      return memo;
+    };
+  }
+
+//|   
+//| Returns the first function passed as an argument to the second, 
+//| allowing you to adjust arguments, run code before and after, 
+//| and conditionally execute the original function.  
+//| 
+  
+function Function.wrap(wrapper) {
+    return function(arguments..) {
+      return wrapper.apply(this,(this super),arguments);
+    };
+  }
+
+//| 
+//| Returns a function that is the composition of a list of functions, 
+//| each consuming the return value of its previous function.
+//| Each function in the list can return an array. Elements of the array 
+//| will be passed as arguments to the next function in the list
+//| Note: first function gets executed first
+//|
+
+function Function.batch(funcs..) {
+    return function(arguments..) {
+      var args = arguments;
+      for (var i = 0; i < funcs.length; ++i) {
+	    if( typeof args == #array )
+          args = funcs[i].apply(this, args);
+		else
+		  args = funcs[i].call(this, args);
+      }
+      return args;
+    };
+  }

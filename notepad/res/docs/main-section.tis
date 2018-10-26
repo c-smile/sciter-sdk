@@ -1,0 +1,19 @@
+include "replace-animator.tis";
+
+class MainSection : Element {
+  
+  event click $(widget) (evt,widget)
+  {
+    var s = (widget.index / 2 + 1).toString();
+    widget.state.current = true;
+    const c = this;
+    function stateChanger() { 
+      if( c.attributes["state"] == s)
+        c.attributes["state"] = undefined;
+      else
+        c.attributes["state"] = s;
+    }
+    AniReplace(this, stateChanger, 300);
+  }
+
+}

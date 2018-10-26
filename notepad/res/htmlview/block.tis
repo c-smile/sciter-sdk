@@ -1,0 +1,244 @@
+namespace Outline 
+{
+  var offset = 0; // root left margin offset
+  var unit = 20;
+  var root = null; // current root (BFC - block formatting context element)
+
+  // block element representation
+  class Block : Element 
+  {
+    this var markerX1; // marker coordinates
+    this var markerX2;
+    this var markerY1; 
+    this var markerY2;
+
+    function attached() {
+      this._depth = undefined;
+      this.color = this.style.variable("marker-color") || color(255,0,0,0.25);
+    }
+
+    function getMarkerWidth() {
+      var pd = this.parent.depth;
+      return (pd ? pd - 1 : this.depth) * unit;
+    }
+     
+    function paintBackground(gfx) {
+
+      if( this.style.blockFormattingContext !== root )
+      {
+        this.markerX1 = 0;
+        this.markerX2 = -1;
+        this.markerY1 = 0; 
+        this.markerY2 = -1;
+        return false;
+      }
+
+      var (x,y,w,h) = this.box(#rectw,#inner,#root);
+
+      w = this.getMarkerWidth();
+
+      this.markerX1 = offset - w;
+      this.markerX2 = offset;
+      this.markerY1 = y; 
+      this.markerY2 = y + h;
+
+      gfx.strokeWidth(1)
+         .fillColor( this.color )
+         .strokeColor(color(0,0,0))
+         .rectangle(offset-x-w,0,w,h);
+    }
+
+    function findMarkedBy(rx,ry) {
+      if( ry < this.markerY1 || ry > this.markerY2 )
+        return null;
+      if( rx < this.markerX1 || rx > this.markerX2 )
+        return null;
+
+      for(var child in this) {
+        var found = child instanceof Block && child.findMarkedBy(rx,ry);
+        if( found ) return found;
+      }
+      return this;
+    }
+
+    property depth(v) {
+      get {
+        if( !this._depth ) 
+        {
+          var d = 0; 
+          for(var child in this) {
+            var t = child.depth || 0;
+            if( t > d ) d = t;
+          }
+          this._depth = d + 1;
+        }
+        return this._depth;
+      }
+    }
+
+    event contentchange {
+      this._depth = undefined;
+      this.color = this.style.variable("marker-color") || color(0,0,0,0.25);
+    }
+  }
+
+  // block element, most probably H1 ... H6 that may have ID assigned
+  //class IDableBlock : Block {
+  //}
+  
+
+
+  // BFC, Block Foramtting Context element, see: https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Block_formatting_context
+  
+  class BlockRoot : Element 
+  {
+    function attached() {
+      assert root === this;
+      //root = this;
+      //debug root: this;
+    }
+    function detached() {
+      //debug deroot: this;
+    }
+
+    function paintBackground(gfx) {
+      unit = Integer.min(offset / this.cumulativeDepth(),this.toPixels(10dip,#width));
+    }   
+
+    event contentchange {
+      this._depth = undefined;
+      this.refresh();
+    }
+
+    function cumulativeDepth() {
+      if( !this._depth ) 
+      {
+        var d = 0; 
+        for(var child in this) {
+          var t = child.depth || 0;
+          if( t > d ) d = t;
+        }
+        this._depth = d || 1;
+      }
+      return this._depth;
+    }
+
+    function findMarkedBy(rx,ry) {
+      for(var child in this) {
+        var found = child instanceof Block && child.findMarkedBy(rx,ry);
+        if( found ) return found;
+      }
+      return null;
+    }    
+ 
+  }
+
+  class AnonymousParagraph : Block {
+    function getMarkerWidth() { return unit * 2 / 3; }
+  }
+
+  // <html> element
+  class Document : Element 
+  {
+    var   elWithHoveredMark;
+
+    function setupRoot() {
+      const body = this.$(body);
+      var bfc = this.parent.selection.blockFormattingContext || body;
+      const display = bfc.style#display;
+      if( (bfc.state.flowType == #text) && (display like "table*"))
+        bfc = bfc.parent.blockFormattingContext || body;
+      if( !bfc.belongsTo(this))
+        bfc = null;
+
+      if(bfc === root)
+        return;
+
+      //debug root: "change-root" root bfc;
+      if(var oldbfc = root) {
+        //debug root: "de-root" oldbfc bfc;
+        if(oldbfc.parent)
+          oldbfc.state.current = false;
+        root = null;
+      }
+        
+
+      if(bfc) {
+        root = bfc;
+        bfc.state.current = true;
+          //debug root: "re-visited" bfc;
+          //root = bfc;
+      }
+      this.parent.refresh();
+      //debug root: bfc;
+    }
+
+    event selectionchange (evt) { 
+      this.setupRoot(); 
+      //this.post( function() {debug selchange: root; });
+    }
+
+    function highlightElement(el) {
+
+      if(el === elWithHoveredMark)
+        return false;
+
+      if(elWithHoveredMark) {
+        if(elWithHoveredMark.parent)
+          elWithHoveredMark.state.busy = false;
+        elWithHoveredMark = null;
+      }
+
+      if(elWithHoveredMark = el) 
+        el.state.busy = true;
+      return true;
+    }
+
+    function paintBackground(gfx) {
+      //if(!root || !root.state.visited) {
+      //  root = null;
+      //  this.setupRoot();
+      //}
+      offset = this.$(body).box(#left,#border,#parent) - this.toPixels(6dip,#width);
+    }   
+
+    event ~mousemove (evt) {
+      if( !evt.target.belongsTo(this,false,true) ) 
+        return false; // on popups and other floatings on top of this
+      if( evt.x > offset ) { highlightElement(null);  return false; }
+      if(!root || !root.state.visited)
+        this.setupRoot();
+      if(!root) 
+        return; 
+      var x = evt.x, y = evt.y;
+      var onMarkerOfBlock = root.findMarkedBy(x,y);
+      highlightElement(onMarkerOfBlock);
+      return true;
+    }
+
+    event ~mousedown (evt) {
+      if( !evt.mainButton ) return false;
+      if( !elWithHoveredMark ) return false;
+      //if( self.parent.selection.caret != elWithHoveredMark.startPos )
+      //  self.parent.selection.select(elWithHoveredMark.startPos);
+      //else
+      //  self.parent.selection.select(elWithHoveredMark.endPos);
+      self.parent.selection.select(elWithHoveredMark,#element);
+      return true;
+    }
+    event ~dblclick (evt) {
+      if( !evt.mainButton ) return false;
+      if( !elWithHoveredMark ) return false;
+      //if( self.parent.selection.caret != elWithHoveredMark.startPos )
+      //  self.parent.selection.select(elWithHoveredMark.startPos);
+      //else
+      //  self.parent.selection.select(elWithHoveredMark.endPos);
+      self.parent.selection.select(elWithHoveredMark,#element);
+      self.postEvent("show-source");
+      return true;
+    }
+
+
+  }
+}
+

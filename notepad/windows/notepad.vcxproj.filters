@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="sources">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="headers">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="res">
+      <UniqueIdentifier>{2172956c-f874-4311-a659-ee577e02f34b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\html-notepad.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\sciter-win-main.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\include\sciter-x-window.hpp">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\aux-asset.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\version.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="notepad.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\res\common.css">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\editor.css">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\editor.tis">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\fkeys.htm">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\frame-else.htm">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\frame-windows.css">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\frame-windows.htm">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\main.css">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\main.htm">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\main.tis">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\settings.tis">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\dist\versions.json" />
+  </ItemGroup>
+</Project>

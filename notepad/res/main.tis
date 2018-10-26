@@ -1,0 +1,257 @@
+const APP_NAME = "html-notepad";
+
+include "utils/settings.tis";
+include "utils/utils.tis";
+include "utils/drop-zone.tis";
+
+const editors = $(section#editors);
+
+function findEditor(url) { 
+  for(var editor in editors) {
+    if(editor.docUrl == url)
+      return editor;
+  }
+  return null;
+}
+
+function checkHasDocument() {
+
+  var hasDocument = !!$(section#editors > editor:current);
+  if( hasDocument === self.hasDocument )
+    return;
+
+  if(hasDocument) {
+    for(var toolbar in $$(toolbar:not(.permanent)))
+      toolbar.state.disabled = false;
+    self.attributes["has-document"] = true;
+    self.hasDocument = true;
+  } else {
+    for(var toolbar in $$(toolbar:not(.permanent)))
+      toolbar.state.disabled = true;
+    self.attributes["has-document"] = undefined;
+    self.hasDocument = false;
+  }
+}
+
+function openDocument(url = "", folderUrl = "") {
+  var editor;
+  if(!url) {
+    const BLANK_URL = "unknown:new";
+    url = BLANK_URL;
+    var n = 1;
+    for(; n < 32; ++n) {
+      editor = findEditor(url);
+      if(!editor)
+        break;
+      else if(!editor.isChanged) {
+        editor.activate();
+        return;     
+      }
+      url = BLANK_URL + " " + n;
+    } 
+    if( n >= 32 ) {
+      view.msgbox("Too many unsaved new documents");
+      return;
+    }
+  }
+  else if( editor = findEditor(url) ) { 
+    editor.activate(); 
+    return; 
+  }
+  var main = self.$(main);
+  editor = new Element("editor");
+  if(var current = editors.$(editor:current))
+    current.state.current = false;
+  editors.append(editor);
+  self.attributes["has-document"] = true;
+  editor.style#display; // force prototype assignment
+  editor.loadDocument(url,folderUrl);
+  editor.activate();
+  checkHasDocument();
+  editor.postEvent("doc-added");
+  return editor;
+}
+
+function restoreDocument(def) {
+  var editor = new Element("editor");
+  editors.append(editor);
+  editor.restoreContent(def);
+  return editor;
+}
+
+function setCaption(text) {
+  view.windowCaption = text;
+  if(var elCaption = $(window-caption)) 
+    elCaption.text = text;
+}
+
+function closeDocument(editor) {
+  if( editor.isChanged ) {
+    var attempts = 0;
+    while:saving(true)
+    {
+      if( ++attempts > 4)
+        return false; // four times max to ask the user to make her mind
+      var result = view.msgbox { 
+         type:#question, 
+         content: String.$(<p><a href="{editor.docUrl}">{URL.toPath(editor.docUrl)}</a></p>
+                           <p.dfn>Do you want to save it?</p>),
+         caption:"Document was modified:", 
+         buttons:[ {id:#yes,text:"Yes",role:"default-button"},
+                   {id:#no,text:"No"},
+                   {id:#cancel,text:"Cancel",role:"cancel-button"} ]
+      };
+      switch(result)
+      {
+        case #yes:  if(!editor.saveDocument())
+                      continue;
+                    break saving;
+        case #no:   break saving;
+        case #cancel: return false;
+      }
+    }
+  }
+  editor.sendEvent("doc-closed");
+
+  if(editor.state.current) {
+    var next;
+    if(editor.next)
+      next = editor.next;
+    else if(editor.prior)
+      next = editor.prior;
+    if( next ) 
+      next.activate();
+    else
+      setCaption(APP_NAME);
+  }
+
+  editor.remove();
+  checkHasDocument();
+  enqueueSaveState();
+  return true;
+}
+
+function showDialog(params) 
+{
+  var principal = params.principal || self;
+  var (x,y,w,h) = principal.box(#rectw,#inner,#screen);
+  params.x = x + w / 2;
+  params.y = y + h / 2;
+  self.attributes["shows-dialog"] = true;
+  var r = view.dialog(params);
+  self.attributes["shows-dialog"] = undefined;
+  return r;
+}
+
+function notImplementedYet(func) {
+  var text = String.$(The function {func} is not implemented yet.
+                      <p>Please <a href="https://html-notepad.com/to-make-it-better/">help</a> to speed up its developement.</p>);
+  view.msgbox {
+    type: #information,
+    caption: "Not implemented yet",
+    content: text 
+  };
+  return true;
+}
+
+event click $(button#new-file) { openDocument(); }
+
+event click $(button#open-file) { 
+  var urls = view.selectFile(#open-multiple, "HTML Files (*.htm,*.html,*.xhtml)|*.htm;*.html;*.xhtml|All Files (*.*)|*.*","xhtml");
+  if(!urls) return false;
+  if( typeof urls == #string )
+    openDocument(urls); 
+  else if( typeof urls == #array )
+    for( var url in urls )
+      openDocument(url); 
+}
+
+event doc-modification-state-change { enqueueSaveState(); }
+event doc-closed { enqueueSaveState(); }
+event doc-added { enqueueSaveState(); }
+event doc-changed { enqueueSaveState(); }
+event doc-activated { checkHasDocument(); }
+
+function setTheme(dark) {
+  var theme = dark ? "dark" : "light";
+  self.attributes["theme"] = theme;
+  view.windowBlurbehind = symbol(theme);
+}
+
+event change $(button#theme) {
+  setTheme(this.value);
+  enqueueSaveState();
+  return true;
+}
+
+Settings.add {
+  uiStateStore: function(data) 
+  {
+    data.themeDark = $(button#theme).value;
+  },
+  uiStateRestore: function(data) 
+  {
+    if( data.themeDark !== undefined ) {
+      setTheme(data.themeDark);
+      $(button#theme).value = data.themeDark; 
+    }
+  }
+};
+
+function self.ready() {
+  Settings.restore();
+  //checkHasDocument();
+  for(var toolbar in $$(toolbar:not(.permanent)))
+      toolbar.state.disabled = true;
+  self.attributes["has-document"] = undefined;
+  self.hasDocument = false;
+
+  self.post( function() {
+    try {
+      for( var (index,arg) in view.argv() )
+      {
+        if(index && (arg !like "-*"))
+          openDocument(URL.fromPath(arg));
+      }
+    } catch(e) {}
+  });
+  
+}
+
+function self.closing() {
+  Settings.store(); 
+}
+
+class MainController : Element 
+{
+  function attached() {
+    DropZone.call(this,"*.htm;*.html;*.xhtml");
+  }
+  function updateMode(editor) {
+    var isSource = editor.sourceMode;
+    this.attributes["mode"] = isSource ? "source" : "wysiwyg";   
+  }
+  event doc-view-mode-change (evt) { this.updateMode(evt.target); }
+  event doc-activated (evt) { this.updateMode(evt.target); }
+  event file-drop (evt) {
+    for( var fn in evt.data )
+      openDocument(fn);
+    return true;
+  }
+}
+
+// not implemented stubs:
+event keydown (evt) {
+  if( !evt.shortcutKey ) return false;
+  switch(evt.keyCode) {
+    case Event.VK_F: 
+    case Event.VK_H: return notImplementedYet("Search and Replace");
+  }
+}
+
+event click $(button.mathml) { return notImplementedYet("MathML editing"); }
+event click $(button.markdown) { return notImplementedYet("Markdown editing"); }
+event click $(button#print-file) { return notImplementedYet("Printing"); }
+
+
+

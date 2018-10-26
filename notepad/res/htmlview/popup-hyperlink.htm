@@ -1,0 +1,16 @@
+<popup#hyperlink>
+  <form>
+    <input|text(caption) nullable novalue="Link caption" /><button(apply) tooltip="apply changes" role="default-button" />
+    <input|text(url) novalue="Paste or type URL here" /><button(check) tooltip="verify hyperlink" />
+    <button|checkbox(local-links-switch)>Show local link targets</button><button(remove) tooltip="remove the hyperlink" />
+    <select|list(local-links)>
+      <thead>
+        <th>ID/name</th>
+        <th>text</th>
+        <th>URL</th>
+      </thead>
+      <tbody></tbody>
+    </select>
+
+  </form>
+</popup>

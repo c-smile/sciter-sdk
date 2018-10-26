@@ -1,0 +1,259 @@
+include "sequences.tis";
+
+// "* " at the beginning of <p>,<div> -> <ul><li>
+Sequences.add("p,div",/^\*\s$/,null, function(htmlarea,caret,start,end) 
+{
+   var anchor = [bookmark:caret[0],0,false];
+   return htmlarea.transact( function(transaction) 
+   {
+     caret = transaction.removeRange(anchor,caret); // remove
+     htmlarea.selection.select(caret); 
+     transaction.execCommand("format:toggle-list:ul"); // transform
+     return true; // commit
+   });
+});
+
+// "# " at the beginning of <p>,<div> -> <ol><li>
+Sequences.add("p,div",/^#\s$/,null, function(htmlarea,caret,start,end) 
+{
+   var anchor = [bookmark:caret[0],0,false];
+   return htmlarea.transact( function(transaction) 
+   {
+     caret = transaction.removeRange(anchor,caret); // remove
+     htmlarea.selection.select(caret); 
+     transaction.execCommand("format:toggle-list:ol"); // transform
+     return true; // commit
+   });
+});
+
+// "1. " at the beginning of <p>,<div> -> <ol><li>
+Sequences.add("p,div",/^\d\.\s$/,null, function(htmlarea,caret,start,end) 
+{
+   var anchor = [bookmark:caret[0],0,false];
+   return htmlarea.transact( function(transaction) 
+   {
+     caret = transaction.removeRange(anchor,caret); // remove
+     htmlarea.selection.select(caret); 
+     transaction.execCommand("format:toggle-list:ol"); // transform
+     return true; // commit
+   });
+});
+
+
+// "- " at the beginning of <p>,<div> -> <dl><dt>
+Sequences.add("p,div",/^-\s$/,null, function(htmlarea,caret,start,end) 
+{
+   var anchor = [bookmark:caret[0],0,false];
+   return htmlarea.transact( function(transaction) 
+   {
+     caret = transaction.removeRange(anchor,caret); // remove
+     htmlarea.selection.select(caret); 
+     transaction.execCommand("format:toggle-list:dl"); // transform
+     return true; // commit
+   });
+});
+
+// "^ " at the beginning of <p>,<div> -> <dir><li>
+/*Sequences.add("p,div",/^\^\s$/,null, function(htmlarea,caret,start,end) 
+{
+   var anchor = [bookmark:caret[0],0,false];
+   return htmlarea.transact( function(transaction) 
+   {
+     caret = transaction.removeRange(anchor,caret); // remove
+     htmlarea.selection.select(caret); 
+     transaction.execCommand("format:toggle-list:dir"); // transform
+     return true; // commit
+   });
+});*/
+
+
+// "> " at the beginning of <p>,<div> -> <pre>
+Sequences.add("p,div",/^>\s$/,null, function(htmlarea,caret,start,end) 
+{
+   var anchor = [bookmark:caret[0],0,false];
+   return htmlarea.transact( function(transaction) 
+   {
+     caret = transaction.removeRange(anchor,caret); // remove
+     htmlarea.selection.select(caret); 
+     transaction.execCommand("format:morph-block:pre"); // transform
+     return true; // commit
+   });
+});
+
+// "` " at the beginning of <p>,<div> -> <pre>
+/*Sequences.add("p,div",/^`\s$/,null, function(htmlarea,caret,start,end) 
+{
+   var anchor = [bookmark:caret[0],0,false];
+   return htmlarea.transact( function(transaction) 
+   {
+     caret = transaction.removeRange(anchor,caret); // remove
+     htmlarea.selection.select(caret); 
+     transaction.execCommand("format:morph-block:pre"); // transform
+     return true; // commit
+   });
+});*/
+
+// "h1 " ... "h6 " at the beginning of <p>,<div> -> <h1>...<h6>
+Sequences.add("p,div",/^[hH][123456]\s$/,null, function(htmlarea,caret,start,end) 
+{
+   var anchor = [bookmark:caret[0],0,false];
+   return htmlarea.transact( function(transaction) 
+   {
+     caret = transaction.removeRange(anchor,caret); // remove
+     htmlarea.selection.select(caret); 
+     transaction.execCommand("format:morph-block:" + start.trim()); // transform
+     return true; // commit
+   });
+});
+
+// "-- " -> mdash, need to check
+Sequences.add("*",/\-\-\s$/,null, function(htmlarea,caret,start,end) 
+{
+   // anchor - starting position of --
+   var anchor = [bookmark:caret[0],caret[1]-2,false];
+   caret = [bookmark:caret[0],caret[1]-1,true];
+
+   return htmlarea.transact( function(transaction) 
+   {
+     var c = transaction.removeRange(anchor,caret); // remove sequence
+     transaction.insertText(c,"\u2014");
+     htmlarea.selection.select(caret);
+     return true; // done,commit
+   });
+});
+
+// "---" -> <hr>
+Sequences.add("p,div",/^[-]{3,}$/,null, function(htmlarea,caret,start,end) 
+{
+   //var anchor = [bookmark:caret[0],0,false];
+   var block = caret[0].parent;
+   return htmlarea.transact( function(transaction) 
+   {
+     const pos = [bookmark:block.parent,block.nodeIndex,false];
+     const elm = new Element("hr");
+
+     transaction.removeNode(block);
+     transaction.insertNode(pos, elm);
+
+     htmlarea.selection.select(elm.endPos); 
+
+     return true; // commit
+   });
+});
+
+
+// "# " ... "###### " at the beginning of <p>,<div> -> <h1>...<h6>
+/*Sequences.add("p,div",/^(#{1,6})\s$/,null, function(htmlarea,caret,start,end,re) 
+{
+   var anchor = [bookmark:caret[0],0,false];
+   return htmlarea.transact( function(transaction) 
+   {
+     caret = transaction.removeRange(anchor,caret); // remove
+     htmlarea.selection.select(caret); 
+     transaction.execCommand("format:morph-block:" + "h" + re[1].length.toString()); // transform
+     return true; // commit
+   });
+});*/
+
+
+// "[c:r] " at the beginning of <p>,<div> -> <table> of r rows and c columns
+Sequences.add("p,div",/^\[(\d):(\d)\]\s$/,null, function(htmlarea,caret,start,end,re) 
+{
+   var anchor = [bookmark:caret[0],0,false];
+   //stdout.println(re[0],re[1],re[2]);
+   return htmlarea.transact( function(transaction) 
+   {
+     var p = anchor[0].commonParent(caret[0]);
+     var at = [bookmark:p.parent,p.nodeIndex,false];
+     var rows = re[2].toInteger();
+     var cols = re[1].toInteger();
+
+     if( !rows || !cols )
+       return false;
+
+     var html = TableGenerator.tableHtml{ columns: cols, rows:rows, border:true };
+     var list = transaction.insertHtml(at,html);
+     transaction.removeNode(p);
+     var firstCell = list[0].$(td,th);
+     if( firstCell )
+       htmlarea.selection.select(firstCell.firstCaretPos); 
+     return true; // commit
+   });
+});
+
+// "[c:r:ch:rh] " at the beginning of <p>,<div> -> <table> of r rows and c columns, with col/row headers 
+/*Sequences.add("p,div",/^\[(\d):(\d):(\d):(\d)\]\s$/,null, function(htmlarea,caret,start,end,re) 
+{
+   var anchor = [bookmark:caret[0],0,false];
+   return htmlarea.transact( function(transaction) 
+   {
+     caret = transaction.removeRange(anchor,caret); // remove sequence
+     var p = caret[0].parent; // get parent <p>
+     var cols = re[1].toInteger();
+     var rows = re[2].toInteger();
+     var headerCols = re[3].toInteger();
+     var headerRows = re[4].toInteger();
+     if( !rows || !cols )
+       return false;
+     var html = HtmlArea.tableHtml//(cols, rows, headerCols, headerRows, true);       
+                                  { columns: cols, rows:rows, hcolumns: headerCols, hrows:headerRows, border:true };
+     transaction.insertHtml(htmlarea.selection.caret,html); 
+     return true; // commit
+   });
+});*/
+
+/*Sequences.add("*",/^\{date\}\s$/,null, function(htmlarea,caret,start,end,re) 
+{
+   var anchor = [bookmark:caret[0],0,false];
+   return htmlarea.transact( function(transaction) 
+   {
+     caret = transaction.removeRange(anchor,caret); // remove sequence
+     var p = caret[0].parent; // get parent <p>
+     htmlarea.selection.select(p); 
+     const html = "<input type=event date='2017-09-28' />";
+     transaction.insertHtml(htmlarea.selection.caret,html); 
+     return true; // commit
+   });
+});*/
+
+const MSRE_HTTP = /((?:https?:\/\/)([a-zA-Z-]+)(\.[a-zA-Z-]+)([-\/\w\.\?#&=%\(\)]*)\/?)\s/i; 
+const MSRE_EMAIL = /(([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6}))\s/i;
+
+// [single space] typed after url - wrap it into <a href=url>url</a>
+Sequences.add(":not(a)",MSRE_HTTP,null, function(htmlarea,caret,start,end) 
+{
+   var url = start.match(MSRE_HTTP)[1];
+   caret[1] -= 1; // shift pos by 1 space back
+   // anchor - starting position of the URL text
+   var anchor = [bookmark:caret[0],caret[1] - url.length + 1,false];
+
+   return htmlarea.transact( function(transaction) 
+   {
+     htmlarea.selection.select(caret,anchor); // select url text
+     var a = new Element("a"); a.attributes["href"] = url; // new <a href=...>
+     var (start,end) = transaction.wrap(htmlarea.selection.anchor,htmlarea.selection.caret,a); // wrap selection into it
+     htmlarea.selection.select(end); 
+     htmlarea.selection.advance(#next); // advance caret to the position where it used to be visually
+     return true; // done,commit
+   });
+});
+
+// [single space] typed after url - wrap it into <a href=url>url</a>
+Sequences.add(":not(a)",MSRE_EMAIL,null, function(htmlarea,caret,start,end) 
+{
+   var url = start.match(MSRE_EMAIL)[1];
+   caret[1] -= 1; // shift pos by 1 space back
+   // anchor - starting position of the URL text
+   var anchor = [bookmark:caret[0],caret[1] - url.length + 1,false];
+
+   return htmlarea.transact( function(transaction) 
+   {
+     htmlarea.selection.select(caret,anchor); // select url text
+     var a = new Element("a"); a.attributes["href"] = "mailto:" + url; // new <a href=...>
+     var (start,end) = transaction.wrap(htmlarea.selection.anchor,htmlarea.selection.caret,a); // wrap selection into it
+     htmlarea.selection.select(end);
+     htmlarea.selection.advance(#next); // advance caret to the position where it used to be visually
+     return true; // done,commit
+   });
+});
+

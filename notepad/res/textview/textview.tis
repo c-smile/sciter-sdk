@@ -1,0 +1,55 @@
+include "colorizer.tis";
+
+class TextView : Element {
+
+  function attached() {
+    assert this.tag == "plaintext";
+    this.colorize = colorizer(this,#markup);
+  }
+
+  function line(n) {
+    // n is 1..N
+    if( n <= this.length )
+      return this[n-1][0].text;
+    else
+      return null;
+  }
+
+  function setText(html,selStart,selEnd) {
+
+    this.setContent(html,selStart,selEnd);
+    this.colorize();
+  }
+
+  event change { this.colorize(); }
+  event dblclick $(text) (e,text) {
+    if( e.x < text.box(#left,#inner,#parent) ) {
+      this.selection.select(text,#content);
+      //this.timer(60ms, function() { this.postEvent("show-wysiwyg") });
+      this.postEvent("show-wysiwyg");
+      e.cursor = "default";
+      return true;
+    }
+  }
+  event mouseup $(text) (e,text) {
+    if( e.x < text.box(#left,#inner,#parent) ) {
+      e.cursor = "default";
+      return true;
+    }
+  }
+  event mousedown $(text) (e,text) {
+    if( e.x < text.box(#left,#inner,#parent) ) {
+      this.selection.select(text,#content);
+      e.cursor = "default";
+      return true;
+    }
+  }
+  event mousemove $(text) (e,text) {
+    if( e.x < text.box(#left,#inner,#parent) ) {
+      e.cursor = "default";
+      return true;
+    }
+  }
+
+
+}

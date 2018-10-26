@@ -1,0 +1,135 @@
+include "../utils/virtual-tree.tis";
+include "../utils/function.tis";
+
+class Folder : VirtualTree
+{
+  var current;
+
+  const defaultFilters = ["*.xhtml","*.html","*.htm","*.png","*.jpg","*.jpeg","*.gif"];
+
+  function attached() {
+    Folder.current = this;
+    //this.post(this.show);
+    //this.filters = (this.attributes["filter"] || "*").split(";");
+  }
+  function detached() {
+    this.close();
+  }
+ 
+  // call cb(caption,path,isFolder) for each root item
+  function eachRoot(cb)
+  {
+    var drives = [];  
+
+    function w(name, flags, caption)
+    {
+      if(flags & (System.IS_HIDDEN | System.IS_SYSTEM)) return true; // skip it   
+      if((flags & System.IS_DIR) != 0)
+        drives.push({name:name,caption:caption});
+      return true;
+    }
+    System.scanFiles("/*.*", w);
+    
+    drives.sort(:a,b: a.name.lexicalCompare(b.name));
+
+    if( System.PLATFORM == #Windows ) // on Windows FS is a forest
+      for(var n in drives)    
+        cb(n.caption + " ("+ n.name +")",n.name, true);
+    else // on Posix FS is a tree
+      for(var n in drives)    
+        cb(n.caption,"/" + n.name, true);
+  }
+  
+  // call cb(caption,path,isFolder) for each child item of the path"
+  function eachChild(path,cb)
+  {
+    var folders = [];
+    var files = [];
+    var filters = this.filters;
+
+    function accept(name) {
+      for(var filter in filters)
+        if(name like filter) return true;
+      return false;
+    }
+  
+    function w(name, flags)
+    {
+      //stdout.println("scan fn",name);
+      if(name == "." || name == "..") return true; // skip it   
+      if(flags & (System.IS_HIDDEN | System.IS_SYSTEM)) return true; // skip it   
+      if((flags & System.IS_DIR) != 0)
+        folders.push(name);
+      else {
+        if(!accept(name)) return true; // skip it
+        files.push(name);
+      }
+      return true;
+    }
+    System.scanFiles(path + "/*.*", w);
+    
+    folders.sort(:a,b: a.lexicalCompare(b));
+    files.sort(:a,b: a.lexicalCompare(b));
+    for(var n in folders)    
+      cb(n,path + "/" + n, true);
+    for(var n in files)    
+      cb(n,path + "/" + n, false);
+  }
+
+  // throttled version of VirtualTree.reloadOption()
+
+  const rescan = VirtualTree.reload.throttle(200ms); 
+
+  function setupWatcherOn(that) { // that is either this or option
+    if(that.watcher) 
+       that.watcher.close();
+    const path = that.attributes["filename"] || this.path;
+    that.watcher = System.watch(path)
+                   << event change (path) { (this super).rescan(that) } 
+                   << event rename (path) { (this super).rescan(that) };
+  }
+
+  function optionExpanded(option) {
+    // install watcher to track changes in folder content
+    this.setupWatcherOn(option);
+  }
+
+  function optionCollapsed(option) {
+    this.close(option);
+  }
+
+  function close(parent = null) 
+  {
+    function removeWatcher(option) {
+      if(option.watcher) {
+        option.watcher.close();
+        option.watcher = null;
+      }
+    }
+    var node = parent ? parent : this;
+    removeWatcher(node);
+    for(var option in this.$$(option:expanded)) 
+      removeWatcher(option);
+  }
+
+  function show(path = "",filters = null) 
+  {
+    this.close();
+    this.path = path = path like "file:*" ? URL.toPath(path) : path;
+    this.filters = filters || defaultFilters;
+    super.show(path);    
+    this.setupWatcherOn(this);
+  }
+
+  property url(v) {
+    get return URL.fromPath(this.path) + "/";
+  }
+
+  event activated 
+  {
+    //stdout.println("activated");
+    this.show(this.path);
+  }
+
+}
+

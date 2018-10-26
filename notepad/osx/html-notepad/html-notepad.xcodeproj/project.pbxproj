@@ -1,0 +1,351 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4926C08F217E810600A9B1CF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4926C08E217E810600A9B1CF /* AppDelegate.m */; };
+		4926C091217E810800A9B1CF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4926C090217E810800A9B1CF /* Assets.xcassets */; };
+		4926C0A0217E897E00A9B1CF /* sciter-osx-main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4926C09F217E897E00A9B1CF /* sciter-osx-main.mm */; };
+		4926C0A2217E899800A9B1CF /* html-notepad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4926C0A1217E899800A9B1CF /* html-notepad.cpp */; };
+		49446C4C217FEBF3006EA494 /* sciter-osx-64.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 49446C4B217FEBF3006EA494 /* sciter-osx-64.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		49446C45217FE8D0006EA494 /* Embed Libraries */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				49446C4C217FEBF3006EA494 /* sciter-osx-64.dylib in Embed Libraries */,
+			);
+			name = "Embed Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		4926C08A217E810600A9B1CF /* html-notepad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "html-notepad.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4926C08D217E810600A9B1CF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		4926C08E217E810600A9B1CF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		4926C090217E810800A9B1CF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4926C095217E810800A9B1CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4926C098217E810800A9B1CF /* html_notepad.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = html_notepad.entitlements; sourceTree = "<group>"; };
+		4926C09E217E817300A9B1CF /* html-notepad.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "html-notepad.entitlements"; sourceTree = "<group>"; };
+		4926C09F217E897E00A9B1CF /* sciter-osx-main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "sciter-osx-main.mm"; path = "../../../../include/sciter-osx-main.mm"; sourceTree = "<group>"; };
+		4926C0A1217E899800A9B1CF /* html-notepad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "html-notepad.cpp"; path = "../../../html-notepad.cpp"; sourceTree = "<group>"; };
+		49446C4B217FEBF3006EA494 /* sciter-osx-64.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "sciter-osx-64.dylib"; path = "../../../bin.osx/sciter-osx-64.dylib"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4926C087217E810600A9B1CF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4926C081217E810600A9B1CF = {
+			isa = PBXGroup;
+			children = (
+				49446C4B217FEBF3006EA494 /* sciter-osx-64.dylib */,
+				4926C08C217E810600A9B1CF /* html-notepad */,
+				4926C08B217E810600A9B1CF /* Products */,
+				49446C46217FE961006EA494 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		4926C08B217E810600A9B1CF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4926C08A217E810600A9B1CF /* html-notepad.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4926C08C217E810600A9B1CF /* html-notepad */ = {
+			isa = PBXGroup;
+			children = (
+				4926C0A1217E899800A9B1CF /* html-notepad.cpp */,
+				4926C09F217E897E00A9B1CF /* sciter-osx-main.mm */,
+				4926C09E217E817300A9B1CF /* html-notepad.entitlements */,
+				4926C08D217E810600A9B1CF /* AppDelegate.h */,
+				4926C08E217E810600A9B1CF /* AppDelegate.m */,
+				4926C090217E810800A9B1CF /* Assets.xcassets */,
+				4926C095217E810800A9B1CF /* Info.plist */,
+				4926C098217E810800A9B1CF /* html_notepad.entitlements */,
+			);
+			path = "html-notepad";
+			sourceTree = "<group>";
+		};
+		49446C46217FE961006EA494 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4926C089217E810600A9B1CF /* html-notepad */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4926C09B217E810800A9B1CF /* Build configuration list for PBXNativeTarget "html-notepad" */;
+			buildPhases = (
+				4926C086217E810600A9B1CF /* Sources */,
+				4926C087217E810600A9B1CF /* Frameworks */,
+				4926C088217E810600A9B1CF /* Resources */,
+				49446C45217FE8D0006EA494 /* Embed Libraries */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "html-notepad";
+			productName = "html-notepad";
+			productReference = 4926C08A217E810600A9B1CF /* html-notepad.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4926C082217E810600A9B1CF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1000;
+				ORGANIZATIONNAME = "Andrew Fedoniouk";
+				TargetAttributes = {
+					4926C089217E810600A9B1CF = {
+						CreatedOnToolsVersion = 10.0;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 0;
+							};
+						};
+					};
+				};
+			};
+			buildConfigurationList = 4926C085217E810600A9B1CF /* Build configuration list for PBXProject "html-notepad" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4926C081217E810600A9B1CF;
+			productRefGroup = 4926C08B217E810600A9B1CF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4926C089217E810600A9B1CF /* html-notepad */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4926C088217E810600A9B1CF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4926C091217E810800A9B1CF /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4926C086217E810600A9B1CF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4926C0A2217E899800A9B1CF /* html-notepad.cpp in Sources */,
+				4926C08F217E810600A9B1CF /* AppDelegate.m in Sources */,
+				4926C0A0217E897E00A9B1CF /* sciter-osx-main.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		4926C099217E810800A9B1CF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		4926C09A217E810800A9B1CF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		4926C09C217E810800A9B1CF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = ../../../bin.osx;
+				DEVELOPMENT_TEAM = 642T6M376L;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../include";
+				INFOPLIST_FILE = "html-notepad/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "terrainformatica.html-notepad";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		4926C09D217E810800A9B1CF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = ../../../bin.osx;
+				DEVELOPMENT_TEAM = 642T6M376L;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../include";
+				INFOPLIST_FILE = "html-notepad/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "terrainformatica.html-notepad";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4926C085217E810600A9B1CF /* Build configuration list for PBXProject "html-notepad" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4926C099217E810800A9B1CF /* Debug */,
+				4926C09A217E810800A9B1CF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4926C09B217E810800A9B1CF /* Build configuration list for PBXNativeTarget "html-notepad" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4926C09C217E810800A9B1CF /* Debug */,
+				4926C09D217E810800A9B1CF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4926C082217E810600A9B1CF /* Project object */;
+}

@@ -1,0 +1,214 @@
+
+
+// list of open files
+class OpenFiles : Element 
+{
+  var instance;
+
+  function attached() {
+    instance = this;
+    self << event doc-activated (evt) { instance.onDocActivated(evt.target); }
+    Settings.add(this);
+  }
+
+  function bindEditorEvents(item) {
+    item.editor << event doc-modification-state-change { item.attributes.toggleClass("changed", item.editor.isChanged); }
+    item.editor << event doc-closed { item.remove(); }
+  }
+
+  function onDocActivated(editor) 
+  {
+    var olditem = this.$(li:current);
+    if( olditem && (olditem.editor === editor))
+      return;
+
+    if(olditem)
+      olditem.state.current = false;
+
+    for( var item in this ) 
+      if(item.editor === editor)
+      {
+        item.state.current = true;
+        return;
+      }
+
+    this.$append(<li url="{editor.docUrl}">{editor.caption}</li>);
+    var item = this.last; 
+    item.editor = editor;
+    item.state.current = true;
+    bindEditorEvents(item);
+  }
+
+  event click $(li:not(:current)) (evt,li) {
+    li.editor.activate();
+    return true;
+  }
+
+  event ~mousedown $(li) (evt,li) {
+    if( evt.target.parent === li ) 
+    {
+      //click on close "button"
+      closeDocument(li.editor);
+      return true;
+    }
+  }
+
+  // persistable settings interface implementation
+  function uiStateStore(data) {
+    var list = [];
+    for(var item in instance)
+      list.push(item.editor.persistContent());
+    data.files = list;
+  }
+
+  function uiStateRestore(data) {
+    if(data.files) for(var def in data.files) {
+      var editor = restoreDocument(def);
+      instance.$append(<li url="{editor.docUrl}">{editor.caption}</li>);
+      var item = instance.last;
+      item.editor = editor;
+      bindEditorEvents(item);
+      item.attributes.toggleClass("changed", editor.isChanged);
+    }
+  }      
+}
+
+class FoldersList : Element {
+
+  const MRU_LENGTH = 4;
+
+  var instance;
+  
+  function attached() {
+    var buttonOpen = $(button#open-folder); assert(buttonOpen);
+    var me = this;
+    buttonOpen << event click {  me.openFolder(); }
+    instance = this;
+    Settings.add(this);
+  }
+
+  function openFolder() {
+    var folderUrl = view.selectFolder("Select folder...");
+    if( folderUrl ) {
+      this.$prepend(<li url="{folderUrl}">{URL.toPath(folderUrl)}</li>);
+      if( this.length > MRU_LENGTH )
+        this.last.remove();
+      $(folder).show(folderUrl);
+      enqueueSaveState();
+    }
+  }
+
+  event click $(li) (evt, li) {
+    $(folder).show(li.attributes["url"]);
+    li.detach();
+    this.prepend(li);
+    enqueueSaveState();
+  }
+
+  // persistable settings interface implementation
+  function uiStateStore(data) {
+    var list = [];
+    for (var item in this)
+      list.push(item.attributes["url"]);
+    data.folders = list;
+  }
+
+  function uiStateRestore(data) {
+
+    if(data.folders && data.folders.length) {
+      instance.clear();
+      for( var furl in data.folders ) 
+        instance.$append(<li url="{furl}">{URL.toPath(furl)}</li>);
+      $(folder).show(data.folders[0]);
+    } 
+  }
+}
+
+event item-activate $(folder) (evt) {
+  var url = evt.data;
+  const ext = URL.parse(url).ext;
+  //debug activate: url evt.target;
+  if( ext in ["htm", "html","xhtml"] )
+    openDocument(url,this.url);
+  //else 
+    // do something with the image
+}
+
+function getUrlOf(element) {
+  var principal = element.$o([url],[filename]);
+  var url = principal.attributes["url"];
+  if( url ) return url;
+  var path = principal.attributes["filename"];
+  if( path ) return URL.fromPath(path);
+  return "";
+}
+
+class LinksContextMenu : Element 
+{
+  event popuprequest $(menu#for-filename) (evt) {
+    var url = getUrlOf(evt.source);
+    // Showing path in menu's <caption>
+    this.$(caption).text = URL.toPath(url);
+
+    const linksList = this.$(div.links-in-doc);
+
+    linksList.clear();
+
+    var root = self.parseHtml(url);
+    var list = [];
+    for(var linkable in root.$$([id],a[name])) {
+      const name = linkable.@["id"] || linkable.@["name"];
+      list.push {
+        cap: (linkable.text || name),
+        url: ("#" + name)
+      };
+    }
+
+    list.sort(:l1,l2: l1.cap.lexicalCompare(l2.cap));
+    for(var item in list)
+      linksList.$append(<li command="edit:copy-location" link="{url + item.url}">{item.cap}</li>);
+
+    this.@["has-in-doc-links"] = list.length ? true : undefined;
+  } 
+
+  event click $([command="edit:copy-location"]) (evt) {
+    var url = evt.target.@["link"];
+    var cap = evt.target.text; 
+    view.clipboard(#put, { 
+      text: url, 
+      link: {caption:cap, url:url },
+      html: String.$(<a href="{url}">{cap}</a>)
+    });
+   return true;
+  }
+
+  event click $([command="edit:copy-path"]) {
+    var url = getUrlOf(this);
+    if( url )
+      view.clipboard(#put, { text: URL.toPath(url), file: [URL.toPath(url)] });
+    return true;
+  }
+  event click $([command="edit:copy-link"]) {
+    var url = getUrlOf(this);
+    if( url ) {
+      var caption = URL.parse(url).name;
+      view.clipboard(#put, { 
+         text: url, 
+         link: {caption:caption, url:url },
+         html: String.$(<a href="{url}">{caption}</a>)
+      });
+    }
+    return true;
+  }
+  /*event click $([command="edit:copy-html-link"]) {
+    var url = getUrlOf(this);
+    if( url ) {
+      var caption = URL.parse(url).name;
+      view.clipboard(#put, { text: url, html: String.$(<a href="{url}">{caption}</a>) });
+    }
+    return true;
+  }*/
+}
+
+
+

@@ -1,0 +1,22 @@
+
+
+div#check-version {
+  prototype: Version url(version.tis);
+}
+
+div#check-version button#check-version { vertical-align:middle; }
+
+div#check-version img#check-version-progress { visibility:none; vertical-align:middle; }
+div#check-version img#check-version-progress:busy { visibility:visible; }
+
+div#check-version #is-latest { visibility:none; }
+div#check-version #is-not-latest { visibility:none; }
+div#check-version #error { visibility:none; }
+
+div#check-version[status="latest"] #is-latest { visibility:visible; }
+div#check-version[status="overdue"] #is-not-latest { visibility:visible; }
+div#check-version[status="error"] #error { visibility:visible; }
+
+div#check-version var { font-weight:bold; }
+
+div#check-version .error { color:red; }

@@ -1,0 +1,112 @@
+﻿<html>
+    <head>
+        <style>
+
+@import url(../common.css);
+@import url(main-section.css);
+@import url(version.css);
+
+html { 
+  background-color: color(paper-color);
+  color: color(text-color); 
+  width:*; 
+  height:*; 
+  overflow:scroll-indicator; 
+}
+
+body { 
+  margin:0 0 0 0 /*length(left-strip-width)*/; 
+  padding:1em;
+}
+
+kbd { 
+  display:inline-block;
+  color:#000;
+  font-size:8.5pt;
+  font-weight:bold;
+  min-width:1em;
+  vertical-align:middle;
+  text-transform: uppercase;
+  text-align: center;
+  padding:3dip 5dip;
+  line-height:1.2em;
+  height:max-content;
+  background-image:url(../images/kbd-back.png);
+  background-repeat:expand stretch-top stretch-bottom stretch-left stretch-right stretch-middle;
+  background-position:4dip 4dip 4dip 4dip;
+}
+
+dl { flow:row(dt,dd); border-spacing:0.5em; padding:4dip;}
+dl > dt { width:auto; text-align:right; white-space:nowrap; text-transform:uppercase;}
+dl > dd { width:*; margin:0;padding:0; }
+
+section#about {
+  flow:horizontal;
+  border-spacing: 1em;
+  vertical-align:middle;
+}
+
+section#about p { margin: 0.5em 0; }
+
+picture#mascot {
+  width:80dip;
+  height:70dip;
+  margin:10dip;
+  foreground-image:url(mascot.png);
+}
+
+@media resolution > 96 {
+  picture#mascot {
+    foreground-image:url(mascot2x.png); 
+  }
+}
+
+a[href] { behavior:button; color: color(hyperlink-color); }
+
+div#shortcuts {
+  flow:horizontal;
+}
+
+div#shortcuts > section {
+  width:*;
+}
+
+div#donate, div#check-version {
+  font:10pt verdana,sans-serif;
+  line-height:1.4em;
+}
+
+
+        </style>
+        <script type="text/tiscript">
+
+event click $(a[href]) {
+  Sciter.launch(this.attributes["href"]);
+  return true;
+}
+
+function self.ready() {
+  $(span#username).text = Sciter.userName();
+}
+
+        </script>
+  </head>
+  <body>
+    <section#about>
+       <picture id="mascot" />
+       <div>
+          <p>Hello <span#username></span>, welcome to HTML-NOTEPAD!</p>
+          <p>This application is hand-crafted by <a href="mailto:andrew@terrainformatica.com?subject=Enquiry%20about%20HTML-NOTEPAD%20application">c-smile</a> at <a href="https://terrainformatica.com">Terra Informatica Software, Inc</a> and 
+             uses <a href="https://sciter.com">Sciter</a> &mdash; an embeddable HTML/CSS desktop UI engine.</p> 
+          <p>HTML-NOTEPAD sources are part of <a href="https://sciter.com/download/">Sciter SDK distribution</a> and 
+             accessible at <a href="https://github.com/c-smile/sciter-sdk/tree/master/html-notepad">GitHub</a>.</p>
+       </div>
+    </section> 
+    <section#main>
+      <widget.shortcuts>Keyboard shortcuts</widget> <div#shortcuts><include src="shortcuts.htm" /></div>
+      <widget.license>License</widget>              <div><frame #license src="license.htm" content-style="license.css" /></div>
+      <widget.donate>Better html-notepad</widget>   <div#donate><include src="donate.htm" /></div>      
+      <widget.check-version>Check version</widget>  <div#check-version><include src="check-version.htm" /></div>
+    </section>
+  </body>
+</html>

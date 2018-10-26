@@ -1,0 +1,212 @@
+// the Editor is a wrapper around two views of the same document: htmlview and sourceview (HTML) 
+
+class Editor : Element 
+{
+  this var htmlview;
+  this var textview;
+
+  this var htmlChanged = false;
+  this var textChanged = false;
+
+  var current; // current Editor, note it is a class variable.  
+  var documentToolbar;
+  var fileToolbar;
+  var observers = [];
+
+  function attached() {
+    this.$append(<htmlarea.htmlview/><plaintext.sourceview/>);
+    this.htmlview = this[0];
+    this.textview = this[1];
+
+    if(!documentToolbar) {
+      documentToolbar = self.$(toolbar.document);
+      fileToolbar = self.$(toolbar.file);
+      assert documentToolbar && fileToolbar;
+      bindToolbars();
+    }
+  }
+
+  property caption(v) {
+    get { return URL.parse(this.docUrl).name || "{new}"; }
+  }
+
+  property isNew(v) { 
+    get return URL.parse(this.docUrl).protocol != "file";
+  }
+
+  function loadDocument(fileUrl, folderUrl) {
+    this.docUrl = fileUrl;
+    this.dirUrl = folderUrl;
+    if( !this.isNew )
+      return this.htmlview.loadDocument(fileUrl);
+    else
+      return this.htmlview.emptyDocument();
+  }
+
+  function saveDocument(saveAs = false) {
+    if(this.isNew)
+      saveAs = true;
+    var url = this.docUrl;
+    if( saveAs ) { 
+      var proposedFn = (Folder.current.path || System.path(#USER_DOCUMENTS)) + "/new";
+      url = view.selectFile(#save, "HTML Files (*.htm,*.html,*.xhtml)|*.htm;*.html;*.xhtml|All Files (*.*)|*.*","xhtml", proposedFn);
+      if(!url) 
+        return false;
+      // TODO-DO-DO: reparent URLs, please!
+      this.htmlview.setDocumentUrl(this.docUrl = url);      
+    }
+    if( this.sourceMode)  
+    {
+      var r = this.textview.getContent();
+      this.htmlview.sourceToContent(r[0], this.docUrl, r[1], r[2]);
+    }
+    if(!this.htmlview.saveDocument(this.docUrl)) {
+      view.msgbox(#alert, "Cannot save document:" + URL.toPath(this.docUrl));
+      return false;
+    }
+    this.htmlChanged = false;
+    this.textChanged = false;
+    this.postEvent("doc-modification-state-change",false);
+    return true;
+  }
+
+  function persistContent() {
+    if( this.isChanged ) {
+      var bytes;
+      if( this.sourceMode)  
+        bytes = Bytes.fromString(this.textview.value,"utf-8");
+      else 
+        bytes = this.htmlview.contentToBytes();
+      return { url: this.docUrl, folderUrl: this.folderUrl, content: bytes.compress().toString("base64") };
+    }
+    else 
+      return { url: this.docUrl };
+  }
+  function restoreContent(def) {
+    if( def.content ) {
+      this.htmlview.bytesToContent(Bytes.fromString(def.content,"base64").decompress(), def.url);
+      this.docUrl = def.url;
+      this.folderUrl = def.folderUrl;
+      this.htmlChanged = true;
+    }
+    else
+      this.loadDocument(def.url, def.folderUrl);
+  }
+
+  property isChanged(v) {
+    get return this.htmlChanged || this.textChanged;
+    set assert false;
+  }
+
+  // htmlarea has or has not undos  
+  event contentmodification $(htmlarea) (evt) {
+    const wasChanged = this.isChanged;
+    this.htmlChanged = evt.reason != 0;
+    const nowChanged = this.isChanged;
+    if( wasChanged != nowChanged )
+      this.postEvent("doc-modification-state-change",nowChanged);
+  }
+
+  // plaintext has or has not undos
+  event contentmodification $(plaintext) (evt) {
+    const wasChanged = this.isChanged;
+    this.textChanged = evt.reason != 0;
+    const nowChanged = this.isChanged;
+    if( wasChanged != nowChanged )
+      this.postEvent("doc-modification-state-change",nowChanged);
+  }
+
+  event change $(htmlarea) (evt) { this.postEvent("doc-changed"); }
+  event change $(plaintext) (evt) { this.postEvent("doc-changed"); }
+
+  property sourceMode(v) {
+    var currentMode = this.textview.isVisible;
+    get return currentMode;
+    set {
+      var cel;
+      if( v === currentMode )
+        return;
+      else if( v ) { // switching to source 
+        var r = this.htmlview.contentToSource(); // r[0] - text, r[1] - anchor pos, r[2] - caret pos 
+        this.attributes["mode"] = "source";
+        this.textview.setText(r[0],r[1],r[2]);
+        cel = this.textview;
+      }
+      else { // switching to wysiwyg 
+        this.textChanged = false;
+        var r = this.textview.getContent();
+        this.attributes["mode"] = "wysiwyg";        
+        this.htmlview.sourceToContent(r[0], this.docUrl, r[1], r[2]);
+        cel = this.htmlview;
+      }
+      cel.state.focus = true;
+      this.postEvent("doc-view-mode-change",v);
+    }
+  }
+
+  event show-source { 
+    this.sourceMode = true;
+  }
+
+  event show-wysiwyg {
+    this.sourceMode = false; 
+  }
+
+  property currentView(v) {
+    get return this.sourceMode ? this.textview : this.htmlview;
+  }
+
+  property folderUrl(v) {
+    get {
+      if(this.dirUrl) 
+        return this.dirUrl;
+      else 
+        return (this.docUrl /~ "/") + "/";
+    } set {
+      this.dirUrl = v;
+    }
+  }
+
+  property docUrl(v) {
+    get return this._url || "unknown:new"; 
+    set { this._url = v; assert typeof v == #string; }
+  }
+
+  //this var docUrl = "unknown:new";  
+
+  // set this editor as current one
+  function activate() {
+    current = this;
+    this.state.current = true;
+    this.postEvent("doc-activated");
+    this.currentView.state.focus = true;
+    var path = URL.toPath(this.docUrl);
+    setCaption(path);
+  }
+
+  // class function
+  function bindToolbars() 
+  {
+    const buttonSource = self.$(button#source);
+    const buttonSave = self.$(button#save-file);
+    assert buttonSource && buttonSave;
+    
+    buttonSource << event change { current.sourceMode = this.state.checked; }
+    buttonSave << event click (evt) { current.saveDocument(evt.shiftKey); }
+
+    self << event doc-view-mode-change {
+      buttonSource.state.checked = current.sourceMode;
+    }
+    
+    self << event doc-activated {
+      buttonSource.state.checked = current.sourceMode;
+      buttonSave.state.disabled = !current.isChanged; 
+    }
+
+    self << event doc-modification-state-change {
+      buttonSave.state.disabled = !current.isChanged;  
+    }
+
+  }
+
+}

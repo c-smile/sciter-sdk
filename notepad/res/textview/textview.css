@@ -1,0 +1,51 @@
+
+@set textview < std-plaintext
+{
+  :root { 
+    prototype: TextView url(textview.tis);
+    background-color:rgba(255,255,255,0);
+    border:none;
+    overflow:scroll-indicator;
+    font-size:9pt;
+    cursor:default;
+  }
+
+  :root:theme(dark) {
+    background-color:rgba(0,0,0,0);
+  }
+
+  :root { tab-size:2; }
+  
+  :root > text { 
+    margin-left: length(left-strip-width);
+    hit-margin: 0 0 0 length(left-strip-width);
+    white-space:pre-wrap;
+    list-marker-color:color(text-color-dimmed);
+    line-height:1.4em;
+    background:color(document-color);
+    cursor:text;
+    color:#000;
+  }
+  :root > text:theme(dark) {
+    color:#fff;
+  }
+
+  :root > text:nth-child(10n) { list-marker-color:color(text-color); }
+  /*markup*/  
+  text::mark(tag) { color: steelblue; } /*background-color: #f0f0fa;*/
+  text::mark(tag-id) { color: red; } /*background-color: #f0f0fa;*/
+
+  /*source*/  
+  text::mark(number) { color: brown; }
+  text::mark(number-unit) { color: brown; }
+  text::mark(string) { color: teal; }
+  text::mark(keyword) { color: blue; }
+  text::mark(symbol) { color: brown; }
+  text::mark(literal) { color: brown; }
+  text::mark(comment) { color: green; }
+  
+  text[type=script] {  background-color: #FFFAF0; }
+  text[type=markup] {  background:color(document-color); }
+  text[type=style]  {  background-color: #FAFFF0; }
+}
+

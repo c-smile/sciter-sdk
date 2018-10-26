@@ -1,0 +1,210 @@
+
+// WYSIWYG styles
+
+html { 
+  background:transparent; width:*; cursor: default; 
+  prototype: Outline.Document url(block.tis);
+  font-family: Verdana, Helvetica, sans-serif;
+  line-height:1.4em;
+}
+
+body {
+  margin:0 0 0 length(left-strip-width);
+  padding-left:2em;
+  padding-right:1em;
+  padding-top:0.5em;
+  width:*;
+  outline:1dip solid color(splitter-color);
+  background:color(document-color);
+  color:#000;
+  cursor:text; 
+  text-selection-caret-color:#000;
+}
+body:theme(dark) {
+  color:#fff;
+  text-selection-caret-color:#fff;
+}
+
+// we reuse :current flag as a marker of current BFC
+:current { prototype: Outline.BlockRoot url(block.tis); /*outline:3dip dotted red -3dip;*/ }
+
+// BLOCKS+ (participating in outline)
+
+ol { var(marker-color):#8FBC8FA0; prototype: Outline.Block url(block.tis); }
+ul { var(marker-color):#FFA07AA0; prototype: Outline.Block url(block.tis); }
+li { var(marker-color):#FFFFFF80; prototype: Outline.Block url(block.tis); }
+
+h1 { var(marker-color):#FFD700E0; prototype: Outline.Block url(block.tis); }
+h2 { var(marker-color):#FFD700D0; prototype: Outline.Block url(block.tis); }
+h3 { var(marker-color):#FFD700C0; prototype: Outline.Block url(block.tis); }
+h4,h5,h6 { var(marker-color):#FFD70080; prototype: Outline.Block url(block.tis); }
+p  { var(marker-color):#FFFFFFC0; prototype: Outline.Block url(block.tis); }
+div{ var(marker-color):lavender;  prototype: Outline.Block url(block.tis); }
+blockquote { var(marker-color):#DDA0DD80; prototype: Outline.Block url(block.tis); 
+             border-left: 2dip #DDA0DD80 solid; margin-left:1.5em; padding-left:0.5em; }
+
+dl { var(marker-color):#87CEEBA0; prototype: Outline.Block url(block.tis); }
+dt { var(marker-color):#FFFFFF80; prototype: Outline.Block url(block.tis); font-weight:bold; }
+dd { var(marker-color):#FFFFFFA0; prototype: Outline.Block url(block.tis); }
+
+table { var(marker-color):peru; prototype:Outline.Block url(block.tis); }
+thead, tfoot, tbody { var(marker-color):burlywood; prototype: Outline.Block url(block.tis); }
+tr { var(marker-color):wheat; prototype:Outline.Block url(block.tis); }
+
+figure { display:block; width:*; max-width:max-content; margin: 1em 0.001*; border:1dip dotted #aaa; prototype: Outline.Block url(block.tis); } 
+figure > img { display:block; width:*; max-width:max-content; margin:4dip; prototype: Outline.Block url(block.tis);  }
+figure > figcaption { display:block; width:*; text-align:center; border:1dip dotted #aaa; margin:4dip; prototype: Outline.Block url(block.tis); }
+
+pre  { var(marker-color):#E6E6FA80; prototype: Outline.Block url(block.tis);
+       background:#E6E6FA80; border:1dip dotted #aaa; padding:0.25em; }
+
+section { var(marker-color):#FA807280; prototype:Outline.Block url(block.tis); }
+
+text { prototype: Outline.AnonymousParagraph url(block.tis); }
+
+dir,
+menu,
+form,
+hr,
+address,
+fieldset, 
+legend, 
+article, 
+aside, 
+hgroup, 
+header, 
+footer, 
+main, 
+nav, 
+figure, 
+figcaption, 
+details, 
+picture
+{
+  var(marker-color):#40E0D080; 
+  prototype:Outline.Block url(block.tis);
+}
+
+// BLOCKS-
+
+br {
+  display:inline-block;
+  width:0.6em;
+  height:1.2em;
+  foreground-image: url(path:m 1600.26,479.74 v 704 q 0,13 -9.5,22.5 -9.5,9.5 -23.5,9.5 H 704.26 v 192 q 0,40 -37,58 -37,18 -69,-9 l -384,-320 q -22,-18 -22,-49 0,-31 22,-49 l 384,-320 q 31,-26 69,-9 37,18 37,58 v 192 h 640 v -320 q 0,-14 11,-25 l 192,-160 q 14,-13 34,-4 19,9 19,29 z);
+  foreground-repeat: no-repeat;
+  foreground-position: 50% 50%;
+  foreground-size: 0.6em;
+  fill:#bbb;
+}
+
+
+code { background:#E6E6FAC0; }
+
+[href] { 
+  behavior:clickable; 
+  //cursor: inherit; 
+  color: color(hyperlink-color); 
+}
+
+[id] {
+  hit-margin: 0 0 0 18dip;
+}
+
+@set link-target-marker {
+  :root {
+    behavior:clickable;
+    prototype: LinkMarker url(content-widgets.tis);
+    display:block;
+    size:22dip;
+    //background:#ccc;
+    margin-left:-22dip;
+    vertical-align:middle;
+    cursor:default;
+    foreground-image: url(path:M 5 7 C 2.2 7 0 9.2 0 12 C 0 14.8 2.2 17 5 17 L 8 17 C 9.6 17 11.1 16.2 12 15 C 12.9 16.2 14.4 17 16 17 L 19 17 C 21.8 17 24 14.8 24 12 C 24 9.2 21.8 7 19 7 L 16 7 C 14.4 7 12.9 7.8 12 9 C 11.1 7.8 9.6 7 8 7 L 5 7 z M 5 9 L 8 9 C 8.9 9 9.6875 9.4 10.1875 10 L 13.8125 10 C 14.3125 9.4 15.1 9 16 9 L 19 9 C 20.7 9 22 10.3 22 12 C 22 13.7 20.7 15 19 15 L 16 15 C 15.1 15 14.3125 14.6 13.8125 14 L 10.1875 14 C 9.6875 14.6 8.9 15 8 15 L 5 15 C 3.3 15 2 13.7 2 12 C 2 10.3 3.3 9 5 9 z M 7.8125 11 A 1.001098 1.001098 0 0 0 8 13 L 16 13 A 1.0001 1.0001 0 1 0 16 11 L 8 11 A 1.0001 1.0001 0 0 0 7.90625 11 A 1.001098 1.001098 0 0 0 7.8125 11 z);
+    foreground-size: 15dip;
+    foreground-position: 50% 50%;
+    foreground-repeat: no-repeat;
+    stroke:none;  fill: color(icon-color-dimmed);
+  }  
+
+  :root:hover {
+    border-radius:2dip;
+    background-color: color(selection-highlight-color);
+    fill:color(icon-color);
+    foreground-image: url(path:M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z);
+    foreground-size: 15dip;
+  }
+
+  :root.highlighted {
+    fill: color(selection-text-color);
+    background-color: color(selection-color);
+    transition: background-color(none,linear,300ms) fill(none,linear,300ms);
+  }
+}
+
+[id]::marker {
+  style-set: link-target-marker;
+}
+
+  
+// selected blocks:
+//::selection { background:highlight; }
+
+input, 
+textarea, 
+button, 
+select { -disabled:true; }
+
+table td { padding:2dip 0.5em; min-width:1em; prototype: Outline.Cell url(block.tis); color:color(document-text-color); }
+table th { padding:2dip 0.5em; min-width:1em; prototype: Outline.Cell url(block.tis); background: color(document-gray-color); color:color(document-text-color); }
+  
+table:not([border]) td:not(:selected), 
+table:not([border]) th:not(:selected) { outline:1dip dotted #aaa -1dip; }
+
+table[border] {
+  border-collapse: collapse;
+}
+
+
+td:not(:selected):hover(left), 
+th:not(:selected):hover(left) { foreground-color: color(selection-highlight-color); cursor:pointer; }
+
+@set selected-shade {
+  :root {
+    behavior:clickable;
+    prototype: MetaEditor url(content-widgets.tis);
+    display:block;
+    line-height:18dip;
+    width:max-content;
+    max-width:100%;
+    height:*;
+    max-height:18dip;
+    font:system;
+    margin-left:*;
+    margin-top:0;
+    margin-right:0;
+    margin-bottom:*;
+    vertical-align:middle;
+    cursor:default;
+    padding:0 0.1em;
+    background-color: morph(color(selection-color),opacity:70%);
+    color: color(selection-text-color);
+    z-index:2; // marker is drawn on top of content
+  }  
+
+  :root:hover {
+    background-color: color(selection-hover-color);
+    //fill:color(icon-color);
+  }
+}
+
+
+:selected { 
+  foreground-color:color(selection-highlight-color); 
+  outline: 2dip nesw-hatch color(selection-color) -2dip; 
+}
+
+:selected::shade { style-set: selected-shade; }
+
+img:selected { foreground-color: rgba(255,255,255,0.5); }

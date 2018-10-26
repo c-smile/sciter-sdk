@@ -1,0 +1,64 @@
+
+class Version : Element 
+{
+  this var version; // reported by the app
+  function attached() 
+  {
+    try {
+      this.version = view.version();
+      this.$(var#current-version).text = this.version;
+    } catch(e) {
+    }
+  }
+  event click $(button#check-version) (evt, button) 
+  {
+    button.state.disabled = true;
+    const ind = $(img#check-version-progress);
+    ind.state.busy = true;
+    this.attributes["status"] = undefined;
+    var me = this;
+    this.checkVersion(function(status) { 
+      ind.state.busy = false;
+      button.state.disabled = false; 
+      me.attributes["status"] = status;
+    });
+  }
+
+  function checkVersion(whenDone) 
+  {
+    const version = this.version;
+    function dataReceived(data,status) {
+      //stdout.println("ok",JSON.stringify(data));
+      var list = $(ul#versions-list);
+      list.clear();
+      if( data.length == 0) {
+        $(#error).$content(Oops, server configuration problems...);
+        whenDone.call(this, "error");
+      }
+      else {  
+        for(var rec in data) {
+          if(rec.ver == version)
+            break; 
+          else if(rec.url)
+            list.$append(<li><a href="https://html-notepad.com{rec.url}"><var>{rec.ver}</var></a><pre>{rec.brief}</pre></li>);
+          else
+            list.$append(<li><var>{rec.ver}</var></a><pre>{rec.brief}</pre></li>);
+        }
+        whenDone.call(this, list.length == 0 ? "latest" : "overdue");
+      }
+    }
+    function gotError(err,status) {
+      $(#error).$content(Error accessing the site, HTTP status: <var>{status}</var>);
+      whenDone.call(this,"error");
+    }
+
+    view.request {
+      type: #get,
+      url:  "https://html-notepad.com/dist/versions.json",
+      success: dataReceived,
+      error:   gotError,
+      output:  #json,
+      noCache: true
+    };
+  }
+}

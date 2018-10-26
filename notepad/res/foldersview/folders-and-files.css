@@ -1,0 +1,144 @@
+@import url(folder.css);
+
+toolbar.folders-and-files { width:*; margin:0; }
+
+open-files 
+{
+  prototype: OpenFiles url(folders-and-files.tis);
+  display:block;
+  flow:horizontal-wrap;
+  width:*;
+  height:max-content;
+  max-height:300dip;
+  overflow:scroll-indicator;
+  padding:4dip;
+  border-spacing:4dip;
+  border-bottom: 1dip solid color(splitter-color);
+}
+
+open-files:empty {
+  visibility:none;
+}
+
+open-files > li {
+  behavior:button;
+  display:block;
+  width:*;
+  max-width:auto;
+  padding:0 2em;
+  height:max-content;
+  line-height:1.8em;
+  cursor:pointer;
+  @LIST-ITEM-NORMAL; 
+  @LIST-ITEM-HOVER;
+}
+
+open-files > li:hover { @LIST-ITEM-CURRENT; }
+open-files > li:current { @LIST-ITEM-CURRENT; }
+
+open-files > li::marker { 
+  // close button
+  size:1.8em;
+  margin:* 0 * *;
+  foreground-image: url(path:M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z);
+  foreground-repeat: no-repeat;  
+  foreground-position: 50% 50%;
+  foreground-size:0.5em;
+  fill:color(text-color);
+}
+
+open-files > li.changed {
+  background-image: url(path:M478.21 334.093L336 256l142.21-78.093c11.795-6.477 15.961-21.384 9.232-33.037l-19.48-33.741c-6.728-11.653-21.72-15.499-33.227-8.523L296 186.718l3.475-162.204C299.763 11.061 288.937 0 275.48 0h-38.96c-13.456 0-24.283 11.061-23.994 24.514L216 186.718 77.265 102.607c-11.506-6.976-26.499-3.13-33.227 8.523l-19.48 33.741c-6.728 11.653-2.562 26.56 9.233 33.037L176 256 33.79 334.093c-11.795 6.477-15.961 21.384-9.232 33.037l19.48 33.741c6.728 11.653 21.721 15.499 33.227 8.523L216 325.282l-3.475 162.204C212.237 500.939 223.064 512 236.52 512h38.961c13.456 0 24.283-11.061 23.995-24.514L296 325.282l138.735 84.111c11.506 6.976 26.499 3.13 33.227-8.523l19.48-33.741c6.728-11.653 2.563-26.559-9.232-33.036z);
+  background-repeat: no-repeat;  
+  background-position: 0.5em 50%;
+  background-size:0.5em;
+  fill:#F00;
+}
+
+folders-list {
+  prototype: FoldersList url(folders-and-files.tis);
+  display:block;
+  flow:vertical;
+  width:*;
+  height:max-content;
+  //max-height:300dip;
+  overflow-y:scroll-indicator;
+  border-top: 1dip solid color(splitter-color);
+}
+
+folders-list:empty {
+  visibility:none;
+}
+
+folders-list > li 
+{
+  behavior:button;
+  flow:text;
+  width:*;
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow:path-ellipsis;
+  text-align:start;
+  padding-left:1.6em;
+  padding-right:0.2em;
+  background-image: url(path:M1600 1312v-704q0-40-28-68t-68-28h-704q-40 0-68-28t-28-68v-64q0-40-28-68t-68-28h-320q-40 0-68 28t-28 68v960q0 40 28 68t68 28h1216q40 0 68-28t28-68zm128-704v704q0 92-66 158t-158 66h-1216q-92 0-158-66t-66-158v-960q0-92 66-158t158-66h320q92 0 158 66t66 158v32h672q92 0 158 66t66 158z);
+  background-repeat: no-repeat;
+  background-position: 0.2em 50%;
+  background-size: 1em;
+  fill:color(text-color-dimmed);
+  stroke:none;
+  line-height:2em;
+  @LIST-ITEM-NORMAL; 
+}
+
+folders-list > li:first-child { 
+  background-size: 0.7em;
+  background-image: url(path:M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z); 
+  //@LIST-ITEM-CURRENT;  
+}
+
+folders-list > li:hover {
+  @LIST-ITEM-HOVER;   
+}
+
+folders-list > li:focus {
+  @LIST-ITEM-FOCUS;   
+}
+
+[filename],[url] {
+  context-menu: selector(menu#for-filename);
+}
+
+menu#for-filename {
+  prototype: LinksContextMenu url(folders-and-files.tis);
+}
+
+menu#for-filename > caption {
+  font-size:85%;
+  line-height:1.4em;
+  white-space:normal;
+  width:*;
+  border-bottom:1dip solid color(splitter-color);
+}
+
+menu#for-filename > div.links-in-doc {
+  overflow-y: scroll-indicator;
+  max-height: 20em;
+}
+
+menu#for-filename > div.links-in-doc > li {
+  flow:text;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space:nowrap;
+  max-width:20em;
+  width:*;
+}
+
+menu#for-filename > div.links-in-doc:empty {
+  visibility:none;
+}
+
+menu#for-filename > caption.links-in-doc { visibility:none; }
+menu#for-filename[has-in-doc-links] > caption.links-in-doc { visibility:visible; }
+

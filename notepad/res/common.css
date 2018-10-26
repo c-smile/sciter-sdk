@@ -1,0 +1,70 @@
+html {
+  background:transparent;
+  var(splitter-color): rgba(0,0,0,10%);
+  var(left-strip-width): 80dip; 
+
+  var(paper-color): rgba(255,255,255); 
+  var(paper-color-dimmed): rgba(255,255,255,40%); 
+  var(paper-color-highlight): #ddd; 
+
+  var(hyperlink-color): #2038DD; 
+
+  var(text-color): #000; 
+  var(text-color-dimmed): rgba(0,0,0,40%); 
+  var(icon-color): rgba(0,0,0,70%);
+  var(icon-color-dimmed): rgba(0,0,0,20%);
+  var(icon-color-trace): rgba(0,0,0,10%);
+
+  var(document-color): rgb(255,255,255);
+  var(document-text-color): rgb(0,0,0);
+  var(document-gray-color): rgb(240,240,240);
+
+  var(selection-color): window-accent-color;
+  var(selection-highlight-color): morph(window-accent-color,opacity:10%);
+  var(selection-hover-color): morph(window-accent-color,lighten:20%);
+  var(selection-text-color): window-accent-text-color;
+  var(selection-border-width): 3dip;
+
+  var(accent) : window-accent-color;
+  var(accent-dimmed) : morph(window-accent-color,opacity:40%);
+  var(info-color) : #FFF8DC;
+
+  var(connector-color) : window-accent-color;
+
+  var(dialog-shim-color): rgba(240,240,240,50%);
+
+}
+
+html:theme(dark) {
+  var(splitter-color): rgba(255,255,255,10%);
+
+  var(paper-color): rgba(0,0,0); 
+  var(paper-color-dimmed): rgba(0,0,0,40%); 
+  var(paper-color-highlight): #777; 
+
+  var(hyperlink-color): #1E90FF; 
+
+  var(text-color): #fff; 
+  var(text-color-dimmed): rgba(255,255,255,40%); 
+  var(icon-color): rgba(255,255,255,70%);
+  var(icon-color-dimmed): rgba(255,255,255,20%);
+
+  var(document-color): rgb(29,31,34);
+  var(document-text-color): rgb(255,255,255);
+  var(document-gray-color): rgb(64,64,64);
+  var(info-color) : #2F3F3F;
+  var(dialog-shim-color): rgba(29,31,34,50%);
+}
+
+.connected[with] {
+  prototype: ConnectedLabel url(utils/utils.tis);
+  border-radius:3dip;
+}
+
+.connected[with]:hover {
+  outline:1dip solid color(connector-color);
+}
+
+span.connected[with] {
+  display:inline-block;
+}

@@ -1,0 +1,206 @@
+<html>
+    <head>
+        <title>Insert image</title>
+        <style>
+          @import url(sciter:msgbox.css);
+          @import url(../common.css);
+          @import url(../utils/utils.css);
+          /*html 
+          { 
+            font:system;
+            width:max-content; 
+            height:max-content; 
+            overflow:hidden; 
+          }*/
+
+
+          form {
+            padding:1em;
+            margin:0;
+            background:transparent;
+            vertical-align:bottom;
+            background:linear-gradient(to bottom, rgba(255,255,255,0.0), rgba(248,248,248,0.97) 50%,rgba(248,248,248,1));
+            flow: grid(1 2 2,
+                       3 4 4,
+                       5 6 7,
+                       8 9 9);
+            border-spacing:0.5em;
+          }
+
+          form > label { display:inline-block; line-height:2em; margin-left:*; }
+          form > label::after { content:" :"; }
+          form > input { width:*; }
+          form > select { display:inline-block; margin:0 *;}
+
+          radio-group { display: block; flow:horizontal; }
+          radio-group > button:checked { text-decoration:underline; }
+
+          section.content {
+            aspect: DropZone url(../utils/drop-zone.tis);
+            behavior: button; // yet clickable.
+            flow:stack;
+            white-space:normal;
+            padding:0;
+            margin:0;
+            background:window;
+            min-width:400dip;
+            min-height:300dip;
+          }
+
+          section.content > * { display:block; size:*; }
+          section.content > picture { overflow:hidden; foreground-size:cover; }
+          section.content > caption { behavior:button; vertical-align:middle; text-align:center; background:window; }
+          section.content > form { visibility:hidden; }
+
+          [file-accepted] section.content > form { visibility:visible; }
+          [file-accepted] section.content > caption { visibility:hidden; }
+
+          [no-source] input(src) { visibility:hidden; }
+
+          section.content toolbar { background:none; }
+          section.content toolbar > button {
+            foreground-size: 16dip;
+            foreground-repeat: no-repeat;
+            foreground-position: 50% 50%;
+            fill:#000;
+            stroke:none;
+            size:1.2em;
+          }
+
+          form[model="img"] toolbar.placement { visibility:hidden; } 
+
+          section.content toolbar > button.none { foreground-image: url(path:m 32.97525,-8.0303027 -1.9375,1.3749997 v 2.75 h 8 v -1.5625 l -2.03125,-1.25 -1.71875,0.75 z m 4.5625,-2.8750003 c -0.828427,0 -1.5,0.671573 -1.5,1.5000003 0,0.828427 0.671573,1.5 1.5,1.5 0.828427,0 1.5,-0.671573 1.5,-1.5 0,-0.8284273 -0.671573,-1.5000003 -1.5,-1.5000003 z M 26.857666,-14.148562 H 43.054507 V -0.22753 H 26.857666 Z m 0.172766,-2.043464 c -0.522223,0 -1.06047,0.18547 -1.4375,0.5625 -0.377031,0.377031 -0.5625,0.915278 -0.5625,1.4375 v 14 c 0,0.522222 0.185469,1.060469 0.5625,1.4375 0.37703,0.377031 0.915277,0.5625 1.4375,0.5625 h 16 c 0.522222,0 1.060469,-0.185469 1.4375,-0.5625 0.377031,-0.377031 0.5625,-0.915278 0.5625,-1.4375 v -14 c 0,-0.522222 -0.185469,-1.060469 -0.5625,-1.4375 -0.377031,-0.37703 -0.915278,-0.5625 -1.4375,-0.5625 z); }
+          section.content toolbar > button.bottom { foreground-image: url(path:m 32.97525,-8.0303027 -1.9375,1.3749997 v 2.75 h 8 v -1.5625 l -2.03125,-1.25 -1.71875,0.75 z m 4.5625,-2.8750003 c -0.828427,0 -1.5,0.671573 -1.5,1.5000003 0,0.828427 0.671573,1.5 1.5,1.5 0.828427,0 1.5,-0.671573 1.5,-1.5 0,-0.8284273 -0.671573,-1.5000003 -1.5,-1.5000003 z m -10.614471,9.675334 h 16.17495 v 3 h -16.17495 z m 0,-10.95018 H 43.12012 v 9 H 26.923279 Z m 0.172766,-2.043464 c -0.522222,0 -1.06047,0.185469 -1.4375,0.5625 -0.377031,0.37703 -0.5625,0.915278 -0.5625,1.4375 v 14 c 0,0.522222 0.185469,1.060469 0.5625,1.4375 0.37703,0.377031 0.915278,0.5625 1.4375,0.5625 h 16 c 0.522222,0 1.060469,-0.185469 1.4375,-0.5625 0.377031,-0.377031 0.5625,-0.915278 0.5625,-1.4375 v -14 c 0,-0.522222 -0.185469,-1.06047 -0.5625,-1.4375 -0.377031,-0.377031 -0.915278,-0.5625 -1.4375,-0.5625 z); }
+          section.content toolbar > button.top { foreground-image: url(path:m 32.97525,-8.0303027 -1.9375,1.3749997 v 2.75 h 8 v -1.5625 l -2.03125,-1.25 -1.71875,0.75 z m 4.5625,-2.8750003 c -0.828427,0 -1.5,0.671573 -1.5,1.5000003 0,0.828427 0.671573,1.5 1.5,1.5 0.828427,0 1.5,-0.671573 1.5,-1.5 0,-0.8284273 -0.671573,-1.5000003 -1.5,-1.5000003 z m -10.417629,-3.068952 h 16.17495 v -3 h -16.17495 z m 0,10.95018 h 16.196841 v -9 H 27.120121 Z m 0.172766,2.043464 c -0.522223,0 -1.06047,-0.18547 -1.4375,-0.5625 -0.377031,-0.377031 -0.5625,-0.915278 -0.5625,-1.4375 v -14 c 0,-0.522222 0.185469,-1.060469 0.5625,-1.4375 0.37703,-0.377031 0.915277,-0.5625 1.4375,-0.5625 h 16 c 0.522222,0 1.060469,0.185469 1.4375,0.5625 0.377031,0.377031 0.5625,0.915278 0.5625,1.4375 v 14 c 0,0.522222 -0.185469,1.060469 -0.5625,1.4375 -0.377031,0.37703 -0.915278,0.5625 -1.4375,0.5625 z); }
+
+        </style>
+        <script type="text/tiscript">
+          
+          var file;
+          const picture = $(picture);
+          const form = $(form);
+          const caption = $(caption);
+
+          var model = "figure";
+          var placement = "bottom";
+          var image = null;
+
+          event click $(#apply) { view.close( produceHtml() ); return true; }
+          event click $(#cancel) { view.close(null); return true; }
+
+          event file-enter (evt) {
+            file = evt.data[0];
+            picture.attributes["src"] = file;
+            self.attributes["file-accepted"] = undefined;
+            return true;
+          }
+          event file-leave {
+            picture.attributes["src"] = undefined;
+            return true;
+          }
+          event file-drop {
+            self.attributes["file-accepted"] = true;
+            setSrc(file);
+            return true;
+          }
+
+          function setSrc(url) {
+            const parts = URL.parse(url);
+            $(input(src)).value = url;
+            var text = parts.name;
+            text = text.replace(/[_-]/g," ");
+            $(input(title)).value = text;
+            $(input(alt)).value = text;
+          }
+
+          event change $(radio-group) {
+            form.attributes["model"] = model = form.value.model;
+          }
+
+          event click $(section.content > caption) {
+            var fn = view.selectFile(#open,
+               "Pictures (*.png,*.jpg,*.gif,*.svg,*.webp)|*.jpg;*.jpeg;*.png;*.gif;*.svg;*.webp|All Files (*.*)|*.*" , "png" );
+            if( fn ) {
+              file = fn;
+              picture.attributes["src"] = fn;
+              self.attributes["file-accepted"] = true;
+              setSrc(fn);
+            }
+            return true;
+          }
+
+          function self.ready() {
+            form.attributes["model"] = model;
+            form.value = {placement: placement};
+            if(image = view.parameters.image) {
+              self.attributes["file-accepted"] = true;
+              self.attributes["no-source"] = true;
+              picture.value = image;
+            }
+          }
+
+
+          function produceHtml() {
+            var out = "";
+            const def = form.value;
+
+            if(image)
+              def.src = image.toBytes(#png).toDataUrl();
+            
+            if(def.model == "figure") {
+              switch(def.placement) {
+                case "top":    
+out = String.$(<figure>
+    <figcaption>{def.title.toHtmlString()}</figcaption>
+    <img src="{def.src}" alt="{def.alt}" title="{def.title}" />
+  </figure>); break;
+                case "bottom": 
+out = String.$(<figure>
+    <img alt="{def.alt}" title="{def.title}" src="{def.src}" />
+    <figcaption>{def.title.toHtmlString()}</figcaption>
+  </figure>); break;
+                case "none":  
+out = String.$(<figure>
+    <img alt="{def.alt}" title="{def.title}" src="{def.src}" />
+  </figure>); break;
+              }  
+            } else {
+              out = String.$(<img alt="{def.alt}" title="{def.title}" src="{def.src}" />);
+            }
+            return out;
+          }
+
+        </script>
+    </head>
+    <body>
+      <section.content accept-drop="*.jpg;*.jpeg;*.png;*.gif;*.svg;*.webp;*.tiff">
+        <picture/>
+        <caption>
+          <text>Drag image here or click to select file ...</text>
+        </caption>
+        <form model="figure">
+          <label>model</label>
+            <radio-group>
+              <button|radio(model) value="figure" checked>&lt;figure&gt; block</button>
+              <button|radio(model) value="img">inline &lt;img&gt;</button>
+            </radio-group>
+          <label>src</label>
+          <input|text(src) nullable />
+          <label>title</label>
+          <input|text(title) nullable />
+          <toolbar.placement>
+            <button|radio(placement).bottom value="bottom" checked title="&lt;figure&gt;, caption at bottom"/>          
+            <button|radio(placement).top value="top"    title="&lt;figure&gt;, caption at top"/>
+            <button|radio(placement).none value="none"   title="just &lt;img&gt;, no caption"/>
+          </toolbar>
+          <label>alt</label>
+          <input|text(alt) nullable />
+        </form>
+      </section>
+    <section#button-bar>
+      <button#apply role="default-button">Apply</button>
+      <button#cancel role="cancel-button">Cancel</button>
+    </section>
+
+    </body>
+</html>

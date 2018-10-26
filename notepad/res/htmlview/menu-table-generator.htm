@@ -1,0 +1,38 @@
+<menu#table-generator-menu>
+  <header>
+    <label>table width:</label><button|radio(tablewidth) value='false' checked>auto</button>
+                               <button|radio(tablewidth) value='width=100%'>100%</button>
+  </header>
+  <div.table>
+    <input|hslider(hcols) min=0 max=8 value=0 />
+    <input|vslider(hrows) min=5 max=0 value=0 />
+    <table>
+      <tbody>
+        <tr><td/><td/><td/><td/><td/><td/><td/><td/></tr>
+        <tr><td/><td/><td/><td/><td/><td/><td/><td/></tr>
+        <tr><td/><td/><td/><td/><td/><td/><td/><td/></tr>
+        <tr><td/><td/><td/><td/><td/><td/><td/><td/></tr>
+        <tr><td/><td/><td/><td/><td/><td/><td/><td/></tr>
+      </tbody>
+    </table>
+  </div>
+</menu>
+
+<!-- 
+<menu#table-generator-menu>
+  <header>
+    <row><label>table width:</label><button|radio(tablewidth) value='false' checked>auto</button>
+                                    <button|radio(tablewidth) value='width=100%'>100%</button></row>
+    <row><label>headers, columns</label><input|integer step=1 min=0 max=5 value=0/>
+                     <label>rows</label><input|integer step=1 min=0 max=4 value=0/></row>
+  </header>
+  <table>
+    <tbody>
+      <tr><td/><td/><td/><td/><td/><td/><td/><td/></tr>
+      <tr><td/><td/><td/><td/><td/><td/><td/><td/></tr>
+      <tr><td/><td/><td/><td/><td/><td/><td/><td/></tr>
+      <tr><td/><td/><td/><td/><td/><td/><td/><td/></tr>
+      <tr><td/><td/><td/><td/><td/><td/><td/><td/></tr>
+    </tbody>
+  </table>
+</menu> -->

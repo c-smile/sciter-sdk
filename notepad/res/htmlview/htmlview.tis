@@ -1,0 +1,202 @@
+include "canonicalize-dom.tis";
+include "magicsequences.tis";
+include "widgets.tis";
+
+class HTMLView : Element {
+
+  var observers = [];
+  var toolbar = null;
+  var current = null; // current HTMLView in focus
+
+  const AVAILABLE = 0; // toolbar button flags
+  const ACTIVE = 0x01;
+  const DISABLED = 0x02;
+
+  var selectionType;
+
+  function attached() {
+
+    this.attributes["content-style"] ="htmlview/content.css";
+
+    if( !toolbar ) {
+      //current = this;
+      toolbar = self.$(toolbar.htmlview); 
+      initToolbar();
+    }
+  }
+
+  function initToolbar() {
+
+    bind("li.remove",        "format:remove-span:*");  
+    bind("li.bold",          "format:toggle-span:b|strong");    
+    bind("li.italic",        "format:toggle-span:i|em");
+    bind("li.underline",     "format:toggle-span:u");
+    bind("li.del",           "format:toggle-span:del|strike");
+    bind("li.sub",           "format:toggle-span:sub");
+    bind("li.sup",           "format:toggle-span:sup");
+    bind("li.code",          "format:toggle-span:code");
+                                 
+    bind("button.ulist",         "format:toggle-list:ul");
+    bind("button.olist",         "format:toggle-list:ol");
+    bind("button.dlist",         "format:toggle-list:dl");
+    bind("button.pre",           "format:toggle-pre");
+                                 
+    bind("button.unindent",      "format:unindent");
+    bind("button.indent",        "format:indent");
+
+    bind("button.blockquote",    "format:toggle-block:blockquote");
+    
+    bind("button.picture", this.insertPicture);    
+
+    bind("li.p",             "format:toggle-block:p");
+    bind("li.div",           "format:toggle-block:div");
+    bind("li.h1",            "format:toggle-block:h1");
+    bind("li.h2",            "format:toggle-block:h2");
+    bind("li.h3",            "format:toggle-block:h3");
+    bind("li.h4",            "format:toggle-block:h4");
+    bind("li.h5",            "format:toggle-block:h5");
+    bind("li.h6",            "format:toggle-block:h6");
+
+    bind("button.link",      this.handleHyperlink);
+    //bind("button.table",     this.handleTable);
+
+    bind("button.insert-col-before", "edit:insert-table-column:before");
+    bind("button.insert-col-after", "edit:insert-table-column:after");
+    bind("button.delete-col", "edit:delete-table-columns");
+
+    bind("button.insert-row-before", "edit:insert-table-row:before");
+    bind("button.insert-row-after", "edit:insert-table-row:after");
+    bind("button.delete-row", "edit:delete-table-rows");
+
+    bind("button.merge-cells", "edit:merge-table-cells");
+    bind("button.split-cells", "edit:split-table-cells");
+
+    bind("button.picture",  this.handleImage);
+  }
+
+  // binds UI thing (e.g. toolbar button) with command|function to be executed onClick
+  function bind(selector, cmd, param = undefined) 
+  {
+    var uiel = self.select(selector); assert uiel;
+    if(typeof cmd == #function) {
+      uiel.on("click.htmlview",  :: cmd.call(current,#exec,param,uiel) );
+      observers.push( function() {
+        var cmdState = (current ? cmd.call(current,#query,param,uiel) : 0) || 0;
+        uiel.state.checked  = (cmdState & ACTIVE) != 0;
+        uiel.state.disabled = (cmdState & DISABLED) != 0;
+      });
+    } else if(typeof cmd == #string) {
+      uiel.on("click.htmlview",  :: current.execCommand(cmd,param) );
+      observers.push( function() {
+        var cmdState = (current ? current.queryCommand(cmd,param) : 0) || 0;
+        uiel.state.checked  = (cmdState & ACTIVE) != 0;
+        uiel.state.disabled = (cmdState & DISABLED) != 0;
+      });
+    } else 
+      assert false: "Bad cmd type" cmd;
+  }
+
+  event statechange {
+    this.timer(200ms, this.updateObservers)
+    this.timer(600ms, this.checkSelection)
+    return true;
+  }
+
+  function updateObservers() 
+  {
+    for(var func in observers) func(); 
+    this[0].postEvent("selectionchange");
+  }
+
+  function checkSelection() {
+    const selectionType = this.selection.type;
+    if(selectionType == #cells)
+      TableCells.showForSelection(this);
+    //else if(var hlink = this.selection.contains("a[href]"))
+    //  HyperlinkEditor.showForElement(this,hlink); - does not work - event loop on selection
+
+  }
+
+  event focusin { current = this; }
+
+  event change (evt) 
+  {
+    const CHANGE_BY_INS_CHAR = 0;  // single char insertion
+    const CHANGE_BY_INS_CHARS = 1; // character range insertion, clipboard
+    const CHANGE_BY_DEL_CHAR = 2;  // single char deletion
+    const CHANGE_BY_DEL_CHARS = 3; // character range deletion (selection)
+    const CHANGE_BY_UNDO_REDO = 4;
+    const CHANGE_BY_INS_CONSECUTIVE_CHAR = 5; // single char insertion, previous character was inserted in previous position  
+    const CHANGE_BY_CODE = 6; 
+
+    if(evt.reason == CHANGE_BY_INS_CONSECUTIVE_CHAR || evt.reason == CHANGE_BY_INS_CHAR)
+      Sequences.check(this,this.selection.caret);
+   
+  }
+
+  event pastehtml (evt) {
+    canonicalizeDOM(evt.source, { 
+      baseUrl       : this.parent.docUrl,
+      baseFolderUrl : this.parent.folderUrl
+    });
+    // do not consume the event so it will be pasted
+  }
+
+  event pasteimage (evt) {
+    this.handleImage(#exec,{image:evt.data},null);
+    return true;
+  }
+
+
+  event click $([href]) (evt,link) {
+    if( evt.target === link )
+      link.postEvent("edit-hyperlink");
+    return true;
+  } 
+
+  event mousedown $(td,th) (evt,cell) {
+    if( evt.target === cell && cell.state.hoverLeft ) 
+    {
+      this.selection.select(cell,#element);
+      return true;
+    }
+
+  }
+  
+  function insertPicture() {}
+
+  function handleHyperlink(mod,params,btn) {
+    if( mod == #query ) { 
+      if(this.queryCommand("format:remove-span:a") != DISABLED) {
+        // we have <a> element already, so repurpose this button for link removal
+        btn.attributes.addClass("unlink");
+        return AVAILABLE;
+      } else {
+        //  no <a> in selection so this will add link
+        btn.attributes.removeClass("unlink");
+        return AVAILABLE;
+      }
+    } else if( mod == #exec ) { 
+      if( btn.$is(.unlink) ) 
+        this.execCommand("format:remove-span:a");
+      else
+        HyperlinkEditor.showForSelection(this);
+    }
+  }
+
+  function handleImage(mod,params,btn) {
+
+    if( mod == #query ) 
+      return AVAILABLE;
+    else if( mod == #exec ) {
+      var result = showDialog {
+        url: __FOLDER__ + "dialog-image.htm",
+        principal: this,
+        parameters: params
+      };
+      if( result )
+        this.execCommand("edit:insert-html", result);
+    }
+  }
+
+}

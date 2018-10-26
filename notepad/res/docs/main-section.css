@@ -1,0 +1,83 @@
+section#main {
+  prototype: MainSection url(main-section.tis);
+  flow: grid(1 3,
+             5 7);
+  border-spacing:1em;
+  horizontal-align:center;
+  vertical-align:middle;
+  size:*;
+  padding-top:1em;
+}
+
+section#main > widget { 
+  behavior: button;
+  color:#000;
+  size:20vw; 
+  display:block; 
+  vertical-align:middle; 
+  text-align:center; 
+  cursor:pointer;
+  border-radius:8dip;
+  font:12pt Verdana, sans-serif;
+}
+
+section#main > div { visibility:none; size:*; overflow:scroll-indicator; }
+
+section#main[state] > widget { 
+  width:8em; height:*; 
+  font:system;
+}
+
+section#main[state] > widget:current {
+  //box-shadow: inset 1dip 1dip 3dip rgba(0,0,0,60%);
+  outline:2dip solid rgba(0,0,0,40%) -2dip;
+}
+
+section#main[state] {
+  border-top: color(splitter-color) 1dip solid;
+}
+
+section#main[state=1]
+{
+  flow: grid(1 2,
+             3 2,
+             5 2,
+             7 2);
+}      
+section#main[state=1] > div:nth-child(2) { visibility:visible; } 
+//section#main[state=1] > widget:nth-child(1) { border-color:blue; } 
+
+section#main[state=2]
+{
+  flow: grid(1 4,
+             3 4,
+             5 4,
+             7 4);
+}      
+section#main[state=2] > div:nth-child(4) { visibility:visible; } 
+//section#main[state=2] > widget:nth-child(3) { border-color:blue; } 
+
+section#main[state=3]
+{
+  flow: grid(1 6,
+             3 6,
+             5 6,
+             7 6);
+}      
+section#main[state=3] > div:nth-child(6) { visibility:visible; } 
+//section#main[state=3] > widget:nth-child(5) { border-color:blue; } 
+
+section#main[state=4]
+{
+  flow: grid(1 8,
+             3 8,
+             5 8,
+             7 8);
+}      
+section#main[state=4] > div:nth-child(8) { visibility:visible; } 
+//section#main[state=4] > widget:nth-child(7) { border-color:blue; } 
+
+widget.shortcuts     { background:#f3f2db; }
+widget.license       { background:#d8e8d0; }
+widget.check-version { background:#f5c9d8; }
+widget.donate        { background:#f9eec3; }

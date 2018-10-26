@@ -1,0 +1,50 @@
+
+<!--<button.bold tooltip='strong/bold, <kbd>&platform-cmd-mod;</kbd>+<kbd>B</kbd>' />
+<button.italic tooltip='emphasis/italic, <kbd>&platform-cmd-mod;</kbd>+<kbd>I</kbd>' />
+<button.underline tooltip='underlined, <kbd>&platform-cmd-mod;</kbd>+<kbd>U</kbd>' />
+<button.del tooltip='deletion/strikethrough, <kbd>&platform-cmd-mod;</kbd>+<kbd>E</kbd>' />
+<button.sub />
+<button.sup />
+<button.code tooltip='inline code, <kbd>&platform-cmd-mod;</kbd>+<kbd>D</kbd>'>code</button>
+-->
+<button|menu.span #spans>
+  <menu.popup>
+    <li.span.remove><label>Remove formatting spans</label><span class="accesskey">ALT+Delete</span></li>
+    <hr/>
+    <li.bold #test><label><b>strong</b>/bold</label><span class="accesskey">&platform-cmd-mod;+B</span></li>
+    <li.italic><label><b>em</b>phasis/italic</label><span class="accesskey">&platform-cmd-mod;+I</span></li>
+    <li.underline><label><b>u</b>nderlined</label><span class="accesskey">&platform-cmd-mod;+U</span></li>
+    <li.del><label><b>del</b>etion/strikethrough</label><span class="accesskey">&platform-cmd-mod;+E</span></li>
+    <li.sub><label><b>sub</b>script</label></li>
+    <li.sup><label><b>sup</b>erscript</label></li>
+    <li.code><label>inline <b>code</b></label><span class="accesskey">&platform-cmd-mod;+D</span></li>
+  </menu>
+</button>
+<splitter/>
+<button|menu.paragraph #paragraphs>
+  <menu.popup>
+    <li.p><label>p - normal paragraph</label><span class="accesskey">&platform-cmd-mod;+NUMPAD0</span></li>
+    <li.div><label>div - division</label><span class="accesskey">&platform-cmd-mod;+NUMPAD7</span></li>
+    <li.h1><label>h1 - header, level 1</label><span class="accesskey">&platform-cmd-mod;+NUMPAD1</span></li>
+    <li.h2><label>h2 - header, level 2</label><span class="accesskey">&platform-cmd-mod;+NUMPAD2</span></li>
+    <li.h3><label>h3 - header, level 3</label><span class="accesskey">&platform-cmd-mod;+NUMPAD3</span></li>
+    <li.h4><label>h4 - header, level 4</label><span class="accesskey">&platform-cmd-mod;+NUMPAD4</span></li>
+    <li.h5><label>h5 - header, level 5</label><span class="accesskey">&platform-cmd-mod;+NUMPAD5</span></li>
+    <li.h6><label>h6 - header, level 6</label><span class="accesskey">&platform-cmd-mod;+NUMPAD6</span></li>
+  </menu>
+</button>
+<splitter/>
+<button.ulist title="unordered list" />
+<button.olist title="ordered list" />
+<button.dlist title="definitions list" />
+<splitter/>
+<button.pre title="pre block" />
+<button.blockquote title="blockquote block" />
+<splitter/>
+<button.unindent tooltip='unindent selection: <kbd>&platform-cmd-mod;</kbd>+<kbd>-</kbd>' />
+<button.indent tooltip='indent selection: <kbd>&platform-cmd-mod;</kbd>+<kbd>+</kbd>' />
+<splitter/>
+<button.picture />
+<button|menu.table><include src="menu-table-generator.htm" /></button>
+<button.mathml />
+<button.link accesskey="^L" tooltip='<span.on>add</span><span.off>remove</span> link: <kbd>&platform-cmd-mod;</kbd>+<kbd>L</kbd>'/>
