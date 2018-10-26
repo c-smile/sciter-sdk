@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		492748931F322B5700FF0136 /* sciter-osx-main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 492748921F322B5700FF0136 /* sciter-osx-main.mm */; };
 		492748951F322BE000FF0136 /* notes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 492748941F322BE000FF0136 /* notes.cpp */; };
+		49446C4E217FEC72006EA494 /* sciter-osx-64.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 49446C4D217FEC72006EA494 /* sciter-osx-64.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		49EBD87C1F31558B0099EDF5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 49EBD87B1F31558B0099EDF5 /* AppDelegate.m */; };
 		49EBD8841F31558B0099EDF5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49EBD8831F31558B0099EDF5 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -20,15 +21,16 @@
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
+				49446C4E217FEC72006EA494 /* sciter-osx-64.dylib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		491A0AA71F6898B800D63865 /* sciter-osx-64.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "sciter-osx-64.dylib"; sourceTree = "<group>"; };
 		492748921F322B5700FF0136 /* sciter-osx-main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "sciter-osx-main.mm"; path = "../../../include/sciter-osx-main.mm"; sourceTree = "<group>"; };
 		492748941F322BE000FF0136 /* notes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = notes.cpp; path = ../../notes.cpp; sourceTree = "<group>"; };
+		49446C4D217FEC72006EA494 /* sciter-osx-64.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "sciter-osx-64.dylib"; path = "../../bin.osx/sciter-osx-64.dylib"; sourceTree = "<group>"; };
 		49EBD8771F31558B0099EDF5 /* SciterNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SciterNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49EBD87A1F31558B0099EDF5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		49EBD87B1F31558B0099EDF5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -50,7 +52,7 @@
 		49EBD86E1F31558B0099EDF5 = {
 			isa = PBXGroup;
 			children = (
-				491A0AA71F6898B800D63865 /* sciter-osx-64.dylib */,
+				49446C4D217FEC72006EA494 /* sciter-osx-64.dylib */,
 				49EBD8791F31558B0099EDF5 /* notes */,
 				49EBD8781F31558B0099EDF5 /* Products */,
 			);

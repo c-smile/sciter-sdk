@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+plaintext.simple { padding:0; }
+plaintext.simple > text { margin:0; padding:0; display:block; background:none; color:inherit;}
+
+plaintext.dark { background:#000; color:#fff; }
+plaintext.light { background:#fff; color:#000; }
+
+        </style>
+
+        <script type="text/tiscript">
+            var counter = 0;
+            const plaintext = $(plaintext);
+
+            event click $(#add) 
+            {
+              plaintext.$append(<text>Messsage No {++counter}</text>);
+              plaintext.last.scrollToView(false,false);
+            }
+
+            event click $(#add-animated) 
+            {
+              plaintext.$append(<text>Messsage No {++counter}</text>);
+              plaintext.timer(100ms, :: plaintext.last.scrollToView() );
+            }
+
+        </script>
+
+    </head>
+    <body>
+
+<button#add>output message</button>
+<button#add-animated>output message + animation</button>
+
+<plaintext.simple.dark></plaintext>
+
+    </body>
+</html>

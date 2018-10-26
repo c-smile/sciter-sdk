@@ -63,9 +63,9 @@
       }
       frame#content > div#intro > img#arrow { vertical-align:middle; size:0.8em; color:brown; }
       
-      frame#content[allow-drop]
+      frame#content.allow-drop
       {
-          outline:2px orange solid -2px;
+          outline:2dip orange solid -2dip;
       }
 
       toolbar > button#open         { background-image:image-map(icons,open); }
@@ -91,6 +91,7 @@
 
       const APP_NAME = "sciter.app";
       include "settings.tis";
+      include "drop-zone.tis";
 
       const content = $(frame#content);
       const inspectorButton = $(button#inspector);
@@ -121,34 +122,12 @@
           view.windowCaption =  "Sciter";
       }
 
-      function content.onExchange(evt)
-      {
-         if( evt.type == Event.X_DRAG_ENTER && evt.draggingDataType == #file)
-         {
-           this.@#allow-drop = true;
-           return true;
-         }
-         else if( evt.type == Event.X_DRAG_LEAVE )
-         {
-           this.@#allow-drop = undefined;
-           return true;
-         }
-         else if( evt.type == Event.X_DRAG && evt.draggingDataType == #file)
-         {
-           return true;
-         }
-         else if( evt.type == Event.X_DROP && evt.draggingDataType == #file)
-         {
-           this.@#allow-drop = undefined;
-           var fn;
-           if(typeof evt.dragging == #array)
-             fn = evt.dragging[0];
-           else
-             fn = evt.dragging;
-           loadFile(fn);
-           return true;
-         }
-      }      
+      DropZone.call(content,"*.htm;*.html;*.xhtml;*.svg"); 
+
+      event file-drop (evt) {
+        loadFile(evt.data[0]);
+        return true;
+      }
 
       event click $(toolbar > button#open)
       {

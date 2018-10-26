@@ -4,14 +4,20 @@
     <style></style>
     <script type="text/tiscript">
     
-      view.root.on("closerequest",function(evt) {
+      view.root << event closerequest (evt) {
       
         const REASONS = ["BY CHROME", "BY CODE", "BY LOAD"];
-        view.msgbox(#information, "closing " + REASONS[evt.reason]);
+
+        var result = view.msgbox { 
+          type:#question, 
+          content:"closing " + REASONS[evt.reason], 
+          buttons:[#yes,#no]
+        };
+
+        if(result === #no)
+           evt.cancel = true ; //to cancel closing
         
-        // evt.data = #cancel ; to cancel closing
-        
-      });
+      };
       
       $(button).on("click", function() {
         view.close();

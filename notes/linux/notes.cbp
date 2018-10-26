@@ -30,8 +30,8 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-Wall" />
 			<Add option="-std=c++11" />
+			<Add option="-Wall" />
 			<Add option="-m64" />
 			<Add option="`pkg-config gtk+-3.0 --cflags`" />
 			<Add option="-mtune=generic" />

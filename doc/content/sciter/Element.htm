@@ -94,7 +94,7 @@
     <dt>rows</dt>
     <dd> <font color="#999999">r</font> - <em>integer</em>, Number of rows in the DOM element, for the &lt;table&gt; element returns number of rows in it, for other returns number of rows with respect of <em>flow</em> CSS property.</dd>
     <dt>columns</dt>
-    <dd> <font color="#999999">r</font> - <em>integer</em>, Number of columns in the DOM element, for the &lt;table&gt; element returns number of columns in it, for other returns number of rocolumns with respect of <em>flow</em> CSS property.</dd>
+    <dd> <font color="#999999">r</font> - <em>integer</em>, Number of columns in the DOM element, for the &lt;table&gt; element returns number of columns in it, for other returns number of&nbsp;columns with respect of <em>flow</em> CSS property.</dd>
     <dt>options</dt>
     <dd> <font color="#999999">r</font> - <em>Element</em>, for &lt;select&gt; element returns DOM element - container of options that can be used to populate list of options programmatically.</dd>
     <dt>contentModel</dt>
@@ -399,7 +399,7 @@ some.selectParent(printel, &quot;div&quot;);
     <dt>content</dt>
     <dd>
       <div> <strong>( element</strong> | <strong>array</strong> [, <strong>element</strong>2 [, <strong>element</strong>3, ... ]]<strong> )</strong> returns: true | false.</div>
-      <p>Replaces content of the element by elements, that is short form of el.clear(); el.append(element1); el.append(element2); ...</p>
+      <p>Replaces content of the element by elements, that is short form of <code>el.clear(); el.append(element1); el.append(element2); ...</code></p>
       <p> <em>This method can be used for setting cells in &lt;tr&gt;s. It handles properly cells with col/rowspans.</em></p>
       <p>For all other elements <em>elementN</em> can be either DOM element, string, object ( template of the element that uses <a href="#object-template">microformat</a> ) or array of Elements/Nodes.</p></dd>
     <dt>$content</dt>
@@ -673,14 +673,6 @@ el.$content(This is item number <b>{ num }</b>);
       <p>Samples are in sdk/samples/ideas/moveable-windows/ and sdk/samples/ideas/rect-tracker/ folders.</p>
       <p>Call of the <code>move()</code> without parameters restores default positioning of the element.</p>
       <p>See also: <code>Element.style.dimension()</code> method.</p></dd>
-    <dt>textWidth</dt>
-    <dd>
-      <div> <strong>( text</strong>: string<strong> )</strong> : int</div>
-      <p>Calculates width of the text with respect of current font defined for the element. If text contains multiple lines separated by &quot;\n&quot; character then it returns width of widest string.</p></dd>
-    <dt>textHeight</dt>
-    <dd>
-      <div> <strong>( text</strong>: string<strong> )</strong> : int</div>
-      <p>Calculates height of the text with respect of current font and line-height defined for the element. If text contains multiple lines separated by &quot;\n&quot; character then it returns sum of heights of all strings.</p></dd>
     <dt>subscribe</dt>
     <dd>
       <div> <strong>(</strong> <strong>handler</strong>: function, <strong>eventGroup</strong> : int [, <strong>eventType</strong>: int] <strong>)</strong> : &lt;this element&gt;</div>

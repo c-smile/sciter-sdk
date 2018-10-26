@@ -138,7 +138,8 @@
     table.onRowClick = function( row, reason )
     {
       if(reason == #by_mouse)
-        stdout << "got mouse click on row:" << row << "\n";
+        //stdout << "got mouse click on row:" << row << "\n";
+        debug row: row, row.index;
     }
     
     // attaching custom handler to onRowClick port. 

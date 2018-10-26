@@ -1,8 +1,8 @@
 ﻿<html>
   <head>
-    <meta name="source"/>
-    <meta name="source"/>
-    <meta name="generator" content="h-smile:richtext"/>
+    <meta name="source">
+    <meta name="source">
+    <meta name="generator" content="h-smile:richtext">
   </head>
 <body>
   <h1>behavior:masked-edit</h1>
@@ -44,14 +44,19 @@
 			<dt>selectAll(exec:bool)</dt>
 			<dd>- if&nbsp;<i>exec</i> is <i>true</i> selects all editable fields in the input.</dd>
 			<dt>mask(array of field definitions)&nbsp;</dt>
-			<dd><p>- allows to define structure of masked input &quot;manually&quot; and with more control.</p><p>Mask definition is an array of strings (rendered as static separators) and objects. Each object defines editable regions and may have following fields:</p>
+			<dd> <p>- allows to define structure of masked input &quot;manually&quot; and with more control.</p>
+           <p>Mask definition is an array of strings (rendered as static separators) and objects. Each object defines editable regions and may have following fields:</p>
 				<ul><li><code>type: #integer | #text | #enum </code> - defines type of the region, mandatory;</li>
 					<li><code>width: integer</code> - defines length of the region in characters, mandatory;</li>
 					<li><code>class: string | symbol</code> - defines CSS class of generated span element, optional;</li>
 					<li><code>min,max,step : integer</code> - define min/max/step values for type:#integer, optional;</li>
 					<li><code>leading-zero : true | false</code> - if true then this&nbsp;type:#integer&nbsp;field is prefixed by zeros&nbsp;</li>
-					<li><code>items:[&quot;case1&quot;,&quot;case2&quot;,...]</code> - defines list of enumerable cases for type:#enum - this region allows to input only those predefined cases. Mandatory for type:#enum fields.</li>
-					<li><code>filter: &quot;a~z&quot;</code> - defines filter of allowed characters in this type:#text field, optional.&nbsp;</li></ul></dd></dl>
+					<li><code>items:[&quot;case1&quot;,&quot;case2&quot;,...]</code> - defines list of enumerable cases for type: #enum - this region allows to input only those predefined cases. Mandatory for type:#enum fields.</li>
+					<li><code>filter: &quot;a~z&quot;</code> - defines filter of allowed characters in this type:#text field, optional.</li>
+					</ul>
+				</dd>
+      <dt>mask() : array</dt>
+			<dd>returns array of field definitions as the above.</dd></dl>
     
 <h2>Events</h2>
     <dt>EDIT_VALUE_CHANGED / event change</dt>

@@ -41,10 +41,10 @@
   <p>go to that global document namespace. <em>self</em> and <em>view</em> global variables are members of this namespace.</p>
   <dl>
     <dt> <em>self</em></dt>
-    <dd>is a reference to the document (&lt;html&gt; node)</dd>
+    <dd>is a reference to the document (<code>&lt;html&gt;</code> node)</dd>
     <dt> <em>view</em></dt>
     <dd>is a reference to the view object (usually it is a Sciter window)</dd></dl>
-  <h3>Script execution</h3>
+  <h3 id="script-execution">Script execution</h3>
   <p>Sciter executes scripts as a last step of document loading - after &lt;/html&gt; tag is being parsed. So at the moment of any script execution DOM is established and scripts can refer to it.</p>
   <p>There are three major steps of script execution in the engine:</p>
   <ol>

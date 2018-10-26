@@ -13,13 +13,13 @@
   @click @on "#hello-world-2": {
     var r = view.msgbox { type:#information, 
                   content:"Hello world!", 
-                  title:"Greeting:" };
+                  caption:"Greeting:" };
     stdout.println(r);        
   }
   @click @on "#hello-world-3": {
     view.msgbox { type:#information, 
                   content:"world!", 
-                  title:"Hello",
+                  caption:"Hello",
                   onLoad: function(root){ stdout.printf("msgbox loaded with %s\n",root); },
                   onClose: function(root,buttonSym){ stdout.printf("msgbox closed with #%s\n",buttonSym); }
                 };

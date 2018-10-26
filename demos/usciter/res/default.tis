@@ -1,6 +1,7 @@
 
 const APP_NAME = "usciter.app";
 include "settings.tis";
+include "drop-zone.tis";
 
 const native = view.nativeApi();
 
@@ -155,6 +156,14 @@ event click $(button#help)
   };
 }
 
+DropZone.call(content,"*.htm;*.html;*.xhtml;*.svg"); 
+
+event file-drop (evt) {
+  loadFile(evt.data[0]);
+  return true;
+}
+
+/*
 function content.onExchange(evt)
 {
    if( evt.type == Event.X_DRAG_ENTER && evt.draggingDataType == #file)
@@ -182,7 +191,9 @@ function content.onExchange(evt)
      loadFile(fn);
      return true;
    }
-}
+}*/
+
+
 
 event click $(button#inspector)
 {

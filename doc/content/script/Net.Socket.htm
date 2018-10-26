@@ -1,12 +1,12 @@
 ﻿<html>
   <head>
-    <title>TIScript - DataSocket object</title>
-    <meta name="generator" content="h-smile:richtext"/>
+    <title>Net.Socket - raw TCP connection socket</title>
+    <meta name="generator" content="h-smile:richtext">
   </head>
 <body>
   <h1>Net.Socket object</h1>
   <p>Sockets are used for duplex raw data transfer using either named pipes (Windows) or TCP/IP sockets between two Sciter processes running either on the same machine (&quot;localhost&quot; address) or over the wire. Socket supports server listening sockets (<code>Socket.listen()</code> ) and client sockets (<code>Socket.connect()</code>) .</p>
-  <p>Socket sends/receive raw data - strings or bytes. You send data by <code>socket.send(data)</code> and receive them by <code>socket.on(&quot;receive&quot;, function(data) {})</code> on other end. </p>
+  <p>Socketn seds/receive raw data - strings or bytes. You send data by <code>socket.send(data)</code> and receive them by <code>socket.on(&quot;receive&quot;, function(data) {})</code> on other end. </p>
   <dl>
     <h2>Properties</h2>
     <h2>Methods</h2>
@@ -28,11 +28,11 @@
       <p><strong>( event</strong>: string<strong>, callback</strong>: function<strong> )</strong> : this</p>
       <p>Subscribes the callback to one of socket events:</p>
       <ul>
-        <li><strong>&quot;connect&quot;</strong> -&gt; <code>function()</code>, socket just connected to the host;</li>
-        <li><strong>&quot;data&quot;</strong> -&gt; <code>function(data:any)</code>, the data has been received; &nbsp;</li>
-        <li><strong>&quot;sent&quot;</strong> -&gt; <code>function()</code>, data were sent in full;</li>
-        <li><strong>&quot;error&quot;</strong> -&gt; <code>function(err: Error)</code>, error occured, error object passed to the function;</li>
-        <li><strong>&quot;close&quot;</strong> -&gt; <code>function()</code>, socket was closed;</li></ul>
+        <li><strong>&quot;connect&quot;</strong> -&nbsp;<code>function()</code>, socket just connected to the host;</li>
+        <li><strong>&quot;data&quot;</strong> -&nbsp;<code>function(data:string)</code>, the data has been received;</li>
+        <li><strong>&quot;sent&quot;</strong> -&nbsp;<code>function()</code>, data were sent in full;</li>
+        <li><strong>&quot;error&quot;</strong> -&nbsp;<code>function(err: Error)</code>, error occured, error object passed to the function;</li>
+        <li><strong>&quot;close&quot;</strong> -&nbsp;<code>function()</code>, socket was closed;</li></ul>
       <p>The event name may contain &quot;.namespace&quot; part that can be used in .off() call.</p></dd>
     <dt>off</dt>
     <dd>
