@@ -7,20 +7,25 @@
       flow: "1 2 3"
             "4 5 6" 
             "7 8 9";
-      margin:20px;
-      border-spacing:2px;
+      margin:20dip;
+      border-spacing:2dip;
     }    
     div.cell
     {
       behavior:switch; /* only one child has :checked state */
-      font-size:30px;
-      size:60px;
-      margin:0px;
-      padding:0px;
+      font-size:30dip;
+      size:60dip;
+      margin:0dip;
+      padding:0dip;
       vertical-align:middle;
       text-align:center;
       background-color:gold;
-      border:2px solid brown;
+      border:2dip solid brown;
+      transition: transform quad-in 0.4s,
+                  font-size quad-in 0.4s,
+                  background-color linear 0.4s,
+                  border-radius quad-in 0.4s; 
+
     }
     div.cell:hover
     {
@@ -30,21 +35,16 @@
     div.cell:checked 
     {
       position:relative;
-      font-size:40px;
+      font-size:40dip;
       background-color:rgba(255,0,0,0.75);
       border-radius: 50%; /* so it is a disk */ 
       transform: scale(1.5);
-      transition: transform(timing-function:quad-in, duration:0.4s)
-                  font-size(timing-function:quad-in, duration:0.4s)
-                  background-color(timing-function:linear, duration:0.4s)
-                  border-radius(timing-function:quad-in, duration:0.4s)
-                  sound(in: url(images/notification.wav)); 
     }
   
   </style>  
 </head>
 <body>
-  <h1>Complex animation: transform(scale),font-size, background-color, border-radius and sound</h1>
+  <h1>Complex animation: transform(scale),font-size, background-color and border-radius</h1>
   <p>Click on one of the cells</p>
   <div .grid>
     <div .cell>1</div>

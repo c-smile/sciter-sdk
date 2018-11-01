@@ -10,7 +10,19 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FFFADA">4.2.5.3</td><td nowrap valign="top" align="center">25-10-2018</td><td>new:
+    <tr><td valign="top" bgcolor="#FFFADA">4.2.6.0</td><td nowrap valign="top" align="center">01-11-2018</td><td>
+					
+					<p>new:</p>
+					<ul><li>[css] support of standard transition property notation and semantic, like <code>transition: width 400ms;</code> see : <a href="https://sciter.com/forums/topic/releasing-mouse-after-capture-cancels-transitions/">https://sciter.com/forums/topic/releasing-mouse-after-capture-cancels-transitions/</a>&nbsp;</li>
+						<li>Fix of long-standing issue with percent units. Now percent child is handled properly if it is inside flex parent.</li></ul><p>fixes:
+					</p><ul>
+						
+						
+						
+						
+						
+						<li>fix of <a href="https://sciter.com/forums/topic/buttons-cursor/">https://sciter.com/forums/topic/buttons-cursor/</a> [rtl] fix of&nbsp;<code>flow:row(...)</code> with <code>direction:rtl;</code></li><li>[DOM, parser] handling garbage HTML structure in tables: h<a href="https://sciter.com/forums/topic/input-bug-with-a/">ttps://sciter.com/forums/topic/input-bug-with-a/</a>&nbsp;</li><li>[osx, rtl] fix of inverted non-RTL rendering in <code>dir=rtl</code> blocks.</li><li>[System D&amp;D] <code>Event.X_WILL_ACCEPT_DROP</code> / <code>event dragaccept</code> has been&nbsp;finalized. That is very first event in <code>drag***</code> events sequence. Handler <b>must return true</b> if drop target accepts event.dragging data.   <code>Event.draggingMode</code>&nbsp;fix.</li>
+						<li><code>&lt;textarea&gt;</code> fix of caret position on initial mouse down: <a href="https://sciter.com/forums/topic/small-bugs-collection/#post-58830">https://sciter.com/forums/topic/small-bugs-collection/#post-58830</a>&nbsp;</li></ul></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.2.5.3</td><td nowrap valign="top" align="center">25-10-2018</td><td>new:
 					<ul><li>/sdk/notepad/ - that are sources of <a href="https://html-notepad.com">html-notepad</a>&nbsp;application. </li>
 						<li>[script, Bytes] + <code>bytes.toDataUrl()</code> and <code>Bytes.fromDataUrl(dataUrl)</code> methods;</li>
 						<li>[&lt;img&gt;,&lt;picture&gt;] + <code>img.value = imageObj; imageObj = img.value;</code> - getting/setting <code>Image</code> object to <code>&lt;img&gt;</code>,<code>&lt;picture&gt;</code> directly.&nbsp;</li>

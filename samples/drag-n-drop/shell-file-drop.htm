@@ -10,6 +10,7 @@
         border: 4px dashed;
         vertical-align:middle;
         text-align:center;
+        margin:1em;
       }
       div.file-drop-zone.active-target {
         background:gold;
@@ -20,13 +21,37 @@
     
     class FileDropZone : Element 
     {
+      this var filter;  
+      this var files = []; // filtered files
+
+      function checkFiles(list) {
+        if(typeof list != #array )
+          list = [list];
+        const patterns = this.filter;
+        function flt(fn) {
+          for(var x in patterns)
+            if( fn like x ) return true;
+          return false;
+        }
+        this.files = list.filter(flt);
+        return this.files.length > 0;
+      }
+
+      function attached() {
+        this.filter = (this.attributes["accept-drop"] || "*").split(";");
+        debug filter: this.filter;
+      }
+
+      event dragaccept (evt) {
+        if(evt.draggingDataType == #file && this.checkFiles(evt.dragging))
+          return true; // accept only files
+        return false;
+      }
+
       event dragenter (evt) 
       {
-        if(evt.draggingDataType == #file)
-        {
-          this.attributes.addClass("active-target");
-          return true;
-        }
+        this.attributes.addClass("active-target");
+        return true;
       }  
 
       event dragleave (evt) 
@@ -37,22 +62,15 @@
 
       event drag (evt) 
       {
-        if(evt.draggingDataType == #file)
-        {
-          stdout.println(evt.x,evt.y);
-          return true;
-        }
+        stdout.println(evt.x,evt.y);
+        return true;
       }  
 
       event drop (evt) 
       {
-        if(evt.draggingDataType == #file)
-        {
-          this.attributes.removeClass("active-target");
-          var fn = evt.dragging;
-          view.msgbox(#information, String.printf("Dropped:%V",fn));
-          return true;
-        }
+        this.attributes.removeClass("active-target");
+        view.msgbox(#information, String.printf("Dropped:%V",this.files));
+        return true;
       }  
       
     }
@@ -61,11 +79,16 @@
   </head>
 <body>
 
-  <h2>IDropTarget demo, D&amp;D files from Windows Shell to DOM elements</h2> 
+  <h2>D&amp;D files from Windows Shell to DOM elements</h2> 
 
   <div.file-drop-zone>
-    Drop your files here
+    Drop any file here
   </div>
+
+  <div.file-drop-zone accept-drop="*.gif;*.png;*.jpg;*.jpeg;*.tiff">
+    Drop only images here
+  </div>
+
 
 </body>
 </html>

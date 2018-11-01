@@ -13,6 +13,10 @@
       padding:4dip;
       margin:4dip;
       overflow:hidden; 
+      transition: height cubic-in-out 0.4s 0.4s,
+                  width cubic-out 0.4s,
+                  border-radius cubic-in-out 0.4s 0.4s,
+                  background-color linear 0.7s 0.2s;
     }
     div.test:hover
     {
@@ -20,10 +24,6 @@
       width:150dip;
       height:150dip;
       border-radius: 14dip;
-      transition: height( timing-function:cubic-in-out, duration:0.4s, delay:0.4s)
-                  width( timing-function:cubic-out, duration:0.4s)
-                  border-radius(timing-function:cubic-in-out, duration:0.4s, delay:0.4s)
-                  background-color(timing-function:linear, duration:0.7s, delay:0.2s);
     }
     
     div#ani-container

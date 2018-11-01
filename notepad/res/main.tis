@@ -173,7 +173,7 @@ event doc-changed { enqueueSaveState(); }
 event doc-activated { checkHasDocument(); }
 
 function setTheme(dark) {
-  var theme = dark ? "dark" : "light";
+  var theme = dark ? "ultra-dark" : "light";
   self.attributes["theme"] = theme;
   view.windowBlurbehind = symbol(theme);
 }
@@ -206,15 +206,16 @@ function self.ready() {
   self.attributes["has-document"] = undefined;
   self.hasDocument = false;
 
-  self.post( function() {
-    try {
-      for( var (index,arg) in view.argv() )
-      {
-        if(index && (arg !like "-*"))
-          openDocument(URL.fromPath(arg));
-      }
-    } catch(e) {}
-  });
+  if( System.PLATFORM != #OSX )
+    self.post( function() {
+      try {
+        for( var (index,arg) in view.argv() )
+        {
+          if(index && (arg !like "-*"))
+            openDocument(URL.fromPath(arg));
+        }
+      } catch(e) {}
+    });
   
 }
 

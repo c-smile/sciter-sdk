@@ -16,17 +16,20 @@
     
     class FileDropZone : Element 
     {
+
+      event dragaccept (evt) {
+        if(evt.draggingDataType == #file)
+          return true;
+        return false;
+      }
+
       event dragenter (evt) 
       {
-        if(evt.draggingDataType == #file)
-        {
-          this.attributes.addClass("active-target");
-          var fn = evt.dragging;
-          this.popup = $(popup);
-          this.popup.$(span).text = fn;
-
-          return true;
-        }
+        this.attributes.addClass("active-target");
+        var fn = evt.dragging;
+        this.popup = $(popup);
+        this.popup.$(span).text = fn;
+        return true;
       }  
 
       event dragleave (evt) 
@@ -38,23 +41,17 @@
 
       event drag (evt) 
       {
-        if(evt.draggingDataType == #file)
-        {
-          this.popup.move(evt.xView + 32,evt.yView + 32, #view, #detached-topmost-window );
-          return true;
-        }
+        this.popup.move(evt.xView + 32,evt.yView + 32, #view, #detached-topmost-window );
+        return true;
       }  
 
       event drop (evt) 
       {
-        if(evt.draggingDataType == #file)
-        {
-          this.attributes.removeClass("active-target");
-          this.popup.move();
-          //var fn = evt.dragging;
-          //view.msgbox(#information, String.printf("Dropped:%V",fn));
-          return true;
-        }
+        this.attributes.removeClass("active-target");
+        this.popup.move();
+        //var fn = evt.dragging;
+        //view.msgbox(#information, String.printf("Dropped:%V",fn));
+        return true;
       }  
       
     }

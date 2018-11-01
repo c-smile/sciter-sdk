@@ -12,11 +12,12 @@
     caption + div
     {
       visibility:collapse;
-      height:0px;
+      height:0dip;
       background-color:white;
       color:white;
-      padding:4px;
+      padding:4dip;
       vertical-align:bottom;
+      transition: height 0.4s, background-color 0.4s, color 0.4s;
     }
     
     caption:checked
@@ -30,10 +31,6 @@
       height:min-content;
       background-color:#EEE;
       color:#000;
-      
-      transition: height(quad-out,0.4s)
-                  background-color(linear,0.4s)
-                  color(linear,0.4s);
     }
         
     div:animating
@@ -48,7 +45,7 @@
   <h1>Extended transition property demo</h1>
   <p>Animation from height:0 to height:min-content</p>
   
-  <div style="width:50%;margin:4px *;" >
+  <div style="width:50%;margin:4dip *;" >
     <caption>Click me!</caption>
     <div>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod 

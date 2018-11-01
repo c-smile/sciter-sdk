@@ -1,5 +1,5 @@
 html {
-  background:transparent;
+  background:#EEE;
   var(splitter-color): rgba(0,0,0,10%);
   var(left-strip-width): 80dip; 
 
@@ -32,10 +32,10 @@ html {
   var(connector-color) : window-accent-color;
 
   var(dialog-shim-color): rgba(240,240,240,50%);
-
 }
 
 html:theme(dark) {
+  background:#222;  
   var(splitter-color): rgba(255,255,255,10%);
 
   var(paper-color): rgba(0,0,0); 
@@ -55,6 +55,12 @@ html:theme(dark) {
   var(info-color) : #2F3F3F;
   var(dialog-shim-color): rgba(29,31,34,50%);
 }
+
+@media ui-blurbehind {
+  html {
+    background:transparent;
+  }
+} 
 
 .connected[with] {
   prototype: ConnectedLabel url(utils/utils.tis);

@@ -2,16 +2,23 @@
   <head>
     <style>
     
-      img.twinkle { aspect: Twinkle; /* see below */ }
+      img.twinkle { 
+        aspect: Twinkle; 
+        transform:scale(1); 
+        transition:transform sine-in-out 600ms; 
+      }
       
-      img.twinkle:expanded { transform: scale(2); transition: transform(sine-in-out, 600ms); }
+      img.twinkle:expanded { transform: scale(2);  }
     
     </style>
     <script type="text/tiscript">
     
     function Twinkle() 
     {
-      function flipflop() { this.state.expanded = !this.state.expanded; }
+      function flipflop() { 
+        debug log: "flipflop";
+        this.state.expanded = !this.state.expanded; 
+      }
     
       this.start = function() {
         this.state.expanded = true; // triggers transition/animation

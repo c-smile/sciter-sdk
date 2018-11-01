@@ -365,7 +365,9 @@ VK_F20      VK_F21      VK_F22      VK_F23      VK_F24
     <dt>exec:{command}</dt>
     <dd>- the event is fired to execute the {command}. E.g. &quot;query:edit:paste&quot; event is sent to the element to execute paste from clipboard.</dd>
 		
-		<h4>System drag and drop events</h4><dt>drag</dt>
+		<h4>System drag and drop events</h4>
+		<dt>dragaccept</dt>
+		<dd>- fired before any other <code>drag***</code> events, a.k.a. <code>Event.X_WILL_ACCEPT_DROP</code> . &quot;Will the element accept the <code>event.dragging</code> data?&quot;. The element shall return <code>true</code> from the handler in order to receive all other drag/drop events.</dd><dt>drag</dt>
 		<dd>- fired when a data is being dragged over the element.&nbsp;</dd>
 		<dt>dragenter</dt>
 		<dd>-&nbsp;fired when data drag enters the element.</dd>

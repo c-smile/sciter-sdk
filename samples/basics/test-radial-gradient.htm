@@ -13,13 +13,15 @@
     border-spacing:10px;
   }
 
-  div { width:*; height:100px; padding:6px; }
+  div {
+    width:*; height:100px; padding:6px; 
+    transition: transform quart-out 0.5s;
+  }
   div:nth-child(2n) { clear:right; }
   
   div:hover
   {
     transform:rotate(15deg) scale(.5);
-    transition: transform(quart-out,0.5s,quart-in);
   }
 
   //white, orange, rgba(0,0,204,0.5)
@@ -27,14 +29,13 @@
   div.gradient-ellipse-farthest-corner
   {
     background: radial-gradient(25% 25%, ellipse farthest-corner, red, yellow, green, blue, rgba(255,0,255,0.5) );
+    transition: background 0.5s;    
   }
   div.gradient-ellipse-farthest-corner:hover
   {
     background: radial-gradient(25% 25%, ellipse farthest-corner, red, yellow 70%, green 75%, blue, rgba(255,0,255,0.5) );
     transform:none;
-    transition: background(quart-out,0.5s,quart-in);
   }
-  
   
   div.gradient-ellipse-farthest-side
   {
@@ -53,15 +54,14 @@
   div.gradient-circle-farthest-corner
   {
     background: radial-gradient(75% 75%, circle farthest-corner, white, orange 50%, rgba(0,0,204,0.5));
+    transition: background 0.5s;    
   }
   div.gradient-circle-farthest-corner:hover
   {
     background: radial-gradient(75% 75%, circle farthest-corner, white, orange 80%, rgba(0,0,204,0.5));
     transform:none;
-    transition: background(quart-out,0.5s,quart-in);
   }
-  
-  
+    
   div.gradient-circle-farthest-side
   {
     background: radial-gradient(75% 75%, circle farthest-side, white, orange, rgba(0,0,204,0.5));
@@ -75,7 +75,6 @@
   {
     background: radial-gradient(75% 75%, circle closest-side, white, orange, rgba(0,0,204,0.5));
   }
-
  
   div.rounded { border-radius:10px; }
   

@@ -24,7 +24,12 @@
     
       function onExchange(evt)
       {
-        if( evt.type == Event.X_DRAG_ENTER)
+        if( evt.type == Event.X_WILL_ACCEPT_DROP)
+        {
+          // will accept any data
+          return true;
+        }
+        else if( evt.type == Event.X_DRAG_ENTER)
         {
           this.attributes.addClass("active-target");
           var types = evt.exchangeData();

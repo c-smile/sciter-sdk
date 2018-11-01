@@ -13,15 +13,17 @@
     border-spacing:10px;
   }
 
-  div { width:*; height:100px; 
-        padding:6px; /*border-radius:10px;*/ }
+  div { 
+    width:*; height:100px; 
+    padding:6px; /*border-radius:10px;*/ 
+    transition: transform 0.5s;
+  }
         
   div:nth-child(2n) { clear:right; }
   
   div:hover
   {
     transform:rotate(15deg) scale(.5);
-    transition: transform(quart-out,0.5s,quart-in);
   }
   
   @const START: rgb(255,0,0);
@@ -30,15 +32,14 @@
   div.gradient
   {
     background: linear-gradient(top, @START, @END);
+    transition: background linear 0.5s;
   }
   div.gradient:hover
   {
     transform:none;
     background: linear-gradient(top, @END, @START);
-    transition: background(linear,0.5s);
   }
-  
-  
+    
   div.gradient-2
   {
     background: linear-gradient(left, red, yellow, green, blue, magenta);
@@ -56,12 +57,12 @@
   div.gradient-fixed
   {
     background: linear-gradient(100% 100%, 80px 80px, @START, @END);
+    transition: background 0.5s;    
   }
   div.gradient-fixed:hover
   {
     transform:none;
     background: linear-gradient(0% 0%, 80px 80px, @START, @END);
-    transition: background(quart-out,0.5s,quart-in);
   }
   
   div.gradient-fixed-2
@@ -81,16 +82,15 @@
   div.angle-gradient-pos
   {
     background: linear-gradient(25% 25%, 45deg, @START, @END);
+    transition: background linear 0.5s;    
   }
   
   div.angle-gradient-pos:hover
   {
     transform:none;
     background: linear-gradient(25% 25%, 135deg, @START, @END);
-    transition: background(linear,0.5s);
   }
-  
-  
+    
   div.angle-gradient-pos-2
   {
     background: linear-gradient(25% 25%, 45deg, red, yellow, green, blue, magenta);
@@ -98,21 +98,19 @@
   div.angle-gradient-dim
   {
     background: linear-gradient(center center, 80px 80px, 45deg, @START, @END);
+    transition: background 0.5s;    
   }
   div.angle-gradient-dim:hover
   {
     transform:none;
     background: linear-gradient(center center, 80px 80px, 135deg, @START, @END);
-    transition: background(quart-out,0.5s,quart-in);
   }
   
   div.angle-gradient-dim-2
   {
     background: linear-gradient(40px 40px, 80px 80px, 45deg, red, yellow, green, blue, magenta);
   }
-  
 
-  
   
 </style>
 <script type="text/tiscript"></script>
