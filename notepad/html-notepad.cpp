@@ -4,15 +4,20 @@
 #include <functional>
 #include "version.h"
 
-#ifdef WINDOWS
+#if defined(WINDOWS)
   #include <VersionHelpers.h>
-#endif 
+  #define FLAGS (SW_TITLEBAR | SW_RESIZEABLE | SW_CONTROLS | SW_MAIN | SW_GLASSY)
+#elif defined(OSX)
+  #define FLAGS (SW_TITLEBAR | SW_RESIZEABLE | SW_CONTROLS | SW_MAIN | SW_GLASSY)
+#else
+  #define FLAGS (SW_TITLEBAR | SW_RESIZEABLE | SW_CONTROLS | SW_MAIN)
+#endif
 
-class frame: public sciter::window 
+class frame: public sciter::window
 {
 public:
 
-  frame(bool needs_debugger) : window(SW_TITLEBAR | SW_RESIZEABLE | SW_CONTROLS | SW_MAIN | SW_GLASSY | (needs_debugger ? SW_ENABLE_DEBUG:0))
+  frame(bool needs_debugger) : window( FLAGS | (needs_debugger ? SW_ENABLE_DEBUG:0))
   {
   }
 
@@ -21,7 +26,7 @@ public:
     FUNCTION_0("version", get_version);
   END_FUNCTION_MAP
 
-  sciter::value  get_argv() { 
+  sciter::value  get_argv() {
     std::vector<sciter::value> vargs;
     for (auto& arg : sciter::application::argv())
       vargs.push_back(sciter::value(arg));
@@ -57,12 +62,14 @@ int uimain(std::function<int()> run ) {
 
   // note: this:://app URL is dedicated to the sciter::archive content associated with the application
 
-#ifdef WINDOWS
+#if defined(WINDOWS)
   if(IsWindows8OrGreater())
     pwin->load( WSTR("this://app/frame-windows.htm") );
-  else 
+  else
     pwin->load(WSTR("this://app/frame-else.htm"));
-#else 
+#elif defined(OSX)
+  pwin->load( WSTR("this://app/frame-mac.htm") );
+#else
   pwin->load( WSTR("this://app/frame-else.htm") );
 #endif
   pwin->expand();
