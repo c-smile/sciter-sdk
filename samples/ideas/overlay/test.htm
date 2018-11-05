@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+          @import url(overlay.css);
+        </style>
+        <script type="text/tiscript">
+       
+        event click $(#start) {
+          self.postEvent("waiting","Waiting for DB to execute"); // start waiting with the message
+          self.timer(5s, function() {
+             self.postEvent("waiting",false); // done waiting
+          });
+        }
+
+        </script>
+    </head>
+    <body>
+
+      <button#start>Start waiting for 5 seconds</button>
+
+    </body>
+    <overlay id="waiting" />
+</html>

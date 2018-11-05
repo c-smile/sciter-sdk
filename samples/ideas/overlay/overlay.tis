@@ -1,0 +1,22 @@
+class Overlay: Element
+{
+  function attached() {
+    var me = this;
+    self.on("waiting.overlay",function(evt) { me.onWaitingRequest(evt.data)}); // note: waiting handler is on root element.
+  }
+
+  function detached() {
+    self.off("waiting.overlay"); 
+  }
+
+  function onWaitingRequest(msg) {
+    if( msg ) {
+      this.$content(<text>{msg}</text>);
+      self.attributes["waiting"] = true;
+    } else {
+      self.attributes["waiting"] = undefined;
+      this.clear();
+    }
+  }
+}
+

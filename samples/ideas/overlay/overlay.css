@@ -1,0 +1,23 @@
+overlay 
+{
+  display:block; flow:vertical;
+  visibility:none; // invisible by default          
+  prototype: Overlay url(overlay.tis);
+  position:fixed;
+  top:0; left:0; right:0; bottom:0; // covers whole window area 
+  background:rgba(240,240,255,0.7); // semi-transparent
+  z-index: 100; // above all
+}
+
+overlay > text {
+  width:50%;
+  height:max-content;
+  margin:*; // to put it in the middle
+  padding:1em;
+  background:#fff;
+  box-shadow: 3dip 3dip 3dip #0008; 
+}
+
+html[waiting] overlay {
+  visibility:visible; // visible if root element has attribute "waiting"
+}
