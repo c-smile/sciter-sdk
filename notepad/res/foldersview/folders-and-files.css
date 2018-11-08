@@ -29,6 +29,7 @@ open-files > li {
   height:max-content;
   line-height:1.8em;
   cursor:pointer;
+  word-break: break-all; 
   @LIST-ITEM-NORMAL; 
   @LIST-ITEM-HOVER;
 }

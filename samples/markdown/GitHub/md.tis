@@ -1,0 +1,249 @@
+
+namespace markdown {
+
+  const H6 = /^====== /; 
+  const H5 = /^===== /; 
+  const H4 = /^==== /;
+  const H3 = /^=== /;
+  const H2 = /^== /;
+  const H1 = /^= /;
+  const PRE = /```/;
+  const UL_LI = /^\* /;
+  const OL_LI = /^\d\. /;
+  const DL_DD = /\: /;
+  const TR = /^.*\|/;
+  const TR_TH = /^\-+\|/;
+
+  const CRLF = "\r\n";
+
+  function parse(s) 
+  {
+    var ins = Stream.openString(s);
+    function input() {
+      var ln = ins.readln(); 
+      return ln === undefined ? ln : (ln + CRLF);
+    };
+    input.lineType = null; // defining local prop on the function
+
+    var r = doParse(input);
+    ins.close();
+    return r;
+  } 
+
+  function colorize(plaintext) 
+  {
+    var elText = plaintext.first;
+    var elNext = elText;
+
+    const applyMark = Selection.applyMark;
+    const clearMark = Selection.clearMark;
+
+    function classify(cls) {
+      elText.attributes["region"] = cls;
+    }    
+
+    function input() {
+       if( !elNext ) return undefined;
+       elText = elNext;
+       classify(undefined);
+       clearMark(elText);
+       var ln = elText.text + CRLF;
+       elNext = elNext.next;
+       return ln;
+    };
+
+    input.lineType = property(cls) {
+      get return null; // write only prop
+      set classify(cls);
+    }
+
+    var r = doParse(input);
+    return r;
+  } 
+
+
+  function doParse(input) 
+  {
+    var out = "";
+
+    const ONLY_SPACES_RE = /^[ \n\r]*$/;
+
+    // The parser is made as a chain of finite-state machines (generators). 
+    // This allows to define and produce hierarchical markup. 
+
+    // Chain diagram: 
+    // processBlocks << processList(2) << processList(1) << processList(0) << processHeaders << input;
+    
+    function startsWith(that, str) { return that.indexOf(str) == 0; }
+
+    function spans(r) 
+    {
+      // bold, italics, and code formatting
+      r = r.replace(/([ ]+|^)\*\*(.*?)\*\*/g, "$1<strong>$2</strong>");
+      r = r.replace(/([ ]+|^)\*(.*?)\*/g, "$1<em>$2</em>");
+      r = r.replace(/`(.*?)`/g,  function(s,r) { return "<code>"+ r.htmlEscape() + "</code>"});
+      r = r.replace(/\~\~\~([^\~]+)\~\~\~/g, "<del>$1</del>");
+      // links
+      // br is \\
+      r = r.replace(/\\\\/g, "<br/>");
+      // escapements
+      r = r.replace(/\\([^\\])/g, "$1");
+      return r;
+    }
+
+    function* processHeaders() 
+    {
+      var bln = null;
+      for(var ln = input(); ln !== undefined; ln = bln || input()) 
+      {
+        bln = null;
+        var head; var tail; var hn; var re; 
+
+             if( ln like H6 ) { re = "       "; head = "<h6>"; tail = "</h6>"; hn = #h6; }
+        else if( ln like H5 ) { re = "      ";  head = "<h5>"; tail = "</h5>"; hn = #h5; }
+        else if( ln like H4 ) { re = "     ";   head = "<h4>"; tail = "</h4>"; hn = #h4; }
+        else if( ln like H3 ) { re = "    ";    head = "<h3>"; tail = "</h3>"; hn = #h3; }
+        else if( ln like H2 ) { re = "   ";     head = "<h2>"; tail = "</h2>"; hn = #h2; }
+        else if( ln like H1 ) { re = "  ";      head = "<h1>"; tail = "</h1>"; hn = #h1; }
+        else if( ln like TR)
+        {
+          var thead = "";
+          var tbody = "<tbody>\n";
+          var cells = ln.split("|");
+          for( var ln in input ) { 
+            if( ln like TR_TH ) {
+              thead = "<thead>\n<tr>" + cells.map(:cell: "<th>" + spans(cell) + "</th>").join("") + "</tr>\n</thead>\n";
+              cells = null;
+            }
+            else if( ln like TR ) {
+              if(cells) tbody += "<tr>" + cells.map(:cell: "<td>" + spans(cell) + "</td>").join("") + "</tr>\n";
+              cells = ln.split("|");
+            }
+            else {
+              if(cells) tbody += "<tr>" + cells.map(:cell: "<td>" + spans(cell) + "</td>").join("") + "</tr>\n";
+              tbody += "</tbody>";
+              bln = ln;
+              break;
+            }
+          }
+          yield "<table border>" + thead + tbody + "</table>"; 
+          continue;
+        }
+        else {
+            yield ln; 
+            continue;
+        } 
+        input.lineType = hn;
+        yield head + ln.substr(re.length); 
+        while(true){ 
+          ln = input();
+          if( !startsWith(ln,re) ) { if(ln) bln = ln; yield tail; break; }
+          input.lineType = hn;
+          yield ln.substr(re.length); 
+        }
+      }
+    }
+
+    function* processList(n) 
+    {
+      const inp = n < 3 ? processList(n+1) : processHeaders();
+      for(var ln in inp) 
+      {
+        for:listtype (var c = 0; c < 2; ++c ) 
+        {
+          if( ln like UL_LI)
+          {
+            yield "<ul><li>" + ln.substr(2); input.lineType = #ul;
+            for(ln in inp) { 
+              input.lineType = #ul; 
+              if( startsWith(ln,"  ") ) yield ln.substr(2);  
+              else if( ln like UL_LI ) yield "</li><li>" + ln.substr(2);  
+              else if( ln like OL_LI ) { yield "</li></ul>"; continue listtype; }
+              else { yield "</li></ul>"; yield ln; break; }
+            } 
+          } 
+          else if(ln like OL_LI) 
+          {
+            yield "<ol><li>" + ln.substr(3); input.lineType = #ol;
+            for(ln in inp) { 
+              input.lineType = #ol;
+              if( startsWith(ln,"   ") ) yield ln.substr(3);  
+              else if( ln like OL_LI ) yield "</li><li>" + ln.substr(3);  
+              else if( ln like UL_LI ) { yield "</li></ol>"; continue listtype; }
+              else { yield "</li></ol>"; yield ln; break; }
+            } 
+          }
+          /*else if(startsWith(ln,DL)) 
+          {
+            yield "<dl><dt>" + ln.substr(2) + "</dt><dd>"; 
+            input.lineType = #dt;
+            for(ln in inp) 
+            { 
+                   if( startsWith(ln,"  ") ) { input.lineType = #dd; yield ln.substr(2); }
+              else if( startsWith(ln,DL) ) { input.lineType = #dt; yield "</dd>\r\n<dt>" + ln.substr(2) + "</dt><dd>"; }
+              else { yield "</dd></dl>"; continue listtype; }
+            }
+            yield "</dd></dl>";
+          }*/
+          else  
+            yield ln;  
+          break;
+        }
+      }
+    }
+
+
+    /*function tablefy(r) {
+      r = r.replace(/\[\*(.+?)\*?\]/g,"<th>$1</th>").replace(/\[ (.+?) \]/g, "<td>$1</td>");
+      return spans( "<tr>" + r + "</tr>");  
+    }*/
+    
+    function* processBlocks() 
+    {
+      const gen = processList(0);
+
+      for(var nln in gen) 
+      {
+        var sln; // pushed back item
+        for:pushback( var ln = nln; ln; ln = sln, sln = null ) 
+        {
+          //if(sln) stdout.println("got pushback",ln); 
+          //sln = null;
+          if( ln like PRE ) 
+          {
+            var s = "<pre>";
+            input.lineType = #pre;
+            for(var ln in gen) { 
+              input.lineType = #pre;
+              if( ln like PRE ) break;
+              else s += ln.htmlEscape();
+            } 
+            s += "</pre>";
+            yield s;
+          } 
+          else if( ln like ONLY_SPACES_RE ) 
+          {
+            var p = "";
+            for(var ln in gen) { 
+              if((ln like PRE)/* || startsWith(ln,TD) || startsWith(ln,TH)*/) 
+                                                { if(p) yield "<p>" + spans(p) + "</p>"; sln = ln; continue pushback; }
+              else if( ln like ONLY_SPACES_RE ) { if(p) yield "<p>" + spans(p) + "</p>"; p = ""; } 
+              else if( ln[0] == '<')            { if(p) yield "<p>" + spans(p) + "</p>" + CRLF; yield spans(ln); p = ""; break; }
+              else p += ln;
+            }
+            if(p) yield "<p>" + spans(p) + "</p>";
+          }  
+          else 
+            yield spans(ln);
+        }
+          
+      }
+    }
+
+    for( var v in processBlocks() )
+      out += v;
+
+    return out.replace(/(\s*\r\n\s*)(<\/[a-z0-6]+>)/g,"$2\r\n");
+
+  }
+}

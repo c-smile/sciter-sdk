@@ -1,3 +1,4 @@
+@import url(../common-element-colors.css);
 
 // WYSIWYG styles
 
@@ -30,32 +31,32 @@ body:theme(dark) {
 
 // BLOCKS+ (participating in outline)
 
-ol { var(marker-color):#8FBC8FA0; prototype: Outline.Block url(block.tis); }
-ul { var(marker-color):#FFA07AA0; prototype: Outline.Block url(block.tis); }
-li { var(marker-color):#FFFFFF80; prototype: Outline.Block url(block.tis); }
+ol { var(marker-color):@OL_COLOR; prototype: Outline.Block url(block.tis); }
+ul { var(marker-color):@UL_COLOR; prototype: Outline.Block url(block.tis); }
+li { var(marker-color):@LI_COLOR; prototype: Outline.Block url(block.tis); }
 
-h1 { var(marker-color):#FFD700E0; prototype: Outline.Block url(block.tis); }
-h2 { var(marker-color):#FFD700D0; prototype: Outline.Block url(block.tis); }
-h3 { var(marker-color):#FFD700C0; prototype: Outline.Block url(block.tis); }
-h4,h5,h6 { var(marker-color):#FFD70080; prototype: Outline.Block url(block.tis); }
-p  { var(marker-color):#FFFFFFC0; prototype: Outline.Block url(block.tis); }
-div{ var(marker-color):lavender;  prototype: Outline.Block url(block.tis); }
-blockquote { var(marker-color):#DDA0DD80; prototype: Outline.Block url(block.tis); 
+h1 { var(marker-color):@H1_COLOR; prototype: Outline.Block url(block.tis); }
+h2 { var(marker-color):@H2_COLOR; prototype: Outline.Block url(block.tis); }
+h3 { var(marker-color):@H3_COLOR; prototype: Outline.Block url(block.tis); }
+h4,h5,h6 { var(marker-color):@HN_COLOR; prototype: Outline.Block url(block.tis); }
+p  { var(marker-color):@P_COLOR; prototype: Outline.Block url(block.tis); }
+div{ var(marker-color):@DIV_COLOR;  prototype: Outline.Block url(block.tis); }
+blockquote { var(marker-color):@BQ_COLOR; prototype: Outline.Block url(block.tis); 
              border-left: 2dip #DDA0DD80 solid; margin-left:1.5em; padding-left:0.5em; }
 
-dl { var(marker-color):#87CEEBA0; prototype: Outline.Block url(block.tis); }
-dt { var(marker-color):#FFFFFF80; prototype: Outline.Block url(block.tis); font-weight:bold; }
-dd { var(marker-color):#FFFFFFA0; prototype: Outline.Block url(block.tis); }
+dl { var(marker-color):@DL_COLOR; prototype: Outline.Block url(block.tis); }
+dt { var(marker-color):@DT_COLOR; prototype: Outline.Block url(block.tis); font-weight:bold; }
+dd { var(marker-color):@DD_COLOR; prototype: Outline.Block url(block.tis); }
 
-table { var(marker-color):peru; prototype:Outline.Block url(block.tis); }
-thead, tfoot, tbody { var(marker-color):burlywood; prototype: Outline.Block url(block.tis); }
-tr { var(marker-color):wheat; prototype:Outline.Block url(block.tis); }
+table { var(marker-color):@TABLE_COLOR; prototype:Outline.Block url(block.tis); }
+thead, tfoot, tbody { var(marker-color):@TBODY_COLOR; prototype: Outline.Block url(block.tis); }
+tr { var(marker-color):@TR_COLOR; prototype:Outline.Block url(block.tis); }
 
 figure { display:block; width:*; max-width:max-content; margin: 1em 0.001*; border:1dip dotted #aaa; prototype: Outline.Block url(block.tis); } 
 figure > img { display:block; width:*; max-width:max-content; margin:4dip; prototype: Outline.Block url(block.tis);  }
 figure > figcaption { display:block; width:*; text-align:center; border:1dip dotted #aaa; margin:4dip; prototype: Outline.Block url(block.tis); }
 
-pre  { var(marker-color):#E6E6FA80; prototype: Outline.Block url(block.tis);
+pre  { var(marker-color):@PRE_COLOR; prototype: Outline.Block url(block.tis);
        background:#E6E6FA80; border:1dip dotted #aaa; padding:0.25em; }
 
 section { var(marker-color):#FA807280; prototype:Outline.Block url(block.tis); }

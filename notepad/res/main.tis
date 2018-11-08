@@ -251,7 +251,7 @@ event keydown (evt) {
 }
 
 event click $(button.mathml) { return notImplementedYet("MathML editing"); }
-event click $(button.markdown) { return notImplementedYet("Markdown editing"); }
+//event click $(button.markdown) { return notImplementedYet("Markdown editing"); }
 event click $(button#print-file) { return notImplementedYet("Printing"); }
 
 

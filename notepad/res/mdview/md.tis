@@ -1,0 +1,188 @@
+
+namespace MD {
+
+  function makeTextStream() {
+    var out = [];    // lines
+    var curl = "";   // current line
+    var curo = 0;    // current line offset (a.k.a. level)
+  
+    function outPrefix(text, level = 0) {
+      if(curl) out.push(curl);
+      curl = new String(level,' ') + (text || "");
+      if(text === null) out.push(curl);
+      curo = curl.length;
+      return curo;
+    }
+
+    function outText(text) {
+      text = text.replace(/[ \n\r]{2,}/g," ");
+      curl += text;
+      return curo;
+    }
+
+    function getContent() { if(curl) out.push(curl); curl = ""; return out.join("\n"); }
+    function getPos() { return curl.length; } 
+
+    function getLines() { if(curl) out.push(curl); curl = ""; return out; } 
+
+    return {
+      prefix : outPrefix,
+      text   : outText,
+      content: getContent,
+      lines  : getLines,
+      pos    : getPos,
+      out    : function(txt) { curl += txt; }
+    };
+  }
+
+  function gap(stream, el, level, force = false) {
+
+    function blockBefore(el) {
+      if(var pe = el.prior) {
+        if(pe.state.flowType)
+          return true;
+      }
+      return false;
+    }
+
+    if(force || blockBefore(el))
+      stream.prefix(null,level);
+  }
+
+  function escape(text) 
+  {
+    const escapes = [
+      [/\\/g, "\\\\"],
+      [/\*/g, "\\*"],
+      [/^-/g, "\\-"],
+      [/^\+ /g, "\\+ "],
+      [/^(=+)/g, "\\$1"],
+      [/^(#{1,6}) /g, "\\$1 "],
+      [/`/g, "\\`"],
+      [/^~~~/g, "\\~~~"],
+      [/\[/g, "\\["],
+      [/\]/g, "\\]"],
+      [/^>/g, "\\>"],
+      [/_/g, "\\_"],
+      [/^(\d+)\. /g, "$1\\. "]
+    ];
+    function reducer(acc, esc) { return acc.replace(esc[0], esc[1]); } 
+    return escapes.reduce( reducer , text);
+  }
+
+  namespace blocks {
+    function li(stream, el, level) { const prefix = el.parent.tag == "ol" ? "1. " : "* "; emitContent(stream,el,stream.prefix(prefix,level)); }
+    function ol(stream, el, level) { gap(stream,el,level); emitContent(stream, el, level); }
+    function ul(stream, el, level) { gap(stream,el,level); emitContent(stream, el, level); }
+    function dl(stream, el, level) { gap(stream,el,level); emitContent(stream, el, level); }
+    function dt(stream, el, level) { emitContent(stream,el,stream.prefix(": ",level)); }
+    function dd(stream, el, level) { emitContent(stream,el,stream.prefix("  ",level)); }
+    function blockquote(stream, el, level) { gap(stream,el,level); emitContent(stream,el,stream.prefix("> ",level)); }
+    function p(stream, el, level)  { gap(stream,el,level,true); emitContent(stream, el, level); }
+    function div(stream, el, level){ gap(stream,el,level); emitContent(stream,el,stream.prefix("",level)); }
+    function h1(stream, el, level) { gap(stream,el,level); emitContent(stream,el,stream.prefix("# ",level)); }
+    function h2(stream, el, level) { gap(stream,el,level); emitContent(stream,el,stream.prefix("## ",level)); }
+    function h3(stream, el, level) { gap(stream,el,level); emitContent(stream,el,stream.prefix("### ",level)); }
+    function h4(stream, el, level) { gap(stream,el,level); emitContent(stream,el,stream.prefix("#### ",level)); }
+    function h5(stream, el, level) { gap(stream,el,level); emitContent(stream,el,stream.prefix("##### ",level)); }
+    function h6(stream, el, level) { gap(stream,el,level); emitContent(stream,el,stream.prefix("###### ",level)); }
+    function pre(stream, el, level) { gap(stream,el,level); stream.prefix("```",level); stream.out("\n"+el.text); stream.prefix("```",level); }
+
+    function img(stream, el, level) { //![GitHub Logo](/images/logo.png)
+      stream.out("!["); stream.text(el.attributes["alt"] || ""); stream.out("]"); stream.out("(" + el.attributes["src"] + ")"); 
+    }  
+    function figure(stream, el, level) { //![GitHub Logo](/images/logo.png)
+      const caption = el.$(figcaption);
+      const img = el.$(img);
+      if(!img || !caption) return;
+      gap(stream,el,level); 
+      stream.out("![");  
+      stream.text(caption.text || ""); //emitContent(stream,caption,level); 
+      stream.out("]"); stream.out("(" + img.attributes["src"] + ")"); 
+    }
+
+    function table(stream, el, level) { 
+      var thead = el.$(thead);  
+      var tbody = el.$(tbody);
+      var tfoot = el.$(tfoot);
+      gap(stream,el,level);
+      if( thead ) {
+        var cellwidths = [];
+        for(var tr in thead) {
+          stream.prefix("",level);
+          for(var td in tr) {
+            var pos = stream.pos(); emitContent(stream,td,level); cellwidths.push(stream.pos() - pos);
+            if( td.next ) stream.out(" | ");
+          }
+        }
+        stream.prefix("",level);
+        for(var (index,w) in cellwidths) {
+          stream.out(new String(w,'-'));
+          if( index != cellwidths.length - 1 ) stream.out(" | ");
+        }
+      }
+      if(tbody) {
+        for(var tr in tbody) {
+          stream.prefix("",level);
+          for(var td in tr) {
+            emitContent(stream,td,level); 
+            if( td.next ) stream.out(" | ");
+          }
+        }
+      }
+    }
+
+    function thunk(stream, el, level) { emitContent(stream, el, level); }
+  }
+  
+
+  namespace spans {
+    function strong(stream,el) { stream.out("**"); emitContent(stream, el); stream.out("**"); }
+    function em(stream,el) { stream.out("*"); emitContent(stream, el); stream.out("*"); }
+    function code(stream,el) { stream.out("`"); emitContent(stream, el); stream.out("`"); }
+
+    function a(stream,el) { stream.out("["); // [GitHub](http://github.com)
+                            emitContent(stream, el);
+                            stream.out("]");
+                            stream.out("(" + el.attributes["href"] + ")");}
+   
+    // aliases 
+    const b = strong;
+    const i = em;
+    //const var = code;
+    const kbd = code;
+    // unknown span(?)
+    function thunk(stream,el) { emitContent(stream, el); }
+  }
+
+  function emitBlock(stream, el, parentLevel = 0) {
+    const emitter = blocks[el.tag] || blocks.thunk;
+    emitter(stream,el,parentLevel);
+  }
+
+  function emitContent(stream, el, blockContentlevel = 0) {
+    const isBlock = !!el.state.flowType; 
+    const nodes = el.nodes();
+    for(var node in nodes) {
+      if(node.isText) {
+        var text = node.text;
+        if(nodes.first === node)
+          text = text.trim(#left);
+        if(nodes.last === node)
+          text = text.trim(#right);
+        if(text)
+          stream.text(escape(text));
+      }
+      else if(node.isElement) {
+        if(node.tag == "br")
+          stream.prefix("  ");
+        else if(node.state.flowType) { // block element
+          emitBlock(stream, node, blockContentlevel); 
+        } else if(node.text.trim()){ // span element
+          var emitter = spans[node.tag] || spans.thunk;
+          emitter(stream, node);
+        }
+      }
+    }
+  }
+}

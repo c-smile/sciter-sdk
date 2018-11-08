@@ -1,3 +1,5 @@
+@import url(common-element-colors.css);
+
 html {
   background:#EEE;
   var(splitter-color): rgba(0,0,0,10%);
@@ -74,3 +76,5 @@ html:theme(dark) {
 span.connected[with] {
   display:inline-block;
 }
+
+

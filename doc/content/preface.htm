@@ -20,7 +20,7 @@
   <p>Window that Sciter is attached to is represented by the View objects in script.</p>
   <p>Each view has <em>root</em> property - reference of the document loaded into the view. This is a root element of the loaded document. Root element in the Sciter is <code>&lt;html&gt;</code> element of the loaded document and there is no dedicated Document class. Document is really root node of element tree - <code>&lt;html&gt;</code> element and its children.</p>
   <h3>Frames and framesets.</h3>
-  <p>Frames and framesets are also ordinary DOM elements. &lt;frame&gt; element has single child element - &lt;html&gt; element of the document loaded into it. <em>parent </em>property of the root element of the document loaded in the frame refer to the &lt;frame&gt; element this document loaded into. Simple as it is.</p>
+  <p>Frames and framesets are also ordinary DOM elements. &lt;frame&gt; element has single child element - &lt;html&gt; element of the document loaded into it.&nbsp;<em>parent </em>&nbsp;property of the root element of the document loaded in the frame refer to the &lt;frame&gt; element this document loaded into. Simple as it is.</p>
   <p>Frames (&lt;frame&gt; elements) in the Sciter can appear in any part of the HTML (not only in &lt;frameset&gt;) so there is no difference between &lt;frame&gt; and &lt;iframe&gt; in the Sciter. Moreover any block element like &lt;div&gt; can be declared as a &lt;frame&gt; by declaring style=&quot;behavior:frame&quot; for it.</p>
   <p>Element object has method <em>load</em> that allows to (re)load content of any element and &lt;frame&gt; from external source - url or stream (including in-memory dynamic stream). So there is not too much difference between block element like &lt;div&gt; and frames in the Sciter. Use frames when you need to isolate different style systems or scripts on the same screen.</p>
   <p>The same approach is used with &lt;frameset&gt;s - they are plain DOM elements and may appear at any place where block elements are acceptable. &lt;frameset&gt; can contain not only &lt;frame&gt; elements but any block elements thus &lt;frameset&gt; in the Sciter is a convenient way to define container with splitters. Morever any block element can be transformed into the frameset by declaring behavior:frameset in its style declaration.</p>
@@ -40,9 +40,9 @@
 </pre>
   <p>go to that global document namespace. <em>self</em> and <em>view</em> global variables are members of this namespace.</p>
   <dl>
-    <dt> <em>self</em></dt>
+    <dt><em>self</em></dt>
     <dd>is a reference to the document (<code>&lt;html&gt;</code> node)</dd>
-    <dt> <em>view</em></dt>
+    <dt><em>view</em></dt>
     <dd>is a reference to the view object (usually it is a Sciter window)</dd></dl>
   <h3 id="script-execution">Script execution</h3>
   <p>Sciter executes scripts as a last step of document loading - after &lt;/html&gt; tag is being parsed. So at the moment of any script execution DOM is established and scripts can refer to it.</p>

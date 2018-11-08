@@ -164,7 +164,7 @@ popup#hyperlink { style-set: hyperlink-editor; }
   div.table {
     width:max-content;
     height:max-content;
-    flow: grid(* 1,
+    flow: grid(0 1,
                2 3);
   }
   div.table > input(hcols) { display:block; width:*; padding:5dip; height:2dip; }

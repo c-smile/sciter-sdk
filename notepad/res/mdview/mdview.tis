@@ -1,0 +1,35 @@
+include "md.tis";
+include "md-parser.tis";
+
+class MDView : Element {
+
+  function attached() {
+    assert this.tag == "plaintext";
+  }
+
+  function setLines(lines) {
+    this.clear();
+    for(var line in lines)
+      this.$append(<text>{line}</text>);
+  }
+
+  function setTextFrom(htmlarea) {
+    var doc = htmlarea.first;
+    var body = doc.$(body) || doc;
+    var stream = MD.makeTextStream();
+    MD.emitContent(stream,body);
+    this.setLines(stream.lines());
+    this.colorize();
+  }
+
+  function colorize() {
+    MD.Parser.colorize(this);  
+  }
+
+  function getHTMLContent() {
+    return [MD.Parser.emitHtmlFrom(this),0,0];
+  }
+
+  event change { this.timer(200ms, this.colorize); }
+
+}

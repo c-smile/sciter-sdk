@@ -1,0 +1,107 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+
+      @import url(styles.css);
+    
+      toolbar { display:block; flow:horizontal; }
+      plaintext { display:block; size:*; font:10pt monospace;}
+
+      pre#debug { size:*; overflow: scroll-indicator; }      
+     
+
+    </style>
+    <script type="text/tiscript">
+    
+      include "md.tis";
+      
+      const md = $(#markdown);
+      const pv = $(#preview);
+      
+      /*function preview() {
+        var html = markdown.parse(md.value);
+        pv.html = html;
+        $(pre#debug).text = html;
+      }
+      
+      md.on("change", preview.debounce(500ms));
+     
+      preview(); */
+    
+    </script>
+  </head>
+<body>
+  <!--<toolbar>
+    <button>New</button>
+    <button>Open</button>
+    <button>Save</button>
+  </toolbar>-->
+  
+  <h2>Hierarchical markdown editor and convertor</h2> 
+  <p>Type in the left pane to see result</p>
+  
+  <frameset cols="300dip,*,300dip">
+    <plaintext.markdown #markdown htmlview="htmlview" srcview="pre#debug">
+= Heading 1
+== Heading 2    
+=== Heading 3
+==== Heading 4
+===== Heading 5
+====== Heading 6
+
+```
+hello plain text
+world
+```
+
+==== Heading 4
+
+Must be paragraph
+
+===== Heading 5
+      Continuation 5
+
+**bold** *italic* `code` [link](https://sciter.com) escapes \*\*foo\*\* \*bar\* ~~~deleted~~~
+
+* AA
+  * AA.1
+  * AA.2
+* BB
+  ```
+  hello
+  Universe
+  ```
+* CC
+1. first 
+   continuation 
+2. second
+
+prop1 
+: prop1 description 
+prop2 
+: prop2 description 
+  sss
+
+<dl>
+  <dt>prop1</dt>
+  <dd>prop1 description</dd>
+  <dt>prop2</dt>
+  <dd>prop2 description
+      sss</dd>
+</dl>
+
+TH1|TH2|TH3
+---|---|---
+td1|td2|td3
+td4|td5|td6
+
+== Heading 2 
+
+eee
+</plaintext>
+   <htmlview aria-live="polite" />
+   <pre#debug></pre>
+  </frameset>
+</body>
+</html>

@@ -1,0 +1,51 @@
+
+
+plaintext.markdown {
+  size:*;
+  aspect: MarkdownEditor url(md-editor.tis);
+  background-color:#fff;
+  padding:4dip;
+}
+
+@const PLAIN: #FAFAE6;
+@const UL: #FAE6FA;
+
+plaintext.markdown > text { display:block; padding:0; margin:0; }
+plaintext.markdown > text[region=pre] { background: @PLAIN; }
+plaintext.markdown > text[region=ul] { background: @UL; }
+
+/*plaintext.markdown > text[region=h1]::mark(offset) { background: #efefef; color:#777; }
+plaintext.markdown > text[region=h2]::mark(offset) { background: #efefef; color:#777; }
+plaintext.markdown > text[region=h3]::mark(offset) { background: #efefef; color:#777; }
+plaintext.markdown > text[region=h4]::mark(offset) { background: #efefef; color:#777; }
+plaintext.markdown > text[region=h5]::mark(offset) { background: #efefef; color:#777; }
+plaintext.markdown > text[region=ol]::mark(offset) { background-color:#efefef; }
+plaintext.markdown > text[region=ul]::mark(offset) { background-color:#efefef; }
+plaintext.markdown > text[region=dt]::mark(offset) { background-color:#efefef; } 
+plaintext.markdown > text::mark(offset) { background-color:#eaeaea; }*/
+
+htmlview { display:block; background:white; padding:0.5em; overflow: scroll-indicator; size:*; }
+htmlview pre { margin:0; border:1dip solid #ccc; background: @PLAIN; padding:4dip;}
+htmlview code { background: @PLAIN; }
+
+htmlview table[border] { 
+  border-spacing: -1dip;
+  border:none;
+  margin:1em 0;
+}
+htmlview table[border] td { 
+  border:1dip solid #bbb;
+  padding:2dip 4dip;
+}
+htmlview table[border] th { 
+  border:1dip solid #bbb;
+  padding:2dip 4dip;
+  background: #eee;
+  //font-weight: normal;
+}
+
+htmlview dl { flow: row(dt,dd); border-spacing: 1em 4dip;}
+htmlview dl dt { text-align:right; font-weight:bold; }
+htmlview dl dt::after { content:":"; }
+htmlview dl dd { margin:0; padding:0; width:*; }
+

@@ -1,0 +1,27 @@
+
+include "md.tis";
+//include "../../+lib/function.tis";
+
+function MarkdownEditor() 
+{
+  var htmlview = null;
+  var srcview = null;
+  //var plaintext.markdown
+  if( var htmlviewSelector = this.attributes["htmlview"] ) htmlview = self.select(htmlviewSelector);
+  if( var srcviewSelector = this.attributes["srcview"] ) srcview = self.select(srcviewSelector);
+
+  var me = this;
+
+  function doit() {
+    var html = markdown.colorize(me);
+               //markdown.parse($(plaintext#markdown).value); 
+    if( htmlview && htmlview.isVisible ) htmlview.html = html;
+    if( srcview && srcview.isVisible ) srcview.text = html;
+  }
+
+  function onchange() { me.timer(200ms,doit); } // debounce
+      
+  this.on("change", onchange); 
+
+  doit();
+} 

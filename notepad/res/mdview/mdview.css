@@ -1,0 +1,58 @@
+@import url(../common-element-colors.css);
+
+@set mdview < std-plaintext
+{
+  :root { 
+    prototype: MDView url(mdview.tis);
+    background-color:rgba(255,255,255,0);
+    border:none;
+    overflow:scroll-indicator;
+    font-size:9pt;
+    cursor:default;
+  }
+
+  :root:theme(dark) {
+    background-color:rgba(0,0,0,0);
+  }
+
+  :root { tab-size:2; }
+  
+  :root > text { 
+    margin-left: length(left-strip-width);
+    hit-margin: 0 0 0 length(left-strip-width);
+    white-space:pre-wrap;
+    //list-marker-color:color(text-color-dimmed);
+    line-height:1.4em;
+    background:color(document-color);
+    cursor:text;
+    color:#000;
+    display:block;
+  }
+  :root > text:theme(dark) {
+    color:#fff;
+  }
+
+  :root > text:nth-child(10n) { list-marker-color:color(text-color); }
+
+  
+  @mixin REGION_MARKER {
+    width:10dip; margin-left:-16dip; height:*;
+    border:1px solid #0003;
+  }
+
+  text[region^=h] { font-weight:bold; }  
+
+  text[region=h1]::marker {  @REGION_MARKER; background-color: @H1_COLOR; }
+  text[region=h2]::marker {  @REGION_MARKER; background-color: @H2_COLOR; }
+  text[region=h3]::marker {  @REGION_MARKER; background-color: @H3_COLOR; }
+  text[region=h4]   
+  text[region=h5]   
+  text[region=h6]::marker {  @REGION_MARKER; background-color: @HN_COLOR; }
+  text[region=pre] {  background-color: @PRE_COLOR; }
+  text[region=bq]::marker  {  @REGION_MARKER; background-color: @BQ_COLOR; }
+  text[region=tr]::marker  {  @REGION_MARKER; background-color: @TR_COLOR; }
+  text[region=ul]::marker  {  @REGION_MARKER; background-color: @UL_COLOR; }
+  text[region=ol]::marker  {  @REGION_MARKER; background-color: @OL_COLOR; }
+
+}
+

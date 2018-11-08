@@ -63,7 +63,7 @@ int uimain(std::function<int()> run ) {
   // note: this:://app URL is dedicated to the sciter::archive content associated with the application
 
 #if defined(WINDOWS)
-  if(IsWindows8OrGreater())
+  if(IsWindows7SP1OrGreater())
     pwin->load( WSTR("this://app/frame-windows.htm") );
   else
     pwin->load(WSTR("this://app/frame-else.htm"));

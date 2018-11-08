@@ -1,5 +1,6 @@
 @import url(htmlview/htmlview.css);
 @import url(textview/textview.css);
+@import url(mdview/mdview.css);
 
 editor { 
   prototype: Editor url(editor.tis);
@@ -12,10 +13,14 @@ editor {
 }
 
 editor > htmlarea { size:*; border:none; background:transparent; overflow:scroll-indicator; }
-editor > plaintext { style-set:textview; visibility:none; size:*; }
+editor > plaintext.sourceview { style-set:textview; visibility:none; size:*; }
+editor > plaintext.mdview { style-set:mdview; visibility:none; size:*; }
 
-editor[mode="source"] > plaintext { visibility:visible; }
+editor[mode="source"] > plaintext.sourceview { visibility:visible; }
 editor[mode="source"] > htmlarea { visibility:none; }
+
+editor[mode="markdown"] > plaintext.mdview { visibility:visible; }
+editor[mode="markdown"] > htmlarea { visibility:none; }
 
 editor:current { visibility: visible; }
 
