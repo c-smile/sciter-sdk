@@ -1,5 +1,58 @@
 
 
+// attached to tab representing single opened file
+class OpenFile : Element 
+{
+  // static constructor
+  function createOn(list, editor) {
+    list.$append(<li url="{editor.docUrl}">{editor.caption}</li>);
+    var item = list.last;
+    item.prototype = OpenFile; // manual subclassing
+    item.editor = editor;
+    item.state.current = true;
+    item.bindEditorEvents();
+    item.attributes.toggleClass("changed", editor.isChanged);
+    return item;
+  }
+
+  function bindEditorEvents() {
+    var item = this;
+    item.editor << event doc-modification-state-change { item.attributes.toggleClass("changed", item.editor.isChanged); }
+    item.editor << event doc-closed { item.remove(); }
+    item.editor << event doc-name-change { item.updateItemCaption(); }
+  }
+
+  function updateItemCaption() {
+    this.text = this.editor.caption;
+    this.url = this.editor.docUrl;
+  }
+
+  property current(v) {
+    get this.state.current;
+    set this.state.current = v;
+  }
+
+  //property changed(v) {
+  //  get this.attributes.hasClass("changed");
+  //  set this.attributes.toggleClass("changed",v);
+  //}
+
+  event click {
+    if(!this.current)
+      this.editor.activate();
+    return true;
+  }
+
+  event ~mousedown (evt) {
+    if( evt.target.parent === this ) 
+    {
+      //click on close "button"
+      closeDocument(this.editor);
+      return true;
+    }
+  }
+}
+
 // list of open files
 class OpenFiles : Element 
 {
@@ -11,11 +64,6 @@ class OpenFiles : Element
     Settings.add(this);
   }
 
-  function bindEditorEvents(item) {
-    item.editor << event doc-modification-state-change { item.attributes.toggleClass("changed", item.editor.isChanged); }
-    item.editor << event doc-closed { item.remove(); }
-  }
-
   function onDocActivated(editor) 
   {
     var olditem = this.$(li:current);
@@ -23,34 +71,16 @@ class OpenFiles : Element
       return;
 
     if(olditem)
-      olditem.state.current = false;
+      olditem.current = false;
 
     for( var item in this ) 
       if(item.editor === editor)
       {
-        item.state.current = true;
+        item.current = true;
         return;
       }
-
-    this.$append(<li url="{editor.docUrl}">{editor.caption}</li>);
-    var item = this.last; 
-    item.editor = editor;
-    item.state.current = true;
-    bindEditorEvents(item);
-  }
-
-  event click $(li:not(:current)) (evt,li) {
-    li.editor.activate();
-    return true;
-  }
-
-  event ~mousedown $(li) (evt,li) {
-    if( evt.target.parent === li ) 
-    {
-      //click on close "button"
-      closeDocument(li.editor);
-      return true;
-    }
+    // else
+    OpenFile.createOn(this,editor)
   }
 
   // persistable settings interface implementation
@@ -64,14 +94,11 @@ class OpenFiles : Element
   function uiStateRestore(data) {
     if(data.files) for(var def in data.files) {
       var editor = restoreDocument(def);
-      instance.$append(<li url="{editor.docUrl}">{editor.caption}</li>);
-      var item = instance.last;
-      item.editor = editor;
-      bindEditorEvents(item);
-      item.attributes.toggleClass("changed", editor.isChanged);
+      OpenFile.createOn(instance,editor);
     }
   }      
 }
+
 
 class FoldersList : Element {
 

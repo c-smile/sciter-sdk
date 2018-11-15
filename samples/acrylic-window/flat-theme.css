@@ -375,7 +375,9 @@ editbox { display:inline-block; style-set:std-edit; }
   { 
     white-space: nowrap;
     @STD-BOX-NORMAL;
-    padding:0; 
+    padding:0;
+    width:auto; 
+    height:1.8em;
   }
       
   :root:hover                   { @STD-BOX-HOVER; }
@@ -387,9 +389,10 @@ editbox { display:inline-block; style-set:std-edit; }
   /* caption portion of combobox */
   :root > caption
   { 
-    padding:0.2em 0.4em;
-    min-width : 2em;
+    padding:0 0.4em;
+    min-width:2em;
     color:inherit; 
+    line-height:1.8em;
   }
   
   /* popup select element */

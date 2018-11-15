@@ -2,46 +2,59 @@
   <h1>Keyboard shortcuts</h1>
   <dl>
     <h2>Text spans</h2>
-    <dt><span.connected with="button#spans"><kbd>Ctrl</kbd>+<kbd>B</kbd></span></dt>
+    <dt><span class="connected" with="button#spans"><kbd>Ctrl</kbd>+<kbd>B</kbd></span></dt>
       <dd><code>&lt;strong&gt;</code> <b>b</b>old span;</dd>
-    <dt><span.connected with="button#spans"><kbd>Ctrl</kbd>+<kbd>I</kbd></span></dt>
+    <dt><span class="connected" with="button#spans"><kbd>Ctrl</kbd>+<kbd>I</kbd></span></dt>
       <dd><code>&lt;em&gt;</code> emphasis/<b>i</b>talics span;</dd>
-    <dt><span.connected with="button#spans"><kbd>Ctrl</kbd>+<kbd>D</kbd></span></dt>
+    <dt><span class="connected" with="button#spans"><kbd>Ctrl</kbd>+<kbd>D</kbd></span></dt>
       <dd><code>&lt;code&gt;</code> inline co<b>d</b>e span;</dd>
-    <dt><span.connected with="button#spans"><kbd>Ctrl</kbd>+<kbd>U</kbd></span></dt>
+    <dt><span class="connected" with="button#spans"><kbd>Ctrl</kbd>+<kbd>U</kbd></span></dt>
       <dd><code>&lt;u&gt;</code> <b>u</b>nderlined span;</dd>
-    <dt><span.connected with="button#spans"><kbd>Ctrl</kbd>+<kbd>E</kbd></span></dt>
+    <dt><span class="connected" with="button#spans"><kbd>Ctrl</kbd>+<kbd>E</kbd></span></dt>
       <dd><code>&lt;del&gt;</code> d<b>e</b>letion span;</dd>
-  <h2>Blocks</h2>
-    <dt><span.connected with="button.ulist"><kbd>Ctrl</kbd>+<kbd>Numpad *</kbd></span></dt>
-      <dd><code>&lt;ul/li&gt;</code> - unordered list item;</dd>
-    <dt><span.connected with="button.olist"><kbd>Ctrl</kbd>+<kbd>Numpad .</kbd></span></dt>
-      <dd><code>&lt;ol/li&gt;</code> - ordered list item;</dd>
-    <dt><span.connected with="button.dlist"><kbd>Ctrl</kbd>+<kbd>Numpad /</kbd></span></dt>
-      <dd><code>&lt;dl/dt/dd&gt;</code> - definition list item;</dd>
-    <dt><span.connected with="button.indent"><kbd>Ctrl</kbd>+<kbd>Numpad +</kbd></span></dt>
-      <dd>indent - e.g. create sublist item;</dd>
-    <dt><span.connected with="button.unindent"><kbd>Ctrl</kbd>+<kbd>Numpad -</kbd></span></dt>
-      <dd>unindent - e.g. de-sublist item;</dd>
-    <dt><span.connected with="button#paragraphs"><kbd>Ctrl</kbd>+<kbd>Numpad 0</kbd></span></dt>
-      <dd>Transform block to paragraph <code>&lt;p&gt;</code></dd>
-    <dt><span.connected with="button#paragraphs"><kbd>Ctrl</kbd>+<kbd>Numpad 1</kbd></span></dt>
-      <dd>Transform paragraph to header <code>&lt;h1&gt;</code>. Same is for 2,3,4,5 and 6;</dd>
+  <h2>Breaks</h2>
+    <dt><span><kbd>Enter</kbd></span></dt>
+      <dd>Pressing Enter key will break current paragraph or list items into two ones, so pressing Enter here:
+<pre>&lt;li&gt;one|two&lt;/li&gt;</pre>will produce this markup:<pre>&lt;li&gt;one&lt;/li&gt;
+&lt;li&gt;two&lt;/li&gt;
+</pre></dd>
+    <dt><span><kbd>Ctrl</kbd>+<kbd>Enter</kbd></span></dt>
+      <dd>This will create sub-paragraph inside list item, table cell, div, etc. so you will have this:<pre>&lt;li&gt;one
+ &lt;p&gt;two&lt;/p&gt;
+&lt;/li&gt;</pre></dd>
+    <dt><span><kbd>Shift</kbd>+<kbd>Enter</kbd></span></dt>
+      <dd>This will insert &quot;soft break&quot; - <code>&lt;br&gt;</code> element.<pre>&lt;li&gt;one&lt;br&gt;two&lt;/li&gt;</pre>
+    </dd>
+    <h2>Blocks</h2>
+      <dt><span class="connected" with="button.ulist"><kbd>Ctrl</kbd>+<kbd>Numpad *</kbd></span></dt>
+    <dd><code>&lt;ul/li&gt;</code> - unordered list item;</dd>
+      <dt><span class="connected" with="button.olist"><kbd>Ctrl</kbd>+<kbd>Numpad .</kbd></span></dt>
+    <dd><code>&lt;ol/li&gt;</code> - ordered list item;</dd>
+      <dt><span class="connected" with="button.dlist"><kbd>Ctrl</kbd>+<kbd>Numpad /</kbd></span></dt>
+    <dd><code>&lt;dl/dt/dd&gt;</code> - definition list item;</dd>
+      <dt><span class="connected" with="button.indent"><kbd>Ctrl</kbd>+<kbd>Numpad +</kbd></span></dt>
     
-    <dt><span.connected with="button.pre"><kbd>Ctrl</kbd>+<kbd>Numpad 9</kbd></span></dt>
+    <dd>indent - e.g. create sublist item;</dd>
+      <dt><span class="connected" with="button.unindent"><kbd>Ctrl</kbd>+<kbd>Numpad -</kbd></span></dt>
+    <dd>unindent - e.g. de-sublist item;</dd>
+    <dt><span class="connected" with="button#paragraphs"><kbd>Ctrl</kbd>+<kbd>Numpad 0</kbd></span></dt>
+      <dd>Transform block to paragraph <code>&lt;p&gt;</code></dd>
+    <dt><span class="connected" with="button#paragraphs"><kbd>Ctrl</kbd>+<kbd>Numpad 1</kbd></span></dt>
+      <dd>Transform paragraph to header <code>&lt;h1&gt;</code>. Same is for 2,3,4,5 and 6;</dd>
+    <dt><span class="connected" with="button.pre"><kbd>Ctrl</kbd>+<kbd>Numpad 9</kbd></span></dt>
       <dd>Transform paragraph to <code>&lt;pre&gt;</code>formatted text;</dd>
     <h2>Operations</h2>
-    <dt><span.connected with="button#open-file"><kbd>Ctrl</kbd>+<kbd>O</kbd></span></dt>
-      <dd><b>o</b>pen existing document;</dd>
-    <dt><span.connected with="button#new-file"><kbd>Ctrl</kbd>+<kbd>N</kbd></span></dt>
-      <dd>create <b>n</b>ew document;</dd>
-    <dt><span.connected with="button#save-file"><kbd>Ctrl</kbd>+<kbd>S</kbd></span></dt>
-      <dd><b>s</b>ave current changed document;</dd>
-    <dt><span.connected with="button#print-file"><kbd>Ctrl</kbd>+<kbd>P</kbd></span></dt>
+      <dt><span class="connected" with="button#open-file"><kbd>Ctrl</kbd>+<kbd>O</kbd></span></dt>
+    <dd><b>o</b>pen existing document;</dd>
+      <dt><span class="connected" with="button#new-file"><kbd>Ctrl</kbd>+<kbd>N</kbd></span></dt>
+    <dd>create <b>n</b>ew document;</dd>
+      <dt><span class="connected" with="button#save-file"><kbd>Ctrl</kbd>+<kbd>S</kbd></span></dt>
+  <dd><b>s</b>ave current changed document;</dd>
+    <dt><span class="connected" with="button#print-file"><kbd>Ctrl</kbd>+<kbd>P</kbd></span></dt>
       <dd><b>p</b>rint current document;</dd>
-    <dt><span.connected with="button#source"><kbd>F10</kbd></span></dt>
+  <dt><span class="connected" with="button#source"><kbd>F10</kbd></span></dt>
       <dd>toggle WYSIWYG/source view;</dd>
-    <dt><span.connected with="button#markdown"><kbd>F9</kbd></span></dt>
+  <dt><span class="connected" with="button#markdown"><kbd>F9</kbd></span></dt>
       <dd>toggle WYSIWYG/MarkDown source view;</dd>
   </dl>
 </section>
@@ -68,12 +81,10 @@
   	<dd>Table of <i>c</i> columns and <i>r</i> rows. Note: c and r are integers here;</dd>
     <h2>Inlines</h2>    
     <dt><kbd>--_</kbd></dt>
-    <dd>replaces two minuses by EM DASH (<code>&mdash;</code>) symbol;</dd>
-    <dt><kbd>&hellip;url&hellip;</kbd></dt>
-    <dd>wraps URL sequence into &lt;a href="..."&gt;</dd>
-    <dt><kbd>&hellip;email&hellip;</kbd></dt>
-    <dd>wraps e-mail address sequence into &lt;a href="mailto:..."&gt;</dd>
+    <dd>replaces two minuses by EM DASH (<code>—</code>) symbol;</dd>
+    <dt><kbd>…url…</kbd></dt>
+    <dd>wraps URL sequence into &lt;a href=&quot;...&quot;&gt;</dd>
+    <dt><kbd>…email…</kbd></dt>
+    <dd>wraps e-mail address sequence into &lt;a href=&quot;mailto:...&quot;&gt;</dd>
   </dl>
-
-
 </section>

@@ -3,12 +3,24 @@
 		<title></title>
 		<style>
       body { font:system; background:threedface; margin:0; padding:20px; }
-	</style>
+	  </style>
+    <script type="text/tiscript">
+
+       event change $(input#slidersrc) { $(#sliderval).value = this.value; }
+       event change $(input#sliderval) { $(#slidersrc).value = this.value; }
+
+    </script>
 	</head>
 	<body>
       <h1>slider bar test</h1>
+
+      <form>
+        <input|integer #sliderval min=0 max=100 value=0 step=10/>
+        <input|hslider #slidersrc min=0 max=100 value=0 />
+      </form>
+
       <h2>horizontal</h2>
-      <p>0%:<input type="hslider" name="p1" max="100" value="0" style="border:1px solid white" />
+      <p>0%:<input type="hslider" name="p1" max="100" value="0" style="border:1dip solid white" />
          25%:<input type="hslider" name="p2" max="100" value="25"/>
          50%:<input type="hslider" name="p3" max="100" value="50"/>
          75%:<input type="hslider" name="p4" max="100" value="75"/>
@@ -34,5 +46,4 @@
          <input type="vslider" name="p2c" min=99 max=0 value="99" buddy="p2c-buddy" /> There are <b id="p2c-buddy">x</b> bottles of beer on the wall.
          
 	</body>
-	</basefont>
 </html>

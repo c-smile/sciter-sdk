@@ -124,14 +124,21 @@ function VirtualList(params) {
       var ni = bsn + list.length;
       var niend = Integer.min(ni + BUFFER_SIZE - list.length, records.length);
     
-      for( var i = ni; i < niend; ++i )
+      var items = [];
+      for( var i in (niend - ni))
       {
-        var rec = recordAt(i); 
+        var rec = recordAt(i + ni);
         var t = createRecViewer(rec);
-        list.append(t);
-        setupRecordObserver(rec,t);
-        showRecord(i,rec,t);
+        items.push(t);
       }
+      list.append(items);
+      for(var (i,t) in items )
+      {
+        var t = items[i];
+        var rec = t.data;
+        setupRecordObserver(rec,t);
+        showRecord(i + ni,rec,t);
+      }      
     
       if(list.first) {
         if(item_height == 10) {

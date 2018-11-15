@@ -19,7 +19,7 @@ html {
 
   var(document-color): rgb(255,255,255);
   var(document-text-color): rgb(0,0,0);
-  var(document-gray-color): rgb(240,240,240);
+  var(document-gray-color): rgb(200,200,200);
 
   var(selection-color): window-accent-color;
   var(selection-highlight-color): morph(window-accent-color,opacity:10%);
@@ -53,7 +53,7 @@ html:theme(dark) {
 
   var(document-color): rgb(29,31,34);
   var(document-text-color): rgb(255,255,255);
-  var(document-gray-color): rgb(64,64,64);
+  var(document-gray-color): rgb(100,100,100);
   var(info-color) : #2F3F3F;
   var(dialog-shim-color): rgba(29,31,34,50%);
 }

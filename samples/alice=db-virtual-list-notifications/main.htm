@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <title>Alice</title>
+        <style src="main.css" />
+        <script type="text/tiscript" src="main.tis" />
+    </head>
+    <body>
+    <section>    
+<p>&quot;Alice in Wonderland&quot; sample, demonstrates:</p>
+  <ol>
+    <li>Use of Storage. On first run whole book gets pushed from /db/alice.txt file into database - each line as a separate record.</li>
+    <li>Use of VirtualList to show those lines of the book + custom formatting in the list.</li>
+    <li>Use of Notification class - tray notifications.</li>
+  </ol>
+  <p>Type &quot;END&quot; (all capital letters) in the following field to scan whole book. THE END is the last line there.</p>
+    </section>
+    <header>
+      <input|text.search />
+    </header>
+    <list>
+      <li><output|integer(id)/>. <output(text)/></li>
+    </list>
+    <footer>
+      lines found: <span|integer(found)/>
+      total lines: <span|integer(total)/>
+    </footer>
+    </body>
+    <popup#notification>
+      <div>
+        <header>Question:</header>
+        <content></content>
+      </div>
+    </popup>
+</html>

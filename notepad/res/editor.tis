@@ -54,11 +54,15 @@ class Editor : Element
       saveAs = true;
     var url = this.docUrl;
     if( saveAs ) { 
-      var proposedFn = (Folder.current.path || System.path(#USER_DOCUMENTS)) + "/new";
+      //url
+      var proposedFn = this.isNew ? ((Folder.current.path || System.path(#USER_DOCUMENTS)) + "/new") 
+                                  : URL.toPath(url);
+      //debug path: proposedFn;
       url = view.selectFile(#save, "HTML Files (*.htm,*.html,*.xhtml)|*.htm;*.html;*.xhtml|All Files (*.*)|*.*","xhtml", proposedFn);
       if(!url) 
         return false;
       // TODO-DO-DO: reparent URLs, please!
+      this.postEvent("doc-name-change",false);  
       this.htmlview.setDocumentUrl(this.docUrl = url);      
     }
     if(this.viewMode == #source)  

@@ -1,0 +1,72 @@
+
+
+namespace DB {
+
+  var storage = null;
+
+  function root() {
+    if(!storage)
+      storage = Storage.open(__FOLDER__ + "alice.db");
+    assert storage;  
+    if(!storage.root || !storage.root.lines)
+      init();
+    return storage.root;
+  }
+
+  function init() // inits structure of new DB
+  {
+    assert storage;
+    storage.root = {
+      version: "1.0.0.0",
+      lines: storage.createIndex(#integer) // line no -> text line - whole book
+    };
+    var stream = Stream.openFile(__FOLDER__ + "alice.txt"); // opening file ./alice.txt
+    var lines = storage.root.lines;
+    var counter = 1;
+    // pushing line by line as records in DB
+    for( var line = stream.readln(); line !== undefined; line = stream.readln()) {
+      lines[counter] = { id:counter, text:line };
+      ++counter;
+    }
+  }
+
+  var serialNo = 0; // only one instance of running find task is allowed
+
+  async function find(words,cbFound,cbComplete) 
+  {
+    var curSerialNo = ++serialNo;
+    var recNo = 0;
+
+    function hasWords(text) {
+      for(var word in words)
+        if( text.indexOf(word) >= 0 )
+          return true;
+      return false;
+    }
+    function anyRecord() { return true; } // show all
+
+    const test = words == [""] ? anyRecord : hasWords;
+
+    function timeout(tm)  {
+      var p = promise(); // Sciter's way to create promise
+      self.timer(tm, :: p(true,[true])); // fullfil the promise
+      return p;
+    }
+
+    var counter = 0;
+
+    for(var rec in storage.root.lines ) {
+      if( serialNo != curSerialNo )
+        return; // another request issued
+      if( (++recNo % 300) == 0 ) 
+        await timeout(20ms); // do not block the UI
+      if( test(rec.text) ) {
+        cbFound(rec);
+        ++counter;
+      }
+    }
+    cbComplete(counter,storage.root.lines.length);
+  }
+
+}
+

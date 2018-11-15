@@ -157,14 +157,21 @@ textarea,
 button, 
 select { -disabled:true; }
 
+table { border-color:red; }
+
 table td { padding:2dip 0.5em; min-width:1em; prototype: Outline.Cell url(block.tis); color:color(document-text-color); }
 table th { padding:2dip 0.5em; min-width:1em; prototype: Outline.Cell url(block.tis); background: color(document-gray-color); color:color(document-text-color); }
   
 table:not([border]) td:not(:selected), 
-table:not([border]) th:not(:selected) { outline:1dip dotted #aaa -1dip; }
+table:not([border]) th:not(:selected) { outline:1dip solid #aaa -1dip; }
 
 table[border] {
   border-collapse: collapse;
+}
+
+table[border] td,
+table[border] th {
+  border-color: color(document-gray-color);
 }
 
 

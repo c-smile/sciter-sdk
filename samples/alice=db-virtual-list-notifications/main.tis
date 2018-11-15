@@ -1,0 +1,67 @@
+include "db/db.tis";
+include "../+vlist/vlist.tis";
+
+var records = []; // list (array) of found records, observed by VirtualList 
+
+var storageRoot = null;
+
+var reWords = null; // RegExp to highhlight words
+
+function setupFilter() // `this` is the intput.search DOM element
+{
+  var me = this;
+  this.state.busy = true;
+  var words = this.text.split(/\s/);
+  function found(rec) { records.push(rec); }
+  function lookupComplete(numFound,numTotal) { me.state.busy = false; showStats(numFound,numTotal); Notification.show("Found " + numFound, "Alice:"); }
+  records.length = 0;
+  reWords = words == [""] ? null : new RegExp("(" + words.join("|") +")", "ig");
+  DB.find(words, found, lookupComplete);
+}
+
+event change $(input.search) {
+  this.timer(300ms,setupFilter); // Note: throttling lookup function
+}
+
+function setupListView() {
+
+  const theList = $(list);
+
+  function highlight(recordNo,record,li)  {
+    if( reWords )
+      li[1].html = record.text.replace(reWords,"<span.found>$1</span>");
+  }
+
+  // fetch item from DB
+  function fetchItem(recordNo) {
+    return storageRoot.lines[recordNo+1];
+  }
+
+  VirtualList {
+    container: $(list),
+    setupItemView: highlight,
+    getItemData: fetchItem,
+    bufferSize: 50
+  };
+
+  return theList; // <list> DOM element 
+}
+
+function showStats(numFound,numTotal) {
+  $(footer).value = {
+    found: numFound,
+    total: numTotal
+  };
+}
+
+function self.ready() {
+  storageRoot = DB.root();
+  var list = setupListView();
+  list.value = records; // bind records array with its view
+  setupFilter.call($(input.search)); // will show whole book initially as filter is empty
+}
+
+function self.closing() {
+  setupListView();
+  DB.storage.close();
+}

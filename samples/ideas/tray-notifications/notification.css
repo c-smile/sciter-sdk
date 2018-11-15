@@ -8,12 +8,13 @@ popup#notification { style-set: notification-message; }
     background: transparent;
     margin:20dip;
     size: max-content;
-    display:none;
+    display:block;
+    visibility:none;
     transform: translate(0,0); opacity:1.0;
     font:system;
   }
   
-  :root[state] {display:block;}
+  :root[state] {visibility:visible;}
   :root[state=initial] { transform: translate(0,100%); opacity:0.0; } /* offstage */
   :root[state=shown]   { transform: translate(0,0);    opacity:1.0; transition: transform(quad-out,500ms) opacity(linear,500ms);  }
   :root[state=closed]  { transform: translate(100%,0); opacity:0.0; transition: transform(linear,500ms) opacity(linear,500ms);  }

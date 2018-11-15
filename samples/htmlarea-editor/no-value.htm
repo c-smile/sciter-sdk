@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+  htmlarea[novalue]:empty:not(:focus)::marker {
+    content:attr(novalue);
+    width:*; 
+    text-align:center;
+    margin:* 0;
+    color:#bbb;
+    z-index:-1; // below content layer, does not react on mouse
+  }
+
+        </style>
+        <script type="text/tiscript"></script>
+    </head>
+    <body>
+
+<p>demo of "novalue" handling by CSS means</p>
+
+<htmlarea novalue="click to type something here" />
+
+    </body>
+</html>
