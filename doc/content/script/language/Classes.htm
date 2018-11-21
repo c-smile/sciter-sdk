@@ -1,8 +1,8 @@
 ﻿<html>
   <head>
     <title>Classes and namespaces</title>
-    <link rel="stylesheet" href="for-screen.css"/>
-    <meta name="generator" content="h-smile:richtext"/>
+    <link rel="stylesheet" href="for-screen.css">
+    <meta name="generator" content="h-smile:richtext">
   </head>
 <body>
   <h1>Classes and namespaces</h1>
@@ -22,7 +22,7 @@
 </pre>
   <dl>
     <dt>Where:</dt>
-    <dd><code>&lt;function&gt;</code> is a standard function declaration. Such functions can be used as instance or static methods of the class.<br/><code>&lt;constructor&gt;</code> is a function with predefined name <em>this</em>.<br/><code>&lt;property&gt;</code> is a special type of member function. See more details below.<br/><code>&lt;var&gt;</code> is a standard var declaration - allows to define class or module variables (a.k.a. static variables)<br/><code>&lt;const&gt;</code> is a declaration of named constant.<br/><code>&lt;class&gt;</code> is a declaration of inner class.<br/><code>&lt;this var&gt;</code> is a declaration of member variable[s]:<br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>this var &lt;name&gt; [= &lt;value&gt;] [, &lt;name&gt; = &lt;value&gt; , ...];</code> </dd></dl>
+    <dd><code>&lt;function&gt;</code> is a standard function declaration. Such functions can be used as instance or static methods of the class.<br><code>&lt;constructor&gt;</code> is a function with predefined name <em>this</em>.<br><code>&lt;property&gt;</code> is a special type of member function. See more details below.<br><code>&lt;var&gt;</code> is a standard var declaration - allows to define class or module variables (a.k.a. static variables)<br><code>&lt;const&gt;</code> is a declaration of named constant.<br><code>&lt;class&gt;</code> is a declaration of inner class.<br><code>&lt;this var&gt;</code> is a declaration of member variable[s]:<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>this var &lt;name&gt; [= &lt;value&gt;] [, &lt;name&gt; = &lt;value&gt; , ...];</code> </dd></dl>
   <h2><a name="constructors" id="constructors">Constructors</a></h2>
   <p>The function with the name <em>this</em>, declared in the context of a class, serves the role of the function-constructor for all instances of the class:</p>
   <pre class="code tiscript">class Tor
@@ -126,7 +126,17 @@ var n2 = rs.secondName; // through property undefined()<code>
   <pre class="code tiscript">Toz.all.push(&quot;anything&quot;);
 Toz.counter += 1;<code>
 </code></pre>
-  <h2><a name="constants" id="constants">Constants</a></h2>
+  
+	<h2>Instance variables</h2>
+	
+	<p>Classes may have so called instance variables defined upfront. Instance variable is unique to each instance of the class - not shared with other instances.</p><p>Instance variables are defined in context of a class by using <em>this var</em> keyword combination. Example:</p>
+	
+	<pre>class Recordset {
+  this var currentRecord = []; // note, these are
+  this var dbCursor = null;    // instance variables
+  
+  function next() { this.currentRecord = DB.advanceNext(this.dbCursor); }
+}</pre><h2><a name="constants" id="constants">Constants</a></h2>
   <p>Namespace constants (a.k.a. constants) are read-only variables, defined in the context of a type by using the <code>const</code> keyword. Example:</p>
   <pre class="code tiscript">namespace Toz
 {

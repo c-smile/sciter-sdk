@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+body { 
+  background: url(https://html-notepad.com/wp-content/uploads/2018/10/cropped-calm-1.jpg) no-repeat;
+  background-size: auto 120%;
+  overflow: scroll-indicator;
+}
+
+        </style>
+        <script type="text/tiscript">
+
+$(body).onScroll = function(evt) {
+  if( evt.type == Event.SCROLL_POS ) {
+    var ratio = evt.scrollPos.toFloat() / this.box(#height,#content);
+    this.style#background-position-top = pr(ratio * 100);
+  }
+}
+
+        </script>
+    </head>
+    <body>
+
+       <p>content</p>
+       <p>content</p>
+       <p>content</p>
+       <p>content</p>
+       <p>content</p>
+       <p>content</p>
+       <p>content</p>
+       <p>content</p>
+       <p>content</p>
+       <p>content</p>
+       <p>content</p>
+       <p>content</p>
+       <p>content</p>
+       <p>content</p>
+       <p>content</p>
+       <p>content</p>
+       <p>content</p>
+       <p>content</p>
+       <p>content</p>
+       <p>content</p>
+       <p>content</p>
+       <p>content</p>
+       <p>content</p>
+       <p>content</p>
+
+    </body>
+</html>

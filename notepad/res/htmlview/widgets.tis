@@ -97,15 +97,12 @@ class Popup: Element
 
   event keydown (evt) {
     switch(evt.keyCode) {
-      case Event.VK_ESCAPE: this.onEscape(); break;
-      case Event.VK_RETURN: this.onEnter(); break;
+      case Event.VK_ESCAPE: this.onEscape(); return true;
+      case Event.VK_RETURN: this.onEnter(); return true;
     }
-    return true; // consume, do not propagate it further.
+    return false;
   }
 
-  event keyup {
-    return true; // consume, do not propagate it further.
-  }
   event keypress {
     return true; // consume, do not propagate it further.
   }

@@ -9,9 +9,10 @@ class Richtext: Behavior {
     this.clear();             // clear 
     this.append(this.toolbar = new Element("toolbar"));
     this.append(this.htmlarea = new Element("htmlarea"));
-    //this.append(this.textarea = new Element("textarea"));
-    for( var node in nodes ) // assign content to htmlarea 
-      this.htmlarea.appendNode(node);
+    var body;
+    this.htmlarea.append(body = new Element("body"));
+    for( var node in nodes ) // assign content to htmlarea > body
+      body.appendNode(node);
     this.observers = [];
     this.initToolbar();
     this.setupKeyBindings();
@@ -55,7 +56,7 @@ class Richtext: Behavior {
         <splitter/>
         <button .font-family />
         <button|menu .font-size>
-          <menu.popup #test>
+          <menu.popup>
             <li>1 - xx-small</li>
             <li>2 - x-small</li>
             <li>3 - small</li>

@@ -84,6 +84,7 @@ function canonicalizeDOM(elHtml, params) {
     function redundant(el) {
       const tag = el.tag;
       if( tag == "span" ) return true; 
+      if( tag == "font" ) return true; 
       //if( tag == "head" ) return true;
       if( tag == "div" && !el.firstNode ) return true;
       return false;

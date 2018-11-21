@@ -138,7 +138,17 @@
         
         :root > textarea { size:*; background:window; padding:0; visibility:collapse;}
         
-        :root > htmlarea { size:*; background:window; padding:0; padding-left:32dip; overflow: scroll-indicator; font-rendering-mode:snap-pixel; }
+        :root > htmlarea { 
+          size:*; 
+          background:window; 
+          padding:0; 
+          overflow: scroll-indicator; 
+          font-rendering-mode:snap-pixel; 
+          text-selection-background-color: rgba(highlight,0.25);
+          text-selection-color: transparent;
+        }
+        :root > htmlarea > body { size:*; margin: 0 2em; }
+
         :root > htmlarea dt:content-editable { font-weight:bold; }
         :root > htmlarea br:content-editable { width:8dip; background:url(images/br.png) no-repeat 1dip 50%; }
         
@@ -148,14 +158,14 @@
         
         :root > htmlarea img:selected { prototype:EditableImage url(richtext-utils.tis); }          
         :root > htmlarea img:selected.mouse-on-corner { cursor:se-resize; } 
-        :root > htmlarea img::selection { background:rgba(255,255,255,0.65); outline: 5dip nesw-hatch highlight -5dip; }
+        :root > htmlarea img:selected{ background:rgba(255,255,255,0.65); outline: 5dip nesw-hatch highlight -5dip; }
         
-        :root > htmlarea input::selection, 
-        :root > htmlarea textarea::selection, 
-        :root > htmlarea button::selection, 
-        :root > htmlarea select::selection, 
-        :root > htmlarea th::selection, 
-        :root > htmlarea td::selection { background:rgba(highlight,0.25); outline: 3dip nesw-hatch highlight -3dip; }
+        :root > htmlarea input:selected, 
+        :root > htmlarea textarea:selected, 
+        :root > htmlarea button:selected, 
+        :root > htmlarea select:selected, 
+        :root > htmlarea th:selected, 
+        :root > htmlarea td:selected { background:rgba(highlight,0.25); outline: 3dip nesw-hatch highlight -3dip; }
         
         :root > htmlarea input, 
         :root > htmlarea textarea, 

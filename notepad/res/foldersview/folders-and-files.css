@@ -32,6 +32,7 @@ open-files > li {
   word-break: break-all; 
   @LIST-ITEM-NORMAL; 
   @LIST-ITEM-HOVER;
+  margin-right:system-scrollbar-width;
 }
 
 open-files > li:hover { @LIST-ITEM-CURRENT; }
