@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+section#splash {
+  visibility:none;
+  background:rgba(128,128,200,0.5);
+  opacity:0;
+  position:fixed;
+  left:0;right:0;top:0;bottom:0;
+}
+
+section#splash.shown {
+  visibility:visible;
+  opacity:1;
+  transition:opacity(linear,600ms) visibility(linear,600ms);
+}
+
+section#splash > div {
+  width:30vw;
+  height:30vh;
+  margin:*; 
+  background:#eee;
+  padding:1em;
+}
+
+        </style>
+        <script type="text/tiscript">
+
+
+self.timer(20ms,function(){
+  const splash = $(section#splash);
+  splash.attributes.addClass("shown");
+  self.timer(4s,function() {
+    splash.attributes.removeClass("shown");
+  });
+
+})
+
+        </script>
+    </head>
+    <body>
+      Foo
+    </body>
+    <section#splash>
+      <div>content</div>
+    </section>
+</html>
