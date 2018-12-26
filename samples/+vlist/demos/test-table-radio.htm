@@ -1,0 +1,51 @@
+<html>
+  <head>
+  <style>
+    @import url(../vgrid.css);
+    
+    table { style-set: vgrid; 
+            width:*;
+            height:*; } 
+    table th:nth-child(1) { width:2em; }
+    table th:nth-child(3) { width:*; }
+    table th:last-child { width:8em; }
+    
+    table input { display:block; }
+
+    input(selected) { behavior:check; }
+      
+  </style>
+  <script type="text/tiscript">
+
+  var vlist = $(table);  
+  
+  function self.ready() {
+  
+    var records = new Array(5);
+    
+    for(var i = 0; i < records.length; ++i)
+      records[i] = {selected: false, index: i, caption:"Item", status:"aaaa" };    
+    records[2].selected = true;
+      
+    vlist.value = records;
+  }
+
+  // set record.selected  
+  event click $(table input(selected)) {
+    var ridx = vlist.tbody.recordIndex(this);
+    for(var (idx,record) in vlist.value) 
+      record.selected = ridx == idx;
+  }
+  
+  </script>
+  </head>
+<body>
+  <table resizeable>
+    <thead>
+      <tr><th /><th(index)>index</th><th(caption)>caption</th><th(status)>status</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><input(selected)|radio /></td><td(index)></td><td(caption)></td><td(status)></td></tr>
+    </tbody>
+  </table>
+</body>
