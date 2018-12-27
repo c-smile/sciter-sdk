@@ -47,6 +47,11 @@ namespace sciter
   {
     const std::vector<sciter::string>& argv();
     HINSTANCE                          hinstance();
+#ifdef WINDOWS
+    // this function will do PeekMessage/DispatchMessage, it is intended to be used in NodeJs environment.
+    bool pump_messages(); // returns false if it got WM_QUIT
+#endif 
+
   }
 
   class window : public aux::asset

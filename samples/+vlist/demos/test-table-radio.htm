@@ -12,10 +12,13 @@
     
     table input { display:block; }
 
-    input(selected) { behavior:check; }
+    // looks like radio but behaves as checkbox:
+    tabls > tbody > tr > td:first-child > input(selected) { behavior:check; }
       
   </style>
   <script type="text/tiscript">
+
+  // See: https://sciter.com/forums/topic/vlist-with-radio-input/
 
   var vlist = $(table);  
   
@@ -30,7 +33,7 @@
     vlist.value = records;
   }
 
-  // set record.selected  
+  // radio functionality: only one record.selected in the set 
   event click $(table input(selected)) {
     var ridx = vlist.tbody.recordIndex(this);
     for(var (idx,record) in vlist.value) 

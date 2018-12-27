@@ -113,7 +113,12 @@ class Richtext: Behavior {
     this.bind("button.font-size li:nth-child(6)", "format:apply-span:font", {size:6});
     this.bind("button.font-size li:nth-child(7)", "format:apply-span:font", {size:7});
     
-    this.bind("button.picture", this.onInsertPicture);    
+    this.bind("button.picture", this.onInsertPicture); 
+
+    this.bind("button.align li.align-left", this.onAlign, "left");
+    this.bind("button.align li.align-right", this.onAlign, "right");
+    this.bind("button.align li.align-center", this.onAlign, "center");
+    this.bind("button.align li.align-justify", this.onAlign, "justify");
     
     this.SetupTableSelector(this.toolbar.$(button.table));
   }
@@ -246,6 +251,29 @@ class Richtext: Behavior {
       view.msgbox(#information,"for the demo purposes this will insert images/test.jpg");
       this.insertPicture("images/test.jpg");
     }
+  }
+
+  function onAlign(cmd,param) {
+    var htmlarea = this.htmlarea;
+    const ELEMENTS = "p,td,th,h1,h2,h3,h4,h5,h6";
+    function state() {
+      if(!htmlarea.selection.contains(ELEMENTS))
+        return DISABLED;
+      if(htmlarea.selection.contains("[align=" + param + "]"))
+        return ACTIVE;
+      return 0;
+    }
+    function apply() {
+      var elements = htmlarea.selection.elements(ELEMENTS);
+      function setAlign(transaction) {
+        for(var el in elements)   
+          transaction.attr(el,"align",param);
+        return true;
+      }
+      htmlarea.transact(setAlign,"set align"); // do the action inside undoable transaction.
+    }
+    if(cmd == #exec) apply();
+    return state(); 
   }
     
   // helper methods:

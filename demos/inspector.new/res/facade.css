@@ -400,7 +400,7 @@ widget.element-details > section:expanded > dl > header > a
 
 widget.element-details > section:expanded > dl > dt 
 {
-  width:*;
+  width:1*;
   min-width:4em;
   white-space:nowrap;
   overflow-x: hidden;
@@ -412,14 +412,14 @@ widget.element-details > section:expanded > dl > dt
 }
 widget.element-details > section:expanded > dl > dd 
 {
-  width:*;
-  white-space:nowrap;
+  width:2*;
   margin:0;
   padding:2dip 3dip;
   font-weight:bold;
-  max-width:300dip;
-  overflow-x:hidden;
-  text-overflow:ellipsis;
+  //white-space:nowrap;
+  //max-width:300dip;
+  //overflow-x:hidden;
+  //text-overflow:ellipsis;
 }
 
 /* resources view content */ 

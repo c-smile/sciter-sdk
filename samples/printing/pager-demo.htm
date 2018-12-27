@@ -8,7 +8,7 @@
     frame > pagebox {
       background-color:white;
       /*border: 1px solid #444;*/
-      box-shadow: 2px 2px 6px #224;
+      box-shadow: 2dip 2dip 6dip #224;
     }
     
     </style>
@@ -17,38 +17,37 @@
       var currentPageNo = $(#current-page);
       var contentUrl = self.url("samples/print-test.htm");
 
-      $(button#select-printer).on("click",function() {  pager.selectPrinter(); });
-      $(button#print).on("click", function() { 
+      event click $(button#select-printer) {  pager.selectPrinter(); }
+      
+      event click $(button#print) { 
         pager.print(); // print all pages
         //pager.print([1]); // print only first page
-      });
+      }
       
-      $(select#to-load).on("change", function() { 
+      event change $(select#to-load) { 
         contentUrl = self.url( this.value );
         currentPageNo.attributes["max"] = 1;
         currentPageNo.value = 1;
         pager.loadDocument( contentUrl ); 
-      });
+      }
       
-      currentPageNo.on("change", function(){
+      event change $(#current-page) {
         pager.pageNo( this.value );
-      });
+      }
 
-      $(button#load-template-alt).on("click", function() { 
+      event click $(button#load-template-alt) { 
         var templ = self.url("page-template-alt.htm");
         pager.loadDocument( templ, contentUrl ); 
-      });
+      }
       
-      pager.on("paginationend", function(evt) {
+      event paginationend $(frame) (evt) {
         $(#numpages).value = evt.reason;
         $(#current-page).attributes["max"] = evt.reason;
-      });
+      }
       
-      $(button#load-from-mem).on("click", function() { 
+      event click $(button#load-from-mem){ 
         pager.loadHtml( "<html><body>this is a test.</body></html", "about:blank"); 
-      });
-      
-      
+      }
       
     </script>
   </head>

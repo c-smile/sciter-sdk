@@ -10,7 +10,23 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FFFADA">4.2.6.6</td><td nowrap valign="top" align="center">05-12-2018</td><td>fixes:
+    <tr><td valign="top" bgcolor="#FFFADA">4.2.6.7</td><td nowrap valign="top" align="center">27-12-2018</td><td>
+					<p>new:</p>
+					<ul><li><code>view.windowEnabled = true | false;</code> runtime property - enables / disables window as a whole. Used in modal dialog emulation scenarious.</li>
+						<li><code>Element.selection.elements(&quot;selector&quot;)</code>; - method returns list of elements covered by selection.&nbsp;</li>
+						<li>+ sciter.node - basic NodeJs Sciter integration: sdk/demos/sciter.node - NodeJs native module (DLL) and sdk/samples/sciter.node/ demos. See: <a href="https://terrainformatica.com/2018/12/23/sciternode-versus-electron/">https://terrainformatica.com/2018/12/23/sciternode-versus-electron/</a>&nbsp;</li></ul>
+					<p>fixes:
+					</p>
+					<ul><li>[rendering] speed up of path image rendering.</li><li><code>element.state.disabled = true;</code> also disables OS window if the element is windowed one (airborn or popup).</li>
+						<li>[rendering] shadow rendering fix: <a href="https://sciter.com/forums/topic/seamed-box-shadow/">https://sciter.com/forums/topic/seamed-box-shadow/</a>&nbsp;</li>
+						<li>[DOM] fix of checked attribute handling. See: <a href="https://sciter.com/forums/topic/input-in-table-rendering/">https://sciter.com/forums/topic/input-in-table-rendering/</a>&nbsp;</li>
+						<li>Fix of runtime style update, h<a href="https://sciter.com/forums/topic/disappearing-elements/">ttps://sciter.com/forums/topic/disappearing-elements/ </a></li>
+						<li>Fix of <code>transition:blend()</code> in case of <a href="https://sciter.com/forums/topic/disappearing-elements/#post-59480">https://sciter.com/forums/topic/disappearing-elements/#post-59480</a>&nbsp;</li>
+						<li>[Lang] initial translation load in sdk/samples/+lang/lang.tis&nbsp;</li>
+						<li>[CSS] fix of AV in <code>::after</code>/<code>::before</code> handling in this case: <a href="https://sciter.com/forums/topic/4-2-6-3-css-crash-case/">https://sciter.com/forums/topic/4-2-6-3-css-crash-case/</a>&nbsp;</li>
+						<li>[Storage] handling of compound class names, see: <a href="https://sciter.com/forums/topic/load-custom-class-from-storage/">https://sciter.com/forums/topic/load-custom-class-from-storage/</a> </li>
+						<li><code>&lt;select|dropdown&gt;</code> fix of popup appearance.</li>
+						<li>[inspector] showing <code>!important</code> properties.</li></ul></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.2.6.6</td><td nowrap valign="top" align="center">05-12-2018</td><td>fixes:
 					<ul>
 						
 						

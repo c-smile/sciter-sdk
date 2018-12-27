@@ -22,7 +22,7 @@
 function VirtualList(params) {
 
     const list = params.container; assert list;
-    const BUFFER_SIZE = params.bufferSize || 100; // sliding buffer size, number of DOM elements in the view
+    const BUFFER_SIZE = params.bufferSize || 50; // sliding buffer size, number of DOM elements in the view
         
     var   records = null; 
     var   template = list.first; template.detach();

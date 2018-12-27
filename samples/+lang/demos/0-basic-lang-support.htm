@@ -15,10 +15,10 @@
     <script type="text/tiscript">
       include "../lang.tis";
       include "../lang-tool.tis";
-    
-      $(select#lang).onValueChanged = function() { self.language = this.value; }
-      $(input[name=nmatches]).onValueChanged = function() { $(var[name=nmatches]).value = this.value; }
-    
+
+      event change $(select#lang) { self.language = this.value; }
+      event change $(input[name=nmatches]) { $(var[name=nmatches]).value = this.value; }
+
     </script>
     
   </head>

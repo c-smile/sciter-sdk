@@ -3,13 +3,14 @@
 #include <vector>
 
 #include "sciter-x-window.hpp"
+#include "sciter-x-threads.h"
 
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
 // Windows Header Files:
 #include <windows.h>
 #include <shellapi.h>
 
-HINSTANCE ghInstance = 0;
+HINSTANCE ghInstance = THIS_HINSTANCE;
 
 #ifndef SKIP_MAIN
 
@@ -46,7 +47,6 @@ int APIENTRY wWinMain(HINSTANCE hInstance,
   return r;
 	  
 }
-
 #endif
 namespace sciter {
 
@@ -68,6 +68,21 @@ namespace sciter {
 
     HINSTANCE hinstance() {
       return ghInstance;
+    }
+
+    bool pump_messages()
+    {
+      MSG msg;
+      for (int n = 0; n < 10; ++n)
+      {
+        if (!PeekMessage(&msg, NULL, 0, 0, PM_REMOVE | PM_QS_INPUT | PM_QS_POSTMESSAGE | PM_QS_PAINT | PM_QS_SENDMESSAGE))
+          break;
+        if (msg.message == WM_QUIT)
+          return false;
+        TranslateMessage(&msg);
+        DispatchMessage(&msg);
+      }
+      return true;
     }
   }
 

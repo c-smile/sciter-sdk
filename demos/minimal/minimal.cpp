@@ -102,13 +102,20 @@ int CALLBACK WinMain(HINSTANCE hInstance,
   ghInstance = hInstance;
   OleInitialize(NULL); // for shell interaction: drag-n-drop, etc.
 
-  // un-comment the following to see console output: 
+
+  // Enable these features, to be available from script 
+  SciterSetOption(NULL, SCITER_SET_SCRIPT_RUNTIME_FEATURES,
+    ALLOW_FILE_IO |
+    ALLOW_SOCKET_IO |
+    ALLOW_EVAL |
+    ALLOW_SYSINFO);
+
+  // enabling interaction with inspector:
+  ::SciterSetOption(NULL, SCITER_SET_DEBUG_MODE, TRUE);
+
+  // or un-comment the following to see console output: 
   //sciter::debug_output_console _;
 
-  // un-comment the following to enable inspector in this application 
-  // SciterSetOption(NULL, SCITER_SET_DEBUG_MODE, TRUE);
-
-  ::SciterSetOption(NULL, SCITER_SET_DEBUG_MODE, TRUE);
 
 	HWND wnd = ::CreateWindowEx(
 		0, /*WS_EX_LAYOUTRTL,*/

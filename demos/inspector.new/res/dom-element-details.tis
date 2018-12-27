@@ -56,8 +56,12 @@ class ElementDetails : Behavior
         props_names.sort();
         for(var name in props_names) {
           var prop_val = props[name];
-          if( prop_val !== undefined && prop_val !== null)
-            styleRulesList.$append(<dt>{name}:</dt><dd>{ prop_val.toCssString() }</dd>);
+          if( prop_val !== undefined && prop_val !== null) {
+            if(typeof prop_val == #tuple && prop_val.tag == symbol("!important"))
+              styleRulesList.$append(<dt>{name}:</dt><dd>{ prop_val[0].toCssString() } !important</dd>);
+            else
+              styleRulesList.$append(<dt>{name}:</dt><dd>{ prop_val.toCssString() }</dd>);
+          }
         }
         ++cnt;
       }  
@@ -75,8 +79,9 @@ class ElementDetails : Behavior
     props_names.sort();
     for(var name in props_names) {
       var prop_val = props[name];
-      if( prop_val !== undefined && prop_val !== null)
+      if( prop_val !== undefined && prop_val !== null) {
         usedStylesList.$append(<dt>{name}:</dt><dd>{ prop_val.toCssString() }</dd>);
+      }
     }
     usedStylesList.parent.attributes.toggleClass("no-items", props_names.length == 0);
   }

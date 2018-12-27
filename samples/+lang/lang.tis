@@ -133,6 +133,8 @@ const Lang = function() {
     else return typeof fmt == #function ? fmt.call(this, val) : fmt.replace("#",val.toString() );
   }
 
+  loadTranslation(); // load inital translation
+
   return {
       Controller    : Controller,
       Label         : Label,
