@@ -3,10 +3,10 @@ function Repeatable()
 {
   var template = this.first;
   assert template : "should have one or two children";
-  template.remove();
+  template.detach();
   var norecsTemplate = this.first;
   if( norecsTemplate )
-    norecsTemplate.remove();
+    norecsTemplate.detach();
       
   this[#value] = property(v) {
     get {
