@@ -42,11 +42,13 @@
     <dd>
       <div> <strong>( el</strong>:<em>element</em> [<strong> , how</strong>: #content | #element ]<strong> ) </strong> returns: <em>true | false</em></div>
       <p>Set's selection to either the element <i>el</i> itself (<i>what</i> is <code>#element</code>) or to its content - its first and last caret positions.</p>
-			</dd><dt>elements</dt>
+			</dd>
+		
+		<dt>contains</dt><dd><b>(</b> <b>selector</b>: string <b>)</b> returns: true | false<p>Returns true if selection covers at least one of elements matching the CSS selector.</p></dd><dt>elements</dt>
 		<dd><b>(</b> <b>selector</b>: string <b>)</b> returns: Array of elements <p>Returns list of DOM elements covered by the selection. It returns only elements satisfying the selector. Note that selector may contain list of comma separated selectors.</p>
 			<p>Example:</p>
 			
-			<pre>var paragraphs = editor.selection.elements(&quot;p,div&quot;);</pre><p>Here <i>paragraphs</i> will contain list of &lt;p&gt; and &lt;div&gt; elements that current selection covers.</p></dd>    <dt>advance</dt>
+			<pre>var paragraphs = editor.selection.elements(&quot;p,div&quot;);</pre><p>Here <i>paragraphs</i> will contain list of &lt;p&gt; and &lt;div&gt; elements that are covered by current selection.</p></dd>    <dt>advance</dt>
     <dd>
       <div> <strong>( step</strong>:symbol [, <strong>target</strong>:symbol] <strong>)</strong> returns: <em>true | false</em>.</div>
       <p>Advances <em>target</em> to new position by <em>step</em>. The <em>target</em> defines what end of selection to advance, can be one of:</p>

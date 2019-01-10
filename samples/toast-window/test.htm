@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style></style>
+        <script type="text/tiscript">
+
+
+event click $(button) {
+  var tw = View.window {
+    url: self.url("toast.htm")
+  };
+  tw.root.ns.show("Hello world");
+  //debug log: tw, tw.root;
+}
+
+
+        </script>
+    </head>
+    <body>
+
+      <button>Show Toast Window</button>
+
+    </body>
+</html>

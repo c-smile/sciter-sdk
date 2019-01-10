@@ -1,0 +1,65 @@
+<html window-frame="transparent">
+    <head>
+        <title>Toast</title>
+        <style>
+
+  html {
+    background: transparent;
+    size: max-content;
+    overflow:none;
+  }
+
+  body {
+    background: gold;
+    margin:20dip;    
+    padding:20dip;
+    opacity:0;
+    size: max-content;
+    transform: translate(0,0); opacity:1.0;
+    font:system;
+  }
+  
+  body[state] {visibility:visible;}
+  body[state=initial] { transform: translate(0,100%); opacity:0.0; } /* offstage */
+  body[state=shown]   { transform: translate(0,0);    opacity:1.0; transition: transform(quad-out,500ms) opacity(linear,500ms);  }
+  body[state=closed]  { transform: translate(100%,0); opacity:0.0; transition: transform(linear,500ms) opacity(linear,500ms);  }
+    
+  header { border-bottom: 1dip dashed gray; padding: 4dip; }
+  main { padding: 8dip; }
+
+        </style>
+        <script type="text/tiscript">
+
+    const body = $(body);        
+
+    function show(message) {
+
+        var (screenX1,screenY1,screenX2,screenY2) = view.screenBox(#workarea, #rect );
+
+        body.$(main).text = message;
+
+        // measure its real sizes
+        var (w,h) = body.box(#dimension,#margin);
+
+        // position its border box at bottom / right corner of the screen
+        view.move( screenX2 - w, screenY2 - h);
+
+        body.attributes["state"] = "shown";
+
+        self.timer(5s, :: body.attributes["state"] = "closed"); // hide it in 5 seconds
+    }
+
+    // set initial "off stage" state 
+    body.attributes["state"] = "initial";
+
+        </script>
+    </head>
+    <body state="initial">
+      <header>Hello</header>
+      <main></main>
+      <footer>
+        <button>Snooze</button>
+        <button>Dismiss</button>
+      </footer>
+    </body>
+</html>

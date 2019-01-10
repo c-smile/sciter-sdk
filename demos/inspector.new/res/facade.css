@@ -1,7 +1,7 @@
 ﻿@import url(tabs.css);
 @import url(source-code.css);
 
-@const PANEL-BORDER: 1px solid threedshadow;
+@const PANEL-BORDER: 1px solid #C0C0C0;
 @const BACK-COLOR:   #5C4C4C;
 @const CAPTION-COLOR: #5d8bb8;
 @const CAPTION-COLOR-HOVER: #2061a1;
@@ -22,7 +22,10 @@
 @const OPTION-BG-FOCUS:   url(sciter:list-view-item-selected.png) expand(stretch-left,stretch-right,stretch-middle) 4 4 4 4;
 @const OPTION-BG-HOVER:   url(sciter:list-view-item-hover.png) expand(stretch-left,stretch-right,stretch-middle) 4 4 4 4;
 
-html { font:system; background: transparent; }
+@const WINDOW-BACK-COLOR: #fff;
+@const WINDOW-TEXT-COLOR: #000;
+
+html { font:system; background: #fff; color:#000;}
        
 body 
 { 
@@ -88,7 +91,8 @@ body > footer > label > kbd {
 .panel 
 { 
   font:system;
-  background: window;
+  background: @WINDOW-BACK-COLOR;
+  color: @WINDOW-TEXT-COLOR;
   border:none;
   overflow-y:scroll-indicator; 
   overflow-x:scroll-indicator; 
@@ -229,7 +233,9 @@ select.log > option
   border-bottom: 1dip solid #eee;
   white-space :pre;
   font-family:monospace;
-  color:windowtext; background-color:window;
+  //color:windowtext; background-color:window;
+  background-color: @WINDOW-BACK-COLOR;
+  color: @WINDOW-TEXT-COLOR;
 }
 
 select.log > option a { behavior:clickable; }
@@ -368,7 +374,9 @@ widget.element-details > section > dl
   visibility:none;
   margin:0;
   padding:0;
-  background:window;
+  //background:window;
+  background: @WINDOW-BACK-COLOR;
+  color: @WINDOW-TEXT-COLOR;
   flow:row(dt,dd);
   border-bottom:@PANEL-BORDER;
 }
@@ -485,7 +493,9 @@ widget.element-details > section:expanded > dl > dd
   visibility:none;
   margin:0;
   padding:0;
-  background:window;
+  //background:window;
+  background: @WINDOW-BACK-COLOR;
+  color: @WINDOW-TEXT-COLOR;
 }
 
 .resources-view > .resource-list  > section:expanded > ul { visibility:visible; }
