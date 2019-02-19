@@ -149,17 +149,57 @@ namespace Charts {
       const scale = canvas.scale; 
       const zerop = canvas.zerop;
 
-      for( var (i,val) in this.dataset.values ) {
-        const x = canvas.vbands[i].position;
-        const y = zerop - val * scale;
-        if(i) this.linePath.lineTo(x,y);
-        else this.linePath.moveTo(x,y);
-        if(fill) {
-          if(i) this.areaPath.lineTo(x,y);
-          else this.areaPath.moveTo(x,y);
-        }
-        this.dots.push([point:x,y]);
+      const vbands = canvas.vbands;
+      const values = this.dataset.values;
+
+      function xy(i) {
+        var x = vbands[i].position;
+        var y = zerop - values[i] * scale;        
+        return (x,y);
       }
+
+      var (x,y) = xy(0);
+
+      this.linePath.moveTo(x,y);
+      if(fill) this.areaPath.moveTo(x,y);
+      this.dots.push([point:x,y]);
+
+      const tolerance = canvas.interpolation;
+
+      if( tolerance > 0 ) {
+        const t = tolerance / 6.0; // adjusted tolerance
+        for (var i = 0; i < values.length - 1; ++i) {
+
+          var (x0,y0) = xy((i > 0) ? i - 1: 0);
+          var (x1,y1) = xy(i);
+          var (x2,y2) = xy(i + 1);
+          var (x3,y3) = xy((i != values.length - 2) ? i + 2 : i + 1);
+
+          var cp1x = x1 + (x2 - x0) * t;
+          var cp1y = y1 + (y2 - y0) * t;
+
+          var cp2x = x2 - (x3 - x1) * t;
+          var cp2y = y2 - (y3 - y1) * t;
+
+          this.linePath.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x2, y2);
+          if(fill)
+            this.areaPath.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x2, y2);
+
+          this.dots.push([point:x1,y1]);
+        }
+
+        (x,y) = xy(values.length - 1);
+        this.dots.push([point:x,y]);
+      } else {
+        for(var i = 1; i < values.length; ++i) {
+          (x,y) = xy(i);
+          this.linePath.lineTo(x,y);
+          if(fill)
+            this.areaPath.lineTo(x,y);
+          this.dots.push([point:x,y]);
+        }        
+      }
+
       if(fill) {
         this.areaPath.lineTo(canvas.rightPosition,zerop);
         this.areaPath.lineTo(canvas.leftPosition,zerop);

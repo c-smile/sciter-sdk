@@ -10,7 +10,7 @@ function checkDatabase(pathname)
 {
   try 
   {
-    var ndb = Storage.open(pathname, false, false);
+    var ndb = Storage.open(pathname);
     ndb.close();
     return true;
   } catch(e) {

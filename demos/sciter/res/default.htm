@@ -103,7 +103,6 @@
          "SCAPP files only (*.zip,*.scapp)|*.ZIP;*.SCAPP|"
          "All Files (*.*)|*.*";
 
-      var debugIsActive = false;
 
       function loadFile(fn)
       {
@@ -112,8 +111,6 @@
         $(button#reload).state.disabled = false;
         var inspectorButton = $(button#inspector);
         inspectorButton.state.disabled = false;
-        if(debugIsActive)
-          view.launchDebugView();
         var croot = content[0];
         var title = croot.$(head>title);
         if( title )
@@ -146,8 +143,6 @@
       {
 		    if( filename ) {
           content.load(filename);
-          if(debugIsActive)
-            view.launchDebugView();
         }
       }
 

@@ -20,7 +20,9 @@ html:theme(dark) {
   var(hover-option-cover): rgba(255,255,255,0.1);
 }
 
-html:theme(light) {
+//html:theme(light) 
+html:not(:theme(dark))
+{
   var(panel-back): #f8f8f8;
   var(popup-panel-back): #f7f7f7; 
   var(panel-text): #333;
@@ -274,7 +276,7 @@ radio { display:inline-block; style-set: std-radio; }
     :root[mixed]:empty::marker {
       background-image: url(path:M 0 0 H 9 V 9 H 0 Z);
       background-size:0.63em;
-      background-position:54% 54%;
+      background-position:50% 50%;
       fill: color(panel-text);
       stroke:none;
     }
@@ -382,7 +384,7 @@ editbox { display:inline-block; style-set:std-edit; }
       
   :root:hover                   { @STD-BOX-HOVER; }
   :root:focus                   { @STD-BOX-FOCUS; }
-  :root:active                  { @STD-BOX-PRESSED; }
+  //:root:active                  { @STD-BOX-PRESSED; }
   :root:disabled                { @STD-BOX-DISABLED; }
   :root:tab-focus               { @STD-TAB-FOCUS; }  
 
@@ -490,11 +492,11 @@ editbox { display:inline-block; style-set:std-edit; }
   :root 
   {
     width:8em;
-    aspect: Flat.HSlider;
+    aspect: Flat.HSlider url(flat-theme.tis);
     height:0.14em;
     background: color(border);
     background-clip: content-box;
-    padding:0.56em;
+    padding:0.7em;
     overflow:visible;
   }
       
@@ -512,3 +514,22 @@ editbox { display:inline-block; style-set:std-edit; }
 }
 
 slider { display:inline-block; style-set:std-hslider; }
+
+@set std-progress
+{
+  :root
+  {
+    @STD-BOX-NORMAL;
+    behavior:none; // not using default behavior
+    aspect: Flat.Progress url(flat-theme.tis);
+    width:8em;
+    height:0.28em;
+    color: color(accent);
+    //color: red;
+    border-style:none;
+    border-radius:0;
+    padding:0;
+  }
+}
+
+progress { display:inline-block; style-set:std-progress; }

@@ -63,7 +63,8 @@ namespace sciter
 
   bool frame::setup(const wchar_t* url, HWND parent)
   {
-    _hwnd = CreateWindowEx(0,WINDOW_CLASS_NAME, L"sciter-frame", WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, parent, NULL, ghInstance, this);
+    _hwnd = CreateWindowEx(/* 0x00200000L WS_EX_NOREDIRECTIONBITMAP*/ 0,
+       WINDOW_CLASS_NAME, L"sciter-frame", WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, parent, NULL, ghInstance, this);
     
     if (!_hwnd)
       return false;

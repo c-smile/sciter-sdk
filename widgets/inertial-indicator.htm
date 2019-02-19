@@ -1,0 +1,95 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+        indicator 
+        {
+          aspect:BusyIndicator(psize:1em);
+          display:block;
+          width:*;
+          color: #00b;
+          padding:1em 0;
+          border:1dip solid black;
+        }
+
+        </style>
+        <script type="text/tiscript">
+
+        function BusyIndicator(params = {}) {
+
+          var me = this;
+
+          const PARTICLES = 4;
+
+          var positions = new Array(PARTICLES);
+
+          function init() {
+            for( var i in PARTICLES ) positions[i] = i * 0.15 - 1.0;  
+          }
+
+          const particleSize = params.psize || 10pt;
+
+          function paint(gfx) {
+            var width = me.box(#width);
+            var height = me.box(#height);
+            var size = me.toPixels(particleSize);
+            var radius = size / 2;
+            var y = height / 2;
+            gfx.fillColor(me.style#color);
+            gfx.pushLayer(#client-box)
+            for( var (i,p) in positions ) {
+              var x = (p + 0.5) * width + i * size;
+              gfx.arc(x,y,radius,radius,0deg,360deg);
+            }
+            gfx.popLayer();
+            return true; // discard default content drawing
+          }
+
+          function step() {
+            if(!me.state.busy) {
+              me.refresh();
+              return false;
+            }
+            for( var (i,p) in positions ) {
+              var dx = Float.max(0.001, Math.abs(p) / 16.0);
+              p += dx; if( p > 1.0 ) p = -1.0;
+              positions[i] = p;
+            }
+            me.refresh();
+            return true;
+          }
+    
+          // this.value = true | false;
+          me[#busy] = property (v) {
+            get return me.state.busy;
+            set {
+              if(v) {
+                init();
+                me.paintContent = paint; // setup painter
+                me.state.busy = true;
+                me.animate(step);
+              } else {
+                me.paintContent = null; // remove script painter 
+                me.state.busy = false;
+              }
+            }
+          };
+
+        }
+
+        event change $(button#run) {
+          $(indicator).busy = this.value;
+        }
+
+
+        </script>
+    </head>
+    <body>
+
+    <indicator>Click on checkbox to run</indicator>
+
+    <button|checkbox #run>Run</button>
+
+    </body>
+</html>

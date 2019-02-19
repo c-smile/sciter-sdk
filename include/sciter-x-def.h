@@ -287,10 +287,10 @@ typedef SCN_GRAPHICS_CRITICAL_FAILURE* LPSCN_GRAPHICS_CRITICAL_FAILURE;
 /**Load HTML file.
  *
  * \param[in] hWndSciter \b HWINDOW, Sciter window handle.
- * \param[in] filename \b LPCWSTR, File name of an HTML file.
+ * \param[in] url \b LPCWSTR, either absolute URL of HTML file to load. "file://...", "http://...", "res:***", "this://app/***" or absolute file path.
  * \return \b BOOL, \c TRUE if the text was parsed and loaded successfully, \c FALSE otherwise.
  **/
- BOOL SCAPI     SciterLoadFile(HWINDOW hWndSciter, LPCWSTR filename);
+ BOOL SCAPI     SciterLoadFile(HWINDOW hWndSciter, LPCWSTR url);
 
 /**Load HTML from in memory buffer with base.
  *

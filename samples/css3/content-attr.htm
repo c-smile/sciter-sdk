@@ -13,11 +13,21 @@
       div::after { content: attr(after); }
     
     </style>
-    <script type="text/tiscript"></script>
+    <script type="text/tiscript">
+
+      event click $(button) {
+        $(div).@#before = "<<<"; // does not
+        $(div).@#after = ">>>"; // does not
+        $(div).@#caption = "test"; // works
+      }
+
+    </script>
   </head>
 <body>
   DIV below has content defined by its 'content' attribute:  
   <div caption="caption attribute value" after="}" before="{"></div>
+
+  <button>Change</button>
 
 </body>
 </html>

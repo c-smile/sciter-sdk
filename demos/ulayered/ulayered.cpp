@@ -4,7 +4,7 @@ static RECT wrc = { 100, 100, 800, 800 };
 
 class frame: public sciter::window {
 public:
-  frame() : window( SW_MAIN | SW_ENABLE_DEBUG, wrc) {}
+  frame() : window( SW_MAIN | SW_ENABLE_DEBUG | SW_ALPHA | SW_GLASSY, wrc) {}
 
   BEGIN_FUNCTION_MAP
     FUNCTION_0("architecture", architecture);

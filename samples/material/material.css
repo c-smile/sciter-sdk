@@ -43,7 +43,10 @@
     width:*;
   }
   :root > caption { line-height:1.6em; width:*; transform-origin: 0% 0%; color:#777;  }
-  :root > text { flow:text; cursor:text; white-space:pre; behavior:edit; line-height:1.6em; width:*; }
+  :root > text { 
+    flow:text; cursor:text; white-space:pre; behavior:edit; line-height:1.6em; width:*; height:*; 
+    background:transparent;
+  }
 
   :root:owns-focus > caption, 
   :root:not(.is-empty) > caption

@@ -82,11 +82,9 @@ UINT SC_CALLBACK SciterCallback( LPSCITER_CALLBACK_NOTIFICATION pns, LPVOID call
 }
 
 
-LPCWSTR GetUrl() {
+LPCWSTR GetAbsolutePath() {
   static WCHAR url[MAX_PATH] = {0};
-
-  wcscpy(url,L"file://");
-  GetModuleFileName(NULL,url+7,MAX_PATH-7);
+  GetModuleFileName(NULL,url,MAX_PATH);
   WCHAR* t = wcsrchr(url,'\\');
   assert(t);
   wcscpy(t + 1,L"minimal.htm");
@@ -128,7 +126,7 @@ int CALLBACK WinMain(HINSTANCE hInstance,
 
   ::SciterSetCallback(wnd,&SciterCallback,NULL);
     
-	::SciterLoadFile(wnd, GetUrl());
+	::SciterLoadFile(wnd, GetAbsolutePath());
 	::ShowWindow(wnd, SW_SHOWNORMAL);
   //::SciterLoadFile(wnd, GetUrl());
 

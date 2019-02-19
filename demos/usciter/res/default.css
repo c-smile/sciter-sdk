@@ -1,12 +1,20 @@
 
-    html:theme(dark) { var(text-color): #fff; var(back-color):#000; var(disbaled-color): #aaa; }
-    html:theme(light) { var(text-color): #000; var(back-color):#fff; var(disbaled-color): #777;}
+    html:theme(dark) { var(text-color): #fff; var(back-color):#333; var(disbaled-color): #aaa; }
+    html:theme(light) { var(text-color): #000; var(back-color):#eee; var(disbaled-color): #777;}
           
-    html { 
+    html 
+    { 
       var(accent-color): window-accent-color;
-      background:transparent;
       color: color(text-color);
+      background: color(back-color);
       font:system; 
+    }
+
+    @media ui-blurbehind {
+      /* platform supports blurbehind */ 
+      html {
+        background:transparent;
+      }
     }
 
     body { flow:horizontal; margin:0; }

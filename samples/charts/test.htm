@@ -47,6 +47,10 @@
           $(p).text = "#" + evt.data + " selected";
         }
 
+        event change $(input#interpolation) {
+           $(chart).interpolation = this.value; 
+        }
+
         event click $(#update) {
 
           $(chart).value = {
@@ -71,10 +75,13 @@
       <button|radio(chart) value="line" checked>Line chart</button> 
       <button|radio(chart) value="area">Area chart</button>
       <button|radio(chart) value="bar">Bar chart</button>
-      <button#update>Update</button>
     </form>
 
-    <chart|lines />
+    <label>Interpolation tolerance:</label><input|hslider#interpolation value="0.0" min="0.0" max="1.5" />
+    
+    <button#update>Update</button>
+
+    <chart|lines interpolation="0.0"/>
 
     <p/>
 

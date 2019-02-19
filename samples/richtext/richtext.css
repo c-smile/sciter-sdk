@@ -150,7 +150,12 @@
         :root > htmlarea > body { size:*; margin: 0 2em; }
 
         :root > htmlarea dt:content-editable { font-weight:bold; }
-        :root > htmlarea br:content-editable { width:8dip; background:url(images/br.png) no-repeat 1dip 50%; }
+        :root > htmlarea br:content-editable { 
+          width:8dip;
+          content:"\21B2";
+          color:red;
+          //background:url(images/br.png) no-repeat 1dip 50%; 
+        }
         
         /*:root > htmlarea img { prototype:EditableImage url(richtext-utils.tis); cursor:pointer; }
           :root > htmlarea img:focus { outline:2dip dotted highlight -2dip; }

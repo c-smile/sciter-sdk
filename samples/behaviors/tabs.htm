@@ -2,16 +2,12 @@
 <head><style>
 
 
-.tabs {
-  aspect:Tabs;
-}
-
 .tabs 
 {
   font:system;
   behavior:tabs;
-  height:100%%;
-  width:100%%;
+  height:*;
+  width:*;
   overflow:hidden;
 }
 
@@ -26,7 +22,7 @@
 {
   padding: 3px 8px;
   margin-bottom:1px;
-  height: 100%%;
+  height: *;
   max-width: auto; /* not wider than max-intrinsic  */
   background-image:url(theme:tab-item-normal);
   background-repeat:stretch;
@@ -77,7 +73,7 @@
   background-repeat:stretch;
   padding:4px;
   display:block; 
-  height:100%%;
+  height:*;
 }
 
 /* second, light tabs */
@@ -95,7 +91,7 @@
   background-image:none;
   padding:4px;
   display:block; 
-  height:100%%;
+  height:*;
 }
 
 /* third, tabs on bottom */
@@ -122,7 +118,7 @@
 #third.tabs > .strip > [panel] /* all tabs, passive by default */
 {
   padding: 3px 8px;
-  height: 100%%;
+  height: *;
   max-width: auto; /* not wider than max-intrinsic  */
   background-image:none;
   border: 1px solid transparent;

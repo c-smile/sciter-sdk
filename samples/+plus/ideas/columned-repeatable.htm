@@ -1,0 +1,104 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+          @import url(../plus.css); /* the only thing needed to include Plus framework */
+          
+          widget {
+            font:system;
+            var(c1): 3em;
+            var(c2): 10em;
+            var(c3): 8em;
+            var(c4): 9em;
+            var(c5): *;
+            var(spacing): 4dip;
+            size:*;
+          }
+
+          widget > header { flow:horizontal; border-spacing:length(spacing); border-bottom:1dip solid #ccc;}
+          widget > header > label { display:block; }
+          widget > header > label:nth-child(1) { width:length(c1); }
+          widget > header > label:nth-child(2) { width:length(c2); }
+          widget > header > label:nth-child(3) { width:length(c3); }
+          widget > header > label:nth-child(4) { width:length(c4); }
+          widget > header > label:nth-child(5) { width:length(c5); }
+
+          widget > select { 
+            display:block; 
+            flow:vertical; size:*; 
+            border-spacing:length(spacing);
+            padding:0;
+            border:none;
+          }
+          widget > select > option { 
+            //behavior:form;
+            display:block; 
+            flow:grid(1 2 3 4 5,
+                      1 6 6 6 6); 
+            border-spacing:length(spacing);
+            padding:0;
+          }
+
+          widget > select > option > :nth-child(1) { width:length(c1); }
+          widget > select > option > :nth-child(2) { width:length(c2); }
+          widget > select > option > :nth-child(3) { width:length(c3); }
+          widget > select > option > :nth-child(4) { width:length(c4); }
+          widget > select > option > :nth-child(5) { width:length(c5); }
+          widget > select > option > :nth-child(6) { width:*; }
+
+          widget > select > option > picture { foreground-size:2em 2em; foreground-position:50% 50%;}
+
+
+        </style>
+        <script type="text/tiscript">
+
+
+        namespace Data // our model
+        {  
+          var hosts = [
+            {
+              name:"apple", 
+              icon:"sciter:copy.png", 
+              ip:"123.456.789.012", 
+              mac: "07-34-568-1234",
+              iface: "Olga's machine",
+              desc: "She is naturaly blond so expect wonders on that machine"
+            }, {
+              name:"orange", 
+              icon:"sciter:cut.png", 
+              ip:"123.456.789.012", 
+              mac: "07-34-568-1234",
+              iface: "Vasilii's machine",
+              desc: "Super gamer's stuff"
+            }
+          ];
+        }
+        </script>
+    </head>
+    <body>
+
+
+    <widget model="Data">
+      <header>
+        <label></label>
+        <label>Host Name</label>
+        <label>IP</label>
+        <label>MAC</label>
+        <label>Interface</label>
+      </header>
+      <select|list each="host in hosts" multiple>
+        <option>
+          <picture @src="host.icon" />
+          <div(host.name) />
+          <div(host.ip) />
+          <div(host.mac) />
+          <div(host.iface) />
+          <div(host.desc) />
+        </option>
+      </select>
+    </widget>
+
+
+    </body>
+</html>

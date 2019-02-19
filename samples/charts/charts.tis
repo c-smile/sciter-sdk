@@ -8,6 +8,7 @@ namespace Charts {
       this.paintContent = this.render;
       this.reset();
       this.replace();
+      this._interpolationTolerance = (this.attributes["interpolation"] || "0").toFloat(); // 
     }
     
     function add(drawable) // either one or list of drawables
@@ -53,6 +54,15 @@ namespace Charts {
       get return this.data;
       set {
         this.data = v;
+        this.reset();
+        this.replace();
+      }
+    }
+
+    property interpolation(v) {
+      get return this._interpolationTolerance;
+      set { 
+        this._interpolationTolerance = v;
         this.reset();
         this.replace();
       }

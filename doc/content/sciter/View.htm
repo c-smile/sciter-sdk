@@ -83,13 +83,18 @@ view.<u>eventsRoot</u> = null;
       <div> <strong>( </strong>[<strong>screenNo:</strong> integer,]<em></em><strong>area</strong> [, <strong>part</strong> ] <strong>) </strong>returns: integer, device pixels</div>
       <p>Returns screen(monitor) projection on cumulative desktop space. Parameters:</p>
       <ul>
-        <li> <strong>area</strong> - one of symbolic constants <strong>#frame </strong>- monitor screen dimension, <strong>#workarea</strong> - monitor workarea (dimension modulo task/menu bars). In device pixels.</li>
+        <li> <strong>area</strong> - one of symbolic constants: <ul><li><strong>#frame </strong>- monitor screen dimension, </li><li><strong>#workarea</strong> - monitor work area (dimension modulo task/menu bars). In device pixels.</li>
+						<li><b>#snapshot</b> - returns <i>Image</i> - screenshot of this particular screen;</li>
+						<li><b>#isPrimary</b> - returns <i>true</i> if this monitor is primary;</li>
+						<li><b>#device</b> - returns <i>string</i> - name of monitor;</li></ul></li>
+				
+				
         <li> <strong>part</strong>, one of view:</li>
         <ul>
           <li> <strong>#rect</strong> - (x1,y1,x2,y2) metrics, <em>default</em>;</li>
           <li> <strong>#rectw</strong> - metrics as (x,y,width,height);</li>
-          <li> <strong>#position</strong> - (x,y)<em>,</em></li>
-          <li> <strong>#dimension</strong> - (width,height)<em>,</em></li></ul>
+          <li> <strong>#position</strong> - (x,y) position of the screen on cumulative surface that includes all monitors;&nbsp;</li>
+          <li> <strong>#dimension</strong> - (width,height) of the screen<em>;</em></li></ul>
         <li> <strong>screenNo - </strong>integer, optional. If provided returns metrics of particular screen. If omitted returns metrics of this window screen.</li></ul></dd>
     <dt>move</dt>
     <dd>
