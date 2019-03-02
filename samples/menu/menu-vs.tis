@@ -1,0 +1,18 @@
+class RootPopupMenu : Element {
+
+  function paintContent(gfx) {
+    var li = this.$o(li);
+    var pw = li.box(#width,#padding);
+    var pix = self.toPixels(1dip);
+    var (x,y,w,h) = this.box(#rectw,#border);
+    gfx.fillColor(li.style#border-top-color)
+       .strokeWidth(0)
+       .rectangle(pw-pix,y,w-pw,pix)
+       .rectangle(x+w-pix,y,pix,h)
+       .rectangle(x-pix,y+h-pix,w,pix)
+       .rectangle(x,y-pix,pix,h)
+       //.translate(pix/2.0,pix/2.0)
+       //.polyline(pw,y1,x2,y1,x2,y2,x1,y2,x1,y1);
+  }
+
+}
