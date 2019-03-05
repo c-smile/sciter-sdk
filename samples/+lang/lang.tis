@@ -33,9 +33,25 @@ const Lang = function() {
   
   function updateLang(el) {
     var evh = el[ON_LANG_CHANGE];
-    if( evh ) evh();
+    if( evh ) { 
+      if( typeof evh == #array )
+        for(var h in evh)
+          h.call(el);
+      else   
+        evh.call(el);
+    }
     for( var child in el ) // do this for the whole tree 
       updateLang(child); 
+  }
+
+  function addLangHandler(el, handler) {
+    var existing = el[ON_LANG_CHANGE];
+    if( !existing )
+      el[ON_LANG_CHANGE] = handler;
+    else if( typeof existing == #array) 
+      existing.push(handler);
+    else 
+      el[ON_LANG_CHANGE] = [existing,handler];
   }
 
   function Controller() {
@@ -80,9 +96,26 @@ const Lang = function() {
       }
     }
     
-    this[ON_LANG_CHANGE] = update;
+    addLangHandler(this,update);
     update();
   }
+
+  // static @title updater
+  function Title() {
+
+    var key = this.attributes["title"];
+    var el = this;
+    
+    function update() {
+      var text = xlation[key];
+      if( !text ) { if(notfound) notfound[key] = #text; el.attributes["title"] = key; }
+      else { el.attributes["title"] = text; if(used) used[key] = true; }
+    }
+    
+    addLangHandler(this,update);
+    update();
+  }
+
   
   // dynamic text updater, used by <var> or <xxx .var>
   // calls pluralizer/formatting function defined in the language map.
@@ -93,12 +126,12 @@ const Lang = function() {
     if( fmt && used) used[key] = true;
     if( !fmt && notfound) notfound[key] = #function;
     
-    function update() { 
+    function update() {
       fmt = xlation[key]; 
       if( !fmt ) { if(notfound) notfound[key] = #function; }
       else { (this super).value = val; }
     }
-    this[ON_LANG_CHANGE] = update;
+    addLangHandler(this,update);
     
     this[#value] = property(v) {
       get return val;
@@ -138,6 +171,7 @@ const Lang = function() {
   return {
       Controller    : Controller,
       Label         : Label,
+      Title         : Title,
       Formatter     : Formatter,
       initStats     : initStats,
       translate     : translate,
