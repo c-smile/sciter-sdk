@@ -1,0 +1,56 @@
+<html>
+	<head>
+		<title>Select table</title>
+		<style>
+        
+        table {
+          //flow: table-fixed;
+          width:*;
+          height:*;
+          border:1dip solid grey;
+        }
+
+        tbody
+        { 
+          behavior: select-multiple;
+          height:*; 
+          width:*;
+          padding:0; 
+        }
+        tbody tr:checked { background:highlight; color:highlighttext; }
+		</style>
+	</head>
+	<body>
+    <p>Table as select|list</p>
+    <table>
+      <thead>
+        <tr><th>First</th>
+            <th>Second</th>
+            <th>Third</th>
+        </tr>
+      </thead>
+  		<tbody>
+          <tr value="1" role="option">
+              <td>Option 1</td>
+              <td>*Short*</td>
+              <td>123456</td>
+          </tr>
+          <tr value="2" role="option">
+              <td>Option 2</td>
+              <td>******* LOONG ********</td>
+              <td>123456</td>
+          </tr>
+          <tr value="3" role="option">
+              <td>Option 3</td>
+              <td>*Short*</td>
+              <td>123456</td>
+          </tr>
+          <tr value="4" role="option">
+              <td>Option 4</td>
+              <td></td>
+              <td>7890</td>
+          </tr>
+  		</tbody>
+    </table>      
+	</body>
+</html>

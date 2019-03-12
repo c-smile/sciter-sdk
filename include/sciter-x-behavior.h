@@ -232,6 +232,7 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
     SCROLL_SOURCE_KEYBOARD,  // SCROLL_PARAMS::reason <- keyCode
     SCROLL_SOURCE_SCROLLBAR, // SCROLL_PARAMS::reason <- SCROLLBAR_PART 
     SCROLL_SOURCE_ANIMATOR,
+    SCROLL_SOURCE_WHEEL,
   };
 
   enum SCROLLBAR_PART {
@@ -473,8 +474,7 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
       UINT_PTR reason;     // CLICK_REASON or EDIT_CHANGED_REASON - UI action causing change.
                            // In case of custom event notifications this may be any
                            // application specific value.
-      SCITER_VALUE 
-               data;       // auxiliary data accompanied with the event. E.g. FORM_SUBMIT event is using this field to pass collection of values.
+      SCITER_VALUE data;   // auxiliary data accompanied with the event. E.g. FORM_SUBMIT event is using this field to pass collection of values.
   } BEHAVIOR_EVENT_PARAMS;
 
   typedef struct TIMER_PARAMS

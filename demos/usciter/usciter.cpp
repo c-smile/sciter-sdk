@@ -69,9 +69,10 @@ public:
 
 int uimain(std::function<int()> run ) {
 
+  // enable features to be used from script
   SciterSetOption(NULL, SCITER_SET_SCRIPT_RUNTIME_FEATURES, 
                           ALLOW_FILE_IO | 
-                          ALLOW_SOCKET_IO |
+                          ALLOW_SOCKET_IO | 
                           ALLOW_EVAL |
                           ALLOW_SYSINFO );
 

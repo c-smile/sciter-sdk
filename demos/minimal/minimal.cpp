@@ -102,11 +102,11 @@ int CALLBACK WinMain(HINSTANCE hInstance,
 
 
   // Enable these features, to be available from script 
-  SciterSetOption(NULL, SCITER_SET_SCRIPT_RUNTIME_FEATURES,
-    ALLOW_FILE_IO |
-    ALLOW_SOCKET_IO |
-    ALLOW_EVAL |
-    ALLOW_SYSINFO);
+  //SciterSetOption(NULL, SCITER_SET_SCRIPT_RUNTIME_FEATURES,
+  //  ALLOW_FILE_IO |
+  //  ALLOW_SOCKET_IO |
+  //  ALLOW_EVAL |
+  //  ALLOW_SYSINFO);
 
   // enabling interaction with inspector:
   ::SciterSetOption(NULL, SCITER_SET_DEBUG_MODE, TRUE);

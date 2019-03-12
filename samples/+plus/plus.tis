@@ -261,8 +261,8 @@ const Plus = function() {
     assert classattr : "it should not be empty";
     
     var parts = classattr.match(CLASS_RE);
-    
-    if( parts[1] /*&& parts[5]*/ )
+
+    if( parts[1] )
       this.@["class"] = parts[1] + " " + (parts[5] || "");
     else
       this.@["class"] = undefined;
@@ -275,10 +275,13 @@ const Plus = function() {
     
     function classUpdater(thing,v) {
       thing.post(function() {
-        if( cname )            // case A 
-          thing.@.toggleClass(cname, v || false);  
-        else if( sname != v )  // case B
-          thing.@.removeClass(sname); thing.@.addClass(sname = v);  
+        if( cname ) {           // case A
+          thing.@.toggleClass(cname, v || false); 
+        }
+        else if( sname != v ) { // case B 
+          thing.@.removeClass(sname); 
+          thing.@.addClass(sname = v);  
+        }
       }, true);
     }
     setupTerminalBinding(model,thing,expr,false,classUpdater); 
@@ -533,8 +536,8 @@ const Plus = function() {
         node = node.nextNode;
         while( node ) {
           var domitem = node;
-          if( !domitem.isElement ) break;
-          var elval = domitem.$model[nitem]; 
+          if( !domitem.isElement ) { node = node.nextNode; continue; }
+          var elval = domitem.$model && domitem.$model[nitem]; 
           if(elval !== undefined && elval.removeObserver)
             elval.removeObserver(rqRenderList);
           node = domitem.nextNode;

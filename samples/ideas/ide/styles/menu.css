@@ -24,7 +24,7 @@ menubar > li /* menu item in menu bar */
   flow:horizontal;
 }
 
-menubar > li:hover,
+menubar:not(:focus) > li:hover,
 menubar > li:current /* current menu item in menu bar */ 
 {  
   background-color:@MENU-HILITE-BACK; color:@MENU-HILITE-TEXT; 

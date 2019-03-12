@@ -10,7 +10,22 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FFFADA">4.2.6.10</td><td nowrap valign="top" align="center">19-02-2019</td><td>new:
+    <tr><td valign="top" bgcolor="#FFFADA">4.2.7.0</td><td nowrap valign="top" align="center">12-03-2019</td><td>fixes:
+					<ul>
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						<li>[script] fix of <code>parseData(&quot;-2&quot;)</code> case. <code>JSON.parse(&quot;-2&quot;)</code> is not affected and works as before;</li><li>[Windows] fix of <code>view.windowResizable = true | false</code> for custom frames;</li><li>[lang] support of title attribute;</li><li><code>Net.DataSocket</code>, enabling pipe connection by default to support communication with inspector;</li><li>[SDK headers] Fix of <code>SCROLL_SOURCE</code> enumeration;</li><li>[script] fix of &quot;BrokenHeart&quot; GC issue while handling <code>include</code> statement;</li>
+						<li>[script] fix of &quot;BrokenHeart&quot; issue in <code>array.length = ...</code>;&nbsp;</li><li>[+vlist] <code>params.bufferSize</code> parameter is obsolete now - not used, vlist computes bufferSize automatically;</li><li>[+plus] fix of <code>class=&quot;{{foo:expr}}&quot;</code> binding;</li>
+						<li>[+plus] <code>&lt;element repeat=&quot;&quot;&gt;</code> fix of record reordering.</li><li>Fix of SciterGetElementTextCB(), see: <a href="https://github.com/sciter-sdk/go-sciter/issues/177">https://github.com/sciter-sdk/go-sciter/issues/177</a>&nbsp;</li><li>[script] throwing error on new Array(-1);</li><li><code>&lt;htmlarea&gt;</code> and <code>&lt;plaintext&gt;</code> fix of <code>edit:selectall</code> command handling;</li>
+						<li><code>&lt;plaintext&gt;</code> fix of caret position after <code>plaintext.value = &quot;&quot;;</code></li><li>Fix of AV on failed TCP/IP connection.</li></ul></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.2.6.10</td><td nowrap valign="top" align="center">19-02-2019</td><td>new:
 					<ul><li>[smaples/charts] + interpolation mode;</li>
 						<li>+ sample: sdk/widgets/inertial-indicator.htm - W10 alike &quot;busy&quot; indicator;</li>
 						<li>[osx] support of <code>view.performDrag()</code> on MacOS too;</li>
