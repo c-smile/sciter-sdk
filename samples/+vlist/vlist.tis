@@ -51,12 +51,18 @@ function VirtualList(params) {
       }
       return r;
     }
+
+    function isContentDependent(list) {
+      if(list.style["max-height"] == "max-content") return true;
+      if(list.style["height"] == "max-content") return true;
+      return false;
+    }
  
     list.onSize = function() 
     {
       if(list.first)
         item_height = list.first.box(#height,#border); // adjust real item height
-      var ch = list.box(#height,#client);
+      var ch = isContentDependent(list) ? list.parent.box(#height,#inner) : list.box(#height,#client);
       var vi = ch / (item_height || 10);
       visible_items = vi;
       buffer_size = vi + 3;
@@ -105,7 +111,7 @@ function VirtualList(params) {
             
       if(i + buffer_size > records.length)
         i = Integer.max(0, records.length - buffer_size + 1); 
-        
+
       var bsn = buffer_start = i;
       
       if(list.last) {
