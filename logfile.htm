@@ -10,7 +10,31 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FFFADA">4.2.7.1</td><td nowrap valign="top" align="center">12-03-2019</td><td>fixes:
+    <tr><td valign="top" bgcolor="#FFFADA">4.2.7.2</td><td nowrap valign="top" align="center">29-03-2019</td><td>
+					
+					<p>new:</p>
+					<ul><li>+ [input|password] sample of &quot;show password&quot; functionality: sdk/samples/forms/password.htm</li>
+						<li>+ <code>&lt;script media=&quot;screen&quot;&gt;</code> - support of @media in &lt;script&gt; too (in the same way as in &lt;style&gt;).&nbsp;</li></ul><p>fixes:
+					</p><ul>
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						<li>[gtk] more gracefull <code>view.close()</code> implementation.</li><li><code>html { padding: ... }</code> dynamic update fix, see: <a href="https://sciter.com/forums/topic/can-not-change-html-padding-immediately-in-the-statechange-event/">https://sciter.com/forums/topic/can-not-change-html-padding-immediately-in-the-statechange-event/</a> &nbsp;</li><li>Fix of outline rendering on scrollable <code>position:absolute</code> elements.</li><li>[<code>&lt;select|dropdown&gt;</code>] fix of keyboard handling when no popup is shown.</li><li>[css] fix of <code>transition: ...list...;</code> parsing.</li><li>[MacOS] compatibility with MacOS 10.4.4&nbsp;</li><li>[+vlist] fix of partial view on resize;</li><li>[gtk] date formatting fix;</li><li>[html, printing] fix of <code>&lt;frame|pager&gt;</code> when it runs in child window, see: <a href="https://sciter.com/forums/topic/how-to-just-print-no-preview/#post-60426">https://sciter.com/forums/topic/how-to-just-print-no-preview/#post-60426</a>&nbsp;</li><li>[gtk] <code>element.state.focus = true</code> fix for newely created windows;</li><li>[script] <code>debug log: a, b;</code> - comma (<code>,</code>) is mandatory now;&nbsp;</li><li>[gtk] view move event generation;</li>
+						<li>[gtk] view activate event generation;</li><li>[+plus] <code>@expanded=&quot;some.prop&quot;</code> uses duplex binding (updates data model on event expand/collapse);</li><li>fix of a problem with delivering notifications when message queue is clogged by WM_PAINTs.</li><li>[DOM] <code>option.state.expanded/collapsed = true;</code> fix&nbsp;</li><li>[script] <code>eval()</code>, <code>object.eval()</code> is disabled by default, needs explicit <code>SciterSetOption(NULL, SCITER_SET_SCRIPT_RUNTIME_FEATURES, ALLOW_EVAL);</code></li><li>[+vlist] fix of the case when <code>list.style[&quot;max-height&quot;] == &quot;max-content&quot;</code>&nbsp;</li><li>[script] <code>Array.splice(start,...)</code> fix when start &gt;= length</li><li>[DOM] fix of <code>element.scrollToView()</code> for the case of deep hierarchies.</li></ul></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.2.7.1</td><td nowrap valign="top" align="center">12-03-2019</td><td>fixes:
 					<ul><li>[script] regression, fix of <code>parseData(&quot;-2&quot;)</code> &nbsp;issue introduced in 4.2.7.0</li></ul></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.2.7.0</td><td nowrap valign="top" align="center">12-03-2019</td><td>fixes:
 					<ul>
 						

@@ -89,7 +89,7 @@ const Plus = function() {
     return func;
   }
   
-  function setupTerminalBinding(model,thing,path,isInput,updater) 
+  function setupTerminalBinding(model,thing,path,duplexMode /*false|true|#expansion*/,updater) 
   {
     if( typeof model != #object  && typeof model != #namespace)
     {
@@ -129,7 +129,16 @@ const Plus = function() {
         updater(thing,coll.length); // intial value
       } 
       else { // subscribe to model change notifications:
-        if( isInput ) { // setup DOM change event handler 
+
+        if( duplexMode == #expansion) { // setup DOM expand/collapse event handler 
+          function on_state_change(evt) { 
+            coll[key] = thing.state.expanded; 
+            return false; 
+          } 
+          thing.on("expand.plus",on_state_change); // subscribe to the element expand/collapse change event
+          thing.on("collapse.plus",on_state_change); 
+        }
+        else if( duplexMode ) { // setup DOM change event handler 
           function on_ui_change(evt) { 
             if(evt.target === this || // itself 
               (evt.target.parent === this && evt.target.$is(caption))) // caption in editable list
@@ -138,6 +147,7 @@ const Plus = function() {
           } 
           thing.on("change.plus",on_ui_change); // subscribe to the element value change event
         }
+
         setupModelChangeHandler( coll, key, function(val) { if( !thing.parent ) throw undefined; updater(thing,val); } );
         if(thing.attributes["each"]) // if it has each then wee need to update the value after rendering its items
         {
@@ -183,22 +193,18 @@ const Plus = function() {
       function attrUpdater(thing,v) {
         thing.post(function() {
           if( thing.parent ) switch(attr) {
-            case "expanded":
-              thing.state.expanded = !!v; break;
-            case "collapsed":
-              thing.state.collapsed = !!v; break;
-            case "disabled":
-              thing.state.disabled = !!v; break;
-            case "enabled":
-              thing.state.disabled = !v; break;
-            case "readonly":
-              thing.state.readonly = !!v; break;
+            case "expanded":  if(v) thing.state.expanded = true; else thing.state.collapsed = true; break;
+            case "collapsed": if(v) thing.state.collapsed = true; else thing.state.expanded = true; break;
+            case "disabled":  thing.state.disabled = !!v; break;
+            case "enabled":   thing.state.disabled = !v; break;
+            case "readonly":  thing.state.readonly = !!v; break;
             default:
               thing.@[attr] = v;  
           }
         }, true);
       }
-      setupTerminalBinding(model,thing,expr,false,attrUpdater); 
+      var duplex = attr == "expanded" ? #expansion : false;
+      setupTerminalBinding(model,thing,expr,duplex,attrUpdater); 
     }
     for( var attr in thing.attributes ) // scan all attributes for "@..." ones:
     {

@@ -102,7 +102,7 @@ int CALLBACK WinMain(HINSTANCE hInstance,
 
 
   // Enable these features, to be available from script 
-  //SciterSetOption(NULL, SCITER_SET_SCRIPT_RUNTIME_FEATURES,
+  // SciterSetOption(NULL, SCITER_SET_SCRIPT_RUNTIME_FEATURES, 
   //  ALLOW_FILE_IO |
   //  ALLOW_SOCKET_IO |
   //  ALLOW_EVAL |

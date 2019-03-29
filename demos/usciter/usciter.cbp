@@ -71,6 +71,7 @@
 			<Add option="`pkg-config gtk+-3.0 --libs` -ldl" />
 			<Add option="-pthread" />
 		</Linker>
+		<Unit filename="../../../gtk/scapp/scapp.cbp" />
 		<Unit filename="../../include/behaviors/behavior_drawing.cpp" />
 		<Unit filename="../../include/behaviors/behavior_video_generator.cpp" />
 		<Unit filename="../../include/sciter-gtk-main.cpp" />

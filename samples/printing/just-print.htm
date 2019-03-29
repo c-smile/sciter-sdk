@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+    frame { visibility:none; }
+        
+    </style>
+    <script type="text/tiscript">
+      
+      event click $(button#print) { 
+        var pager = $(frame);
+        pager.print(); // print all pages
+        //pager.print([1]); // print only first page
+      }
+      
+      event paginationend $(frame) (evt) {
+        $(#print).state.disabled = false;
+      }
+      
+    </script>
+  </head>
+<body>
+  <p>This uses invisible &lt;frame|pager&gt; for printing (without preview)</p>
+  <button disabled #print>Print</button>
+  <frame|pager src="samples/print-test.htm" page-template="page-template.htm" />
+</body>
+</html>
