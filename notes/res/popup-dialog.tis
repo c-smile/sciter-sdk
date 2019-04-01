@@ -92,8 +92,9 @@ class PopupDialog : Element
     return true;
   }
 
-  event popupdismissed (evt) 
+  event popupdismissing (evt) 
   { 
+    //debug popupdismissed: evt.target, this, evt.target === this;
     if(evt.target === this) {
       view.eventsRoot = null;
       if(var fin = this.params.gone)

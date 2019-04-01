@@ -108,7 +108,7 @@ class BookView : Element
     var book = option.book;
     var caption = option.$(span.name);
     caption.attributes.addClass("editing");
-    caption.post( function() { caption.state.focus = true; });
+
     function commit(text) {
       caption.attributes.removeClass("editing"); 
       caption.off(".booknameedit");
@@ -119,13 +119,18 @@ class BookView : Element
         book.update{ name: db.getUniqueBookName(text) };
       option.parent.show();
     }
-    caption.on("focusout.booknameedit", function() { commit(this.value) });
-    caption.on("keydown.booknameedit", function(evt) { 
-      switch( evt.keyCode ) {
-        case Event.VK_RETURN: commit( this.value ); option.execCommand("set-current"); setCurrentBook(book); return true;
-        case Event.VK_ESCAPE: commit( book ? book.name: "" ); return true;
-      }
-    });
+
+    function startEditing() {
+      caption.state.focus = true;
+      caption.on("focusout.booknameedit", function() { commit(this.value) });
+      caption.on("keydown.booknameedit", function(evt) { 
+        switch( evt.keyCode ) {
+          case Event.VK_RETURN: commit( this.value ); option.execCommand("set-current"); setCurrentBook(book); return true;
+          case Event.VK_ESCAPE: commit( book ? book.name: "" ); return true;
+        }
+      });
+    }
+    caption.post( startEditing() );
   }
 
   event popuprequest $(menu.context#book) (evt,menu) {
