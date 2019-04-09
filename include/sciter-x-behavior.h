@@ -300,6 +300,37 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
                             // for GESTURE_ZOOM - zoom value, is less or greater than 1.0    
   };
 
+  enum EXCHANGE_CMD {
+    X_DRAG_ENTER = 0,       // drag enters the element
+    X_DRAG_LEAVE = 1,       // drag leaves the element  
+    X_DRAG = 2,             // drag over the element
+    X_DROP = 3,             // data dropped on the element  
+    X_PASTE = 4,            // N/A
+    X_DRAG_REQUEST = 5,     // N/A
+    X_DRAG_CANCEL = 6,      // drag cancelled (e.g. by pressing VK_ESCAPE)
+    X_WILL_ACCEPT_DROP = 7, // drop target element shall consume this event in order to receive X_DROP 
+  };
+
+  enum DD_MODES {
+    DD_MODE_NONE = 0, // DROPEFFECT_NONE	( 0 )
+    DD_MODE_COPY = 1, // DROPEFFECT_COPY	( 1 )
+    DD_MODE_MOVE = 2, // DROPEFFECT_MOVE	( 2 )
+    DD_MODE_COPY_OR_MOVE = 3, // DROPEFFECT_COPY	( 1 ) | DROPEFFECT_MOVE	( 2 )
+    DD_MODE_LINK = 4, // DROPEFFECT_LINK	( 4 )
+  };
+  
+  struct EXCHANGE_PARAMS
+  {
+    UINT         cmd;          // EXCHANGE_EVENTS
+    HELEMENT     target;       // target element
+    HELEMENT     source;       // source element (can be null if D&D from external window)
+    POINT        pos;          // position of cursor, element relative
+    POINT        pos_view;     // position of cursor, view relative
+    UINT         mode;         // DD_MODE 
+    SCITER_VALUE data;         // packaged drag data
+  };
+
+
   enum DRAW_EVENTS
   {
       DRAW_BACKGROUND = 0,
@@ -656,6 +687,11 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
           return false;                     
         }
 
+      virtual bool handle_exchange(HELEMENT he, EXCHANGE_PARAMS& params)
+        {
+          return false;
+        }
+      
       virtual bool handle_draw   (HELEMENT he, DRAW_PARAMS& params )
         {
           return on_draw(he, params.cmd, params.gfx, params.area );
@@ -760,6 +796,7 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
             // call using tiscript::value's (from the script)
             case HANDLE_TISCRIPT_METHOD_CALL: { TISCRIPT_METHOD_PARAMS* p = (TISCRIPT_METHOD_PARAMS *)prms; return pThis->handle_scripting_call(he, *p ); }
 			      case HANDLE_GESTURE :  { GESTURE_PARAMS *p = (GESTURE_PARAMS *)prms; return pThis->handle_gesture(he, *p ); }
+            case HANDLE_EXCHANGE: { EXCHANGE_PARAMS *p = (EXCHANGE_PARAMS *)prms; return pThis->handle_exchange(he, *p); }
 			      default:
               assert(false);
         }

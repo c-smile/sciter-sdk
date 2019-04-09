@@ -130,7 +130,7 @@ class BookView : Element
         }
       });
     }
-    caption.post( startEditing() );
+    caption.post( startEditing );
   }
 
   event popuprequest $(menu.context#book) (evt,menu) {

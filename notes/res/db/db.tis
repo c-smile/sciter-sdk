@@ -125,9 +125,11 @@ function db.purgeDeletedItems() {
       item.tags = null;
     }
   }
-  delBook.items.clear();
-  assert delBook.items.length == 0;
-  self.postEvent("book-assigned",delBook); // to update counters
+  if(delBook.items) {
+    delBook.items.clear();
+    assert delBook.items.length == 0;
+    self.postEvent("book-assigned",delBook); // to update counters
+  }
 }
 
 function db.addTag(tag) 

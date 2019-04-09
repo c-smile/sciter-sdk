@@ -180,7 +180,7 @@ function loadDialog(url) {
 
 
 function self.ready() {
-  //db.purgeDeletedItems();
+  db.purgeDeletedItems();
 
   view.animationsEnabled = false; // disable CSS animations for initial setup
   Settings.restore(); // restore UI layout
