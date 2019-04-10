@@ -32,9 +32,12 @@ struct native_clock: public event_handler
 
     virtual void attached  (HELEMENT he ) 
     {
-      dom::element(he).start_timer(1000);
+      dom::element(he).start_timer(1000,this);
     }
-    virtual void detached  (HELEMENT he ) { delete this; }
+    virtual void detached  (HELEMENT he ) { 
+      dom::element(he).stop_timer(this);
+      delete this; 
+    }
 
 
     virtual bool handle_timer  (HELEMENT he,TIMER_PARAMS& params )
