@@ -1,0 +1,89 @@
+<html>
+  <head>
+  <title></title>
+  <style>
+    
+    vlist 
+    { 
+      display:block; 
+      height:*; width:300px; 
+      border:1px solid black; 
+      overflow: scroll-indicator;
+    }
+
+    vlist > li {
+      display:block; 
+      padding:0 6dip;
+      line-height:31dip;
+      background: linear-gradient(top, #fff, #ddd);
+      behavior:form; /* each repeated child is treated as a form so it can accept object values */ 
+    } 
+    
+    vlist > li.highlighted {
+      background: linear-gradient(top, #fff, #da9);
+    }
+
+    vlist > li:hover {
+      background: linear-gradient(top, #fff, #bcd);
+    }
+
+    vlist > li:current {
+      background:gold;
+    }    
+    
+      
+  </style>
+  <script type="text/tiscript">
+  
+  include "../vlist.tis";
+  
+  function self.ready() {
+  
+    var records = new Array(10000);
+    
+    for( var n in records.length )
+      records[n] = { index: n, caption:"Item" };  
+
+    function setupRecordView(recordNo,record,viewEl) {
+      viewEl.attributes.toggleClass( "highlighted", record.highlighted || false );
+    }
+   
+     
+    var vlist = VirtualList {
+      container     : $(vlist),
+      setupItemView : setupRecordView
+    };
+    
+    // feed it by these records
+    vlist.value = records;
+    
+
+    $(#removeHighlighted) << event click() {
+      for(var record in records)
+        if(record)
+          record.highlighted = false;
+    }
+    
+    $(#updateHighlighted) << event click() {
+      for(var (n,record) in records)
+        if(record)
+          record.highlighted = (n & 1) != 0;
+    }
+    
+  }
+  
+  </script>
+  </head>
+<body>
+
+  <p>test custom setupItemView() function</p>
+  <button #updateHighlighted>Highlight (set 'record.highlighted = true') to odd items</button> 
+  <button #removeHighlighted>Remove highlightion</button> 
+
+  <vlist>
+    <li><span(index)/> <span(caption)>???</span></li>
+  </vlist>
+ 
+  
+</body>
+</html>

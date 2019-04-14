@@ -18,10 +18,6 @@
       background: linear-gradient(top, #fff, #ddd);
       behavior:form; /* each repeated child is treated as a form so it can accept object values */ 
     } 
-    
-    vlist > li.highlighted {
-      background: linear-gradient(top, #fff, #da9);
-    }
 
     vlist > li:hover {
       background: linear-gradient(top, #fff, #bcd);
@@ -43,10 +39,6 @@
     var n = 0;
     var p = 0;
     
-    function setupRecordView(recordNo,record,viewEl) {
-      viewEl.attributes.toggleClass( "highlighted", record.highlighted || false );
-    }
-    
     function provideItemData(recordNo) {
       return { index: recordNo, caption:"Item" };  
     }
@@ -54,7 +46,6 @@
     var vlist = VirtualList {
       container     : $(vlist),
       bufferSize    : 50, // records in sliding window
-      setupItemView : setupRecordView,
       getItemData   : provideItemData
     };
     
@@ -94,18 +85,6 @@
         if(record)
           record.index += 1;
     }
-
-    $(#removeHighlighted) << event click() {
-      for(var record in records)
-        if(record)
-          record.highlighted = false;
-    }
-    
-    $(#updateHighlighted) << event click() {
-      for(var (n,record) in records)
-        if(record)
-          record.highlighted = (n & 1) != 0;
-    }
     
   }
   
@@ -125,10 +104,6 @@
   <button #update>Update first 10</button> 
   <button #update-last>Update last 10</button> 
   <button #updateIndex>Increment index</button> 
-  <p>test custom setupItemView() function</p>
-  <button #updateHighlighted>Highlight (set 'record.highlighted = true') to odd items</button> 
-  <button #removeHighlighted>Remove highlightion</button> 
-
   <vlist>
     <li><span(index)/> <span(caption)>???</span></li>
   </vlist>
