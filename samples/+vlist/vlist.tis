@@ -270,8 +270,13 @@ function VirtualList(params) {
     
     list.onScroll = function(evt) 
     {
-      if( evt.type == Event.SCROLL_POS )
-        onScrollTo( (evt.scrollPos / item_height).limit( 0 , records.length - 1 - visible_items));
+      if( evt.type == Event.SCROLL_POS ) {
+        var sPos = evt.scrollPos / item_height;
+        var mPos = records.length - 1 - visible_items;
+        if( sPos > mPos ) sPos = mPos;
+        if( sPos < 0 ) sPos = 0;
+        onScrollTo( sPos );
+      }
     };
     
     function onRecordsetRangeAdd(start, end) 
