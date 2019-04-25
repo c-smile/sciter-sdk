@@ -264,8 +264,15 @@ function VirtualList(params) {
       visible_items = vi;
       const old_buffer_size = buffer_size;
       buffer_size = vi + 3;
-      if( old_buffer_size < buffer_size)
-         pumpAfter(list.firstIndex);
+
+      if( old_buffer_size < buffer_size) {
+        if(  buffer_start + buffer_size >= records.length ) {
+          buffer_start = records.length - visible_items + 1;
+          resetView();
+        } else 
+          pumpAfter(list.firstIndex);
+      }
+
     }
     
     list.onScroll = function(evt) 
