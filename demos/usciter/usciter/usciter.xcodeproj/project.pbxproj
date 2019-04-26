@@ -12,6 +12,7 @@
 		492B36D220EC59D500E479B4 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 492B36D020EC59D500E479B4 /* MainMenu.xib */; };
 		492B36DD20EC674300E479B4 /* usciter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 492B36DC20EC674300E479B4 /* usciter.cpp */; };
 		492B36DF20EC677500E479B4 /* sciter-osx-main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 492B36DE20EC677500E479B4 /* sciter-osx-main.mm */; };
+		49C45B7C226923A000E67ACC /* behavior_video_generator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49C45B7B226923A000E67ACC /* behavior_video_generator.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		492B36D620EC59D500E479B4 /* usciter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = usciter.entitlements; sourceTree = "<group>"; };
 		492B36DC20EC674300E479B4 /* usciter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = usciter.cpp; path = ../usciter.cpp; sourceTree = "<group>"; };
 		492B36DE20EC677500E479B4 /* sciter-osx-main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "sciter-osx-main.mm"; path = "../../../../include/sciter-osx-main.mm"; sourceTree = "<group>"; };
+		49C45B7B226923A000E67ACC /* behavior_video_generator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = behavior_video_generator.cpp; path = ../../../include/behaviors/behavior_video_generator.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,6 +42,7 @@
 		492B36BF20EC59D400E479B4 = {
 			isa = PBXGroup;
 			children = (
+				49C45B7B226923A000E67ACC /* behavior_video_generator.cpp */,
 				492B36DC20EC674300E479B4 /* usciter.cpp */,
 				492B36CA20EC59D400E479B4 /* usciter */,
 				492B36C920EC59D400E479B4 /* Products */,
@@ -154,6 +157,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				492B36CD20EC59D400E479B4 /* AppDelegate.m in Sources */,
+				49C45B7C226923A000E67ACC /* behavior_video_generator.cpp in Sources */,
 				492B36DD20EC674300E479B4 /* usciter.cpp in Sources */,
 				492B36DF20EC677500E479B4 /* sciter-osx-main.mm in Sources */,
 			);
@@ -303,6 +307,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = ../../../bin.osx;
 				DEVELOPMENT_TEAM = 642T6M376L;
+				HEADER_SEARCH_PATHS = (
+					../../../include,
+					../,
+					./,
+				);
 				INFOPLIST_FILE = usciter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = terrainformatica.usciter;
@@ -321,6 +330,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = ../../../bin.osx;
 				DEVELOPMENT_TEAM = 642T6M376L;
+				HEADER_SEARCH_PATHS = (
+					../../../include,
+					../,
+					./,
+				);
 				INFOPLIST_FILE = usciter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = terrainformatica.usciter;

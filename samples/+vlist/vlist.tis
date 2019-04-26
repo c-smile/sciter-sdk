@@ -255,6 +255,8 @@ function VirtualList(params) {
       }
     }
 
+    var ready = false;
+
     list.onSize = function() 
     {
       if(list.first)
@@ -273,6 +275,10 @@ function VirtualList(params) {
           pumpAfter(list.firstIndex);
       }
 
+      if(!ready) {
+        ready = true;
+        list.postEvent("ready"); // notify that list is ready to accept data
+      }
     }
     
     list.onScroll = function(evt) 

@@ -314,6 +314,9 @@
     <CustomBuildStep>
       <TreatOutputAsContent>true</TreatOutputAsContent>
     </CustomBuildStep>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='XpDebug|Win32'">
     <ClCompile>
@@ -505,7 +508,6 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
@@ -530,6 +532,9 @@
     <CustomBuildStep>
       <TreatOutputAsContent>true</TreatOutputAsContent>
     </CustomBuildStep>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Tools|Win32'">
     <ClCompile>
@@ -819,6 +824,7 @@
     <ResourceCompile Include="win-res\usciter.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\include\behaviors\behavior_video_generator.cpp" />
     <ClCompile Include="..\..\include\sciter-win-main.cpp" />
     <ClInclude Include="resources.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>

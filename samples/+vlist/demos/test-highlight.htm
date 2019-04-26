@@ -60,14 +60,12 @@
 
     $(#removeHighlighted) << event click() {
       for(var record in records)
-        if(record)
-          record.highlighted = false;
+        record.highlighted = false;
     }
     
     $(#updateHighlighted) << event click() {
       for(var (n,record) in records)
-        if(record)
-          record.highlighted = (n & 1) != 0;
+        record.highlighted = (n & 1) != 0; // highlight odd items
     }
     
   }

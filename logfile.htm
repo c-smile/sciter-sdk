@@ -10,7 +10,29 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FFFADA">4.2.7.5</td><td nowrap valign="top" align="center">10-04-2019</td><td>fixes:
+    <tr><td valign="top" bgcolor="#FFFADA">4.2.8.1</td><td nowrap valign="top" align="center">25-04-2019</td><td>fixes: 
+					<ul><li>regression fix of <code>return (expr,expr,...);</code> handling, &nbsp;see: &nbsp;<a href="https://sciter.com/forums/topic/found-version-4-2-8-0-do-not-suppert-this-syntax">https://sciter.com/forums/topic/found-version-4-2-8-0-do-not-suppert-this-syntax</a> </li></ul></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.2.8.0</td><td nowrap valign="top" align="center">25-04-2019</td><td>new:
+					<ul><li>[script] start of &quot;ES7 compatibility&quot; series:<ul><li>support of ES6 fat arrow functions (this-less lambdas): <code>(a,b) =&gt; a + b;</code> </li>
+								<li>stage I of <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment">destructuring assignment</a> support, DA in <code>var</code> and <code>let</code> initializations: <code>var [a,b] = [1,2];</code> and <code>var {a,b} = { a:1,b:2 };</code></li>
+								<li>Support of ellipsis <code>...</code> &nbsp;in DA and function declarations (rest parameters)</li></ul></li>
+						
+						<li>[script] re-implementation of <code>Element.create();</code>, this time object template is expressed as Tuple:&nbsp;<code>Element.create([div: &quot;text node&quot;]);</code></li>
+						<li>[script] <code>var (a,b,c) = (1,2);</code> will not produce error, will just set <code>c</code> to <code>undefined</code> silently to match DA/ES7 logic.&nbsp;</li>
+						<li>[API] + <code>BEHAVIOR_EVENT_PARAMS::name</code> and <code>BEHAVIOR_EVENTS::CUSTOM</code> - for handling custom events (<code>element.postEvent(&quot;custom-event&quot;)</code>) in native code.</li>
+						</ul>
+					<p>fixes:</p>
+					<ul>
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						<li>[gtk] fix keydown/up events handling.</li><li>[+vlist] fix of &quot;size change when scrolled at bottom&quot;: <a href="https://sciter.com/forums/topic/vlist-will-break-when-drag-the-scroll-bar-to-the-bottom/">https://sciter.com/forums/topic/vlist-will-break-when-drag-the-scroll-bar-to-the-bottom/</a> &nbsp;</li><li>[richtext] fix of error of last character removal.</li><li>[DOM] fix of paste from clipboard function.</li><li>[+vlist] fix of <a href="https://sciter.com/forums/topic/vlist-tiss-list-onscroll-function-will-error-in-in-this-condition/">https://sciter.com/forums/topic/vlist-tiss-list-onscroll-function-will-error-in-in-this-condition/</a> &nbsp;case.</li><li>[&lt;input|slider&gt;] fix of sticky behavior / missed MOUSE_UP handler.&nbsp;</li><li>[css] fix of <code>font-family: @CONST-LIST; </code>- use of font list constants.</li><li>[osx] OpenGL gfx backend &nbsp;creation fix.</li><li>[vlist] + sdk/samples/+vlist/demos/test-highlight.htm sample.</li><li>[DOM] <code>animationend</code> event generation fix.</li><li>[html,parser] fix of standalone '<code>\r</code>' parsing.</li><li>fix of AV on degenerate&nbsp;DOM structure: <a href="https://github.com/c-smile/sciter-sdk/issues/123">https://github.com/c-smile/sciter-sdk/issues/123</a>&nbsp;</li></ul></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.2.7.5</td><td nowrap valign="top" align="center">10-04-2019</td><td>fixes:
 					<ul>
 						
 						

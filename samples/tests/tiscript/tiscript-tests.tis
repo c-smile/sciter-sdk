@@ -747,7 +747,7 @@ function Function_test()
   if(DefParams() != 314) throw "Function, default parameters values"; 
   
   // varargs
-  function VarArgs(args..)
+  function VarArgs(...args)
   {
     //stdout << "args are:" << args;
     //stdout << " typeof args is:" << typeof args << "\n";
@@ -756,7 +756,7 @@ function Function_test()
   if(VarArgs(1,2,3) != 3) throw "Function, varargs!"; 
 
   // varargs, rest
-  function VarArgs2(first, restOfArgs..)
+  function VarArgs2(first, ...restOfArgs)
   {
     return restOfArgs;
   }
@@ -797,21 +797,47 @@ function Function_test()
   // lambda tests
   
   // simplest form 
+  {
+    var lambda1 = :a,b: a+b;
+    
+    if( typeof lambda1 != #function) throw "Lambda 1.1 failed !"; 
+    if( lambda1(3,4) != 7) throw "Lambda 1.2 failed !"; 
+    
+    // second form of lambda declaration - block with parameters
+    var lambda2 = :a,b { return a+b; }
+    if( typeof lambda2 != #function) throw "Lambda 2.1 failed !"; 
+    if( lambda2(3,4) != 7) throw "Lambda 2.2 failed !"; 
+    
+    // third, classic lambda declaration
+    var lambda3 = function (a,b) { return a+b; }
+    if( typeof lambda3 != #function) throw "Lambda 3.1 failed !"; 
+    if( lambda3(3,4) != 7) throw "Lambda 3.2 failed !"; 
+  }
 
-  var lambda1 = :a,b: a+b;
-  
-  if( typeof lambda1 != #function) throw "Lambda 1.1 failed !"; 
-  if( lambda1(3,4) != 7) throw "Lambda 1.2 failed !"; 
-  
-  // second form of lambda declaration - block with parameters
-  var lambda2 = :a,b { return a+b; }
-  if( typeof lambda2 != #function) throw "Lambda 2.1 failed !"; 
-  if( lambda2(3,4) != 7) throw "Lambda 2.2 failed !"; 
-  
-  // third, classic lambda declaration
-  var lambda3 = function (a,b) { return a+b; }
-  if( typeof lambda3 != #function) throw "Lambda 3.1 failed !"; 
-  if( lambda3(3,4) != 7) throw "Lambda 3.2 failed !"; 
+  // arrow functions  
+  {
+    var lambda1 = (a,b) => a+b;
+    
+    if( typeof lambda1 != #function) throw "Arrow lambda 1.1 failed !"; 
+    if( lambda1(3,4) != 7) throw "Arrow lambda 1.2 failed !"; 
+    
+    // second form of lambda declaration - block with parameters
+    var lambda2 = (a,b) => { return a+b; }
+    if( typeof lambda2 != #function) throw "Arrow lambda 2.1 failed !"; 
+    if( lambda2(3,4) != 7) throw "Arrow lambda 2.2 failed !"; 
+
+    // arrow functions have no `this` - their this is of outer function  
+    var obj = {};
+    function test() {
+      return () => this;  
+    }
+    var lambda3 = test.call(obj);
+    if( lambda3() !== obj) throw "Arrow lambda 3 failed !"; 
+
+    var lambda4 = a => a + 1;
+    if( lambda4(3) != 4) throw "Arrow lambda 4 failed !";     
+
+  }
   
   // --- 
   // Test of "new Function ([arg1[, arg2[, ... argN]],] functionBody)"
@@ -1396,6 +1422,71 @@ function referenceOf_test() {
 }
 
 
+function destructurung_assignment_test() {
+
+  var arr = [1,2,3];
+
+  {
+    var [a,b,c] = arr;
+    assert a == 1 && b == 2 && c == 3;
+  }
+
+  {
+    var [a,b,...c] = arr;
+    assert a == 1 && b == 2 && c == [3];
+  }
+
+  {
+    var [...a] = arr;
+    assert a == [1,2,3];
+  }
+
+  {
+    var [a,b,c,d] = arr;
+    assert a == 1 && b == 2 && c == 3 && d === undefined;
+  }
+
+  {
+    var [a,b,c,d = 4] = arr;
+    assert a == 1 && b == 2 && c == 3 && d == 4;
+  }
+
+  {
+    var [,,c] = arr;
+    assert c == 3;
+  }
+
+
+  var obj = { a: 1, b: 2, c: 3 };
+
+  {
+    var {a,b,c} = obj;
+    assert a == 1 && b == 2 && c == 3;
+  }
+
+  {
+    var {a,b,...rest} = obj;
+    assert a == 1 && b == 2 && rest == {c:3};
+  }
+
+  {
+    var {...copy} = obj;
+    assert copy == { a: 1, b: 2, c: 3 } && copy !== obj;
+  }
+
+  {
+    var {a,b,c,d} = obj;
+    assert a == 1 && b == 2 && c == 3 && d === undefined;
+  }
+
+  {
+    var {a,b,c,d = 4} = obj;
+    assert a == 1 && b == 2 && c == 3 && d == 4;
+  }
+
+}
+
+
 function showMemStats(msg) {
   var (total,free, used) = gc();
   stdout.printf("heap %s total=%d free=%d used=%d bytes\n", msg, total, free, used);
@@ -1432,6 +1523,7 @@ run( ForIn_test );
 run( match_test );
 run( regex_match_test );
 run( referenceOf_test );
+run( destructurung_assignment_test);
 
 showMemStats("after");
 

@@ -34,7 +34,7 @@
     <ClCompile Include="..\..\include\sciter-win-main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="resources.cpp">
+    <ClCompile Include="..\..\include\behaviors\behavior_video_generator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,6 +44,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sciter-x-window.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resources.cpp">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

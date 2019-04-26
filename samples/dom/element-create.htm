@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+          p.foo { color:blue; }
+          p.bar { color:green; }
+
+        </style>
+        <script type="text/tiscript">
+
+          function self.ready() {
+            // create 
+            var p = Element.create([p: "paragraph 1"]);
+            $(body).append(p);
+
+            $(body).append([p: "paragraph 2"]);
+
+            $(body).append([p: {class:"foo"}, 
+                             "paragraph 3 ",
+                             [strong:"with compound"],
+                             " content"
+                           ]);
+
+            $(body).append([p: {class:"bar"}, 
+                             [
+                               "paragraph 4 ",
+                               [strong:"with list of"],
+                               " children"
+                             ]
+                           ]);
+          }
+
+        </script>
+    </head>
+    <body>
+       <h1>Demo of <code>Element.create()</code> function that uses DOM creation microformat.</h1> 
+    </body>
+</html>

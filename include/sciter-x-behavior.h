@@ -469,6 +469,8 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
       PAGINATION_PAGE    = 0xE1,     // behavior:pager paginated page no, reason -> page no
       PAGINATION_ENDS    = 0xE2,     // behavior:pager end pagination, reason -> total pages
 
+      CUSTOM             = 0xF0,     // event with custom name
+
       FIRST_APPLICATION_EVENT_CODE = 0x100
       // all custom event codes shall be greater
       // than this number. All codes below this will be used
@@ -506,6 +508,9 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
                            // In case of custom event notifications this may be any
                            // application specific value.
       SCITER_VALUE data;   // auxiliary data accompanied with the event. E.g. FORM_SUBMIT event is using this field to pass collection of values.
+
+      LPCWSTR  name;       // name of custom event (when cmd == CUSTOM)
+
   } BEHAVIOR_EVENT_PARAMS;
 
   typedef struct TIMER_PARAMS
