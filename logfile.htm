@@ -10,7 +10,12 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FFFADA">4.2.8.1</td><td nowrap valign="top" align="center">25-04-2019</td><td>fixes: 
+    <tr><td valign="top" bgcolor="#FFFADA">4.2.8.2</td><td nowrap valign="top" align="center">28-04-2019</td><td>
+					
+					<p>new:</p>
+					<ul><li>behavior:layer; - adds bitmap buffer to element. Used on complex elements in presence of frequently updating elements like <code>&lt;video&gt;</code>.</li></ul><p>fixes:
+					</p><ul><li>destructuring assignment fixes.</li>
+						<li>fix of script loading from url containing non-ascii characters, see: <a href="https://sciter.com/forums/topic/4-2-8-1-plus/">https://sciter.com/forums/topic/4-2-8-1-plus/</a>&nbsp;</li></ul></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.2.8.1</td><td nowrap valign="top" align="center">25-04-2019</td><td>fixes: 
 					<ul><li>regression fix of <code>return (expr,expr,...);</code> handling, &nbsp;see: &nbsp;<a href="https://sciter.com/forums/topic/found-version-4-2-8-0-do-not-suppert-this-syntax">https://sciter.com/forums/topic/found-version-4-2-8-0-do-not-suppert-this-syntax</a> </li></ul></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.2.8.0</td><td nowrap valign="top" align="center">25-04-2019</td><td>new:
 					<ul><li>[script] start of &quot;ES7 compatibility&quot; series:<ul><li>support of ES6 fat arrow functions (this-less lambdas): <code>(a,b) =&gt; a + b;</code> </li>
 								<li>stage I of <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment">destructuring assignment</a> support, DA in <code>var</code> and <code>let</code> initializations: <code>var [a,b] = [1,2];</code> and <code>var {a,b} = { a:1,b:2 };</code></li>

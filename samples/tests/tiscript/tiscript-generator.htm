@@ -23,21 +23,24 @@
       function* step()
       {
         var i = 0;
-        while( i < items.length )
-          i += (yield items[i]) || 1;
+        while( i < items.length ) {
+          var n = yield items[i];
+          debug log: n;
+          i += n || 1;
+        }
       }
 
       var ol = self.select("ol#forward");
       for(var item in forward())
-        ol.insert { li, [item] };
+        ol.append([li: item]);
       ol = self.select("ol#backward");
       for(var item in backward())
-        ol.insert { li, [item] };
+        ol.append([li: item]);
 
       ol = self.select("ol#step");
       var iterator = step();
       while(var item = iterator.next(2))
-        ol.insert { li, [item] };
+        ol.append([li:item]);
         
     }
     

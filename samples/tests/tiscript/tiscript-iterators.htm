@@ -43,14 +43,14 @@
       var src = new Fruits();
       var ol = self.select("ol#forward");
       for(var item in src.forward())
-        ol.insert { li, [item] };
+        ol.insert([li: item ]);
       ol = self.select("ol#backward");
       for(var item in src.backward())
-        ol.insert { li, [item] };
+        ol.insert([li: item]);
         
       var ul = self.select("ul#range");
       for(var item in range(12,21))
-        ul.insert { li, [item.toString()] };
+        ul.insert ([ li: item.toString()]);
     }
     
   </script>
