@@ -150,8 +150,8 @@ function VirtualList(params) {
     
     function pumpBefore(i) {
     
-      var nve = Integer.max(buffer_size,Integer.max(0,i) + visible_items);
-      
+      var nve = Integer.max(0,i) + buffer_size;
+
       if(list.last) {
         list.last.style#margin-bottom = undefined;
         list.first.style#margin-top = undefined;

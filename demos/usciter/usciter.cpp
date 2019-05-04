@@ -85,13 +85,23 @@ int uimain(std::function<int()> run ) {
   // example, setting "usciter" media variable, check https://sciter.com/forums/topic/debugging-issues/  
   SciterSetMediaType(pwin->get_hwnd(), WSTR("desktop,usciter"));
 
+  bool loaded = false;
+  
+  const std::vector<sciter::string>& argv = sciter::application::argv();
+
+  if (sciter::application::argv().size() > 1) {
+     sciter::string file_to_open = argv[1];
+     loaded = pwin->load(file_to_open.c_str());
+  }
+
+  if(!loaded)
   // note: this:://app URL is dedicated to the sciter::archive content associated with the application
 #if defined(WINDOWS)
-  pwin->load(WSTR("this://app/default-win.htm"));
+    pwin->load(WSTR("this://app/default-win.htm"));
 #elif defined(OSX)
-  pwin->load(WSTR("this://app/default-osx.htm"));
+    pwin->load(WSTR("this://app/default-osx.htm"));
 #else // too many of them differnt
-  pwin->load(WSTR("this://app/default-else.htm"));
+    pwin->load(WSTR("this://app/default-else.htm"));
 #endif // WINDOWS
 
   pwin->expand();

@@ -668,6 +668,31 @@
       }); 
     }
 
+    template<typename R, typename T1, typename T2, typename T3, typename T4, typename T5>
+    inline value vfunc( R(*func)(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5)) {
+      return value([func](unsigned int argc, const value *argv) -> value {
+        R r = func(argc >= 1 ? argv[0].get<T1>() : T1(),
+          argc >= 2 ? argv[1].get<T2>() : T2(),
+          argc >= 3 ? argv[2].get<T3>() : T3(),
+          argc >= 4 ? argv[3].get<T4>() : T4(),
+          argc >= 5 ? argv[4].get<T5>() : T5());
+        return value(r);
+      });
+    }
+    template<typename R, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
+    inline value vfunc( R(*func)(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6)) {
+      return value([func](unsigned int argc, const value *argv) -> value {
+        R r = func(argc >= 1 ? argv[0].get<T1>() : T1(),
+          argc >= 2 ? argv[1].get<T2>() : T2(),
+          argc >= 3 ? argv[2].get<T3>() : T3(),
+          argc >= 4 ? argv[3].get<T4>() : T4(),
+          argc >= 5 ? argv[4].get<T5>() : T5(),
+          argc >= 6 ? argv[5].get<T6>() : T6());
+        return value(r);
+      });
+    }
+
+
     // versions of the above but for generic std::function
     template<typename R>
       inline value vfunc( std::function<R()> func ) 

@@ -10,8 +10,8 @@ class NodeBlock: Behavior
   
   function moveTo(x,y)  {
     this.style.set {
-      left: dip(x),
-      top: dip(y) 
+      left: px(x),
+      top: px(y) 
     };
   }
 }
