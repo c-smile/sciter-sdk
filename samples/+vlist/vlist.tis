@@ -98,7 +98,7 @@ function VirtualList(params) {
     function pumpAfter(i) { 
 
       var bso = buffer_start;
-            
+
       if(i + buffer_size > records.length)
         i = Integer.max(0, records.length - buffer_size + 1); 
 
@@ -309,18 +309,20 @@ function VirtualList(params) {
         var sy = list.scroll(#top);
         
         buffer_start += (end - start);
-        
+
         list.first.style#margin-top = px(topm + extra);
+        list.update();
         list.scrollTo(0, sy + extra);
       } 
       else if(start >= buffer_start + buffer_size && list.length) 
       {
-         var extra = (records.length - buffer_start - list.length) * item_height;
-         if(extra > 0)
-            list.last.style#margin-bottom = px(extra);
+        var extra = (records.length - buffer_start - list.length) * item_height;
+        if(extra > 0)
+          list.last.style#margin-bottom = px(extra);
       }
-      else 
+      else {
         resetView();
+      }
     }
     function onRecordsetRangeUpdate(start, end) 
     {
