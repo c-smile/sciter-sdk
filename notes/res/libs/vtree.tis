@@ -70,7 +70,7 @@ function VirtualTree(params)
     }
     eachChild(parentopt.data, appendChild);
     for( var opt in options ) opt.remove();
-    parentopt.state.expanded = true;
+    //parentopt.state.expanded = true;
   }
   
   collapseOption = function(opt)
@@ -78,7 +78,7 @@ function VirtualTree(params)
     //stdout.println("collapse");
     while(opt.length > 1)
       opt.last.remove();
-    opt.state.collapsed = true;       
+    //opt.state.collapsed = true;       
   }
 
   tree << event expand (evt) { expandOption(evt.target); /*optionExpanded(evt.target);*/ return true; }

@@ -451,6 +451,7 @@ function DragDrop(def)
           
           if( dd_placeholder_src ) 
           {
+            dd_placeholder_src.style.clear();
             if(dd_op == #moving) 
               dd_placeholder_src.remove();
             else if(dd_op == #copying) 
@@ -459,7 +460,6 @@ function DragDrop(def)
               dd_placeholder_src.@.removeClass("placeholder","src"); 
               //dd_placeholder_src.subscribe(onMouseHandler, Event.MOUSE);
             }
-            dd_placeholder_src.style.clear();
             dd_placeholder_src = null;
           }
           if(def.dropped) def.dropped(dd_source, from);

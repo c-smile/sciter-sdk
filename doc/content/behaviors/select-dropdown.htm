@@ -1,6 +1,6 @@
 ﻿<html>
   <head>
-    <meta name="generator" content="h-smile:richtext"/>
+    <meta name="generator" content="h-smile:richtext">
   </head>
 <body>
   <h1>behavior:dropdown-select</h1>
@@ -57,8 +57,8 @@
 	<p>Note: commands are invoked by calling <code>element.execCommand(&quot;cmd-name&quot;[,params])</code></p>
 	<ul><li><b>&quot;set-current&quot;</b> - when the command is sent to an <code>&lt;option&gt;</code> inside the select it causes the option to be current; &nbsp;</li></ul>
   <h2>Methods</h2>
-	<dl><dt>showPopup()</dt>
-    <dd>- shows popup list widget.</dd></dl>
+	<dl><dt>showPopup([true|false])</dt>
+    <dd>- shows (or closes) popup list widget.</dd></dl>
   <h2>Properties</h2>
   <p>Other than standard properties of DOM elements the dropdown also supports:</p>
   <ul>
@@ -67,7 +67,7 @@
   <ul>
     <li>editable select - string, read/write - content of the &lt;caption&gt;</li>
     <li>nullable select - any | undefined, read/write. value of selected option. Value of the option is its value attribute or option's text if there is no value defined on the &lt;option&gt;. Before user makes any choice value of the select is <em>undefined</em>.</li>
-    <li>normal select - any, read/write. value of selected option. Value of the option is its value attribute or option's text if there is no value defined. <br/>If no &lt;option selected&gt; defined then value of the select is the value of its first &lt;option&gt; element.</li></ul>
+    <li>normal select - any, read/write. value of selected option. Value of the option is its value attribute or option's text if there is no value defined. <br>If no &lt;option selected&gt; defined then value of the select is the value of its first &lt;option&gt; element.</li></ul>
   <h2>Selection change handling in script</h2>
   <h3>raw <code>onValueChanged</code> handler</h3>
   <pre>var btn = $(select#some);

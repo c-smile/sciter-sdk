@@ -4,18 +4,18 @@
 /*listitemicon*/
 option img
 {
-  margin:2px;
-	min-width:20px;
-	min-height:20px;
-	//foreground-position:50%50%;
+  margin:2dip;
+	min-width:20dip;
+	min-height:20dip;
 	foreground-repeat:no-repeat;
 	vertical-align:middle;
+  foreground-size:auto auto;
 }
 option img[stretch]
 {
-  foreground-repeat:stretch;
-  width:20px;
-	height:20px;  
+  foreground-size:100% 100%;
+  width:20dip;
+	height:20dip;  
 }
 
 widget
@@ -26,12 +26,12 @@ widget
 
 div
 {
-	padding:10px;
+	padding:10dip;
 	width:100%%;
 	height:100%%;
 }
 
-.header { background-color:threedface; padding:4px; margin:0; }
+.header { background-color:threedface; padding:4dip; margin:0; }
 
 @media screen && composition-supported
 {
@@ -229,12 +229,12 @@ div
 <option><img src="theme:toolbar-split-dd-button-disabled">toolbar-split-dd-button-disabled</option>
 <option><img src="theme:toolbar-split-dd-button-checked">toolbar-split-dd-button-checked</option>
 <option><img src="theme:toolbar-split-dd-button-checked-hover">toolbar-split-dd-button-checked-hover</option>
-<option><img src="theme:toolbar-h-splitter" style="width:16px; ">toolbar-h-splitter</option>
-<option><img src="theme:toolbar-v-splitter" style="height:16px">toolbar-v-splitter</option>
+<option><img src="theme:toolbar-h-splitter" style="width:16dip; ">toolbar-h-splitter</option>
+<option><img src="theme:toolbar-v-splitter" style="height:16dip">toolbar-v-splitter</option>
 
-<option><img src="theme:column-header-normal" style="width:16px; ">column-header-normal</option>
-<option><img src="theme:column-header-hover" style="width:16px; ">column-header-hover</option>
-<option><img src="theme:column-header-pressed" style="width:16px; ">column-header-pressed</option>
+<option><img src="theme:column-header-normal" style="width:16dip; ">column-header-normal</option>
+<option><img src="theme:column-header-hover" style="width:16dip; ">column-header-hover</option>
+<option><img src="theme:column-header-pressed" style="width:16dip; ">column-header-pressed</option>
 
 </widget>
 <div>
