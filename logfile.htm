@@ -10,7 +10,18 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FFFADA">4.2.8.4</td><td nowrap valign="top" align="center">13-05-2019</td><td>fixes:
+    <tr><td valign="top" bgcolor="#FFFADA">4.2.8.5</td><td nowrap valign="top" align="center">16-05-2019</td><td>
+					
+					<p>new:</p>
+					<ul><li>&quot;default media vars&quot; &nbsp;- defining default set of media variables common to all windows:<ul><li>by native API : <code>SciterSetMediaVars(NULL,&amp;mediaVars);</code></li>
+								<li>from script : <code><b>V</b>iew.mediaVars {...};</code></li>
+								</ul></li>
+						<li>+ <code>System.path(#DOWNLOADS)</code> - to get location of user's Downloads folder.</li></ul><p>fixes:
+					</p><ul><li>[gtk] modal dialogs CPU consumption fix;</li>
+						<li>[script] <code>event ~change { ... }</code> handling fix;</li>
+						<li>[osx] fix of drag-n-drop initiation.</li>
+						</ul>
+					<p>NOTE: this is the last build of 4.2.8.xxx series.</p></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.2.8.4</td><td nowrap valign="top" align="center">13-05-2019</td><td>fixes:
 					<ul><li>[animation] fix of image animation: <a href="https://sciter.com/forums/topic/foreground-image-transition-bug-in-4-2-8-3/">https://sciter.com/forums/topic/foreground-image-transition-bug-in-4-2-8-3/</a> ;</li>
 						<li>[css] <code>option:node</code>, &nbsp;better css selector handling;</li>
 						<li>[ddm] fix of /sciter-sdk/samples/carousel/carousel.htm case;</li>

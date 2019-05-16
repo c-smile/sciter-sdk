@@ -115,7 +115,8 @@ view.<u>eventsRoot</u> = null;
     <dd>
       <div> <strong>(</strong>[ <i>newVars</i>:object]<strong>)</strong> : Object | undefined</div>
       <p>If no <i>newVars</i> parameter provided then the method returns current set of media variables used by the view.</p>
-			<p>If <i>newVars</i> is an object then the method will update view's media variables from properties of the object. Returns <i>undefined</i> in this case.</p></dd>
+			<p>If <i>newVars</i> is an object then the method will update view's media variables from properties of the object. Returns <i>undefined</i> in this case.</p>
+			<p>The method can be called as for particular view (window) as <code>view.mediaVars(newVars)</code> or as a class method&nbsp;<code><b>View</b>.mediaVars(newVars)</code>. In later case it will set default media variables for all windows created after the call.</p></dd>
     <dt>selectFile</dt>
     <dd>
       <div> <strong>(</strong> <em>#save</em> | <em>#</em>open | #open-multiple, <em>filter</em>:string , <em>ext</em>: string [,<em>initialPath</em>:string[, <em>dialogCaption</em>:string]] <strong>) </strong>: string | array(string) | null</div>
