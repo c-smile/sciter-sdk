@@ -1,0 +1,9 @@
+// module to be imported 
+
+export function modFoo() { return #modFoo; }
+
+export var modVar = #modVar;
+export const modConst = #modConst;
+
+export default function modDefaultFoo() { return #modDefaultFoo; }
+

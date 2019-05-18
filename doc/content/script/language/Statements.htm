@@ -4,7 +4,7 @@
     <style>
       dl > dt { margin-top:1em; margin-bottom:0.5em; }
     </style>
-    <meta name="generator" content="h-smile:richtext"/>
+    <meta name="generator" content="h-smile:richtext">
   </head>
 <body>
   <h1>Statements</h1>
@@ -12,7 +12,7 @@
     <dt><strong><code>{</code></strong> &lt;statements&gt; <strong><code>}</code></strong></dt>
     <dd>A sequence of statements, delimited by the curly brackets, '{' and '}', is called a <strong>block</strong>. A block is itself a statement. Each block establishes its own namespace for the variables declared by the <strong>var</strong> and <strong>const</strong> statements.</dd>
 		<dt>&lt;expression&gt; <code>(</code> [&lt;param-expression&gt;[&nbsp;<code>,</code> &lt;param-expression&gt;[&nbsp;<code>,</code> ... &lt;param-expression&gt;]]] <code>)</code> </dt>
-		<dd>function/method call. Expression on the left shall evaluate to function reference. List of param-expressions (if any) will be evaluated and passed to the function as arguments.<p><i>Param-expression</i> is either a normal expression or a spread operator <code>..</code>&lt;iterable&gt; where <i>iterable</i> is an array, tuple or generator instance. Iterable expands to sequence of arguments.</p></dd>
+		<dd>function/method call. Expression on the left shall evaluate to function reference. List of param-expressions (if any) will be evaluated and passed to the function as arguments.<p><i>Param-expression</i> is either a normal expression or a spread operator <code>...</code>&lt;iterable&gt; where <i>iterable</i> is an array, tuple or generator instance. Iterable expands to sequence of arguments.</p></dd>
     <dt><strong><code>if</code></strong> <strong><code>(</code></strong> &lt;expression&gt; <strong><code>)</code></strong> &lt;statement&gt; [ <strong><code>else</code></strong> &lt;statement&gt; ]</dt>
     <dd>Conditionally executes a statement, depending on the result of the &lt;expression&gt;.</dd>
     <dt><strong><code>while</code></strong> [ <code><strong>:</strong></code> name ] <strong><code>(</code></strong> &lt;expression&gt; <strong><code>)</code></strong> &lt;statement&gt;</dt>
@@ -22,29 +22,32 @@
     <dt><strong><code>for</code></strong> [ <code><strong>:</strong></code> label ] <strong><code>(</code></strong> &lt;init-expression&gt; | <strong><code>var</code></strong> &lt;name-with-initialization&gt; <code>;</code> [&lt;condition-expression&gt;] <code>;</code> [&lt;inc-expression&gt;] <strong><code>)</code></strong> &lt;statement&gt;</dt>
     <dd>Executes the &lt;statement&gt; as long as the &lt;condition-expression&gt; evaluates to <em>true</em>.</dd>
     <dt><strong><code>for</code></strong> [ <strong><code>:</code></strong> label ] <code><strong>(</strong></code> [ <strong><code>var</code> </strong>] &lt;name&gt; <strong><code>in</code></strong> &lt;expression&gt; <code><strong>)</strong></code> &lt;statement&gt; [ <code><strong>otherwise</strong></code> &lt;statement&gt; ]</dt>
-    <dd>Executes the &lt;statement&gt; for every element contained in an array, object, or a function (a.k.a. generator-function). If the &lt;expression&gt; is an array, the &lt;name&gt; variable receives consecutive members of the array on each iteration. For the object, it receives the name (a.k.a. key) of each property. If the &lt;expression&gt; is a function, the for-in will invoke the function on each itearation until the function returns nothing. This happens if the function reaches the end of its body without a return statement (but it returns the <em>nothing</em> value in this case).<br/>If body of the loop neither executes (e.g. when the &lt;expression&gt; evaluates to an empty array) then the statement after <em>otherwise</em> is executed (if it is present).</dd>
+    <dd>Executes the &lt;statement&gt; for every element contained in an array, object, or a function (a.k.a. generator-function). If the &lt;expression&gt; is an array, the &lt;name&gt; variable receives consecutive members of the array on each iteration. For the object, it receives the name (a.k.a. key) of each property. If the &lt;expression&gt; is a function, the for-in will invoke the function on each iteration until the function returns nothing. This happens if the function reaches the end of its body without a return statement (but it returns the <em>nothing</em> value in this case).<br>If body of the loop neither executes (e.g. when the &lt;expression&gt; evaluates to an empty array) then the statement after <em>otherwise</em> is executed (if it is present).</dd>
     <dt><strong><code>for</code></strong> [ <strong><code>:</code></strong> label ] <code><strong>(</strong></code> [ <strong><code>var</code> </strong>] <em>&lt;name-list&gt;</em> <strong><code>in</code></strong> &lt;expression&gt; <code><strong>)</strong></code> &lt;statement&gt; [ <code><strong>otherwise</strong></code> &lt;statement&gt; ]</dt>
-    <dd>Where the <em>&lt;name-list&gt;</em> is list of variables separated by the comma <code><strong>,</strong></code> and enclosed by <code><strong>(</strong></code> <code><strong>)</strong></code> parentheses.<br/>This form of the for-in executes the &lt;statement&gt; for every element contained in an array, object, or a function (a.k.a. generator-function). <br/>If the &lt;expression&gt; is an array, the variables in the <em>name-list</em> receive consecutive index value <strong>and</strong> value of the correspondent array member on each iteration. For the object, first variable receives the name (a.k.a. key) of the property and second variable will receive the value of the property. If the &lt;expression&gt; is a function, the for-in will invoke the function on each itearation until the function returns nothing. Variables in the <em>&lt;name-list&gt;</em> will receive returned value of values if the function returns list of values.<br/>Examples:<br/><code>for( var (k,v) in obj ) stdout.printf(&quot;k=%s,v=%v,&quot;, k, v);</code> &nbsp;- prints names and values of each property of the object.<br/><code>for( var (i,v) in arr ) stdout.printf(&quot;i=%d,v=%v,&quot;, i, v);</code> &nbsp;- prints indexes and values of each member of the array.<br/>If body of the loop neither executes (e.g. when the &lt;expression&gt; evaluates to an empty array) then the statement after <em>otherwise</em> is executed (if it is present).</dd>
-    <dt><pre><strong><code>switch</code> <code>(</code> </strong>&lt;selector-expression&gt; <strong><code>)</code> <code>
+    <dd>Where the <em>&lt;name-list&gt;</em> is list of variables separated by the comma <code><strong>,</strong></code> and enclosed by <code><strong>(</strong></code> <code><strong>)</strong></code> parentheses.<br>This form of the for-in executes the &lt;statement&gt; for every element contained in an array, object, or a function (a.k.a. generator-function). <br>If the &lt;expression&gt; is an array, the variables in the <em>name-list</em> receive consecutive index value <strong>and</strong> value of the correspondent array member on each iteration. For the object, first variable receives the name (a.k.a. key) of the property and second variable will receive the value of the property. If the &lt;expression&gt; is a function, the for-in will invoke the function on each itearation until the function returns nothing. Variables in the <em>&lt;name-list&gt;</em> will receive returned value of values if the function returns list of values.<br>Examples:<br><code>for( var (k,v) in obj ) stdout.printf(&quot;k=%s,v=%v,&quot;, k, v);</code> &nbsp;- prints names and values of each property of the object.<br><code>for( var (i,v) in arr ) stdout.printf(&quot;i=%d,v=%v,&quot;, i, v);</code> &nbsp;- prints indexes and values of each member of the array.<br>If body of the loop neither executes (e.g. when the &lt;expression&gt; evaluates to an empty array) then the statement after <em>otherwise</em> is executed (if it is present).</dd>
+    <dt> <pre><strong><code>switch</code> <code>(</code> </strong>&lt;selector-expression&gt; <strong><code>)</code> </strong></pre></dt>
+    <dd> <p>The <strong>switch</strong> statement allows to select one of the many blocks of code for execution:</p>  
+    <pre><strong><code>switch</code> <code>(</code> </strong>&lt;selector-expression&gt; <strong><code>)</code> <code>
 {</code></strong>
     <code><strong>case</strong></code> &lt;case-expression&gt;<strong> <code>:</code> </strong>&lt;statements&gt; [...] 
     <code><strong>like</strong></code> &lt;template-expression&gt;<strong> <code>:</code> </strong>&lt;statements&gt; [...]<code><strong>
     instanceof</strong></code> &lt;class-name&gt;<strong> <code>:</code> </strong>&lt;statements&gt; [...]
     <code><strong>in</strong></code> &lt;collection&gt;<strong> <code>:</code> </strong>&lt;statements&gt; [...]
     <code><strong>default:</strong></code> &lt;statement&gt; <strong><code>
-}</code></strong></pre></dt>
-    <dd>The <strong>switch</strong> statement allows to select one of the many blocks of code for execution. When the result of &lt;case-expression&gt; equals the value of the &lt;selector-expression&gt;, the corresponding &lt;statements&gt; are executed. If &lt;template-expression&gt; matches the selector-expression the corresponding &lt;statements&gt; are executed. If there is no matching &lt;case-expression&gt; or &lt;template-expression&gt;, the statements marked by the <code>default:</code> label get executed (if present).</dd>
-    <dt><strong><code>break</code></strong> [label]<strong> <code>;</code></strong></dt>
+}</code></strong></pre>
+    <p>When the result of &lt;case-expression&gt; equals the value of the &lt;selector-expression&gt;, the corresponding &lt;statements&gt; are executed. If &lt;template-expression&gt; matches the selector-expression the corresponding &lt;statements&gt; are executed. </p>
+			<p>If there is no matching &lt;case-expression&gt; or &lt;template-expression&gt;, the statements marked by the <code>default:</code> label get executed (if present).</p></dd>
+    <dt><code><strong>br</strong>eak [label] ;</code></dt>
     <dd>The <strong>break</strong> statement terminates the execution of loops (for, for in, while or do/while) and switch statements. If the label is provided, it's a so-called named break statement. It breaks the outer loop, marked by the corresponding label. It is a syntax error if no such label is found in the current scope.
       Example: <pre>for:outer ( var row in rows )
     for:x ( var cell in row )
        if ( cell == current ) break outer;</pre></dd>
-    <dt><strong><code>continue</code></strong> [label]<strong> <code>;</code></strong></dt>
+    <dt><code><strong>c</strong>ontinue [label] ;</code></dt>
     <dd>The <strong>continue</strong> statement forces a loop (for, for in, while or do/while) to skip to the next iteration. If the label is provided, it's a so called named continue statement. It will iterates the outer loop, marked by the corresponding label. It is a syntax error if no such label is found in the current scope.</dd>
     <dt><strong><code>var</code></strong> &lt;name-or-name-list&gt; [ <strong><code>=</code></strong> &lt;init-expression&gt;] [ <strong><code>,</code></strong> &lt;name&gt; [<strong>=</strong> &lt;init-expression&gt;] ... ] <strong><code>;</code></strong></dt>
-    <dd>The <strong>var</strong> statement introduces a new variable local to the current scope. Blocks ( <code><strong>{</strong></code> ... <code><strong>}</strong></code> ) establish variable scopes in the language. (<em>Note</em>: In JavaScript, the scope is established only by the body of a function).<br/><em>&lt;name-or-name-list&gt;</em> here is either single <em>&lt;name&gt;</em> or group of names enclosed by <code><strong>(</strong></code> and &nbsp;<code><strong>)</strong></code> parentheses and separated by the comma <code><strong>,</strong></code> <br/>Example:<br/><code>var (a,b,c) = 1;</code> - declares variables a,b,c and assigns value '1' to them.<br/><code>var (a,b,c) = (1,2,3);</code> - equivalent of <code>var a = 1, b = 2, c = 3;</code></dd>
+    <dd>The <strong>var</strong> statement introduces a new variable local to the current scope. Blocks ( <code><strong>{</strong></code> ... <code><strong>}</strong></code> ) establish variable scopes in the language. (<em>Note</em>: In JavaScript, the scope is established only by the body of a function).<br><em>&lt;name-or-name-list&gt;</em> here is either single <em>&lt;name&gt;</em> or group of names enclosed by <code><strong>(</strong></code> and &nbsp;<code><strong>)</strong></code> parentheses and separated by the comma <code><strong>,</strong></code> <br>Example:<br><code>var (a,b,c) = 1;</code> - declares variables a,b,c and assigns value '1' to them.<br><code>var (a,b,c) = (1,2,3);</code> - equivalent of <code>var a = 1, b = 2, c = 3;</code></dd>
     <dt><strong><code>return</code></strong> [ &lt;expression&gt; | &lt;expression-list&gt; ] <strong><code>;</code></strong></dt>
-    <dd>The <strong>return</strong> statement terminates the execution of the current function, optionally returning the result of the &lt;expression&gt; or &lt;expression-list&gt;. If the expression is omitted, the function will return the special <em>undefined</em> value. <br/>Note that the <em>return</em> can return multiple values by providing expressions list:<br/><code>function rect() { return (10,10,100,100); }<br/>var (x,y,width,height) = rect(); // x and y get '10' and width and height get '100' values.</code></dd>
+    <dd>The <strong>return</strong> statement terminates the execution of the current function, optionally returning the result of the &lt;expression&gt; or &lt;expression-list&gt;. If the expression is omitted, the function will return the special <em>undefined</em> value. <br>Note that the <em>return</em> can return multiple values by providing expressions list:<br><code>function rect() { return (10,10,100,100); }<br>var (x,y,width,height) = rect(); // x and y get '10' and width and height get '100' values.</code></dd>
     <dt><strong><code>const</code></strong> &lt;name&gt; <strong>=</strong> &lt;init-expression&gt; [ <strong><code>,</code></strong> &lt;name&gt; <strong>=</strong> &lt;init-expression&gt; ... ] <strong><code>;</code></strong></dt>
     <dd>The <strong>const</strong> statement introduces a new named constant, local to the current scope. Autside the const statement, any attempt to assign another value to the &lt;name&gt; will generate a compile-time error.</dd>
     <dt><strong><code>try</code></strong> &lt;statement&gt; <strong><code>catch</code></strong> <strong><code>(</code></strong> &lt;variable-name&gt; <strong><code>)</code></strong> &lt;catch-statement&gt; <strong><code>finally</code></strong> &lt;finally-statement&gt;</dt>
@@ -61,21 +64,34 @@
         <li>string literal or variable holding string - file name to include. File may contain script source or compiled bytecode;</li>
         <li>expression evaluated to stream;</li>
         <li>expression evaluated to Bytes array.</li></ul></dd>
-    <dt><strong><code>assert</code></strong> &lt;test-expression&gt; [ <strong><code>:</code></strong> &lt;space-separated-list-of-expressions&gt; ]&nbsp;<strong><code>;</code></strong></dt>
-    <dd><p>The <strong>assert</strong> statement allows you to test assumptions about your program. When the &lt;test-expression&gt; evaluates to <em>false</em> at runtime, an error is thrown with the source text of the &lt;test-expression&gt; and optional list of expressions. </p><p>Note: with no debugger attached, this statement has no effect&nbsp;(NOP - empty instruction);&nbsp;</p></dd>
+    <dt><code>import</code> ...</dt>
+    <dd>The import statement allows to include other files as <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import">modules in ES2015</a>&nbsp;and supports following forms:<p>Import individual features (functions, variables, constants, classes and namespaces):</p>
+			<pre><b>import</b> <b>{</b> <i>name</i> <b>}</b> <b>from</b> &quot;module file path&quot;; // imports only name entity
+<b>import</b> <b>{</b> <i>name1</i>, <i>name2</i> <b>}</b> <b>from</b> &quot;module file path&quot;; // imports name1 and name2 entities</pre>
+			<p>Import default exported entity:</p>
+			<pre><b>import</b> <i>name</i> <b>from</b> &quot;module file path&quot;; // export default entity as <i>name</i></pre>
+			<p>Import all of a module's exports as a module object:</p>
+			<pre><b>import * as</b> <i>name</i> <b>from</b> &quot;module file path&quot;;</pre>
+			<p>Import exports with local aliases:</p>
+			<pre><b>import {</b> <i>theirName</i> <b>as</b> <i>name</i> <b>} from</b> &quot;module file path&quot;;</pre>
+			<p>Import a module for side effects only:</p>
+			<pre><b>import</b> &quot;module file path&quot;;</pre></dd>
+		<dt><code>export [default] ...</code></dt>
+		<dd> <p>The <i>export</i> is a modifier that can appear before <code>function</code>, <code>class</code>, <code>namespace</code>, <code>var</code> or <code>const</code> declarations inside modules to mark entities exported <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export">from modules</a>.</p></dd>
+<dt><strong><code>assert</code></strong> &lt;test-expression&gt; [ <strong><code>:</code></strong> &lt;space-separated-list-of-expressions&gt; ]&nbsp;<strong><code>;</code></strong></dt>
+    <dd> <p>The <strong>assert</strong> statement allows you to test assumptions about your program. When the &lt;test-expression&gt; evaluates to <em>false</em> at runtime, an error is thrown with the source text of the &lt;test-expression&gt; and optional list of expressions. </p><p>Note: with no debugger attached, this statement has no effect&nbsp;(NOP - empty instruction);&nbsp;</p></dd>
     <dt><code><strong>debug break;</strong></code></dt>
     <dd>Defines explicit breakpoint in source code, with attached debugger code execution stops at that line. With no debugger attached, this statement has no effect&nbsp;(NOP - empty instruction);&nbsp;</dd>
-		<dt><code><strong>debug namespace;</strong></code></dt>
-
+    <dt><code><strong>debug namespace;</strong></code></dt>
     <dd>Outputs current chain of namespaces to debug console;</dd>
     <dt><code><strong>debug stacktrace;</strong></code></dt>
-    <dd>Outputs stacktrace at the point;</dd>
+		<dd>Outputs stacktrace at the point;</dd>
 
-    <dt><code><strong>debug [log | info | warning | alert] :</strong></code> &lt;space-separated-list-of-expressions&gt; <code><strong>;<br/>debug [log | info | warning | alert] (</strong></code> &lt;stringizer-function-parameters&gt;&nbsp;<code><strong>)</strong></code></dt>
-    <dd><p>Log output: renders&nbsp;results of evaluation of expressions to the debug output.&nbsp; Second format supports stringizer parameters like:</p>
+    <dt><code><strong>debug [log | info | warning | alert] :</strong></code> &lt;space-separated-list-of-expressions&gt; <code><strong>;<br>debug [log | info | warning | alert] (</strong></code> &lt;stringizer-function-parameters&gt;&nbsp;<code><strong>)</strong></code></dt>
+    <dd> <p>Log output: renders&nbsp;results of evaluation of expressions to the debug output.&nbsp; Second format supports stringizer parameters like:</p>
 			<pre>debug info ( object data {obj} );</pre><p>Note: with no debugger attached, this statement has no effect&nbsp;(NOP - empty instruction);</p></dd>
-
     <dt>&lt;expression&gt;<strong> <code>;</code></strong></dt>
+
     <dd>Expressions that end with ';' constitute a single statement. Result of the &lt;expression&gt; is suppressed.</dd></dl>
 </body>
 </html>

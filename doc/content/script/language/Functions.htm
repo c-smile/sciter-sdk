@@ -1,7 +1,7 @@
 ﻿<html>
   <head>
     <title>Functions</title>
-    <meta name="generator" content="h-smile:richtext"/>
+    <meta name="generator" content="h-smile:richtext">
   </head>
 <body>
   <h1>Functions</h1>
@@ -15,7 +15,7 @@
 </pre>
   <dl>
     <dt>Where:</dt>
-    <dd><em>&lt;function-name&gt;</em> is a function name, either: simple&nbsp;<em>&lt;nmtoken&gt;</em> , or<br/>compound name: <em>&lt;nmtoken1&gt;</em> [ . <em>&lt;nmtoken2&gt;</em> [ . <em>&lt;nmtoken3&gt;</em> [ . <em>&lt;nmtokenN&gt;</em> ]]] <sup><a href="#fn__1" name="fnt__1" id="fnt__1" class="fn_top">1)</a></sup><br/><em>&lt;parameters&gt;</em> is a list of formal function parameters:<br/>[<em>&lt;parameter-name1&gt;</em> [ , <em>&lt;parameter-name2&gt;</em> [ , ... <em>&lt;parameter-nameN&gt;</em> ]]]</dd></dl>
+    <dd><em>&lt;function-name&gt;</em> is a function name, either: simple&nbsp;<em>&lt;nmtoken&gt;</em> , or<br>compound name: <em>&lt;nmtoken1&gt;</em> [ . <em>&lt;nmtoken2&gt;</em> [ . <em>&lt;nmtoken3&gt;</em> [ . <em>&lt;nmtokenN&gt;</em> ]]] <sup><a href="#fn__1" name="fnt__1" id="fnt__1" class="fn_top">1)</a></sup><br><em>&lt;parameters&gt;</em> is a list of formal function parameters:<br>[<em>&lt;parameter-name1&gt;</em> [ , <em>&lt;parameter-name2&gt;</em> [ , ... <em>&lt;parameter-nameN&gt;</em> ]]]</dd></dl>
   
   <h2><a name="anonymous-functions" id="anonymous-functions">Anonymous functions</a></h2>
   <p>Anonymous (a.k.a. lambda) functions can be declared in-place by using the following forms:</p>
@@ -29,16 +29,20 @@
   <pre><b>:</b> &lt;parameters&gt; <b>{</b> &lt;statements&gt; <b>}</b> 
 </pre>
   
-	<h3>&quot;That&quot; lambda function declarations:</h3>
+	<h3>&quot;fat arrow&quot; lambda function (a.k.a. &quot;that&quot; lambda function) declarations:</h3>
 	<p>Such functions do not own  <i>this</i> environment variable. <i>this</i> environment variable gets&nbsp;resolved to <i>this</i> of outer function as in 
   <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions">&quot;arrow&quot; functions in ES6</a>.</p>
 	<p>Single statement lambda function form:</p>
-  <pre><b>|</b> &lt;parameters&gt; <b>|</b> &lt;statement&gt;</pre>
+  <pre><b>(</b> &lt;parameters&gt; <b>) =&gt;</b> &lt;statement&gt;;</pre>
   <p>Block lambda function form:</p>
-  <pre><b>|</b> &lt;parameters&gt; <b>{</b> &lt;statements&gt; <b>}</b> 
+  <pre><b>(</b> &lt;parameters&gt; <b>) =&gt;</b> <b>{</b> &lt;statements&gt; <b>}</b> 
 </pre>
   
-	<p>Nested functions (functions inside of other functions) are allowed.</p>
+	
+	<p>Single parameter arrow function can be declared without <code>(</code> and <code>)</code> brackets as :</p>
+	<pre><i>name</i> <b>=&gt;</b> &lt;statement&gt;; // or
+<i>name</i> <b>=&gt; {</b> &lt;statements&gt; <b>}</b> 
+</pre><p>Nested functions (functions inside other functions) are allowed.</p>
 	<h2>Async functions</h2>
 	<pre><b>async function </b>( &lt;parameters&gt; ) 
 { 
@@ -183,10 +187,10 @@ for( var n in arr )
 </p>
   <pre>  foo ({ one:1, two:2 })
 </pre>
-  <hr/>
+  <hr>
   <p><sup><a href="#fnt__1" id="fn__1" name="fn__1">1)
 </a>
-</sup> Declaration of functions with compound names is a short form for the expression:<br/>name1.name2.name3. ... .nameN = function( &lt;parameters&gt; ) { &lt;statements&gt; }
+</sup> Declaration of functions with compound names is a short form for the expression:<br>name1.name2.name3. ... .nameN = function( &lt;parameters&gt; ) { &lt;statements&gt; }
 
 </p>
 </body>

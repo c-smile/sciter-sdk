@@ -1,4 +1,8 @@
 ﻿
+import { modFoo as aliasedModFoo, modVar as aliasedModVar, modConst as aliasedModConst } from "module.tis";
+import { modFoo, modVar, modConst } from "module.tis";
+import * as module from "module.tis";
+
 //|
 //| String test
 //|
@@ -235,7 +239,7 @@ function Array_test()
   const sx4 = [0, ..sx1, 4, ..sx3];
   assert sx4 == [0,1,2,3,4,5,6,7];
 
-  const sx5 = [..genNumbers(5)];
+  const sx5 = [...genNumbers(5)];
   assert sx5 == [0,1,2,3,4]; 
 
 
@@ -252,10 +256,15 @@ function Array_test()
 
   // find element and index
   {
-    var (idx,el) = sx1.find(:el: el == 2);
+    var (idx,el) = sx1.find( el => el == 2);
     assert el == 2 && idx == 1;
   }
-  
+
+  var empty = [];
+  assert empty.length == 0;
+  assert empty.last === void(0); assert empty.last == undefined;
+  assert empty.first === void(0); assert empty.first == undefined;
+
 }
 
 function Tuple_test()
@@ -277,7 +286,7 @@ function Tuple_test()
   const sx4 = [test3:0, ..sx1, 4, ..sx3];
   assert sx4 == [test3:0,1,2,3,4,5,6,7];
 
-  const sx5 = [test3:..genNumbers(5)];
+  const sx5 = [test3: ...genNumbers(5) ];
   assert sx5 == [test3:0,1,2,3,4];  
 
 
@@ -376,13 +385,23 @@ function Equality_test()
   assert foo1 !== foo3;
 }
 
-
-class Bar: Foo // type 'Bar' is derived from 'Foo'
+// SS style
+class Bar : Foo // class 'Bar' is derived from 'Foo'
 {
   function this(n = "o2")   { super(n); this.two = 2; }
   function bar()            { return "bar"; }
   function foo()            { return super.foo() + "bar"; }
   property name(v)          { get return "bar:" + this._name; set this._name = v; }
+}
+
+// JS style
+class Zur extends Foo // type 'Bar' is derived from 'Foo'
+{
+  constructor(n = "o3")   { super(n); this.two = 2; }
+  zur()            { return "zur"; }
+  foo()            { return super.foo() + "zur"; }
+  get name()       { return "zur:" + this._name; }
+  set name(v)      { this._name = v; }
 }
 
 function shallNotThrow(fn)
@@ -423,15 +442,25 @@ function Object_test()
   if(bar.name != "bar:o2") throw "property/get 2";
   
   bar.name = "O2";
-  
-  
-  if(bar.name != "bar:O2") throw "property/set 2";
-  
+  if(bar.name != "bar:O2") throw "property/set 2.1";  
+
   if( typeof bar != #object ) throw "typeof";
   if( !(bar instanceof Bar) ) throw "instanceof 1";
   if( !(bar instanceof Foo) ) throw "instanceof 2";
+
+  var zur = new Zur(); // Zur is derived from Foo 
   
-// `this var` (instance data)  and 'var' (class data, a.k.a. "static") 
+  if(zur.one != 1 ) throw "class ctor 3.1";
+  if(zur.two != 2 ) throw "class ctor 3.2";
+  if(zur.zur() != "zur" ) throw "class method 3.1";
+  if(zur.foo() != "foozur" ) throw "class method 3.2";  
+  if(zur.prototype !== Zur) throw "prototype/get 3";
+  if(zur.name != "zur:o3") throw "property/get 3";
+
+  zur.name = "O3";
+  if(zur.name != "zur:O3") throw "property/set 3.1 (" + zur.name + ")";  
+    
+  // `this var` (instance data)  and 'var' (class data, a.k.a. "static") 
   var f1 = new Foo();  
   var f2 = new Foo();  
   
@@ -462,9 +491,10 @@ function Object_test()
   if( !("one" in oc) ) throw "in";
   
   // non JS feature: literals of user defined classes
-  var o2 = {:Foo one:1 }; // this is actually short form of var o2 = {prototype:Class, one:1 };
-  if(o2.one != 1 ) throw "literal class 1 ";
-  if(o2.foo() != "foo" ) throw "literal class 2";
+  // NOT SUPPORTED anymore
+  // var o2 = {:Foo one:1 }; // this is actually short form of var o2 = {prototype:Class, one:1 };
+  // if(o2.one != 1 ) throw "literal class 1 ";
+  // if(o2.foo() != "foo" ) throw "literal class 2";
   
   // non JS feature: get element by literal 
   var o3 = { one:1, two:2, three:3, #thirty-three: 33 };
@@ -853,7 +883,7 @@ function Function_test()
   // parameters spread
   function takeFive(args..) { assert args == [0,1,2,3,4]; }
 
-  takeFive(..genNumbers(5));
+  takeFive(...genNumbers(5));
 
 }
 
@@ -984,7 +1014,9 @@ function Socket_test()
 
   sock << event data (message) { resp += message; stdout.println("response:", resp); }
   sock << event close() { oath(true,[resp]); }  
-  sock << event error(err) { oath(false,[err]);  }
+  sock << event error(err) { oath(false,[err]); }
+
+  debug log:12345;
 
   return oath;
 }
@@ -1339,6 +1371,9 @@ function ForIn_test() {
   for (var e4 in obj) { assert e4 == #one; }
   
   for (var (k,v) in obj) { assert k == #one && v == 1; }
+
+  for(var e1 of arr) { assert e1 == 1; }
+
 }
 
 function match_test() {
@@ -1483,6 +1518,12 @@ function destructurung_assignment_test() {
     assert a == 1 && b == 2 && c == 3 && d == 4;
   }
 
+  { // aliasing 
+    var {a:foo,b:bar,c:zap,c:zoo = 4} = obj;
+    assert foo == 1 && bar == 2 && zap == 3 && zoo == 4;
+  }
+
+
 }
 
 function value_list_test() {
@@ -1515,6 +1556,21 @@ function value_list_test() {
     var (a,b,c) = (obj.a,obj.b,obj.c);
     assert a == 1 && b == 2 && c == 3;
   }
+}
+
+function import_test() {
+
+  assert aliasedModFoo() == #modFoo;
+  //assert aliasedModVar == #modVar;
+  //assert aliasedModConst == #modConst;
+
+  assert modFoo() == #modFoo;
+  //assert modVar == #modVar;
+  //assert modConst == #modConst;
+
+  assert module.modFoo() == #modFoo;
+  //assert module.modVar == #modVar;
+  //assert module.modConst == #modConst;
 }
 
 
@@ -1556,6 +1612,7 @@ run( regex_match_test );
 run( referenceOf_test );
 run( destructurung_assignment_test);
 run( value_list_test);
+run( import_test);
 
 showMemStats("after");
 

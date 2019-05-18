@@ -89,9 +89,15 @@ int uimain(std::function<int()> run ) {
   
   const std::vector<sciter::string>& argv = sciter::application::argv();
 
-  if (sciter::application::argv().size() > 1) {
-     sciter::string file_to_open = argv[1];
-     loaded = pwin->load(file_to_open.c_str());
+  if (argv.size() > 1) {
+    sciter::string file_to_open;
+    for(int n = 1; n < argv.size(); ++n )
+        if( argv[n][0] != '-' ) {
+          file_to_open = argv[n];
+          break;
+        }
+    if (file_to_open.length())
+      loaded = pwin->load(file_to_open.c_str());
   }
 
   if(!loaded)

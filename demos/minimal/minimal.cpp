@@ -112,9 +112,9 @@ int CALLBACK WinMain(HINSTANCE hInstance,
   ::SciterSetOption(NULL, SCITER_SET_DEBUG_MODE, TRUE);
 
   // or un-comment the following to see console output: 
-  //sciter::debug_output_console _;
 
-
+  sciter::debug_output_console _;
+  
 	HWND wnd = ::CreateWindowEx(
 		0, /*WS_EX_LAYOUTRTL,*/
 		::SciterClassName(),

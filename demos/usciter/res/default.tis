@@ -208,7 +208,7 @@ event click $(button#inspector)
       return;
     }
     Sciter.launch(inspectorPath);
-    self.timer(200ms, function() { connectToInspector($(frame#content)) });
+    self.timer(300ms, function() { connectToInspector($(frame#content)) });
     
   }
 }

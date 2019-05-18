@@ -206,7 +206,7 @@ value DB_exec(VM* vm)
 
   int numrows_affected = sqlite3_changes(pdb);
   
-  TISCRIPT_RETURN_2(vm,v_int(r),v_int(numrows_affected));
+  TISCRIPT_RETURN_2(vm, v_int(r), v_int(numrows_affected));
 }
 
 // GC detected that the db object is not used by anyone so ... 

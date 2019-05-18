@@ -10,7 +10,15 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FFFADA">4.2.8.5</td><td nowrap valign="top" align="center">16-05-2019</td><td>
+    <tr><td valign="top" bgcolor="#FAFFEA">4.3.0.0</td><td nowrap valign="top" align="center">17-05-2019</td><td>new:
+					<ul><li>[script], first phase of moving towards ES2015/ES2017 compatibility:&nbsp;<ul><li>&quot;fat arrow&quot; functions according to ES2015 spec;</li>
+								<li><code><b>class</b> <i>name</i> <b>extend</b> <i>othername</i> { constructor() {...} ... }</code> - <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes">class declarations ES2015 style</a>&nbsp;including <code>get</code>/<code>set</code> functions for virtual property declarations.</li><li>modules support: <code>import ...;</code> and <code>export</code> statements in <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import">ES2015 specification</a>. <code>import</code> &nbsp;and <code>include</code> can both be used but for different script files; &nbsp;</li>
+								<li><code>void</code> support.</li>
+								</ul></li>
+						
+						</ul>
+					<p>fixes:</p>
+					<ul><li>[osx] sciter.app - enabling access to extended features from script, see <a href="https://sciter.com/forums/topic/osx-sciter-app-load-html-button-has-no-effect/">https://sciter.com/forums/topic/osx-sciter-app-load-html-button-has-no-effect/</a>&nbsp;</li></ul></td></tr><tr><td valign="top" bgcolor="#FFFADA">4.2.8.5</td><td nowrap valign="top" align="center">16-05-2019</td><td>
 					
 					<p>new:</p>
 					<ul><li>&quot;default media vars&quot; &nbsp;- defining default set of media variables common to all windows:<ul><li>by native API : <code>SciterSetMediaVars(NULL,&amp;mediaVars);</code></li>

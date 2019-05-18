@@ -20,6 +20,14 @@ int main(int argc, const char * argv[])
 {
     //::SciterSetOption(NULL,SCITER_SET_GFX_LAYER,1); // use this to force the engine to use CoreGraphics backend.
     
+    // enable features to be used from script
+    SciterSetOption(NULL, SCITER_SET_SCRIPT_RUNTIME_FEATURES,
+                    ALLOW_FILE_IO |
+                    ALLOW_SOCKET_IO |
+                    ALLOW_EVAL |
+                    ALLOW_SYSINFO );
+    
+    
     NSApplication * application = [NSApplication sharedApplication];
     NSArray *tl;
     [[NSBundle mainBundle] loadNibNamed:@"MainMenu" owner:application topLevelObjects:&tl];
