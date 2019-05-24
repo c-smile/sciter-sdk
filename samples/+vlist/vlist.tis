@@ -94,8 +94,24 @@ function VirtualList(params) {
       t.data = rec;
       return t;
     }
+
+    function calcMetrics() // calcs item_height, returns true if buffer_size was increased; 
+    {
+      if(list.first)
+        item_height = list.first.box(#height,#border); // adjust real item height
+      var ch = isContentDependent(list) ? list.parent.box(#height,#inner) : list.box(#height,#client);
+      var vi = ch / (item_height || 10);
+      visible_items = vi;
+      const old_buffer_size = buffer_size;
+      buffer_size = vi + 3;
+      return old_buffer_size < buffer_size;
+    } 
+
   
     function pumpAfter(i) { 
+
+      if(item_height == 10)
+        calcMetrics();
 
       var bso = buffer_start;
 
@@ -137,9 +153,6 @@ function VirtualList(params) {
       }      
     
       if(list.first) {
-        if(item_height == 10) {
-          list.onSize();
-        }
         list.first.style#margin-top = px( bsn * item_height );
         if(niend < records.length) {
           var extra = (records.length - niend) * item_height;
@@ -259,15 +272,7 @@ function VirtualList(params) {
 
     list.onSize = function() 
     {
-      if(list.first)
-        item_height = list.first.box(#height,#border); // adjust real item height
-      var ch = isContentDependent(list) ? list.parent.box(#height,#inner) : list.box(#height,#client);
-      var vi = ch / (item_height || 10);
-      visible_items = vi;
-      const old_buffer_size = buffer_size;
-      buffer_size = vi + 3;
-
-      if( old_buffer_size < buffer_size) {
+      if( calcMetrics() ) {
         if(  buffer_start + buffer_size >= records.length ) {
           buffer_start = records.length - visible_items + 1;
           resetView();
