@@ -10,8 +10,6 @@ Sciter is an embeddable HTML/CSS/scripting engine, Windows, Mac OSX and Linux.
 
 ![Norton Internet Security](https://sciter.com/screenshots/slide-norton-nis.png)
 
-![Norton Internet Security](https://sciter.com/screenshots/slide-norton-nis.png)
-
 ![Avast](https://sciter.com/screenshots/slide-avast.png)
 
 ![Cardio monitor](https://sciter.com/screenshots/slide-cardio.png)
