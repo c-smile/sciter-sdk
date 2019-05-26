@@ -76,7 +76,9 @@ int uimain(std::function<int()> run ) {
                           ALLOW_EVAL |
                           ALLOW_SYSINFO );
 
-  //sciter::debug_output_console console; //- uncomment it if you will need console window
+#ifdef _DEBUG
+  sciter::debug_output_console console; //- uncomment it if you will need console window
+#endif
 
   sciter::archive::instance().open(aux::elements_of(resources)); // bind resources[] (defined in "resources.cpp") with the archive
 

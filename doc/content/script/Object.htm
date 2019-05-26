@@ -1,7 +1,7 @@
 ﻿<html>
   <head>
     <title>Object</title>
-    <meta name="generator" content="h-smile:richtext"/>
+    <meta name="generator" content="h-smile:richtext">
   </head>
 <body>
   <h1>Object object</h1>
@@ -20,7 +20,7 @@ if( obj instanceof Object )
     <dt>this</dt>
     <dd>( )
       <p>constructor, creates instance of Object class - object per se.</p></dd>
-    <dt>toString<br/> toLocaleString</dt>
+    <dt>toString<br> toLocaleString</dt>
     <dd>( ) : string
       <p>Returns string <code>&quot;[object Object]&quot;</code>.</p></dd>
     <dt>valueOf</dt>
@@ -32,38 +32,33 @@ if( obj instanceof Object )
     <dt>extend</dt>
     <dd>( [deep:true], object1, object2, ... &nbsp;) : this
       <p>Extends the object by merging its properties from properties of object1, object2, etc.</p></dd>
-    <dt>exists</dt>
-    <dd>( <strong>tag</strong>: value, [<strong>deep</strong> = false] ) : true | false
-      <p>Checks property by its tag for existence. If deep == true then does deep lookup - in objects itself and its chain of classes.</p></dd>
-    <dt>remove</dt>
-    <dd>( <strong>tag</strong>: value ) : void
-      <p>Removes property of the object by its tag (a.k.a. name).</p></dd>
-    <dt>call</dt>
-    <dd>( <strong>func</strong>: function, [<strong>p1</strong>:value, <strong>p2</strong>:value, ... <strong>pN</strong>:value [, <strong>argv</strong>: array] ] ) : value
-      <p>Calls the <em>func</em> with context of <em>this</em> equal to the object. Parameters if given passed to the function. If <em>argv</em> is provided then its memebers will be added to the list of parameters of the call.</p></dd>
-    <dt>show</dt>
-    <dd>( [<strong>out</strong>: Stream] ) : void
-      <p>Reports class name and list of property name/values of the object. Intended to use for debugging purposes.</p></dd>
     <dt>eval</dt>
     <dd>( <strong>what</strong>: string | Stream [, <strong>namespace</strong>: object] ): value
       <p>Evaluates (interprets) <em>what</em> with context of <em>this</em> equal to the object. If <em>namespace</em> object is given then it is used as global namespace for evaluated code.</p></dd>
-    <dt>propertyAt</dt>
-    <dd>( <strong>tag</strong>: value ) : value
-      <p>Does lookup in the object for member/property by its tag. This is a direct equivalent of <em>obj.tag</em> construction.</p></dd>
-    <dt>seal</dt>
-    <dd><strong>( </strong>[<strong>strict</strong>:true|false] <strong>)</strong> : object
+    <h2>Static methods</h2>
+    <dt>Object.keys</dt>
+    <dd><strong>( </strong><b>obj</b> <strong>)</strong> : array &nbsp; &nbsp; &nbsp; <p>Returns list of property names defined on the object itself.</p></dd>
+    
+		
+		<dt>Object.create</dt><dd><b>(</b> <b>proto</b>: class | object | <i>null</i>, [ <b>propertiesObject</b>: object ]&nbsp;<b>)&nbsp;</b>: object<p>Creates a new object, using an existing object as the prototype of the newly created object.</p>
+			<p>If&nbsp;<i>propertiesObject</i> is provided then its properties are copied into newly created object.</p>
+			<p>Returns created object.</p></dd>
+		<dt>Object.assign</dt><dd><b>(</b> <b></b><b>target</b>: object, <b>source</b>: object, ... source: object <b>)&nbsp;</b>: object<p>Copies the values of all own properties from one or more <i>source</i> objects to the <i>target</i> object.</p>
+			<p>Returns the target object.</p></dd>
+    <dt>Object.seal</dt>
+    <dd><strong>( </strong><b>obj</b>, [<strong>strict</strong>:true|false] <strong>)</strong> : object
       <p>Locks structure of the object - after the call any attempt to add or remove object's property will throw an error. Values of existing properties can be changed though. Returns the object iself. If <em>strict</em> parameter is provided and it is exactly <em>true</em> then any attempt to get unknown property will throw an error.</p></dd>
-    <dt>isSealed</dt>
-    <dd><strong>( </strong>[<strong>strict</strong>:true|false]<strong> )</strong> : true | false | undefined
+    <dt>Object.isSealed</dt>
+    <dd><strong>(</strong><b>obj</b>, [<strong>strict</strong>:true|false] <strong>)</strong> : true | false | undefined
       <p>Returns <em>true</em> if the object is sealed. If <em>strict</em> parameter is provided and is exactly <em>true</em> then the method returns <em>true</em> only if <em>seal(true)</em> was called for it.</p></dd>
-    <dt>freeze</dt>
-    <dd><strong>( </strong>[<strong>strict</strong>:true|false] <strong>)</strong> : object
+    <dt>Object.freeze</dt>
+    <dd><strong>(</strong><b>obj</b>, [<strong>strict</strong>:true|false]<strong> )</strong> : object
       <p>Locks the object - makes it immutable - any attempt to add, remove and modify value of any object's property will throw an error. Returns the object itself. If there is a <em>strict</em> parameter and it is exactly <em>true</em> then any attempt to get unknown property will throw an error.</p></dd>
-    <dt>isFrozen</dt>
-    <dd><strong>( </strong>[<strong>strict</strong>:true|false]<strong> )</strong> : true | false | undefined
+    <dt>Object.isFrozen</dt>
+    <dd><strong>(</strong><b>obj</b>,&nbsp;[<strong>strict</strong>:true|false]<strong> )</strong> : true | false | undefined
       <p>Returns <em>true</em> if the object is frozen. If <em>strict</em> parameter is provided and is exactly <em>true</em> then the method returns <em>true</em> only if <em>freeze(true)</em> was called for it.</p></dd>
-    <dt>addObserver</dt>
-    <dd><strong>( observer</strong>:function<strong> )</strong> : undefined
+    <dt>Object.addObserver</dt>
+    <dd><strong>(obj</strong>, <strong>observer</strong>:function<strong> )</strong> : undefined
       <p>Attaches observer to the object - function that is called when the object changes. The observer here is a function that has following signature:</p>
       <p><code>function observer(changeDefinition) {}</code> where changeDefinition is tuple having following fields:</p>
       <ul>
@@ -72,10 +67,10 @@ if( obj instanceof Object )
         <li><code>[2]</code> - symbol or string, property name;</li>
         <li><code>[3]</code> - any, new value;</li>
         <li><code>[4]</code> - any, old value.</li></ul></dd>
-    <dt>removeObserver</dt>
-    <dd><strong>( observer</strong>:function<strong> | functionName</strong>:symbol<strong> )</strong> : undefined
+    <dt>Object.removeObserver</dt>
+    <dd><strong>(obj</strong>, <strong>observer</strong>:function<strong> | functionName</strong>:symbol<strong> )</strong> : undefined
       <p>Detaches given observer function from the object by function reference or by its name. &nbsp;</p></dd>
-    <dt>referenceOf</dt>
+    <dt>Object.referenceOf</dt>
     <dd><strong>( namespace</strong>:object, <strong>path</strong>:string<strong> )</strong> : (collection:object, key:symbol|string)<p>When given dot separated path like &quot;one.two.three&quot; the function returns obj/key pair - object in which &quot;three&quot; key is defined and that key.</p></dd></dl>
 </body>
 </html>

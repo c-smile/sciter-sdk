@@ -116,6 +116,21 @@ const Lang = function() {
     update();
   }
 
+  // static @novalue updater
+  function Novalue() {
+
+    var key = this.attributes["novalue"];
+    var el = this;
+    
+    function update() {
+      var text = xlation[key];
+      if( !text ) { if(notfound) notfound[key] = #text; el.attributes["novalue"] = key; }
+      else { el.attributes["novalue"] = text; if(used) used[key] = true; }
+    }
+    
+    addLangHandler(this,update);
+    update();
+  }
   
   // dynamic text updater, used by <var> or <xxx .var>
   // calls pluralizer/formatting function defined in the language map.
@@ -172,6 +187,7 @@ const Lang = function() {
       Controller    : Controller,
       Label         : Label,
       Title         : Title,
+      Novalue       : Novalue,
       Formatter     : Formatter,
       initStats     : initStats,
       translate     : translate,

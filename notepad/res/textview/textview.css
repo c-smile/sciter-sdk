@@ -31,21 +31,26 @@
   }
 
   :root > text:nth-child(10n) { list-marker-color:color(text-color); }
+  
   /*markup*/  
-  text::mark(tag) { color: steelblue; } /*background-color: #f0f0fa;*/
-  text::mark(tag-id) { color: red; } /*background-color: #f0f0fa;*/
+  text::mark(tag) { color: steelblue; }    text::mark(tag):theme(dark) { color: #9fc2df; } 
+  text::mark(tag-id) { color: red; }    
 
   /*source*/  
-  text::mark(number) { color: brown; }
-  text::mark(number-unit) { color: brown; }
-  text::mark(string) { color: teal; }
-  text::mark(keyword) { color: blue; }
-  text::mark(symbol) { color: brown; }
-  text::mark(literal) { color: brown; }
-  text::mark(comment) { color: green; }
+  text::mark(number) { color: brown; }      text::mark(number):theme(dark) { color: #e2afaf; } 
+  text::mark(number-unit) { color: brown; } text::mark(number-unit):theme(dark) { color: #e2afaf; } 
+  text::mark(string) { color: teal; }       text::mark(string):theme(dark) { color: #49d9d9; }     
+  text::mark(keyword) { color: blue; }      text::mark(keyword):theme(dark) { color: #65b7ff; }
+  text::mark(symbol) { color: brown; }      text::mark(symbol):theme(dark) { color: #e2afaf; } 
+  text::mark(literal) { color: brown; }     text::mark(literal):theme(dark) { color: #e2afaf; } 
+  text::mark(comment) { color: green; }     text::mark(comment):theme(dark) { color: #00c714; }
   
   text[type=script] {  background-color: #FFFAF0; }
   text[type=markup] {  background:color(document-color); }
   text[type=style]  {  background-color: #FAFFF0; }
+
+  text[type=script]:theme(dark) {  background-color: #453004; }
+  text[type=style]:theme(dark)  {  background-color: #283a05; }
+
 }
 

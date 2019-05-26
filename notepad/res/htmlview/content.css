@@ -59,6 +59,8 @@ figure > figcaption { display:block; width:*; text-align:center; border:1dip dot
 pre  { var(marker-color):@PRE_COLOR; prototype: Outline.Block url(block.tis);
        background:#E6E6FA80; border:1dip dotted #aaa; padding:0.25em; }
 
+pre:theme(dark) { background:#323252; } 
+
 section { var(marker-color):#FA807280; prototype:Outline.Block url(block.tis); }
 
 text { prototype: Outline.AnonymousParagraph url(block.tis); }
@@ -101,6 +103,7 @@ br {
 
 
 code { background:#E6E6FAC0; }
+code:theme(dark) { background:#515182; } 
 
 [href] { 
   behavior:clickable; 

@@ -10,7 +10,19 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FAFFEA">4.3.0.0</td><td nowrap valign="top" align="center">17-05-2019</td><td>new:
+    <tr><td valign="top" bgcolor="#FAFFEA">4.3.0.1</td><td nowrap valign="top" align="center">26-05-2019</td><td>
+					
+					<p>new:</p>
+					<ul><li>[script] support of <code>'single quote strings'</code> as in JS.</li>
+						<li><code>&lt;input|time default-group=&quot;second&quot;&gt;</code> (or &quot;hour&quot; or &quot;minute&quot;) - defines group that is selected by default. &nbsp;</li>
+						<li>+vlist and +lang (attribute <code>novalue</code>) updates.</li></ul><p>fixes:
+					</p><ul>
+						
+						<li>[script] fix of <code>for(var (one) in coll)</code> handling (single element var list).</li><li>[windows] <code>element.state.focus = true;</code> fix when current focus is in other window.</li><li>[layout] fix of occasional AV in <code>flow:table-fixed</code> (tables with fixed layout).</li>
+						<li>[notepad] dark theme compatibility.</li>
+						<li>[richtext] fix of richtext functionality on popup windows.</li>
+						<li>regression fix in <code>Element.attributes</code> <code>for(...in...)</code> enumeration.</li>
+						<li>[vlist] fix of https://sciter.com/forums/topic/vlist-buffer_size-error/ case.&nbsp;</li></ul></td></tr><tr><td valign="top" bgcolor="#FAFFEA">4.3.0.0</td><td nowrap valign="top" align="center">17-05-2019</td><td>new:
 					<ul><li>[script], first phase of moving towards ES2015/ES2017 compatibility:&nbsp;<ul><li>&quot;fat arrow&quot; functions according to ES2015 spec;</li>
 								<li><code><b>class</b> <i>name</i> <b>extend</b> <i>othername</i> { constructor() {...} ... }</code> - <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes">class declarations ES2015 style</a>&nbsp;including <code>get</code>/<code>set</code> functions for virtual property declarations.</li><li>modules support: <code>import ...;</code> and <code>export</code> statements in <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import">ES2015 specification</a>. <code>import</code> &nbsp;and <code>include</code> can both be used but for different script files; &nbsp;</li>
 								<li><code>void</code> support.</li>
