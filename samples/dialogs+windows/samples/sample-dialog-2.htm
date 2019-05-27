@@ -9,6 +9,8 @@
       height:max-content; 
       overflow:hidden; 
     }
+
+    //html:visited { background:gold; }
     
     form { flow: row(label,input select); border-spacing: 4dip; }
     form > label { white-space:nowrap; text-align:right; vertical-align:baseline; }
@@ -18,6 +20,10 @@
   
     event click $(#close-dialog) { view.close( $(form).value ); }
     event change $(form) { stdout.printf("value=%V\n",$(form).value); }
+
+    //event mousemove {
+    //  self.state.visited = !self.state.visited;
+    //}
     
     // fill data fields from passed parameters.
     // 'parameters' variable passed by dialog function.

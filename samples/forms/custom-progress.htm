@@ -1,0 +1,95 @@
+<html>
+    <head>
+        <title>Custom progress</title>
+        <style>
+
+        progress {
+          style-set:none;
+          aspect: Progress;
+
+          border-radius: 30dip;
+          background-color: red;
+          color: rgba(200,200,230,1);
+          width: 300dip;
+          height: 50dip;
+        } 
+
+        </style>
+        <script type="text/tiscript">
+
+
+  function Progress() 
+  {
+    var _max = (this.attributes["max"] || "100").toFloat();   
+    var _min = (this.attributes["min"] || "0").toFloat();   
+    
+    var _val;
+    
+    function paintValue(gfx) 
+    {
+      var (w,h) = this.box(#dimension,#inner);
+      var sw = _val / (_max - _min) * w;
+      gfx.fillColor( this.style#color )
+         .pushLayer(#background-area)
+         .rectangle(0,0,sw,h)
+         .popLayer();
+      return true;
+    }
+
+    var pos = -0.25; // 
+
+    function step() {
+      if( _val !== undefined ) { this.refresh(); return false; }
+      pos += 0.01;
+      if( pos > 1.25) 
+        pos = -0.25;
+      this.refresh();
+      return true;
+    }     
+
+    function paintNoValue(gfx) 
+    {
+      var (w,h) = this.box(#dimension,#inner);
+      var x = pos * w;
+      w = w * 0.25;
+      gfx.fillColor( this.style#color )
+         .pushLayer(#background-area)
+         .rectangle(x,0,w,h)
+         .popLayer();
+      return true;
+    }
+
+    this[#value] = property(v) {
+      get return _val;
+      set {
+        if( v === undefined ) {
+          _val = undefined;
+          pos = -0.25;
+          this.paintContent = paintNoValue;
+          //this.timer(16ms,step);
+          this.animate(step);
+        }
+        else if(v !== _val)
+        {
+          this.paintContent = paintValue;
+          _val = Float.min(v,_max);
+          _val = Float.max(_val,_min);
+        }
+        this.refresh();
+      }
+    }
+    this.value = parseData(this.attributes["value"] || "");
+  }
+
+        </script>
+    </head>
+    <body>
+
+<p>Fixed value
+  <progress value=25 /> </p>
+
+<p>No value
+<progress /></p>
+
+    </body>
+</html>
