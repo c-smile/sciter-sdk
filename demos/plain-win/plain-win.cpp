@@ -89,6 +89,7 @@ LRESULT CALLBACK window::wnd_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
     sciter::value r;
     try {
       r = root.call_function("Test.add",sciter::value(2),sciter::value(2));
+      //r = self->call_function("Nothing.add", sciter::value(2), sciter::value(2)); // testing non existent
     } catch (sciter::script_error& err) {
       std::cerr << err.what() << std::endl;
     }
@@ -164,6 +165,13 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
  	// TODO: Place code here.
 	MSG msg;
 	HACCEL hAccelTable;
+
+  SciterSetOption(NULL, SCITER_SET_SCRIPT_RUNTIME_FEATURES, 
+    ALLOW_FILE_IO |
+    ALLOW_SOCKET_IO |
+    ALLOW_EVAL |
+    ALLOW_SYSINFO);
+
 
   // Perform application initialization:
 

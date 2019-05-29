@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+          .multiline-overflow {
+            aspect: MultilineOverflow;
+            overflow:hidden;
+            width: *;
+            height: 2.5em; // two lines
+            border: 1dip solid;
+            padding-right:1em; 
+          }
+
+          .multiline-overflow.overflows {
+            foreground-image: url(path:M1675 832q0 53-37 90l-651 652q-39 37-91 37-53 0-90-37l-651-652q-38-36-38-90 0-53 38-91l74-75q39-37 91-37 53 0 90 37l294 294v-704q0-52 38-90t90-38h128q52 0 90 38t38 90v704l294-294q37-37 90-37 52 0 91 37l75 75q37 39 37 91z);
+            foreground-repeat:no-repeat; 
+            foreground-size:0.8em 0.8em;
+            fill:#444;
+            stroke:none;
+            foreground-position-right:0.2em;
+            foreground-position-bottom:0.2em;
+          }
+
+        </style>
+        <script type="text/tiscript">
+          function MultilineOverflow() {
+            function paint(gfx) {
+              var height = this.box(#height);
+              var contentHeight = this.box(#height,#content);
+              this.attributes.toggleClass("overflows", contentHeight > height);
+            }
+            this.paintContent = paint;
+          }
+        </script>
+    </head>
+    <body>
+
+       <p.multiline-overflow>In this example the MultilineOverflow aspect applied to the element, which means the text is clamped after three lines.
+  An "see more arrow" will be shown.</p> 
+
+    </body>
+</html>
+

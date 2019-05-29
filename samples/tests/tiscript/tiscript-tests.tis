@@ -468,7 +468,7 @@ function Object_test()
   assert f1.staticVar == [1,2,3];
   
   assert f1.memberVar == f2.memberVar;
-  assert f1.memberVar !== f2.memberVar; // instances has their own clones of proto arrays and objects
+  // Not anymore - assert f1.memberVar !== f2.memberVar; // instances has their own clones of proto arrays and objects - no clones just prototyping
   
   assert f1.staticVar == f2.staticVar;
   assert f1.staticVar === f2.staticVar;
@@ -515,34 +515,34 @@ function Object_test()
   
   // sealed tests
   var ox = { a:1,b:2 };
-  ox.seal();
+  Object.seal(ox);
   assert shallNotThrow( :: ox.a = 3 ) : "sealed 1";
   assert ox.a == 3 : "sealed 2";
   assert shallThrow( :: ox.c = 4 ) : "sealed 3";
   assert shallThrow( :{ delete ox.a }) : "sealed 4";
   assert ox.a == 3 : "sealed 5";
-  assert ox.isSealed() : "sealed 6";
+  assert Object.isSealed(ox) : "sealed 6";
   
   // frozen tests
   var oxx = { a:1,b:2 };
-  oxx.freeze();
+  Object.freeze(oxx);
   assert shallThrow( :: oxx.a = 3 ) : "freeze 1";
   assert oxx.a == 1 : "freeze 2";
   assert shallThrow( :: oxx.c = 4 ) : "freeze 3";
   assert shallThrow( :{ delete oxx.a }) : "freeze 4";
   assert oxx.a == 1 : "freeze 5";
-  assert oxx.isSealed() : "freeze 6";
-  assert oxx.isFrozen() : "freeze 7";
+  assert Object.isSealed(oxx) : "freeze 6";
+  assert Object.isFrozen(oxx) : "freeze 7";
     
   // strong sealed tests
   var oxxx = { a:1,b:2 };
-  oxxx.seal(true);
+  Object.seal(oxxx,true);
   assert shallNotThrow( :: oxxx.a = 3 ) : "strong sealed 1";
   assert oxxx.a == 3 : "strong sealed 2";
   assert shallThrow( :: oxxx.c = 4 ) : "strong sealed 3";
   assert shallThrow( :{ delete oxxx.a }) : "strong sealed 4";
   assert oxxx.a == 3 : "strong sealed 5";
-  assert oxxx.isSealed() : "strong sealed 6";
+  assert Object.isSealed(oxxx) : "strong sealed 6";
   var oxxxt;
   assert shallThrow( :: oxxxt = oxxx.c) : "strong sealed 7"; // reading of unknown property from strongly sealed object - throws an error
   
@@ -571,7 +571,7 @@ function Object_test()
   assert #three !in {one:1, two:2 };
   
   var keylist = [#for, #while, #do, #delete, #return, #get,#set, #throw];
-  assert kw.keys() == keylist: "Object.keys()";
+  assert Object.keys(kw) == keylist: "Object.keys()";
  
 
   var to1 = { a:1,b:[1,2] };

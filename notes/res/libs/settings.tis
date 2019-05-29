@@ -75,7 +75,7 @@ Settings.add {
   
 function enqueueSaveState()
 {
-  self.timer(4s,Settings.store);
+  view.root.timer(4s,Settings.store);
 }
 
 view.on("move",enqueueSaveState)

@@ -104,9 +104,6 @@ obj.filter(<var>callback</var>,[<var>thisArg</var>])
 obj.find(<var>predicate</var>,[<var>thisArg</var>])
 obj.some(<var>predicate</var>,[<var>thisArg</var>])
 obj.every(<var>predicate</var>,[<var>thisArg</var>])
-
-obj.addObserver(observerFunc)
-obj.removeObserver(observerFunc)</pre>
 </section>
 
 <section>
@@ -128,17 +125,13 @@ obj.clone([<var>deep:true</var>])
 obj.extend([<var>deep:true</var>][,<var>obj1</var>,[<var>obj2</var>, &hellip;]])
 obj.eval(<var>"script"|stream</var>[,<var>ns</var>])
 
-obj.propertyAt(<var>key</var>)
-obj.remove(<var>key</var>)
+Object.seal(<var>obj</var>,<var>strict</var>)
+Object.isSealed(<var>obj</var>,<var>strict</var>)
+Object.freeze(<var>obj</var>,<var>strict</var>)
+Object.isFrozen(<var>obj</var>,<var>strict</var>)
 
-obj.seal(<var>strict</var>)
-obj.isSealed(<var>strict</var>)
-obj.freeze(<var>strict</var>)
-obj.isFrozen(<var>strict</var>)
-
-obj.addObserver(<var>observerFunc</var>)
-obj.removeObserver(<var>observerFunc</var>)
-
+Object.addObserver(<var>obj</var>,<var>observerFunc</var>)
+Object.removeObserver(<var>obj</var>,<var>observerFunc</var>)
 Object.referenceOf(<var>ns</var>,<var>"path"</var>):(<var>coll,key</var>)</pre>
 </section>
 

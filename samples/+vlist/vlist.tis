@@ -62,7 +62,7 @@ function VirtualList(params) {
       var record = el.data;
       if(!record) return;
       el.data = null;
-      record.removeObserver(el[#vlist-record-observer]);
+      Object.removeObserver(record,el[#vlist-record-observer]);
       el[#vlist-record-observer] = null;
     }
  
@@ -76,7 +76,7 @@ function VirtualList(params) {
           showRecord(idx, record, el); 
       }
       el[#vlist-record-observer] = recordObserver;        
-      record.addObserver(recordObserver);
+      Object.addObserver(record,recordObserver);
       return record;
     }
     
@@ -109,9 +109,6 @@ function VirtualList(params) {
 
   
     function pumpAfter(i) { 
-
-      if(item_height == 10)
-        calcMetrics();
 
       var bso = buffer_start;
 
@@ -153,6 +150,19 @@ function VirtualList(params) {
       }      
     
       if(list.first) {
+        if(item_height == 10)
+        {
+          const old_buffer_size = buffer_size;
+          calcMetrics();
+          if(item_height != 10 || old_buffer_size != buffer_size)
+          {
+            var niend_new = Integer.min(bsn + buffer_size, records.length);
+            for(var i in (niend - niend_new))
+              removeRecViewer(list.last);
+            niend = niend_new;
+          }
+        }
+
         list.first.style#margin-top = px( bsn * item_height );
         if(niend < records.length) {
           var extra = (records.length - niend) * item_height;
@@ -382,7 +392,7 @@ function VirtualList(params) {
         } 
         onRecordSetChange.list = list;
         // assign it as an observer    
-        Object.addObserver.call(records,onRecordSetChange); // subscribe to collection object changes    
+        Object.addObserver(records,onRecordSetChange); // subscribe to collection object changes    
       }
       else {
         if( !silent )
@@ -390,13 +400,35 @@ function VirtualList(params) {
             removeRecViewer(list.last);
         var thisObserver = null;
         function cmp( observer ) { if( observer.list == list ) { thisObserver = observer; return true; } }
-        records.eachObserver( cmp );
+        Object.eachObserver(records, cmp);
         if(thisObserver)
-          Object.removeObserver.call(records,thisObserver); // unsubscribe
+          Object.removeObserver(records,thisObserver); // unsubscribe
         current_record = null;
       }
     }
  
+    list.navigateToStart = function() 
+    { 
+      //buffer_start = 0;   
+      //list.scrollTo(0, 0, false); 
+      resetView(true);
+    };
+
+    list.reset = function(cb) 
+    { 
+      setupSetObserver(false);
+      var idxToGo = cb(records);
+      setupSetObserver(true);      
+      list.clear(); 
+      if( records )
+         pumpAfter.call(list,0); 
+      list.scrollTo(0,0);      
+      if(typeof idxToGo == #integer) {
+        list.post(function() {
+          list.firstIndex = idxToGo;
+        });
+      }
+    };
     list[#value] = property(v) 
     {
       get return records;
@@ -489,8 +521,14 @@ function VirtualList(params) {
       get return records.indexOf(current_record);
       set { setCurrent(v,false); }
     } 
-    
-    list.current = property(v) 
+
+    list.currentRecord = property(v) 
+    {
+      get return records.indexOf(current_record) >= 0? current_record : null;
+      set { setCurrent(records.indexOf(v),false); }
+    } 
+
+    list.current = property(v) // alias of the above
     {
       get return records.indexOf(current_record) >= 0? current_record : null;
       set { setCurrent(records.indexOf(v),false); }

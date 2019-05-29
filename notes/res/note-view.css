@@ -2,14 +2,14 @@
 @import url(icons.css);
 
 @mixin TOOLBAR-SPAN {
-  height:length(band-size); 
+  font:system;  
+  height:length(band-size);
   line-height:height(100%);
+  font-size:14dip;  
   padding-top:0;
   padding-bottom:0;
   margin-top:0;
   margin-bottom:0;
-  font:system;
-  font-size:14dip;
 }
 
 note-view {
@@ -257,6 +257,7 @@ note-view > history > label { display:block; } */
     border: none;
     border-radius:0;
     min-height:auto;
+    height:*;
     padding:0;
   }
 
@@ -274,6 +275,7 @@ note-view > history > label { display:block; } */
     @TOOLBAR-SPAN;
     display:block;
     width:*;
+    line-height:height(100%);
     foreground-image: url(path: M1664 896q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z);
     foreground-repeat:no-repeat;
     foreground-position: 6dip 50%;
@@ -294,6 +296,14 @@ note-view > history > label { display:block; } */
     width:max-content;
     margin:0 *;
     border: none;
+  }
+
+  select.book option span.name {
+    height:1.8em;
+  }
+
+  select.book option:hover {
+    foreground-color:color(hover-highlight);
   }
 
 
@@ -322,7 +332,6 @@ note-view > history > label { display:block; } */
     padding:0 4dip;
     width:*;
     height:38dip;
-    font:system;
     font-size: 14dip;
   }
 

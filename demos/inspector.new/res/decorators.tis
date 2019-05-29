@@ -1,4 +1,4 @@
-﻿
+
 
 // decorator '@when' - filters event type and establishes chain of event handlers
 function @when(func, evtType)
@@ -12,7 +12,7 @@ function @when(func, evtType)
     return r;  
   }
   // note 'this' in decorators is a current namespace - class or global (ns)
-  var principal = this instanceof Behavior? this : self;
+  var principal = typeof this == #class? this : self;
   t.next = principal.onControlEvent; 
   return principal.onControlEvent = t;
 }
@@ -31,30 +31,11 @@ function @click(func) // short form of @when Event.BUTTON_CLICK ...
     return r;  
   }
   // note 'this' in decorators is a current namespace - class or global (ns)
-  var principal = this instanceof Behavior? this : self;
+  var principal = typeof this == #class? this : self;
+
   t.next = principal.onControlEvent; 
   return principal.onControlEvent = t;
 }
-
-function @sinkingclick(func) // short form of @when Event.BUTTON_CLICK ...
-{
-  function t(evt)
-  {
-    var r = false;
-    if(  evt.type == (Event.BUTTON_CLICK | Event.SINKING)
-      || evt.type == (Event.HYPERLINK_CLICK | Event.SINKING)
-      || evt.type == (Event.MENU_ITEM_CLICK | Event.SINKING)
-      || evt.type == (Event.CLICK | Event.SINKING) ) 
-      r = func.call(this,evt);
-    if(t.next) return t.next.call(this,evt) || r;
-    return r;  
-  }
-  // note 'this' in decorators is a current namespace - class or global (ns)
-  var principal = this instanceof Behavior? this : self;
-  t.next = principal.onControlEvent; 
-  return principal.onControlEvent = t;
-}
-
 
 function @dblclick(func) 
 {
@@ -67,7 +48,7 @@ function @dblclick(func)
     return r;  
   }
   // note 'this' in decorators is a current namespace - class or global (ns)
-  var principal = this instanceof Behavior? this : self;
+  var principal = typeof this == #class? this : self;
   t.next = principal.onMouse; 
   return principal.onMouse = t;
 }
@@ -87,7 +68,7 @@ function @change(func) // short form of @when Event.EDIT_VALUE_CHANGED, etc ...
     return r;  
   }
   // note 'this' in decorators is a current namespace - class or global (ns)
-  var principal = this instanceof Behavior? this : self;
+  var principal = typeof this == #class? this : self;
   t.next = principal.onControlEvent; 
   return principal.onControlEvent = t;
 }
@@ -97,8 +78,9 @@ function @on(func, selector)
 {
   return function(evt)
   {
+    if(!evt.target) return;
     var el = evt.target.selectParent(selector);
-    if( el && el.belongsTo(this,true))
+    if( el && el.belongsTo(this))
       return func.call(this,evt,el);
   }
 }
@@ -117,30 +99,11 @@ function @key(func, keyCode = undefined, modifiers..)
     return r;  
   }
   // note 'this' in decorators is a current namespace - class or global (ns)
-  var principal = this instanceof Behavior ? this : self;
+  var principal = typeof this == #class ? this : self;
   t.next = principal.onKey; 
   principal.onKey = t;
   //return 
 }
-
-function @sinkingkey(func, keyCode = undefined, modifiers..)
-{
-  function t(evt)
-  {
-    var r = false;
-    if( evt.type == (Event.KEY_DOWN | Event.SINKING) && 
-        (keyCode === undefined || (keyCode == evt.keyCode)) ) 
-          r = func.call(this,evt);
-    if(t.next) return t.next.call(this,evt) || r;
-    return r;  
-  }
-  // note 'this' in decorators is a current namespace - class or global (ns)
-  var principal = this instanceof Behavior ? this : self;
-  t.next = principal.onKey; 
-  principal.onKey = t;
-  //return 
-}
-
 
 // decorator '@CTRL' - pass if evt.ctrlKey === true
 function @CTRL(func) { return function(evt) { if( evt.ctrlKey === true ) return func.call(this,evt); } }
@@ -167,7 +130,7 @@ function @mouse(func, mouseEvtType)
     return r;  
   }
   // note 'this' in decorators is a current namespace - class or global (ns)
-  var principal = this instanceof Behavior? this : self;
+  var principal = typeof this == #class? this : self;
   t.next = principal.onMouse; 
   return principal.onMouse = t;
 }
@@ -184,7 +147,7 @@ function @focus(func, got /*true|false*/)
     return r;  
   }
   // note 'this' in decorators is a current namespace - class or global (ns)
-  var principal = this instanceof Behavior? this : self;
+  var principal = typeof this == #class? this : self;
   t.next = principal.onFocus; 
   return principal.onFocus = t;
 }

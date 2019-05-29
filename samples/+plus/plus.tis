@@ -20,7 +20,7 @@ const Plus = function() {
   function setPrototype(obj,proto) {
     if( obj === proto || obj instanceof proto )
       return;
-    obj.prototype = proto;
+    Object.setPrototypeOf(obj,proto);
   }
 
   const reIsExpression=/ *[-()+*&:?|=!^\<\>]+ */;
@@ -45,7 +45,7 @@ const Plus = function() {
       }
     }  
     // assign it as an observer    
-    Object.addObserver.call(coll,on_model_change); // subscribe to collection object changes
+    Object.addObserver(coll,on_model_change); // subscribe to collection object changes
   }
   
   // 'added()' gets called for each new element added to coll
@@ -58,7 +58,7 @@ const Plus = function() {
         case #add-range:  { var start = changedef[2]; var end = changedef[3]; for(var i = start; i < end; ++i) added(coll,i); } break; 
       }
     }      
-    Object.addObserver.call(coll,on_model_change); // subscribe to collection object changes
+    Object.addObserver(coll,on_model_change); // subscribe to collection object changes
   }
   
   // 'changed()' is called when coll.length has changed
@@ -71,7 +71,7 @@ const Plus = function() {
         case #delete: case #delete-range:  changed(coll.length);  break; 
       }
     }      
-    Object.addObserver.call(coll,on_model_change); // subscribe to collection object changes
+    Object.addObserver(coll,on_model_change); // subscribe to collection object changes
   }
   
   // 'changed()' is called when coll changes
@@ -79,7 +79,7 @@ const Plus = function() {
   {
     // setup data object change event handler 
     function on_model_change(changedef) { changed(); }
-    Object.addObserver.call(coll,on_model_change); // subscribe to collection object changes
+    Object.addObserver(coll,on_model_change); // subscribe to collection object changes
   }
   
   // compile expression into a function
@@ -402,27 +402,27 @@ const Plus = function() {
             return; // record already bound with the DOM
           }  
           domitem.remove(); 
-          if(elval !== undefined && elval.removeObserver)
-            elval.removeObserver(rqRenderList);
+          if(elval !== undefined)
+            Object.removeObserver(elval,rqRenderList);
         }
         domitem = template.clone();
         var repeatable_root = {};
         repeatable_root[nitem] = val; 
         repeatable_root[ncoll] = coll; 
         if(nindex) repeatable_root[nindex] = idx; 
-        repeatable_root.prototype = root;// repeatable namespace is derived from parent namespace
+        Object.setPrototypeOf(repeatable_root,root);// repeatable namespace is derived from parent namespace
         domitem.$model = repeatable_root; // repeated element is holding local $model now for its descendannts.
         
         cont.insert(domitem,domItemIdx);
        
         // if something in the record has changed we need to notify list observers
-        if( typeof val == #object && !val.eachObserver( :fun: fun.name == rqUpdateCollectionObserves) )
-          val.addObserver(rqUpdateCollectionObserves);
+        if( typeof val == #object && !Object.eachObserver(val, fun => fun.name == rqUpdateCollectionObserves) )
+          Object.addObserver(val,rqUpdateCollectionObserves);
       }
 
       var rcoll, rkey, coll; 
       
-      updateCollectionObserves = function() { coll.eachObserver( :fun: fun([null,null,null]) ) }
+      updateCollectionObserves = function() { Object.eachObserver(coll, fun => fun([null,null,null]) ) }
      
       renderList = function () {
         var seqNo = 0;
@@ -433,8 +433,8 @@ const Plus = function() {
         while( thing.length > seqNo ) {
           var domitem = thing.last;
           var elval = domitem.$model ? domitem.$model[nitem] : undefined; 
-          if(elval !== undefined && elval.removeObserver)
-            elval.removeObserver(rqRenderList);
+          if(elval !== undefined)
+            Object.removeObserver(elval,rqRenderList);
           domitem.remove();          
         }
         if(hasBoundValue) // after rendering <select> items we need to reset value to match new options
@@ -510,8 +510,8 @@ const Plus = function() {
               return domitem; // record already bound with the DOM
             }
             domitem.remove(); 
-            if(elval !== undefined && elval.removeObserver)
-              elval.removeObserver(rqRenderList);
+            if(elval !== undefined)
+              Object.removeObserver(elval,rqRenderList);
           }
         }
         domitem = thing.clone();
@@ -519,19 +519,19 @@ const Plus = function() {
         repeatable_root[nitem] = val; 
         repeatable_root[ncoll] = coll; 
         if(nindex) repeatable_root[nindex] = idx; 
-        repeatable_root.prototype = root;// repeatable namespace is derived from parent namespace
+        Object.setPrototypeOf(repeatable_root,root);// repeatable namespace is derived from parent namespace
         domitem.$model = repeatable_root; // repeated element is holding local $model now for its descendannts.
         //thingParent.insert(domitem,domItemIdx + thingIndex);
         lastNode.insertNodeAfter(domitem);
         // if something in the record has changed we need to notify list observers
-        if( typeof val == #object && !val.eachObserver( :fun: fun.name == rqUpdateCollectionObserves) )
-          val.addObserver(rqUpdateCollectionObserves);
+        if( typeof val == #object && !Object.eachObserver(val, fun => fun.name == rqUpdateCollectionObserves) )
+          Object.addObserver(val,rqUpdateCollectionObserves);
         return domitem;
       }
 
       var coll; 
       
-      updateCollectionObserves = function() { coll.eachObserver( :fun: fun([null,null,null]) ) }
+      updateCollectionObserves = function() { Object.eachObserver(coll, fun => fun([null,null,null]) ) }
      
       renderList = function () {
         var node = placeholder;
@@ -544,8 +544,8 @@ const Plus = function() {
           var domitem = node;
           if( !domitem.isElement ) { node = node.nextNode; continue; }
           var elval = domitem.$model && domitem.$model[nitem]; 
-          if(elval !== undefined && elval.removeObserver)
-            elval.removeObserver(rqRenderList);
+          if(elval !== undefined)
+            Object.removeObserver(elval,rqRenderList);
           node = domitem.nextNode;
           domitem.remove();          
         }
@@ -691,7 +691,7 @@ function @observing(func, paths..) {
         onchange(obj,changedef,spath);
       }
           
-      Object.addObserver.call(obj,subs);
+      Object.addObserver(obj,subs);
     };
     
     function notifier(obj,func,path) { return :: func.call(obj,path); }

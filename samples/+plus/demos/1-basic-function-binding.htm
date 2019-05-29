@@ -19,13 +19,21 @@
         
         // this function is observing 'celsius' and calculates 'fahrenheit'
         @observing "celsius"
-          function toFahrenheit() {
-            fahrenheit = celsius.toFloat() * 9 / 5 + 32;
+          function toFahrenheit() { 
+            try {
+              fahrenheit = celsius.toFloat() * 9 / 5 + 32;
+            } catch(e) {
+              fahrenheit = undefined;
+            }
           }
         // this function is observing 'fahrenheit' and calculates 'celsius'
         @observing "fahrenheit"
           function toCelcius() {
-            celsius = (fahrenheit.toFloat() - 32) * 5 / 9;
+            try {
+              celsius = (fahrenheit.toFloat() - 32) * 5 / 9;
+            } catch (e) {
+              celsius = undefined;
+            }
           }
         
       }    

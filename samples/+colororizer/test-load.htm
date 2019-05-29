@@ -9,10 +9,12 @@
 
 	<script type="text/tiscript">
   
-    !function() {
+    async function loader() {
 		  var str = await view.request { url:self.url("colorizer.tis"), output:#string };
 			$(pre).load(str, "tis");
-    }();
+    }
+
+    loader();
 			
 	</script>
 </head>

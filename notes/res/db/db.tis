@@ -60,7 +60,7 @@ function db.addItem(item, tags = null)
         tag.addItem(item);
     }
   }
-  item.store();
+  Object.store(item);
 
   self.postEvent("note-created",item);
  

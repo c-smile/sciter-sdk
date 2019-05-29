@@ -8,7 +8,11 @@ class CollapsibleSection: Behavior
       Settings.add(this); // register this element as persistable.
   }
 
-  @click @on "header": evt {
+  /*@click @on "header": evt {
+    this.state.expanded = !this.state.expanded;
+    saveState();
+  }*/
+  event click $(header) {
     this.state.expanded = !this.state.expanded;
     saveState();
   }

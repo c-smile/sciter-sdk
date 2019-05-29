@@ -1,7 +1,7 @@
 ﻿include "decorators.tis";
 
 // ViewDriver represents view/window on debugee side.
-class ViewDriver: Behavior 
+class ViewDriver: Element 
 { 
   const views = $(#views);
 

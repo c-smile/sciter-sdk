@@ -4,7 +4,6 @@
 //| VirtualList - list view bound with the records array. The list is real time bound with the array - view reflects changes in the array.
 //|
 //| params.container - DOM element, the list containing list items representing records.
-//| params.bufferSize - integer, size of sliding window - max number of DOM element used to render records in the view.
 //| params.renderItemView - function(recordNo:integer,record: object, itemEl: Element) - function used to render contents of itemEl by record data, optional.
 //| params.setupItemView - function(recordNo:integer,record: object, itemEl: Element) - function used to setup contents of itemEl after rendering (add classes etc.), optional.
 //| params.getItemData - function(recordNo:integer): object - function gets called on undefined records to fetch record from external source, optional. 
@@ -14,19 +13,19 @@
 //| returns DOM element passed in params.container with the following properties/mthods added:
 //| - list.value - array, read/write, recordset (array of objects).
 //| - list.currentIndex - integer, read/write, index of current record in records array or -1 if there is no current record
-//| - list.currentRecord - object, read/write, current record or null if there is no current record.
+//| - list.current - object, read/write, current record or null if there is no current record.
 //| - list.recordView(record|index) - function returns DOM element, used to render given record (or record at index). May return null if the record is out of sliding window.
-//|
+//| - list.recordIndex(element) - function returns index of record correspoding to the DOM element. 
+//|                               DOM element here is either row or its child
 
 function VirtualList(params) {
 
     const list = params.container; assert list;
-    const BUFFER_SIZE = params.bufferSize || 100; // sliding buffer size, number of DOM elements in the view
-        
+    
+    var   buffer_size = 50;   // sliding buffer size, number of DOM elements in the view, will be recalulated in onSize
     var   records = null; 
-    var   template = list.first;
-          template.detach();
-    var   item_height = 0;   // will be adjusted later
+    var   template = list.first; template.detach();
+    var   item_height = 10;   // will be adjusted later
     var   buffer_start = 0;   // index of first buffer element in _records
     var   visible_items = 0;  // number of visible items in the view
     var   current_record = undefined;  // current record z
@@ -52,25 +51,18 @@ function VirtualList(params) {
       }
       return r;
     }
- 
-    list.onSize = function() 
-    {
-      if(list.first) 
-        item_height = list.first.box(#height,#border); // adjust real item height
-      else if( item_height == 0 )
-        item_height = 1;
 
-      var ch = list.box(#height,#client);
-      var vi = (ch + item_height - 1) / (item_height || 10);
-      if( vi != visible_items )
-        visible_items = vi;
+    function isContentDependent(list) {
+      if(list.style["max-height"] == "max-content") return true;
+      if(list.style["height"] == "max-content") return true;
+      return false;
     }
-    
+ 
     function detachRecordObserver(el) {
       var record = el.data;
       if(!record) return;
       el.data = null;
-      record.removeObserver(el[#vlist-record-observer]);
+      Object.removeObserver(record,el[#vlist-record-observer]);
       el[#vlist-record-observer] = null;
     }
  
@@ -84,7 +76,7 @@ function VirtualList(params) {
           showRecord(idx, record, el); 
       }
       el[#vlist-record-observer] = recordObserver;        
-      record.addObserver(recordObserver);
+      Object.addObserver(record,recordObserver);
       return record;
     }
     
@@ -102,14 +94,30 @@ function VirtualList(params) {
       t.data = rec;
       return t;
     }
+
+    function calcMetrics() // calcs item_height, returns true if buffer_size was increased; 
+    {
+      if(list.first)
+        item_height = list.first.box(#height,#border); // adjust real item height
+      var ch = isContentDependent(list) ? list.parent.box(#height,#inner) : list.box(#height,#client);
+      var vi = ch / (item_height || 10);
+      visible_items = vi;
+      const old_buffer_size = buffer_size;
+      buffer_size = vi + 3;
+      return old_buffer_size < buffer_size;
+    } 
+
   
     function pumpAfter(i) { 
 
+      if(item_height == 10)
+        calcMetrics();
+
       var bso = buffer_start;
-            
-      if(i + BUFFER_SIZE > records.length)
-        i = Integer.max(0, records.length - BUFFER_SIZE + 1); 
-        
+
+      if(i + buffer_size > records.length)
+        i = Integer.max(0, records.length - buffer_size + 1); 
+
       var bsn = buffer_start = i;
       
       if(list.last) {
@@ -126,20 +134,25 @@ function VirtualList(params) {
         }
      
       var ni = bsn + list.length;
-      var niend = Integer.min(ni + BUFFER_SIZE - list.length, records.length);
+      var niend = Integer.min(ni + buffer_size - list.length, records.length);
     
-      for( var i = ni; i < niend; ++i )
+      var items = [];
+      for( var i in (niend - ni))
       {
-        var rec = recordAt(i); 
+        var rec = recordAt(i + ni);
         var t = createRecViewer(rec);
-        list.append(t);
-        setupRecordObserver(rec,t);
-        showRecord(i,rec,t);
+        items.push(t);
       }
+      list.append(items);
+      for(var (i,t) in items )
+      {
+        var t = items[i];
+        var rec = t.data;
+        setupRecordObserver(rec,t);
+        showRecord(i + ni,rec,t);
+      }      
     
       if(list.first) {
-        if(item_height < 10)
-          list.onSize();
         list.first.style#margin-top = px( bsn * item_height );
         if(niend < records.length) {
           var extra = (records.length - niend) * item_height;
@@ -150,8 +163,8 @@ function VirtualList(params) {
     
     function pumpBefore(i) {
     
-      var nve = Integer.max(BUFFER_SIZE,Integer.max(0,i) + visible_items);
-      
+      var nve = Integer.max(0,i) + buffer_size;
+
       if(list.last) {
         list.last.style#margin-bottom = undefined;
         list.first.style#margin-top = undefined;
@@ -164,9 +177,9 @@ function VirtualList(params) {
           removeRecViewer(list.last);
       
       var n = list.length ? buffer_start 
-            : Integer.min(records.length, i + BUFFER_SIZE);
+            : Integer.min(records.length, i + buffer_size);
             
-      for(--n; n >= 0 && list.length < BUFFER_SIZE ; --n)
+      for(--n; n >= 0 && list.length < buffer_size ; --n)
       {
         var rec = recordAt(n); 
         var t = createRecViewer(rec);
@@ -177,8 +190,6 @@ function VirtualList(params) {
       }
       
       if(list.first) {
-        if(item_height < 10)
-          list.onSize();
         list.first.style#margin-top = px( buffer_start * item_height );
         if(buffer_start + list.length < records.length) {
           var extra = (records.length - buffer_start - list.length) * item_height;
@@ -191,14 +202,12 @@ function VirtualList(params) {
     function resetView() { 
     
       var sy = list.scroll(#top);
-
+      
       if(list.first) {
         list.first.style#margin-top = undefined;
         list.last.style#margin-bottom = undefined;
-        if(item_height < 10)
-          list.onSize();
       }
-
+      
       function findElementFor(rec) { 
         for(var el in list) { 
           if( el.data === rec )
@@ -208,20 +217,13 @@ function VirtualList(params) {
         return (el, true);
       }
 
-      if( buffer_start + BUFFER_SIZE > records.length ) {
-        //stdout.println("resetView buffer_start + BUFFER_SIZE > records.length");
-        //buffer_start = records.length - BUFFER_SIZE;
-        //sy = records.length * item_height - list.scroll(#height);
-        sy = 0;
-        buffer_start = 0;
-      }
+      if( buffer_start + buffer_size > records.length )
+        buffer_start = records.length - buffer_size;
      
-      if( buffer_start < 0 ) {
-        sy = 0;
+      if( buffer_start < 0 )
         buffer_start = 0;
-      }
         
-      var nend = buffer_start + BUFFER_SIZE;
+      var nend = buffer_start + buffer_size;
       
       var i = 0;
 
@@ -256,23 +258,50 @@ function VirtualList(params) {
     
     function onScrollTo(recNo) 
     {
-      if( recNo + visible_items >= buffer_start + BUFFER_SIZE ) {
+      if( recNo + visible_items >= buffer_start + buffer_size ) {
         pumpAfter(recNo);
-        view.update();
+        list.update();
       }
       else if( recNo < buffer_start ) {
         pumpBefore(recNo);
-        view.update();
+        list.update();
+      }
+    }
+
+    var ready = false;
+
+    list.onSize = function() 
+    {
+      if(list.first)
+        item_height = list.first.box(#height,#border); // adjust real item height
+      var ch = isContentDependent(list) ? list.parent.box(#height,#inner) : list.box(#height,#client);
+      var vi = ch / (item_height || 10);
+      visible_items = vi;
+      const old_buffer_size = buffer_size;
+      buffer_size = vi + 3;
+
+      if( old_buffer_size < buffer_size) {
+        if(  buffer_start + buffer_size >= records.length ) {
+          buffer_start = records.length - visible_items + 1;
+          resetView();
+        } else 
+          pumpAfter(list.firstIndex);
+      }
+
+      if(!ready) {
+        ready = true;
+        list.postEvent("ready"); // notify that list is ready to accept data
       }
     }
     
     list.onScroll = function(evt) 
     {
       if( evt.type == Event.SCROLL_POS ) {
-        if(item_height < 10)
-          list.onSize();
-        var recNo = (evt.scrollPos / item_height).limit( 0 , records.length - 1 - visible_items);
-        onScrollTo(recNo || 0);
+        var sPos = evt.scrollPos / item_height;
+        var mPos = records.length - 1 - visible_items;
+        if( sPos > mPos ) sPos = mPos;
+        if( sPos < 0 ) sPos = 0;
+        onScrollTo( sPos );
       }
     };
     
@@ -286,9 +315,6 @@ function VirtualList(params) {
           pumpBefore(buffer_start);
           return;
         }
-
-        if(item_height < 10)
-          list.onSize();
       
         var extra = (end - start) * item_height; 
         var topm = buffer_start * item_height;
@@ -296,52 +322,52 @@ function VirtualList(params) {
         var sy = list.scroll(#top);
         
         buffer_start += (end - start);
-        
+
         list.first.style#margin-top = px(topm + extra);
+        list.update();
         list.scrollTo(0, sy + extra);
       } 
-      else if(start >= buffer_start + BUFFER_SIZE && list.length) 
+      else if(start >= buffer_start + buffer_size && list.length) 
       {
-         var extra = (records.length - buffer_start - list.length) * item_height;
-         if(extra > 0)
-            list.last.style#margin-bottom = px(extra);
+        var extra = (records.length - buffer_start - list.length) * item_height;
+        if(extra > 0)
+          list.last.style#margin-bottom = px(extra);
       }
-      else 
+      else {
         resetView();
+      }
     }
     function onRecordsetRangeUpdate(start, end) 
     {
       if( end < buffer_start )
         return;
-      else if( start > buffer_start + BUFFER_SIZE )
+      else if( start > buffer_start + buffer_size )
         return;
       resetView();
     }
     function onRecordsetRangeDelete(start, end) 
     {
       if( end <= buffer_start ) {
-        if(item_height < 10)
-          list.onSize();
         var oldtop = buffer_start * item_height;
         buffer_start -= end - start;
         assert(buffer_start >= 0);
         var extra = (end - start) * item_height;
         var sy = list.scroll(#top);
         list.scrollTo(0, sy - extra);
-        list.first.style#margin-top = px(Integer.max(0,oldtop-extra));
+        if(list.first)
+          list.first.style#margin-top = px(Integer.max(0,oldtop-extra));
       }
-      else if( start > buffer_start + BUFFER_SIZE ) {
-        if(item_height < 10)
-          list.onSize();
+      else if( start > buffer_start + buffer_size ) {
         var extra = (records.length - buffer_start - list.length) * item_height;
-        if(extra > 0)
-          list.last.style#margin-bottom = px(extra);
-        else
-          list.last.style#margin-bottom = undefined;
+        if(list.last) {
+          if(extra > 0)
+            list.last.style#margin-bottom = px(extra);
+          else
+            list.last.style#margin-bottom = undefined;
+        }
       }
-      else {
+      else 
         resetView();
-      }
     }
     
     setupSetObserver = function(apply, silent = false )
@@ -364,7 +390,7 @@ function VirtualList(params) {
         } 
         onRecordSetChange.list = list;
         // assign it as an observer    
-        Object.addObserver.call(records,onRecordSetChange); // subscribe to collection object changes    
+        Object.addObserver(records,onRecordSetChange); // subscribe to collection object changes    
       }
       else {
         if( !silent )
@@ -372,13 +398,13 @@ function VirtualList(params) {
             removeRecViewer(list.last);
         var thisObserver = null;
         function cmp( observer ) { if( observer.list == list ) { thisObserver = observer; return true; } }
-        records.eachObserver( cmp );
+        Object.eachObserver(records, cmp);
         if(thisObserver)
-          Object.removeObserver.call(records,thisObserver); // unsubscribe
+          Object.removeObserver(records,thisObserver); // unsubscribe
         current_record = null;
       }
     }
-
+ 
     list.navigateToStart = function() 
     { 
       //buffer_start = 0;   
@@ -401,7 +427,6 @@ function VirtualList(params) {
         });
       }
     };
-
     list[#value] = property(v) 
     {
       get return records;
@@ -412,11 +437,15 @@ function VirtualList(params) {
           if(records = v)
             setupSetObserver(true);  
         }
+        if(list.last) {
+          list.last.style#margin-bottom = undefined;
+          list.first.style#margin-top = undefined;
+        }
+        list.clear(); 
+        if( records )
+          pumpAfter.call(list,0); 
+        list.scrollTo(0,0);
       }
-      list.clear(); 
-      if( records )
-         pumpAfter.call(list,0); 
-      list.scrollTo(0,0);      
     }
   
     list[#offset] = property(v) {
@@ -432,8 +461,7 @@ function VirtualList(params) {
         
     function setCurrent(index, generateEvent = true) {
       if( var old = list.$(>li:current,>tr:current) ) {
-        if(old.index + buffer_start == index) 
-           return; // already set
+        if(old.index + buffer_start == index) return; // already set
         old.state.current = false;
       }
       current_record = null;
@@ -441,10 +469,7 @@ function VirtualList(params) {
         return; // out of records range
       
       current_record = recordAt(index);
-
-      if(item_height < 10)
-        list.onSize();
-     
+      
       var y = index * item_height;
       
       if( index < buffer_start ) {
@@ -457,16 +482,15 @@ function VirtualList(params) {
         var el = list[index - buffer_start];
         el.state.current = true;
         var sy = list.scroll(#top);
-        //if( y < sy )
-        //  list.scrollTo(0, y,true); 
-        //else if( y + item_height > sy + list.scroll(#height) )
-        //  list.scrollTo(0, y - list.scroll(#height) + item_height ,true); 
-        el.scrollToView();
+        if( y < sy )
+          list.scrollTo(0, y,true); 
+        else if( y + item_height > sy + list.scroll(#height) )
+          list.scrollTo(0, y - list.scroll(#height) + item_height ,true); 
       }
       if(generateEvent)
         list.postEvent("change");
     }
-                
+               
     list.onMouse = function(evt) {
       if( evt.type == Event.MOUSE_DOWN )
       {
@@ -502,6 +526,12 @@ function VirtualList(params) {
       set { setCurrent(records.indexOf(v),false); }
     } 
 
+    list.current = property(v) // alias of the above
+    {
+      get return records.indexOf(current_record) >= 0? current_record : null;
+      set { setCurrent(records.indexOf(v),false); }
+    } 
+
     list.firstIndex = property(v) {
       get { 
         var sy = list.scroll(#top);
@@ -512,8 +542,7 @@ function VirtualList(params) {
         list.scrollTo(0, y, false);
         onScrollTo(v); 
       }
-    } 
-
+    }     
     
     // returns "record view" - DOM element that represents nth record.
     //         or null if the record is out of the sliding window 
@@ -527,14 +556,23 @@ function VirtualList(params) {
         return null; // out of sliding window
       return list[idx - buffer_start];
     }
+
+    // returns index of record of an element 
+    //   element here can be record view or any child inside it
+    list.recordIndex = function(element) {
+      var li = element.$p(li,tr);
+      if( li && li.parent === list )
+        return li.index + buffer_start;
+      // otherwise - undefined;
+    }
   
     list.clear();
     if( records )
-      resetView();
+      pumpAfter(0);
     return list;
 }
 
-class VList : Element 
+class VList : Behavior 
 {
   function attached() { 
      VirtualList { container: this };
@@ -544,7 +582,7 @@ class VList : Element
   }
 }
 
-class VGrid : Element 
+class VGrid : Behavior 
 {
   function attached() { 
     this.tbody = this.$(tbody);

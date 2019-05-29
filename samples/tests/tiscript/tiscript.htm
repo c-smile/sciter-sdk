@@ -39,6 +39,7 @@
       {
         li.html = String.printf("%s failed with <pre>%s</pre>", TestFunc, err );
         li.@#class = "failure";
+        debug error: err.toString();
       }
     }
     include "tiscript-tests.tis";
