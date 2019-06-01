@@ -10,10 +10,18 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FAFFEA">4.3.0.3</td><td nowrap valign="top" align="center">29-05-2019</td><td>new:
+    <tr><td valign="top" bgcolor="#FAFFEA">4.3.0.4</td><td nowrap valign="top" align="center">01-06-2019</td><td>fixes:
 					<ul>
-						<li>script:</li><li><code>&quot;disable $tringizers&quot;</code> meta instruction as the very first string token in .tis file - disables special treatment of $names.</li>
-						<li>Functions below are static now - callable as, for example, <code>Object.keys(obj)</code> rather than <code>obj.keys()</code> as they used to be: <pre>Object.isFrozen()
+						
+						
+						
+						
+						
+						
+						<li>[System.Process] fix of <code>process.send(textForTheirStdin)</code>;<ul><li>+ /samples/process/exec-terminal.htm sample demonstating <code>process.send(data)</code>;</li></ul></li>
+						<li>[script] fix of AV while parsing <code>a.(b)</code>;</li><li>[gtk] <code>view.move()</code> fix.</li><li>[DOM] fix of <code>view.move(..., true)</code> for windows with custom frames.</li><li>[script] fix of setting object property that shadows class constants (was prohibited, now allowed) due to valid use cases.</li><li>[API] regression fix of <code>TISAPI define_class()</code>...</li><li>[script] compatibility with @decorators;</li><li>[default media vars] regression fix.</li></ul></td></tr><tr><td valign="top" bgcolor="#FAFFEA">4.3.0.3</td><td nowrap valign="top" align="center">29-05-2019</td><td>new:
+					<ul>
+						<li>script:<ul><li><code>&quot;disable $tringizers&quot;</code> meta instruction as the very first string token in .tis file - disables special treatment of $names.</li><li>Functions below are static now - callable as, for example, <code>Object.keys(obj)</code> rather than <code>obj.keys()</code> as they used to be: <pre>Object.isFrozen()
 Object.freeze()
 Object.isSealed()
 Object.seal()
@@ -31,13 +39,14 @@ Object.getPrototypeOf()
 Object.setPrototypeOf()
 
 Object.store()
-Object.restore()</pre>Just to comply with JavaScript calling convention.<p>You will need to update +plus.tis and +vlist.tis in your sources from the SDK - otherwise you will get warnings in console.</p></li>
-						<li>Support of JS's [ugly] style of object creation using functions and function.prototypes: <pre>function Foo() { this.prop = 42; }
+Object.restore()</pre>Just to comply with JavaScript calling convention.<p>You will need to update +plus.tis and +vlist.tis in your sources from the SDK - otherwise you will get warnings in console.</p></li><li>Support of JS's [ugly] style of object creation using functions and function.prototypes: <pre>function Foo() { this.prop = 42; }
 Foo.prototype.say = function() { debug log: this.prop; }
 // and usage:
 var foo = new Foo();
 foo.say(); // will print &quot;42&quot;
-</pre></li></ul></td></tr><tr><td valign="top" bgcolor="#FAFFEA">4.3.0.2</td><td nowrap valign="top" align="center">27-05-2019</td><td>fixes:
+</pre></li></ul></li>
+						
+						</ul></td></tr><tr><td valign="top" bgcolor="#FAFFEA">4.3.0.2</td><td nowrap valign="top" align="center">27-05-2019</td><td>fixes:
 					<ul>
 						<li>[windows] compatibility of blur-behind windows on Windows.1903 build</li><li>[dom] generation of mouseleave event for elements that are detached in :hover state.</li>
 						<li>[script] fix of <code>duration.toFloat()</code>, bug manifested in <a href="https://sciter.com/forums/topic/4-3-0-1-some-animation-simples-are-broken/">https://sciter.com/forums/topic/4-3-0-1-some-animation-simples-are-broken/</a>&nbsp;</li>

@@ -432,6 +432,9 @@ function Object_test()
   foo.name = "O1";
   if(foo.name != "foo:O1") throw "property/set 1";
 
+  var propName = "name";
+  if(foo.(propName) != "foo:O1") throw "property/get prop by name 1";
+
   var bar = new Bar(); // Bar is derived from Foo 
   
   if(bar.one != 1 ) throw "class ctor 2.1";

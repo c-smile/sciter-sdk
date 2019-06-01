@@ -1,0 +1,84 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+          plaintext { display:block; size:*; border:1dip solid;}
+          plaintext > text.error {  background: pink; }
+          plaintext:busy {
+            foreground: url(sciter:busy.png) no-repeat 100% 0%;
+            foreground-size: 16dip;
+          }
+        </style>
+        <script type="text/tiscript">
+
+          var childProc;  
+
+          var inputCommand = $(input#command);
+          var buttonSend = $(button#send);
+          var buttonExec = $(button#exec);
+
+          event click $(#exec) {
+            var out = $(plaintext);
+
+            const EOL = System.EOL;
+
+            var cline;
+            var lt = null;
+
+            function append(text, from) {
+              var lines = text.split(EOL);
+              if( from !== lt ) {
+                out.$append(<text.{from}>{ lines.shift() }</text>);
+                cline = out.last;
+              }
+              else
+                cline.append(lines.shift());
+              for(var line in lines) {
+                out.$append(<text.{from}>{ line }</text>);
+                cline = out.last;
+              }
+              lt = from;
+            }
+
+            var cmd = System.PLATFORM == "Windows" ? "cmd.exe" : "/bin/bash";
+
+            this.state.disabled = true; // disabling the button
+
+            buttonSend.state.disabled = false;
+
+            childProc = System.Process.exec(cmd,[]);
+
+            childProc  << event stdout (text) { append(text,#out); }
+                       << event stderr (text) { append(text,#error) }
+                       << event stdin (status) { buttonSend.state.disabled = false;  }
+                       << event terminate (status) { 
+                            out.$append(<text.done>Done:{status.toString()}</text>); 
+                            out.state.busy = false;
+                            buttonExec.disabled = false;
+                            buttonSend.state.disabled = true;
+                            childProc = null;
+                          };
+
+            out.state.busy = true;
+          }
+
+          event click $(button#send) {
+            this.state.disabled = true;
+            var text = inputCommand.value;
+            debug cmd: text;
+            childProc.send(text + "\n");
+          }
+
+        </script>
+    </head>
+    <body>
+
+      <button #exec>Start terminal...</button>
+      <p>  
+        <input #command novalue="command to execute"> <button #send disabled>Exec</button>
+      </p>
+      <plaintext></plaintext>
+
+
+    </body>
+</html>
