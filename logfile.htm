@@ -10,7 +10,15 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FAFFEA">4.3.0.4</td><td nowrap valign="top" align="center">01-06-2019</td><td>fixes:
+    <tr><td valign="top" bgcolor="#FAFFEA">4.3.0.5</td><td nowrap valign="top" align="center">04-06-2019</td><td>fixes:
+					<ul><li>[gtk] <code>view.move(x,y,w,h)</code> fix for the case when is not yet shown. Due to limitation of GTK design window rectangle is not guarantied to match exactly x,y,w,h box when view.move() is called when window is not yet shown (a.k.a. realized in terms of GTK).&nbsp;</li>
+						<li><code>delete el.attributes[&quot;attrName&quot; | index]</code>; support - deletion of attribute.</li>
+						<li>[richtext] <code>htmlarea.value = &quot;&lt;p&gt;&lt;/p&gt;&quot;</code> fix.</li>
+						<li>[DOM] <code>element instanceof ElementClass</code>; fix.</li>
+						<li>[DOM] fix of <code>this var</code> handling in element classes.&nbsp;</li>
+						<li>[script] ES7 compatibility fix: extended object literals:		<pre>var propName = &quot;foo&quot;;
+var obj = { [propName]:&quot;bar&quot; }; 
+// yields { &quot;foo&quot;:&quot;bar&quot; }</pre></li></ul></td></tr><tr><td valign="top" bgcolor="#FAFFEA">4.3.0.4</td><td nowrap valign="top" align="center">01-06-2019</td><td>fixes:
 					<ul>
 						
 						

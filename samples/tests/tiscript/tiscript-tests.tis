@@ -589,6 +589,17 @@ function Object_test()
   assert to3 == tor1: "extend 1";
   assert to3 == tor2: "extend 2, deep";
 
+  {
+     var a = {a:1};
+     var b = {b:2};
+     var c = {c:3};
+     var name = "b";
+     var r1 = {...a, [name]:b.b, ...c}; // composition 1
+     var r2 = {...a, (name):b.b, ...c}; // composition 2 
+     assert r1 == {a:1,b:2,c:3}: "object literal 1";
+     assert r2 == {a:1,b:2,c:3}: "object literal 2";
+  }
+
  
 }
 
