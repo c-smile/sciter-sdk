@@ -22,6 +22,8 @@
 
   #include <string>
   #include <functional>
+  #include <stdexcept>
+
   #include "aux-slice.h"
   #include "aux-cvt.h"
 
