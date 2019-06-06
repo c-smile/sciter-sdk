@@ -186,10 +186,9 @@ function VirtualList(params) {
         else 
           removeRecViewer(list.last);
       
-      var n = list.length ? buffer_start 
-            : Integer.min(records.length, i + buffer_size);
-            
-      for(--n; n >= 0 && list.length < buffer_size ; --n)
+      var n = list.length ? buffer_start : Integer.min(records.length, i + buffer_size);
+
+      for(--n; n >= 0 ; --n)
       {
         var rec = recordAt(n); 
         var t = createRecViewer(rec);
@@ -198,7 +197,7 @@ function VirtualList(params) {
         showRecord(n,rec,t);
         buffer_start = n;
       }
-      
+            
       if(list.first) {
         list.first.style#margin-top = px( buffer_start * item_height );
         if(buffer_start + list.length < records.length) {
