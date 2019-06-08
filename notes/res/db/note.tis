@@ -124,6 +124,8 @@ class Note
 
   function containsTags(tags) {
     var thistags = this.tags;
+    if( !thistags )
+      return false;
     if( typeof tags == #array ) {
       for( var t in tags)
         if( t !in thistags) 

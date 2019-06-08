@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style></style>
+        <script type="text/tiscript">
+
+function self.ready() 
+{
+  var ostream = Stream.openString(); 
+
+  // process test.thtm n "PHPi-mode", passing quantity as a global variable
+  emit(self.url("test.thtm"),ostream,{quantity:10});
+
+  $(body).append(ostream.toString()); // append generated content
+}
+        </script>
+    </head>
+    <body>
+      <h1>PHP-alike stream processing demo</h1>
+      <p>Generated content:</p>
+    </body>
+</html>
