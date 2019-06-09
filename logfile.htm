@@ -10,7 +10,19 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FAFFEA">4.3.0.5</td><td nowrap valign="top" align="center">04-06-2019</td><td>fixes:
+    <tr><td valign="top" bgcolor="#FAFFEA">4.3.0.6</td><td nowrap valign="top" align="center">08-06-2019</td><td>new:
+					<ul><li><code>view.trayicon()</code> &nbsp;- creates tray icon associated with the view (window). The view will receive trayicon-click events after successful creation. See: <u>sdk/samples/trayicon/</u> demos.</li>
+						</ul>
+					<p>fixes:</p>
+					<ul>
+						
+						
+						
+						
+						
+						
+						
+						<li>[documentation] <code>popupdismissing</code> event documented;</li><li>[notes] fixes.</li><li>[CSS] support of nested <code>@media</code> declarations.</li><li>[input|masked, input|time] applying min/max constraints on fields, see: <a href="https://sciter.com/forums/topic/how-to-improve-time-control/">https://sciter.com/forums/topic/how-to-improve-time-control/</a>&nbsp;</li><li>[samples] fix of sdk/samples/ideas/virtual-grid/ ;</li><li>[sdk] value.hpp , missed #include;</li><li>[script] fix of AV while executing: <code>1.0 - (0.0/0.0)</code> expression;</li><li>[DOM] fix of AV in drawing of changed-on-the-fly content;</li><li>[script] fix of misleading &quot;Name already defined as function argument&quot;;</li></ul></td></tr><tr><td valign="top" bgcolor="#FAFFEA">4.3.0.5</td><td nowrap valign="top" align="center">04-06-2019</td><td>fixes:
 					<ul><li>[gtk] <code>view.move(x,y,w,h)</code> fix for the case when is not yet shown. Due to limitation of GTK design window rectangle is not guarantied to match exactly x,y,w,h box when view.move() is called when window is not yet shown (a.k.a. realized in terms of GTK).&nbsp;</li>
 						<li><code>delete el.attributes[&quot;attrName&quot; | index]</code>; support - deletion of attribute.</li>
 						<li>[richtext] <code>htmlarea.value = &quot;&lt;p&gt;&lt;/p&gt;&quot;</code> fix.</li>

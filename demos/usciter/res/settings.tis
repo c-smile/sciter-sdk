@@ -64,6 +64,10 @@ Settings.add {
   
 function saveState()
 {
+  if(!self.view) {
+    view.off(saveState);
+    return;
+  }
   self.timer(1s,Settings.store);
 }
 

@@ -1,0 +1,111 @@
+<html window-frame="solid-with-shadow">
+    <head>
+        <title>Tray window</title>
+        <style>
+
+          body { font:system; flow:stack; }
+          section { size:*; visibility:none; }
+          
+          [mode=usage] section#usage { visibility:visible; }
+          [mode=intro] section#intro { visibility:visible; }
+          [mode=tray]  section#tray  { visibility:visible; }
+
+          section#tray > button { 
+            display:block; 
+            width:*;
+            padding:* 0; 
+            flow:vertical; 
+          }
+
+        </style>
+        <script type="text/tiscript">
+           
+          const WINDOW_SIZE = 150dip; 
+
+          function init() 
+          {
+            // show initial introduction in the middle of the screen:
+            self.attributes["mode"] = "intro";
+            var (sx,sy,sw,sh) = view.screenBox(#frame,#rectw);
+            var sz = self.toPixels(WINDOW_SIZE);
+            view.move( sx - sz / 2 + sw / 2,
+                       sy - sz / 2 + sh / 2, 
+                       sz, sz );
+            
+            self.timer(5s, function() {
+              // setup tray icon
+              view.trayIcon {
+               image: self.loadImage(self.url("i32.png")),
+               text: "Tray window demo"
+              };
+              view.state = View.WINDOW_HIDDEN;
+              self.attributes["mode"] = "tray";
+            });
+          }
+
+          function self.ready() 
+          {
+            if(self.parent) {
+              self.attributes["mode"] = "usage";
+              return;
+            }
+            init();
+          }
+
+          // show this window as popup near tray icon
+          view << event trayicon-click { 
+            var (sx1,sy1,sx2,sy2) = view.screenBox(#workarea,#rect);
+            var (ix,iy,iw,ih) = view.trayIcon(#place);
+            // determine location of the popup window
+            var sz = self.toPixels(WINDOW_SIZE);
+            var wx,wy;
+            if( iy + ih <= sy1 ) // tray on top
+              wy = sy1;
+            else if( iy >= sy2 ) // tray at bottom
+              wy = sy2 - sz;
+            wx = ix + iw / 2 - sz / 2;
+            if(wx < sx1)
+              wx = sx1;
+            else if(wx + sz > sx2)
+              wx = sx2 - sz;
+            view.move(wx,wy,sz,sz);
+            view.state = View.WINDOW_SHOWN;
+            $(button#show-window).state.focus = true;
+          }
+
+          view << event activate (as) {
+            if( as === false ) 
+              view.state = View.WINDOW_HIDDEN;
+          }
+
+          event click $(button#show-window) {
+
+            view.window {
+              url      : self.url("app/app-window.htm"),
+              type     : View.FRAME_WINDOW,
+              width    : self.toPixels(800dip),
+              height   : self.toPixels(600dip),
+              alignment: 5
+            }
+          }
+
+          event click $(button#close-app) {
+            view.close(); // as this is main window it will exit 
+          }
+
+        </script>
+    </head>
+    <body>
+       <section #usage>
+         Open this file in view (not in frame). 
+       </section>
+       <section #intro>
+         <p>This is introductionary screen, will be closed in 5 seconds. 
+         You should see <img src="i32.png"> icon in taskbar.</p>
+       </section>
+       <section #tray>
+         <button#show-window>Show window</button>
+         <button#close-app>Exit application</button>
+       </section>
+    </body>
+</html>

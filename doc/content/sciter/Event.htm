@@ -348,8 +348,10 @@ VK_F20      VK_F21      VK_F22      VK_F23      VK_F24
     <dd>- Event.POPUP_REQUEST, the event is fired as a first phase of popup creation, when window for it is not created. event.source is the popup element. Use this event to popuplate content of the popup.</dd>
     <dt>popupready</dt>
     <dd>- Event.POPUP_READY, the event is fired as a last phase of popup creation, when window for it is created. event.source is the popup element.</dd>
-    <dt>popupdismissed</dt>
-    <dd>- Event.POPUP_DISMISSED, the event is fired as after popup window gets removed from screen.</dd>
+    
+		
+		<dt>popupdismissing</dt><dd>-&nbsp;Event.POPUP_DISMISSING,&nbsp;the event is sent&nbsp;<b>before</b> popup window gets removed from screen. The event is sent to the element itself while popup is still visible (but about to be closed).</dd><dt>popupdismissed</dt>
+    <dd>- Event.POPUP_DISMISSED, the event is posted to the popup owner and <b>after</b> popup window gets removed from screen.</dd>
 		<dt>tooltiprequest</dt>
 		<dd>- Event.TOOLTIP_REQUEST, the event is sent in response to Event.MOUSE_IDLE.</dd>
     

@@ -305,7 +305,7 @@ if( fn ) view.<strong>load</strong>(fn);
 </pre></dd>
     <dt>request</dt>
     <dd>
-      <div> <strong>( </strong><em>params</em>: object<strong>) </strong>: <em>undefined</em>.</div>
+      <div> <strong>( </strong> <b>params</b>: object<strong>) </strong>: <em>undefined</em>.</div>
       <p>Sends HTTP request with <em>params</em> object having following fields:</p>
       <ul>
         <li> <strong>type</strong> - <em>symbol</em>, HTTP verb, one of : <strong>#get</strong>, <strong>#post</strong>, <strong>#put</strong> or <strong>#delete</strong>, default: #get ;</li>
@@ -321,7 +321,17 @@ if( fn ) view.<strong>load</strong>(fn);
         <li> <strong>proxyHost</strong>, <strong>proxyPort</strong> - <em>string</em>, <em>integer</em>. If these two are provided then the request will go through that proxy host.</li>
         <li> <strong>output</strong> - symbol, one of <strong>#string</strong> | <strong>#stream</strong> | <strong>#bytes</strong> | <strong>#json</strong>. If provided forces <em>data</em> to be reported as instance of String, Stream, Bytes or a value - result of JSON parsing.</li>
 				<li><b>noCache</b> - true | false, if <i>true</i> then request will not use reading from cache nor writing the request response to cache.&nbsp;</li></ul>
-      <div>Sample: <u>sdk/samples/communication/file-download.htm</u> and <u>sdk/samples/communication/http.tis</u></div></dd></dl>
+      <p>Sample: <u>sdk/samples/communication/file-download.htm</u> and <u>sdk/samples/communication/http.tis</u></p>
+			</dd><dt>trayIcon</dt>
+		<dd><b>(</b> <i></i><b>param</b> : symbol | object <b>)</b> : many<p>Defines parameters of tray icon for the window. Accepts following parameters:</p>
+			<ul><li><code>view.trayIcon { <b>image</b>: Image, <b>text</b>: string } : boolean</code> creates tray icon for the window, parameters:<ul><li><i>image</i> is an instance of <a href="Image.htm">Image</a> class, mandatory - bitmap of system specific size (e.g. for MacOS 20x20px png);</li>
+						<li><i>text</i> is string - tooltip text that will appear on mouse over the icon.</li>
+						</ul></li>
+				<li><code>view.trayIcon( <b>#place</b> ) : (x,y,w,h)</code> - returns location of the tray icon in screen coordinates.</li>
+				<li><code>view.trayIcon( <b>#remove</b> ) : boolean</code> - &nbsp;removes tray icon from system status bar.</li>
+				</ul>
+			<p>When tray icon is created the view will start receiving <a href="#trayicon-click">trayicon-click</a> events.</p>
+			<p>Sample: <u>sdk/samples/trayicon</u>&nbsp;</p></dd></dl>
   
 	<h2>Notifications</h2>
 	<dl><dt>onRequest(rq: <a href="Request.htm">Request</a>)</dt>
@@ -360,9 +370,12 @@ if( fn ) view.<strong>load</strong>(fn);
         <li> <strong>#by-mouse</strong> - window is activated by mouse click on it.</li></ul></dd>
 
     <dt>&quot;closing&quot;</dt>
-    <dd>The event is generated as a part of view(window) closing sequence, delivered before view's document gets destroyed.</dd></dl>
+    <dd>The event is generated as a part of view(window) closing sequence, delivered before view's document gets destroyed.</dd>
     <dt>&quot;close&quot;</dt>
     <dd>Very last event from view (window), delivered immediately before view (window) is destroyed.</dd>
-</body>
+    <dt id="trayicon-click">&quot;trayicon-click&quot;</dt>
+    <dd>Click on tray icon (if any). Event parameter is an object <code>{ <b>x</b>: integer, &nbsp;<b>y</b>: integer, <b>button</b>: integer }</code> &nbsp;where x/y are mouse screen coordinates, and button is 1 - left mouse button or 2 - right mouse button or 0 if system does not support right clicks (MacOS) on tray buttons.&nbsp;</dd>
+</dl>
+    </body>
 
 </html>

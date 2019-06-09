@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+          ol#events { 
+            height:*; 
+            overflow:auto; 
+            vertical-align:bottom;
+          }
+
+
+        </style>
+        <script type="text/tiscript">
+
+          event click $(button#set) {
+            var r = view.trayIcon {
+              image: this.loadImage(self.url("i32.png")),
+              text: "I am trayIcon\ncreated: " + (new Date()).toString()
+            };
+            if( r )
+              this.state.disabled = true;
+          } 
+
+          event click $(button#remove) {
+            var r = view.trayIcon(#remove);
+            if( r )
+              $(button#set).state.disabled = false;
+          } 
+
+          event click $(button#place) {
+            var (x,y,w,h) = view.trayIcon(#place);
+            $(span#place).$content(x:{x},y:{y},w:{w},h:{h});
+          } 
+
+          event click $(button#update) {
+            view.trayIcon{ text: "updated: " + (new Date()).toString() };
+          } 
+
+          function self.ready() {
+            const ol = $(ol#events);
+            assert ol;
+
+            function append(name,evt) {
+              ol.$append(<li>{name} x:{evt.x} y:{evt.y} buttons:{evt.buttons}</li>);
+              if(ol.length > 100)
+                ol.first.remove();
+            }
+ 
+            view << event trayicon-click (evt) { append("trayicon-click",evt); } 
+          }
+
+        </script>
+    </head>
+    <body>
+
+       <div><button#set>Set Icon</button><br>
+       <button#remove>Remove icon</button><br>
+       <button#update>Update text</button>
+       <button#place>Get place:</button><span#place /></div>
+       
+       trayIcon Events:
+       <ol#events>
+       </ol>
+
+    </body>
+</html>
