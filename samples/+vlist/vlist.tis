@@ -196,6 +196,8 @@ function VirtualList(params) {
         setupRecordObserver(rec,t);
         showRecord(n,rec,t);
         buffer_start = n;
+        if( list.length >= buffer_size )
+          break;
       }
             
       if(list.first) {
