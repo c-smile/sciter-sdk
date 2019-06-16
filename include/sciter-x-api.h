@@ -269,11 +269,7 @@ typedef ISciterAPI* (SCAPI *SciterAPI_ptr)();
 
     EXTERN_C ISciterAPI* SCAPI SciterAPI();
 
-#if defined(__cplusplus) && !defined(PLAIN_API_ONLY)
-    inline ISciterAPI* SAPI( ISciterAPI* ext = NULL ) {
-#else
-    inline ISciterAPI* SAPI(ISciterAPI* ext) {
-#endif
+    inline ISciterAPI* _SAPI(ISciterAPI* ext) {
        static ISciterAPI* _api = NULL;
        if( ext ) _api = ext;
        if( !_api )
@@ -289,7 +285,7 @@ typedef ISciterAPI* (SCAPI *SciterAPI_ptr)();
 
 #elif defined(WINDOWS)
 
-    inline ISciterAPI* SAPI( ISciterAPI* ext = NULL ) {
+    inline ISciterAPI* _SAPI( ISciterAPI* ext ) {
        static ISciterAPI* _api = NULL;
        if( ext ) _api = ext;
        if( !_api )
@@ -316,12 +312,11 @@ typedef ISciterAPI* (SCAPI *SciterAPI_ptr)();
        return _api;
     }
 
-
 #elif defined(OSX)
 
     //typedef ISciterAPI* SCAPI (*SciterAPI_ptr)();
 
-    inline ISciterAPI* SAPI( ISciterAPI* ext = NULL )
+    inline ISciterAPI* _SAPI( ISciterAPI* ext )
     {
         static ISciterAPI* _api = NULL;
         if( ext ) _api = ext;
@@ -373,7 +368,7 @@ typedef ISciterAPI* (SCAPI *SciterAPI_ptr)();
 
     //typedef ISciterAPI* SCAPI (*SciterAPI_ptr)();
 
-    inline ISciterAPI* SAPI( ISciterAPI* ext = NULL )
+    inline ISciterAPI* _SAPI( ISciterAPI* ext )
     {
         static ISciterAPI* _api = NULL;
         if( ext ) _api = ext;
@@ -426,8 +421,12 @@ typedef ISciterAPI* (SCAPI *SciterAPI_ptr)();
         return _api;
     }
 
-
 #endif
+
+  inline ISciterAPI* SAPI() {
+    static ISciterAPI* _api = _SAPI(NULL);
+    return _api;
+  }
 
   inline LPSciterGraphicsAPI gapi()
   {
