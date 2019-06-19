@@ -17,16 +17,14 @@
       <caption>Book color:</caption>
       <div.colors><li color=0/><li color=1/><li color=2/><li color=3/><li color=4/><li color=5/><li color=6/></div>
       <hr>
+      <li(map-book)>Map book to folder</li>
+      <li(unmap-book)>Unmap book from folder:<text.mapped-folder /></li>
+      <hr>
       <li(move-notes)>Move notes to
          <menu#move-notes-to></menu>
       </li>
       <li(delete-book)>Delete book</li>
     </menu>
-<!--        <popup.dialog #link>
-      <form><label>Text:</label><input|text(text) />
-            <label>Address:</label><input|text(url) default /></form>
-      <footer><button(insert) disabled>Insert</button></footer>
-    </popup>-->
     <frame#loadable-dialogs content-style="popup-dialog.css"/>
 </head>
 <!--<window-header></window-header>-->

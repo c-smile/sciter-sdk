@@ -290,9 +290,9 @@ event edit-hyperlink (evt) {
 class Hyperlink : Element 
 {
 
-  const RE_HTTP = /((?:https?:\/\/)([a-zA-Z-]+)(\.[a-zA-Z-]+)([-\/\w\.\?#&=%\(\)]*)\/?)$/i; 
+  const RE_HTTP = /((?:https?:\/\/)([a-zA-Z0-9-]+)(\.[a-zA-Z-]+)([-\/\w\.\?#&=%\(\)]*)\/?)$/i; 
   const RE_FILE = /^(?:file\:\/\/\/?)?(([-\/\w \.]*)\/?)([-\?\=\w%#]+)?$/i;
-  const RE_MAIL = /(([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6}))$/i;
+  const RE_MAIL = /(([a-z0-9_\.-]+)@([a-z0-9\.-]+)\.([a-z\.]{2,6}))$/i;
   function attached() { this.validate(); }
   event change() { this.validate(); }
   function validate() {

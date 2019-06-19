@@ -13,3 +13,14 @@ function sameDateTime(date1,date2) {
   && date1.month == date2.month
   && date1.year == date2.year;
 }
+
+function makeFolder(path) {
+  if( System.sync.stat(path) )
+    return true;
+  var parent = path /~ "/";
+  if( !parent || (path == parent) )
+    return true;
+  if( makeFolder(parent) )
+    return System.sync.mkdir(path) >= 0;
+  return false;
+}

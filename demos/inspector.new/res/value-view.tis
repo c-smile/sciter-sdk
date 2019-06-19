@@ -149,7 +149,7 @@ class ValueView : Element
       case #array:
         return (String.printf("[%s]", formatArray(varval,exp)), #array);
       case #date:
-        return (varval.toISOString(), false);
+        return (varval.toString(), false);
       case #string:
       case #integer:
       case #float:

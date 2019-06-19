@@ -7,7 +7,6 @@ include "book.tis";
 include "tag.tis";
 include "note.tis";
 
-
 //|
 //| Global db object and its methods
 //| 
@@ -93,10 +92,15 @@ function db.importItem(item, book, tags )
     var ourDate = existing.mdate.valueOf();
     var theirDate = item.mdate.valueOf();
     var modified; 
-    if( ourDate <= theirDate )
+    //debug dates: existing, item , existing.mdate, item.mdate;
+    if( ourDate <= theirDate ) {
+      //debug theirsontop: item;
       modified = existing.mergeContent(item,#theirs-on-top);
-    else
+    }
+    else {
+      //debug oursontop: item;
       modified = existing.mergeContent(item,#ours-on-top); 
+    }
     action = modified ? #updated : #skipped;
   } 
 
@@ -116,8 +120,8 @@ function db.purgeDeletedItems() {
   
   for(var item in delBook.items ) {
      //book.items.remove(item.id);     // remove item from tag
-    assert root.id2item.remove(item.id);
-    assert root.date2item.remove(item.cdate,item);
+    root.id2item.remove(item.id);
+    root.date2item.remove(item.cdate,item);
     // remove it from tags
     if(item.tags) {
       for( var tag in item.tags )
@@ -128,7 +132,7 @@ function db.purgeDeletedItems() {
   if(delBook.items) {
     delBook.items.clear();
     assert delBook.items.length == 0;
-    self.postEvent("book-assigned",delBook); // to update counters
+    self.postEvent("book-updated",delBook); // to update counters
   }
 }
 
@@ -181,12 +185,14 @@ function db.getUniqueTagName(name) {
 // assign tag to the item
 function db.assignTagToItem(item,tag) 
 {
+  self.postEvent("note-tags-changed",item);
   return tag.addItem(item);
 }
 
 // remove tag from the item
 function db.removeTagFromItem(item,tag) 
 {
+  self.postEvent("note-tags-changed",item);
   return tag.removeItem(item);
 }
 
@@ -368,28 +374,30 @@ function db.defaultBook() {
 
 function db.assignItemToBook(item, book)
 {
-  if(item.book)
-    db.removeItemFromBook(item,item.book);
+  var oldBook = item.book; 
+  if(oldBook)
+    db.removeItemFromBook(item,oldBook);
 
   item.book = book;
 
   if( !book.items ) book.items = db.createIndex(#string);
   book.items[item.id] = item; // append their item to our collection.
 
-  self.postEvent("book-assigned", [book,item]);
+  assert oldBook != book;
+  self.postEvent("note-book-changed",[item,oldBook]);
 }
 
 function db.removeItemFromBook(item, book)
 {
   assert book === item.book;
-  book.items.remove(item.id);     // remove item from tag
+  book.items.remove(item.id);     // remove item from book
 }
 
 function db.deleteBook(book, bookToMoveItemsInto = null) {
-   if( book.items && book.items.length )
-      db.mergeBookItems(book, bookToMoveItemsInto || db.defaultBook());
-   this.root.books.remove(book.id);  
-   self.postEvent("book-removed", book);
+  if( book.items && book.items.length )
+    db.mergeBookItems(book, bookToMoveItemsInto || db.defaultBook());
+  this.root.books.remove(book.id);  
+  self.postEvent("book-removed", book);
 }
 
 function db.mergeBookItems(fromBook, toBook) {
@@ -399,15 +407,9 @@ function db.mergeBookItems(fromBook, toBook) {
     toBook.items[item.id] = item; 
     item.book = toBook;
     if( cnote === item )
-      self.postEvent("book-assigned", [toBook,item]);
+      self.postEvent("note-book-changed",[item,fromBook]);
   }
   fromBook.items.clear();
 }
-
-
-
-
-
-
 
 

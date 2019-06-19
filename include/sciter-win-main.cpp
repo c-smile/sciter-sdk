@@ -1,6 +1,3 @@
-#include "stdafx.h"
-
-#include <vector>
 
 #include "sciter-x-window.hpp"
 #include "sciter-x-threads.h"
@@ -9,6 +6,8 @@
 // Windows Header Files:
 #include <windows.h>
 #include <shellapi.h>
+
+#include <vector>
 
 HINSTANCE ghInstance = THIS_HINSTANCE;
 

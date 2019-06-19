@@ -72,6 +72,31 @@ Settings.add {
            Integer.max(data.window.height,600)); 
     }
 };
+
+// persistent stuff
+
+View.settings = function() 
+{
+  var map = {}; 
+
+  Settings.add {
+    uiStateStore: function(data)   { data.settings = map; },
+    uiStateRestore: function(data) { if(data.settings) Object.assign(map,data.settings); }
+  };
+
+  function add(name,val) {
+    map[name] = val;
+    enqueueSaveState();    
+  }
+
+  function get(name,defval) {
+    return map[name] || defval;
+  }
+
+  return {add:add, get:get};
+
+}();
+
   
 function enqueueSaveState()
 {

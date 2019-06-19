@@ -11,12 +11,12 @@ const PREVIEW_HEIGHT = 80;
 
 function previewImageOf(doc)
 {
-      var body = doc.$(body) || doc;
-      var (px1,py1,px2,py2) = body.box(#rect,#border,#inner)
-      var w = Integer.min(px1 + px2 + body.intrinsicWidthMax(),doc.toPixels(800dip,#width));
-      var h = body.intrinsicHeight(w).limit(32, doc.toPixels(1000dip,#height));
-      var pvh = Integer.min(PREVIEW_HEIGHT, PREVIEW_WIDTH * h / w );
-      return new Image(w, h, PREVIEW_WIDTH, pvh, body); // make snapshot of the body
+  var body = doc.$(body) || doc;
+  var (px1,py1,px2,py2) = body.box(#rect,#border,#inner)
+  var w = Integer.min(px1 + px2 + body.intrinsicWidthMax(),doc.toPixels(800dip,#width));
+  var h = body.intrinsicHeight(w).limit(32, doc.toPixels(1000dip,#height));
+  var pvh = Integer.min(PREVIEW_HEIGHT, PREVIEW_WIDTH * h / w );
+  return new Image(w, h, PREVIEW_WIDTH, pvh, body); // make snapshot of the body
 }
 
 class HtmlArea: Element 
@@ -70,9 +70,11 @@ class HtmlArea: Element
     const CHANGE_BY_INS_CONSECUTIVE_CHAR = 5; // single char insertion, previous character was inserted in previous position  
     const CHANGE_BY_CODE = 6; 
 
-    if(evt.reason == CHANGE_BY_INS_CONSECUTIVE_CHAR || evt.reason == CHANGE_BY_INS_CHAR)
+    if( this.selection.caret && (evt.reason == CHANGE_BY_INS_CONSECUTIVE_CHAR || evt.reason == CHANGE_BY_INS_CHAR))
       Sequences.check(this,this.selection.caret);
-   
+
+    if( this.note )
+      this.postEvent("note-content-changed", this.note); // by the user
   }
 
   function onRequest(rq) 
@@ -128,7 +130,7 @@ class HtmlArea: Element
              Tag.known("web",true).addItem(this.note); 
              var domain = URL.parse(this.sourceUrl).hostname;
              this.appendHtml("<p|urlfrom><a href='" + this.sourceUrl + "'>" + domain + "</a></p>");
-             this.note.updateMeta{ urlFrom: this.sourceUrl };
+             this.note.setMeta{ urlFrom: this.sourceUrl };
              break;
            }
           like "file://*.doc": 
@@ -455,7 +457,7 @@ class NoteFrame : Element
   //   #update - but keep changes history
   //   #discard - discard changes as we have more recent changes
   //   #merge - TODO
-  function createNoteFromFile(pathOrBytes) 
+  function createNoteFromFile(pathOrBytes, params = {}) 
   {
     var note = null;
     var doc = null;
@@ -511,9 +513,9 @@ class NoteFrame : Element
       this.note = note = new Note();
       doc = evt.target;
 
-      noteId = DOM.getMeta(doc,"note-id") || note.id; 
-      noteCDate = Date.parse(DOM.getMeta(doc,"note-cdate"),note.cdate);
-      noteMDate = Date.parse(DOM.getMeta(doc,"note-mdate"),note.mdate); 
+      noteId = params.id || DOM.getMeta(doc,"note-id") || note.id; 
+      noteCDate = params.cdate || Date.parse(DOM.getMeta(doc,"note-cdate"), note.cdate);
+      noteMDate = params.mdate || Date.parse(DOM.getMeta(doc,"note-mdate"), note.mdate); 
       noteCWho =  DOM.getMeta(doc,"note-created-by") || note.createdBy;
       noteMWho =  DOM.getMeta(doc,"note-modified-by") || note.modifiedBy;
 
@@ -547,7 +549,7 @@ class NoteFrame : Element
       note.text = text;
       note.caption = caption;
 
-      var book = db.getBookByName(noteBook,true);
+      var book = params.book || db.getBookByName(noteBook,true);
       var tags = noteTags.split(",").filter(:nt:!!nt).map(:tn: db.getTagByName(tn,true));
 
       (note,action) = db.importItem(note,book,tags);
@@ -560,6 +562,7 @@ class NoteFrame : Element
     this.off(processNote);
     return (note,action);
   }
+
 
   function registerActivator(activator, attached) 
   {

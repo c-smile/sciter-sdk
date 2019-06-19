@@ -1,6 +1,7 @@
 
 #include "sciter-x-window.hpp"
 #include "sciter-x-graphics.hpp"
+
 //#include "behaviors/behavior_video_generator.cpp"
 
 // native API demo
@@ -91,11 +92,12 @@ int uimain(std::function<int()> run ) {
   
   const std::vector<sciter::string>& argv = sciter::application::argv();
 
+  // usciter.exe -o file-to-open.htm
   if (argv.size() > 1) {
     sciter::string file_to_open;
-    for(int n = 1; n < argv.size(); ++n )
-        if( argv[n][0] != '-' ) {
-          file_to_open = argv[n];
+    for(int n = 1; n < int(argv.size()) - 1; ++n )
+        if( aux::chars_of(argv[n]) == const_wchars("-o") ) {
+          file_to_open = argv[n+1];
           break;
         }
     if (file_to_open.length())

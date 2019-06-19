@@ -57,6 +57,11 @@ class Note
     self.postEvent("note-updated",this);    
   }*/
 
+  static function get(id) {
+    return db.getItem(id);
+  }
+
+
   function update(params) 
   {
     // use with care - no check for field names!
@@ -75,7 +80,7 @@ class Note
     }
   }  
 
-  function updateMeta(params) 
+  function setMeta(params) 
   {
     var changes = false;
     if( !this.meta ) this.meta = {};
@@ -225,7 +230,7 @@ class Note
   {
     if( events && (events.length == 0)) 
       events = null;
-    this.updateMeta({events:events}); 
+    this.setMeta({events:events}); 
     if( events ) {
       this.addTag(Tag.known("event",true));
       self.postEvent("events-changed",true);
@@ -281,6 +286,12 @@ class Note
       var dt = this.activeStartDate;
       return dt && (dt <= (new Date()));
     }
+  }
+
+  // move the note to the deleted book
+  function moveToDeletedBook() {
+    var delBook = db.getDeletedBook();
+    db.assignItemToBook(this, delBook);
   }
 
 

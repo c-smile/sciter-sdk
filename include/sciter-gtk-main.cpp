@@ -7,6 +7,7 @@
 //
 
 #include <gtk/gtk.h>
+#include <locale.h>
 
 #include "sciter-x-window.hpp"
 
@@ -19,6 +20,8 @@ int main (int argc, char *argv[])
   g_log_set_handler ("Gtk", G_LOG_LEVEL_WARNING, (GLogFunc) gtk_false, NULL);
   gtk_init (&argc, &argv);
   g_log_set_handler ("Gtk", G_LOG_LEVEL_WARNING, g_log_default_handler, NULL);
+
+  setlocale(LC_TIME,"");
 
   for( int i = 0; i < argc; ++i ) {
       aux::a2w w(argv[i]);

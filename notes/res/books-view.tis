@@ -8,10 +8,12 @@ class BooksView : Element
     var me = this;
     self << event book-selected { me.show();  } 
     self << event notes-filter-changed { me.show(); } 
-    self << event book-assigned { me.updateCounters(); } 
+    self << event note-book-changed { me.updateCounters(); } 
     self << event book-removed { me.show(); }
     self << event book-updated { me.show(); }
     self << event book-created { me.show(); }
+    self << event book-mapping-added { me.updateMapping(); }
+    self << event book-mapping-removed { me.updateMapping(); }
 
     this.show();
     optionAll.execCommand("set-current");
@@ -56,6 +58,12 @@ class BooksView : Element
       option.updateCounter(); 
   }
 
+  function updateMapping() {
+    for( var option in this ) {
+      option.updateMapping(); 
+    }
+  }  
+
   event click $(menu#book > li[name=add-book])  (evt) 
   {
     this.insert("<option><i> </i><span.name> </span></option>",1);
@@ -87,15 +95,21 @@ class BookView : Element
         this.$content(<i color={book.color || 0}>{firstCharOf(book.name)}</i><span.name>{book.name}</span><span.count>{book.itemsCount}</span>);
     }
     else 
-      this.html = "<i> </i><span.name> </span><span.count></span>";   
+      this.html = "<i> </i><span.name/><span.count/>";   
   }
 
   function updateCounter() {
     this.$(.count).text = db.getBookItemsCount(this.book); 
   }
 
+  function updateMapping() {
+    if(this.book)
+      this.attributes.toggleClass("mapped",!!this.book.mappedTo); 
+  }
+
+
   // static method, used by NoteView.populateBooks()
-  function bookBriefHtml(book) {
+  static function bookBriefHtml(book) {
     if(book.id == DELETED_BOOK_ID)
       return String.$(<option value="{book.id}"><span.name.deleted-notes>Deleted</span></option>);
     else
@@ -156,8 +170,16 @@ class BookView : Element
     if(thisbook)
     {
       menu.$(li[name=delete-book]).state.disabled = thisbook.itemsCount > 0;      
-      menu.$(li[color={thisbook.color || 0}]).state.checked = true; 
-    }
+      menu.$(li[color={thisbook.color || 0}]).state.checked = true;
+      if(var mappedTo = thisbook.mappedTo) {
+        menu.attributes.addClass("mapped");
+        menu.$(li[name=unmap-book] > text.mapped-folder).value = mappedTo;
+      }
+      else 
+        menu.attributes.removeClass("mapped");
+    } else 
+      menu.attributes.removeClass("mapped");
+
   }
 
   event click $(menu#move-notes-to > li[bookid]) (evt,li) {
@@ -190,6 +212,25 @@ class BookView : Element
     return true;
   }
 
+  event click $(menu#book > li[name=map-book]) (evt) {
+    var path = view.dialog {
+      url: self.url("dialogs/select-mapped-folder.htm"),
+      alignment: 5,
+      parameters: { book: this.book },
+    };
+    if(path) 
+    {
+      var r = makeFolder(path);
+      if( r )
+        this.book.addMapping(path);
+      else 
+        view.msgbox(#alert, "Failed to create folder:<br>" + path.toHtmlString());
+    }
+  }
+
+  event click $(menu#book > li[name=unmap-book]) (evt) {
+    this.book.removeMapping();
+  }
 
   // system D&D
 /* not yet 

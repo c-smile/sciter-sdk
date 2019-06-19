@@ -1,0 +1,113 @@
+<html>
+    <head>
+        <title>Select folder for notes</title>
+        <style>
+          html {overflow:none;}
+          body { min-width: 30em; min-height:30em; margin:0; }
+
+          div.options { behavior: form; }
+          div.options > button 
+          { 
+            display:block; margin:0.5em; flow:vertical;
+            height:auto;
+            padding-left:2em;
+          }
+
+          div.options > button::marker { margin-top:0.4em; }
+
+          header { padding:1em; }
+          main { size:*; overflow:auto; }
+
+          div.folder-chooser { margin:1em; flow:horizontal; vertical-align:middle; border-spacing:0.5em; }
+          div.folder-chooser > input { width:*; display:block; }
+          div.folder-chooser > button { display:block; }
+          footer {padding: 1em; text-align:right; }
+
+        </style>
+        <script type="text/tiscript">
+
+var folderPath;
+var bookName;
+
+function updateFolderPath(path) {
+  folderPath = path;
+  if(folderPath !like "*/" ) 
+    folderPath += "/";
+  for(var el in $$(span.folder))
+    el.text = folderPath;
+  return folderPath;
+}
+
+function updateBookName(name) {
+  for(var el in $$(.book))
+    el.text = name;
+  bookName = name;
+}
+
+event change $(input(folder-path)) {
+  updateFolderPath(this.value);
+}
+
+event click $(button#choose) {
+  var path = view.selectFolder("Select folder for the book");
+  if( path ) {
+    path = URL.toPath(path);
+    $(input#folder-path).value = updateFolderPath(path);
+  }
+}
+
+event click $(button#apply) {
+  var opt = $(div.options).value.combinator;
+  view.settings.add("lastMappedFolder",folderPath);  
+  view.settings.add("lastMappedFolderCombinator",opt);  
+  var finalPath;
+  switch(opt) {
+    case "a": finalPath = folderPath; break;
+    case "b": finalPath = folderPath + bookName; break;
+    case "c": finalPath = folderPath + "notes/" + bookName; break;
+  }
+  view.close(finalPath);
+}
+
+event click $(button#cancel) {
+  view.close(false);
+}
+
+function self.ready() {
+  updateBookName(view.parameters.book.name);
+  var initialPath = view.settings.get("lastMappedFolder",System.path(#USER_DOCUMENTS)); 
+  $(div.options).value = { combinator: view.settings.get("lastMappedFolderCombinator","a") };
+  $(input#folder-path).value = updateFolderPath(initialPath);
+}
+
+        </script>
+    </head>
+    <body>
+
+<header>
+  Select folder to place notes of <strong.book/> book.
+</header>
+
+<main>
+  <div.folder-chooser>
+    <input|text #folder-path novalue="(folder path)"/>
+    <button#choose>Choose</button>
+  </div>
+  <div.options>
+    <button|radio(combinator) value="a" checked><text>Use the folder as it is:</text>
+      <p><span.folder/></p></button>
+    <button|radio(combinator) value="b"><text>Create book sub-folder:</text>
+      <p><span.folder/><span.book/></p></button>
+    <button|radio(combinator) value="c"><text>Create notes/book folders:</text>
+      <p><span.folder/>notes/<span.book/></p></button>
+  </div>
+
+</main>
+
+<footer>
+  <button#apply>Apply</button>
+  <button#cancel>Cancel</button>
+</footer>
+
+    </body>
+</html>

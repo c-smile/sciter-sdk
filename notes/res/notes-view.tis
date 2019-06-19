@@ -26,14 +26,14 @@ class List : Element
 
     self << event events-changed(evt) {  }
 
-    self << event book-assigned (evt) { 
+    self << event note-book-changed (evt) { 
       var data = evt.data;
-      var book = data[0]; 
-      var note = data[1];
-      if( book === db.getDeletedBook() && currentBook !== db.getDeletedBook()) 
+      var note = data[0];      
+      var fromBook = data[1]; 
+      if( note.book === db.getDeletedBook() && currentBook !== db.getDeletedBook()) 
         // note "deleted" so
         records.removeByValue(note);
-      else if( currentBook && book !== currentBook )
+      else if( currentBook && note.book !== currentBook )
         // note moved out of current book
         records.removeByValue(note);
       else 

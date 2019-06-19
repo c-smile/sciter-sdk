@@ -36,10 +36,10 @@ class NoteView : Element
     self << event note-updated()      { me.updateState(); }
     //self << event note-history()      { me.updateState(); }
     self << event note-history-changed (evt) { if(this.note === evt.data) me.updateState(); }
-   
+
+    self << event note-book-changed() { me.populateBooks(); }   
 
     self << event book-changed() { me.populateBooks(); }
-    self << event book-assigned() { me.populateBooks(); }
     self << event book-created() { me.populateBooks(); }
     self << event book-removed() { me.populateBooks(); }
     self << event book-updated() { me.populateBooks(); }

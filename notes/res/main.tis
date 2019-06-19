@@ -16,8 +16,8 @@ const WorkerFrame = $(frame#worker);
 // this user id
 const PRINCIPAL = String.$({Sciter.userName()}@{Sciter.machineName(true)});
 
-const RE_HTTP = /((?:https?:\/\/)?(([\da-z\\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)\/?))/;
-const RE_MAIL = /([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})/;
+const RE_HTTP = /((?:https?:\/\/)?(([a-z0-9.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)\/?))/;
+const RE_MAIL = /([a-z0-9_\.-]+)@([a-z0-9.-]+)\.([a-z\.]{2,6})/;
 
 function PopulteNotesList(array) {
   array.length = 0;
@@ -178,7 +178,6 @@ function loadDialog(url) {
   return holder.first;
 }
 
-
 function self.ready() {
   db.purgeDeletedItems();
 
@@ -262,6 +261,15 @@ function self.ready() {
     self.timer(EVENT_CHECK_PERIOD,checkEventsState); 
   }  
   // events monitoring ----
+
+  /*self.timer(400ms, function() {
+    var book = db.getBookByName("docs");
+    assert book;
+    book.mappedTo = "D:\\mapped\\docs\\";
+    BookMapping.scanMappedFolder(book);
+  });*/
+
+  this.postEvent("started");
 
 }
 

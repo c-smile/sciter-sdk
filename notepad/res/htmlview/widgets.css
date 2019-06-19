@@ -123,6 +123,7 @@
     width:*;
     overflow-x:hidden;
     white-space: nowrap;
+    max-width:20em;
     text-overflow:path-ellipsis;
   } 
   select(local-links) option span.text
@@ -130,6 +131,7 @@
     width:*;
     overflow-x:hidden;
     white-space: nowrap;
+    max-width:20em;
     text-overflow:ellipsis;
   } 
   select(local-links) option span.text:empty { content:"{here}" }

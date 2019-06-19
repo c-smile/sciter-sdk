@@ -1,0 +1,247 @@
+//|
+//| Book mapping - content of a book (in DB) is mapped to content of a folder on disk
+//| Each file in the folder is a note. 
+//|
+
+// NOT USED YET
+
+namespace BookMapping 
+{
+
+  function createMonitor(book)
+  {
+    if(!System.scanFiles(book.mappedTo))
+      return null;
+
+    const THRESHOLD = 400ms;
+
+    var monitor = System.watch(book.mappedTo);
+
+    function onFileChange() { scanFolder(book); }
+
+    monitor << event change (path) { self.timer(THRESHOLD, onFileChange); }; 
+    monitor << event rename (path) { self.timer(THRESHOLD, onFileChange); }; 
+
+    return monitor;
+  }
+
+  const noteframe = $(frame#worker);
+
+  function exportNote(note,fn) {
+    noteframe.saveNoteToFile(note,fn);
+    var fmd5 = System.md5(fn);
+    note.setMeta { fileMD5: fmd5 };
+    System.utimes(fn, note.mdate, note.mdate);
+  }
+
+  function importNote(book, stats) {
+    var overrides = {
+      book: book,
+      cdate: stats.ctime,
+      mdate: stats.mtime
+    };
+    var (note,action) =  noteframe.createNoteFromFile( stats.path, overrides );
+    note.setMeta { fileMD5: stats.md5 };
+    return note;
+  }
+
+  function updateNote(note,stats) {
+    var overrides = {
+      book: note.book,
+      id: note.id,
+      cdate: stats.ctime,
+      mdate: stats.mtime
+    };
+    var (dummy,action) = noteframe.createNoteFromFile( stats.path, overrides );
+    assert dummy === note;
+    note.setMeta { fileMD5: stats.md5 };
+    return note;
+  }
+
+
+  function scanFolder(book, changes = { addition: {}, removal:{}, change:{} }) 
+  {
+    var folderNotes = {}; // 
+    var folderNotesToCreate = {}; // in the folder
+    var folderNotesToUpdate = {}; // 
+    var folderNotesToRemove = {};
+
+    var bookPath = book.mappedTo;
+    if(bookPath !like "*/") bookPath += "/";
+
+    function noteFilePath(noteId) { return bookPath + noteId + ".htm"; }
+
+    System.dir(book.mappedTo, function(filename,filetype,stats) { 
+      if( filetype != #file )
+        return;
+      var name = filename /~ ".";
+      var ext = filename %~ ".";
+      if(ext != "htm" && ext != "html") 
+        return;
+      if( name == "index" )
+        return;
+      stats.path = book.mappedTo like "*/" ? book.mappedTo + filename : book.mappedTo + "/" + filename;
+      stats.md5 = System.md5(stats.path);      
+      folderNotes[name] = stats;
+    }); 
+
+    var initial = folderNotes.length == 0;
+
+    var notesToCreate = {}; // in the db
+    var notesToUpdate = {}; // in this db
+
+    for(var (id,stats) in folderNotes) {
+      var note = book.items[id];
+      if( !note )  {
+        if( id !in changes.removal ) { // ???
+          //debug A:stats;          
+          notesToCreate[id] = stats;
+        }
+      }
+      else {
+        // it is here
+        var noteMD5 = note.getMeta(#fileMD5);
+        //debug log: noteMD5, stats.md5;
+        if ( !noteMD5 || changes.change[note.id]) 
+          folderNotesToUpdate[id] = { note:note, stats: stats };
+        else 
+          if( noteMD5 != stats.md5 ) { // content is different
+            if( stats.mtime > note.mdate )
+              notesToUpdate[id] = { note:note, stats: stats };
+            else 
+              folderNotesToUpdate[id] = { note:note, stats: stats };
+          }
+      }
+    }
+
+    for(var noteId in changes.addition) {
+      //debug addition: noteId, noteId !in folderNotes, book.items[noteId];
+      if( (noteId !in folderNotes) && book.items[noteId]) {
+        folderNotesToCreate[noteId] = book.items[noteId]; 
+        //debug addToFolder: folderNotesToCreate[noteId];
+      }
+    }
+
+    for(var noteId in changes.change)
+    {
+      var stats = folderNotes[noteId];
+      if( !stats) 
+        folderNotesToCreate[noteId] = book.items[noteId];
+      else
+        folderNotesToUpdate[noteId] = { note: book.items[noteId], stats: stats };
+    }
+
+    for(var noteId in changes.removal)
+      if( noteId in folderNotes) 
+        folderNotesToRemove[noteId] = true; 
+
+    // process them
+
+    for(var (id,note) in folderNotesToCreate)
+      exportNote(note, noteFilePath(id));
+
+    for(var (id,noteStats) in folderNotesToUpdate)
+      exportNote(noteStats.note, noteStats.stats.path);
+
+    for(var (id,noteStats) in notesToUpdate)
+      updateNote(noteStats.note, noteStats.stats);
+
+    for(var (id,stats) in notesToCreate) {
+      var note = importNote(book,stats);
+      var canonicPath = noteFilePath(id);
+      if( stats.path != canonicPath ) {
+        exportNote(note, canonicPath);
+      }
+    }
+
+    var notesToRemove = [];
+
+    if(!initial) {
+      for( var note in book.items )
+        if( note.id !in folderNotes && note.id !in folderNotesToCreate) 
+          notesToRemove.push(note); 
+
+      for( var note in notesToRemove)
+        note.moveToDeletedBook();
+    }
+
+    for( var (id,stats) in folderNotes ) 
+      if( !book.items[id] )
+        System.unlink(stats.path);
+
+    debug SCANBOOK: book.name, folderNotesToCreate, folderNotesToUpdate, folderNotesToRemove, notesToCreate, notesToUpdate, notesToRemove;
+
+  }
+
+}
+
+!function() {
+
+  self << event book-mapping-added (evt) {
+    var book = evt.data;
+    assert book instanceof Book;
+    BookMapping.scanFolder(book);
+    book.mappingMonitor = BookMapping.createMonitor(book);
+  } 
+
+  self << event book-mapping-removed (evt) {
+    var book = evt.data;
+    assert book instanceof Book;
+    assert book.mappingMonitor;
+    book.mappingMonitor.close();
+    delete book.mappingMonitor;
+  }
+
+  self << event started {
+    //var total = 0;
+    for( var (id,book) in db.root.books ) 
+      if(book.mappedTo)
+        self.postEvent("book-mapping-added",book);
+  }
+
+  var bookUpdateQueue = {}; // books to update, contains list of removed notes (by this user)
+  // contains { addition: {}, removal:{}, change:{} } under book.id keys
+
+  function doScan() { 
+    for( var bookId in bookUpdateQueue ) {
+      var book = Book.get(bookId);
+      var changes = bookUpdateQueue[bookId]; 
+      BookMapping.scanFolder(book,changes); 
+    }
+    bookUpdateQueue = {};
+  }
+
+  function enqueueBookUpdate(book, action, note) {
+    var changes = bookUpdateQueue[book.id];
+    if(changes !== undefined) {
+      changes[action][note.id] = true;
+      return;
+    }
+    changes = { addition: {}, removal:{}, change:{} };
+    changes[action][note.id] = true;
+    bookUpdateQueue[book.id] = changes;
+    self.timer(2s,doScan);
+  }
+
+  function onChange(note) {
+    if( note.book.mappedTo ) {
+      note.setMeta { fileMD5: null };
+      enqueueBookUpdate(note.book, #change, note);
+    }
+  }
+  self << event note-tags-changed (evt) { onChange(evt.data); }
+  self << event note-content-changed (evt) { onChange(evt.data); }
+  
+  self << event note-book-changed (evt) { 
+    var [note,oldBook] = evt.data;
+    if( note.book.mappedTo )
+      enqueueBookUpdate(note.book, #addition, note);
+    if(oldBook && oldBook.mappedTo) {
+      //debug removal: oldBook,#removal,note;
+      enqueueBookUpdate(oldBook,#removal,note);
+    }
+  }
+  
+
+}();
+

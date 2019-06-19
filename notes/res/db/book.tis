@@ -1,7 +1,8 @@
 //|
-//| Tag represents "tag" that can be assigned to 
-//| the Item, see: addItem/removeItem. 
+//| Book is a container of notes (a.k.a. "items")
 //|
+
+include "book-mapping.tis";
 
 class Book
 {
@@ -17,6 +18,11 @@ class Book
     this.items  = null;      
     this.color  = colorId;   
   }
+
+  static function get(id) {
+    return db.getBook(id);
+  }
+
  
   function addItem(item)
   {
@@ -54,6 +60,16 @@ class Book
     self.postEvent("book-updated", this);
   }
 
+  function addMapping(folderPath) {
+    this.mappedTo = folderPath;
+    self.postEvent("book-mapping-added", this);
+  }
 
+  function removeMapping() {
+    this.mappedTo = null;
+    self.postEvent("book-mapping-removed", this);    
+  }
+ 
 
 }
+

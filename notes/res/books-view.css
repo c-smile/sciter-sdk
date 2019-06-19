@@ -20,7 +20,7 @@
     prototype: BookView url(books-view.tis);
     color: #fff;
     flow:horizontal;
-    padding:0;
+    padding:0 16dip 0 0;
     border:none;    
     height: length(band-size);
     line-height: length(band-size);
@@ -55,6 +55,16 @@
     text-align:center;
   }
 
+  option.mapped {
+    background-image: url(path: M1344 1024q133 0 226.5 93.5t93.5 226.5-93.5 226.5-226.5 93.5-226.5-93.5-93.5-226.5q0-12 2-34l-360-180q-92 86-218 86-133 0-226.5-93.5t-93.5-226.5 93.5-226.5 226.5-93.5q126 0 218 86l360-180q-2-22-2-34 0-133 93.5-226.5t226.5-93.5 226.5 93.5 93.5 226.5-93.5 226.5-226.5 93.5q-126 0-218-86l-360 180q2 22 2 34t-2 34l360 180q92-86 218-86z);
+    background-repeat:no-repeat;
+    background-position-top: 50%;
+    background-position-right: 3dip;
+    background-size: 10dip 10dip;
+    fill:#ccc;
+    stroke:none;
+  }
+
   option#all > i {
     background-image: url(path: M1546 1050q46 26 59.5 77.5t-12.5 97.5l-64 110q-26 46-77.5 59.5t-97.5-12.5l-266-153v307q0 52-38 90t-90 38h-128q-52 0-90-38t-38-90v-307l-266 153q-46 26-97.5 12.5t-77.5-59.5l-64-110q-26-46-12.5-97.5t59.5-77.5l266-154-266-154q-46-26-59.5-77.5t12.5-97.5l64-110q26-46 77.5-59.5t97.5 12.5l266 153v-307q0-52 38-90t90-38h128q52 0 90 38t38 90v307l266-153q46-26 97.5-12.5t77.5 59.5l64 110q26 46 12.5 97.5t-59.5 77.5l-266 154z);
   }
@@ -63,7 +73,6 @@
     background-image: url(path: M704 736v576q0 14-9 23t-23 9h-64q-14 0-23-9t-9-23v-576q0-14 9-23t23-9h64q14 0 23 9t9 23zm256 0v576q0 14-9 23t-23 9h-64q-14 0-23-9t-9-23v-576q0-14 9-23t23-9h64q14 0 23 9t9 23zm256 0v576q0 14-9 23t-23 9h-64q-14 0-23-9t-9-23v-576q0-14 9-23t23-9h64q14 0 23 9t9 23zm128 724v-948h-896v948q0 22 7 40.5t14.5 27 10.5 8.5h832q3 0 10.5-8.5t14.5-27 7-40.5zm-672-1076h448l-48-117q-7-9-17-11h-317q-10 2-17 11zm928 32v64q0 14-9 23t-23 9h-96v948q0 83-47 143.5t-113 60.5h-832q-66 0-113-58.5t-47-141.5v-952h-96q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h309l70-167q15-37 54-63t79-26h320q40 0 79 26t54 63l70 167h309q14 0 23 9t9 23z);
     fill:#ccc;    
   }
-
 
   :root:collapsed > option > i {
     background-size: 24dip 24dip;
@@ -110,4 +119,14 @@
 
 books-view { style-set: books-view; }
 
+menu.context#book > li(unmap-book) { visibility:none; }
+menu.context#book.mapped > li(map-book) { visibility:none; }
+menu.context#book.mapped > li(unmap-book) { visibility:visible; flow:vertical;}
+menu.context#book.mapped > li(unmap-book) > text.mapped-folder {
+  max-width:16em;
+  display:block;
+  overflow-x: hidden;
+  text-overflow: path-ellipsis;
+  white-space:nowrap;
+}
 

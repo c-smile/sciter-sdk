@@ -84,7 +84,46 @@
       <div><strong>(</strong>exe-path: string [,arg1:string ... argN: string]<strong>)</strong> returns: integer</div>
       <p>Starts executable asynchronously passing optional command line parameters. The method does not wait for executable to complete.</p>
       <p>Retuns 0 if executable has started successfully and C runtime <code>errno</code> variable code otherwise (<b>EACCES</b>, <b>ENOTDIR</b>, etc.).</p>
-    </dd>
+			</dd><dt>dir</dt>
+		<dd><strong>( </strong><em>path</em>:string ,<em> callback</em>:function[, <i>wantStats</i>: true | false]<strong> )</strong> : true | false<p>Extended version of&nbsp;<i>scanFiles</i> function. The callback function accepts three parameters:</p><p><code>function <em>callback</em>( <em>fileName</em>: string, fileType: symbol, fileStats: object )</code> where:</p>
+			<ul><li>  <b>filename</b> is name and extension of the file;</li>
+				<li><b>fileType</b> is one of <code>#unknown | #file | #dir | #link | #fifo | #socket | #char | #block</code> - type of entry in the directory.</li>
+				<li><b>fileStats</b> (if requested) is an object with the fields:<ul id="filestats"><li><b>dev</b> - integer, the numeric identifier of the device containing the file.</li><li><b>ino</b> - integer, the file system specific &quot;Inode&quot; number for the file.</li><li><b>mode</b> - integer, a bit-field describing the file type and mode.</li><li><b>nlink</b> - integer, the number of hard-links that exist for the file.</li><li><b>uid</b> - integer, the numeric user identifier of the user that owns the file (POSIX).</li><li><b>gid</b> - integer, the numeric group identifier of the group that owns the file (POSIX).</li><li><b>rdev</b> - integer, a numeric device identifier if the file is considered &quot;special&quot;.</li><li><b>size</b> - float, the size of the file in bytes.</li><li><b>blksize</b> - integer, the file system block size for i/o operations.</li><li><b>blocks</b> - integer, the number of blocks allocated for this file.</li><li><b>atime</b> - Date, the timestamp indicating the last time this file was accessed.</li><li><b>mtime</b> - Date, the timestamp indicating the last time this file was modified.</li><li><b>ctime</b> - Date, the timestamp indicating the last time the file status was changed.</li><li><b>birthtime</b> - Date, the timestamp indicating the creation time of this file.</li>
+						</ul></li>
+				</ul>
+			</dd><dt>stat<br>sync.stat</dt>
+		<dd>( <i>path</i>: string ) : <i>promise</i> or <a href="#fileStats">FileStats</a><p>Asynchronous method that returns promise. Can be used as:</p>
+			<pre>System.stat(&quot;d:/test.txt&quot;).then( function(stats) {...} );</pre>Or in asynchronous functions as:
+			<pre>async function checkStats() {
+   var stats = await System.stat(&quot;d:/test.txt&quot;);
+   ...
+}</pre></dd>
+		<dt>unlink<br>sync.unlink</dt>
+		<dd><b>(</b> <i>path</i>: string <b>)</b> : <i>promise</i> (true | error code on failure)<p>Asynchronously or synchronously removes a file or symbolic link.</p>
+			</dd><dt>rmdir<br>sync.rmdir</dt>
+		<dd><b>(</b> <i>path</i>: string <b>)</b> : <i>promise</i> (true | error code on failure)<p>Removes directory (a.k.a. folder). Directory must be empty. The function calls <a href="http://man7.org/linux/man-pages/man2/rmdir.2.html">rmdir</a>.&nbsp;</p>
+			</dd><dt>mkdir<br>sync.mkdir</dt>
+		<dd><b>(</b> <i>path</i>: string <b>)&nbsp;</b>: <i>promise</i> (true | error code on failure)<p>Creates directory (a.k.a. folder). The function calls <code>mkdir</code>.&nbsp;</p></dd>
+  <dt>rename<br>sync.rename</dt>
+		<dd><b>(</b> <i>oldPath</i>: string, <i>newPath</i>: string <b>)&nbsp;</b>: <i>promise</i> (true | error code on failure)
+    <p>Asynchronously rename file at <i>oldPath</i> to the pathname provided as <i>newPath</i>. In the case that newPath already exists, it will be overwritten. If there is a directory at newPath, an error will be raised instead.</p></dd>
+		<dt>copyFile<br>sync.copyFile</dt>
+		<dd><b>(</b> &nbsp;<i>srcPath</i>: string, <i>dstPath</i>: &nbsp;string [,<i>#no-overwrite</i>] <b>)&nbsp;</b>: <i>promise</i> (true | error code on failure)<p>Asynchronously copies <i>src</i> to <i>dst</i>. By default, <i>dst</i> is overwritten if it already exists. Sciter makes no guarantees about the atomicity of the copy operation. If an error occurs after the destination file has been opened for writing, Sciter will attempt to remove the destination. If #<i>no-overwrite</i> parameter is provided the operation will fail if something is on dstPath already.&nbsp;</p></dd>
+  <dt>utimes<br>sync.utimes</dt>
+		<dd><b>(</b> <i>path</i>: string,  <i>atime</i>: Date, <i>mtime</i>: Date <b>)&nbsp;</b>: <i>promise</i> (true | error code on failure)<p>Change the file system timestamps of the object referenced by path.&nbsp;</p>
+			</dd>
+  <dt>chmod<br>sync.chmod</dt>
+		<dd><b>(</b> <i>path</i>: string,  <i></i>mode: integer <b>)&nbsp;</b>: <i>promise</i> (true | error code on failure)<p>Changes file mode bits. The function calls <a href="http://man7.org/linux/man-pages/man2/chmod.2.html">chmod</a>&nbsp;system function.</p>
+			</dd>
+<dt>watch</dt>
+		<dd><b>(</b> <i>path</i>: string <b>)&nbsp;</b>: <i>FileMonitor</i> <p>Creates FileMonitor object that will receive change notifications on a file or folder content. The only public method of FileMonitor is <code>close()</code> - stop monitoring and dispose the monitor.&nbsp;The FileMonitor instance supports change and rename events:</p><pre>var watcher = null;  
+if( watcher ) 
+    watcher.close();
+var path = ...;
+// create file monitor and subscribe to events:
+that.watcher = System.watch(path)
+          &lt;&lt; event change (path) { ... change detected ... } 
+          &lt;&lt; event rename (path) { ... change detected ... };</pre></dd>
   </dl>
 </body>
 </html>
