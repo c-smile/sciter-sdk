@@ -64,6 +64,14 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
   //SCITER+
   // Sciter needs it for Drag-n-drop, etc.
   OleInitialize(NULL);
+
+  // enable "unsafe" functions to be accessible from script
+  SciterSetOption(NULL, SCITER_SET_SCRIPT_RUNTIME_FEATURES,
+    ALLOW_FILE_IO |
+    ALLOW_SOCKET_IO |
+    ALLOW_EVAL |
+    ALLOW_SYSINFO);
+
   //SCITER-
 
   if (FAILED(InitWindow(hInstance, nCmdShow)))

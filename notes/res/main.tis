@@ -3,6 +3,7 @@ include "config.tis";
 include "db/db.tis";
 include "libs/settings.tis";
 include "libs/net.tis";
+include "navigate.tis";
 
 var currentBook = null; 
 var currentNote = null;
@@ -86,7 +87,7 @@ function setFilterEvents(onOff, dropOtherFilters = false)
     filterEvents = onOff;
     if( dropOtherFilters ) {
       setFilterText(null);
-      setCurrentBook(null);
+      //setCurrentBook(null);
       setFilterTags(null);
     }
     self.postEvent("notes-filter-changed", #events);
@@ -98,9 +99,8 @@ function setCurrentBook(book)
 {
   if( currentBook != book ) {
     currentBook = book;
-    setFilterTags(null);  
+    setFilterTags(null); 
     self.postEvent("book-selected");
-    //self.postEvent("notes-filter-changed");
   }
 }
 
@@ -184,8 +184,9 @@ function self.ready() {
   view.animationsEnabled = false; // disable CSS animations for initial setup
   Settings.restore(); // restore UI layout
   // let's start with new note
-  this.sendEvent("start-new-note");
   this.sendEvent("start");
+
+  this.postEvent("start-new-note");
 
   if( "-debug" in argv ) {
       const inspector = System.PLATFORM == "Windows" ? "inspector.exe" : "inspector";
@@ -270,14 +271,13 @@ function self.ready() {
   });*/
 
   this.postEvent("started");
+  Navigate.goTo("note:blank");
 
 }
-
 
 function self.closing() {
   this.sendEvent("shutdown");
   db.commit();
   db.close();
 }
-
 

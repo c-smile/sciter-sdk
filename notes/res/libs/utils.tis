@@ -7,13 +7,6 @@ function sameDay(date1,date2) {
   && date1.year == date2.year;
 }
 
-function sameDateTime(date1,date2) {
-  return 
-     date1.day == date2.day
-  && date1.month == date2.month
-  && date1.year == date2.year;
-}
-
 function makeFolder(path) {
   if( System.sync.stat(path) )
     return true;
@@ -23,4 +16,15 @@ function makeFolder(path) {
   if( makeFolder(parent) )
     return System.sync.mkdir(path) >= 0;
   return false;
+}
+
+function daysBetween( date1, date2 ) {
+  date1 = new Date(date1.year,date1.month,date1.day);
+  date2 = new Date(date2.year,date2.month,date2.day);
+  var one_day=86400000.0; // milliseconds in one day
+  // Convert both dates to milliseconds
+  var date1_ms = date1.valueOf();
+  var date2_ms = date2.valueOf();
+  var difference_ms = date2_ms - date1_ms;  // difference in milliseconds
+  return (difference_ms/one_day).toInteger(); // whole days
 }

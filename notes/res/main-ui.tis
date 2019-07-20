@@ -47,6 +47,138 @@ class Frameset : Element
 
 }
 
+event keyup (evt) {
+  // global shortcuts:
+  
+  if( evt.shortcutKey ) 
+    switch(evt.keyCode) {
+      case Event.VK_N: Navigate.goTo("note:blank"); return true;
+    }
+  else if( evt.altKey ) 
+    switch(evt.keyCode) {
+      case Event.VK_LEFT: Navigate.back(); return true;
+      case Event.VK_RIGHT: Navigate.fore(); return true;
+    }
+  return true;
+
+}
+
+const fileTypeByExtension = {
+  "htm": #html, 
+  "html": #html, 
+  "txt" : #text,
+  "cpp" : #code, 
+  "c": #code, 
+  "h": #code, 
+  "hpp": #code, 
+  "tis": #code, 
+  "js" : #code, 
+  "json" : #code,
+  "md": #markdown,
+};
+
+// called by DD handlers
+function getDropData(evt) 
+{
+  var files = []; // filtered files
+
+  function checkFiles(list) {
+    if(typeof list != #array )
+      list = [list];
+    function flt(fn) {
+      const ext = fn %~ ".";
+      return !!fileTypeByExtension[ext];
+    }
+    files = list.filter(flt);
+    return files.length > 0;
+  }
+
+  if( evt.draggingDataType == #file && checkFiles(evt.dragging))
+    return (#files, files); 
+  else if( evt.draggingDataType == #html )
+    return (#html, evt.dragging); 
+  else if( evt.draggingDataType == #text )
+    return (#text, evt.dragging); 
+
+  return (null,null);
+}
+
+
+class AddNewNoteKnob : Element  
+{
+
+  function attached() {
+    var me = this;
+    self << event note-new-created { me.state.disabled = false; }
+    self << event note-new-started { me.state.disabled = true; }
+  }
+
+  event click {
+    //self.postEvent("start-new-note"); // relay the click as logical event
+    Navigate.goTo("note:blank");
+    this.state.disabled = true;
+    return true; // consume click
+  }
+
+  event dragaccept(evt)
+  {
+    if(getDropData(evt))
+      return true;
+  }
+
+  event dragenter {
+    this.state.dragover = true;
+    return true;
+  }
+  event dragleave {
+    this.state.dragover = false;
+    return true;
+  }
+  event drag {
+    return true;
+  }
+
+  event drop {
+    //return drop;
+    this.state.dragover = false;
+  }
+
+
+  /*this.onExchange = function(evt)
+  {
+     if( (evt.type == Event.X_WILL_ACCEPT_DROP) && (evt.draggingDataType == #file)) 
+     {
+       return checkFiles(evt.dragging); 
+     }
+     else if( evt.type == Event.X_DRAG_ENTER)
+     {
+       this.@.addClass("allow-drop");
+       this.postEvent("file-enter", files);
+       return true;
+     }
+     else if( evt.type == Event.X_DRAG_LEAVE )
+     {
+       this.@.removeClass("allow-drop");
+       this.postEvent("file-leave", files);
+       return true;
+     }
+     else if( evt.type == Event.X_DRAG)
+     {
+       //stdout.printf("dragging %V\n", evt.dragging);      
+       return true;
+     }
+     else if( evt.type == Event.X_DROP)
+     {
+       this.@.removeClass("allow-drop");
+       if( files.length )
+         this.postEvent("file-drop", files);
+       return true;
+     }
+  }*/
+} 
+
+
+
 
 
 

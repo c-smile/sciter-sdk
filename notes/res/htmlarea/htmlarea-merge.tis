@@ -1,0 +1,101 @@
+
+namespace Merge {
+
+
+  function mutator(from,op,args) {
+
+    var days = from.mdate ? daysBetween(from.mdate,new Date()) : 0;
+
+    function markerText() {
+
+      var date = "";
+      if( days < 1) 
+        date = "today";
+      else if( days < 2) 
+        date = "yesterday";
+      else if( days < 7) 
+        date = from.mdate.dayOfWeekName(true);
+      else 
+        date = from.mdate.toLocaleString(false,false); 
+
+      if(!from.mwho || from.mwho == PRINCIPAL)
+        return date;
+      else 
+        return date + "\n" + from.mwho;
+    } 
+
+    switch(op) {
+      case #update-attributes: 
+        //var [el,fromel] = args; 
+        break;
+      case #insert-node: {
+        var [parent, index, node] = args;
+        var el = node;
+        if( node !instanceof Element ) 
+          el = parent;
+        //debug insert: node;
+        //node.modified = markerText();
+        //node.inserted = true;
+        var mrec = {html:el.html,modified:markerText()};
+        if(!el.addedContent) el.addedContent = [mrec];
+        else el.addedContent.push(mrec);
+        el.state.visited = true;
+      } break;
+      case #remove-node: {
+        var [node] = args;
+        var el = DOM.blockOf(node);
+
+        var mrec = {html:el.html,modified:markerText()};
+
+        if( el === node ) {
+          if( var prior = el.prior ) {
+            if(!prior.removedContentAfter) prior.removedContentAfter = [mrec];
+            else prior.removedContentAfter.push(mrec);
+            el = prior;
+          } else if( var next = el.next ) {
+            if(!next.removedContentBefore) next.removedContentBefore = [mrec]; 
+            else next.removedContentBefore.push(mrec);
+            el = next;
+          } else {
+            if(!el.parent.removedContentInside) el.parent.removedContentInside = [mrec]; 
+            else el.parent.removedContentInside.push(mrec);
+            el = el.parent;
+          }
+        } else { // node is text node 
+          if(!node.text.trim()) return; //do not count empty nodes
+          if(!el.removedContentInside) el.removedContentInside = [mrec]; 
+          else el.removedContentInside.push(mrec);
+        }
+        //debug remove: node, el, el.removedContentAfter,el.removedContentBefore,el.removedContentInside;
+        //el.modified = markerText();
+        el.state.visited = true;
+
+      } break; 
+      case #change-text: {
+        var [node, text] = args;
+        var el = node.parent;
+        //el.modified = markerText();
+        //el.changedContent = node.text; 
+        var mrec = {oldhtml:node.text.toHtmlString(), newhtml: text.toHtmlString(), modified:markerText()};
+        if(!el.changedContent) el.changedContent = [mrec]; 
+        else el.changedContent.push(mrec);
+        el.state.visited = true;
+      } break;
+      case #replace-node:  
+      {
+        var [oldnode, newnode] = args;
+        var el = newnode;
+        if( newnode !instanceof Element ) 
+          el = oldnode.parent;
+        //el.modified = markerText();
+        //el.replacedContent = oldnode.html;
+        debug replace: oldnode, oldnode.html;
+        var mrec = {oldhtml:oldnode.html,newhtml:newnode.html, modified:markerText()};
+        if(!el.changedContent) el.changedContent = [mrec]; 
+        else el.changedContent.push(mrec);
+        el.state.visited = true;
+      }        
+      break;
+    }
+  }
+}

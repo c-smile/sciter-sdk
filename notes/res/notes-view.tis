@@ -24,7 +24,7 @@ class List : Element
     self << event book-updated (evt) { var book = evt.data; for(var item in me) item.onBookUpdate(book); }
     self << event tag-updated (evt) { var tag = evt.data; for(var item in me) item.onTagUpdate(tag); }
 
-    self << event events-changed(evt) {  }
+    //self << event events-changed(evt) {}
 
     self << event note-book-changed (evt) { 
       var data = evt.data;
@@ -45,6 +45,8 @@ class List : Element
         }
     }
 
+    
+
   }
   property animating(v) {
     get return this.state.animating;
@@ -52,7 +54,8 @@ class List : Element
 
   event change {
     var note = this.currentRecord;
-    this.postEvent("show-note", note);
+    //this.postEvent("show-note", note);
+    Navigate.goTo(note);
     return true;
   }
 
@@ -68,41 +71,10 @@ class NotesView : Element
   function attached() {
 
     const list = this.$(notes-list);
-    const me = this;
-
-    const btnAddNew = this.$(knob#add-new-note);
-
-    self << event show-note (evt) { btnAddNew.state.disabled = false; list.currentRecord = evt.data; }  
-    self << event start-new-note (evt) { btnAddNew.state.disabled = true; list.currentRecord = null; }  
-    self << event note-updated (evt) { btnAddNew.state.disabled = false; /*list.currentRecord = evt.data;*/ }  
-    self << event notes-filter-changed { 
-      var ln = $(input#lookup-note);
-      if( !ln.state.focus ) ln.value = filterWords? filterWords.join(" ") : "";
-    }
-    self << event events-status-changed (evt) {
-      me.attributes.toggleClass("has-events", evt.data.totalEvents > 0);
-    }
-  }
-
-  event click $(knob#add-new-note) { 
-    this.postEvent("start-new-note"); // relay the click as logical event
-    return true; // consume click
-  }
-
-  event change $(knob[name=order-toggle]) (evt,knob)
-  {
-    var on = knob.attributes["value"] == "edate";
-    setFilterEvents(on, true);
-    return true;
-  }  
-  
-  event change $(input#lookup-note) {
-    this.timer(600ms, this.updateLookupText);
-  }
-
-  function updateLookupText() {
-    //stdout.println("lookup", this.$(input#lookup-note).value);
-    setFilterText(this.$(input#lookup-note).value);
+        
+    self << event show-note (evt) { list.currentRecord = evt.data; }  
+    self << event start-new-note (evt) { list.currentRecord = null; } 
+    //self << event note-updated (evt) { btnAddNew.state.disabled = false; /*list.currentRecord = evt.data;*/ }  
   }
  
 }

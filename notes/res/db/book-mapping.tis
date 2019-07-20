@@ -10,10 +10,19 @@ namespace BookMapping
 
   function createMonitor(book)
   {
-    if(!System.scanFiles(book.mappedTo))
+
+    var path = book.mappedTo;
+    if( path like "*/" ) 
+      path = path[0 .. path.length - 1];  
+
+    if(!System.scanFiles(path)) {
+      debug failmonitor: path;
       return null;
+    }
 
     const THRESHOLD = 400ms;
+
+    debug monitor: book.mappedTo;
 
     var monitor = System.watch(book.mappedTo);
 
@@ -40,7 +49,7 @@ namespace BookMapping
       cdate: stats.ctime,
       mdate: stats.mtime
     };
-    var (note,action) =  noteframe.createNoteFromFile( stats.path, overrides );
+    var (note,action) = noteframe.createNoteFromFile( stats.path, overrides );
     note.setMeta { fileMD5: stats.md5 };
     return note;
   }
@@ -58,6 +67,11 @@ namespace BookMapping
     return note;
   }
 
+  function generateIndex(book,folderPath) {
+    for( var note in book.items ) {
+      
+    }
+  }
 
   function scanFolder(book, changes = { addition: {}, removal:{}, change:{} }) 
   {
@@ -180,8 +194,10 @@ namespace BookMapping
   self << event book-mapping-added (evt) {
     var book = evt.data;
     assert book instanceof Book;
-    BookMapping.scanFolder(book);
-    book.mappingMonitor = BookMapping.createMonitor(book);
+    this.timer(500ms, function() {
+      BookMapping.scanFolder(book);
+      book.mappingMonitor = BookMapping.createMonitor(book);  
+    },true);
   } 
 
   self << event book-mapping-removed (evt) {
@@ -220,7 +236,7 @@ namespace BookMapping
     changes = { addition: {}, removal:{}, change:{} };
     changes[action][note.id] = true;
     bookUpdateQueue[book.id] = changes;
-    self.timer(2s,doScan);
+    self.timer(30s,doScan); // 0.5 minutes threshold
   }
 
   function onChange(note) {

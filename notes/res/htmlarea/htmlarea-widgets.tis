@@ -35,3 +35,118 @@ class CheckListItem : Element {
   }
 
 }
+
+class MergeInfo : Element 
+{
+  const elPopup = view.root.$(popup#changes-list); 
+
+
+  function attached() {
+
+    var principal = this.parent;
+    /*if(principal.removedContentBefore 
+    || principal.removedContentInside    
+    || principal.removedContentAfter) {
+      debug MergeInfo: "has-deletions", principal.removedContentBefore, principal.removedContentInside, principal.removedContentAfter;
+    }
+    if(principal.replacedContent)
+      debug MergeInfo: "replaced", principal.replacedContent;
+    if(principal.inserted)
+      debug MergeInfo: "inserted", principal.html;
+    if(principal.changedContent)
+      debug MergeInfo: "has-changed-content", principal.changedContent;*/
+    var html = "";
+
+    if( principal.removedContentBefore ) 
+      //list.push([div:{class:"indicator removed before"}]);
+      html += "<div.indicator.content.removed.before/>";
+    if( principal.removedContentInside ) 
+      //list.push([div:{class:"indicator removed content"}]);
+      html += "<div.indicator.content.removed/>";
+    if(principal.changedContent)
+      //list.push([div:{class:"indicator changed content"}]);
+      html += "<div.indicator.content.changed/>";
+    if(principal.replacedContent)
+      //list.push([div:{class:"indicator replaced"}]);
+      html += "<div.indicator.content.replaced/>";
+    if( principal.removedContentAfter ) 
+      //list.push([div:{class:"indicator removed after"}]);
+      html += "<div.indicator.content.removed.after/>";
+    if( principal.addedContent ) 
+      html += "<div.indicator.content.inserted/>";
+    if(html) 
+      this.html = html;
+  }
+
+
+  event click (evt)  {
+    if( evt.target !== this ) return;
+    this.showDetails();
+    return true;
+  }
+
+
+  function showDetails() {
+
+    function emitRemoval(recList,where) {
+      var html = "";
+      for( var item in recList )
+        html += String.$(<div.removal.{where}><div.content><del>{item.html}</del></div><modified>{item.modified}</modified><action.restore>Restore</action></div>);
+      return html;
+    }
+
+    function emitChange(recList) {
+      var html = "";
+      for( var item in recList )
+        html += String.$(<div.replacement><div.content><ins>{item.newhtml}</ins><del>{item.oldhtml}</del></div><modified>{item.modified}</modified><action.restore>Restore</action></div>);
+      return html;
+    }
+
+    function emitAddition(recList) {
+      var html = "";
+      for( var item in recList )
+        html += String.$(<div.addition><div.content><ins>{item.html}</ins></div><modified>{item.modified}</modified><action disabled></action></div>);
+      return html;
+    }
+
+
+    var principal = this.parent;
+    elPopup.clear();
+    //elPopup.text = "The list";
+    var html = "";
+    if( principal.removedContentBefore )
+      html += emitRemoval(principal.removedContentBefore,"before");
+    if( principal.removedContentInside )
+      html += emitRemoval(principal.removedContentInside,"inside");
+    if( principal.removedContentAfter )
+      html += emitRemoval(principal.removedContentAfter,"after");
+
+    if( principal.changedContent )
+      html += emitChange(principal.changedContent);
+
+    if( principal.addedContent )
+      html += emitAddition(principal.addedContent);
+
+
+    elPopup.html = html;
+    this.popup(elPopup, 3 | (9 << 16));
+  }
+
+/*
+  function attached() {
+    var principal = this.parent;
+    //debug MergeInfo: principal;
+    if(principal.removedContentBefore 
+    || principal.removedContentInside    
+    || principal.removedContentAfter) {
+      debug MergeInfo: "has-deletions", principal.removedContentBefore, principal.removedContentInside, principal.removedContentAfter;
+    }
+    if(principal.replacedContent)
+      debug MergeInfo: "replaced", principal.replacedContent;
+    if(principal.inserted)
+      debug MergeInfo: "inserted", principal.html;
+    if(principal.changedContent)
+      debug MergeInfo: "has-changed-content", principal.changedContent;
+  }*/  
+}
+

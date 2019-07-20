@@ -67,6 +67,13 @@ namespace DOM
     }
   }
 
+  /*function isBlock(node) {
+    if( !node.isElement ) return false; 
+    var ft = node.state.flowType;
+    if( !ft ) return false;
+    if( ft == #text ) continue;
+  }*/
+
 
   // function returns nearest block container - element that contains blocks (<body>)
   function blocksContainerOf(node) 
@@ -75,11 +82,42 @@ namespace DOM
     var body = node.$p(body) || node.root;
     for(; node ; node = node.parent ) {
       if( node === body ) return node;
+      var ft = node.state.flowType;
+      if( !ft ) continue;
+      if( ft == #text ) continue;
+      return node;
+    }
+    return body;
+  }
+
+  // function returns nearest parent block or the node itself if it is a block
+  function blockOf(node) 
+  {
+    if( !node.isElement ) node = node.parent;
+    var body = node.$p(body) || node.root;
+    for(; node ; node = node.parent ) {
+      if( node === body ) return node;
+      var ft = node.state.flowType;
+      if( !ft ) continue;
+      return node;
+    }
+    return body;
+  }
+
+
+  // function returns nearest block container - element that contains blocks (<body>)
+  // but not the node itself
+  /*function blockParentOf(node) 
+  {
+    node = node.parent;
+    var body = node.$p(body) || node.root;
+    for(; node ; node = node.parent ) {
+      if( node === body ) return node;
       if( node.state.flowType != #text ) return node;
     }
     return body;
-    
-  }
+  }*/
+
 
   function getMeta(doc,metaName) {
     var el = doc.$(head > meta[name=="{metaName}"]);

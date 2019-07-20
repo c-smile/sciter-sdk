@@ -75,6 +75,7 @@
 @import url(tags-view.css);
 @import url(aside.css);
 @import url(libs/notifications.css);
+@import url(htmlarea/htmlarea-change-list.css);
 
 html { 
   background:#333;
@@ -128,6 +129,10 @@ frameset > splitter {
   hit-margin:0 2dip;
 }
 
+[form] { // <header form> behaves as <form>
+  behavior:form;
+}
+
 section.collapsible          { prototype: CollapsibleSection url(libs/collapsible.tis); 
                                height:max-content; }
 section.collapsible > header { behavior:button; }
@@ -178,3 +183,98 @@ frame#worker { prototype: NoteFrame url(htmlarea/htmlarea.tis); visibility:colla
 .active-target {
   outline:2dip orange solid -2dip; 
 }
+
+
+knob {
+  behavior:button;
+  display:block;
+  //size: 36dip;
+  width:36dip;
+  height:*;
+  //foreground-image: url(path:M1344 800v64q0 14-9 23t-23 9h-352v352q0 14-9 23t-23 9h-64q-14 0-23-9t-9-23v-352h-352q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h352v-352q0-14 9-23t23-9h64q14 0 23 9t9 23v352h352q14 0 23 9t9 23zm128 448v-832q0-66-47-113t-113-47h-832q-66 0-113 47t-47 113v832q0 66 47 113t113 47h832q66 0 113-47t47-113zm128-832v832q0 119-84.5 203.5t-203.5 84.5h-832q-119 0-203.5-84.5t-84.5-203.5v-832q0-119 84.5-203.5t203.5-84.5h832q119 0 203.5 84.5t84.5 203.5z);
+  foreground-repeat:no-repeat;
+  foreground-position:50% 50%;
+  foreground-size:24dip 24dip;  
+  fill: #444;
+  stroke:none; 
+}
+
+knob:disabled { fill:#ccc; }
+
+knob#add-new-note {
+  prototype: AddNewNoteKnob url(main-ui.tis);
+  //foreground-image: url(path:M1344 800v64q0 14-9 23t-23 9h-352v352q0 14-9 23t-23 9h-64q-14 0-23-9t-9-23v-352h-352q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h352v-352q0-14 9-23t23-9h64q14 0 23 9t9 23v352h352q14 0 23 9t9 23zm128 448v-832q0-66-47-113t-113-47h-832q-66 0-113 47t-47 113v832q0 66 47 113t113 47h832q66 0 113-47t47-113zm128-832v832q0 119-84.5 203.5t-203.5 84.5h-832q-119 0-203.5-84.5t-84.5-203.5v-832q0-119 84.5-203.5t203.5-84.5h832q119 0 203.5 84.5t84.5 203.5z);
+  foreground-image: url(path:M1344 960v-128q0-26-19-45t-45-19h-256v-256q0-26-19-45t-45-19h-128q-26 0-45 19t-19 45v256h-256q-26 0-45 19t-19 45v128q0 26 19 45t45 19h256v256q0 26 19 45t45 19h128q26 0 45-19t19-45v-256h256q26 0 45-19t19-45zm320-64q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z);
+  foreground-size:20dip 20dip; 
+}
+
+html:drag-over knob#add-new-note {
+  transform: scale(1.2);
+}
+
+knob[name=order-toggle] {
+  visibility:none;
+  foreground-size:16dip 16dip;  
+  behavior:radio;
+}
+
+knob[name=order-toggle]:checked {
+  background: #bbb;
+}
+
+knob#cdate-order {
+  foreground-image: url(path:M384 1184v64q0 13-9.5 22.5t-22.5 9.5h-64q-13 0-22.5-9.5t-9.5-22.5v-64q0-13 9.5-22.5t22.5-9.5h64q13 0 22.5 9.5t9.5 22.5zm0-256v64q0 13-9.5 22.5t-22.5 9.5h-64q-13 0-22.5-9.5t-9.5-22.5v-64q0-13 9.5-22.5t22.5-9.5h64q13 0 22.5 9.5t9.5 22.5zm0-256v64q0 13-9.5 22.5t-22.5 9.5h-64q-13 0-22.5-9.5t-9.5-22.5v-64q0-13 9.5-22.5t22.5-9.5h64q13 0 22.5 9.5t9.5 22.5zm1152 512v64q0 13-9.5 22.5t-22.5 9.5h-960q-13 0-22.5-9.5t-9.5-22.5v-64q0-13 9.5-22.5t22.5-9.5h960q13 0 22.5 9.5t9.5 22.5zm0-256v64q0 13-9.5 22.5t-22.5 9.5h-960q-13 0-22.5-9.5t-9.5-22.5v-64q0-13 9.5-22.5t22.5-9.5h960q13 0 22.5 9.5t9.5 22.5zm0-256v64q0 13-9.5 22.5t-22.5 9.5h-960q-13 0-22.5-9.5t-9.5-22.5v-64q0-13 9.5-22.5t22.5-9.5h960q13 0 22.5 9.5t9.5 22.5zm128 704v-832q0-13-9.5-22.5t-22.5-9.5h-1472q-13 0-22.5 9.5t-9.5 22.5v832q0 13 9.5 22.5t22.5 9.5h1472q13 0 22.5-9.5t9.5-22.5zm128-1088v1088q0 66-47 113t-113 47h-1472q-66 0-113-47t-47-113v-1088q0-66 47-113t113-47h1472q66 0 113 47t47 113z);
+}
+
+knob#edate-order {
+  prototype: EventsKnob url(notes-view.tis);
+  foreground-image: url(path:M192 1664h288v-288h-288v288zm352 0h320v-288h-320v288zm-352-352h288v-320h-288v320zm352 0h320v-320h-320v320zm-352-384h288v-288h-288v288zm736 736h320v-288h-320v288zm-384-736h320v-288h-320v288zm768 736h288v-288h-288v288zm-384-352h320v-320h-320v320zm-352-864v-288q0-13-9.5-22.5t-22.5-9.5h-64q-13 0-22.5 9.5t-9.5 22.5v288q0 13 9.5 22.5t22.5 9.5h64q13 0 22.5-9.5t9.5-22.5zm736 864h288v-320h-288v320zm-384-384h320v-288h-320v288zm384 0h288v-288h-288v288zm32-480v-288q0-13-9.5-22.5t-22.5-9.5h-64q-13 0-22.5 9.5t-9.5 22.5v288q0 13 9.5 22.5t22.5 9.5h64q13 0 22.5-9.5t9.5-22.5zm384-64v1280q0 52-38 90t-90 38h-1408q-52 0-90-38t-38-90v-1280q0-52 38-90t90-38h128v-96q0-66 47-113t113-47h64q66 0 113 47t47 113v96h384v-96q0-66 47-113t113-47h64q66 0 113 47t47 113v96h128q52 0 90 38t38 90z);
+  font-size:70%;
+  flow:horizontal;
+  vertical-align:bottom;
+  horizontal-align:center;
+  border-spacing:0.2em;
+  padding-bottom:0.2em;
+  foreground-position:50% 25%;
+}
+
+//knob#edate-order[hidden] { visibility:none; }
+
+knob#edate-order > span.active {
+  display:block;
+  background:#f44;
+  color:#fff;
+  height:1.2em;
+  width:max-content;
+  padding:0 0.3em;
+  border-radius:0.6em;
+}
+knob#edate-order > span.total {
+  display:block;
+  background:#444;
+  color:#fff;
+  height:1.2em;
+  width:max-content;
+  padding:0 0.3em;
+  border-radius:0.6em;
+}
+
+knob.list { 
+  prototype: "Navigate.Button" url(navigate.tis); 
+  context-menu: selector(menu.context#navigate);
+  foreground-size:20dip 20dip;  
+  stroke:none;
+}
+knob.list#go-back { foreground-image: url(path:M1408 960v-128q0-26-19-45t-45-19h-502l189-189q19-19 19-45t-19-45l-91-91q-18-18-45-18t-45 18l-362 362-91 91q-18 18-18 45t18 45l91 91 362 362q18 18 45 18t45-18l91-91q18-18 18-45t-18-45l-189-189h502q26 0 45-19t19-45zm256-64q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z);}  
+knob.list#go-fore { foreground-image: url(path:M1413 896q0-27-18-45l-91-91-362-362q-18-18-45-18t-45 18l-91 91q-18 18-18 45t18 45l189 189h-502q-26 0-45 19t-19 45v128q0 26 19 45t45 19h502l-189 189q-19 19-19 45t19 45l91 91q18 18 45 18t45-18l362-362 91-91q18-18 18-45zm251 0q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z);}  
+
+
+/*knob#edate-order:empty { - its invisible if no events
+  foreground-position:50% 50%; 
+}*/
+
+/*knob#edate-order:expanded {
+  background-color: #fbb;
+  fill: #f44;
+  transition: background-color(linear,0.5s) fill(linear,0.5s);
+}*/

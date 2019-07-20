@@ -7,7 +7,7 @@ include "libs/utils.tis";
 
 class NoteView : Element 
 {
-  this var note = null;
+  this var note = undefined;
   this var htmlarea = null;
   this var toolbar = null;
   //this var footer = null;
@@ -15,29 +15,34 @@ class NoteView : Element
   this var history = null;
   this var bookSelector = null;
 
+  var current = null;
+
   function attached() 
   {
+    current = this;
+
     this.htmlarea = this.$(htmlarea);
     this.toolbar = this.$(toolbar);
-    this.history = this.$(history);
+    this.history = this.$(select.history);
     this.tags = this.$(tags);
     this.bookSelector = this.$(select.book);
 
     var me = this;
-    self << event show-note (evt)      { me.showNote(evt.data); }
-    self << event start-new-note (evt) { me.showNote(null);
+    /*self << event show-note (evt)      { me.showNote(evt.data); }*/
+    /*self << event start-new-note (evt) { me.showNote(null);
                                          if(evt.data == #from-clipboard) {
                                            me.htmlarea.state.focus = true;
                                            me.htmlarea.execCommand("edit:paste");
                                          }
-                                       }
+                                       }*/
     self << event note-lock-changed() { me.updateState(); }
     self << event note-created()      { me.updateState(); }
     self << event note-updated()      { me.updateState(); }
     //self << event note-history()      { me.updateState(); }
     self << event note-history-changed (evt) { if(this.note === evt.data) me.updateState(); }
+    //self << event note-merge (evt) { if(this.note === evt.data) me.updateState(); }
 
-    self << event note-book-changed() { me.populateBooks(); }   
+    self << event note-book-changed() { me.populateBooks(); }
 
     self << event book-changed() { me.populateBooks(); }
     self << event book-created() { me.populateBooks(); }
@@ -60,11 +65,32 @@ class NoteView : Element
     }
 
     this.populateBooks(); 
-    EditingToolbar(this.htmlarea, this.$(band.editing));
+    EditingToolbar(this, this.$(band.editing));
 
   }
 
   // gets the note, ensures that note exists
+
+  function presentNote(note, htmlarea ) {
+    //debug presentNote: note, htmlarea;
+
+    if( !note && !htmlarea && this.htmlarea.attributes.exists("initial") ) {
+      htmlarea = this.htmlarea;
+      self.postEvent("note-new-started");
+    }
+    else {
+      if(this.note && this.htmlarea.saveNote())
+        db.commit();
+      this.htmlarea.detach();
+
+      if( !htmlarea )
+        htmlarea = Element.create([htmlarea: {content-style:"htmlarea/htmlarea.css"}]);
+      this.insert(htmlarea,1);
+      this.htmlarea = htmlarea;
+    }
+    this.showNote(note);
+    return htmlarea;
+  }
 
   function provideNote() 
   {
@@ -73,23 +99,31 @@ class NoteView : Element
       db.addItem(this.note);
       var book = db.getBook(this.bookSelector.value);
       book.addItem(this.note);
+      currentNote = this.note;
+      self.postEvent("note-new-created", this.note);
     }
     return this.note;
   }
 
   function showNote(note) {
-    if(this.note) {
-      this.htmlarea.saveNote();
-      db.commit();
-    }
     currentNote = note;
-    this.note = note;
-    if( note && (note.lock === undefined))
-        note.lock = true; // user did not express desire to lock it - lock it by default
-    this.updateState();
-    this.htmlarea.loadNote(note);
-    this.tags.loadNote(note);
+    if(this.note !== note) {
+      this.note = note;
+      if( note && (note.lock === undefined))
+          note.lock = true; // user did not express desire to lock it - lock it by default
+      this.htmlarea.loadNote(note);
+      this.tags.loadNote(note);
+      if(note)
+        this.postEvent("note-shown",note);
+      else
+        this.postEvent("note-blank-shown");
+
+    }
+    this.updateState();    
     this.bookSelector.value = note ? note.book.id : db.defaultBook().id;
+    if(!this.note || !this.note.lock) 
+      this.post( () => this.htmlarea.state.focus = true );
+
   }
 
   function populateBooks() {
@@ -122,21 +156,23 @@ class NoteView : Element
           cwhom: this.note.createdBy,
           mwhom: this.note.modifiedBy,
         }
-        viewingBand.attributes.toggleClass("note-not-modified", sameDay(this.note.mdate,this.note.cdate));
+        if(this.note.mdate && this.note.cdate)
+          viewingBand.attributes.toggleClass("note-not-modified", sameDay(this.note.mdate,this.note.cdate));
         viewingBand.attributes.toggleClass("note-created-by-me", this.note.createdBy == PRINCIPAL);
         viewingBand.attributes.toggleClass("note-modified-by-me", this.note.modifiedBy == PRINCIPAL);
       }
 
-      /*this.history.clear();
+      this.history.options.clear();
       if( this.note.history ) {
-          this.history.$append(<span>changes:</span>);
-          for(var hi in this.note.history) {
-            if( hi.mwho == PRINCIPAL )
-              this.history.$append(<label>{hi.mdate.toLocaleString()}</label>);
-            else
-              this.history.$append(<label>{hi.mdate.toLocaleString()} by {hi.mwho}</label>);
-          }
-      }*/
+        this.history.options.$append(<option value='-1'>Latest</option>);
+        for(var (idx,hi) in this.note.history) {
+          if( hi.mwho == PRINCIPAL )
+            this.history.options.$append(<option value={idx}>{hi.mdate.toLocaleString()}</option>);
+          else
+            this.history.options.$append(<option value={idx}>{hi.mdate.toLocaleString()} by {hi.mwho}</option>);
+        }
+        this.history.value = -1;
+      }
 
     } else {
       this.toolbar.$(button.edit).state.disabled = true;
@@ -145,9 +181,19 @@ class NoteView : Element
       this.toolbar.attributes["mode"] = "editing";
       this.htmlarea.state.readonly = false;
       this.htmlarea.document.state.readonly = false; 
+      this.history.options.clear();
       //this.footer.value = { cdate:null, mdate:null, deleted:null }; 
       //this.footer.state.disabled = true; 
     }
+  }
+
+  function mergeNote( other, how ) {
+    if( how == #theirs-on-top ) {
+      // changes that appeared later than our modifications
+      this.htmlarea.mergeFrom(other);
+      return true;
+    }
+    return false;
   }
 
   event click $(button.edit) (evt, button) { 

@@ -1,6 +1,6 @@
 include "activators/activators.tis";
 
-function EditingToolbar(htmlarea,toolbar) 
+function EditingToolbar(noteview,toolbar) 
 {
   var observers = [];  
 
@@ -34,21 +34,21 @@ function EditingToolbar(htmlarea,toolbar)
   {
     var uiel = toolbar.select(selector); assert uiel : "no " + selector;
     if(typeof cmd == #function) {
-      uiel << event click { cmd.call(htmlarea,#exec,param,uiel); htmlarea.state.focus = true; }
+      uiel << event click { cmd.call(noteview.htmlarea,#exec,param,uiel); noteview.htmlarea.state.focus = true; }
       observers.push( function() {
-        if(!htmlarea) { uiel.state.disabled = true; }
+        if(!noteview.htmlarea) { uiel.state.disabled = true; }
         else {
-          var cmdState = cmd.call(htmlarea,#query,param,uiel) || 0;
+          var cmdState = cmd.call(noteview.htmlarea,#query,param,uiel) || 0;
           uiel.state.checked  = (cmdState & ACTIVE) != 0;
           uiel.state.disabled = (cmdState & DISABLED) != 0;
         }
       });
     } else if(typeof cmd == #string) {
-      uiel << event click { htmlarea.execCommand(cmd,param); htmlarea.state.focus = true; }
+      uiel << event click { noteview.htmlarea.execCommand(cmd,param); noteview.htmlarea.state.focus = true; }
       observers.push( function() {//////
-        if(!htmlarea) { uiel.state.disabled = true; }
+        if(!noteview.htmlarea) { uiel.state.disabled = true; }
         else {
-          var cmdState = htmlarea.queryCommand(cmd,param) || 0;
+          var cmdState = noteview.htmlarea.queryCommand(cmd,param) || 0;
           uiel.state.checked  = (cmdState & ACTIVE) != 0;
           uiel.state.disabled = (cmdState & DISABLED) != 0;
         }
@@ -141,14 +141,14 @@ function EditingToolbar(htmlarea,toolbar)
   });
 
 
-  htmlarea << event statechange { notifyObservers(); }
-  htmlarea << event change { notifyObservers(); }
+  noteview.htmlarea << event statechange { notifyObservers(); }
+  noteview.htmlarea << event change { notifyObservers(); }
 
   const activatorsMenu = toolbar.$(button.activators>menu);
   Activators.setupActivatorsMenu(activatorsMenu);
 
   activatorsMenu << event click $(li) {
-    return Activators.handleMenuClick(this,htmlarea);
+    return Activators.handleMenuClick(this,noteview.htmlarea);
   }
 
 

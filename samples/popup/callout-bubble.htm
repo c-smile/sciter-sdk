@@ -5,16 +5,19 @@
     popup.bubble
     {
       prototype: BubblePopup;
-      background-color: transparent;
+      background-color: transparent; // must be exactly transparent to create transparent window 
       width:400dip;
       height:300dip;
       cursor:pointer;
-      padding-top: 12dip;
+      padding:18dip; // room for the shadow 
       cursor: default;
-      margin:2dip;
+      margin:2dip; // offset from anchor element
+      border:1dip solid #ddd;
+      var(shape-color): #fff; // shape background color
     }
     popup.bubble > .content {
-      margin:6dip;
+      padding:12dip;
+      size:*;
     }
     
     div#anchor
@@ -39,13 +42,10 @@
         this.popup( $(popup.bubble), (8 /*popup middle-top*/ << 16) | 2 /*at anchor's middle-bottom*/);
       } 
       
-      class BubblePopup: Behavior {
+      class BubblePopup: Element {
       
         const RADIUS = 10dip;
         const ARROW_HEIGHT = 12dip;
-        const STROKE_WIDTH = 1dip;
-        const STROKE_COLOR = color(0,0,0);
-        const BACK_COLOR = color("gold");
       
         function attached() { 
           this.paintBackground = this.drawBackground;
@@ -61,14 +61,16 @@
             this.shapeHeight = null;
           }
          
-          var (x,y,w,h) = this.box(#rectw);
+          var (x,y,w,h) = this.$(div.content).box(#rectw,#border,#parent);
          
           if( this.shapeWidth == w && this.shapeHeight == h)
             return shape; // nothing to do already calculated
           
           shape.reset();
 
-          const stoke_width = this.toPixels(STROKE_WIDTH,#width);
+          const borderWidth = this.style#border-top-width;          
+
+          const stoke_width = this.toPixels(borderWidth,#width);
           
           // lines shall go through pixels middles:
           x += stoke_width / 2; y -= stoke_width / 2; w -= stoke_width; h -= stoke_width;
@@ -92,11 +94,29 @@
         }      
       
         function drawBackground( gfx ) {
+
           if(var shape = this.getShape()) {
-             gfx.lineWidth(STROKE_WIDTH)
-                .lineColor(STROKE_COLOR)
-                .fillColor(BACK_COLOR)
-                .drawPath( shape );
+
+            const filter = [#drop-shadow: 6dip, 6dip, 6dip, rgba(0,0,0,0.60)]; // CSS: drop-sahdow(...);
+            const backColor = this.style.variable("shape-color");
+            const hasBorder = this.style#border-top-style == "solid";
+
+             gfx.pushLayer(#margin-box,filter);
+
+            if( hasBorder ) {
+              const borderColor = this.style#border-top-color;
+              const borderWidth = this.style#border-top-width;
+              gfx.lineWidth(borderWidth)
+                 .lineColor(borderColor)
+                 .fillColor(backColor)
+                 .drawPath( shape );
+            } else 
+              gfx.fillColor(backColor)
+                 .drawPath( shape );
+
+            gfx.popLayer();
+
+            return true;
           }
         }
       }
@@ -117,3 +137,4 @@
 
 </body>
 </html>
+

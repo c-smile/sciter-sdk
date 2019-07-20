@@ -49,15 +49,15 @@ class Carousel: Behavior
   function scrollLeft()
   {
     var (f,l) = this.visibleItems(true);
-    this.doScrollAnumation( f.box(#left,#margin,#content) );
+    this.doScrollAnimation( f.box(#left,#margin,#content) );
   }
   function scrollRight()
   {
     var (f,l) = this.visibleItems(false);
-    if( l.next ) this.doScrollAnumation( l.next.box(#left,#margin,#content) );
+    if( l.next ) this.doScrollAnimation( l.next.box(#left,#margin,#content) );
   }
   
-  function doScrollAnumation(finalx)
+  function doScrollAnimation(finalx)
   {
     function ease(p, start, stop) { return (stop-start)*((p=p-1.)*p*p + 1.) + start; } // simple cubic-out ease function
     
@@ -71,9 +71,9 @@ class Carousel: Behavior
     function animationStep()
     {
       progress += 0.02;
-      if(progress >= 1.0) { list.scrollTo( finalx.toInteger(),0 ); return 0; }
+      if(progress >= 1.0) { list.scrollTo( finalx.toInteger(),0 ); return false; }
       list.scrollTo( ease(progress, initx, finalx).toInteger(),0 );
-      return STEP_DELAY;
+      return true;
     }
     this.animate(animationStep);
   }

@@ -22,7 +22,6 @@ class Book
   static function get(id) {
     return db.getBook(id);
   }
-
  
   function addItem(item)
   {

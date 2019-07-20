@@ -4,6 +4,7 @@ include "../libs/dom.tis";
 include "magicsequences.tis";
 include "shortcuts.tis";
 include "htmlarea-ext-css.tis";
+include "htmlarea-merge.tis";
 include "activators/activators.tis";
 
 const PREVIEW_WIDTH = 80;
@@ -26,17 +27,14 @@ class HtmlArea: Element
   this var isNew = true;
   this var isBlank = false;
   this var activators = {}; // activator classes map, to trace activators state 
-
-  var instance;
-  
+ 
   function attached() {
-    this.loadBlank(); 
-    this.isBlank = true;
-    instance = this;
-    setupKeyboardShortcutsOn(this);
+    //???? setupKeyboardShortcutsOn(this);
   }
 
   function loadBlank() {
+    //this.loadBlank(); 
+    this.isBlank = true;
     this.loadDocument(this.url("htmlarea/htmlarea-blank.htm"));
     this.activators = {};
   }
@@ -253,7 +251,7 @@ class HtmlArea: Element
 
   function saveNote() {
     if( !this.changed /* || !this.note*/) 
-      return;
+      return false;
 
     var isNew = this.checkNote();
 
@@ -274,17 +272,22 @@ class HtmlArea: Element
     for(var (activator, dummy) in this.activators)
       activator.onSaveNote(this,this.note);
 
+    return true;
   }
 
-  function loadNote(n) {
+  function loadNote(note) {
     this.loading = true;
     this.activators = {};    
     this.save();
-    this.note = n;
-    if( n ) {
+    this.note = note;
+    if( note ) {
       this.isNew = false;
       this.isBlank = false;
-      this.loadDocument(n.html, "note:" + n.id);
+      var url = "note:" + note.id;
+      if(note.history)
+        this.loadWithHistory(note, url);
+      else
+        this.loadDocument(note.html, url);
       this.document.state.readonly = this.state.readonly;
       if( filterWords ) this.highlightWords(filterWords);
     }
@@ -296,6 +299,42 @@ class HtmlArea: Element
     }
     this.loading = false;
   }
+
+  function loadWithHistory(note,url) {
+
+    for(var (i,hr) in note.history) {
+      if(!hr.html) continue;
+      if(i == 0)
+        this.loadDocument(hr.html,url);
+      else { // show merge
+        function callback(op,...args) { Merge.mutator(hr,op,args); }
+        var otherdoc = this.parseHtml(hr.html);
+        var thisdoc = this[0];
+        thisdoc.$(body).merge(otherdoc.$(body),callback,#only-children);
+      }
+    }
+    
+    function callback(op,...args) { Merge.mutator(note,op,args); }
+    var otherdoc = this.parseHtml(note.html);
+    var thisdoc = this[0];
+    thisdoc.$(body).merge(otherdoc.$(body),callback,#only-children);
+  }
+
+  function mergeFrom(otherNote) {
+
+    //debug merging: otherNote;
+
+    function callback(op, ...args) { Merge.mutator(otherNote,op,args); }
+
+    function exec(transaction) 
+    {
+      transaction.merge(otherNote.html, callback);
+      return true;
+    }
+    this.transact(exec,"merge"); // do the action inside undoable transaction.
+    return true; 
+  }
+
   
   // obsolete:
   function saveNoteTo(fileName) {
@@ -307,13 +346,18 @@ class HtmlArea: Element
     this.activators[activator] = true;
   }
 
+  property disableHyperlinkClick(v) {
+    get return !this.state.readonly;
+  }
+ 
+  /* moved to navigate.tis
   event ~click $(a[href]) (evt) {
      const url = evt.target.attributes["href"];
      if( url && this.state.readonly ) {
        Sciter.launch(url);
        return true;
      }
-  }
+  }*/
 
   event contextmenu $(a[href]) (evt, a) {
      const url = a.attributes["href"];
@@ -322,6 +366,7 @@ class HtmlArea: Element
        return true;
      }
   }
+
 
   function linkDialog(forElement) 
   {
@@ -435,6 +480,9 @@ class NoteFrame : Element
 
     var head = this.document.$(head);
     if( head ) head.remove();
+
+    this.note.cdate = this.note.cdate || new Date();
+    this.note.mdate = this.note.mdate || new Date();
 
     this.document.$prepend(<head>
       <title>{this.note.caption}</title>

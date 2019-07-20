@@ -101,7 +101,9 @@ note-view > history > label { display:block; } */
     @TOOLBAR-SPAN; 
   }
 
-  band.viewing.note-not-modified > .modified { visibility:none; }
+  band.viewing.note-not-modified > .modified { 
+    visibility:none; 
+  }
 
   band.viewing.note-created-by-me > .created.person { visibility:none; }
   band.viewing.note-modified-by-me > .modified.person { visibility:none; }
@@ -156,6 +158,9 @@ note-view > history > label { display:block; } */
     transition: background-color(linear,150ms);
   } 
 
+  band > button:active {
+    transform: translate(1px,1px);
+  }
 
   band > button:disabled {
     fill:#ccc;

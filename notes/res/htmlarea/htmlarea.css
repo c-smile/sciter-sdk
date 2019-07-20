@@ -12,7 +12,8 @@ html {
 }
 
 html > body { 
-  margin:0 0.001*;
+  margin:0 4em 0 0.001*;
+  hit-margin:0 4em;
   padding:0 var(note-padding,10dip); 
   width:*;
   max-width:var(note-width,800dip);
@@ -93,3 +94,56 @@ mark.c { background: #e0a0f7; }
 *::mark(found0) { background-color:#ff0; }
 *::mark(found1) { background-color:#f8f; }
 *::mark(found2) { background-color:#8ff; }
+
+//html:visited { margin-right:10em; /*to accomodate change markers*/}
+
+body :visited {
+  hit-margin: 0 4em;
+}
+body :visited::shade // new addition while merging
+{
+  behavior:clickable;
+  prototype: MergeInfo url(htmlarea-widgets.tis);  
+  font:system;
+  width:4em;
+  height: auto;
+  vertical-align:middle;
+  margin-left:100%;
+  margin-bottom:*;
+  //margin-left:*;
+  //border-left: 3dip solid gold;
+  //padding: 0.25em;
+  //content: prop(modified);
+  //white-space:pre;
+  //color:red;
+  background:#efefef;
+  cursor:pointer;
+  z-index:1;
+} 
+
+.indicator {
+  size:1.2em;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 1em 1em;
+  stroke: none;  
+}
+
+.indicator.content.removed {
+  //background-color: #f00;
+  background-image: url(path:M1344 960v-128q0-26-19-45t-45-19h-768q-26 0-45 19t-19 45v128q0 26 19 45t45 19h768q26 0 45-19t19-45zm320-64q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z);
+  fill: #FF4500;
+}
+
+.indicator.content.inserted {
+  background-image: url(path:M1344 960v-128q0-26-19-45t-45-19h-256v-256q0-26-19-45t-45-19h-128q-26 0-45 19t-19 45v256h-256q-26 0-45 19t-19 45v128q0 26 19 45t45 19h256v256q0 26 19 45t45 19h128q26 0 45-19t19-45v-256h256q26 0 45-19t19-45zm320-64q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z);
+  fill: #008000;
+}
+
+.indicator.content.changed,
+.indicator.content.replaced {
+  background-image: url(path:M832 1184v-576q0-14-9-23t-23-9h-256q-14 0-23 9t-9 23v576q0 14 9 23t23 9h256q14 0 23-9t9-23zm448 0v-576q0-14-9-23t-23-9h-256q-14 0-23 9t-9 23v576q0 14 9 23t23 9h256q14 0 23-9t9-23zm384-288q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z);
+  fill: #FF8C00;
+}
+
+

@@ -10,9 +10,15 @@
     
   </style>
   <script type="text/tiscript">
-  
-    self.subscribe("statechange","tabs", function() { $(select).value = this.current; });
-    self.subscribe("change", "select", function() { $(tabs).current = this.value; });
+
+    event statechange $(tabs) {
+      $(select).value = this.current;
+    }
+
+    event change $(select) {
+      $(tabs).current = this.value;
+    }
+
   
   </script>
   </head>

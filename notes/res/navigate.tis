@@ -1,0 +1,123 @@
+
+namespace Navigate {
+  var stack = [];  // { note: note, editor: htmlarea }
+  var stackPos = -1;
+
+
+  function goBack() { 
+    if(stackPos == 0) return false;
+    var rec = stack[--stackPos];
+    NoteView.current.presentNote(rec.note,rec.htmlarea);
+    self.postEvent("navigation-history-change");
+  }
+  function goFore() {  
+    if(++stackPos >= stack.length) return false;
+    var rec = stack[stackPos];
+    NoteView.current.presentNote(rec.note,rec.htmlarea);
+    self.postEvent("navigation-history-change");
+  }
+
+  function goTo(note) {
+    var editor = null;
+    if( typeof note == #string ) {
+      var id = note;
+      if( id like "note:*") 
+        id = id.substr(5);
+      
+      if(id == "blank") 
+        note = null;
+      else {
+        note = Note.get(id);
+        assert note;
+      }
+    } 
+    else if( note !instanceof Note )
+      throw note + " is not a note";
+
+    var (existingIdx, existingNote) = stack.find( si => si.note === note );
+    if( existingIdx >= 0 ) {
+      editor = stack[existingIdx].editor;
+      delete stack[existingIdx];
+      --stackPos;
+      //debug found: existingIdx;
+    } 
+    
+    editor = NoteView.current.presentNote(note,editor);
+
+    stack.length = ++stackPos;
+    stack[stackPos] = { note:note, editor:editor};
+    self.postEvent("navigation-history-change");
+    return true;
+  }
+
+  function canGoBack() { return stackPos > 0; }
+
+  function canGoFore() { return stackPos < stack.length - 1; }
+
+  function backs() { return stack[0..stackPos].reverse(); }  
+  function fores() { return stack[stackPos + 1 .. stack.length]; }
+
+  class Button : Element {
+    //var menu = $(menu.context#navigate);
+
+    function attached() {
+      this.isForward = this.id == "go-fore";
+      self << event navigation-history-change { this super.onHistoryChange(); }
+    }
+
+    event contextmenusetup (evt) {
+      var menu = evt.source;
+      menu.clear();
+      for( var si in (this.isForward ? fores():backs()) )
+        if(si.note) 
+          menu.$append(<li href="note:{si.note.id}">{si.note.caption.trim() || "{no caption}" }</li>);
+    }
+
+    function onHistoryChange() {
+      if( this.isForward )
+        this.state.disabled = !canGoFore();
+      else 
+        this.state.disabled = !canGoBack();
+    }
+    event click {
+      if(this.isForward) 
+        goFore();
+      else
+        goBack();
+    }
+  }
+}
+
+
+event ~click $([href]){
+  var href = this.attributes["href"];
+
+  function disableHyperlinkClick( el ) {
+    if(!el) 
+      return false;
+    if( el.disableHyperlinkClick ) 
+      return true;
+    return disableHyperlinkClick(el.owner);
+  }
+
+  if(disableHyperlinkClick(this))
+     return true;
+
+  this.post(:{
+    if(href like "note:*")
+      Navigate.goTo(href);
+    else 
+      Sciter.launch(href);
+  });
+
+  return true;
+}
+
+
+/*  event ~click $(a[href]) (evt) {
+     const url = evt.target.attributes["href"];
+     if( url && this.state.readonly ) {
+       Sciter.launch(url);
+       return true;
+     }
+  } */

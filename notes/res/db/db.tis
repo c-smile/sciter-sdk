@@ -374,7 +374,9 @@ function db.defaultBook() {
 
 function db.assignItemToBook(item, book)
 {
-  var oldBook = item.book; 
+  var oldBook = item.book;   
+  if( oldBook === book )
+    return;
   if(oldBook)
     db.removeItemFromBook(item,oldBook);
 
@@ -383,7 +385,6 @@ function db.assignItemToBook(item, book)
   if( !book.items ) book.items = db.createIndex(#string);
   book.items[item.id] = item; // append their item to our collection.
 
-  assert oldBook != book;
   self.postEvent("note-book-changed",[item,oldBook]);
 }
 

@@ -1,7 +1,7 @@
 ﻿<html>
   <head>
     <title>TIScript - Request object</title>
-    <meta name="generator" content="h-smile:richtext"/>
+    <meta name="generator" content="h-smile:richtext">
   </head>
 <body>
   <h1>Request object</h1>
@@ -24,20 +24,24 @@
     <h2>Properties</h2>
     <dt>status</dt>
     <dd>- <em>integer</em>, response&nbsp;state - http response code: 200 - OK, 404 - not found, etc.</dd>
-    <dt>requestedDataType</dt>
+    <dt>requestDataType</dt>
     <dd>- <em>integer</em>, one DATA_*** values above, type of requested data.</dd>
+		<dt>requestUrl</dt>
+		<dd>- <i>string</i>, requested URL.</dd>
 		<dt>response</dt>
-		<dd>- string, value, stream or byte array - data requested. Particular type is depends on <code>output</code> parameter of <code>view.request()</code> method.</dd>
+		<dd>- <i>string, value, stream or byte array</i> - data requested. Particular type is depends on <code>output</code> parameter of <code>view.request()</code> method.</dd>
 		<dt>responseData&nbsp;</dt>
-		<dd>- Bytes (byte array) - data requested as it was returned by server.</dd>
+		<dd>- <i>Bytes (byte array)</i> - data requested as it was returned by server.</dd>
 		<dt>responseMimeType</dt>
-		<dd>- string, mime type of server response data.</dd>
+		<dd>- <i>string</i>, mime type of server response data.</dd>
+		<dt>responseUrl</dt>
+		<dd>- <i>string</i>, response URL ( can be different from requestUrl due to redirections ).</dd>
 		<dt>isConsumed</dt>
-		<dd>- boolean, true if the request is consumed (by destination element).</dd>
+		<dd>- <i>boolean</i>, true if the request is consumed (by destination element).</dd>
 		<dt>isSucceeded</dt>
-		<dd>- boolean, true if the request was completed with success.</dd>
+		<dd>- <i>boolean</i>, true if the request was completed with success.</dd>
 		<dt>destination</dt>
-		<dd>- Element or View objects,  that requested the data.&nbsp;</dd>
+		<dd>- <i>Element or View object</i>,  that requested the data.&nbsp;</dd>
     <h2>Methods</h2>
     <dt>fulfill</dt>
     <dd>

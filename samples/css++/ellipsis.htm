@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      p.single {
+        width:*;
+        margin-right:*;
+        overflow-x:hidden;
+        white-space:nowrap;
+        text-overflow:ellipsis;
+        border:1px solid;
+      }
+
+      p.multi {
+        width:*;
+        margin-right:*;
+        overflow-y:hidden;
+        text-overflow:ellipsis;
+        max-height:2.4em; // two lines max
+        border:1px solid;
+        line-height:1.2em;
+      }
+
+    
+    </style>
+    <script type="text/tiscript"></script>
+  </head>
+<body>
+ Change window size to see ellipsis.
+
+ <h3>Single line ellipsis</h3> 
+  
+ <p.single>Pretty long text, it is here just to show ellipsis when text overflows the container.</p>
+
+ <text>Ellipsis appear when needed if element has these properties defined:</text>
+
+<pre>overflow-x:hidden;
+white-space:nowrap;
+text-overflow:ellipsis;</pre>
+
+
+<h3>Multiline line ellipsis</h3> 
+
+ <p.multi>Pretty long text, it is here just to show ellipsis when text overflows the container.</p>
+
+ <text>Multiline ellipsis appear when needed if element has these properties defined:</text>
+
+<pre>overflow-y:hidden;
+text-overflow:ellipsis;
+max-height:2.6em; // or just height</pre>
+
+
+</body>
+</html>

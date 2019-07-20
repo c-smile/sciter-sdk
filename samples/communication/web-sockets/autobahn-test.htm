@@ -22,7 +22,7 @@
     {
       if(currentTest == 0)
       {
-        socket = WebSocket.connect("ws://localhost:9001/getCaseCount");
+        socket = Net.WebSocket.connect("ws://localhost:9001/getCaseCount");
         socket.on("text", function(text) {
           totalTests = text.toInteger();
         });
@@ -40,7 +40,7 @@
       }
       else if(currentTest <= totalTests)
       {
-        socket = WebSocket.connect("ws://localhost:9001/runCase?case=" + currentTest + "&agent=sciter");
+        socket = Net.WebSocket.connect("ws://localhost:9001/runCase?case=" + currentTest + "&agent=sciter");
         socket.on("text", function(text) { socket.sendText(text); });
         socket.on("binary", function(data) { socket.sendBinary(data); });
         socket.on("error", function(err) { 

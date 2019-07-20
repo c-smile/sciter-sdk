@@ -60,7 +60,7 @@ function ButtonTableSelector()
       var params = header.value;
       var autoWidth = params.tablewidth == "auto";
 
-      HtmlArea.instance.execCommand("insert-table",
+      NoteView.current.htmlarea.execCommand("insert-table",
       {
         rows: R + 1,
         columns: C + 1,

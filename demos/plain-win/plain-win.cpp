@@ -127,6 +127,18 @@ LRESULT CALLBACK window::wnd_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
     return 0;
   }
 
+  if (message == WM_KEYDOWN && wParam == VK_F6)
+  {
+    window* self = ptr(hWnd);
+    sciter::dom::element root = self->get_root();
+    sciter::dom::element popup = root.find_first("popup");
+
+    POINT pos = { 100,100 };
+
+    SciterShowPopupAt(popup, pos, 7);
+    
+    return 0;
+  }
 
 
   //date_time::DT_UTC | date_time::DT_HAS_DATE | date_time::DT_HAS_TIME | date_time::DT_HAS_SECONDS

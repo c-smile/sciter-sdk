@@ -2,7 +2,7 @@
 //| Item is a note that could be of various types 
 //|
 
-
+include "../libs/utils.tis";
 
 class Note 
 {
@@ -62,22 +62,33 @@ class Note
   }
 
 
-  function update(params) 
+  function update(props) 
   {
     // use with care - no check for field names!
     var changes = false;
-    for(var (key,val) in params) {
+    var contentChanges = false;
+    for(var (key,val) in props) 
       if( this[key] != val ) {
-        this[key] = val;
         changes = true;
+        if(key == #html)
+          contentChanges = true;
       }
+    
+    if(!changes)
+      return;
+
+    var now = new Date();      
+    this.mdate = now;
+    this.mwho = PRINCIPAL; 
+    self.postEvent("note-updated",this);    
+
+    if(contentChanges) {
+      if((daysBetween(this.mdate,now) >= 1) || (this.mwho != PRINCIPAL))
+        this.pushToHistory(this);
     }
-    if(changes) {
-      this.mdate = new Date();  
-      this.mwho = PRINCIPAL; 
-      //stdout.println("note-updated",this.text); 
-      self.postEvent("note-updated",this);    
-    }
+
+    for(var (key,val) in props)
+      this[key] = val;
   }  
 
   function setMeta(params) 
@@ -91,7 +102,7 @@ class Note
       }
     }
     if(changes) {
-      this.mdate = new Date();  
+      this.mdate = new Date();
       this.mwho = PRINCIPAL;  
       //stdout.println("note-updated",this.text); 
       self.postEvent("note-updated",this);    
@@ -181,14 +192,6 @@ class Note
     set this.mwho = v;
   }
 
-  /*function identical(other) {
-    if(this.id != other.id) { stdout.println("not identical ids"); return false; }
-    if(this.html != other.html) { stdout.println("not identical html"); return false; }
-    //if(this.cdate.toISOString(true) != other.cdate.toISOString(true)) return false;
-    //if(this.mdate.toISOString(true) != other.mdate.toISOString(true)) return false;
-    return true;
-  }*/
-
   function pushToHistory(from)
   {
     if(!this.history) 
@@ -196,6 +199,16 @@ class Note
 
     if( this.history.last && this.history.last.html == from.html)
       return false;
+
+    self.postEvent("note-history-changed",this);
+
+    // collapse all changes that happened in one day
+    if( var last = this.history.last ) {
+      if(last.mwho == from.modifiedBy && daysBetween(last.mdate,from.mdate) < 1) 
+      last.mdate = from.mdate;
+      last.html = from.html;
+      return true;
+    }
 
     this.history.push {
       mdate: from.mdate,
@@ -205,12 +218,17 @@ class Note
     if(this.history.length > 8) // we keep only this number of history items
       this.history.shift();
 
-    self.postEvent("note-history-changed",this);
     return true;
   }
 
   function mergeContent(other, how) {
-    // how #their-on-top or #ours-on-top
+    //debug log: currentNote === this, currentNote, this;
+    if( currentNote === this ) {
+      // do it visually
+      if(NoteView.current.mergeNote(other, how))
+        return true;
+    }
+    // how: #their-on-top or #ours-on-top
     if( how == #theirs-on-top ) {
       if(!this.pushToHistory(this))
         return false;

@@ -536,10 +536,10 @@ SCDOM_RESULT SCAPI SciterShowPopup(HELEMENT hePopup, HELEMENT heAnchor, UINT pla
 /** Shows block element (DIV) in popup window at given position.
  * \param[in] hePopup \b HELEMENT, element to show as popup
  * \param[in] pos \b POINT, popup element position, relative to origin of Sciter window.
- * \param[in] animate \b BOOL, true if animation is needed.
+ * \param[in] placement \b UINT, meaning of pos - number in 1..9 range. When 7 - pos is top/left corner of the popup
  **/
 
-SCDOM_RESULT SCAPI SciterShowPopupAt(HELEMENT hePopup, POINT pos, BOOL animate);
+SCDOM_RESULT SCAPI SciterShowPopupAt(HELEMENT hePopup, POINT pos, UINT placement);
 
 /** Removes popup window.
  * \param[in] he \b HELEMENT, element which belongs to popup window or popup element itself

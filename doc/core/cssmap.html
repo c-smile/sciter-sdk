@@ -1363,15 +1363,17 @@ input[focus] { aspect: handleFocusAttribute; }
               <td rowspan="6" bgcolor="#ffe4ca" valign="top"><strong>Other attributes</strong></td>
               <td nowrap bgcolor="#ffe4ca" align="right"><strong>content</strong></td>
               <td bgcolor="#ffe4ca">
-          <div><code>&quot;string&quot; | attr(attrname)</code></div>
+          <div><code>&quot;string&quot; | attr(attrname) | prop(propname)</code></div>
           <p>Allows to redefine textual content of the element in style. In h-smile <em>content</em> is can be applied to the element itself.</p>
-          <p>If the content is a string then it is used &quot;as is&quot; to replace element's content. If it is <code>attr(attrname)</code> then content of the element is replaced by value of the attribute.</p>
+          <p>If the content is a string then it is used &quot;as is&quot; to replace element's content. </p>
+						<p>If it is <code>attr(attrname)</code> then content of the element is replaced by value of the attribute.</p>
+						<p>And if it is <code>prop(propname)</code> then content of the element gets replaced by the value of property defined in script on the element.</p>
           <div>This allow to define different captions of some element by CSS using for example some attribute as a switch:</div>
               <pre>p.status[state=&quot;pending&quot;] { content: &quot;Pending&quot;; foreground-image:...; }
 p.status[state=&quot;done&quot;] { content: &quot;Done&quot;; foreground-image:...; }
 p.status[state=&quot;warning&quot;] { content: &quot;Warning!&quot;; foreground-image:...; }
 </pre>
-          <div><em>content</em> is applicable only to elements that allowed to have textual content. E.g. it will work for P, SPAN, etc. but not for DIV.</div></td></tr>
+          <div><em>content</em> is applicable only to elements that allowed to have textual content. E.g. it will work for P, SPAN, etc. but not for TABLE.</div></td></tr>
             <tr>
               <td nowrap bgcolor="#ffe4ca" align="right"><strong>vertical-scrollbar</strong></td>
               <td bgcolor="#ffe4ca"> <font color="#ff0000">&quot;style-set-name&quot;</font> - style set name that defines styles of vertical scrollbar.</td></tr>
