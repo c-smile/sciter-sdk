@@ -100,6 +100,7 @@ const Lang = function() {
     update();
   }
 
+
   // static @title updater
   function Title() {
 
@@ -181,12 +182,41 @@ const Lang = function() {
     else return typeof fmt == #function ? fmt.call(this, val) : fmt.replace("#",val.toString() );
   }
 
+  // <output> updater
+  function Output() {
+
+    var key = this.state.value; // non translated value
+        
+    function update() {
+      var text = xlation[key];
+      if( !text ) { if(notfound) notfound[key] = #text; this.state.value = key; }
+      else { this.state.value = text; if(used) used[key] = true; }
+    }
+    
+    this[#value] = property(v) {
+      get {
+        return key;
+      }
+      set {
+        if( typeof v == #string ) {
+          key = v;
+          update.call(this);
+        } else 
+          this.state.value = v;
+      }
+    }
+    addLangHandler(this,update);
+    update();
+  }
+
+
   loadTranslation(); // load inital translation
 
   return {
       Controller    : Controller,
       Label         : Label,
       Title         : Title,
+      Output        : Output,
       Novalue       : Novalue,
       Formatter     : Formatter,
       initStats     : initStats,
