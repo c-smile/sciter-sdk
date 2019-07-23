@@ -308,7 +308,10 @@ function DragDrop2(def)
       if(dd_target) // we have left it
         dd_target.state.dragover = false; // CSS: :drag-over 
       dd_target = found;
-      if(dd_target) dd_target.state.dragover = true;
+      if(dd_target) {
+        dd_target.state.dragover = true;
+        if(def.arrivedTo) def.arrivedTo(dd_source,dd_target);
+      }
     }
    
     if(!dd_target) 
