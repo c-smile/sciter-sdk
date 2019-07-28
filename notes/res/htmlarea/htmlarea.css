@@ -6,13 +6,13 @@
 
 html { 
   font:10pt Verdana,Helvetica,Roboto,sans-serif;
-  font-rendering-mode:snap-pixel; // so caret can be placed properly
+  //font-rendering-mode:snap-pixel; // so caret can be placed properly
   flow:vertical; 
   background:none;
 }
 
 html > body { 
-  margin:0 4em 0 0.001*;
+  margin:0 fx(0.001,2em) 0 0.001*;
   hit-margin:0 4em;
   padding:0 var(note-padding,10dip); 
   width:*;
@@ -105,18 +105,19 @@ body :visited::shade // new addition while merging
   behavior:clickable;
   prototype: MergeInfo url(htmlarea-widgets.tis);  
   font:system;
-  width:4em;
+  width:2em;
   height: auto;
   vertical-align:middle;
   margin-left:100%;
   margin-bottom:*;
+  flow:horizontal;
   //margin-left:*;
   //border-left: 3dip solid gold;
   //padding: 0.25em;
   //content: prop(modified);
   //white-space:pre;
   //color:red;
-  background:#efefef;
+  background:#fefefe;
   cursor:pointer;
   z-index:1;
 } 

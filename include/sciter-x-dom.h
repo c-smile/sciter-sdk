@@ -680,7 +680,7 @@ SCDOM_RESULT SCAPI SciterWindowDetachEventHandler( HWINDOW hwndLayout, LPELEMENT
  **/
 
 SCDOM_RESULT SCAPI SciterSendEvent(
-          HELEMENT he, UINT appEventCode, HELEMENT heSource, UINT reason, /*out*/ BOOL* handled);
+          HELEMENT he, UINT appEventCode, HELEMENT heSource, UINT_PTR reason, /*out*/ BOOL* handled);
 
 /** SciterPostEvent - post sinking/bubbling event to the child/parent chain of he element.
  *  Function will return immediately posting event into input queue of the application.
@@ -692,7 +692,7 @@ SCDOM_RESULT SCAPI SciterSendEvent(
 
  **/
 
-SCDOM_RESULT SCAPI SciterPostEvent( HELEMENT he, UINT appEventCode, HELEMENT heSource, UINT reason);
+SCDOM_RESULT SCAPI SciterPostEvent( HELEMENT he, UINT appEventCode, HELEMENT heSource, UINT_PTR reason);
 
 
 /** SciterFireEvent - sends or posts sinking/bubbling event to the child/parent chain of specified element.

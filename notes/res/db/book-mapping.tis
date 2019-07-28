@@ -3,10 +3,30 @@
 //| Each file in the folder is a note. 
 //|
 
-// NOT USED YET
 
 namespace BookMapping 
 {
+
+  const INDEX_HEAD = `
+<html>
+    <head>
+        <title>{bookname}</title>
+        <style>
+body { font-size: 10pt; font-family: Verdana, Arial, Helvetica, sans-serif; }
+a { display:flex; flex-direction: row;  margin:0.5em 0; border:1px solid #ccc; text-decoration:none; border-bottom: 1px solid #ccc; min-height:84px; }
+a > img { display:block; width:64px; margin:0.15em; align-self: flex-start; }
+a > section { vertical-align:top; }
+a > section > .tags { margin:0.5em; }
+a > section > .tags > .tag { display:inline-block; width:max-content; padding:0.25em 0.5em; background:#eee; }
+a > section > p { margin:0.5em; }
+        </style>
+    </head>
+    <body>`;
+
+const INDEX_TAIL = `
+   </body>
+</html>`;
+
 
   function createMonitor(book)
   {
@@ -22,7 +42,7 @@ namespace BookMapping
 
     const THRESHOLD = 400ms;
 
-    debug monitor: book.mappedTo;
+    //debug monitor: book.mappedTo;
 
     var monitor = System.watch(book.mappedTo);
 
@@ -68,9 +88,29 @@ namespace BookMapping
   }
 
   function generateIndex(book,folderPath) {
-    for( var note in book.items ) {
-      
+    const pathname = folderPath + "index.htm";
+    const out = Stream.openFile(pathname,"wu");
+    out << INDEX_HEAD.replace("{bookname}",book.name);
+/*<div class=note>
+  <div class=tags>
+    <span class=tag>{tagname}</span>
+  </div>
+  <a class=caption>{caption}</a>
+</div>*/
+    for( var note in db.bookNotes(book) ) {
+      out.printf("<a class=note href='%s.htm'>",note.id);
+      out.printf("<img src='data:image/png;base64,%s'>",note.preview.toString());
+      out.println("<section>");
+      out.println("  <div class=tags>");
+      for(var tag in note.tags)
+        out.println("    <span class=tag>", tag.name.toHtmlString(),"</span>");
+      out.println("  </div");
+      out.println("<p>", note.caption.toHtmlString(), "</p>");
+      out.println("</section>");
+      out.println("</a>");
     }
+    out << INDEX_TAIL;
+    out.close();
   }
 
   function scanFolder(book, changes = { addition: {}, removal:{}, change:{} }) 
@@ -184,6 +224,8 @@ namespace BookMapping
         System.unlink(stats.path);
 
     debug SCANBOOK: book.name, folderNotesToCreate, folderNotesToUpdate, folderNotesToRemove, notesToCreate, notesToUpdate, notesToRemove;
+    if( folderNotesToCreate.length || folderNotesToUpdate.length || folderNotesToRemove.length)
+      generateIndex(book,bookPath);
 
   }
 

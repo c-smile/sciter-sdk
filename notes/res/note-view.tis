@@ -12,7 +12,7 @@ class NoteView : Element
   this var toolbar = null;
   //this var footer = null;
   this var keywords = null; // keywords list 
-  this var history = null;
+  //this var history = null;
   this var bookSelector = null;
 
   var current = null;
@@ -23,7 +23,7 @@ class NoteView : Element
 
     this.htmlarea = this.$(htmlarea);
     this.toolbar = this.$(toolbar);
-    this.history = this.$(select.history);
+    //this.history = this.$(select.history);
     this.tags = this.$(tags);
     this.bookSelector = this.$(select.book);
 
@@ -74,10 +74,8 @@ class NoteView : Element
   function presentNote(note, htmlarea ) {
     //debug presentNote: note, htmlarea;
 
-    if( !note && !htmlarea && this.htmlarea.attributes.exists("initial") ) {
+    if( !note && !htmlarea && this.htmlarea.attributes.exists("initial") )
       htmlarea = this.htmlarea;
-      self.postEvent("note-new-started");
-    }
     else {
       if(this.note && this.htmlarea.saveNote())
         db.commit();
@@ -162,7 +160,7 @@ class NoteView : Element
         viewingBand.attributes.toggleClass("note-modified-by-me", this.note.modifiedBy == PRINCIPAL);
       }
 
-      this.history.options.clear();
+      /*this.history.options.clear();
       if( this.note.history ) {
         this.history.options.$append(<option value='-1'>Latest</option>);
         for(var (idx,hi) in this.note.history) {
@@ -172,7 +170,7 @@ class NoteView : Element
             this.history.options.$append(<option value={idx}>{hi.mdate.toLocaleString()} by {hi.mwho}</option>);
         }
         this.history.value = -1;
-      }
+      }*/
 
     } else {
       this.toolbar.$(button.edit).state.disabled = true;
@@ -181,9 +179,7 @@ class NoteView : Element
       this.toolbar.attributes["mode"] = "editing";
       this.htmlarea.state.readonly = false;
       this.htmlarea.document.state.readonly = false; 
-      this.history.options.clear();
-      //this.footer.value = { cdate:null, mdate:null, deleted:null }; 
-      //this.footer.state.disabled = true; 
+      //this.history.options.clear();
     }
   }
 

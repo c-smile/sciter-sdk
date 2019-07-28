@@ -6,6 +6,7 @@
     font:system;
     border:#ccc solid 1dip;
     padding:2dip;
+    cursor:default;
   }
 
   action { 
@@ -46,7 +47,9 @@
     display:block; 
     width:*;
     overflow: hidden;
+    line-height:1.2em;
     max-height:2.6em;
+    text-overflow: ellipsis;
   }
 
   :root > div.removal > action {

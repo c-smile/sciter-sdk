@@ -4,15 +4,10 @@ class NotesFilter : Element {
   const ln = $(input#lookup-note);
   const cdateOrderButton = $(knob#cdate-order);
   const edateOrderButton = $(knob#edate-order);
-  const addNewNoteButton = $(knob#add-new-note);
   
   function attached() {
 
     const me = this;
-        
-    self << event note-shown  { addNewNoteButton.state.disabled = false; }  
-    self << event note-blank-shown { addNewNoteButton.state.disabled = true; } 
-    self << event note-updated { addNewNoteButton.state.disabled = false; }  
 
     self << event notes-filter-changed { 
       if( !ln.state.focus ) ln.value = filterWords? filterWords.join(" ") : "";

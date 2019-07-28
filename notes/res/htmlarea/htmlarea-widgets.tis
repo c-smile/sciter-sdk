@@ -44,17 +44,6 @@ class MergeInfo : Element
   function attached() {
 
     var principal = this.parent;
-    /*if(principal.removedContentBefore 
-    || principal.removedContentInside    
-    || principal.removedContentAfter) {
-      debug MergeInfo: "has-deletions", principal.removedContentBefore, principal.removedContentInside, principal.removedContentAfter;
-    }
-    if(principal.replacedContent)
-      debug MergeInfo: "replaced", principal.replacedContent;
-    if(principal.inserted)
-      debug MergeInfo: "inserted", principal.html;
-    if(principal.changedContent)
-      debug MergeInfo: "has-changed-content", principal.changedContent;*/
     var html = "";
 
     if( principal.removedContentBefore ) 
@@ -78,13 +67,11 @@ class MergeInfo : Element
       this.html = html;
   }
 
-
   event click (evt)  {
     if( evt.target !== this ) return;
     this.showDetails();
     return true;
   }
-
 
   function showDetails() {
 
@@ -108,7 +95,6 @@ class MergeInfo : Element
         html += String.$(<div.addition><div.content><ins>{item.html}</ins></div><modified>{item.modified}</modified><action disabled></action></div>);
       return html;
     }
-
 
     var principal = this.parent;
     elPopup.clear();

@@ -283,6 +283,14 @@ function* db.matchingItems(tags, words, book, events)
   }
 }
 
+function* db.bookNotes(book) {
+  var startDate = new Date(1000,1,1);
+  var endDate = new Date(3000,1,1);
+  for(var it in this.root.date2item.select(startDate,endDate,false))
+    if( it.book === book )
+      yield it;
+}
+
 
 function db.selectTags(callback, tagKind ) {
   for(var (n,t) in this.root.tags)

@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+          //common styles
+        </style>
+
+        <style id="current-theme" src="themes/b.css" /> 
+
+        <script type="text/tiscript">
+
+event change $(form) {
+  var themeRelUrl = this.value.theme;
+  var elStyle = $(style#current-theme);
+  assert elStyle;
+  elStyle.deactivate(); // remove all rules
+  elStyle.attributes["src"] = themeRelUrl; // set src
+  elStyle.activate(); // add rules
+}
+
+        </script>
+    </head>
+    <body>
+
+      <h2>Theme switch demo</h2> 
+
+      <form>
+        <button|radio(theme) value="themes/a.css">A theme</button>
+        <button|radio(theme) checked value="themes/b.css">B theme</button>
+      </form>
+
+    </body>
+</html>

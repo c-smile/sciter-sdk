@@ -18,7 +18,7 @@ function Plus.Application() {
       if( route.path like topath ) {
         path = topath;
         param = andparam;
-        main.load(self.url(route.url));
+        main.update(::main.load(self.url(route.url))); // do transactional update to reduce visual effects
         main.postEvent("routechange");
         return;
       }

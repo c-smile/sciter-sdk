@@ -532,8 +532,8 @@ typedef ISciterAPI* (SCAPI *SciterAPI_ptr)();
   inline SCDOM_RESULT SCAPI SciterAttachEventHandler( HELEMENT he, LPELEMENT_EVENT_PROC pep, LPVOID tag ) { return SAPI()->SciterAttachEventHandler( he,pep,tag ); }
   inline SCDOM_RESULT SCAPI SciterWindowAttachEventHandler( HWINDOW hwndLayout, LPELEMENT_EVENT_PROC pep, LPVOID tag, UINT subscription ) { return SAPI()->SciterWindowAttachEventHandler(hwndLayout,pep,tag,subscription ); }
   inline SCDOM_RESULT SCAPI SciterWindowDetachEventHandler( HWINDOW hwndLayout, LPELEMENT_EVENT_PROC pep, LPVOID tag ) { return SAPI()->SciterWindowDetachEventHandler(hwndLayout,pep,tag ); }
-  inline SCDOM_RESULT SCAPI SciterSendEvent( HELEMENT he, UINT appEventCode, HELEMENT heSource, UINT reason, /*out*/ BOOL* handled) { return SAPI()->SciterSendEvent( he,appEventCode,heSource,reason,handled); }
-  inline SCDOM_RESULT SCAPI SciterPostEvent( HELEMENT he, UINT appEventCode, HELEMENT heSource, UINT reason) { return SAPI()->SciterPostEvent(he,appEventCode,heSource,reason); }
+  inline SCDOM_RESULT SCAPI SciterSendEvent( HELEMENT he, UINT appEventCode, HELEMENT heSource, UINT_PTR reason, /*out*/ BOOL* handled) { return SAPI()->SciterSendEvent( he,appEventCode,heSource,reason,handled); }
+  inline SCDOM_RESULT SCAPI SciterPostEvent( HELEMENT he, UINT appEventCode, HELEMENT heSource, UINT_PTR reason) { return SAPI()->SciterPostEvent(he,appEventCode,heSource,reason); }
   inline SCDOM_RESULT SCAPI SciterFireEvent( const BEHAVIOR_EVENT_PARAMS* evt, BOOL post, BOOL *handled) { return SAPI()->SciterFireEvent( evt, post, handled ); }
   inline SCDOM_RESULT SCAPI SciterCallBehaviorMethod(HELEMENT he, struct METHOD_PARAMS* params) { return SAPI()->SciterCallBehaviorMethod(he,params); }
   inline SCDOM_RESULT SCAPI SciterRequestElementData( HELEMENT he, LPCWSTR url, UINT dataType, HELEMENT initiator ) { return SAPI()->SciterRequestElementData(he,url,dataType,initiator ); }

@@ -10,7 +10,18 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FAFFEA">4.3.0.8</td><td nowrap valign="top" align="center">19-07-2019</td><td>new:&nbsp;
+    <tr><td valign="top" bgcolor="#FAFFEA">4.3.0.9</td><td nowrap valign="top" align="center">27-07-2019</td><td>new:
+					<ul><li>[css]&nbsp;<code>fx(weight,min:length, max:length)</code> - flex declaration with min/max limits for properties that do not have min/max-xxxxx counterparts.</li>
+						<li>+lang, support of <code>&lt;output&gt;</code> translation;</li>
+						<li>+sample sdk/samples/ideas/sticky-navbar/demo.htm</li>
+						<li>+sample sdk/samples/cssom/theme-switch.htm</li></ul>
+					<p>&nbsp;fixes:</p>
+					<ul>
+						<li>[CRITICAL] fix of mem leak alike memory consumption, case: <a href="https://sciter.com/forums/topic/memory-leak-in-sciter/">https://sciter.com/forums/topic/memory-leak-in-sciter/</a>&nbsp;</li>
+						<li>[trayicon] mem leak fix.</li><li>Fix of min-height handling when height is not defined.</li>
+						<li>[gtk] modal dialog fixes.</li>
+						<li>[+plus-routes] forced update on route change to avoid non-desired initial visual effects.</li>
+						<li>[API] headers, &nbsp;<code>SciterPost/SendEvent(, UINT reason)</code> -&gt; <code>SciterPost/SendEvent(, UINT_PTR reason)</code></li></ul></td></tr><tr><td valign="top" bgcolor="#FAFFEA">4.3.0.8</td><td nowrap valign="top" align="center">19-07-2019</td><td>new:&nbsp;
 					<ul><li><code>text-overflow:ellipsis</code> in multiline text containers, see: <a href="https://sciter.com/text-overflow-ellipsis-for-multiline-texts/">https://sciter.com/text-overflow-ellipsis-for-multiline-texts/</a>&nbsp;</li>
 						<li><code>Event.wheelDeltas</code> -&gt; (x,y)</li>
 						<li><code>Event.device</code> -&gt; &nbsp;<code>undefined | #keyboard | #mouse | #touch | #pen | #touchpad</code></li>
@@ -23,30 +34,17 @@
 						</ul>
 					<p>fixes:</p>
 					<ul>
-						
-						
-						
-						
-						
-						
 						<li>[dom] fix of key handling on <code>:current</code> element, see: <a href="https://sciter.com/forums/topic/not-visible-dropdown-changes-value-on-keypress/">https://sciter.com/forums/topic/not-visible-dropdown-changes-value-on-keypress/</a>&nbsp;</li><li>[win] fix of text rendering when css <code>opacity</code> is used.</li><li>[CSS] fix with <code>color::morph()</code> function: <a href="https://sciter.com/forums/topic/wish-multiple-css-morph-parameters/">https://sciter.com/forums/topic/wish-multiple-css-morph-parameters/</a>&nbsp;</li><li>[osx] optimization of rendering with OpenGL backend.</li><li>[DOM,script] fix of prototype handling on element attached as <code>some::shade { prototype:... }</code></li><li>[<code>behavior:tree</code> + checkmarks] fix of redundant &quot;change&quot; event generation.</li><li>[docs] <code>Request</code> documentation update.&nbsp;</li><li>[OSX] better window size handling.</li>
 						<li>[css/dom] fix of: inline <code>style=&quot;flow(1 1,2 3)&quot;</code> is causing high CPU load.</li>
 						<li>[regression] Fix of aspect/prototype handling that modify attribute class, see: <a href="https://github.com/c-smile/sciter-sdk/issues/124">https://github.com/c-smile/sciter-sdk/issues/124</a>&nbsp;</li>
 						<li>[DOM] fix of hang up on some entangled update graphs.</li>
 						<li>[API] change of function parameter meaning in: </li>
-						<pre>SCDOM_RESULT SCAPI SciterShowPopupAt(HELEMENT hePopup, POINT pos, UINT placement); // note placement </pre></ul></td></tr><tr><td valign="top" bgcolor="#FAFFEA">4.3.0.7</td><td nowrap valign="top" align="center">18-06-2019</td><td>
-					
+						<pre>SciterShowPopupAt(HELEMENT, POINT, UINT placement); 
+  // note placement </pre></ul></td></tr><tr><td valign="top" bgcolor="#FAFFEA">4.3.0.7</td><td nowrap valign="top" align="center">18-06-2019</td><td>
 					<p>new:</p>
 					<ul><li>[script, ES7 compatibility] &quot;static&quot; methods in classes. <code>class Foo { static function Bar() {... no `this` here...}}&nbsp;</code></li>
 						<li>[sciter.notes] sharing books (over folders, and so dropbox, onedrive, nextcloud, etc., and so with their mobile clients(access notes on mobiles)), part I. NOTE: use with care, beta and feature is not complete.</li></ul><p>fixes:
 					</p><ul>
-						
-						
-						
-						
-						
-						
-						
 						<li>[CSS] fix&nbsp;of <code>@import url(...) condition-expr;</code> handling&nbsp;</li><li>[win] fix of resolution change handling of custom frame windows.</li><li>[gtk] &lt;input|date&gt; to use current locale settings.</li><li><code>System.sync.mkdir()</code> ... sync equivalents.</li><li>[API] fix of sciter-x-api.h compatibility with C99.</li><li>[script] fix of Date reporting in inspector.</li><li>[DOM] <code>flow:stack</code>, fix of potential AV.</li><li>Fix of aspect/prototype handling that modify attribute class, see: <a href="https://github.com/c-smile/sciter-sdk/issues/124">https://github.com/c-smile/sciter-sdk/issues/124</a>&nbsp;</li>
 						<li>[script] <code>System.mkdir()</code>, <code>System.rmdir()</code>, <code>System.copyFile()</code>, <code>System.watch()</code>, etc. have been documented.</li></ul></td></tr><tr><td valign="top" bgcolor="#FAFFEA">4.3.0.6</td><td nowrap valign="top" align="center">08-06-2019</td><td>new:
 					<ul><li><code>view.trayicon()</code> &nbsp;- creates tray icon associated with the view (window). The view will receive trayicon-click events after successful creation. See: <u>sdk/samples/trayicon/</u> demos.</li>
