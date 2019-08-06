@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+          button:disabled > img { fill:#ccc; } 
+
+        </style>
+        <script type="text/tiscript">
+
+          const frame = $(frame);
+          const paths = [ "frame1.htm", "frame2.htm", "frame3.htm" ];  
+          var   index = 0;
+
+          event click $(button#next) {
+            ++index;
+            $(button#prev).state.disabled = false;            
+            if( index == paths.length - 1 ) { this.state.disabled = true; }
+            function changer() { frame.load( self.url(paths[index]) ); }
+            frame.update(changer, { effect:"slide-left", ease:"quad-out", duration:600ms });
+          }
+
+          event click $(button#prev) {
+            --index;
+            $(button#next).state.disabled = false;            
+            if( index == 0 ) { this.state.disabled = true; }
+            function changer() { frame.load( self.url(paths[index]) ); }
+            frame.update(changer, { effect:"slide-right", ease:"quad-out", duration:600ms });
+          }
+
+
+        </script>
+    </head>
+    <body>
+       <button #prev disabled><img src="stock:arrow-left"></button>
+       <button #next><img src="stock:arrow-right"></button>
+       <frame src="frame1.htm" />
+    </body>
+</html>
