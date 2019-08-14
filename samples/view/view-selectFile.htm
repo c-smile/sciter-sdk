@@ -33,7 +33,7 @@
         const initialPath = System.path(#USER_DOCUMENTS,"newdoc");
         const caption = "Select file to save";
       
-        var url = view.selectFile(#save, filter, defaultExt, initialPath, caption );
+        var url = view.selectFile(#save, filter, defaultExt, initialPath, caption);
         if( url ) {
           outUrl.text = url;
           outPath.text = URL.toPath(url);

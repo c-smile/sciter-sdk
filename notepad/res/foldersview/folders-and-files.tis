@@ -7,7 +7,8 @@ class OpenFile : Element
   function createOn(list, editor) {
     list.$append(<li url="{editor.docUrl}">{editor.caption}</li>);
     var item = list.last;
-    item.prototype = OpenFile; // manual subclassing
+    //item.prototype = OpenFile; // manual subclassing
+    Object.setPrototypeOf(item,OpenFile);
     item.editor = editor;
     item.state.current = true;
     item.bindEditorEvents();

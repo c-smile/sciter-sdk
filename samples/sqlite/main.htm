@@ -1,0 +1,24 @@
+<html>
+<head>
+<script type="text/tiscript">
+  const db = view.db;   //retrieving the db object opened in boot.  
+  assert db;
+//const db = SQLite.DB.open(":memory:"); //This works without any errors.   
+  function setValues() {
+    stdout.println("Create table.");
+    db.exec("DROP TABLE IF EXISTS test;" );
+    db.exec("CREATE TABLE test (key INTEGER PRIMARY KEY, field1 INT, field2 TEXT);" );
+    stdout.println("Create table success.");
+    stdout.println("Insert data.");
+      db.insert("test",{field1 : 101,field2 : "Hello World! from script."});
+    stdout.println("Data insert fail."); //Doesn't execute.
+  }
+  $(button#test).subscribe("click", setValues ); 
+</script>
+</head>
+<body>
+  <div>
+    <button #test>Test</button>
+  </div>
+</body>
+</html>

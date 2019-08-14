@@ -1,0 +1,128 @@
+
+html {
+  // variables
+  var(text-color): #000;
+  var(back-color): #FFF;
+  var(positive-color): #080;
+  var(negative-color): #E00;
+  var(highlight-color): #bcd8;
+  var(current-color): #dcb8;
+
+  background: color(back-color); // apply variables
+  color: color(text-color);
+  font:system; // to respect user choice  
+}
+
+html:theme(dark) {
+  var(text-color): #FFF;
+  var(back-color): #000;
+  var(positive-color): #0F0;
+  var(negative-color): #F00;
+}
+
+header { flow:horizontal; }
+header > div { width:*; }
+header > form { 
+  flow: row(label,div);
+  border-spacing:0.5em;
+}
+
+header > form > label { white-space:nowrap; vertical-align:middle; }
+header > form > div { width:max-content; }
+
+table {
+  font:system;
+  height:*; width:*; 
+  border:1px solid black; 
+  flow:table-fixed; // ATTN: this value is mission critical!
+  overflow-x:hidden;
+}
+
+table > tbody, table > tbody { border-spacing:0; }
+
+table > tbody 
+{ 
+  overflow: scroll-indicator;
+  size:*;
+}
+
+table > tbody > tr {
+  behavior:form; // mission critical: each repeated child is treated as a form so it can accept object values  
+} 
+
+table > tbody > tr:hover {
+  foreground-color: color(highlight-color);
+}
+
+table > tbody > tr:current {
+  foreground-color: color(current-color);
+} 
+
+td,   
+th { width:4.4vw; overflow-x:hidden; height:1.4em; padding:2dip; }
+
+td[type] { 
+  behavior:output; // bahaves as <output> - uses formatters 
+}
+
+td[type="decimal"] { 
+  text-align:right; 
+}
+
+td[type="currency"] { text-align:right; 
+  background-image: url(stock:arrow-up);
+  background-repeat:no-repeat;
+  background-position-top: 50%;
+  background-position-right: 3dip;
+  background-size:9dip 5dip;
+  color:color(positive-color);
+  fill:color(positive-color); // background vector image icon color
+  padding-right:14dip;
+}
+td[type="currency"][negative] { 
+  background-image: url(stock:arrow-down);
+  color:color(negative-color); 
+  fill:color(negative-color); 
+}
+
+td[type="progress"] { 
+  behavior:progress;
+  foreground-color:#39c; // color of proggress bar
+  foreground-clip:content-box;
+}
+
+td[type="integer"] { 
+  text-align:right; 
+}
+
+td[type="enum"] { width:2em; }
+
+td[type="select"] { 
+  //behavior:clickable; // or button if it is focusable 
+  prototype: ExtSelect url(widgets/ext-select.tis);
+  line-height:height(100%);
+  overflow: hidden;
+  padding:0 14dip 0 2dip;
+  foreground-image:url(stock:arrow-down);
+  foreground-position-right: 7dip;
+  foreground-position-top: 50%;
+  foreground-repeat:no-repeat;
+  color:color(text-color);
+  fill:color(text-color); // background vector image icon color
+  popup-position: top-left bottom-left; /*point-on-popup at point-on-anchor */
+}
+
+
+select#dropdown {
+  display:block;
+  width:*;
+  height:max-content;
+  max-height: 8em;
+  background: color(back-color);
+  border: 1dip solid color(text-color);
+}
+
+select#dropdown > option { color: color(text-color); }
+select#dropdown > option:current { color: highlighttext; }
+
+  

@@ -1,0 +1,97 @@
+<html theme="dark">
+  <head>
+  <title></title>
+  <style src="terminal.css" />
+  <script type="text/tiscript">
+  
+  include "../vlist.tis";
+  include "terminal.tis";
+
+  self.ready = Terminal.init;
+    
+  </script>
+
+    <select|list #dropdown>
+      <option value="0">First</option>
+      <option value="1">Second</option>
+      <option value="2">Third</option>
+    </select>
+
+  </head>
+<body>
+
+  <header>
+    <div>
+      <h2>Dynamic recordset mutation in virtual table list</h2>
+      <p>Records array is created with 500 records initially and gets modified dynamically each 40ms (25 FPS)</p> 
+      <button #mutate>Start random updates</button>      
+    </div>      
+    <form>
+      <label>theme:</label>
+      <div>
+         <button|radio(theme) value="light">Day</button>
+         <button|radio(theme) value="dark" checked>Night</button>
+      </div>
+      <label>data rows:</label>
+      <div>
+         <button|radio(nrecords) value="500" checked>500</button>
+         <button|radio(nrecords) value="1000">1000</button>
+         <button|radio(nrecords) value="5000">5000</button>
+      </div>
+    </form>
+  </header>
+
+  <table>
+    <thead>
+      <tr>
+        <td(index)>index</th>
+        <td(caption)>caption</th>
+        <td(status)>status</th>
+        <td(money1)>money1</th>
+        <td(money2)>money2</th>
+        <td(money3)>money3</th>
+        <td(money4)>money4</th>
+        <td(progress)>progress</th>
+        <td(int1)>int1</th>
+        <td(int2)>int2</th>
+        <td(int3)>int3</th>
+        <td(int4)>int4</th>
+        <td(enum1)>enum</th>
+        <td(float1)>float1</th>
+        <td(float2)>float2</th>
+        <td(float3)>float3</th>
+        <td(float4)>float4</th>
+        <td(select)>enum</th>
+        <td(text)>text</th>
+        <td(text)>dummy</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td|integer(index)/>
+        <td(caption)/>
+        <td(status)/>
+        <td|currency(money1)/>
+        <td|currency(money2)/>
+        <td|currency(money3)/>
+        <td|currency(money4)/>
+        <td|progress(progress) max=100/>
+        <td|integer(int1)/>
+        <td|integer(int2)/>
+        <td|integer(int3)/>
+        <td|integer(int4)/>
+        <td|enum(enum1)/>
+        <td|decimal(float1)/>
+        <td|decimal(float2)/>
+        <td|decimal(float3)/>
+        <td|decimal(float4)/>
+        <td|select(select)/>
+        <td(text)/>
+        <td(dummy)/>
+      </tr>
+    </tbody>
+  </table>
+ 
+  
+</body>
+</html>

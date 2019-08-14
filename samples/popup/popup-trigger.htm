@@ -51,7 +51,7 @@
       }
      
       popup << event popupready { popupShown = true; }
-            << event popupdismissed { me.timer(500ms, ::popupShown = false); };
+            << event popupdismissing { me.timer(500ms, ::popupShown = false); };
 
     } 
       

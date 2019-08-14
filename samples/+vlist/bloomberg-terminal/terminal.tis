@@ -1,0 +1,88 @@
+namespace Terminal {
+
+  const LOREMS = ["lorem","ipsum","dolor","sit","amet", "consectetur", "adipiscing","elit"];
+  const STATUS = ["passive","active"];
+  const ENUM = ["ABC","DEF", "GHI"];
+
+  var records = []; 
+  var vlist;
+
+  // generate record with random content
+  function recordAt(index) {
+    return {
+      index : index,
+      caption : LOREMS[rand(8)], 
+      status : STATUS[rand(2)],
+      money1 : rand(20000) - 10000,
+      money2 : rand(20000) - 10000,
+      money3 : rand(20000) - 10000,
+      money4 : rand(20000) - 10000,
+      progress: rand(100),
+      int1: rand(1000) - 500,
+      int2: rand(1000) - 500,
+      int3: rand(1000) - 500,
+      int4: rand(1000) - 500,
+      enum1: ENUM[rand(3)],
+      float1 : rand(2000) - 1000.0,
+      float2 : rand(2000) - 1000.0,
+      float3 : rand(2000) - 1000.0,
+      float4 : rand(2000) - 1000.0,
+      select : rand(3),
+      text: LOREMS[rand(8)]
+    }
+  }
+
+  function initRecordesetBy(nrecords)  {
+    records.length = nrecords;
+    // init recordset
+    for(var i in nrecords) 
+      records[i] = recordAt(i);
+  }
+
+  function init() {
+
+    initRecordesetBy(500);
+    
+    // setup virtual list on <tbody>
+    vlist = VirtualList { container : $(table>tbody) };
+
+    // bind  vlist with these recordset
+    vlist.value = records;
+  }
+}
+
+
+event click $(#mutate) 
+{
+  var vlist = Terminal.vlist;
+  var records = Terminal.records;
+
+
+  function mutateRecord(rec) {
+    const newrec = Terminal.recordAt(rec.index);
+    for(var n in 3) { // mutate 3 properties at once
+      const key = Object.keys(rec)[rand(19)]; // get random prop
+      rec[key] = newrec[key];
+    }
+  }
+
+  self.timer(40ms, function() {
+    if(!vlist.state.animating) { // prevent updates on animation
+      for(var n in 10) // mutate 10 records
+        mutateRecord(records[rand(records.length)]);
+    }
+    return true; // keep going
+  });
+
+}
+
+// "theme" click handler 
+
+event click $(button[name=theme]) {
+  self.attributes["theme"] = this.value;  
+}
+
+// "num records in recordset" click handler
+event click $(button[name=nrecords]) {
+  Terminal.initRecordesetBy(this.value.toInteger());
+}

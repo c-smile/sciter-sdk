@@ -1,0 +1,39 @@
+
+// select with external list
+class ExtSelect : Element {
+  this var _value;
+  var ddselect = $(select#dropdown);
+
+  property value(v) {
+    get return this._value;
+    set {
+      this._value = v;
+      var current = ddselect.$(option[value="{v}"]);
+      this.text = current ? current.text : "?";
+    }
+  }
+
+  event click (evt) {
+    if( evt.target != this ) return;
+    if( this.state.ownspopup ) {
+      ddselect.closePopup();
+    } else {
+      ddselect.value = this._value;      
+      this.popup(ddselect);
+      ddselect.state.focus = true;
+    }
+    return true; // consume the event
+  }
+
+  event change $(select) {
+    var current = ddselect.$(option:current);
+    this.text = current ? current.text : "";
+    this.postEvent("change");
+    return true;
+  }
+
+  event mouseup $(select) {
+    ddselect.closePopup();
+  }
+
+}

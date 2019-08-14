@@ -19,8 +19,8 @@ public:
   HWND      get_hwnd() const { return _hwnd; }
   HINSTANCE get_resource_instance() const{ return ghInstance; }
 
-  /* sciter::request / LOAD_MYSELF testing
-  LRESULT on_load_data(LPSCN_LOAD_DATA pnmld) {
+  /* sciter::request / LOAD_MYSELF testing */
+  /*LRESULT on_load_data(LPSCN_LOAD_DATA pnmld) {
     aux::wchars wu = aux::chars_of(pnmld->uri);
     if(wu == const_wchars("res:go.png"))
     {
@@ -31,7 +31,7 @@ public:
       return LOAD_MYSELF;
     }
     return sciter::host<window>::on_load_data(pnmld);
-  }*/ 
+  }*/
 
   window();
   bool init(); // instance
