@@ -39,8 +39,8 @@ Sciter is an embeddable HTML/CSS/scripting engine, Windows, Mac OSX and Linux.
 
 * [demos/usciter](usciter) - demo "browser" for all supported platforms - use it to load samples from /samples/ folder.
 * [demos/uminimal](uminimal) - minimalistic multiplatform integration sample.
-* [demos/notepad](HTML NOTEPAD) sources of [https://html-notepad.com](HTML NOTEPAD application).
-* [demos/notes](Sciter Notes) sources of [https://notes.sciter.com](Sciter Notes application).
+* [demos/notepad](notepad) sources of https://html-notepad.com application.
+* [demos/notes](notes) sources of https://notes.sciter.com - Sciter Notes application.
 
 
 
