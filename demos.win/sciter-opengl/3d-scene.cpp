@@ -8,8 +8,10 @@ extern HGLRC hglrc_main;
 static HGLRC  hglrc = 0;
 static float  theta = 0;
 static HDC    hdc = 0;
+static DWORD  ticks = 0;
 
 void init_3d() {
+  ticks = GetTickCount();
   hdc = GetDC(hWnd);
   hglrc = wglCreateContext(hdc);
   theta = 0;
@@ -29,8 +31,6 @@ void draw_3d()
 	// make it the calling thread's current rendering context 
 	wglMakeCurrent(hdc, hglrc);
 
-	DWORD ticks = GetTickCount();
-
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Clear the screen and depth buffer
 
 	glPushMatrix();
@@ -48,6 +48,9 @@ void draw_3d()
 
 	theta += (nticks - ticks) / 100.0f;
 	ticks = nticks;
+
+  wglMakeCurrent(hdc, hglrc_main);
+ 
 }
 
 
