@@ -12,8 +12,8 @@ WCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
 WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
 
 
-HWND hWnd;
-bool needsDrawing = true;
+HWND  hWnd;
+HGLRC hglrc_main = NULL;
 
 // Forward declarations of functions included in this code module:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -22,6 +22,10 @@ LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 
 sciter::dom::element back_layer;
 sciter::dom::element fore_layer;
+
+void init_3d();
+void stop_3d();
+void draw_3d();
 
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
@@ -55,55 +59,48 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // Main message loop:
     while (!quit) 
-	{
-		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
-		{
-			if(msg.message == WM_QUIT)
-			{
-				quit = true;
-			}
-			else {
-				TranslateMessage(&msg);
-				DispatchMessage(&msg);
-			}
-		}
-		else /*if (needsDrawing)*/ {
-			needsDrawing = false;
+	  {
+		  if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+		  {
+			  if(msg.message == WM_QUIT)
+			  {
+				  quit = true;
+			  }
+			  else {
+				  TranslateMessage(&msg);
+				  DispatchMessage(&msg);
+			  }
+		  }
+		  else {
 
-		
-			/*{
-				// draw background layer
-				SCITER_X_MSG_PAINT pc(back_layer, FALSE);
-				SciterProcX(hWnd, pc);
-				first = true;
-			}*/
+			  if( !hglrc_main) {
+          hglrc_main = wglGetCurrentContext();
+          init_3d();
+			  }
 
-			if( !ctx ) {
-			  ctx = new context();
-			  ctx->hwnd = hWnd;
-			  ctx->mainGLRC = wglGetCurrentContext();
-			  sciter::thread(opengl_thread, ctx);
-			}
+        /*{
+          // draw background layer if needed
+          SCITER_X_MSG_PAINT pc(back_layer, FALSE);
+          SciterProcX(hWnd, pc);
+        }*/
 
-      //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Clear the screen and depth buffer
+        draw_3d();
 
-			ctx->event_draw.signal();
-			ctx->event_draw_complete.wait();
+			  {
+				  // draw foreground layer on top of 3d
+				  SCITER_X_MSG_PAINT pc(fore_layer, TRUE);
+				  SciterProcX(hWnd, pc);
+			  }
+        glFinish();
+			  {
+				  HDC dc = GetDC(hWnd);
+				  SwapBuffers(dc);
+				  ReleaseDC(hWnd, dc);
+			  }
 
-			{
-				// draw foreground layer
-				SCITER_X_MSG_PAINT pc(fore_layer, TRUE);
-				SciterProcX(hWnd, pc);
-			}
-      glFinish();
-			{
-				HDC dc = GetDC(hWnd);
-				SwapBuffers(dc);
-				ReleaseDC(hWnd, dc);
-			}
-
-		}
-	}
+		  }
+	  }
+    stop_3d();
 
     return (int) msg.wParam;
 }
