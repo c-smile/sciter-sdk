@@ -30,10 +30,10 @@ Sciter is an embeddable HTML/CSS/scripting engine, Windows, Mac OSX and Linux.
 
 # Sources
 
-* [include/sciter-x-dom.hpp] - `sciter::dom::element` C++ class - pretty much all you need to access DOM tree of the window. That is C++ wrapper of [plain C DOM API](include/sciter-x-dom.h)
-* [include/sciter-x-window.hpp] - `sciter::window` C++ class represents sciter window on all supported platforms. The window class:  
-  * [include/sciter-x-host-callback.h] application (window host) callback interface that handles resource loading and script call methods
-  * [include/sciter-x-behavior.h]  DOM event handler - receiver of DOM events (button clicks, input change events, etc).
+* [include/sciter-x-dom.hpp](include/sciter-x-dom.hpp) - `sciter::dom::element` C++ class pretty much all you need to access DOM tree of the window. That is C++ wrapper of [include/sciter-x-dom.h](plain C DOM API)
+* [include/sciter-x-window.hpp](include/sciter-x-window.hpp) - `sciter::window` C++ class represents sciter window on all supported platforms. The window class:  
+  * [include/sciter-x-host-callback.h](include/sciter-x-host-callback.h) application (window host) callback interface that handles resource loading and script call methods
+  * [include/sciter-x-behavior.h](include/sciter-x-behavior.h) DOM event handler - receiver of DOM events (button clicks, input change events, etc).
 
 
 
