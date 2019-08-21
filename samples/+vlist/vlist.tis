@@ -24,7 +24,7 @@ function VirtualList(params) {
     
     var   buffer_size = 50;   // sliding buffer size, number of DOM elements in the view, will be recalulated in onSize
     var   records = null; 
-    var   template = list.first; template.detach();
+    var   template = list.first;
     var   item_height = 10;   // will be adjusted later
     var   buffer_start = 0;   // index of first buffer element in _records
     var   visible_items = 0;  // number of visible items in the view
@@ -446,7 +446,8 @@ function VirtualList(params) {
         }
         list.clear(); 
         if( records )
-          pumpAfter.call(list,0); 
+          //pumpAfter.call(list,0); 
+          resetView.call(list); 
         list.scrollTo(0,0);
       }
     }
@@ -569,6 +570,8 @@ function VirtualList(params) {
       // otherwise - undefined;
     }
   
+    calcMetrics(); 
+    template.detach();
     list.clear();
     if( records )
       pumpAfter(0);
