@@ -1,0 +1,47 @@
+﻿<html>
+    <head>
+        <title>Test</title>
+        <style></style>
+        <script type="text/tiscript"></script>
+    </head>
+    <body>
+	<h1> sciter.node - basic NodeJs Sciter integration</h1>
+	<p>Prerequisites:</p>
+	<ul><li><b>/sdk/bin/64/sciter.node</b> - Native Sciter Module for NodeJs, exposes Sciter namespace object (in terms of Node).&nbsp;</li><li><b>/sdk/demos/sciter.node</b> - source code of sciter.node DLL.</li>
+		</ul>
+	<p>Sample files:</p>
+	
+	<ul><li><b>helloworld.js</b> - basic demo:<ul><li>creates&nbsp;Sciter.View (window);</li>
+				<li> loads HTML from string;</li>
+				<li>runs message pump loop;</li>
+				</ul></li>
+		<li><b>ui-methods.js</b> - calling Sciter methods from NodeJs (JavaScript) side  <ul><li>creates Sciter.View and loads /ui/ui-methods.htm file in it.</li>
+				<li>calls function defined in ui-methods.htm from NodeJs side.</li>
+				<li>runs message pump loop;</li>
+				</ul></li>
+		<li><b>node-methods.js</b> - calling NodeJs (JavaScript) methods from Sciter side<ul><li>creates Sciter.View and loads /ui/node-methods.htm file in it.</li>
+				<li>call JavaScript function defined in NodeJs from Sciter side.</li>
+				</ul></li>
+		<li><b>sciter.js</b> - loads native sciter.node module<ul><li>returns Sciter namespace;</li>
+				<li>adds <code>Sciter.run()</code> message pump &quot;loop&quot; to native Sciter namespace.&nbsp;<code>Sciter.run()</code> call is required for UI operation.</li></ul></li>
+		
+		
+		
+		</ul>
+	<h2>Native sciter.node module</h2>
+	<p>Exports:</p>
+	<ul><li><code>View</code> class - Sciter window;</li><li><code>pumpMessages()</code> function - native function, executes PeekMessage/DispatchMessage;</li>
+		</ul>
+	<p><code>Sciter.View</code> class - represents Sciter window on JavaScript/Node side. It allows to call SciterScript functions from JavaScript (Node side) as to call JavaScript functions (a.k.a. backend) from SciterScript side (a.k.a. frontend).</p>
+	<p>Methods:</p>
+	<ul><li><code>{constructor}</code> - <code>new Sciter.View();</code> - constructs instance of sciter window, window is in hidden state initially;</li><li><code>loadHtml(html:string)</code> - loads HTML from the string into the window;</li>
+		<li><code>loadFile(path:string)</code> - loads HTML from file;</li>
+		<li><code>expand([fullScreen:true | false])</code> - shows the window;</li>
+		<li><code>collapse()</code> - hides the window;</li>
+		<li><code>call(funcName:string[, args...]): value</code> - calls sciter script function defined in document loaded into the window. JavaScript -&gt; SciterScript call;</li>
+		</ul>
+	<p>JavaScript instance of Sciter.View class may have arbitrary JavaScript methods added to it. These methods are callable from SciteScript side as <code>view.method(args)</code> .</p>
+	
+	
+	</body>
+</html>

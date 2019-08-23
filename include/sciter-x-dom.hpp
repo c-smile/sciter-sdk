@@ -903,7 +903,7 @@ namespace dom
     /** traverse event - send it by sinking/bubbling on the
       * parent/child chain of this element
       **/
-    bool send_event(unsigned int event_code, unsigned int reason = 0, HELEMENT heSource = 0)
+    bool send_event(unsigned int event_code, uintptr_t reason = 0, HELEMENT heSource = 0)
     {
       BOOL handled = false;
       SCDOM_RESULT r = SciterSendEvent(he, event_code, heSource? heSource: he, reason, &handled);
@@ -915,7 +915,7 @@ namespace dom
       * parent/child chain of this element.
       * method returns immediately
       **/
-    void post_event(unsigned int event_code, unsigned int reason = 0, HELEMENT heSource = 0)
+    void post_event(unsigned int event_code, uintptr_t reason = 0, HELEMENT heSource = 0)
     {
       SCDOM_RESULT r = SciterPostEvent(he, event_code, heSource? heSource: he, reason);
       assert(r == SCDOM_OK); (void)r;

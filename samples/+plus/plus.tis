@@ -37,11 +37,15 @@ const Plus = function() {
       //[2] - symbol or string, property name - for objects
       //      or start of changed range (index) in arrays  
       //[3] - end of changed range (index, not inclusive) in arrays  
-      if(changedef) switch(changedef[0]) {
-        case #update: if( key == changedef[2] ) changed(coll[key]); break; // object-property
-        case #delete: if( key == changedef[2] ) { changed(undefined); break; } // object-property
-        case #update-range: if( key >= changedef[2] &&  key < changedef[3] ) changed(coll[key]); break; // vector-index
-        case #delete-range: if( key >= changedef[2] &&  key < changedef[3] ) changed(undefined); break; // vector-index
+      try {
+        if(changedef) switch(changedef[0]) {
+          case #update: if( key == changedef[2] ) changed(coll[key]); break; // object-property
+          case #delete: if( key == changedef[2] ) { changed(undefined); break; } // object-property
+          case #update-range: if( key >= changedef[2] &&  key < changedef[3] ) changed(coll[key]); break; // vector-index
+          case #delete-range: if( key >= changedef[2] &&  key < changedef[3] ) changed(undefined); break; // vector-index
+        } 
+      } catch(e) {
+        Object.removeObserver(coll,this function);
       }
     }  
     // assign it as an observer    
@@ -53,9 +57,13 @@ const Plus = function() {
   {
     // setup data object change event handler 
     function on_model_change(changedef) { 
-      switch(changedef[0]) {
-        case #add:        { added(coll,changedef[2]); } break; 
-        case #add-range:  { var start = changedef[2]; var end = changedef[3]; for(var i = start; i < end; ++i) added(coll,i); } break; 
+      try {
+        switch(changedef[0]) {
+          case #add:        { added(coll,changedef[2]); } break; 
+          case #add-range:  { var start = changedef[2]; var end = changedef[3]; for(var i = start; i < end; ++i) added(coll,i); } break; 
+        }
+      } catch(e) {
+        Object.removeObserver(coll,this function); 
       }
     }      
     Object.addObserver(coll,on_model_change); // subscribe to collection object changes
@@ -66,9 +74,13 @@ const Plus = function() {
   {
     // setup data object change event handler 
     function on_model_change(changedef) { 
-      switch(changedef[0]) {
-        case #add:    case #add-range:
-        case #delete: case #delete-range:  changed(coll.length);  break; 
+      try {
+        switch(changedef[0]) {
+          case #add:    case #add-range:
+          case #delete: case #delete-range:  changed(coll.length);  break; 
+        }
+      } catch(e) {
+        Object.removeObserver(coll,this function);    
       }
     }      
     Object.addObserver(coll,on_model_change); // subscribe to collection object changes
@@ -78,7 +90,13 @@ const Plus = function() {
   function setupCollectionChangeHandler(coll, changed) 
   {
     // setup data object change event handler 
-    function on_model_change(changedef) { changed(); }
+    function on_model_change(changedef) { 
+      try {
+        changed(); 
+      } catch(e) {
+        Object.removeObserver(coll,this function);
+      }
+    }
     Object.addObserver(coll,on_model_change); // subscribe to collection object changes
   }
   

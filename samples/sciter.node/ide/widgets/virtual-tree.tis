@@ -1,0 +1,64 @@
+
+class VirtualTree : Behavior
+{
+  this var ds = null; // the data source
+
+  // overridables:
+  function optionExpanded(option) {}
+  function optionCollapsed(option) {}
+  function selectionChanged() {}
+
+  // implementation
+  function appendOption(parentOpt, caption, path, nodeState)
+  {
+    var opt = parentOpt.$append(<option filename="{path}"><text>{caption}</text></option>);
+    if( nodeState === true ) // expanded folder
+      opt.state.expanded = true;
+    else if( nodeState === false ) // collapsed folder
+      opt.state.collapsed = true;
+    // else 
+    //   neither state.expanded nor state.collapsed
+    return opt;
+  }
+
+  function expandOption(opt)
+  {
+    //stdout.println("expand");
+    function appendChild(caption, path, isFolder) { (this super).appendOption(opt, caption, path, isFolder? false: undefined); }
+    this.ds.eachChild(opt.attributes["filename"], appendChild);
+    opt.state.expanded = true;
+  }
+  function collapseOption(opt)
+  {
+    //stdout.println("collapse");
+    opt.state.collapsed = true; 
+    while(opt.length > 1)
+      opt.last.remove();
+  }
+  
+  function onControlEvent(evt)
+  {
+    if( evt.type == Event.ELEMENT_EXPANDED )  { this.expandOption(evt.target); this.optionExpanded(evt.target); return true; }
+    else if( evt.type == Event.ELEMENT_COLLAPSED ) { this.collapseOption(evt.target); this.optionCollapsed(evt.target); return true; }
+    else if( evt.type == Event.SELECT_SELECTION_CHANGED ) { this.collapseOption(evt.target); this.selectionChanged(); return true; }
+  }
+  
+  function appendRoot(caption, path, isFolder)
+  {
+    var rn = this.appendOption(this, caption, path, isFolder? true: undefined);
+    if(isFolder)
+      this.expandOption(rn);
+  }
+   
+  property dataSource(v) 
+  {
+    get return this.ds;
+    set { 
+       this.ds = v; 
+       this.clear(); 
+       function rootAppender(caption, path, isFolder) { (this super).appendRoot(caption, path, isFolder); }
+       this.ds.eachRoot(rootAppender); 
+    }
+  }
+}
+

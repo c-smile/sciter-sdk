@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+          main { 
+            size:*; 
+            font-size:5vw;
+            vertical-align:middle;
+            text-align:center;
+            color: #000;
+            transform: scale(0.1);
+          }
+
+          main[started] {
+            transform: scale(1);
+            transition: transform 1s bounce-in;
+          }
+
+        </style>
+        <script type="text/tiscript">
+
+          event click $(button#show-greeting) {
+            const main = $(main);
+            // calling function defined on NodeJs side:
+            var nodeFuncResult = view.getGreeting("Sciter");
+            main.text = nodeFuncResult;
+            main.attributes["started"] = true; // start animation
+          }
+
+        </script>
+    </head>
+    <body>
+
+       <button#show-greeting>Call Node function</button>
+
+       <main/>
+
+    </body>
+</html>

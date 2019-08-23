@@ -1,0 +1,75 @@
+@const CHROME-TEXT: #ddd;
+@const MENU-TEXT: #ddd;
+@const MENU-HILITE-BACK: #000;
+@const MENU-HILITE-TEXT: #fff;
+
+@import url(menu.css);
+
+@font-face 
+{
+  font-family: FontAwesome;
+  src: url(../fonts/fontawesome-webfont.ttf);
+}
+
+html /* the whole window */
+{
+  background: transparent; 
+  font:system;
+  color: #ddd;
+}
+
+body { margin:0; padding:0; }
+
+menubar {
+  display:block;
+  line-height: 1.6em;
+  background: #47484B;
+  width:max-content;
+}
+
+main {
+  size:*;           /*spans all available space */
+  flow: horizontal; /* frameset && side bar */
+}
+
+main > toolbar#sidebar 
+{
+  flow:vertical;
+  height:*;
+  width:32dip;
+  //background:#5D5F60;
+  background:transparent;
+}
+
+main > toolbar#sidebar > button {
+  width:*;
+  color:#bbb; 
+  font-family: FontAwesome;
+  font-size: 17dip;
+  line-height: 28dip;
+  text-align:center;
+}
+
+#content > toolbar {
+  flow:horizontal;
+  height:32dip;
+}
+
+widget#tree { 
+  font:system;
+  //background: linear-gradient(top, #5D5F60,#47484B);
+  background: transparent;
+  border:none;
+  size:*;
+  prototype: VirtualTree url(../widgets/virtual-tree.tis); 
+  overflow-y: scroll-indicator;
+}
+
+widget#tree option {
+  color: @CHROME-TEXT;
+}
+widget#tree option:current {
+  color: #000;
+}
+
+plaintext#editor { overflow:scroll-indicator !important; }

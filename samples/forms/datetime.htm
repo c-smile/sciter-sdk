@@ -9,7 +9,7 @@
       input.custom span.today-legend { background-color:yellow; }
       input.custom span.today-caption { content:"Сегодня"; }
 
-      :invalid {color:red;}
+      //:invalid {color:red;}
       
       button#to-set-time 
       {
@@ -19,8 +19,19 @@
       {
         click!: self.$1p(.group).$1(input#time-to-set):value = null;
       }
+
+      /* Example: localization of input|date for Russian language */
+      input:lang(ru) span.year:empty { content:"гггг"; }
+      input:lang(ru) span.month:empty { content:"м"; }
+      input:lang(ru) span.day:empty { content:"д"; }
+
+      /* Example: localization of input|time for Russian language */
+      input:lang(ru) span.hour:empty { content:"ч"; }
+      input:lang(ru) span.minute:empty { content:"м"; }
+      input:lang(ru) span.second:empty { content:"с"; }
       
     </style>
+
 	</head>
 	<body>
     <h3>input type="calendar"</h3> 
