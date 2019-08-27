@@ -1,5 +1,5 @@
   
-class ColorChooser: Behavior
+class ColorChooser: Element
 {
   // this is a callback method, client shall set its own handler to the instance.
   // color changed by selection on popup or through value property
@@ -111,6 +111,8 @@ class ColorChooser: Behavior
       0x000000,0x330000,0x660000,0x990000,0xcc0000,0xff0000, 0x006600,0x336600,0x666600,0x996600,0xcc6600,0xff6600, 0x00cc00,0x33cc00,0x66cc00,0x99cc00,0xcccc00,0xffcc00 ];
                                                                                                              
     var table = new Element("table");
+    var tbody = new Element("tbody");
+    table.append(tbody);
     var i = 0;
     for(var r = 0; r < 12; ++r)
     {
@@ -124,7 +126,7 @@ class ColorChooser: Behavior
         cell.attributes["title"] = cs;
         row.insert(cell);
       }
-      table.insert( row );
+      tbody.insert( row );
     }
     popup.insert(table);
     popup.onMouse = this.popupOnMouse;
