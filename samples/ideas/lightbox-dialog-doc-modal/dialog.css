@@ -1,0 +1,26 @@
+
+
+html {
+  prototype: DocumentDialogExt url(dialog.tis);
+}
+
+html > body { margin:0; }
+html > body:disabled { foreground-color:rgba(127,127,127,0.75); }
+
+html > dialog {
+  background:#ddd;
+  display:block;
+  flow:vertical;
+  size:*;
+  box-shadow: 0dip 0dip 4dip rgba(127,127,240,0.5);
+  position:absolute;
+  top:2em;
+  bottom:2em;
+  left:2em;
+  right:2em;
+}
+
+html > dialog > header {}
+html > dialog > frame { size:*; }
+html > dialog > footer { flow:horizontal; padding:0.5em; border-spacing:0.5em; horizontal-align:right; }
+

@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+
+stack { display:block; flow:stack; size:*; }
+stack > frame { size:*; visibility:none; }
+
+stack > frame:expanded { size:*; visibility:visible; }
+
+
+        </style>
+        <script type="text/tiscript">
+
+event click $(button|radio) {
+  if(var c = $(stack > frame:expanded)) c.state.collapsed = true;
+  $(stack)[this.index].state.expanded = true;
+}
+
+
+        </script>
+    </head>
+    <body>
+      <div><button|radio>First plugin</button>
+           <button|radio>Second plugin</button></div>
+      <stack>
+        <frame src="plugin1.htm" />
+        <frame src="plugin2.htm" />
+      </stack>
+    </body>
+</html>

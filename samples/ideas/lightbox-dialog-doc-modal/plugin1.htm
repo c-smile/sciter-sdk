@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+@import url(dialog.css); // will add self.dialog{}
+
+html {background:gold;}
+
+        </style>
+        <script type="text/tiscript">
+
+
+event click $(#show-dialog) {
+  self.dialog { 
+    url: self.url("dialog.htm"),
+    onOk: function(dialogDoc) {
+      view.msgbox(#information,"dialog closed");
+    }
+  }
+}
+
+        </script>
+    </head>
+    <body>
+
+<button#show-dialog>Show dialog</button>
+
+    </body>
+</html>

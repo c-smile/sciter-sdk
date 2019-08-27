@@ -1,0 +1,45 @@
+
+
+class DocumentDialogExt: Element 
+{
+  
+  function attached() {
+    debug attached: this;
+  }
+
+  function dialog(params) {
+    assert params.url;
+
+    var body = this.$(body);
+    assert body;
+
+    body.state.disabled = true;
+    
+    var dialog = self.$append(
+      <dialog>
+        <header>{params.caption || ""}</header>
+        <frame src="{params.url}" />
+        <footer><button id="dialog-ok">OK</button>
+                <button id="dialog-cancel">Cancel</button></footer>
+      </dialog>);
+
+    function closeDialog() {
+      dialog.remove();
+      body.state.disabled = false;
+    }
+
+    // close by buttons
+    dialog << event click $(#dialog-ok) {
+      if(var cb = params.onOk)
+        cb($(dialog > frame)[0]); // calling params.onOk(dialogDocument)
+      closeDialog();
+    }
+    dialog << event click $(#dialog-cancel) {
+      if(var cb = params.onCancel)
+        cb($(dialog > frame)[0]); // calling params.onCancel(dialogDocument)
+      closeDialog();
+    }
+  }
+ 
+}
+
