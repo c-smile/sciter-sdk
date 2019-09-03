@@ -451,7 +451,7 @@ function DragDrop2(def)
       case 8: dd_container.scrollTo(x, y - distance * AUTO_SCROLL_DELTA); break; // top
       case 2: dd_container.scrollTo(x, y + distance * AUTO_SCROLL_DELTA); break; // bottom
       case 4: dd_container.scrollTo(x - distance * AUTO_SCROLL_DELTA, y); break; // left
-      case 2: dd_container.scrollTo(x + distance * AUTO_SCROLL_DELTA, y); break; // right
+      case 6: dd_container.scrollTo(x + distance * AUTO_SCROLL_DELTA, y); break; // right
     }
     return true;
   }
