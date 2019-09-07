@@ -865,7 +865,7 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
     }
 
 #define BEGIN_FUNCTION_MAP \
-    virtual bool on_script_call(HELEMENT he, LPCSTR name, UINT argc, const sciter::value* argv, sciter::value& retval) \
+    virtual bool on_script_call(HELEMENT he, LPCSTR name, UINT argc, const sciter::value* argv, sciter::value& retval) override \
     { \
       aux::chars _name = aux::chars_of(name);
 

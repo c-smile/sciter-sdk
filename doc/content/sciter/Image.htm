@@ -1,6 +1,6 @@
 ﻿<html>
   <head>
-    <meta name="generator" content="h-smile:richtext"/>
+    <meta name="generator" content="h-smile:richtext">
   </head>
 <body>
   <h1>Image object</h1>
@@ -29,9 +29,10 @@
       <p>Destroys underlying native bitmap. Use this method to force the image to release its bitmap (that can be pretty big) when it is not needed.</p></dd>
     <dt>toBytes</dt>
     <dd>
-      <div>( [<b>packaging</b>: #png |&nbsp;#jpeg | #webp | #raw] [,&nbsp;<strong>compressionLevel</strong>:integer] &nbsp;) : <a href="../script/Bytes.htm">Bytes</a></div>
+      <div>( [<b>packaging</b>: #png | #jpeg | #webp | #bgra] [, <strong>compressionLevel</strong>:integer] &nbsp;) : <a href="../script/Bytes.htm">Bytes</a></div>
       <p>Saves content of the image as a byte vector that can be used e.g. for uploading on the server.</p>
-      <p><em>compressionLevel</em> is a number in the range 10..100 - JPEG or WebP compression level. If <i>compressionLevel</i> is omitted or zero and no <i>packaging</i> provided then the image is saved using PNG encoding.</p></dd>
+      <p><em>compressionLevel</em> is a number in the range 10..100 - JPEG or WebP compression level. If <i>compressionLevel</i> is omitted or zero and no <i>packaging</i> provided then the image is saved using PNG encoding.</p>
+			<p>#bgra packaging returns raw bitmap - array of B-G-R-A-B-G-R-A-... bytes in that sequence. </p></dd>
     <dt>fromBytes</dt>
     <dd>
       <div>( &nbsp;bytes : <a href="../script/Bytes.htm">Bytes</a> &nbsp;) : Image</div>
@@ -39,7 +40,7 @@
     <dt>size</dt>
     <dd>
       <div>( )</div>
-      <p>The method returns width,height pair in one call, use it like this:<br/><code>var (w,h) = img.size();</code></p></dd>
+      <p>The method returns width,height pair in one call, use it like this:<br><code>var (w,h) = img.size();</code></p></dd>
     <dt>colorAt</dt>
     <dd>
       <div>( <strong>x</strong>: integer, <strong>y</strong>: integer [, <strong>c</strong>: color] ) : color</div>

@@ -10,7 +10,29 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FAFFEA">4.3.0.11</td><td nowrap valign="top" align="center">23-08-2019</td><td>fixes:
+    <tr><td valign="top" bgcolor="#FAFFEA">4.3.0.12</td><td nowrap valign="top" align="center">07-09-2019</td><td>
+					
+					<p>new:</p>
+					<ul><li>[sample] sdk/samples/ideas/full-screen</li>
+						<li><code>Element.content/append(arrayOfTuples)</code> - support of arrays of element template tuples to speed up DOM population, see: sdk/samples/tests/test-scrollable-table.htm</li>
+						<li>[script] + <code>Date.diff(d1,d2,#months)</code> method - calendar differences between two dates. <br><code>Date.diff(new Date(2019,8,31),new Date(2019,9,1),#months)</code> &nbsp;will return <code>1</code> as these two dates are from different months.</li></ul><p>fixes:
+					</p><ul><li>Graphics.Text implementation is redesigned to support style and class declarations:&nbsp;<code>Graphics.Text.style = &quot;font:12pt Arial; text-decoration:underline&quot;;</code></li>
+						<li>[SciterGraphicsAPI]&nbsp; changes (affects only C/C++ as Text&nbsp;is not used yet in any other wrappers): <ul><li><code>textCreateForElement</code> - function signature change;</li><li><code>textCreate</code> is now <code>textCreateForElementAndStyle</code>;</li>
+								</ul></li>
+						<li>[win] scapp/32 <code>&lt;video&gt;</code> rendering fix (caused by optimization flags as it appears), see: <a href="https://github.com/c-smile/sciter-sdk/issues/129">https://github.com/c-smile/sciter-sdk/issues/129</a>&nbsp;</li>
+						<li>[script,vm] fix of view object constructing sequence [win, skia];</li>
+						<li>Fix of division by zero in some use cases of&nbsp;<code>&lt;frameset&gt;</code>.</li>
+						<li>[win] fixes in support of multiple GUI threads per process.</li>
+						<li>[Drag-n-drop] <code>Event.exchangeData(#file)</code> fix for multiple files.</li>
+						<li>[SDK] C++ header tweaks, see: <a href="https://sciter.com/forums/topic/some-c-syntax-causes-compilers-warnings/">https://sciter.com/forums/topic/some-c-syntax-causes-compilers-warnings/</a>&nbsp;</li>
+						<li>Fix of potential AV in <code>view.focus = someElement;</code> when <code>someElement</code> is disconnected from the DOM of the view.</li>
+						<li>[Script, event declaration] fix of event handlers defined on global level that have selector, target is correct reference now (points on element matching the selector):
+							
+							<pre>event click $(button) (evt,button) {
+  assert this === button;
+}</pre></li>
+						<li>Support of UTF16LE encoding by SciterLoadHtml/File - input data must start from UTF16LE BOM in order the encoding to be recognized properly. </li>
+						</ul></td></tr><tr><td valign="top" bgcolor="#FAFFEA">4.3.0.11</td><td nowrap valign="top" align="center">23-08-2019</td><td>fixes:
 					<ul>
 						
 						

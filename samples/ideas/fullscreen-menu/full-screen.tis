@@ -1,0 +1,70 @@
+
+
+function initFullScreen() {
+
+  view.fullscreen = property(v) {
+
+    get return self.state.expanded;
+    set {
+      if( v ) 
+      {
+        view.state = View.WINDOW_FULL_SCREEN;
+        self.state.expanded = true;
+      } else {
+        view.state = View.WINDOW_SHOWN;
+        self.state.expanded = false;
+      }
+    }
+  }
+}
+
+class FullScreenMenu : Element 
+{
+  this var xoff = 0; // drag offsets
+  this var yoff = 0; // 
+  this var dragging = false; // is dragging now  
+  this var caption; // <caption> element
+
+  function attached() {
+    this.caption = this.$(caption);
+    this.state.expanded = true;
+    this.move( 0, 0, #view, #detached-window);
+  }
+
+  function detached() {
+    this.move();
+  }
+
+  // menu handlers:
+  event click $(button.exit-fullscreen) { view.fullscreen = false; return true; }
+  event click $(button.expand) { this.state.expanded = true; return true; }
+  event click $(button.collapse) { this.state.collapsed = true;  return true; }
+
+
+  // dragging support:
+  event mousedown $(caption) (evt) 
+  {
+    this.xoff = evt.x; 
+    this.yoff = evt.y;
+    this.dragging = true;
+    this.capture(true);
+    view.doEvent(#untilMouseUp);
+    return true;
+  }
+
+  event mouseup (evt) 
+  {
+    if(!this.dragging) return;
+    this.dragging = false;
+    this.capture(false);
+    return true;
+  }
+
+  event mousemove (evt)
+  {
+    if(!this.dragging) return;
+    this.move( evt.xView - this.xoff, evt.yView - this.yoff, #view, #detached-window);
+    return true;
+  }
+
+}

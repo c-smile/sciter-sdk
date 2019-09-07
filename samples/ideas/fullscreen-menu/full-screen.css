@@ -1,0 +1,20 @@
+
+
+popup#fullscreen {
+  border:1dip solid #333;
+  width:max-content;
+}
+
+popup#fullscreen:collapsed {
+  width:3em; 
+}
+
+popup#fullscreen > button {padding: 4dip; display:block; width:*; }
+
+popup#fullscreen:collapsed > button.collapse { visibility:none; }
+popup#fullscreen:expanded > button.expand { visibility:none; }
+
+// FullScreenMenu is attached only when root (html) is in expanded state (fullscreen)
+html:expanded > head > popup#fullscreen {
+  prototype: FullScreenMenu url(full-screen.tis);
+}

@@ -61,14 +61,14 @@
       }
 
       // slow
-      $(#append-10000).onClick = function()
+      $(#append-5000).onClick = function()
       {
         var tb = $(table>tbody);
         tb.clear();
         
         var st = (new Date()).valueOf();
         
-        for(var i in 10000)
+        for(var i in 5000)
         {
           var tr = new Element(#tr);
           tr.append(new Element(#td, i.toString()));
@@ -79,12 +79,12 @@
         
         var et = (new Date()).valueOf();
         
-        $(#out).$content(10000 rows added in {et - st} ms);
+        $(#out).$content(5000 rows added in {et - st} ms);
         
       }
       
       // fast
-      $(#append-10000-html).onClick = function()
+      $(#append-5000-html).onClick = function()
       {
         var tb = $(table>tbody);
         
@@ -92,46 +92,47 @@
                 
         var st = (new Date()).valueOf();
         
-        for(var i in 10000)
+        for(var i in 5000)
           out.$(<tr><td>{i}</td><td>2</td><td>3</td></tr>);
           
         tb.html = out.toString();
         
         var et = (new Date()).valueOf();
         
-        $(#out).$content(10000 rows added in {et - st} ms);
+        $(#out).$content(5000 rows added in {et - st} ms);
         
       }
       
       // fast
       
-      $(#append-10000-vec).onClick = function()
+      $(#append-5000-vec).onClick = function()
       {
         var tb = $(table>tbody);
         
         var st = (new Date()).valueOf();
       
-        var arr = new Array(10000);  
+        var arr = new Array(5000);  
   
-        for(var i in 10000)
+        for(var i in 5000)
         {
-          var tr = new Element(#tr);
-          tr.append(new Element(#td, i.toString()));
-          tr.append(new Element(#td, "2"));
-          tr.append(new Element(#td, "3"));
-          arr[i] = tr;
+          //var tr = new Element(#tr);
+          //tr.append(new Element(#td, i.toString()));
+          //tr.append(new Element(#td, "2"));
+          //tr.append(new Element(#td, "3"));
+          //arr[i] = tr;
+          arr[i] = [tr: [td:i.toString()], [td:"2"], [td:"3"]];
         }
         
         tb.content(arr);
         
         var et = (new Date()).valueOf();
         
-        $(#out).$content(10000 rows added in {et - st} ms);
+        $(#out).$content(5000 rows added in {et - st} ms);
         
       }  
 
       // async    
-      $(#append-10000-async).onClick = function()
+      $(#append-5000-async).onClick = function()
       {
         var tb = $(table>tbody);
         tb.clear();
@@ -145,15 +146,16 @@
         function appendNext1000() {
            var arr = [];  
            for(var n in 1000) {
-             var tr = new Element(#tr);
-             tr.append(new Element(#td, i.toString()));
-             tr.append(new Element(#td, "2"));
-             tr.append(new Element(#td, "3"));
+             //var tr = new Element(#tr);
+             //tr.append(new Element(#td, i.toString()));
+             //tr.append(new Element(#td, "2"));
+             //tr.append(new Element(#td, "3"));
+             var tr = [tr: [td:i.toString()], [td:"2"], [td:"3"]];
              arr.push(tr);
-             if(++i >= 10000) {
+             if(++i >= 5000) {
                tb.append(arr);
                var et = (new Date()).valueOf();
-               $(#out).$append(,all 10000 rows added in {et - st} ms);
+               $(#out).$append(,all 5000 rows added in {et - st} ms);
                return; // done, all items are loaded
              }
            }
@@ -175,10 +177,10 @@
 <body>
   <button #append-100>Append 100</button>
   <button #append-1000>Append 1,000</button>
-  <button #append-10000>Set 10,000 one by one</button>
-  <button #append-10000-html>Set 10,000 by HTML</button>
-  <button #append-10000-vec>Set 10,000 from array</button>
-  <button #append-10000-async>Set 10,000 by 1000 portions,async</button>
+  <button #append-5000>Set 5,000 one by one</button>
+  <button #append-5000-html>Set 5,000 by HTML</button>
+  <button #append-5000-vec>Set 5,000 from array</button>
+  <button #append-5000-async>Set 5,000 by 1000 portions,async</button>
 
   <table fixedlayout>
     <thead>

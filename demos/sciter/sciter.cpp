@@ -184,6 +184,7 @@ namespace sciter
     :_is_glassy(false) 
   { 
     setup(url); 
+    SciterSetOption(get_hwnd(), SCITER_SET_MAIN_WINDOW, TRUE);
   }
 
   void main_frame::init_window()

@@ -25,14 +25,14 @@
         setWindowSize(iw + this.value, ih + this.value);
       } 
       
-      $(#resizeable).value = view.isResizeable;
+      $(#resizeable).value = view.windowResizable;
       
       $(#resizeable) << event change {
-        view.isResizeable = this.value;
+        view.windowResizable = this.value;
       }
 
-      view.minSize = (160,100);
-      view.maxSize = (1600,1000);
+      view.windowMinSize = (160,100);
+      view.windowMaxSize = (self.toPixels(1600dip),self.toPixels(1000dip));
 
       // test of UI replacement view events
       view.on("replacement-start", :: self.attributes["replacing"] = true)

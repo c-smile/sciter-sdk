@@ -4,7 +4,7 @@
     <style>
     
       picture#map {
-        size: 600dip 300dip; 
+        size: 300dip 150dip; 
         background:#eee;
         box-shadow: 5dip 5dip 5dip #777;
         margin: 1em 0;
@@ -17,7 +17,10 @@
       function showMapFor(place,zoom) {
         const appkey = "AIzaSyA3tz3DnjjlSQ_tAcc_Sh20hpetTEyG3z4";
         place = place.toUrlString();
-        var url = String.$(https://maps.googleapis.com/maps/api/staticmap?center={place}&zoom={zoom}&size=600x300&maptype=roadmap&key={appkey});
+        var w = self.toPixels(300dip,#width);
+        var h = self.toPixels(150dip,#height);
+        debug log: w,h;
+        var url = String.$(https://maps.googleapis.com/maps/api/staticmap?center={place}&zoom={zoom}&size={w}x{h}&maptype=roadmap&key={appkey});
         $(picture#map).attributes["src"] = url;
       }
       

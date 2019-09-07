@@ -14,10 +14,11 @@
       div
       {
         behavior:radio;
-        border:1px solid gold;
+        border:1dip solid gold;
         border-radius: 6dip;
         background: rgba(127,127,140,0.5);
         vertical-align: middle;
+        color: gold;
       }
                    
       div.drawing1
@@ -61,7 +62,7 @@
           this.paintContent = this.paint; 
           this.textLayout = new Graphics.Text(this.text,this);
           //this.textLayout.font("Times",36.0); 
-          this.background = this.loadImage("back.jpg");
+          //this.background = this.loadImage("back.jpg");
           this.textLayout.alignment(Graphics.ALIGN_CENTER,Graphics.ALIGN_CENTER);
         }
         
@@ -76,11 +77,12 @@
           this.textLayout.width(x2-x1);//.height(y2-y1);
           this.textLayout.height(y2-y1);
           
-          gfx.lineWidth(1)
-             .lineColor(color("gold"))
-             //.fillLinearGradient(x1,y1,x1,y2,color(0xFF,0,0),color(0,0xFF,0) )
-             .fillImage(this.background)
-             .drawText(this.textLayout, (x2+x1)/2, (y2+y1)/2,5 );
+          //gfx.lineWidth(1)
+          //   .lineColor(color("gold"))
+          //   .fillImage(this.background)
+          //   .drawText(this.textLayout, (x2+x1)/2, (y2+y1)/2,5 );
+
+          gfx.drawText(this.textLayout, (x2+x1)/2, (y2+y1)/2,5);
              
           return true; // done, no default drawing please.             
         }

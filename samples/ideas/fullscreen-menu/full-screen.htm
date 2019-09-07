@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+           @import url(full-screen.css);
+
+        </style>
+        <script type="text/tiscript">
+
+          include "full-screen.tis";
+
+          function self.ready() {
+            initFullScreen(); // will declare view.fullscreen property
+          }        
+
+          event click $(#fullscreen) {
+            view.fullscreen = true;
+          }
+
+        </script>
+
+        <popup #fullscreen>
+          <caption>Caption</caption> 
+          <button.exit-fullscreen>Exit fullscreen</button>
+          <button.expand>Expand menu</button>
+          <button.collapse>collapse menu</button>
+        </popup>
+    </head>
+    <body>
+
+        <button #fullscreen>fullscreen</button>
+
+    </body>
+</html>

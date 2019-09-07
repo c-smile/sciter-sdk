@@ -330,17 +330,33 @@ ArcTo Tutorial</a></p></dd>
   <dl>
     <h3>Properties</h3>
     <dt>lines</dt>
-    <dd>r - integer, reports number of lines in text layout. To get meaningful values you should set width of the text layout object first like <code>text.width(100);</code></dd>chars
-    <dd>r/w - string, characters rendered by the text layout. Changing charcters after construction invalidates min/max width and height of the object.</dd>
+    <dd>r - integer, reports number of lines in text layout. To get meaningful values you should set width of the text layout object first like <code>text.width(100);</code></dd>
+    <dt>chars</dt>
+    <dd>r/w - string, characters rendered by the text layout. Changing characters after construction invalidates min/max width and height of the object.</dd>
+    <dt>font</dt>
+    <dd>r/w - string, a string parsed as <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font">CSS font</a> value. The default font is the font used by owner Element (or document if owner is not provided in constructor).</dd>
+    <dt>style</dt>
+    <dd>r/w - string, a string parsed as DOM <i>style</i> attribute of DOM Element. By using this property you can define not just font properties but all other text associated ones like <code>line-height</code>, <code>text-align</code>, <code>vertical-align</code>, <code>text-decoration</code>, etc.&nbsp;</dd>
+    <dt>class</dt>
+    <dd>r/w - string, name of a class defined in style sheet. This allows to define text properties not in code but in CSS.&nbsp;<p>Example, if the text is used to render labels on some chart widget:</p>
+			
+			
+			
+			<pre>var chart = this;
+var label = new Graphics.Text(&quot;I quarter&quot;, chart); 
+label.class = &quot;label&quot;;</pre><p>then you can define styles of such labels as</p>
+			
+			
+			
+			<pre>chart &gt; text.label {
+  font-size:75%;
+  color: #000;
+}</pre></dd>
     <h3>Methods</h3>
     <dt>this</dt>
     <dd>
-      <div>(str: <em>string</em> [, styleSource: <em>Element</em>])</div>
+      <div>(str: <em>string</em> [, owner: <em>Element</em>])</div>
       <p>Constructs Text object from a string. &nbsp;When <em>styleSource</em> is provided it is used for assigning initial style (font,alignment, etc) to the text.</p></dd>
-    <dt>font</dt>
-    <dd>
-      <div>( name: <em>string</em>, size: <em>float</em>, [ bold: <em>true|false</em>, [ italic: <em>true|false</em>]] ) : Graphics.Text</div>
-      <p>Defines font attributes of this Text object.</p></dd>
     <dt>width</dt>
     <dd>
       <div>( ) : ( maxWidth:<em>float</em>, minWidth:<em>float</em>, boxWidth:<em>float</em> )</div>
@@ -370,11 +386,14 @@ ArcTo Tutorial</a></p></dd>
     <dt>alignment</dt>
     <dd>
       <div>( textAlignment: ALIGN_***, verticalAlignment: ALIGN_*** ) : Graphics.Text</div>
-      <p>Sets text and vertical alignment of the text object.</p></dd>
+      
+			<p>Sets text and vertical alignment of the text object.</p>
+			<p><b>OBSOLETE</b>: use Text.style or&nbsp;Text.class</p></dd>
     <dt>alignment</dt>
     <dd>
       <div>( ) : ( ALIGN_***, ALIGN_***)</div>
-      <p>Returns text and vertical alignment of the text object.</p></dd></dl>
-  <div>TBD.</div>
+      <p>Returns text and vertical alignment of the text object.</p>
+			<p><b>OBSOLETE</b>: use Text.style or&nbsp;Text.class</p></dd></dl>
+  <div></div>
 </body>
 </html>

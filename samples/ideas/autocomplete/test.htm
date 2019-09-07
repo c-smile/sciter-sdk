@@ -48,7 +48,7 @@
     </style>
     <script type="text/tiscript">
 
-      class AutoComplete : Behavior {
+      class AutoComplete : Element {
       
         function attached() {
           this.candidate = this.$(span);
@@ -72,7 +72,7 @@
             this.candidates.clear();
             for(var li in list) 
               this.candidates.$append(<text data-id="{li.id}">{li.text}</text>);
-            this.candidate.value = list.length ? list[0] : "";
+            this.candidate.text = list.length ? list[0].text : "";
             this.popup( this.candidates , (8 << 16) | 2);
             this.input.state.focus = true;
           }
@@ -102,7 +102,6 @@
           this.input.value = txt;
           this.input.setSelection(0,txt.length); 
           this.input.state.focus = true;
-          debug item: text, id;
         }
         
       }

@@ -88,7 +88,7 @@ typedef enum SCITER_LINE_CAP_TYPE
   SCITER_LINE_CAP_ROUND = 2,
 } SCITER_LINE_CAP_TYPE;
 
-typedef enum SCITER_TEXT_ALIGNMENT
+/*typedef enum SCITER_TEXT_ALIGNMENT
 {
   TEXT_ALIGN_DEFAULT,
   TEXT_ALIGN_START,
@@ -102,7 +102,7 @@ typedef enum SCITER_TEXT_DIRECTION
   TEXT_DIRECTION_LTR,
   TEXT_DIRECTION_RTL,
   TEXT_DIRECTION_TTB,
-} SCITER_TEXT_DIRECTION;
+} SCITER_TEXT_DIRECTION; */
 
 typedef enum SCITER_IMAGE_ENCODING
 {
@@ -112,7 +112,7 @@ typedef enum SCITER_IMAGE_ENCODING
   SCITER_IMAGE_ENCODING_WEBP,
 } SCITER_IMAGE_ENCODING;
 
-typedef struct SCITER_TEXT_FORMAT
+/* typedef struct SCITER_TEXT_FORMAT
 {
     LPWSTR                fontFamily;
     UINT                  fontWeight; // 100...900, 400 - normal, 700 - bold
@@ -123,7 +123,7 @@ typedef struct SCITER_TEXT_FORMAT
     SCITER_TEXT_ALIGNMENT textAlignment; // horizontal alignment
     SCITER_TEXT_ALIGNMENT lineAlignment; // a.k.a. vertical alignment for roman writing systems
     LPWSTR                localeName;
-} SCITER_TEXT_FORMAT;
+} SCITER_TEXT_FORMAT; */
 
 // imageSave callback:
 typedef BOOL SCAPI image_write_function(LPVOID prm, const BYTE* data, UINT data_length);
@@ -328,13 +328,13 @@ struct SciterGraphicsAPI
 
 // SECTION: text
 
-  // create text layout using element's styles
+  // create text layout for host element
   GRAPHIN_RESULT
-        SCFN(textCreateForElement)(HTEXT* ptext, LPCWSTR text, UINT textLength, HELEMENT he );
+        SCFN(textCreateForElement)(HTEXT* ptext, LPCWSTR text, UINT textLength, HELEMENT he, LPCWSTR classNameOrNull );
 
-  // create text layout using explicit format declaration
+  // create text layout using explicit style declaration
   GRAPHIN_RESULT
-        SCFN(textCreate)(HTEXT* ptext, LPCWSTR text, UINT textLength, const SCITER_TEXT_FORMAT* format );
+        SCFN(textCreateForElementAndStyle)(HTEXT* ptext, LPCWSTR text, UINT textLength, HELEMENT he, LPCWSTR style, UINT styleLength); 
 
   GRAPHIN_RESULT
         SCFN(textAddRef) (HTEXT path);

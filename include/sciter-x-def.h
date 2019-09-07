@@ -439,6 +439,9 @@ enum SCITER_RT_OPTIONS
    
    SCITER_SET_INIT_SCRIPT = 13,   // hWnd - N/A , value LPCSTR - UTF-8 encoded script source to be loaded into each view before any other script execution.
                                   //                             The engine copies this string inside the call.
+
+   SCITER_SET_MAIN_WINDOW = 14,   //  hWnd, value - TRUE/FALSE - window is main, will destroy all other dependent windows on close
+
 };
 
  BOOL SCAPI SciterSetOption(HWINDOW hWnd, UINT option, UINT_PTR value );
