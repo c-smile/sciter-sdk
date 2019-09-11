@@ -864,8 +864,10 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
       assert(r == SCDOM_OK); (void)r;
     }
 
+// NOTE: no 'override' here as BEGIN/END_FUNCTION_MAP can be declared on classes that do not derive from event_handler,
+//       see CHAIN_FUNCTION_MAP 
 #define BEGIN_FUNCTION_MAP \
-    virtual bool on_script_call(HELEMENT he, LPCSTR name, UINT argc, const sciter::value* argv, sciter::value& retval) override \
+    virtual bool on_script_call(HELEMENT he, LPCSTR name, UINT argc, const sciter::value* argv, sciter::value& retval) \
     { \
       aux::chars _name = aux::chars_of(name);
 

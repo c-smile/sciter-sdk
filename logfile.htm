@@ -1,7 +1,7 @@
 ﻿<html>
   <head>
     <title>4.* logfile</title>
-    <meta name="generator" content="blocknote.net v2.0">
+    <meta name="generator" content="blocknote.net v2.0"/>
   </head>
 <body>
   <h3>Sciter 4.* logfile:</h3>
@@ -10,12 +10,22 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FAFFEA">4.3.0.12</td><td nowrap valign="top" align="center">07-09-2019</td><td>
+    <tr><td valign="top" bgcolor="#FAFFEA">4.3.0.13</td><td nowrap valign="top" align="center">11-09-2019</td><td>
+					
+					<p>new:</p>
+					<ul><li><code>overflow-y: auto | scroll | scroll-indicator; vertical-align:bottom;</code> - scroll position invariant &quot;attached to bottom&quot;,<br/><code>overflow-x: auto | scroll | scroll-indicator; horizontal-align:right;</code> - scroll position invariant &quot;attached to right&quot;,<br/>these are in effect when scrollable size changes.</li></ul><p>fixes:
+					</p><ul>
+						
+						
+						
+						
+						<li>[multi threading] Fix of API access from worker threads, see: <a href="https://sciter.com/forums/topic/script-changes/">https://sciter.com/forums/topic/script-changes/</a> ;</li><li>[css] flex calculation fix, see: <a href="https://sciter.com/forums/topic/tabs-behavior-works-strange/">https://sciter.com/forums/topic/tabs-behavior-works-strange/</a> ;</li><li>[css] fix of color:xxx on spans;</li><li>fix of MOUSE_UP handling on <code>&lt;input|slider&gt;</code>;</li><li>[gtk] <code>view.close()</code> fix;</li><li>[Windows] bin/32/scapp.exe, rendering videos;</li><li>[osx] CoreGraphics mirrored animated image fix;</li></ul>
+					</td></tr><tr><td valign="top" bgcolor="#FAFFEA">4.3.0.12</td><td nowrap valign="top" align="center">07-09-2019</td><td>
 					
 					<p>new:</p>
 					<ul><li>[sample] sdk/samples/ideas/full-screen</li>
 						<li><code>Element.content/append(arrayOfTuples)</code> - support of arrays of element template tuples to speed up DOM population, see: sdk/samples/tests/test-scrollable-table.htm</li>
-						<li>[script] + <code>Date.diff(d1,d2,#months)</code> method - calendar differences between two dates. <br><code>Date.diff(new Date(2019,8,31),new Date(2019,9,1),#months)</code> &nbsp;will return <code>1</code> as these two dates are from different months.</li></ul><p>fixes:
+						<li>[script] + <code>Date.diff(d1,d2,#months)</code> method - calendar differences between two dates. <br/><code>Date.diff(new Date(2019,8,31),new Date(2019,9,1),#months)</code> &nbsp;will return <code>1</code> as these two dates are from different months.</li></ul><p>fixes:
 					</p><ul><li>Graphics.Text implementation is redesigned to support style and class declarations:&nbsp;<code>Graphics.Text.style = &quot;font:12pt Arial; text-decoration:underline&quot;;</code></li>
 						<li>[SciterGraphicsAPI]&nbsp; changes (affects only C/C++ as Text&nbsp;is not used yet in any other wrappers): <ul><li><code>textCreateForElement</code> - function signature change;</li><li><code>textCreate</code> is now <code>textCreateForElementAndStyle</code>;</li>
 								</ul></li>

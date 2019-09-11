@@ -127,6 +127,10 @@ int CALLBACK WinMain(HINSTANCE hInstance,
   ::SciterSetCallback(wnd,&SciterCallback,NULL);
     
 	::SciterLoadFile(wnd, GetAbsolutePath());
+
+  //const char* css = "html {background:red}";
+  //::SciterSetCSS(wnd, (LPCBYTE)css, strlen(css), L"about:blank", L"");
+
 	::ShowWindow(wnd, SW_SHOWNORMAL);
   //::SciterLoadFile(wnd, GetUrl());
 
