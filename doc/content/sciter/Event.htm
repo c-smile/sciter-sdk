@@ -1,6 +1,6 @@
 ﻿<html>
   <head>
-    <meta name="generator" content="h-smile:richtext">
+    <meta name="generator" content="h-smile:richtext"/>
   </head>
 <body>
   <h1>Event object</h1>
@@ -167,7 +167,7 @@
 }
 </pre></dd>
     <h3>Dragging modes</h3>
-    <dt>DRAGGING_MOVE<br> DRAGGING_COPY</dt>
+    <dt>DRAGGING_MOVE<br/> DRAGGING_COPY</dt>
     <dd>Values of the <em>draggingMode</em> attribute below.</dd>
     <h3>Virtual key codes - values of keyCode filed in KEY_DOWN and KEY_UP events</h3>
     <dd>
@@ -277,7 +277,12 @@ VK_F20      VK_F21      VK_F22      VK_F23      VK_F24
       <p><code>#url</code> - returns (caption,url) pair - caption and the url itself;</p>
       <p><code>#file</code> - returns filenames array - list of dragged file paths;</p>
       <p><code>#picture</code> - returns Image object if dragged data contains an image;</p>
-      <p><code>#json</code> - returns value - json value.</p></dd></dl>
+      <p><code>#json</code> - returns value - json value.</p>
+			</dd><dt>keyPressed</dt>
+		<dd>(<b>vkKeyCode</b>: integer) : true | false<p>Class (static) function, reports true if key is pressed. Can be used to check state of for example CAPSLOCK or&nbsp;NUMLOCK keys :&nbsp;</p>
+			
+			<pre>if( Event.keyPressed(Event.VK_CAPITAL) ) 
+  ... CAPSLOCK is pressed ... </pre></dd></dl>
   <h2 id="symbolic-event-names">Symbolic event names</h2>
   <p>Symbolic event names are used by <code>Element.subscribe(&quot;name&quot;, ...)</code>, <code>Element.on(&quot;name&quot;, ...)</code>, <code>Event.match(&quot;name&quot;, ...)</code> and <code>event <i>name</i>&nbsp;() {}</code> script functions.</p>
   <dl>

@@ -221,9 +221,9 @@ namespace tiscript
     pinned(const pinned& p);
     pinned operator = (const pinned& p);
   public:
-    pinned()                { val = 0, vm = 0, d1 = d2 = 0; }
-    pinned(HVM c)           { val = 0, vm = 0, d1 = d2 = 0;  ni()->pin(c,this); }
-    pinned(HVM c, value v)  { val = 0, vm = 0, d1 = d2 = 0;  ni()->pin(c,this); val = v; }
+    pinned() { val = 0; vm = 0; d1 = d2 = 0; }
+    pinned(HVM c) { val = 0; vm = 0; d1 = d2 = 0;  ni()->pin(c, this); }
+    pinned(HVM c, value v) { val = 0; vm = 0; d1 = d2 = 0;  ni()->pin(c, this); val = v; }
     virtual ~pinned()       { detach(); }
 
     void attach(HVM c){ detach(); ni()->pin(c,this); }
