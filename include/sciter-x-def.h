@@ -442,6 +442,8 @@ enum SCITER_RT_OPTIONS
 
    SCITER_SET_MAIN_WINDOW = 14,   //  hWnd, value - TRUE/FALSE - window is main, will destroy all other dependent windows on close
 
+   SCITER_SET_MAX_HTTP_DATA_LENGTH = 15, // hWnd - N/A , value - max request length in megabytes (1024*1024 bytes)
+
 };
 
  BOOL SCAPI SciterSetOption(HWINDOW hWnd, UINT option, UINT_PTR value );

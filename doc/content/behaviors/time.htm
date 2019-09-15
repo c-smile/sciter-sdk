@@ -1,7 +1,7 @@
 ﻿<html>
   <head>
-    <meta name="source" content="http://www.terrainformatica.com/wiki/doku.php?id=h-smile:built-in-behaviors:edit">
-    <meta name="generator" content="h-smile:richtext">
+    <meta name="source" content="http://www.terrainformatica.com/wiki/doku.php?id=h-smile:built-in-behaviors:edit"/>
+    <meta name="generator" content="h-smile:richtext"/>
   </head>
 <body>
   <h1>behavior: time</h1>
@@ -9,7 +9,7 @@
   <h2>Elements</h2>
   <p>that have this behavior applied by default:</p>
   <ul>
-    <li><code>&lt;input type=&quot;time&quot; /&gt;</code> - inline input input element</li></ul>
+    <li><code>&lt;input type=&quot;time&quot; /&gt;</code> - inline input element</li></ul>
   <h2>Model</h2>
   <p>Upon initialization the behavior creates following DOM structure:</p>
   <pre>&lt;input&gt;
@@ -30,9 +30,10 @@
   <ul>
     <li><code>value=&quot;HH:MM:SS&quot;</code> - time, initial value of the input element. Time portion of ISO 8601 format.</li>
     <li><code>timezone=&quot;TZ&quot;</code> - time zone to show the time for. TZ can be either <code>&quot;local&quot;</code> or <code>&quot;+HH:MM&quot; / &quot;-HH:MM&quot;</code>.</li>
-		<li><code>default-group=&quot;second&quot; | &quot;hour&quot; | &quot;minute&quot;</code> - defines default group that is selected by default when the element gets focus.</li></ul>
+		<li><code>default-group=&quot;second&quot; | &quot;hour&quot; | &quot;minute&quot;</code> - defines default group that is selected by default when the element gets focus.</li>
+		<li><code>no-seconds</code> - no seconds field is present if this attribute is defined.&nbsp;</li></ul>
   <h2>Events</h2>
-  <p>Aside of standard set of events (mouse, keyboard, focus) <em>behavior: button</em> generates:</p>
+  <p>Aside of standard set of events (mouse, keyboard, focus) <em>behavior: time</em> generates:</p>
   <ul>
     <li>EDIT_VALUE_CHANGED event - value of the element (time) was changed due to user actions. Posted (asynchronous) event.</li></ul>
   <h2>Value</h2>
