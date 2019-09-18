@@ -10,7 +10,12 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FAFFEA">4.3.0.15</td><td nowrap valign="top" align="center">15-09-2019</td><td>
+    <tr><td valign="top" bgcolor="#FAFFEA">4.3.0.16</td><td nowrap valign="top" align="center">18-09-2019</td><td>fixes:
+					<ul>
+						
+						
+						
+						<li>[gtk] <code>view.box()</code> and <code>view.move()</code> fixes. Note: <code>view.box(#client)</code> and <code>view.box(#border)</code> report the same coordinates on Linux/GTK as there is no reasonable way on GTK to request sizes of window decorations reliably.</li><li>[gtk] idle processing fix.</li><li>[win, tray icon] trayicon/trayicon-test.htm fixes + demo of &quot;right-click menu&quot;;</li><li>[win] fix of <code>Event.keyPressed(Event.VK_CAPITAL)</code> - it reports now toggled state too;</li><li>[win] <code>view.dialog()</code> - will not disable other windows created by <code>View.window{}</code> (parentless windows);</li></ul></td></tr><tr><td valign="top" bgcolor="#FAFFEA">4.3.0.15</td><td nowrap valign="top" align="center">15-09-2019</td><td>
 					
 					<p>new:</p>
 					<ul><li>Auto UTF-16 encoding recognition support in <code>SciterLoadHtml()</code> and <code>SciterSetElementHtml()</code>&nbsp;</li>

@@ -47,17 +47,49 @@
                 ol.first.remove();
             }
  
-            view << event trayicon-click (evt) { append("trayicon-click",evt); } 
+            view << event trayicon-click (evt) { 
+              append("trayicon-click",evt); 
+
+              if(evt.buttons==2)
+              {
+                var (sx,sy) = view.box(#position,#client,#screen);
+                self.popup($(menu#tray), 2, evt.x - sx, evt.y - sy );
+              }                
+            } 
           }
 
+
+          event click $(button#hide) {
+            view.windowState = View.WINDOW_HIDDEN;
+          } 
+
+          event click $(menu#tray > li#reveal) {
+            view.windowState = View.WINDOW_SHOWN;
+          }   
+
+          event click $(menu#tray > li#exit) {
+            view.trayIcon(#remove);
+            view.close();
+          }   
+
+
         </script>
+        <menu.popup #tray>
+          <li#reveal>Show window</li>
+          <li#exit>Exit</li>
+        </menu>
     </head>
     <body>
 
-       <div><button#set>Set Icon</button><br>
-       <button#remove>Remove icon</button><br>
-       <button#update>Update text</button>
-       <button#place>Get place:</button><span#place /></div>
+       <p>Note: this also demonstrates popup menu on RIGHT CLICK on tray icon.
+
+       <div>
+         <button#set>Set Icon</button><br>
+         <button#remove>Remove icon</button><br>
+         <button#update>Update text</button>
+         <button#place>Get place:</button><span#place /><br>
+         <button#hide>Hide window</button>
+       </div>
        
        trayIcon Events:
        <ol#events>
