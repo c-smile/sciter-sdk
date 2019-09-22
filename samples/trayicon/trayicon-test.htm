@@ -68,6 +68,7 @@
           }   
 
           event click $(menu#tray > li#exit) {
+            // exiting the application
             view.trayIcon(#remove);
             view.close();
           }   
@@ -81,7 +82,7 @@
     </head>
     <body>
 
-       <p>Note: this also demonstrates popup menu on RIGHT CLICK on tray icon.
+       <p>Note: this also demonstrates popup menu on RIGHT CLICK on tray icon.</p>
 
        <div>
          <button#set>Set Icon</button><br>

@@ -207,7 +207,9 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)sdk\bin\$(PlatformArchitecture)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
-    <CustomBuildBeforeTargets>PrepareForBuild</CustomBuildBeforeTargets>
+    <CustomBuildBeforeTargets>
+    </CustomBuildBeforeTargets>
+    <PreBuildEventUseInBuild>true</PreBuildEventUseInBuild>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='XpDebug|Win32'">
     <LinkIncremental>true</LinkIncremental>
@@ -240,7 +242,8 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)sdk\bin\$(PlatformArchitecture)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
-    <CustomBuildBeforeTargets>PrepareForBuild</CustomBuildBeforeTargets>
+    <CustomBuildBeforeTargets>
+    </CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Tools|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -258,7 +261,8 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)sdk\bin\skia$(PlatformArchitecture)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
-    <CustomBuildBeforeTargets>PrepareForBuild</CustomBuildBeforeTargets>
+    <CustomBuildBeforeTargets>
+    </CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -289,6 +293,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.;..\..\include</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -299,21 +304,23 @@
       <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
     </Manifest>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>$(ProjectDir)..\..\bin\packfolder.exe $(ProjectDir)res $(ProjectDir)resources.cpp -v "resources"</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>
       </Message>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>$(ProjectDir)..\..\bin\packfolder.exe $(ProjectDir)res $(ProjectDir)resources.cpp -v "resources"</Command>
+      <Command>
+      </Command>
     </CustomBuildStep>
     <CustomBuildStep>
-      <Outputs>$(ProjectDir)resources.cpp;%(Outputs)</Outputs>
+      <Outputs>
+      </Outputs>
     </CustomBuildStep>
     <CustomBuildStep>
-      <TreatOutputAsContent>true</TreatOutputAsContent>
+      <TreatOutputAsContent>
+      </TreatOutputAsContent>
     </CustomBuildStep>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -523,21 +530,23 @@
       <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
     </Manifest>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>$(ProjectDir)..\..\bin\packfolder.exe $(ProjectDir)res $(ProjectDir)resources.cpp -v "resources"</Command>
     </PreBuildEvent>
     <PreBuildEvent>
-      <Message>
-      </Message>
+      <Message>Compiling resources</Message>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>$(ProjectDir)..\..\bin\packfolder.exe $(ProjectDir)res $(ProjectDir)resources.cpp -v "resources"</Command>
+      <Command>
+      </Command>
     </CustomBuildStep>
     <CustomBuildStep>
-      <Outputs>$(ProjectDir)resources.cpp;%(Outputs)</Outputs>
+      <Outputs>
+      </Outputs>
     </CustomBuildStep>
     <CustomBuildStep>
-      <TreatOutputAsContent>true</TreatOutputAsContent>
+      <TreatOutputAsContent>
+      </TreatOutputAsContent>
+      <Message />
     </CustomBuildStep>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -657,13 +666,17 @@
       </Message>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>$(ProjectDir)..\..\bin\packfolder.exe $(ProjectDir)res $(ProjectDir)resources.cpp -v "resources"</Command>
+      <Command>
+      </Command>
     </CustomBuildStep>
     <CustomBuildStep>
-      <Outputs>$(ProjectDir)resources.cpp;%(Outputs)</Outputs>
+      <Outputs>
+      </Outputs>
     </CustomBuildStep>
     <CustomBuildStep>
-      <TreatOutputAsContent>true</TreatOutputAsContent>
+      <TreatOutputAsContent>
+      </TreatOutputAsContent>
+      <Message />
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

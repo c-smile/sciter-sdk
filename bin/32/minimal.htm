@@ -22,14 +22,15 @@
     </style>
     <script type="text/tiscript">
 
-
+        var title = self.$(head > head);
         //import {foo,zoo,con} from "module.tis";
         //import * as bar from "module.tis";
         //import bar from "module.tis";
+        debug log: title;
 
         //var {A:a,B:b,C:c} = {A:1,B:2,C:3};    
 
-        void function() {
+        /*void function() {
           debug log: 1;
         }();    
 
@@ -38,6 +39,7 @@
           var arr = [];
           debug log: arr.first === void(0), arr.first == undefined;
         }
+        */
 /*
         function self.ready() {
           var obj = {a:1,b:2,c:3}; 

@@ -10,7 +10,15 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FAFFEA">4.3.0.16</td><td nowrap valign="top" align="center">18-09-2019</td><td>fixes:
+    <tr><td valign="top" bgcolor="#FAFFEA">4.3.0.17</td><td nowrap valign="top" align="center">22-09-2019</td><td>
+					
+					<p>new:</p>
+					<ul><li>[script] support of optional chaning: <code>a<b>?.</b>b</code> will be silently resolved to <i>undefined</i> (without generation of runtime error) if either <i>a</i> or <i>b</i> are undefined.</li>
+						<li>[script] support &quot;fallback if undefined&quot; operator : <code>a <b>??</b> b</code> - if <i>a</i> is <i>undefined</i> or <i>null</i> the operator will yield <i>b</i> value. The operator can be used with optional chaining like: 
+							<pre>var duration = params?.animationDuration ?? 300ms; </pre><p>so if there is no&nbsp;<i>animationDuration</i> property in <i>params</i>, or <i>params</i> itself is&nbsp;undefined then duration will be set to <code>300ms</code> value.</p></li></ul><p>fixes:
+					</p><ul><li>[win] popup fixes regarding sdk/samples/trayicon/trayicon-test.htm use cases.</li>
+						<li>[win] more responsive layered window drawing in presence of animations, see: <a href="https://sciter.com/forums/topic/animated-images-blocking-program-with-window-frame-transparent/">https://sciter.com/forums/topic/animated-images-blocking-program-with-window-frame-transparent/</a>&nbsp;</li>
+						<li>[inspector] &nbsp;<code>view.doEvent(#onlyIO)</code> on breakpoint hit, fixes: <a href="https://sciter.com/forums/topic/bug-debug-stops-execution/">https://sciter.com/forums/topic/bug-debug-stops-execution/</a> &nbsp;</li></ul></td></tr><tr><td valign="top" bgcolor="#FAFFEA">4.3.0.16</td><td nowrap valign="top" align="center">18-09-2019</td><td>fixes:
 					<ul>
 						
 						

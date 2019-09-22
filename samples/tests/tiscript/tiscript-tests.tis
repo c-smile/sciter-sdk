@@ -1366,9 +1366,31 @@ function Undefined_test() {
   // access of property of unknown shall throw an error
   assert errorThrown(:: t = obj.unknown.one) : "getting non-existent property of non-objects";
   assert errorThrown(:: obj.unknown.one = 1) : "setting non-existent property of non-objects";
-  // access of unknown global varuable shall throw an error
-  assert errorThrown(:: t = unknown) : "getting non-existent global variable";
+  // access of unknown global varuable shall throw an error - not anymore - just nothing (a.k.a. void)!!!
+  assert unknown === nothing : "getting non-existent global variable";
   assert errorThrown(:: unknown = 1) : "setting non-existent (non declared) global variable";
+}
+
+function OptionalChaining_test() {
+  var obj = { 
+              foo: "foo", 
+              bar: p => p,
+              yoo: 0
+            };
+  assert obj?.foo == "foo" : "existing property";  
+  assert obj?.zoo == undefined : "non-existing property";  
+  assert obj?.foo ?? 42 == "foo" : "existing property with fallback";  
+  assert obj?.zoo ?? 42 == 42 : "existing property with fallback";  
+  
+  // testing ?? alone ( t !== undefined ? t : fallback )
+  assert obj?.yoo ?? 42 == 0 : "fallback, existing property";  
+  assert obj?.zoo ?? 42 == 42: "fallback, non-existing property";  
+
+  // testing non-exitent methods:
+  var x = 0;
+  assert obj?.bad(++x) ?? 42 == 42 && x == 0: "non-exitent method, shortcut";  
+  assert obj?.bar(++x) ?? 42 == 1 && x == 1: "exiting method, shortcut";  
+
 }
 
 function ForIn_test() {
@@ -1620,6 +1642,7 @@ run( With_test );
 run( Units_test );
 run( JSON_test );
 run( Undefined_test );
+run( OptionalChaining_test );
 run( ForIn_test );
 run( match_test );
 run( regex_match_test );
