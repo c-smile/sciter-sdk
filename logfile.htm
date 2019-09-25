@@ -10,7 +10,13 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FAFFEA">4.3.0.17</td><td nowrap valign="top" align="center">22-09-2019</td><td>
+    <tr><td valign="top" bgcolor="#FAFFEA">4.3.0.18</td><td nowrap valign="top" align="center">25-09-2019</td><td>fixes:
+					<ul>
+						
+						
+						<li>[HTTP] default max cap for request/response is set to 128 mb;</li><li>[css] fix of <code>position:absolute; right:0; width:xx;</code> case&nbsp;</li><li>fix of <code>SciterSetOption(NULL, SCITER_SET_DEBUG_MODE, TRUE)</code>;</li>
+						<li>[gtk] <code>view.move()</code> and <code>view.box()</code> workarounds. <code>view.box(,#client)</code> and&nbsp;<code>view.box(,#border)</code> report the same box values as there is no reasonable way on GTK to set place on screen of GtkWindow by using frame box coordinates;</li>
+						<li>[script] <code>Element.value</code>, fix of aggregates, see: <a href="https://sciter.com/forums/topic/form-value-doesnt-consider-repeatable-values/">https://sciter.com/forums/topic/form-value-doesnt-consider-repeatable-values/</a>&nbsp;</li></ul></td></tr><tr><td valign="top" bgcolor="#FAFFEA">4.3.0.17</td><td nowrap valign="top" align="center">22-09-2019</td><td>
 					
 					<p>new:</p>
 					<ul><li>[script] support of optional chaning: <code>a<b>?.</b>b</code> will be silently resolved to <i>undefined</i> (without generation of runtime error) if either <i>a</i> or <i>b</i> are undefined.</li>

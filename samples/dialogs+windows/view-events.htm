@@ -23,6 +23,7 @@
       event click $(#default)      { view.state = View.WINDOW_SHOWN }
 
       view << event move.demo { showEvent("move") }
+           << event moving.demo { showEvent("moving") }
            << event size.demo { showEvent("size") }
            << event mediachange.demo { showEvent("mediachange") }
            << event activate.demo { showEvent("activate") }
