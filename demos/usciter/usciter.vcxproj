@@ -215,28 +215,33 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)sdk\bin\$(PlatformArchitecture)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
-    <CustomBuildBeforeTargets>PrepareForBuild</CustomBuildBeforeTargets>
+    <CustomBuildBeforeTargets>
+    </CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='SkDebug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)sdk\bin\$(PlatformArchitecture)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
-    <CustomBuildBeforeTargets>PrepareForBuild</CustomBuildBeforeTargets>
+    <CustomBuildBeforeTargets>
+    </CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)sdk\bin\$(PlatformArchitecture)\</OutDir>
-    <CustomBuildBeforeTargets>PrepareForBuild</CustomBuildBeforeTargets>
+    <CustomBuildBeforeTargets>
+    </CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='XpDebug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)sdk\bin\$(PlatformArchitecture)\</OutDir>
-    <CustomBuildBeforeTargets>PrepareForBuild</CustomBuildBeforeTargets>
+    <CustomBuildBeforeTargets>
+    </CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='SkDebug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)sdk\bin\$(PlatformArchitecture)\</OutDir>
-    <CustomBuildBeforeTargets>PrepareForBuild</CustomBuildBeforeTargets>
+    <CustomBuildBeforeTargets>
+    </CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -249,13 +254,15 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)sdk\bin\$(PlatformArchitecture)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
-    <CustomBuildBeforeTargets>PrepareForBuild</CustomBuildBeforeTargets>
+    <CustomBuildBeforeTargets>
+    </CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='XpRelease|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)sdk\bin\xp$(PlatformArchitecture)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
-    <CustomBuildBeforeTargets>PrepareForBuild</CustomBuildBeforeTargets>
+    <CustomBuildBeforeTargets>
+    </CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='SkRelease|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -273,17 +280,20 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Tools|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)sdk\bin\$(PlatformArchitecture)\</OutDir>
-    <CustomBuildBeforeTargets>PrepareForBuild</CustomBuildBeforeTargets>
+    <CustomBuildBeforeTargets>
+    </CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='XpRelease|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)sdk\bin\xp$(PlatformArchitecture)\</OutDir>
-    <CustomBuildBeforeTargets>PrepareForBuild</CustomBuildBeforeTargets>
+    <CustomBuildBeforeTargets>
+    </CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='SkRelease|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)sdk\bin\$(PlatformArchitecture)\</OutDir>
-    <CustomBuildBeforeTargets>PrepareForBuild</CustomBuildBeforeTargets>
+    <CustomBuildBeforeTargets>
+    </CustomBuildBeforeTargets>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -322,6 +332,7 @@
     <CustomBuildStep>
       <TreatOutputAsContent>
       </TreatOutputAsContent>
+      <Message />
     </CustomBuildStep>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -354,13 +365,17 @@
       </Message>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>$(ProjectDir)..\..\bin\packfolder.exe $(ProjectDir)res $(ProjectDir)resources.cpp -v "resources"</Command>
+      <Command>
+      </Command>
     </CustomBuildStep>
     <CustomBuildStep>
-      <Outputs>$(ProjectDir)resources.cpp;%(Outputs)</Outputs>
+      <Outputs>
+      </Outputs>
     </CustomBuildStep>
     <CustomBuildStep>
-      <TreatOutputAsContent>true</TreatOutputAsContent>
+      <TreatOutputAsContent>
+      </TreatOutputAsContent>
+      <Message />
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='SkDebug|Win32'">
@@ -391,13 +406,17 @@
       </Message>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>$(ProjectDir)..\..\bin\packfolder.exe $(ProjectDir)res $(ProjectDir)resources.cpp -v "resources"</Command>
+      <Command>
+      </Command>
     </CustomBuildStep>
     <CustomBuildStep>
-      <Outputs>$(ProjectDir)resources.cpp;%(Outputs)</Outputs>
+      <Outputs>
+      </Outputs>
     </CustomBuildStep>
     <CustomBuildStep>
-      <TreatOutputAsContent>true</TreatOutputAsContent>
+      <TreatOutputAsContent>
+      </TreatOutputAsContent>
+      <Message />
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -427,13 +446,17 @@
       </Message>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>$(ProjectDir)..\..\bin\packfolder.exe $(ProjectDir)res $(ProjectDir)resources.cpp -v "resources"</Command>
+      <Command>
+      </Command>
     </CustomBuildStep>
     <CustomBuildStep>
-      <Outputs>$(ProjectDir)resources.cpp;%(Outputs)</Outputs>
+      <Outputs>
+      </Outputs>
     </CustomBuildStep>
     <CustomBuildStep>
-      <TreatOutputAsContent>true</TreatOutputAsContent>
+      <TreatOutputAsContent>
+      </TreatOutputAsContent>
+      <Message />
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='XpDebug|x64'">
@@ -463,13 +486,17 @@
       </Message>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>$(ProjectDir)..\..\bin\packfolder.exe $(ProjectDir)res $(ProjectDir)resources.cpp -v "resources"</Command>
+      <Command>
+      </Command>
     </CustomBuildStep>
     <CustomBuildStep>
-      <Outputs>$(ProjectDir)resources.cpp;%(Outputs)</Outputs>
+      <Outputs>
+      </Outputs>
     </CustomBuildStep>
     <CustomBuildStep>
-      <TreatOutputAsContent>true</TreatOutputAsContent>
+      <TreatOutputAsContent>
+      </TreatOutputAsContent>
+      <Message />
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='SkDebug|x64'">
@@ -499,13 +526,17 @@
       </Message>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>$(ProjectDir)..\..\bin\packfolder.exe $(ProjectDir)res $(ProjectDir)resources.cpp -v "resources"</Command>
+      <Command>
+      </Command>
     </CustomBuildStep>
     <CustomBuildStep>
-      <Outputs>$(ProjectDir)resources.cpp;%(Outputs)</Outputs>
+      <Outputs>
+      </Outputs>
     </CustomBuildStep>
     <CustomBuildStep>
-      <TreatOutputAsContent>true</TreatOutputAsContent>
+      <TreatOutputAsContent>
+      </TreatOutputAsContent>
+      <Message />
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -585,13 +616,17 @@
       </Message>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>$(ProjectDir)..\..\bin\packfolder.exe $(ProjectDir)res $(ProjectDir)resources.cpp -v "resources"</Command>
+      <Command>
+      </Command>
     </CustomBuildStep>
     <CustomBuildStep>
-      <Outputs>$(ProjectDir)resources.cpp;%(Outputs)</Outputs>
+      <Outputs>
+      </Outputs>
     </CustomBuildStep>
     <CustomBuildStep>
-      <TreatOutputAsContent>true</TreatOutputAsContent>
+      <TreatOutputAsContent>
+      </TreatOutputAsContent>
+      <Message />
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='XpRelease|Win32'">
@@ -626,13 +661,17 @@
       </Message>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>$(ProjectDir)..\..\bin\packfolder.exe $(ProjectDir)res $(ProjectDir)resources.cpp -v "resources"</Command>
+      <Command>
+      </Command>
     </CustomBuildStep>
     <CustomBuildStep>
-      <Outputs>$(ProjectDir)resources.cpp;%(Outputs)</Outputs>
+      <Outputs>
+      </Outputs>
     </CustomBuildStep>
     <CustomBuildStep>
-      <TreatOutputAsContent>true</TreatOutputAsContent>
+      <TreatOutputAsContent>
+      </TreatOutputAsContent>
+      <Message />
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='SkRelease|Win32'">
@@ -757,13 +796,17 @@
       </Message>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>$(ProjectDir)..\..\bin\packfolder.exe $(ProjectDir)res $(ProjectDir)resources.cpp -v "resources"</Command>
+      <Command>
+      </Command>
     </CustomBuildStep>
     <CustomBuildStep>
-      <Outputs>$(ProjectDir)resources.cpp;%(Outputs)</Outputs>
+      <Outputs>
+      </Outputs>
     </CustomBuildStep>
     <CustomBuildStep>
-      <TreatOutputAsContent>true</TreatOutputAsContent>
+      <TreatOutputAsContent>
+      </TreatOutputAsContent>
+      <Message />
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='XpRelease|x64'">
@@ -798,13 +841,17 @@
       </Message>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>$(ProjectDir)..\..\bin\packfolder.exe $(ProjectDir)res $(ProjectDir)resources.cpp -v "resources"</Command>
+      <Command>
+      </Command>
     </CustomBuildStep>
     <CustomBuildStep>
-      <Outputs>$(ProjectDir)resources.cpp;%(Outputs)</Outputs>
+      <Outputs>
+      </Outputs>
     </CustomBuildStep>
     <CustomBuildStep>
-      <TreatOutputAsContent>true</TreatOutputAsContent>
+      <TreatOutputAsContent>
+      </TreatOutputAsContent>
+      <Message />
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='SkRelease|x64'">
@@ -839,13 +886,17 @@
       </Message>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>$(ProjectDir)..\..\bin\packfolder.exe $(ProjectDir)res $(ProjectDir)resources.cpp -v "resources"</Command>
+      <Command>
+      </Command>
     </CustomBuildStep>
     <CustomBuildStep>
-      <Outputs>$(ProjectDir)resources.cpp;%(Outputs)</Outputs>
+      <Outputs>
+      </Outputs>
     </CustomBuildStep>
     <CustomBuildStep>
-      <TreatOutputAsContent>true</TreatOutputAsContent>
+      <TreatOutputAsContent>
+      </TreatOutputAsContent>
+      <Message />
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>

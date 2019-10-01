@@ -94,7 +94,6 @@ namespace sciter
     }     
     
     ShowWindow(_hwnd, SW_SHOW);
-    UpdateWindow(_hwnd);
     
     return true;
   }

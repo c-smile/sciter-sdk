@@ -74,7 +74,7 @@ namespace tiscript
     std::basic_string<WCHAR> _name;
   public:
     file_istream(const WCHAR* filename) {
-#ifdef WINDOWS
+#if defined(WINDOWS) && defined(__STDC_SECURE_LIB__)
         _wfopen_s(&_file,filename,L"rb");
 #else
         _file = fopen(aux::w2a(filename),"rb");
