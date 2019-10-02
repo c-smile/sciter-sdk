@@ -40,7 +40,7 @@ ul#menu-bar:not(:focus) > li:hover /* current menu item in menu bar */
   border-color:color(menu-item-hover-border);
 }
 
-ul#menu-bar > li:current /* current menu item in menu bar in focus - showing popup menu */ 
+ul#menu-bar > li:current:owns-popup /* current menu item in menu bar in focus - showing popup menu */ 
 {  
   background-color:color(menu-popup-back); 
   border-color:color(menu-popup-border);
@@ -127,14 +127,17 @@ menu li:has-child-of-type(menu)
 {
   foreground-image:url(stock:arrow-right); /* that arrow */
   foreground-repeat: no-repeat;
-  foreground-position: 100% 50%;
+  foreground-position-top: 50%;
+  foreground-position-left: auto;
+  foreground-position-right: 4dip;
 }
 
 menu li:has-child-of-type(menu):rtl
 {
   foreground-image:url(stock:arrow-left); /* that arrow */
   foreground-repeat: no-repeat;
-  foreground-position: 0% 50%;
+  foreground-position-right: auto;
+  foreground-position-left: 4dip;
 }
 
 
