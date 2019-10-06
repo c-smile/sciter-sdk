@@ -7,6 +7,11 @@
   </style>
   
     <script type="text/tiscript">
+
+event click $(li#menu-open) {
+  var fn = view.selectFile(#open,"HTML Files (*.htm,*.html)|*.HTM;*.HTML|All Files (*.*)|*.*" , "html" );
+}
+
     </script>  
   
   </head>
@@ -17,7 +22,7 @@
   <li>
     <caption>File</caption>
     <menu>
-      <li>Open</li>
+      <li#menu-open>Open</li>
       <li>Save</li>
     </menu>
    </li>

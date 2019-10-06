@@ -34,7 +34,7 @@ ul#menu-bar > li {
   padding:2dip 8dip;  
 }
 
-ul#menu-bar:not(:focus) > li:hover /* current menu item in menu bar */ 
+ul#menu-bar > li:hover /* current menu item in menu bar */ 
 {
   background:color(menu-item-hover);
   border-color:color(menu-item-hover-border);

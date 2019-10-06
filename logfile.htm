@@ -10,7 +10,15 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FAFFEA">4.3.0.19</td><td nowrap valign="top" align="center">01-10-2019</td><td>fixes:
+    <tr><td valign="top" bgcolor="#FAFFEA">4.3.0.20</td><td nowrap valign="top" align="center">06-10-2019</td><td>fixes:
+					<ul><li>[layout, position] Fix of <code>size:*</code> handling in positioned, see: <a href="https://github.com/c-smile/sciter-sdk/issues/134">https://github.com/c-smile/sciter-sdk/issues/134</a>&nbsp;</li>
+						<li>[script, DOM] <code>form.value = {...}</code> fix for the case of compound values, see: sdk/samples/forms/form.htm</li>
+						<li>Fixing :hover handling on elements when visibility changes. See: <a href="https://sciter.com/forums/topic/button-doesnt-skip-selection-after-click/">https://sciter.com/forums/topic/button-doesnt-skip-selection-after-click/</a>&nbsp;</li>
+						<li><code>&lt;frameset&gt;</code>, more tolerant @rows/@cols parsing.</li>
+						<li>[css, layout] Yet another implementation of flex unit calculations. Cassowary solver is slow for flow:vertical | horizontal | horizontal-wrap cases, this one (see flex::engine class) is significantly faster.</li>
+						<li>Fix of <code>element.clone()</code> // prototype handling</li>
+						<li>Fix of AV on handling set_focus() on window that has zero dimensions.</li>
+						</ul></td></tr><tr><td valign="top" bgcolor="#FAFFEA">4.3.0.19</td><td nowrap valign="top" align="center">01-10-2019</td><td>fixes:
 					<ul><li>[win] fix of transparent popups rendering;</li>
 						<li><code>behavior:form</code>, fix of getting values of radio groups;</li>
 						<li>input|calendar, fix of days navigation handling in some timezones;</li>

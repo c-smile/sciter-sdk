@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="behaviors">
+      <UniqueIdentifier>{6f615231-3dc7-41e4-85af-09ad13b4fd4b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="win-res\sciter.ico">
@@ -36,6 +39,15 @@
     </ClCompile>
     <ClCompile Include="..\..\include\behaviors\behavior_video_generator.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\behaviors\behavior_camera_capture.cpp">
+      <Filter>behaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\behaviors\behavior_drawing.cpp">
+      <Filter>behaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\behaviors\behavior_tabs.cpp">
+      <Filter>behaviors</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
