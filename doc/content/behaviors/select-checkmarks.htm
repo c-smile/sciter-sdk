@@ -3,7 +3,7 @@
     <meta name="generator" content="h-smile:richtext"/>
   </head>
 <body>
-  <h1>behavior:select-multiple</h1>
+  <h1>behavior:select-checkmarks</h1>
   <p>Behavior of &lt;select multiple&gt; lists. In principle it can be applied to any DOM element.</p>
   <h2>Elements</h2>
   <p>These elements have behavior:select applied by default:</p>
@@ -23,13 +23,13 @@
     <li><code>name=&quot;name&quot;</code> - standard attribute <em>name</em> - name of the input element on a form.</li>
     <li><code>novalue=&quot;text&quot;</code> - if select has no <code>&lt;option selected&gt;</code> initially it will have this text rendered.</li></ul>
   <h2>Events</h2>
-  <p>Other than standard set of events (mouse, keyboard, focus) behavior:button generates:</p>
+  <p>Other than standard set of events (mouse, keyboard, focus) behavior:select-checkmarks generates:</p>
   <ul>
     <li>SELECT_SELECTION_CHANGED event, generated when user changes selection of the select (click on one of options). Posted event.</li>
     <li>SELECT_SELECTION_CHANGING event, selection is about to change. Synchronous event.</li>
     <li>SELECT_STATE_CHANGED event, one of options have its :checked state changed by user.</li></ul>
   <h2>Methods</h2>
-  <p>N/A - behavior:select does not introduce any specific methods.</p>
+  <p>N/A - behavior:select-checkmarks does not introduce any specific methods.</p>
   <h2>Value</h2>
   <p>array of values, read/write, list of checked options.</p>
   <h2>Selection change handling in script</h2>
