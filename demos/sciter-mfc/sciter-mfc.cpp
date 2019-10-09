@@ -41,6 +41,14 @@ CSciterMfcApp::CSciterMfcApp()
 
 	// TODO: add construction code here,
 	// Place all significant initialization in InitInstance
+
+  SciterSetOption(NULL, SCITER_SET_SCRIPT_RUNTIME_FEATURES,
+    ALLOW_FILE_IO |
+    ALLOW_SOCKET_IO |
+    ALLOW_EVAL |
+    ALLOW_SYSINFO);
+  SciterSetOption(NULL, SCITER_SET_DEBUG_MODE, TRUE);
+
 }
 
 // The one and only CSciterMfcApp object
