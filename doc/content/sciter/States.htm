@@ -15,7 +15,7 @@
     <dt>active</dt>
     <dd><font color="#999999">rw</font> - true/false,</dd>
     <dt>focus</dt>
-    <dd><font color="#999999">rw</font> - true/false, this element is in focus. To set focus on the element is it enough to assign <em>true</em> value to the attribute:
+    <dd><font color="#999999">rw</font> - true/false, this element is in focus. To set focus on the element it is enough to assign <em>true</em> value to the attribute:
       <pre>el.state.focus = true;
 </pre></dd>
     <dt>tabfocus</dt>
@@ -64,7 +64,7 @@
     <dt>moving<br/>copying</dt>
     <dd><font color="#999999">r</font> - true/false, either one of these is true for the element that is being dragged. Engine creates copy of drag-source element and that copy is being dragged.</dd>
     <dt>dragsource</dt>
-    <dd><font color="#999999">r</font> - true/false, element one of these is true for the element that being dragged.</dd>
+    <dd><font color="#999999">r</font> - true/false, either one of these is true for the element that is being dragged.</dd>
     <dt>pressed</dt>
     <dd><font color="#999999">rw</font> - true/false, element has mouse pressed in it.</dd>
     <dt>isltr<br/>isrtl</dt>
@@ -72,9 +72,9 @@
     <dt>value</dt>
     <dd><font color="#999999">rw</font> - &quot;raw&quot; value of the element. It is either the value managed by native behavior or, if the element has no behavior attached, it is a text of the element (see Element.text).</dd>
     <dt>screen</dt>
-    <dd><font color="#999999">r</font> - integer, number of screen (monitor) on which this element is rendered at the moment. Note in can be different from view.screen for popup elements.</dd>
+    <dd><font color="#999999">r</font> - integer, number of screen (monitor) on which this element is rendered at the moment. Note it can be different from view.screen for popup elements.</dd>
     <dt>awaitsDraw</dt>
-    <dd><font color="#999999">rw</font> - boolean, flag indicating that the element is awaiting to be drawn after <code>Element.refresh()</code> was issued for it. Sciter sets this flag autmatically. It also resets it when the element gets drawn on the scree. In between you can set/reset it from code. </dd>
+    <dd><font color="#999999">rw</font> - boolean, flag indicating that the element is awaiting to be drawn after <code>Element.refresh()</code> was issued for it. Sciter sets this flag autmatically. It also resets it when the element gets drawn on the screen. In between you can set/reset it from code. </dd>
 		<dt>flowType</dt>
 		<dd>r - symbol, reports flow type used by the element, is one of: &nbsp;<p>
 #vertical,
