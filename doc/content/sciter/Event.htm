@@ -138,7 +138,7 @@
     <dt>TOOLTIP_REQUEST</dt>
     <dd>Request for tooltip, the event is sent in response of MOUSE_IDLE. Element on <em>evt.source</em> is a proposed tooltip element. You can assign your own DOM element to the <em>evt.source</em> field or text to <i>evt.data</i> field.&nbsp;To cancel tooltip generation set <em>evt.source</em> to <em>null</em> and return <em>true</em> (event handled) from the event handler.</dd>
     <dt>DOCUMENT_COMPLETE</dt>
-    <dd>Notification that document finishes its loading - all requests for external resources are finished. <em>evt.target</em> is the root node ( <code>&lt;html&gt;</code> ) of the document that is complete. Note that the event is being generated even some of resources were not available. DOM elements that contain non-available resources will get <code>:incomplete</code> state flag.</dd>
+    <dd>Notification that document finishes its loading - all requests for external resources are finished. <em>evt.target</em> is the root node ( <code>&lt;html&gt;</code> ) of the document that is complete. Note that the event is being generated even if some of resources were not available. DOM elements that contain non-available resources will get <code>:incomplete</code> state flag.</dd>
     <dt>FORM_SUBMIT</dt>
     <dd>behavior:form detected submission event from button type=reset. <code>evt.data</code> field contains data to be sent to the server as a map (object). You can modify the data or discard submission by returning <code>true</code> (&quot;event consumed&quot;) from the event handler.</dd>
     <dt>FORM_RESET</dt>

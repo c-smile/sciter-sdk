@@ -60,7 +60,7 @@
     <dt> <u>attributes</u></dt>
     <dd> <font color="#999999">c - </font><a href="Attributes.htm"><em>Attributes</em></a>, collection of html attributes of the element.</dd>
     <dt> <u>@</u></dt>
-    <dd> <font color="#999999">c -</font> short form to access<a href="Attributes.htm"><em>Attributes</em></a>, collection of html attributes of the element. It is just an alias of the <em>attributes</em> above.<br>Sample:<br><code>this.@[&quot;selected&quot;] = true</code> // or<br><code>this.@#selected = true</code><br>is an equivalent of <br><code>this.attributes[&quot;selected&quot;] = true</code></dd>
+    <dd> <font color="#999999">c -</font> short form to access <a href="Attributes.htm"><em>Attributes</em></a>, collection of html attributes of the element. It is just an alias of the <em>attributes</em> above.<br>Sample:<br><code>this.@[&quot;selected&quot;] = true</code> // or<br><code>this.@#selected = true</code><br>is an equivalent of <br><code>this.attributes[&quot;selected&quot;] = true</code></dd>
     <dt> <u>style</u></dt>
     <dd> <font color="#999999">c - </font><a href="Style.htm">Style</a>, style attributes of the DOM element.</dd>
     <dt> <u>state</u></dt>
@@ -158,9 +158,8 @@ var el = new Element(#option);
       <div> <strong>(tuple)</strong> : <em>Element</em></div>
       <p>Static constructor of DOM elements. <em>tuple</em> here is an tuple literal with <a href="#object-template">microformat</a> defined below.</p>
       <p>Example, following fragment is an equivalent of creating element with the markup <code>&lt;p&gt;before &lt;button&gt;Hi!&lt;/button&gt; after&lt;/p&gt;</code>:</p>
-      <pre>var para = Element.create( [p:&quot;paragraph text&quot;] ); // or if text is a variable:
-var para = Element.create( [p: paragraphText] );
-</pre></dd>
+      <pre>var para = Element.create( [p: &quot;before &quot;, [button:&quot;Hi!&quot;], &quot; after&quot;] );</pre>
+	</dd>
     <dt>clear</dt>
     <dd>
       <div> <strong>()</strong> : <em>undefined</em></div>
@@ -168,7 +167,7 @@ var para = Element.create( [p: paragraphText] );
     <dt>toString</dt>
     <dd>
       <div> <strong>()</strong> : <em>string</em></div>
-      <p>Returns string - html representation of the element. Text returned is outer html - includes head and tail tags and content s equal to text returned by В <em>html</em> attribute.</p></dd>
+      <p>Returns string - html representation of the element. Text returned is outer html - includes head and tail tags and contents equal to text returned by <em>html</em> attribute.</p></dd>
     <dt>clone</dt>
     <dd>
       <div> <strong>() </strong>:<em>Element</em></div>
@@ -185,7 +184,7 @@ var para = Element.create( [p: paragraphText] );
     <dd>
       <div> <strong>( </strong><em>CSSselector</em><strong> )</strong> : <em>Element</em></div>
       <p>Returns first element satisfying CSS selector.</p>
-      <p>Note: this is a &quot;stringizer&quot; method so CSS selector can В be written without &quot;&quot; quotes.</p>
+      <p>Note: this is a &quot;stringizer&quot; method so CSS selector can be written without &quot;&quot; quotes.</p>
       <p>Example, if document contains <code>&lt;input type=&quot;text&quot;/&gt;</code> elements then following statement</p>
       <pre>var inp = self.$( input[type='text'] );
 </pre>
@@ -199,7 +198,7 @@ var li3 = self.$( ul &gt; li:nth-child({n}) );
     <dd>
       <div> <strong>(func , CSSselector</strong>: string<strong> [, argument1 [, argument2, ... ]])</strong> returns: <em>integer</em></div>
       <p>Calls <em>func</em> (function reference) for each element satisfying (matching) <em>CSSselector.</em> Function <em>func</em> shall accept one parameter where select will provide reference to matched element. Function may return <em>true</em> to stop enumeration.</p>
-      <p>Example, following fragment will print out names of all input elements in the document: <br>function printel(el) { В stdout.println( el.attributes[<font color="#336600">&quot;name&quot;</font>] ); В }<br>document.select(printel, &quot;input&quot;);</p></dd>
+      <p>Example, following fragment will print out names of all input elements in the document: <pre>function printel(el) { stdout.println( el.attributes[<font color="#336600">&quot;name&quot;</font>] ); }<br>document.select(printel, &quot;input&quot;);</pre></p></dd>
     <dt>selectAll</dt>
     <dd>
       <div> <strong>(CSSselector</strong>: string<strong> [, argument1 [, argument2, ... ]])</strong> returns: <em>Array</em></div>
@@ -225,8 +224,8 @@ var li3 = self.$( ul &gt; li:nth-child({n}) );
       <div> <strong>( </strong><em>CSSselector</em><strong> )</strong> returns: <em>Element</em></div>
       <p>Returns first owner element in child/parent chain satisfying CSS selector.</p>
       <p>Note 1: this is a stringizer method - the <em>CSSselector</em> provided literally.</p>
-      <p>Note 2: Function also inspects <em>this</em> element.</p></dd>
-      <p>Note 3: Most of the time element's owner is is its parent except of popup menus when the owner is the element requested the popup.</p>
+      <p>Note 2: Function also inspects <em>this</em> element.</p>
+      <p>Note 3: Most of the time element's owner is is its parent except of popup menus when the owner is the element requested the popup.</p></dd>
     <dt>selectParent</dt>
     <dd>
       <div> <strong>(func , CSSselector</strong>: string<strong> [, argument1 [, argument2, ... ]])</strong> returns: <em>integer</em></div>
@@ -254,7 +253,7 @@ some.selectParent(printel, &quot;div&quot;);
     <dt>belongsTo</dt>
     <dd>
       <div> <strong>(</strong> <strong>parent</strong>: Element [, <strong>useUITree</strong>: true | <em>false</em> [, <strong>includingThis</strong>: true | <em>false</em> ]] <strong>)</strong> : <em>true | false</em></div>
-      <p>Returns <em>true</em> if this element is has <em>parent</em> in its ancestor chain<em>.</em> If <strong>useUITree</strong> is provided and it is true then the function uses UI relationship rather than strict DOM parent/children relation. For example popup element can be declared outside of its host element but this function returns true for the popup if it was created for this element.</p>
+      <p>Returns <em>true</em> if this element has <em>parent</em> in its ancestor chain<em>.</em> If <strong>useUITree</strong> is provided and it is true then the function uses UI relationship rather than strict DOM parent/children relation. For example popup element can be declared outside of its host element but this function returns true for the popup if it was created for this element.</p>
       <p>If <em>includingThis</em> is defined and is <em>true</em> then this function returns <em>true</em> for the element itself too : el.belongsTo(el,false,true) -&gt; true. By default <em>includingThis</em> is <em>false</em>.</p></dd>
     <dt>find</dt>
     <dd>
@@ -306,7 +305,7 @@ some.selectParent(printel, &quot;div&quot;);
         <li> <strong>part</strong> - one of symbolic constants <strong>#left</strong>, <strong>#top</strong>, <strong>#right</strong>, <strong>#bottom</strong>, <strong>#width</strong> or <strong>#height</strong>. Defines part of box (rectangle) to return.</li>
         <ul>
           <li>If <em>part</em> is <strong>#rect</strong> then the function returns four values - left, top, right, bottom. Use it for example as <code> <br>var (x1,y1,x2,y2) = this.box(#rect, #inner, #view)</code>;</li>
-          <li>If <em>part</em> is <strong>#rect</strong>w then the function returns four values - left, top, width and height. Use it for example as <code> <br>var (x,y,w,h) = this.box(#rectw, #inner, #view)</code>;</li>
+          <li>If <em>part</em> is <strong>#rectw</strong> then the function returns four values - left, top, width and height. Use it for example as <code> <br>var (x,y,w,h) = this.box(#rectw, #inner, #view)</code>;</li>
           <li>If part is <strong>#dimension</strong> the function returns two values - width and height. Use it as: <code> <br>var (w,h) = this.box(#dimension, #inner)</code>;</li>
           <li>If part is <strong>#position</strong> the function returns two values - left and top. Use it as: <code> <br>var (x,y) = this.box(#position, #inner, #view)</code>;</li></ul>
         <li> <strong>edge</strong>, one of <a href="http://www.w3.org/TR/REC-CSS2/box.html">edges of element</a>:</li>
@@ -315,7 +314,7 @@ some.selectParent(printel, &quot;div&quot;);
           <li> <strong>#border</strong> - border box edge,</li>
           <li> <strong>#padding</strong> - padding box edge,</li>
           <li> <strong>#inner</strong>, <em>default value</em> - inner box edge,</li>
-          <li> <strong>#content</strong> - content box edge. Content box here is outline of the content of the element and this is not В an inner box of the element. E.g. content box can be bigger than inner box if the element has <em>overflow</em> attribute set<em>.</em></li>
+          <li> <strong>#content</strong> - content box edge. Content box here is outline of the content of the element and this is not an inner box of the element. E.g. content box can be bigger than inner box if the element has <em>overflow</em> attribute set<em>.</em></li>
           <li> <strong>#client</strong> - client area, that is #inner box minus areas taken by [optional] scrollbars.</li>
           <li> <strong>#icon</strong> -area covered by element's icon. Icon here is element's foreground image with foreground-repeat: no-repeat. If element has no such image the function returns <strong>#width</strong> and <strong>#height</strong> equals to zero.</li></ul>
         <li> <strong>relativeTo</strong>, one of:</li>
@@ -351,9 +350,9 @@ some.selectParent(printel, &quot;div&quot;);
     <dt>toPixels</dt>
     <dd>
       <div> <strong>( length : </strong>length | string | symbol [, <strong>#width</strong> | <strong>#height</strong> ]<strong> ) :</strong> integer, device pixels</div>
-      <p>returns the length value converted to the number of device pixels. Conversion is made in context of current element style so <code>el.toPixels( em(1.4) )</code> will number of pixel correspond to 1.4em that us dependent on current font size of the element.</p>
-      <p>length is a string or symbol then this string is treated as a CSS length literal so it is possible to get values like: <code>el.toPixels(#xx-small)</code> В or <code>el.toPixels(#system-scrollbar-width)</code>,</p>
-      <p>Second symbol parameter is used with the conversion from perecentage lengths:<br><code>var h50p = el.toPixels( pr(50.0), #height );</code> - will calculate the same value as the following CSS declaration: <code>height:50%</code>.</p></dd>
+      <p>returns the length value converted to the number of device pixels. Conversion is made in context of current element style so <code>el.toPixels( em(1.4) )</code> will return number of pixel correspond to 1.4em that is dependent on current font size of the element.</p>
+      <p>length is a string or symbol then this string is treated as a CSS length literal so it is possible to get values like: <code>el.toPixels(#xx-small)</code> or <code>el.toPixels(#system-scrollbar-width)</code>,</p>
+      <p>Second symbol parameter is used with the conversion from percentage lengths:<br><code>var h50p = el.toPixels( pr(50.0), #height );</code> - will calculate the same value as the following CSS declaration: <code>height:50%</code>.</p></dd>
     <dt id="method-scroll">scroll</dt>
     <dd> <img src="images/scroll.gif" align="right"><strong>(part) </strong>returns: integer, device pixels
       <p>Returns various scrolling related positions of the element. Parameters:</p>
@@ -373,7 +372,7 @@ some.selectParent(printel, &quot;div&quot;);
     <dt>scrollToView</dt>
     <dd>
       <div>( [<strong>toTop</strong>:bool, <strong>smooth</strong>: bool = true ] )</div>
-      <p>Scrolls the element to the view - ensures that element is visible. В If <em>toTop</em> is <em>true </em>then forces element to be on top of its scrollable container. This method does deep scroll - it tries to make the element visible through all its scrollable containers. If <em>smooth</em> is false then no attempt to animate the scrolling will be made.</p>
+      <p>Scrolls the element to the view - ensures that element is visible. If <em>toTop</em> is <em>true </em>then forces element to be on top of its scrollable container. This method does deep scroll - it tries to make the element visible through all its scrollable containers. If <em>smooth</em> is false then no attempt to animate the scrolling will be made.</p>
       <p>NOTE: in order that method to work the element should establish a box - to be of display: block | inline-block | table-cell | etc. In contrary <code>&lt;tr&gt;</code> (table row) for example is not a box element. In order to scroll to particular row in table you should choose first cell in that row.</p></dd>
     <dt>mapLocalToView</dt>
     <dd>(<strong>xLocal</strong>:int, <strong>yLocal</strong>:int ) : (int,int)
@@ -490,7 +489,7 @@ el.$content(This is item number <b>{ num }</b>);
           <li> <em> <strong>#post</strong></em> - sends HTTP POST request with params serialized as <code>Content-Type: application/x-www-form-urlencoded;charset=utf-8</code>;</li>
           <li> <strong> <em>#post-data</em></strong> - sends HTTP POST request with params serialized as <code>Content-Type: multipart/form-data; boundary= ...</code>;</li>
           <li> <strong> <em>#put-data</em></strong> - sends HTTP PUT request with params serialized as <code>Content-Type: multipart/form-data; boundary= ...</code>;</li>
-          <li> <strong> <em>#post-json</em></strong> - sends HTTP POST request with params serialized as JSON, В <code>Content-Type: application/json;charset=utf-8</code>;</li>
+          <li> <strong> <em>#post-json</em></strong> - sends HTTP POST request with params serialized as JSON, <code>Content-Type: application/json;charset=utf-8</code>;</li>
           <li> <strong> <em>#put-json</em></strong> - sends HTTP PUT request with params serialized as JSON, <code>Content-Type: application/json;charset=utf-8</code>;</li>
           <li> <strong> <em>#delete</em></strong> - - sends HTTP DELETE request.</li></ul>
         <li> <em>url</em> is a string - url of the page (location) on the server handling HTTP requests.</li>
@@ -513,7 +512,7 @@ el.$content(This is item number <b>{ num }</b>);
     <dt>getState</dt>
     <dd>
       <div> <strong>( </strong>[<strong>stateFlags</strong>:int]<strong> ) </strong>:int</div>
-      <p>Returns state of the element. <em>stateFlags</em> here is a set of bits - &quot;ORed&quot; constants STATE_***. <em>stateFlags</em> is provided then function returns <em>int </em>- flags of the element ANDed with the provided <em>stateFlags</em> variable. If no <em>stateFlags</em> is given then the function returns full set of flags element has at hte moment.</p></dd>
+      <p>Returns state of the element. <em>stateFlags</em> here is a set of bits - &quot;ORed&quot; constants STATE_***. <em>stateFlags</em> is provided then function returns <em>int </em>- flags of the element ANDed with the provided <em>stateFlags</em> variable. If no <em>stateFlags</em> is given then the function returns full set of flags element has at the moment.</p></dd>
     <dt>setState</dt>
     <dd>
       <div> <strong>( stateFlags</strong>:int<strong>) </strong>:void</div>
@@ -649,10 +648,10 @@ el.$content(This is item number <b>{ num }</b>);
     <dt>url</dt>
     <dd>
       <div> <strong>( </strong>[ <strong>relativeUrl</strong>: string ]<strong> )</strong> : string</div>
-      <p>Method builds absolute url from the <em>relativeUrl</em> by using document url as a base. В If there is no <em>relativeUrl</em> then the method just returns url of the document this DOM element belongs to.</p></dd>
+      <p>Method builds absolute url from the <em>relativeUrl</em> by using document url as a base. If there is no <em>relativeUrl</em> then the method just returns url of the document this DOM element belongs to.</p></dd>
     <dt>sort</dt>
     <dd>
-      <div> <strong>( comparator</strong>: function[, <strong>fromIndex</strong>: integer [, <strong>numOfElements</strong>:integer]]<strong> В )</strong> : void</div>
+      <div> <strong>( comparator</strong>: function[, <strong>fromIndex</strong>: integer [, <strong>numOfElements</strong>:integer]]<strong> )</strong> : void</div>
       <p>Sorts children of the element by using <em>comparator</em> function. <em>comparator</em> function has to have following signature:</p>
       <pre>function cmp(el1: Element, el2: Element) : int
 </pre>
@@ -768,7 +767,7 @@ el.$content(This is item number <b>{ num }</b>);
           <li> <code>{tag-list}</code> is a pipe (<code>|</code>) &nbsp;separated list of tag names. Example:<br><code>execCommand(&quot;format:apply-span:b|strong&quot;)</code> - will wrap selection into <code>&lt;b&gt;...&lt;/b&gt;</code> while removing any other <code>&lt;b&gt;</code> and <code>&lt;strong&gt;</code> elements from the selection.</li>
           <li>Additional map parameter may contain list of DOM attributes to add to wrapping element, Example:<br><code>execCommand(&quot;format:apply-span:font&quot;,{color:&quot;#F00&quot;})</code> - will wrap selection into <code>&lt;font color=&quot;#F00&quot;&gt;...&lt;/font&gt;</code> element.</li></ul>
         <li> <code>&quot;format:toggle-span:{tag-list}&quot;</code> - if selection contains one of the tags - removes them, otherwise it does <code>&quot;format:apply-span:...&quot;</code> action.</li>
-        <li> <code>&quot;format:toggle-list:{list-tag}&quot;</code> - converts paragraphs in selection into a list. If selection is already a list of that type then items of the list will be converted tp simple paragraphs;</li>
+        <li> <code>&quot;format:toggle-list:{list-tag}&quot;</code> - converts paragraphs in selection into a list. If selection is already a list of that type then items of the list will be converted to simple paragraphs;</li>
         <ul>
           <li> <code>{list-tag}</code> can be either <code>ul</code>, <code>ol</code> or <code>dl</code>.</li></ul>
         <li> <code>&quot;format:toggle-pre&quot;</code> - converts selection to or from <code>&lt;pre&gt;</code> block.</li>
@@ -847,7 +846,7 @@ el.$content(This is item number <b>{ num }</b>);
     <dt>Event.SELECT_SELECTION_CHANGED</dt>
     <dd>Selection was changed in elements-selectors. generated by behaviors: <em>select, dropdown-select, calendar</em>.</dd>
     <dt>Event.SELECT_STATE_CHANGED</dt>
-    <dd>State of item was changed in elements-selectors. generated by behaviors: <em>select</em> when some of the &lt;options&gt; are expanded/collapsed, <em>event.target</em> is the item that changed its state. <em>behavior: calendar</em> sends this event after calendar was switched to show another month so by handling this event you can update DOM inside the calendar. В</dd>
+    <dd>State of item was changed in elements-selectors. generated by behaviors: <em>select</em> when some of the &lt;options&gt; are expanded/collapsed, <em>event.target</em> is the item that changed its state. <em>behavior: calendar</em> sends this event after calendar was switched to show another month so by handling this event you can update DOM inside the calendar.</dd>
     <dt>Event.HYPERLINK_CLICK</dt>
     <dd>Click on hyperlink. <em>event.target</em> is that hyperlink element.</dd>
     <dt>Event.ACTIVATE_CHILD</dt>
