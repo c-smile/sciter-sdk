@@ -18,6 +18,10 @@ class ValueView : Element
         container.$append(<code.compound.array><caption>{caption}</caption></code>{separator});
         container.last.data = val;
         break;
+      case #tuple:
+        container.$append(<code.compound.array><caption>{caption}</caption></code>{separator});
+        container.last.data = val;
+        break;
       default: {
           var cls = typeof varval || "undefined"; 
           container.$append(<code.{cls}><caption>{caption}</caption></code>{separator});
@@ -173,7 +177,7 @@ class ValueView : Element
         list.$append(<dt>{varname}</dt><dd><code.compound.object><caption>{caption}</caption></code></dd>);
         list.last.$(code).data = varval;
       }
-      else if( compound == #array) {
+      else if( compound == #array || compound == #tuple) {
         list.$append(<dt>{varname}</dt><dd><code.compound.array><caption>{caption}</caption></code></dd>);
         list.last.$(code).data = varval;
       }

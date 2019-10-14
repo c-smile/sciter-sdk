@@ -60,9 +60,6 @@ int uimain(std::function<int()> run ) {
   // note: this:://app URL is dedicated to the sciter::archive content associated with the application
   pwin->load( WSTR("this://app/main.htm") );
 
-  //pwin->load( WSTR("file:///home/andrew/Desktop/test.htm") );
-
-
   pwin->expand();
 
   return run();

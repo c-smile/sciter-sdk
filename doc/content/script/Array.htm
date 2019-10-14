@@ -108,7 +108,7 @@
       <ul>
         <li><em>currentValue</em> is a value of array element at the <em>index</em> position;</li>
         <li><em>array</em> is the array to what this method applied.</li></ul>
-      <p>The <em>map</em> method <span class="Apple-converted-space"/>does not mutate the array on which it is called.</p>
+      <p>The <em>map</em> method<span class="Apple-converted-space"/>does not mutate the array on which it is called.</p>
       <p>If the callback function ends with nothing (without explicit return) then the element will not go to resulting array (as when filter() method below returns false). Note: this a la filter() behavior is non standard.</p>
       <p>Example:</p>
       <pre>var numbers = [1, 2, 3];
@@ -126,7 +126,7 @@ var squares = numbers.map(:el:el*el); // make new array of
         <li><em>previousValue</em> is either <em>initialValue</em> (on first run) or result of previous call of the callback function;</li>
         <li><em>currentValue</em> is a value of array element at the <em>index</em> position;</li>
         <li><em>array</em> is the array being scanned (reduced).</li></ul>
-      <p>The method returns result of last <em>callback</em> invocation. The method <span class="Apple-converted-space"/>does not mutate the array on which it is called.</p>
+      <p>The method returns result of last <em>callback</em> invocation. The method<span class="Apple-converted-space"/>does not mutate the array on which it is called.</p>
       <p>Example, this fragment calculates sum of all elements in the array:</p>
       <pre>var total = [0, 1, 2, 3].reduce( :a, b: a + b );
 // total is 6 at this point.
@@ -134,11 +134,11 @@ var squares = numbers.map(:el:el*el); // make new array of
     <dt>filter</dt>
     <dd>
       <p><strong>(</strong> <em>callback</em>: function [, <em>thisObject</em>] <strong>)</strong> : array</p>
-      <p>This method calls the <em>callback</em><span class="Apple-converted-space"/> function once for each element in the array, and constructs new array of all the values for which <span class="Apple-converted-space"/>the <em>callback</em> returns <em>true</em>.</p>The callback function may accept following parameters: <code>callback(currentValue, index, array)</code> where:
+      <p>This method calls the <em>callback</em><span class="Apple-converted-space"/>function once for each element in the array, and constructs new array of all the values for which<span class="Apple-converted-space"/>the <em>callback</em> returns <em>true</em>.</p>The callback function may accept following parameters: <code>callback(currentValue, index, array)</code> where:
       <ul>
         <li><em>currentValue</em> is a value of array element at the <em>index</em> position;</li>
         <li><em>array</em> is the array to what this method applied.</li></ul>
-      <p>The <em>filter</em> method <span class="Apple-converted-space"/>does not mutate the array on which it is called.</p>
+      <p>The <em>filter</em> method<span class="Apple-converted-space"/>does not mutate the array on which it is called.</p>
       <p>Example, this code creates new array from elements of source array that are greater than 10:</p>
       <pre>var filtered = [12, 5, 8, 130, 44].filter(:el: el &gt; 10);
 // filtered is [12, 130, 44] here
