@@ -1,0 +1,32 @@
+﻿<html>
+  <head>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body class="root">
+  <h1>Tuple</h1>
+  <p>Tuple is a tagged fixed length array - just like normal script array but with the tag.</p>
+	<p>Tuples are created by either using tuple literals:</p>
+  <pre>var vnode = [div: {id=&quot;foo&quot;}, [&quot;content&quot;]];</pre>
+	<p>Or by explicit constructor call:</p>
+  <pre>var vnode = new Tuple(#div, [{id=&quot;foo&quot;}, [&quot;content&quot;]]);</pre>
+	<p>Or by SSX expression (it will create tuple of exactly same structure as the above):</p>
+  <pre>var vnode = &lt;div id=&quot;foo&quot;&gt;content&lt;/div&gt;;
+</pre><dl>
+    <h2>Constants</h2>
+    <dd>N/A</dd>
+    <h2>Properties</h2>
+    <dt>[index]</dt>
+    <dd>- <em>integer</em>, element of the tuple at the <em>index</em> position, read-write index accessor. Zero-based integer index.</dd>
+    <dt>length</dt>
+    <dd>- <em>integer</em>, read-only, number of elements in the tuple.</dd>
+    <dt>tag</dt>
+    <dd>- <i>symbol</i>, is a tag (or name) of the tuple.&nbsp;</dd>
+    <h2>Methods</h2>
+    <dt>this</dt>
+    <dd>( <i>tag</i>: symbol | string, <i>length</i>: integer &nbsp;)<br/> ( <i>tag</i>: symbol | string, <i>elements</i>: array )<p>Constructs tuple having the <i>tag</i>, an the length number of initially <i>undefined</i> elements. Or tuple with the <i>tag</i> and elements of the array.</p></dd>
+    <dt>clone</dt>
+		<dd>( ) returns : tuple<p>returns shallow copy of the tuple.</p></dd>
+
+
+</dl></body>
+</html>

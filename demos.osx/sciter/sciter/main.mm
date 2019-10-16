@@ -37,8 +37,8 @@ int main(int argc, const char * argv[])
     RECT frame;
     frame.top = 100;
     frame.left = 100;
-    frame.right = 100 + 800 + 1;
-    frame.bottom = 100 + 600 + 1;
+    frame.right = 100 + 800;
+    frame.bottom = 100 + 600;
     
     aux::asset_ptr<window> wnd = new window(WSTR("this://app/default.htm"),frame);
     

@@ -10,11 +10,18 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FAFFEA">4.3.0.21</td><td nowrap valign="top" align="center">13-10-2019</td><td>fixes:
+    <tr><td valign="top" bgcolor="#FAFFEA">4.3.0.22</td><td nowrap valign="top" align="center">16-10-2019</td><td>fixes:
+					<ul>
+						
+						<li>[dom] fix of <code>event change</code> generation in masked inputs on VK_BACKSPACE key.</li><li>[css] paddings on overflow: auto | scroll | scroll-indicator are part of content. So scrollbars are inscribed into border box but not padding box. Part II. Regression fixes. That is not quite what browsers do where overflow/padding is broken anyway, see my proposal at W3C: <a href="https://lists.w3.org/Archives/Public/www-style/2019Oct/0016.html">https://lists.w3.org/Archives/Public/www-style/2019Oct/0016.html</a>&nbsp;</li>
+						<li>[osx] fix of <code>view.selectFile(,&quot;*.*&quot;)</code></li><li>[osx] <code>view.move()</code> fix.</li>
+						<li>[osx] <code>SciterCreateWindow(,rect,)</code> , fix of rect interpretation ( treated as window frame rectangle ).</li>
+						</ul>
+					<p>Note: this is the end of 4.3.0.* series if nothing critical will popup in between. Next builds will have <a href="https://sciter.com/built-in-reactjs-in-sciter/">Reactor and SSX</a> on board.</p></td></tr><tr><td valign="top" bgcolor="#FAFFEA">4.3.0.21</td><td nowrap valign="top" align="center">13-10-2019</td><td>fixes:
 					<ul><li>[CSS] fix of <code>{padding:10dip; overflow:auto|scroll}</code> - padding is a part of scrollable content now. So scrollbars are attached to border box rather than to padding box as they used to be. See discussion two years ago <a href="https://sciter.com/forums/topic/scrollbar-and-padding/">https://sciter.com/forums/topic/scrollbar-and-padding/</a> . Yeah, <a href="https://en.wikipedia.org/wiki/Mills_of_God">the mills of God are grinding slowly</a>.&nbsp;</li>
 						<li>[doc] <a href="https://github.com/c-smile/sciter-sdk/pull/136">Documentation fixes by mr. 4silvertooth</a>. Thanks, pal!&nbsp;</li>
 						</ul>
-					<p>Note: this is the end of 4.3.0.* series. Next builds will have <a href="https://sciter.com/built-in-reactjs-in-sciter/">Reactor and SSX</a>&nbsp;on board.</p></td></tr><tr><td valign="top" bgcolor="#FAFFEA">4.3.0.20</td><td nowrap valign="top" align="center">06-10-2019</td><td>fixes:
+					</td></tr><tr><td valign="top" bgcolor="#FAFFEA">4.3.0.20</td><td nowrap valign="top" align="center">06-10-2019</td><td>fixes:
 					<ul><li>[layout, position] Fix of <code>size:*</code> handling in positioned, see: <a href="https://github.com/c-smile/sciter-sdk/issues/134">https://github.com/c-smile/sciter-sdk/issues/134</a>&nbsp;</li>
 						<li>[script, DOM] <code>form.value = {...}</code> fix for the case of compound values, see: sdk/samples/forms/form.htm</li>
 						<li>Fixing :hover handling on elements when visibility changes. See: <a href="https://sciter.com/forums/topic/button-doesnt-skip-selection-after-click/">https://sciter.com/forums/topic/button-doesnt-skip-selection-after-click/</a>&nbsp;</li>
