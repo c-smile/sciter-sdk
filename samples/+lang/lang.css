@@ -12,3 +12,6 @@ html[lang] [title] { aspect:"Lang.Title"; }
 html[lang] [novalue] { aspect:"Lang.Novalue"; }
 
 html[lang] output { aspect:"Lang.Output"; }
+html[lang] input|time { aspect:"Lang.DateTime"; }
+html[lang] input|date { aspect:"Lang.DateTime"; }
+html[lang] input|calendar { aspect:"Lang.DateTime"; }

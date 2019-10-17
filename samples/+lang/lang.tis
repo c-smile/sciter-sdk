@@ -209,6 +209,11 @@ const Lang = function() {
     update();
   }
 
+  function DateTime() {
+    function recreate() { this.outerHtml = this.outerHtml; }
+    addLangHandler(this,recreate);
+  }
+
 
   loadTranslation(); // load inital translation
 
@@ -217,6 +222,7 @@ const Lang = function() {
       Label         : Label,
       Title         : Title,
       Output        : Output,
+      DateTime      : DateTime,
       Novalue       : Novalue,
       Formatter     : Formatter,
       initStats     : initStats,
