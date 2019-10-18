@@ -10,6 +10,7 @@ const Lang = function() {
   var   used = null; // items that were used in xlation (for reporting purposes) 
   
   const ON_LANG_CHANGE = #onLangChange; // name of the event
+  const ON_LANG_CHANGING = #onLangChanging; // name of the event
   
   function loadTranslation(lang = null) { 
     
@@ -44,6 +45,19 @@ const Lang = function() {
       updateLang(child); 
   }
 
+  function prepareUpdateLang(el) {
+    var evh = el[ON_LANG_CHANGING];
+    if( evh ) { 
+      if( typeof evh == #array )
+        for(var h in evh)
+          h.call(el);
+      else   
+        evh.call(el);
+    }
+    for( var child in el ) // do this for the whole tree 
+      prepareUpdateLang(child); 
+  }
+
   function addLangHandler(el, handler) {
     var existing = el[ON_LANG_CHANGE];
     if( !existing )
@@ -54,6 +68,16 @@ const Lang = function() {
       el[ON_LANG_CHANGE] = [existing,handler];
   }
 
+  function addLangPreHandler(el, handler) {
+    var existing = el[ON_LANG_CHANGING];
+    if( !existing )
+      el[ON_LANG_CHANGING] = handler;
+    else if( typeof existing == #array) 
+      existing.push(handler);
+    else 
+      el[ON_LANG_CHANGING] = [existing,handler];
+  }
+
   function Controller() {
   
     if(!xlation) loadTranslation();
@@ -61,6 +85,7 @@ const Lang = function() {
     this.language = property(v) {
       get return langId;
       set {
+        prepareUpdateLang(this);
         this.attributes["lang"] = v;
         this.attributes["dir"] = v == "ar" || v == "he" ? "rtl" : "ltr";
         loadTranslation(v);
@@ -210,7 +235,15 @@ const Lang = function() {
   }
 
   function DateTime() {
-    function recreate() { this.outerHtml = this.outerHtml; }
+    var oldvalue = this.value;
+    function prepare() { oldvalue = this.value; }
+    addLangPreHandler(this,prepare);
+    
+    function recreate() { 
+      var p = this.parent; var i = this.index;
+      this.outerHtml = this.outerHtml; 
+      p[i].value = oldvalue; // reset saved value
+    }
     addLangHandler(this,recreate);
   }
 
