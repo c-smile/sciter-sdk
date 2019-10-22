@@ -1,0 +1,61 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+main { size:*; }
+
+table { border:2dip solid #ccc; background:#fff; size:*; }
+table > thead > tr > th { width:*; }
+table > tbody > tr { line-height:1.8em; border-left:0.5em solid transparent; }
+table > tbody > tr:current { background:highlight; color: highlighttext; }
+table > tbody > tr:checked { color:red; }
+
+        </style>
+        <script type="text/tiscript">
+
+include "vlist.tis";
+
+function recordsGenerator() {
+  var out = [];
+  for(var i in 5000) out.push 
+    { 
+      key:i,
+      field1: String.$({i}.1),
+      field2: String.$({i}.2),
+      field3: String.$({i}.3)
+    };
+  return out;
+}
+
+
+$(main).content( 
+  <VTable multiselect="true" recordset={recordsGenerator()} >
+    <columns>
+      <th>First</th>
+      <th>Second</th>
+      <th>Third</th>
+    </columns>
+    { 
+      function(record,index) { // function generating single row
+        return 
+          <tr key={record.key} 
+           :current={this.currentRecord===record} 
+           :checked={this.isSelected(record)}>
+            <td>cell {record.field1}</td>
+            <td>cell {record.field2}</td>
+            <td>cell {record.field3}</td>
+          </tr>;
+      }
+    }
+  </VTable>);
+
+        </script>
+    </head>
+    <body>
+      <p>Demo of simple virtual list component &lt;VList>.</p>
+      <p>The caller shall suply record view producer function.</p>
+      <p>The list supports multiselection (CTRL+CLICK).</p>
+      <main></main>
+    </body>
+</html>

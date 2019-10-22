@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+main { size:*; }
+
+vlist {border:2dip solid #ccc; background:#fff;}
+vlist > li { line-height:1.8em; border-left:0.5em solid transparent; }
+vlist > li:current { background:highlight; color: highlighttext; }
+vlist > li:checked { border-color:red; }
+
+        </style>
+        <script type="text/tiscript">
+
+include "vlist.tis";
+
+function recordsGenerator() {
+  var out = [];
+  for(var i in 1000) out.push {key:i};
+  return out;
+}
+
+function renderRecord(record,index) {
+  return <li key={record.key} 
+     :current={this.currentRecord===record} 
+     :checked={this.isSelected(record)}>This is an item # {index}.</li>;
+}
+
+$(main).content(
+  <VList
+    multiselect="true"
+    recordset={recordsGenerator()}
+    record={renderRecord} />);
+
+        </script>
+    </head>
+    <body>
+      <p>Demo of simple virtual list component &lt;VList>.</p>
+      <p>The caller shall suply record view producer function.</p>
+      <p>The list supports multiselection (CTRL+CLICK).</p>
+      <main></main>
+    </body>
+</html>

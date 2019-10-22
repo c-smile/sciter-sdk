@@ -1,6 +1,6 @@
 ﻿<html>
   <head>
-    <meta name="generator" content="h-smile:richtext">
+    <meta name="generator" content="h-smile:richtext"/>
   </head>
 <body>
   <h1>Element object</h1>
@@ -40,9 +40,9 @@
     <dt>parent</dt>
     <dd> <font color="#999999">r - </font><em>Element</em>, parent element of given element or <em>null</em> if this element is a root element. Read-only.</dd>
     <dt>layoutParent</dt>
-    <dd> <font color="#999999">r - </font><em>Element</em>, layout parent element of given element or <em>null</em> if this element is a root element. Read-only.<br>For positioned elements (position:absolute) layout parent is the positioned container (closest positioned ancestor) element that is used for top/left/bottom/right calculations.</dd>
+    <dd> <font color="#999999">r - </font><em>Element</em>, layout parent element of given element or <em>null</em> if this element is a root element. Read-only.<br/>For positioned elements (position:absolute) layout parent is the positioned container (closest positioned ancestor) element that is used for top/left/bottom/right calculations.</dd>
     <dt>owner</dt>
-    <dd> <font color="#999999">r - </font><em>Element</em>, owner element of given element or <em>null</em> if this element is a root element. Read-only.<br>Most of the time the owner is the parent but for popup elements for example owner is the element that owns the popup, e.g. for the tooltip element the owner is the element that causes the tooltip to be shown.</dd>
+    <dd> <font color="#999999">r - </font><em>Element</em>, owner element of given element or <em>null</em> if this element is a root element. Read-only.<br/>Most of the time the owner is the parent but for popup elements for example owner is the element that owns the popup, e.g. for the tooltip element the owner is the element that causes the tooltip to be shown.</dd>
     <dt>index</dt>
     <dd> <font color="#999999">r</font> - Integer, index of the element in parent collection. Undefined if this element is not connected to any parent.</dd>
     <dt>tag</dt>
@@ -60,7 +60,7 @@
     <dt> <u>attributes</u></dt>
     <dd> <font color="#999999">c - </font><a href="Attributes.htm"><em>Attributes</em></a>, collection of html attributes of the element.</dd>
     <dt> <u>@</u></dt>
-    <dd> <font color="#999999">c -</font> short form to access <a href="Attributes.htm"><em>Attributes</em></a>, collection of html attributes of the element. It is just an alias of the <em>attributes</em> above.<br>Sample:<br><code>this.@[&quot;selected&quot;] = true</code> // or<br><code>this.@#selected = true</code><br>is an equivalent of <br><code>this.attributes[&quot;selected&quot;] = true</code></dd>
+    <dd> <font color="#999999">c -</font> short form to access <a href="Attributes.htm"><em>Attributes</em></a>, collection of html attributes of the element. It is just an alias of the <em>attributes</em> above.<br/>Sample:<br/><code>this.@[&quot;selected&quot;] = true</code> // or<br/><code>this.@#selected = true</code><br/>is an equivalent of <br/><code>this.attributes[&quot;selected&quot;] = true</code></dd>
     <dt> <u>style</u></dt>
     <dd> <font color="#999999">c - </font><a href="Style.htm">Style</a>, style attributes of the DOM element.</dd>
     <dt> <u>state</u></dt>
@@ -141,9 +141,9 @@
     <h2>Enumeration</h2>
     <dt>for ... in</dt>
     <dd>
-      <div>for(var<strong> child</strong> in<strong> element</strong>)<strong> { </strong>/* loop body */<strong> }</strong> or <br>for(var<strong> (index,child)</strong> in<strong> element</strong>)<strong> { </strong>/* loop body */<strong> }</strong></div>
+      <div>for(var<strong> child</strong> in<strong> element</strong>)<strong> { </strong>/* loop body */<strong> }</strong> or <br/>for(var<strong> (index,child)</strong> in<strong> element</strong>)<strong> { </strong>/* loop body */<strong> }</strong></div>
       <p>Executes body of the loop for each child elements of the element.</p>
-      <p>Example, for <em>p</em> element in html: <br><code>&lt;p&gt;Hello &lt;em&gt;wonderfull&lt;/em&gt; world&lt;/p&gt;</code><br>loop will be executed one time and <em>child</em> variable will get Element(&quot;em&quot;).</p></dd>
+      <p>Example, for <em>p</em> element in html: <br/><code>&lt;p&gt;Hello &lt;em&gt;wonderfull&lt;/em&gt; world&lt;/p&gt;</code><br/>loop will be executed one time and <em>child</em> variable will get Element(&quot;em&quot;).</p></dd>
     <h2>Methods</h2>
     <dt>this</dt>
     <dd>
@@ -198,7 +198,7 @@ var li3 = self.$( ul &gt; li:nth-child({n}) );
     <dd>
       <div> <strong>(func , CSSselector</strong>: string<strong> [, argument1 [, argument2, ... ]])</strong> returns: <em>integer</em></div>
       <p>Calls <em>func</em> (function reference) for each element satisfying (matching) <em>CSSselector.</em> Function <em>func</em> shall accept one parameter where select will provide reference to matched element. Function may return <em>true</em> to stop enumeration.</p>
-      <p>Example, following fragment will print out names of all input elements in the document: <pre>function printel(el) { stdout.println( el.attributes[<font color="#336600">&quot;name&quot;</font>] ); }<br>document.select(printel, &quot;input&quot;);</pre></p></dd>
+      <p>Example, following fragment will print out names of all input elements in the document: </p><pre>function printel(el) { stdout.println( el.attributes[<font color="#336600">&quot;name&quot;</font>] ); }<br/>document.select(printel, &quot;input&quot;);</pre></dd>
     <dt>selectAll</dt>
     <dd>
       <div> <strong>(CSSselector</strong>: string<strong> [, argument1 [, argument2, ... ]])</strong> returns: <em>Array</em></div>
@@ -304,10 +304,10 @@ some.selectParent(printel, &quot;div&quot;);
       <ul>
         <li> <strong>part</strong> - one of symbolic constants <strong>#left</strong>, <strong>#top</strong>, <strong>#right</strong>, <strong>#bottom</strong>, <strong>#width</strong> or <strong>#height</strong>. Defines part of box (rectangle) to return.</li>
         <ul>
-          <li>If <em>part</em> is <strong>#rect</strong> then the function returns four values - left, top, right, bottom. Use it for example as <code> <br>var (x1,y1,x2,y2) = this.box(#rect, #inner, #view)</code>;</li>
-          <li>If <em>part</em> is <strong>#rectw</strong> then the function returns four values - left, top, width and height. Use it for example as <code> <br>var (x,y,w,h) = this.box(#rectw, #inner, #view)</code>;</li>
-          <li>If part is <strong>#dimension</strong> the function returns two values - width and height. Use it as: <code> <br>var (w,h) = this.box(#dimension, #inner)</code>;</li>
-          <li>If part is <strong>#position</strong> the function returns two values - left and top. Use it as: <code> <br>var (x,y) = this.box(#position, #inner, #view)</code>;</li></ul>
+          <li>If <em>part</em> is <strong>#rect</strong> then the function returns four values - left, top, right, bottom. Use it for example as <code> <br/>var (x1,y1,x2,y2) = this.box(#rect, #inner, #view)</code>;</li>
+          <li>If <em>part</em> is <strong>#rectw</strong> then the function returns four values - left, top, width and height. Use it for example as <code> <br/>var (x,y,w,h) = this.box(#rectw, #inner, #view)</code>;</li>
+          <li>If part is <strong>#dimension</strong> the function returns two values - width and height. Use it as: <code> <br/>var (w,h) = this.box(#dimension, #inner)</code>;</li>
+          <li>If part is <strong>#position</strong> the function returns two values - left and top. Use it as: <code> <br/>var (x,y) = this.box(#position, #inner, #view)</code>;</li></ul>
         <li> <strong>edge</strong>, one of <a href="http://www.w3.org/TR/REC-CSS2/box.html">edges of element</a>:</li>
         <ul>
           <li> <strong>#margin</strong> - margin box edge,</li>
@@ -333,7 +333,7 @@ some.selectParent(printel, &quot;div&quot;);
             <li> <strong>#padding</strong> - padding box edge,</li>
             <li> <strong>#inner</strong> - inner box edge</li>
             <p>the function will return cumulative widths of correspondent parts, examples:</p>
-            <p> <code>var (mx1,my1,mx2,my2) = this.box(#rect, #margin, #inner)</code>;<br>Each mx* value here will get sum of margin, border and padding in the left, top, right and bottom directions. In other words this call will return distances of margin box from inner(content) box of the element. And this call <code>var (mx1,my1,mx2,my2) = this.box(#rect, #margin, #border)</code>; will just return computed values of margin-left, margin-top, margin-right and margin-bottom CSS attributes.</p></ul></ul></ul>
+            <p> <code>var (mx1,my1,mx2,my2) = this.box(#rect, #margin, #inner)</code>;<br/>Each mx* value here will get sum of margin, border and padding in the left, top, right and bottom directions. In other words this call will return distances of margin box from inner(content) box of the element. And this call <code>var (mx1,my1,mx2,my2) = this.box(#rect, #margin, #border)</code>; will just return computed values of margin-left, margin-top, margin-right and margin-bottom CSS attributes.</p></ul></ul></ul>
       <p>For more information see the <a name="box-model"><em>CSS box model</em></a> specification: <a href="http://www.w3.org/TR/CSS2/box.html">http://www.w3.org/TR/CSS2/box.html</a></p></dd>
     <dt>intrinsicWidthMin</dt>
     <dd>
@@ -352,9 +352,9 @@ some.selectParent(printel, &quot;div&quot;);
       <div> <strong>( length : </strong>length | string | symbol [, <strong>#width</strong> | <strong>#height</strong> ]<strong> ) :</strong> integer, device pixels</div>
       <p>returns the length value converted to the number of device pixels. Conversion is made in context of current element style so <code>el.toPixels( em(1.4) )</code> will return number of pixel correspond to 1.4em that is dependent on current font size of the element.</p>
       <p>length is a string or symbol then this string is treated as a CSS length literal so it is possible to get values like: <code>el.toPixels(#xx-small)</code> or <code>el.toPixels(#system-scrollbar-width)</code>,</p>
-      <p>Second symbol parameter is used with the conversion from percentage lengths:<br><code>var h50p = el.toPixels( pr(50.0), #height );</code> - will calculate the same value as the following CSS declaration: <code>height:50%</code>.</p></dd>
+      <p>Second symbol parameter is used with the conversion from percentage lengths:<br/><code>var h50p = el.toPixels( pr(50.0), #height );</code> - will calculate the same value as the following CSS declaration: <code>height:50%</code>.</p></dd>
     <dt id="method-scroll">scroll</dt>
-    <dd> <img src="images/scroll.gif" align="right"><strong>(part) </strong>returns: integer, device pixels
+    <dd> <img src="images/scroll.gif" align="right"/><strong>(part) </strong>returns: integer, device pixels
       <p>Returns various scrolling related positions of the element. Parameters:</p>
       <p> <strong>part</strong> - one of symbolic constants:</p>
       <ul>
@@ -400,7 +400,17 @@ some.selectParent(printel, &quot;div&quot;);
       <div> <strong>( element</strong> | <strong>array</strong> [, <strong>element</strong>2 [, <strong>element</strong>3, ... ]]<strong> )</strong> returns: true | false.</div>
       <p>Replaces content of the element by elements, that is short form of <code>el.clear(); el.append(element1); el.append(element2); ...</code></p>
       <p> <em>This method can be used for setting cells in &lt;tr&gt;s. It handles properly cells with col/rowspans.</em></p>
-      <p>For all other elements <em>elementN</em> can be either DOM element, string, tuple ( template of the element that uses <a href="#object-template">microformat</a> ) or array of Elements/Nodes.</p></dd>
+      <p>For all other elements <em>elementN</em> can be either DOM element, string, tuple ( template of the element that uses <a href="#object-template">microformat</a> ) or array of Elements/Nodes.</p>
+			</dd><dt>merge</dt>
+		<dd><b>(</b> <b>element</b> | <b>tuple</b>(velement) [, <b>callback</b>: function [, <b>#only-children</b> ]]) : Element<p>Does merge ( a.k.a. patch, reconciliation ) of the DOM tree of this element with other tree that can be either other DOM element or virtual DOM element described by the tuple in the form: <code>[tag:{attributes}, [children]]</code></p>
+			<p>Optional <i>callback</i> function, if provided, will receive the following calls:</p>
+			<ul><li><code>callback(#change-text, textNode:Node, newText: string)</code> - on change of text of DOM text node;</li>
+				<li><code>callback(#remove-node, node:Node)</code> - on DOM node removal (either text node or element);</li>
+				<li><code>callback(#insert-node, parent:Element, atIndex:integer, newNode: Node)</code> - on new DOM node insertion;</li>
+				<li><code>callback(#reposition-node, parent:Element, toIndex:integer, node: Node)</code> - on DOM node move;</li>
+				<li><code>callback(#replace-node, oldNode:Node, newNode: Node)</code> - on DOM node replacement;</li>
+				<li><code>callback(#update-atts, element:Element, atts: Object)</code> - on update of DOM element attributes;</li></ul>
+			<p><i>#only-children</i> parameter instructs the function to do only children reconciliation of two elements not touching attributes of the element itself.</p></dd>
     <dt>$content</dt>
     <dd>
       <div> <strong>(</strong> .. inline html .. <strong>)</strong> : Element</div>
@@ -661,7 +671,7 @@ el.$content(This is item number <b>{ num }</b>);
     <dd>
       <div> <strong>( </strong>[<strong>x</strong>: int, <strong>y</strong>: int [, <strong>w</strong>: int, <strong>h</strong>: int] [, <strong>relto</strong>] [, <strong>mode</strong> ][, <strong>referencePoint</strong>: int] &nbsp;<strong>)</strong> : void</div>
       <p>This methods transforms the element into the &quot;sprite&quot; - element that moves independently from the rest of the DOM:</p>
-      <p>Declares element as having <em>position:popup</em> and moves it to the position (<em>x</em>,<em>y</em>). If the element happens to be outside of the view then engine creates special popup window for it. Third parameter describes role of x and y values. <em>w</em> and <em>h</em> parameters, if provided, change dimensions of the element.<br><em>mode</em> parameter</p>
+      <p>Declares element as having <em>position:popup</em> and moves it to the position (<em>x</em>,<em>y</em>). If the element happens to be outside of the view then engine creates special popup window for it. Third parameter describes role of x and y values. <em>w</em> and <em>h</em> parameters, if provided, change dimensions of the element.<br/><em>mode</em> parameter</p>
       <ul>
         <li> <em>#auto</em> - window is created if element is moved outside of the view. If element stays inside the view it is rendered as popup:fixed.</li>
         <li> <em>#attached-window</em> - forces the engine to create popup window for the element, window is moved in sync with its host window (view).</li>
@@ -696,7 +706,7 @@ el.$content(This is item number <b>{ num }</b>);
       <p>Event names may have namespaces in their names. For example: <code>&quot;click.mywidget&quot;</code> defines click handler assigned by some <em>mywidget</em> component. Namespaces are especially useful when you need to unsubscribe multiple handlers at once. For example this <code>el.unsubscribe(&quot;.mywidget&quot;)</code> will remove all handlers with <em>mywidget</em> namespace.</p>
       <p>The <em>selector</em> is an optional parameter - CSS selector of child element. When provided allows containers to subscribe to events coming from particular children.</p>
       <p>The <em>handler</em> can be any <code>function(evt:Event) {...}</code> - callback that gets invoked when the event occurs. <em>this</em> variable is set to the <code>evt.target</code> - element that originated the event.</p>
-      <p>To subscribe on event in EVENT_SINKING phase prepend the <em>event</em> name by <code>~</code> symbol. For example this handler <br><code>container.subscribe(&quot;~keydown&quot;, function() {...});</code> <br>will receive the keydown event before its children.</p>
+      <p>To subscribe on event in EVENT_SINKING phase prepend the <em>event</em> name by <code>~</code> symbol. For example this handler <br/><code>container.subscribe(&quot;~keydown&quot;, function() {...});</code> <br/>will receive the keydown event before its children.</p>
       <p>Note: this method mimics jQuery's <code>.on()</code> method and has the same semantics.</p></dd>
     <dt id="on-by-name">on</dt>
     <dd>
@@ -710,7 +720,7 @@ el.$content(This is item number <b>{ num }</b>);
     <dt>unsubscribe</dt>
     <dd>
       <div>(<strong>event</strong> : string [, <strong>selector</strong>: string]) : &lt;this element&gt;</div>
-      <p>The method detaches matching event handlers from the element that were set previously by subscribe(&quot;name&quot;,...) method. <br>Example: <br> &nbsp;&nbsp;<code>el.unsubscribe(&quot;click&quot;)</code>;<br>will remove all event handlers with &quot;click&quot; name. Even those that have also namespace defined like &quot;click.mywidget&quot;.</p>
+      <p>The method detaches matching event handlers from the element that were set previously by subscribe(&quot;name&quot;,...) method. <br/>Example: <br/> &nbsp;&nbsp;<code>el.unsubscribe(&quot;click&quot;)</code>;<br/>will remove all event handlers with &quot;click&quot; name. Even those that have also namespace defined like &quot;click.mywidget&quot;.</p>
       <p>Note: this method mimics jQuery's <code>.off()</code> method.</p></dd>
     <dt>off</dt>
     <dd>alias of <strong>unsubscribe</strong> methods above.</dd>
@@ -764,8 +774,8 @@ el.$content(This is item number <b>{ num }</b>);
         <li> <code>&quot;edit:insert-soft-break&quot;</code> - &quot;SHIFT+ENTER&quot; command, inserts <code>&lt;br&gt;</code> separator but actual DOM modification depends on context;</li>
         <li> <code>&quot;format:apply-span:{tag-list}&quot;</code> - wrap selection into span element, if the selection contains one of tags they will be removed.</li>
         <ul>
-          <li> <code>{tag-list}</code> is a pipe (<code>|</code>) &nbsp;separated list of tag names. Example:<br><code>execCommand(&quot;format:apply-span:b|strong&quot;)</code> - will wrap selection into <code>&lt;b&gt;...&lt;/b&gt;</code> while removing any other <code>&lt;b&gt;</code> and <code>&lt;strong&gt;</code> elements from the selection.</li>
-          <li>Additional map parameter may contain list of DOM attributes to add to wrapping element, Example:<br><code>execCommand(&quot;format:apply-span:font&quot;,{color:&quot;#F00&quot;})</code> - will wrap selection into <code>&lt;font color=&quot;#F00&quot;&gt;...&lt;/font&gt;</code> element.</li></ul>
+          <li> <code>{tag-list}</code> is a pipe (<code>|</code>) &nbsp;separated list of tag names. Example:<br/><code>execCommand(&quot;format:apply-span:b|strong&quot;)</code> - will wrap selection into <code>&lt;b&gt;...&lt;/b&gt;</code> while removing any other <code>&lt;b&gt;</code> and <code>&lt;strong&gt;</code> elements from the selection.</li>
+          <li>Additional map parameter may contain list of DOM attributes to add to wrapping element, Example:<br/><code>execCommand(&quot;format:apply-span:font&quot;,{color:&quot;#F00&quot;})</code> - will wrap selection into <code>&lt;font color=&quot;#F00&quot;&gt;...&lt;/font&gt;</code> element.</li></ul>
         <li> <code>&quot;format:toggle-span:{tag-list}&quot;</code> - if selection contains one of the tags - removes them, otherwise it does <code>&quot;format:apply-span:...&quot;</code> action.</li>
         <li> <code>&quot;format:toggle-list:{list-tag}&quot;</code> - converts paragraphs in selection into a list. If selection is already a list of that type then items of the list will be converted to simple paragraphs;</li>
         <ul>
@@ -810,7 +820,7 @@ el.$content(This is item number <b>{ num }</b>);
     <dt>Event.MOUSE_DOWN</dt>
     <dd>One of mouse buttons pressed in the element. <em>event.mainButton</em> and <em>event.</em>propButton will tell what button was pressed.</dd>
     <dt>Event.MOUSE_UP</dt>
-    <dd>One of mouse buttons released in the element. <em>event.mainButton</em> and <em>event.</em>propButton will tell what button was pressed. <br>To detect single MOUSE CLICK event use following condition:<br><font face="Courier New" size="1">event.type == Event.MOUSE_UP &amp;&amp; this.getState(Element.STATE_PRESSED)</font></dd>
+    <dd>One of mouse buttons released in the element. <em>event.mainButton</em> and <em>event.</em>propButton will tell what button was pressed. <br/>To detect single MOUSE CLICK event use following condition:<br/><font face="Courier New" size="1">event.type == Event.MOUSE_UP &amp;&amp; this.getState(Element.STATE_PRESSED)</font></dd>
     <dt>Event.MOUSE_DCLICK</dt>
     <dd>Double mouse click in the element.</dd>
     <dt>Event.MOUSE_WHEEL</dt>
@@ -862,7 +872,7 @@ el.$content(This is item number <b>{ num }</b>);
     <dt>Event.MENU_ITEM_CLICK</dt>
     <dd>Click on menu item. <em>event.target</em> is the item <em>event.owner</em> is an owner of the popup menu.</dd>
     <dt>Event.range 0x1000 .. 0x7FFF</dt>
-    <dd>Custom control events. Any code from this range can be used in <em>element.sendEvent(code,...)</em> calls. <br>If behavior class is designed to behave like for example a button then you may use <em>element.postEvent(Event.BUTTON_CLICK,...)</em> to notify all parties about clicks.</dd>
+    <dd>Custom control events. Any code from this range can be used in <em>element.sendEvent(code,...)</em> calls. <br/>If behavior class is designed to behave like for example a button then you may use <em>element.postEvent(Event.BUTTON_CLICK,...)</em> to notify all parties about clicks.</dd>
     <h4>onGesture(event): true|false</h4>
     <dd>Gestures, DOM events, available on devcices with touch screen support.
       <p>See <strong>Gesture (touch screen) event codes</strong> in Event object definition.</p></dd>
@@ -897,7 +907,7 @@ el.$content(This is item number <b>{ num }</b>);
     <dt>self.ready()</dt>
     <dd>Event is generated as a final step of document loading.</dd>
     <dt>self.closing(reason)</dt>
-    <dd>Document is about to be closed. Event handler can prevent unloading by returning <em>false</em> value. The reason parameter is one of following symbols:<br><strong>- #by-chrome</strong> - user clicked close button on window;<br><strong>- #by-code</strong> - view.close() issued;<br><strong>- #by-load</strong> - document gets unloaded by loading new document.</dd></dl>
+    <dd>Document is about to be closed. Event handler can prevent unloading by returning <em>false</em> value. The reason parameter is one of following symbols:<br/><strong>- #by-chrome</strong> - user clicked close button on window;<br/><strong>- #by-code</strong> - view.close() issued;<br/><strong>- #by-load</strong> - document gets unloaded by loading new document.</dd></dl>
   <h2 align="left" id="object-template">Element.create and Element.insert|append, tuple-template microformat.</h2>
   <div>Tuple-template is a tuple literal used for generation of new elements. The <code>tuple.tag</code> property is used as a tag of newly created DOM element. The tuple shall obey following rules:</div>
   <pre>[div: <font face="monospace" color="#336600">// mandatory, tuple tag - tag name of the DOM element. E.g. <em>div</em>, <em>p</em>, <em>option</em>, <em>select</em>, etc.
@@ -916,8 +926,8 @@ el.$content(This is item number <b>{ num }</b>);
   <p>Example, following script:</p>
   <pre>sb.append (
   [div: { class:&quot;dyn&quot; },
-    [p: &quot;Text1&quot; ],
-    [p: &quot;Text2 before &quot;, [button:&quot;Hi!&quot;], &quot; after&quot;]
+    [ [p: &quot;Text1&quot; ],
+      [p: &quot;Text2 before &quot;, [button:&quot;Hi!&quot;], &quot; after&quot;] ]
   ]);
 </pre>
   <p>Is an equivalent of the following:</p>

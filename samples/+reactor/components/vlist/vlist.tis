@@ -1,0 +1,145 @@
+
+include "sciter:reactor.tis";
+
+class VList : Reactor.Component 
+{
+  const styleset = ["vlist", $url(vlist.css)];
+
+  this var recordset = [];
+  this var recordview = null;
+  this var swIndex = 0;
+  this var swLength = 40;
+  this var itemHeight = 10;  // will be recalculated later
+  this var visibleItems = 1; // will be recalculated later
+  this var currentRecord = null; // current record
+  this var selectedRecords = {};
+
+  function this(atts,kids) {
+    this.swIndex = 0;
+    this.swLength = 40;
+    this.itemHeight = 10; // will be recalculated later
+    this.recordset = atts.recordset;
+    this.recordview = atts.record;
+    this.multiselect = atts.multiselect;
+    assert typeof this.recordset == #array;
+    assert typeof this.recordview == #function;
+  }
+
+  function render() {
+    var items = [];
+    var {recordview, recordset, swIndex, swLength} = this;
+    var end = Integer.min(recordset.length,swIndex + swLength);
+    for( var i = swIndex; i < end; ++i )
+      items.push( recordview.call(this,recordset[i],i) );
+    return <vlist>{items}</vlist>;
+  }
+
+  function attached() {
+    this.paintContent = () => {
+      this.itemHeight = this.first.box(#height,#border);
+      this.visibleItems = this.box(#height,#client) / this.itemHeight; 
+      this.paintContent = null; // we need this only once
+      this.post(this.resetPaddings); // as we've discovered height of the single item we need to resetPaddings
+    };
+  }
+
+  function onSize() {
+    this.visibleItems = this.box(#height,#client) / this.itemHeight;
+    this.swLength = Integer.max(this.swLength,this.visibleItems + 1);
+    this.timer(40ms, function() {
+      this.merge(this.render());
+      this.resetPaddings();
+    });
+  }
+
+  function onScroll(evt) 
+  {
+    if( evt.type != Event.SCROLL_POS ) 
+      return;
+
+    var rPos = evt.scrollPos / this.itemHeight;  // recordPos
+    var mPos = this.recordset.length - 1 - this.visibleItems; // max recordPos
+    if( rPos > mPos ) rPos = mPos;
+    if( rPos < 0 ) rPos = 0;
+
+    if( rPos + this.swLength >= this.recordset.length ) {
+      var ni = this.recordset.length - this.swLength; 
+      if(this.swIndex == ni) return;
+      this.swIndex = ni; 
+    }
+    else if( rPos + this.visibleItems >= this.swIndex + this.swLength )
+      this.swIndex = rPos; 
+    else if(rPos < this.swIndex)
+      this.swIndex = rPos;
+    else 
+      return;
+
+    // note, we do not use standard Component.update() method here
+    // as this needs to be done synchronously - onScroll is called under scroll animation
+    this.merge(this.render());
+    this.resetPaddings();
+    Element.update.call(this); // use original Element.update method.
+  }
+
+  function resetPaddings() {
+    // set paddings so scrollbar will reflect the reality 
+    this.style[#padding-top] = px(this.swIndex * this.itemHeight);
+    this.style[#padding-bottom] = px((this.recordset.length - this.swIndex - this.swLength) * this.itemHeight);
+  }
+
+  function isSelected(record) {
+     return this.selectedRecords[record] || false;
+  }
+
+  event mousedown $(li,tr) (evt,li) {
+    if(var cc = this.$(>*:current))
+      cc.state.current = false;
+    this.currentRecord = this.recordset[li.index + this.swIndex];
+    li.state.current = true;
+    if( this.multiselect && evt.ctrlKey ) {
+      if(li.state.checked) {
+        delete this.selectedRecords[this.currentRecord];
+        li.state.checked = false;
+      } else {
+        this.selectedRecords[this.currentRecord] = true;
+        li.state.checked = true;
+      }
+    }
+  }
+}
+
+// class component
+class VTableBody : VList 
+{
+  const styleset = ["vtbody", $url(vlist.css)];
+
+  function render() {
+    var items = [];
+    var {recordview, recordset, swIndex, swLength} = this;
+    var end = Integer.min(recordset.length,swIndex + swLength);
+    for( var i = swIndex; i < end; ++i )
+      items.push( recordview.call(this,recordset[i],i) );
+    return <tbody>{items}</tbody>;
+  }
+}
+
+// function component - used just for table structure generation
+function VTable(props,kids) {
+  debug log: props;
+  assert kids.length == 2; //
+  assert kids[0].tag == #columns; // expect <columns><th>..</th><th>..</th><columns>
+  assert typeof kids[1] == #function; // expect function producing row: <tr><td>..</td><td>..</td></tr>
+  assert typeof props.recordset == #array;
+
+  var THes = kids[0][1]; // array of <th>'es
+
+  return 
+    <table fixedlayout>
+      <thead><tr>{THes}</tr></thead>
+      <VTableBody multiselect={props.multiselect} 
+                  recordset={props.recordset}
+                  record={kids[1]} />
+    </table>;
+}
+
+

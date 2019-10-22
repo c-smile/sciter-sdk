@@ -68,11 +68,11 @@ function Function.defer(args..) {
 //| 
 
 function Function.throttle(milliseconds, options = {}) {
+    milliseconds = milliseconds.toInteger();
     var context, args, result;
     var running = false;
-    var previous = 0;
+    var previous = options.leading === false ? 0 : Date.ticks() - milliseconds - 1;
     var func = this;
-    milliseconds = milliseconds.toInteger();
     function later() {
       previous = options.leading === false ? 0 : Date.ticks();
       running = false;

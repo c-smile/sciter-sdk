@@ -26,7 +26,7 @@ namespace Merge {
 
     switch(op) {
       case #update-attributes: 
-        //var [el,fromel] = args; 
+        //var el = args; 
         break;
       case #insert-node: {
         var [parent, index, node] = args;

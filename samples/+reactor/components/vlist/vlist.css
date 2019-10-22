@@ -1,0 +1,17 @@
+
+@set vlist {
+  :root {
+    display:block;
+    flow:vertical;
+    size:*;
+    overflow-y:scroll-indicator;
+  }
+  :root > li {display:block; }
+}
+
+@set vtbody {
+  :root {
+    size:*;
+    overflow-y:scroll-indicator;
+  }
+}

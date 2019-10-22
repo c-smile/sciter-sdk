@@ -10,7 +10,17 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FAFFEA">4.3.0.22</td><td nowrap valign="top" align="center">16-10-2019</td><td>fixes:
+    <tr><td valign="top" bgcolor="#FFFAFC">4.4.0.0</td><td nowrap valign="top" align="center">21-10-2019</td><td>new:
+					<ul><li>The Reactor, see: <a href="https://sciter.com/developers/sciter-docs/reactor-and-ssx/">https://sciter.com/developers/sciter-docs/reactor-and-ssx/</a>&nbsp;</li>
+						</ul>
+					<p>fixes:</p>
+					<ul>
+						
+						
+						<li>[CSS/script] Fix of prototype assignment.</li><li>[script, +lib] <code>Function.throttle</code>, fix of initial run.</li><li>[script] fix of await to return all arguments, see: <a href="https://sciter.com/forums/topic/promises-iterate-through-the-array-of-values/#post-63032">https://sciter.com/forums/topic/promises-iterate-through-the-array-of-values/#post-63032</a>&nbsp;</li><li>[dom] fix of event change generation in masked inputs on VK_DELETE key.</li>
+						<li>[dom/script] fix of failed property assignment while document reload.</li>
+						<li>[script] if event handling function throws an error it now gets unsubscribed silently as an event handler.</li>
+						<li>[DOM] better support of <code>el.attributes[&quot;lang&quot;] = newval;</code></li></ul></td></tr><tr><td valign="top" bgcolor="#FAFFEA">4.3.0.22</td><td nowrap valign="top" align="center">16-10-2019</td><td>fixes:
 					<ul>
 						
 						<li>[dom] fix of <code>event change</code> generation in masked inputs on VK_BACKSPACE key.</li><li>[css] paddings on overflow: auto | scroll | scroll-indicator are part of content. So scrollbars are inscribed into border box but not padding box. Part II. Regression fixes. That is not quite what browsers do where overflow/padding is broken anyway, see my proposal at W3C: <a href="https://lists.w3.org/Archives/Public/www-style/2019Oct/0016.html">https://lists.w3.org/Archives/Public/www-style/2019Oct/0016.html</a>&nbsp;</li>

@@ -1,0 +1,69 @@
+
+include "sciter:reactor.tis";
+
+class Tabs : Reactor.Component {
+
+  // "master" style set - gives default and runtime styles critical to the operation 
+  const styleset = [ "tabs", $url(tabs.css) ];
+
+  function this(atts,kids) {
+    this.kids = kids || [];
+    this.atts = atts || {};
+    this.data = { currentTab: kids[0][0].name || kids[0][0].label };
+  }
+  
+  function render() {
+
+    const ATTS = 0; // indexes
+    const KIDS = 1; 
+
+    var currentTab = this.data.currentTab; 
+    var labels = [];
+    var tabContent = [];
+    var extSource;
+    for(var kid in this.kids ) {
+      const name = kid[ATTS].name || kid[ATTS].label;
+      var current = false;
+      if( name == currentTab ) {
+        tabContent = kid[KIDS]; // list of its children as tab content
+        extSource = kid[ATTS].src;
+        current = true;
+      }
+      labels.push(<label for={name} :current={current}>{ kid[ATTS].label }</label>);
+    }
+    if( extSource )
+      this.post( function(){ this.$(>div).load(self.url(extSource)); } );
+    return <tabs><stripe>{labels}</stripe><div>{tabContent}</div></tabs>;
+  }
+
+  event click $(stripe>label:not(.selected)) (evt,label) { return this.activateTab(label); }
+
+  event keydown (evt) 
+  { 
+
+    var currentLabel = this.$(>stripe>label.selected);
+
+    switch( evt.keyCode )
+    {
+      case Event.VK_TAB: 
+        if( evt.ctrlKey ) return this.activateTab( evt.shiftKey? currentLabel.prior : currentLabel.next ); return true;
+      /*case Event.VK_LEFT: return this.activateTab( currentLabel.prior );
+      case Event.VK_RIGHT: return this.activateTab( currentLabel.next );
+      case Event.VK_HOME: return this.activateTab( currentLabel.parent.first );
+      case Event.VK_END: return this.activateTab( currentLabel.parent.last );*/
+    }
+    return false; 
+  }
+
+  // a.k.a. select tab, label here is a <label> inside <stripe> 
+  function activateTab( label, notify = true )
+  {
+    this.update { currentTab: label.attributes["for"]; }
+    if(notify)
+      this.postEvent("statechange");
+    
+    return true;
+  }
+
+
+}

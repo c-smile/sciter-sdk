@@ -1,0 +1,41 @@
+<html lang="en">
+  <head>
+    <title>Basic UI translation sample</title>
+    
+    <!-- these four links define two translation files for different languages. -->
+    <link href="lang/ru.tis" hreflang="ru" rel="translation" >
+    <link href="lang/en.tis" hreflang="en" rel="translation" >
+    <link href="lang/zh.tis" hreflang="zh" rel="translation" >
+    <link href="lang/en.tis" hreflang="ar" rel="translation" >
+    
+    <style>
+      @import url(../lang.css);
+    </style>
+    
+    <script type="text/tiscript">
+      include "../lang.tis";
+      include "../lang-tool.tis";
+
+      event change $(select#lang) { self.language = this.value; }
+      event change $(input[name=nmatches]) { $(var[name=nmatches]).value = this.value; }
+      event click $(#getval)
+      {
+        stdout.println($(#idDate).value);
+        stdout.println($(#idTime).value);
+      }
+    </script>
+    
+  </head>
+  <body>
+    <button #getval>Get value</button>
+    <input type="date" id="idDate" value="now"/>
+    <input id="idTime" type="time" value="now" no-seconds/>
+    <h2>Basic UI translation sample using Lang framework</h2>
+    <fieldset>
+      <p><label title="Title test">UI language</label><include src=lang-selector.htm /></p>
+      <hr>
+      <label>Matches</label> : <input|integer(nmatches) min=0 max=100 step=1 value=0 >
+      <p><var(nmatches) value=0>There are # matches in the box</var>.</p> 
+    </fieldset>
+  </body>
+</html>

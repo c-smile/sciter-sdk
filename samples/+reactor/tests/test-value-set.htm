@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style></style>
+        <script type="text/tiscript">
+
+include "../reactor.tis";
+
+class Clock: Reactor.Component 
+{
+  this var data = { time: new Date() }; // setting initial state 
+
+  function attached() { // a.k.a. React::componentDidMount
+    this.timer(1s, function() {
+      this.update { time:new Date() };
+      return true; 
+    });
+  }
+
+  function render() {
+    return
+      <div>
+        <h1>Hello, world!</h1>
+        <h2>It is <input|time :value={this.data.time} /> now.</h2>
+      </div>;
+  } 
+} 
+
+// "mounting" the Clock as the content of body element: 
+$(body).content(<Clock />);
+
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

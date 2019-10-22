@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style></style>
+        <script type="text/tiscript">
+
+function formatDate(date) { return date.toLocaleString(); }
+
+function Comment(props) {
+  return
+    <div .comment>
+      <div .userinfo>
+        <img .avatar src={props.author.avatarUrl} alt={props.author.name} />
+        <div .userinfo-name>{props.author.name}</div>
+      </div>
+      <div .comment-text>{props.text}</div>
+      <div .comment-date>{formatDate(props.date)}</div>
+    </div>;
+}
+
+const comment = 
+{
+  date: new Date(),
+  text: "I hope you enjoy learning Sciter's Reactor!",
+  author: {
+    name: "Hello Kitty",
+    avatarUrl: "https://placekitten.com/g/64/64",
+  }
+};
+
+$(div).merge(
+  <Comment
+    date={comment.date}
+    text={comment.text}
+    author={comment.author}
+  />
+);
+
+        </script>
+    </head>
+    <body>
+      <div/>
+    </body>
+</html>

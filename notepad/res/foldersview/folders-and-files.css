@@ -12,6 +12,7 @@ open-files
   max-height:300dip;
   overflow:scroll-indicator;
   padding:4dip;
+  padding-right:system-scrollbar-width;
   border-spacing:4dip;
   border-bottom: 1dip solid color(splitter-color);
 }
@@ -32,7 +33,6 @@ open-files > li {
   word-break: break-all; 
   @LIST-ITEM-NORMAL; 
   @LIST-ITEM-HOVER;
-  margin-right:system-scrollbar-width;
 }
 
 open-files > li:hover { @LIST-ITEM-CURRENT; }

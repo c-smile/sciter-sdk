@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style></style>
+        <script type="text/tiscript">
+
+function formatDate(date) { return date.toLocaleString(); }
+
+function Avatar(props) {
+  return
+    <img.avatar
+      src={props.user.avatarUrl}
+      alt={props.user.name}/>;
+}
+
+function UserInfo(props) {
+  return
+    <div.userinfo>
+      <Avatar user={props.user} />
+      <div .userinfo-name>{props.user.name}</div>
+    </div>;
+}
+
+function Comment(props) {
+  return
+    <div.comment>
+      <UserInfo user={props.author} />
+      <div.comment-text>{props.text}</div>
+      <div.comment-date>{formatDate(props.date)}</div>
+    </div>;
+}
+
+const comment = 
+{
+  date: new Date(),
+  text: "I hope you enjoy learning Sciter's Reactor!",
+  author: {
+    name: "Hello Kitty",
+    avatarUrl: "https://placekitten.com/g/64/64",
+  }
+};
+
+$(div).merge(
+  <Comment
+    date={comment.date}
+    text={comment.text}
+    author={comment.author}
+  />
+);
+
+        </script>
+    </head>
+    <body>
+      <div/>
+    </body>
+</html>

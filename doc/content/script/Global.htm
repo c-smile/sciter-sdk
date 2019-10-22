@@ -1,6 +1,6 @@
 ﻿<html>
   <head>
-    <meta name="generator" content="h-smile:richtext">
+    <meta name="generator" content="h-smile:richtext"/>
   </head>
 <body>
   <h1>Global namespace</h1>
@@ -76,58 +76,61 @@ var res = eval( &quot;one + two&quot;, env);
     <dt>store</dt>
     <dd>
       <div><strong>( </strong><em>filename</em> | <em>stream</em>, <em>value</em><strong> ) </strong>:<strong></strong><em>true</em> | <em>false</em></div>
-      <p>Stores the <em>value</em> into file <em>filename </em>or <em>stream </em>in binary form<em>. </em>Returns <em>true</em> if data was stored successfully.</p></dd>
+      <p>Stores the <em>value</em> into file <em>filename </em> or <em>stream </em> in binary form<em>. </em>Returns <em>true</em> if data was stored successfully.</p></dd>
     <dt>fetch</dt>
     <dd>
       <div><strong>( </strong><em>filename</em> | <em>stream</em><strong> ) </strong>:<strong></strong>value | null</div>
-      <p>Restores value previously written into the file (<em>filename</em>) or <em>stream</em> by function <em>store.</em> Returns value or <em>null</em> if operation failed.</p></dd>
+      <p>Restores value previously written into the file (<em>filename</em>) or <em>stream</em> by function <em>store.</em> Returns value or <em>null</em> if operation failed.</p>
+			</dd><dt id="url">$url</dt>
+		
+    <dd>( ...relative path...)<p><a href="language/Functions.htm#Stringizer">Stringizier</a> function, returns absolute URL composed from URL of this script file and the </p>
+			<p>Example:</p>
+			
+			
+			<pre>// this file.tis is at &quot;this://app/widgets/dialog.tis&quot;
+var componentsCss = $url(../styles/components.css);
+assert componentsCss == &quot;this://app/styles/components.css&quot;;</pre></dd>
     <dt>hash</dt>
     <dd>
-      <p><strong>( </strong><em>value</em><strong> ) </strong>: integer</p>
-      <p>Returns hash value of its argument.</p></dd>
+      
+      <strong>( </strong><em>value</em><p>Returns hash value of its argument.</p></dd>
     <dt>membersOf</dt>
     <dd>
-      <p>( obj: object | function ) : map (object)</p></dd>
+      <p>( obj: object | function ) : map (object) is to be used in <code>for( var (k,v) in membersOf(obj))</code></p><pre>function Foo() { ... }
+Foo.bar = 1; // adding property 'bar' to the
+             // Foo function (that is an object too)
+for(var (k,v) in Foo )
+  ... // here you should see k equal to #bar <br/>      // on some iteration
+</pre></dd>
     <dd>
       <p>Returns map (simple object) that has the same set of properties as the obj. Main purpose of <em>membersOf</em> is to be used in <code>for( var (k,v) in membersOf(obj))</code> alike enumerations to scan properties of entities that have different semantic of enumeration than in instances of Object. Example:</p>
       <pre>function Foo() { ... }
 Foo.bar = 1; // adding property 'bar' to the
              // Foo function (that is an object too)
 for(var (k,v) in Foo )
-  ... // here you should see k equal to #bar <br>      // on some iteration
+  ... // here you should see k equal to #bar <br/>      // on some iteration
 </pre></dd>
     <dt>rand</dt>
     <dd>
-      <p><strong>( </strong><em>maxNumber</em><strong> )</strong> : integer</p>
-      <p>Returns a random number between 0 and maxNumber-1.</p></dd>
+      <p><strong>( </strong><em>maxNumber</em> : integer</p>
+      <p>Returns a random number between 0 and maxNumber-1. number of bytes from the system.</p>
+      </dd>
     <dt>gc</dt>
     <dd>
-      <div><strong>( )</strong> : ( <em>total</em>:integer, <em>free</em>: integer, <em>used</em>: integer )</div>
+      <div><strong>( )</strong> : ( :string<em>total</em>:integer, <em>free</em><em>used</em></div>
       <p>Invokes garbage collector and returns: total VM heap memory size, &nbsp;size of free area in the heap and size of used area by the script. total = free + used;</p>
       <p>Note that VM requests twice as <em>total</em> number of bytes from the system.</p></dd>
     <dt>crackUrl</dt>
     <dd>
-      <div><strong>( </strong><em>url</em>:string<strong> )</strong> : object</div>
+      <div><strong>( </strong><em>url</em>:string<strong> )</strong></div>
       <p>Parses the url string. Returns an object having following fields:</p>
-      <ul>
-        <li><em>port</em> - integer, tcp/ip port number;</li>
-        <li><em>protocol</em> - string, protocol like &quot;http&quot;, &quot;file&quot;, etc.;</li>
-        <li><em>hostname</em> - string, host name;</li>
-        <li><em>anchor</em> - string, anchor;</li>
-        <li><em>username</em> - string;</li>
-        <li><em>password</em> - string;</li>
-        <li><em>params</em> - string, parameters of http GET request</li>
-        <li><em>dir</em> - string, directory</li>
-        <li><em>name</em> - string, filename without extension</li>
-        <li><em>ext</em> - string, extension</li>
-        <li><em>name_ext</em> - string, filename with extension.</li></ul></dd>
+      </dd>
     <dt>symbol</dt>
     <dd>
-      <div>( <em>string</em> ) : symbol</div>
-      <p>Function returns symbol of the string. Internally symbol is 32bit value so symbol space is limited - it makes no sense to &quot;symbolize&quot; arbitrary strings.</p></dd>
+      : int, <div>( <em>string</em> ) : symbol</div>
+      <p>Function returns symbol of the string. Internally symbol is 32bit value so symbol space is limited - it makes no sense to &quot;symbolize&quot; arbitrary strings. function constructs color value from red, green, blue and opacity components or by parsing colorStr that can be #RRGGBB or name of the CSS color.</p><strong>b</strong><strong>opacity</strong><br/></dd>
     <dt>color</dt>
-    <dd>(<strong>r</strong>: int, <strong>g</strong>: int, <strong>b</strong>: int [, <strong>opacity</strong>: int | float]) : color <br>( colorStr: string ) : color
-      <p>The <em>color</em> function constructs color value from red, green, blue and opacity components or by parsing colorStr that can be #RRGGBB or name of the CSS color.</p></dd>
+    <dd>(<strong>r</strong>: int, <strong>g</strong><strong>b</strong><strong>opacity</strong><br/><p>The <em>color</em> function constructs color value from red, green, blue and opacity components or by parsing colorStr that can be #RRGGBB or name of the CSS color.</p></dd>
     <dt>em</dt>
     <dd>(<strong> v</strong>: int | float ) : length, these functions constructs length values of correspondent type.</dd>
     <dt>pr</dt>

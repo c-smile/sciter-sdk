@@ -1,11 +1,11 @@
 ﻿<html>
   <head>
-    <meta name="GENERATOR" content="BLOCKNOTE.NET">
-    <meta name="source">
-    <meta name="source">
-    <meta name="source">
-    <basefont face="Verdana" size="2">
-    <meta name="generator" content="h-smile:richtext">
+    <meta name="GENERATOR" content="BLOCKNOTE.NET"/>
+    <meta name="source"/>
+    <meta name="source"/>
+    <meta name="source"/>
+    <basefont face="Verdana" size="2"/>
+    <meta name="generator" content="h-smile:richtext"/>
   </head>
 <body>
   <h1>String object</h1>
@@ -20,8 +20,8 @@
 		</dl>
 	<h2>Iteration</h2>
 	<p><code>for (var <i>codepoint</i> in str) {...}</code></p>
-	<p> Iterates all UNICODE code points in string. Internally strings are stored as arrays of UTF16 code units and <code>str.length</code> reports number of UTF16 code units. In contrary, on each iteration the <i>codepoint</i> variable receives integer value - UNICODE code point. Note that number of iterations can be less than <code>str.length</code> if the string contains so called surrogate pairs - symbols presented by two UTF16 code units.<br></p>
-	<p><i><code>for (var (strpos,codepoint) in str) {...}</code><br></i></p>
+	<p> Iterates all UNICODE code points in string. Internally strings are stored as arrays of UTF16 code units and <code>str.length</code> reports number of UTF16 code units. In contrary, on each iteration the <i>codepoint</i> variable receives integer value - UNICODE code point. Note that number of iterations can be less than <code>str.length</code> if the string contains so called surrogate pairs - symbols presented by two UTF16 code units.<br/></p>
+	<p><i><code>for (var (strpos,codepoint) in str) {...}</code><br/></i></p>
 	<p>Does the same as the above but also reports position (index) of the codepoint in string.</p>
   <dl>
     <h2>Methods</h2>
@@ -30,13 +30,13 @@
 		<dt>new String</dt><dd>(<b>len</b>:integer [, <b>initCharCode</b> = ' '])<p>Creates new string of given size and fill.&nbsp;</p></dd><dt>toInteger</dt>
     <dd>
       <div><strong>([defaultValue[, radix:integer]])</strong> : integer | defaultValue | (undefined)</div>
-      <p>Tries to parse content of the string. If parsing failed then returns defaultValue if provided, or undefined value.<br>toInteger expects string in the following format:</p>
+      <p>Tries to parse content of the string. If parsing failed then returns defaultValue if provided, or undefined value.<br/>toInteger expects string in the following format:</p>
       <pre>[<em>whitespace</em>] [{<strong>+</strong> | -}] [<strong>0</strong> [{ <strong>x</strong> | <strong>X</strong> }]] [<em>digits</em>]
 </pre></dd>
     <dt>toFloat</dt>
     <dd>
       <div><strong>([defaultValue])</strong> : float | defaultValue | (undefined)</div>
-      <p>Tries to parse content of the string. If parsing failed then returns defaultValue if provided, or undefined value.<br>toFloat expects string in the following format:</p>
+      <p>Tries to parse content of the string. If parsing failed then returns defaultValue if provided, or undefined value.<br/>toFloat expects string in the following format:</p>
       <pre>[<em>whitespace</em>] [<em>sign</em>] [<em>digits</em>] [<strong>.</strong><em>digits</em>] [ {<strong>d</strong> | <strong>D</strong> | <strong>e</strong> | <strong>E</strong>}[<em>sign</em>]<em>digits</em>]
 </pre></dd>
     <dt>toNumber</dt>
@@ -55,8 +55,8 @@
       <p>Returns string escaped by html rules. Is an alias of the htmlEscape() method.</p></dd>
     <dt>toUrlString</dt>
     <dd>
-      <div><strong>()</strong> : string</div>
-      <p>Returns string escaped by url rules. Is an alias of the urlEscape() method.</p></dd>
+      <div><strong>(</strong>[ #as-parameter ]<strong>)</strong> : string</div>
+      <p>Returns string escaped by URL rules. It is an equivalent of <code>URL.escape(string)</code> or, if <code>#as-parameter</code> provided, <code>URL.escapeParam(string)</code>.</p></dd>
     <dt>substring</dt>
     <dd>
       <div><strong>(start [,end])</strong> : string | undefined</div>
@@ -182,7 +182,7 @@ var msg = String.$(coordinates are x:{ pt.x } y:{ pt.y });
       <p>Static method. Returns string formatted by the rules of <a href="http://www.cplusplus.com/ref/cstdio/printf.html" target="_blank">sprintf C/C++ function</a>.</p>
       <div>Additional format types:</div>
       <ul>
-        <li><strong>%v</strong> and <strong>%V</strong> - these format types accept any value as an argument and produce source code representation of the value suitable for later parsing by eval() method. Thus if value is an array of values it will be printed as &quot;[element1, element2, element3... elementN]&quot; and object (instance of Object class) will be printed as &quot;{key1:value1, key2:value2,..., keyN:valueN}&quot;. %v produces one line output and %V tries to produce human readable output with line feeds and tabulations.<br>Use it if you need to serialize objects in AJAX/JSON fashion.</li>
+        <li><strong>%v</strong> and <strong>%V</strong> - these format types accept any value as an argument and produce source code representation of the value suitable for later parsing by eval() method. Thus if value is an array of values it will be printed as &quot;[element1, element2, element3... elementN]&quot; and object (instance of Object class) will be printed as &quot;{key1:value1, key2:value2,..., keyN:valueN}&quot;. %v produces one line output and %V tries to produce human readable output with line feeds and tabulations.<br/>Use it if you need to serialize objects in AJAX/JSON fashion.</li>
         <li><strong>%S</strong> - this format type converts its argument into string and outputs it with <em>HTML escapement</em>. So characters like '&lt;' will be converted to &quot;&amp;lt;&quot; sequences in the output.</li></ul></dd>
     <dt>scanf</dt>
     <dd>

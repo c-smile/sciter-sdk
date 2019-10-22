@@ -1,0 +1,114 @@
+﻿<html><body>  
+	<p>Note this document is written intentionally close to <a href="https://reactjs.org/docs/introducing-jsx.html">ReactJS/JSX introduction</a>.&nbsp;</p><h2>Introducing SSX</h2>
+	
+	<p>Consider this variable declaration in Sciter's script:</p>
+
+<pre>const velement = &lt;h1 id=&quot;hw&quot;&gt;Hello, world!&lt;/h1&gt;;</pre>
+
+	<p>It is called SSX, and it is an integral part of Sciter's script syntax. Therefore parsing of such SSX literals does not require invocation of any preprocessor as in browser with JSX.</p><p>That above is neither a string nor HTML but exactly this <a href="../Tuple.htm">tuple</a>&nbsp;declaration:</p>
+	
+<pre>const velement = [h1: { id:&quot;hw&quot;}, [&quot;Hello, world!&quot;] ];</pre><p>Technically SSX is not strictly required - we can use tuple literals directly. It is just that such HTML-ish syntax is more familiar.</p>
+	<h2>Expressions in SSX</h2>
+	<p>Here we declare a variable <i>name</i> and use it in tuple construction:</p>
+	<pre>const name = &quot;Alice&quot;;
+const velement = &lt;h1&gt;Hello, {name}&lt;/h1&gt;;</pre>
+	
+	<p>That above can be written exactly as this:&nbsp;</p>
+	<pre>const velement = [h1: {}, [name] ];</pre>
+	<p>And you can put any valid script expression inside those curly braces:</p>
+	
+	<pre>const velement = &lt;div&gt;1 + 1 is { 1 + 1 }&lt;/div&gt;;
+</pre>
+	<h2>SSX is an expression too</h2>
+	<p>As SSX literal is actually a tuple literal then we can use it in our code as any other literals:</p>
+	
+	<pre>function getGreeting(user) {
+  if (user)
+    return &lt;h1&gt;Hello, {formatName(user)}!&lt;/h1&gt;;
+  else
+    return &lt;h1&gt;Hello, Stranger.&lt;/h1&gt;;
+}</pre><p>The above function returns one of two tuples defined there.&nbsp;</p>
+	<h2><a href="https://reactjs.org/docs/introducing-jsx.html#specifying-attributes-with-jsx"></a>Specifying Attributes in SSX</h2>
+	<p>You may use quotes to specify string literals as attributes:</p>
+	
+	<pre>const velement = &lt;div tabindex=&quot;0&quot;&gt;&lt;/div&gt;;</pre><p>You may also provide value of attribute from a variable or expression:</p>
+	
+	<pre>const velement = &lt;img src={user.avatarUrl}&gt;&lt;/img&gt;;</pre><p>Note: you should either use quotes (for string values) or curly braces (for expressions), but not both in the same attribute.</p>
+	<h2><a href="https://reactjs.org/docs/introducing-jsx.html#specifying-children-with-jsx"></a>Specifying Children with SSX </h2>
+	<p>If tag is empty then you may close it immediately with <code>/&gt;</code> :</p>
+	
+	<pre>const velement = &lt;img src={user.avatarUrl} /&gt;;</pre><p>Note: SSX does not support &quot;tail-less&quot; HTML tags like: <code>&lt;img&gt;</code>, <code>&lt;input&gt;</code> or <code>&lt;br&gt;</code>. &nbsp;These one must be explicitly closed: <code>&lt;img /&gt;</code>, <code>&lt;input /&gt;</code> or <code>&lt;br /&gt;</code>.</p>
+	<p>Yet SSX may contain children:</p>
+	
+	<pre>const velement = 
+  &lt;div&gt; 
+    &lt;h1&gt;Hello!&lt;/h1&gt;
+    &lt;h2&gt;Good to see you here.&lt;/h2&gt; 
+  &lt;/div&gt;;</pre>
+	
+	<h2>Specifying runtime states with SSX</h2>
+	<p>Along with attributes you may want to define runtime states of elements:</p>
+	<pre>const velement = 
+  &lt;li :expanded={ isOpen(item) } &gt; 
+    &lt;caption&gt;Hello!&lt;/caption&gt;
+    &lt;div&gt;&lt;/div&gt; 
+  &lt;/div&gt;;</pre>
+	
+	<p>States here correspond to so called pseudo-classes in CSS:  <code>:active</code>, <code>:hover</code>, <code>:checked</code> and so on.</p>
+	
+	<h3>Specifying runtime value of input elements</h3><p>To specify current runtime value of &lt;input&gt; elements use  <code>:value</code> runtime state attribute - it reflects current value of the input at runtime:</p>
+	<pre>&lt;input|text(firstname) :value=&quot;John&quot; /&gt;</pre>
+	<p>Note that just <i>value</i> attribute: <code>&lt;input|text(firstname) value=&quot;Initial value&quot; /&gt;</code> specifies <i>initial</i> value that is set once upon creation of the element.</p>
+	<h2>Sciter HTML parsing flavor support in SSX</h2>
+	<p>SSX follows HTML parsing shortcut rules used in Sciter and so:</p>
+	<ul><li><code>&lt;input(firstName) /&gt;</code> is an equivalent of <i>name</i> attribute declaration: <code>&lt;input name=&quot;firstName&quot; /&gt;</code>&nbsp;</li>
+		<li><code>&lt;input|text /&gt;</code> is an equivalent of <i>type</i> attribute declaration: <code>&lt;input type=&quot;text&quot; /&gt;</code>&nbsp; </li>
+		<li><code>&lt;input .search /&gt;</code> is an equivalent of <i>class</i> attribute declaration: <code>&lt;input class=&quot;search&quot; /&gt;</code>&nbsp; </li>
+		<li><code>&lt;input #lookup /&gt;</code> is an equivalent of <i>id</i> attribute declaration: <code>&lt;input id=&quot;lookup&quot; /&gt;</code>  </li>
+		</ul>
+	<h2>References in SSX</h2>
+	<p>To define properties, states and content of DOM elements we normally use SSX declarations. But in some cases you may wish &quot;to talk to DOM elements directly&quot;, so to get reference to physical DOM element and call its runtime methods from script.&nbsp;</p>
+	<p>In order to get reference to DOM element you can either use </p>
+	
+	<pre>this.elLookup = container.select(&quot;input#lookup&quot;); </pre><p>or its &quot;stringizer&quot; form: </p>
+	
+	<pre>this.elLookup = container.$(input#lookup); </pre><p>Alternatively you can ask SSX to provide you <b>the reference to the element</b>:</p>
+	
+	<pre>&lt;input #lookup @{this.lookup} /&gt;</pre><p>This <code>@{variable location expression}</code>, when used in attributes, means the following request: &quot;when you (runtime) will create physical DOM element for this vnode please set reference of the DOM element to the given variable&quot;.</p><h2>VNODE: SSX is just another form of tuple literals</h2>
+	<p>SSX generates tuple literals with predefined structure. Tuples of such structure are known as <i>VNODE</i>s - virtual DOM node definitions:</p>
+	
+	
+	<pre>[tag: {attributes}, [children] ] //or 
+[tag: {attributes}, [children], {states} ]</pre><p>Where:</p>
+	<ul><li><i>tag</i> - is literal string matching HTML tags : <code>div</code>, <code>p</code>, <code>section</code>, etc.</li>
+		<li><i>attributes</i> - tuple element at index 0, is <i>null</i> or a plain script object - a map of name/&quot;value&quot; pairs. Attribute values are converted to strings before injecting into the DOM.</li>
+		<li><i>children</i> -&nbsp;tuple element at index 1, is <i>null</i> or a plain script array that contains either strings (representing DOM text nodes) or other vnodes (representing DOM elements).&nbsp;</li>
+		<li><i>states</i> - optional,&nbsp;tuple element at index 2, is a plain script object -&nbsp;name/value map of runtime states you want to be set on the element.</li></ul>
+	<h2>VNODE:&nbsp;usage, a.k.a. rendering</h2>
+	
+ <p id="dom-methods-vdom">Some methods of Element class allow to populate DOM by the vnode definitions:</p><pre>container.content(&lt;div&gt;Hello wonderful world&lt;/div&gt;);</pre><p>After that the container will have single child element: <code>&lt;div&gt;</code></p>
+	
+	
+	
+	<pre>var arr = [1,2,3];
+var children = arr.map( (n) =&gt; &lt;li&gt;item #{n}&lt;/li&gt; );
+container.content(children);</pre><p>The container will have three <code>&lt;li&gt;</code> children with texts &quot;item #1&quot;, &quot;item #3&quot; and &quot;item #3&quot;.</p>
+	<p>List of Element class functions that accept VNODEs and so SSX declarations: children with texts &quot;item #1&quot;, &quot;item #3&quot; and &quot;item #3&quot;.</p>
+	<ul><li><code>element.content(vnode | array of vnodes)</code> - content of the element is replaced by these elements;</li>
+		<li><code>element.append(vnode | array of vnodes)</code> - these element[s] will be added to the end of element's content;</li>
+		<li><code>element.prepend(vnode | array of vnodes)</code> - these element[s]&nbsp;will be added to the end of element's content;</li>
+		<li><code>element.insert(vnode | array of vnodes, atIndex)</code> - these element[s] will be added at <i>atIndex</i> position;</li>
+		<li><code>element.merge(vnode)</code> - patch existing DOM element by vnode definition, see below for more details;</li>
+		</ul>
+	<h3><code>Element.merge(vnode)</code> - DOM reconciliation (a.k.a patching) by vnode</h3>
+	<p>The <code>element.merge(vnode)</code><i>element</i></p>
+	<ul><li>Updates attributes from vnode <code>atts</code> object by removing, creating or changing DOM attributes.&nbsp;</li><li>For each child:<ul><li>if particular vnode's child does not match real DOM child then new DOM element is created from that vnode child;</li>
+				<li>else if particular DOM child does not match any vnode's child then existing DOM element gets removed;</li>
+				<li>else ( DOM child and vnode child match each other ) then the&nbsp;<code>merge()</code> is called for that pair recursively.&nbsp;</li></ul></li></ul>
+	<p>The <code>merge()</code> function uses the following <b>match criteria</b>. Particular element/vnode pair is considered as matching if:</p>
+	<ul><li>they both have the same value of <b>key</b> attribute;</li>
+		<li>or if they have the same value of <b>id</b> attribute;&nbsp;</li>
+		<li>or if they have the same value of <b></b><b>name</b> attribute; </li>
+		<li>or if they have the same <b>tag</b>;</li>
+		</ul>
+	<p>Otherwise DOM element and vnode treated as not matching. function uses the following <b>match criteria</b></p><p>Otherwise DOM element and vnode treated as not matching.</p></body></html>

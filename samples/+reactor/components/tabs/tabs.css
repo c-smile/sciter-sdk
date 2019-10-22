@@ -1,0 +1,35 @@
+
+
+@set tabs 
+{
+  :root {
+    display:block;
+    flow:vertical;
+    size:*;
+  }
+
+  :root > stripe {
+    font:system;
+    display:block;
+    flow:horizontal;
+  }
+
+  :root > stripe > label {
+    behavior:button;
+    display:block;
+    height:*;
+    max-width: auto; // not wider than max-intrinsic
+    padding:0 0.25em;
+  }
+
+  /*:root > stripe > label.selected
+  {
+    background-color: highlight;
+    color: highlighttext;
+  }*/ 
+
+  // container for the current tab:
+  :root > div { size:*; }
+
+}
+

@@ -1,0 +1,23 @@
+include "sciter:reactor.tis";
+
+class Clock: Reactor.Component 
+{
+  const styleset = ["clock", $url(clock.css)]; // style set declaration
+
+  this var data = { time: new Date() }; // setting initial state 
+
+  function attached() { // a.k.a. React::componentDidMount
+    this.timer(1s, function() {
+      this.update { time:new Date() };
+      return true; // to keep the timer ticking
+    });
+  }
+
+  function render() {
+    return
+     <clock>
+      <div.greeting>Hello, world!</div>
+      <div>It is <span.time>{this.data.time.toLocaleString(#time)}</span> now!</div>
+     </clock>;
+  } 
+}

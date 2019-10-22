@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style></style>
+        <script type="text/tiscript">
+
+        function Welcome(props) {
+          return <h1>Hello, {props.name}!</h1>;
+        }
+
+        function App() {
+          return
+            <main>
+              <Welcome name="Ivan" />
+              <Welcome name="Olga" />
+              <Welcome name="Andrew" />
+            </main>;
+        }
+
+        $(main).merge( <App /> );
+
+        </script>
+    </head>
+    <body>
+      <main />
+    </body>
+</html>

@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+      @import url(../+colororizer/colorizer.css);
+      
+      plaintext { size:*; tab-size:2; }
+      
+    </style>
+    <script type="text/tiscript">
+    
+      function self.ready() {
+        var str = this.request(0,#get,"sciter:reactor.tis");
+        $(plaintext).value = str.toString();
+        str.close();
+      } 
+
+    </script>
+  </head>
+<body>
+
+  <p>Content of sciter:reactor.tis resource</p>
+
+  <plaintext#source type="text/tiscript"></plaintext>
+</body>
+</html>
