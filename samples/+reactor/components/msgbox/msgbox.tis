@@ -1,0 +1,42 @@
+
+
+function MsgBox(atts,kids) {
+
+  var vcontent; 
+  var vbuttons;
+  if( !kids.length ) {
+    vcontent = "{Nothing?}";
+    vbuttons = <button id="ok" role="default-button" >OK</button>;
+  }
+  else if( kids.last.tag == #buttons ) { // we've got explicit <buttons>
+    vcontent = kids.splice(0,kids.length - 1);
+    vbuttons = kids[0][1]; // content of <buttons>...</buttons>
+  } else {
+    vcontent = kids;
+    vbuttons = <button id="ok" role="default-button" >OK</button>;
+  }
+
+  const params = {
+    vcontent: vcontent,
+    vbuttons: vbuttons,
+    type: atts?.type ?? "information",
+    caption: atts?.caption ?? "Sciter"
+  };
+
+  // we will pass atts as they are to view.dialog{} + url + parameters
+  const dialogDef = (atts || {}).extend {
+    url: $url(msgbox.htm),
+    parameters: params
+  };
+
+  if(!dialogDef.alignment)
+    dialogDef.alignment = -5; // in the middle of parent view
+
+  return function(formData = {}) {
+    // show modal dialog:
+    params.extend { vdata: formData };
+    var r = view.dialog(dialogDef);
+    return !r || r == #cancel ? false : r;
+  }
+
+}

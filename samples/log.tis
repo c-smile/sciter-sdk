@@ -1,9 +1,9 @@
 
 
-function log(params..)
+function log(...params)
 {
   var tr = __TRACE__;
-  var fnme = tr[1][1] || "";
+  var fnme = (tr[1][1] || "").toString();
   var file = tr[1][2];
   var line = tr[1][0];
   Stream.print.apply(stdout,params);
@@ -13,7 +13,7 @@ function log(params..)
 log.$ = function(params..) // log.$(something{ anything == 1});
 {
   var tr = __TRACE__;
-  var fnme = tr[1][1] || "";
+  var fnme = (tr[1][1] || "").toString();
   var file = tr[1][2];
   var line = tr[1][0];
   stdout.print(String.$.apply(String,params));
@@ -23,7 +23,7 @@ log.$ = function(params..) // log.$(something{ anything == 1});
 log.f = function(params..) // printf version
 {                          // log.f("something=%d",num); 
   var tr = __TRACE__;
-  var fnme = tr[1][1] || "";
+  var fnme = (tr[1][1] || "").toString();
   var file = tr[1][2];
   var line = tr[1][0];
   Stream.printf.apply(stdout,params);

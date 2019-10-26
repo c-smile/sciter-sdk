@@ -1,0 +1,55 @@
+﻿<html>
+    <head>
+        <title>Test</title>
+        <style></style>
+        <script type="text/tiscript">
+
+include "msgbox.tis";
+
+event click $(#show-msgbox) {
+    <MsgBox>
+       Hello world!
+    </MsgBox>(); // declare and call it right away
+}
+
+event click $(#show-prompt) {
+
+  var initialData = {
+    name: "Александр",
+    surname: "Пушкин",
+    gender: "m"
+  };
+
+  var r = 
+    <MsgBox|question caption="Question" alignment={-8} >
+      <p>What is your name?</p>
+      <form>
+        <label>Name</label><input|text(name) />
+        <label>Surname</label><input|text(surname) />
+        <label>Gender</label><row><button|radio(gender) value="m">Male</button>
+                                  <button|radio(gender) value="f">Female</button></row>
+      </form>
+      <buttons>
+        <button id="ok" role="default-button">OK</button>
+        <button id="cancel" role="cancel-button">Cancel</button>
+      </buttons>
+    </MsgBox> (initialData);
+
+  if(r)
+   <MsgBox|info>
+     <pre>{JSON.stringify(r)}</pre>
+   </MsgBox>();
+
+}
+
+
+        </script>
+    </head>
+    <body>
+
+<button #show-msgbox>Show simple msgbox</button> 
+
+<button #show-prompt>Show Prompt</button> 
+
+    </body>
+</html>

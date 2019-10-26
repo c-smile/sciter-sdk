@@ -1,0 +1,66 @@
+<html>
+    <head>
+        <title>Sciter</title>
+        <style src="sciter:msgbox.css" />
+        <script type="text/tiscript">
+
+//debug log: view.parameters;
+
+const {vcontent,vbuttons,vdata,type,caption} = view.parameters;
+
+//debug log:vcontent,vbuttons,vdata;
+
+const main = $(main#content);
+main.attributes["type"] = type || "information";
+
+main.content(vcontent);
+$(footer#button-bar).content(vbuttons);
+
+const form = main.$(form);
+
+if(form) {
+  main.attributes["has-form"] = true;
+  form.value = vdata;
+}
+
+event ~click $([href]) {
+  var href = this.attributes["href"];
+  Sciter.launch(href);
+  return true;
+}
+
+event click $(footer button) (evt,button) {
+  if( var bid = button.attributes["id"] ) {
+    if( bid == "ok" && form) {
+      view.close(form.value);     
+      return true;
+    }
+    view.close(symbol(bid)); 
+    return true;
+  }
+}
+
+function setupMins() {
+  const body = $(body);
+  var w = body.intrinsicWidthMax();
+  var h = body.intrinsicHeight(w);
+  //debug log: w,h;
+  view.windowMinSize = (w,h);
+}
+
+function self.ready() {
+  view.windowCaption = caption || type;
+}
+
+view << event statechange { setupMins(); }
+view << event resolutionchange { setupMins(); }
+
+        </script>
+    </head>
+    <body>
+      <main#content type="information"></main>
+      <footer#button-bar></footer>
+    </body>
+</html>
+
+

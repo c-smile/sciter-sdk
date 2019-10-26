@@ -9,15 +9,16 @@
         async function getRemoteTextTask(url) 
         {
           try {
-            var text = await view.request { url: url, output: #string };
+            var [text,response] = await view.request { url: url, output: #string };
+            //debug log: text,response;
             $(pre#out).text = text;
           } catch(e) {
             $(pre#out).text = String.$( HTTP status: {e.data.status}, response length: {e.data.response.length} );
           }
         }
         
-        $(button#getExisting).on("click", :: getRemoteTextTask("http://sciter.com/test/text.txt") );      
-        $(button#getNonExisting).on("click", :: getRemoteTextTask("http://sciter.com/test/unknown.txt") );
+        $(button#getExisting).on("click", :: getRemoteTextTask("https://sciter.com/test/text.txt") );      
+        $(button#getNonExisting).on("click", :: getRemoteTextTask("https://sciter.com/test/unknown.txt") );
   
       }
       
