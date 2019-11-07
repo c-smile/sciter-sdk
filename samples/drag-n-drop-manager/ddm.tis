@@ -276,7 +276,7 @@ function DragDrop(def)
     return null;
   }
   
-  function findPosWrap(vx,vy,vert) 
+  /*function findPosWrap(vx,vy,vert) 
   {
     var notb = def.notBefore;
     
@@ -299,7 +299,7 @@ function DragDrop(def)
       return dd_target.length;
     else 
       return dd_source_index;
-  }
+  }*/
   
   
   function doMove(vx, vy)
@@ -360,11 +360,11 @@ function DragDrop(def)
     switch( flow )
     {
       case "horizontal-wrap": 
-      case "horizontal-flow": horz = true; pos = findPosWrap(vx,vy,false); break;
+      case "horizontal-flow": horz = true; pos = findPosHorz(vx,vy,true); break;
       case "horizontal":      horz = true; pos = findPosHorz(vx,vy); break;
       case "table-body": 
       case "vertical-wrap": 
-      case "vertical-flow":   horz = false; pos = findPosWrap(vx,vy,true); break;
+      case "vertical-flow":   horz = false; pos = findPosVert(vx,vy,true); break; 
       default:                horz = false; pos = findPosVert(vx,vy); break; 
     }
     
