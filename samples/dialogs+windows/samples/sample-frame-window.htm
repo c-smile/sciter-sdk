@@ -4,12 +4,24 @@
     <style>
     
       button { display:block; }
+
+      html { 
+        width:640dip;
+        height:480dip;
+      }
     
     </style>
     <script type="text/tiscript">
 
    
     function self.ready() {
+      
+      var (x,y) = view.box(#position,#border,#screen);
+      var w = self.toPixels(self.style#width);
+      var h = self.toPixels(self.style#height);
+
+      view.move(x,y,w,h);
+
       view.state = View.WINDOW_SHOWN;
       $(#resizable).value = view.windowResizable;
       $(#minimizable).value = view.windowMinimizable;

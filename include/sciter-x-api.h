@@ -47,7 +47,7 @@ typedef struct _ISciterAPI {
   UINT    SCFN( SciterVersion )(BOOL major);
   BOOL    SCFN( SciterDataReady )(HWINDOW hwnd,LPCWSTR uri,LPCBYTE data, UINT dataLength);
   BOOL    SCFN( SciterDataReadyAsync )(HWINDOW hwnd,LPCWSTR uri, LPCBYTE data, UINT dataLength, LPVOID requestId);
-#ifdef WINDOWS
+#if defined(WINDOWS) && !defined(WINDOWLESS)
   LRESULT SCFN( SciterProc )(HWINDOW hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
   LRESULT SCFN( SciterProcND )(HWINDOW hwnd, UINT msg, WPARAM wParam, LPARAM lParam, BOOL* pbHandled);
 #endif
@@ -65,27 +65,28 @@ typedef struct _ISciterAPI {
   BOOL    SCFN( SciterCall )(HWINDOW hWnd, LPCSTR functionName, UINT argc, const SCITER_VALUE* argv, SCITER_VALUE* retval);
   BOOL    SCFN( SciterEval )( HWINDOW hwnd, LPCWSTR script, UINT scriptLength, SCITER_VALUE* pretval);
   VOID    SCFN( SciterUpdateWindow)(HWINDOW hwnd);
-#ifdef WINDOWS
+#if defined(WINDOWS) && !defined(WINDOWLESS)
   BOOL    SCFN( SciterTranslateMessage )(MSG* lpMsg);
 #endif
   BOOL    SCFN( SciterSetOption )(HWINDOW hWnd, UINT option, UINT_PTR value );
   VOID    SCFN( SciterGetPPI )(HWINDOW hWndSciter, UINT* px, UINT* py);
   BOOL    SCFN( SciterGetViewExpando )( HWINDOW hwnd, VALUE* pval );
-#ifdef WINDOWS
+#if defined(WINDOWS) && !defined(WINDOWLESS)
   BOOL    SCFN( SciterRenderD2D )(HWINDOW hWndSciter, IUnknown* /*ID2D1RenderTarget**/ prt);
-  BOOL    SCFN( SciterD2DFactory )(void** /*ID2D1Factory ***/ ppf);
-  BOOL    SCFN( SciterDWFactory )(void** /*IDWriteFactory ***/ ppf);
+  BOOL    SCFN( SciterD2DFactory )(IUnknown** /*ID2D1Factory ***/ ppf);
+  BOOL    SCFN( SciterDWFactory )(IUnknown** /*IDWriteFactory ***/ ppf);
 #endif
   BOOL    SCFN( SciterGraphicsCaps )(LPUINT pcaps);
   BOOL    SCFN( SciterSetHomeURL )(HWINDOW hWndSciter, LPCWSTR baseUrl);
-#if defined(OSX)
+#if defined(OSX) && !defined(WINDOWLESS)
   HWINDOW SCFN( SciterCreateNSView )( LPRECT frame ); // returns NSView*
 #endif
-#if defined(LINUX)
+#if defined(LINUX) && !defined(WINDOWLESS)
   HWINDOW SCFN( SciterCreateWidget )( LPRECT frame ); // returns GtkWidget
 #endif
-
+#if !defined(WINDOWLESS)
   HWINDOW SCFN( SciterCreateWindow )( UINT creationFlags,LPRECT frame, SciterWindowDelegate* delegate, LPVOID delegateParam, HWINDOW parent);
+#endif
   VOID    SCFN( SciterSetupDebugOutput )(
                 HWINDOW               hwndOrNull,// HWINDOW or null if this is global output handler
                 LPVOID                param,     // param to be passed "as is" to the pfOutput
@@ -251,7 +252,7 @@ typedef struct _ISciterAPI {
   LPSciterGraphicsAPI SCFN( GetSciterGraphicsAPI )();
   LPSciterRequestAPI SCFN( GetSciterRequestAPI )();
 
-#ifdef WINDOWS
+#if defined(WINDOWS) && !defined(WINDOWLESS)
     BOOL SCFN( SciterCreateOnDirectXWindow ) (HWINDOW hwnd, IUnknown* pSwapChain); // IDXGISwapChain
     BOOL SCFN( SciterRenderOnDirectXWindow ) (HWINDOW hwnd, HELEMENT elementToRenderOrNull, BOOL frontLayer);
     BOOL SCFN( SciterRenderOnDirectXTexture ) (HWINDOW hwnd, HELEMENT elementToRenderOrNull, IUnknown* surface); // IDXGISurface
@@ -361,67 +362,85 @@ typedef ISciterAPI* (SCAPI *SciterAPI_ptr)();
         return _api;
     }
 
-#elif defined(LINUX)
+#elif defined(ANDROID)
 
-    #include <libgen.h>
-    #include <dlfcn.h>
-
-    //typedef ISciterAPI* SCAPI (*SciterAPI_ptr)();
+    EXTERN_C ISciterAPI *SciterAPI();
 
     inline ISciterAPI* _SAPI( ISciterAPI* ext )
     {
         static ISciterAPI* _api = NULL;
-        if( ext ) _api = ext;
-        if( !_api ) {
-
-            char folderpath[2048] = {0};
-
-            if (readlink ("/proc/self/exe", folderpath, sizeof(folderpath)) != -1)
-            {
-               dirname (folderpath);
-               //strcat  (pathbuf, "/");
-            }
-
-            void* lib_sciter_handle = NULL;
-
-            {
-                // 1. try to load from the same folder as this executable
-                const char* lookup_paths[] =
-                {
-                    "/" SCITER_DLL_NAME,
-                    NULL
-                };
-                for( int n = 0; !lib_sciter_handle; ++n ) {
-                    if( !lookup_paths[n] )
-                      break;
-                    char tpath[2048] = {0};
-                    strcpy(tpath,folderpath);
-                    strcat(tpath, lookup_paths[n]);
-                    lib_sciter_handle = dlopen(tpath, RTLD_LOCAL | RTLD_LAZY);
-                }
-            }
-
-            if (!lib_sciter_handle) // 2. no luck, try to load from system paths
-              lib_sciter_handle = dlopen(SCITER_DLL_NAME, RTLD_LOCAL | RTLD_LAZY);
-
-            if (!lib_sciter_handle) {
-                fprintf(stderr, "[%s] Unable to load library: %s\n", __FILE__, dlerror());
-                exit(EXIT_FAILURE);
-            }
-
-            SciterAPI_ptr sapi = (SciterAPI_ptr) dlsym(lib_sciter_handle, "SciterAPI");
-            if (!sapi) {
-                fprintf(stderr,"[%s] Unable to get symbol: %s\n", __FILE__, dlerror());
-                exit(EXIT_FAILURE);
-            }
-            _api = sapi();
-            tiscript::ni( _api->TIScriptAPI() );
-        }
+        if( ext ) 
+          _api = ext;
+        else 
+          _api = SciterAPI();
         assert(_api);
+        //if (!sapi) {
+        //  fprintf(stderr, "[%s] Unable to get symbol: %s\n", __FILE__, dlerror());
+        //  exit(EXIT_FAILURE);
+        //}
         return _api;
     }
 
+#elif defined(LINUX)
+
+#include <libgen.h>
+#include <dlfcn.h>
+
+// typedef ISciterAPI* SCAPI (*SciterAPI_ptr)();
+
+inline ISciterAPI *_SAPI(ISciterAPI *ext) {
+  static ISciterAPI *_api = NULL;
+  if (ext) _api = ext;
+  if (!_api) {
+
+    char folderpath[2048] = {0};
+
+    if (readlink("/proc/self/exe", folderpath, sizeof(folderpath)) != -1) {
+      dirname(folderpath);
+      // strcat  (pathbuf, "/");
+    }
+
+    void *lib_sciter_handle = NULL;
+
+    {
+      // 1. try to load from the same folder as this executable
+      const char *lookup_paths[] = {"/" SCITER_DLL_NAME, NULL};
+      for (int n = 0; !lib_sciter_handle; ++n) {
+        if (!lookup_paths[n]) break;
+        char tpath[2048] = {0};
+        strcpy(tpath, folderpath);
+        strcat(tpath, lookup_paths[n]);
+        // fprintf(stdout, "[%s]\n",tpath);
+        lib_sciter_handle = dlopen(tpath, RTLD_LOCAL | RTLD_LAZY);
+        if (!lib_sciter_handle) {
+          fprintf(stderr, "[%s] Unable to load library: %s\n", dlerror(),
+                  tpath);
+        }
+      }
+    }
+
+    if (!lib_sciter_handle) // 2. no luck, try to load from system paths
+      lib_sciter_handle = dlopen(SCITER_DLL_NAME, RTLD_LOCAL | RTLD_LAZY);
+
+    if (!lib_sciter_handle) {
+      fprintf(stderr, "[%s] Unable to load library: %s\n", __FILE__, dlerror());
+      exit(EXIT_FAILURE);
+    }
+
+    SciterAPI_ptr sapi = (SciterAPI_ptr)dlsym(lib_sciter_handle, "SciterAPI");
+    if (!sapi) {
+      fprintf(stderr, "[%s] Unable to get symbol: %s\n", __FILE__, dlerror());
+      exit(EXIT_FAILURE);
+    }
+    _api = sapi();
+    tiscript::ni(_api->TIScriptAPI());
+  }
+  assert(_api);
+  return _api;
+}
+
 #endif
+
 
   inline ISciterAPI* SAPI() {
     static ISciterAPI* _api = _SAPI(NULL);
@@ -445,7 +464,7 @@ typedef ISciterAPI* (SCAPI *SciterAPI_ptr)();
   inline   UINT    SCAPI SciterVersion (BOOL major) { return SAPI()->SciterVersion (major); }
   inline   BOOL    SCAPI SciterDataReady (HWINDOW hwnd,LPCWSTR uri,LPCBYTE data, UINT dataLength) { return SAPI()->SciterDataReady (hwnd,uri,data,dataLength); }
   inline   BOOL    SCAPI SciterDataReadyAsync (HWINDOW hwnd,LPCWSTR uri, LPCBYTE data, UINT dataLength, LPVOID requestId) { return SAPI()->SciterDataReadyAsync (hwnd,uri, data, dataLength, requestId); }
-#ifdef WINDOWS
+#if defined(WINDOWS) && !defined(WINDOWLESS)
   inline   LRESULT SCAPI SciterProc (HWINDOW hwnd, UINT msg, WPARAM wParam, LPARAM lParam) { return SAPI()->SciterProc (hwnd,msg,wParam,lParam); }
   inline   LRESULT SCAPI SciterProcND (HWINDOW hwnd, UINT msg, WPARAM wParam, LPARAM lParam, BOOL* pbHandled) { return SAPI()->SciterProcND (hwnd,msg,wParam,lParam,pbHandled); }
 #endif
@@ -462,23 +481,25 @@ typedef ISciterAPI* (SCAPI *SciterAPI_ptr)();
   inline   BOOL    SCAPI SciterCall (HWINDOW hWnd, LPCSTR functionName, UINT argc, const SCITER_VALUE* argv, SCITER_VALUE* retval) { return SAPI()->SciterCall (hWnd,functionName, argc,argv,retval); }
   inline   BOOL    SCAPI SciterEval ( HWINDOW hwnd, LPCWSTR script, UINT scriptLength, SCITER_VALUE* pretval) { return SAPI()->SciterEval ( hwnd, script, scriptLength, pretval); }
   inline   VOID    SCAPI SciterUpdateWindow(HWINDOW hwnd) { SAPI()->SciterUpdateWindow(hwnd); }
-#ifdef WINDOWS
+#if defined(WINDOWS) && !defined(WINDOWLESS)
   inline   BOOL    SCAPI SciterTranslateMessage (MSG* lpMsg) { return SAPI()->SciterTranslateMessage (lpMsg); }
 #endif
   inline  BOOL    SCAPI SciterSetOption (HWINDOW hWnd, UINT option, UINT_PTR value ) { return SAPI()->SciterSetOption (hWnd,option,value ); }
   inline  VOID    SCAPI SciterGetPPI (HWINDOW hWndSciter, UINT* px, UINT* py) { SAPI()->SciterGetPPI (hWndSciter,px,py); }
   inline  BOOL    SCAPI SciterGetViewExpando ( HWINDOW hwnd, VALUE* pval ) { return SAPI()->SciterGetViewExpando ( hwnd, pval ); }
-#ifdef WINDOWS
+#if defined(WINDOWS) && !defined(WINDOWLESS)
   inline  BOOL    SCAPI SciterRenderD2D (HWINDOW hWndSciter, IUnknown* /*ID2D1RenderTarget**/ prt) { return SAPI()->SciterRenderD2D (hWndSciter,prt); }
-  inline  BOOL    SCAPI SciterD2DFactory (void** /*ID2D1Factory ***/ ppf) { return SAPI()->SciterD2DFactory (ppf); }
-  inline  BOOL    SCAPI SciterDWFactory (void** /*IDWriteFactory ***/ ppf) { return SAPI()->SciterDWFactory (ppf); }
+  inline  BOOL    SCAPI SciterD2DFactory (IUnknown** /*ID2D1Factory ***/ ppf) { return SAPI()->SciterD2DFactory (ppf); }
+  inline  BOOL    SCAPI SciterDWFactory (IUnknown** /*IDWriteFactory ***/ ppf) { return SAPI()->SciterDWFactory (ppf); }
 #endif
   inline  BOOL    SCAPI SciterGraphicsCaps (LPUINT pcaps) { return SAPI()->SciterGraphicsCaps (pcaps); }
   inline  BOOL    SCAPI SciterSetHomeURL (HWINDOW hWndSciter, LPCWSTR baseUrl) { return SAPI()->SciterSetHomeURL (hWndSciter,baseUrl); }
 #if defined(OSX)
   inline  HWINDOW SCAPI SciterCreateNSView ( LPRECT frame ) { return SAPI()->SciterCreateNSView ( frame ); }
 #endif
+#if !defined(WINDOWLESS)
   inline  HWINDOW SCAPI SciterCreateWindow ( UINT creationFlags,LPRECT frame, SciterWindowDelegate* delegate, LPVOID delegateParam, HWINDOW parent) { return SAPI()->SciterCreateWindow (creationFlags,frame,delegate,delegateParam,parent); }
+#endif
 
   inline SCDOM_RESULT SCAPI Sciter_UseElement(HELEMENT he) { return SAPI()->Sciter_UseElement(he); }
   inline SCDOM_RESULT SCAPI Sciter_UnuseElement(HELEMENT he) { return SAPI()->Sciter_UnuseElement(he); }
@@ -613,7 +634,7 @@ typedef ISciterAPI* (SCAPI *SciterAPI_ptr)();
   inline BOOL SCAPI Sciter_v2V(HVM vm, const tiscript_value script_value, VALUE* out_value, BOOL isolate) { return SAPI()->Sciter_v2V(vm,script_value,out_value, isolate); }
   inline BOOL SCAPI Sciter_V2v(HVM vm, const VALUE* value, tiscript_value* out_script_value) { return SAPI()->Sciter_V2v(vm,value,out_script_value); }
 
-#ifdef WINDOWS
+#if defined(WINDOWS) && !defined(WINDOWLESS)
   inline BOOL SCAPI SciterCreateOnDirectXWindow(HWINDOW hwnd, IUnknown* pSwapChain) { return SAPI()->SciterCreateOnDirectXWindow(hwnd,pSwapChain); }
   inline BOOL SCAPI SciterRenderOnDirectXWindow(HWINDOW hwnd, HELEMENT elementToRenderOrNull, BOOL frontLayer) { return SAPI()->SciterRenderOnDirectXWindow(hwnd,elementToRenderOrNull,frontLayer); }
   inline BOOL SCAPI SciterRenderOnDirectXTexture(HWINDOW hwnd, HELEMENT elementToRenderOrNull, IUnknown* surface) { return SAPI()->SciterRenderOnDirectXTexture(hwnd,elementToRenderOrNull,surface); }
@@ -622,10 +643,10 @@ typedef ISciterAPI* (SCAPI *SciterAPI_ptr)();
   inline   BOOL SCAPI SciterProcX(HWINDOW hwnd, SCITER_X_MSG* pMsg) { return SAPI()->SciterProcX(hwnd, pMsg); }
 #ifdef __cplusplus
   template<class MSG>
-  inline   BOOL SCAPI SciterProcX(HWINDOW hwnd, MSG &msg) {
+  inline   BOOL SCAPI SciterProcX(HWINDOW hwnd, const MSG &msg) {
      static_assert(offsetof(MSG, header) == 0, "must contain SCITER_X_MSG as first memeber");
      static_assert(std::is_same<decltype(MSG::header), SCITER_X_MSG>::value, "must contain SCITER_X_MSG");
-     return SAPI()->SciterProcX(hwnd, reinterpret_cast<SCITER_X_MSG*>(&msg));
+     return SAPI()->SciterProcX(hwnd, (SCITER_X_MSG*)(&msg));
   }
 #endif
 

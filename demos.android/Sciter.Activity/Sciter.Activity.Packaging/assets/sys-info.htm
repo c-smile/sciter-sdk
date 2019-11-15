@@ -1,0 +1,135 @@
+<html>
+<head>
+  <title></title>
+  <style>
+
+
+      html { background:transparent; overflow:hidden; }
+    
+      body { font:system; margin:0; padding:8dip; }
+
+      a:link { color:#048; behavior:clickable; }
+    
+      div#intro
+      { 
+        color:#bbb;
+        padding:3dip; 
+        margin-bottom:*;
+        behavior:htmlarea;
+        background: rgba(0,0,0,0.5);
+        width:max-content;
+      }
+
+      div#intro > img#arrow { fill:#bbb; stroke:none; vertical-align:middle; size:0.8em; foreground-image:url(path:M 11.78125 2.28125 L 2.78125 11.28125 L 2.09375 12 L 2.78125 12.71875 L 11.78125 21.71875 L 13.21875 20.28125 L 5.9375 13 L 22 13 L 22 11 L 5.9375 11 L 13.21875 3.71875 L 11.78125 2.28125 z); }  
+      
+      dl#system { flow:row(dt,dd); width:max-content; margin-left:*;}
+      dl#system > dt { width:max-intrinsic; text-align:right; }
+      dl#system > dd { width:max-intrinsic; margin:0; padding-left:0.6em; font-weight:bold; color:#444; }
+      
+      /*section#info {
+        width:*;
+        horizontal-align:right;
+        border-spacing:8dip;
+        flow:horizontal;
+      }*/
+
+    .info {
+      padding: 0.42em;
+      background: rgba(200,200,200,0.75);
+      /* border-radius: 0.42em;  // slows down rendering on Android */
+      margin: 0;
+    }
+
+      .info header  
+      {
+        font-weight:bold; 
+        color:#FFDEAD; 
+        text-align:center;
+        margin-top:0.5em; 
+        text-shadow: 0dip 0dip 2dip rgb(32,16,0) ;
+      }
+
+      section#info {
+        foreground-image:url(path:M 12 0 C 5.373 0 0 5.373 0 12 C 0 18.627 5.373 24 12 24 C 18.627 24 24 18.627 24 12 C 24 5.373 18.627 0 12 0 z M 12 2 C 17.523 2 22 6.477 22 12 C 22 17.523 17.523 22 12 22 C 6.477 22 2 17.523 2 12 C 2 6.477 6.477 2 12 2 z M 12 5.8125 C 11.818 5.8125 11.663 5.80675 11.5 5.84375 C 11.337 5.88075 11.1835 5.9695 11.0625 6.0625 C 10.9425 6.1555 10.85125 6.2855 10.78125 6.4375 C 10.71125 6.5905 10.6875 6.77 10.6875 7 C 10.6875 7.225 10.71225 7.4075 10.78125 7.5625 C 10.85125 7.7175 10.9415 7.8445 11.0625 7.9375 C 11.1835 8.0305 11.337 8.086 11.5 8.125 C 11.663 8.165 11.818 8.1875 12 8.1875 C 12.181 8.1875 12.37225 8.165 12.53125 8.125 C 12.69325 8.086 12.8165 8.0295 12.9375 7.9375 C 13.0575 7.8445 13.14675 7.7185 13.21875 7.5625 C 13.29075 7.4085 13.34375 7.225 13.34375 7 C 13.34375 6.77 13.29075 6.5895 13.21875 6.4375 C 13.14675 6.2855 13.0575 6.1555 12.9375 6.0625 C 12.8165 5.9695 12.69325 5.88075 12.53125 5.84375 C 12.37225 5.80675 12.181 5.8125 12 5.8125 z M 10.78125 9.15625 L 10.78125 18.125 L 13.21875 18.125 L 13.21875 9.15625 L 10.78125 9.15625 z);
+        foreground-position-top:0.25em;
+        foreground-position-right:0.25em;
+        foreground-size:2em 2em;
+        foreground-repeat:no-repeat;
+        fill:#fff;
+        stroke:none;
+        padding:0.42em 2em 0.42em 0.42em;
+        width:0;
+        height:2em;
+        overflow:hidden;
+        background-color:transparent;
+        position:absolute;
+        right:8dip;
+        top:8dip;
+      }
+
+      section#info > ul { size:max-content; clear:both; } 
+
+      section#info:hover {
+        background-color:rgba(200,200,200,0.75);
+        size:max-content;
+        transition: size(sine-out,400ms,100ms) background-color(sine-out,400ms);
+      }
+
+  </style>
+
+  <script type="text/tiscript">
+
+    function self.ready() {
+      $(#version).text = String.printf("%d.%d.%d.%d", 
+  		  (Sciter.VERSION >> 16) & 0xffff, Sciter.VERSION & 0xffff,
+  		  (Sciter.REVISION >> 16) & 0xffff, Sciter.REVISION & 0xffff);
+      $(#revision).text = Sciter.BUILD.toString();      
+  	  $(#user).text = Sciter.userName();
+  	  $(#machine).text = Sciter.machineName();
+  	  $(#domain).text = Sciter.machineName(true);
+  	  //$(#home).text = System.home();
+  	  $(#language).text = System.language;
+  	  $(#country).text = System.country;
+  	  $(#os-type).text = System.HANDHELD? "handheld":"desktop";
+  	  $(#os-version).text = System.OS;
+      $(#gfx-backend).text = view.backendName;
+    }
+
+    event click $(a[href]) {
+      Sciter.launch(this.attributes["href"]);
+      return true;
+    }
+  
+  </script>
+</head>
+<body>
+  <div #intro><img #arrow> use this button to open HTML files...</div>
+
+  <section.info #info>
+    <ul>
+      <header>Sciter Engine contains:</header>  
+      <li><b>H-SMILE</b> (HTML/CSS) and <b>TIScript</b> engines<br>of <a href="http://terrainformatica.com/">Terra Informatica Software, Inc.</a></li>
+      <li><a href="https://skia.org/">Skia library</a>, sponsored and developed by Google.<br>Skia is used for rendering when the engine<br>is asked to do so.</li>
+      <li><a href="https://github.com/nucleic/kiwi/">KIWI Cassowary Constraint Solver</a><br>by Chris Colbert and The Nucleic Development Team.</li>
+      <li><a href="http://www.garret.ru/dybase.html">DyBase</a> library by Konstantin Knizhnik.</li>
+      <li><a href="https://github.com/libuv/libuv">libuv</a> multi-platform asynchronous I/O library.</li>
+    </ul>
+  </section>
+
+  <dl.info #system>
+	  <header#sciter>The Sciter</header>
+	  <dt>version:</dt>	   <dd #version></dd>
+    <dt>revision:</dt>   <dd #revision></dd>
+    <header>System</header>
+	  <dt>OS type:</dt>	   <dd #os-type></dd>
+	  <dt>OS version:</dt> <dd #os-version></dd>
+    <dt>GFX backend:</dt><dd #gfx-backend></dd>
+	  <dt>user:</dt>		   <dd #user></dd>
+	  <dt>machine:</dt>	   <dd #machine></dd>
+	  <dt>domain:</dt>	   <dd #domain></dd>
+    <!--<dt>home:</dt>	     <dd #home></dd>-->
+	  <dt>country:</dt>	   <dd #country></dd>
+	  <dt>language:</dt>	 <dd #language></dd>
+  </dl>
+</body>
+</html>

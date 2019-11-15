@@ -5,7 +5,7 @@ class VList : Reactor.Component
 {
   const styleset = ["vlist", $url(vlist.css)];
 
-  this var recordset = [];
+  this var data = []; // recordset
   this var recordview = null;
   this var swIndex = 0;
   this var swLength = 40;
@@ -18,19 +18,19 @@ class VList : Reactor.Component
     this.swIndex = 0;
     this.swLength = 40;
     this.itemHeight = 10; // will be recalculated later
-    this.recordset = atts.recordset;
+    this.data = atts.recordset;
     this.recordview = atts.record;
     this.multiselect = atts.multiselect;
-    assert typeof this.recordset == #array;
+    assert typeof this.data == #array;
     assert typeof this.recordview == #function;
   }
 
   function render() {
     var items = [];
-    var {recordview, recordset, swIndex, swLength} = this;
-    var end = Integer.min(recordset.length,swIndex + swLength);
+    var {recordview, data, swIndex, swLength} = this;
+    var end = Integer.min(data.length,swIndex + swLength);
     for( var i = swIndex; i < end; ++i )
-      items.push( recordview.call(this,recordset[i],i) );
+      items.push( recordview.call(this,data[i],i) );
     return <vlist>{items}</vlist>;
   }
 
@@ -58,12 +58,12 @@ class VList : Reactor.Component
       return;
 
     var rPos = evt.scrollPos / this.itemHeight;  // recordPos
-    var mPos = this.recordset.length - 1 - this.visibleItems; // max recordPos
+    var mPos = this.data.length - 1 - this.visibleItems; // max recordPos
     if( rPos > mPos ) rPos = mPos;
     if( rPos < 0 ) rPos = 0;
 
-    if( rPos + this.swLength >= this.recordset.length ) {
-      var ni = this.recordset.length - this.swLength; 
+    if( rPos + this.swLength >= this.data.length ) {
+      var ni = this.data.length - this.swLength; 
       if(this.swIndex == ni) return;
       this.swIndex = ni; 
     }
@@ -84,7 +84,7 @@ class VList : Reactor.Component
   function resetPaddings() {
     // set paddings so scrollbar will reflect the reality 
     this.style[#padding-top] = px(this.swIndex * this.itemHeight);
-    this.style[#padding-bottom] = px((this.recordset.length - this.swIndex - this.swLength) * this.itemHeight);
+    this.style[#padding-bottom] = px((this.data.length - this.swIndex - this.swLength) * this.itemHeight);
   }
 
   function isSelected(record) {
@@ -94,7 +94,7 @@ class VList : Reactor.Component
   event mousedown $(li,tr) (evt,li) {
     if(var cc = this.$(>*:current))
       cc.state.current = false;
-    this.currentRecord = this.recordset[li.index + this.swIndex];
+    this.currentRecord = this.data[li.index + this.swIndex];
     li.state.current = true;
     if( this.multiselect && evt.ctrlKey ) {
       if(li.state.checked) {
@@ -115,31 +115,41 @@ class VTableBody : VList
 
   function render() {
     var items = [];
-    var {recordview, recordset, swIndex, swLength} = this;
-    var end = Integer.min(recordset.length,swIndex + swLength);
+    var {recordview, data, swIndex, swLength} = this;
+    var end = Integer.min(data.length,swIndex + swLength);
     for( var i = swIndex; i < end; ++i )
-      items.push( recordview.call(this,recordset[i],i) );
+      items.push( recordview.call(this,data[i],i) );
     return <tbody>{items}</tbody>;
   }
 }
 
-// function component - used just for table structure generation
-function VTable(props,kids) {
-  debug log: props;
-  assert kids.length == 2; //
-  assert kids[0].tag == #columns; // expect <columns><th>..</th><th>..</th><columns>
-  assert typeof kids[1] == #function; // expect function producing row: <tr><td>..</td><td>..</td></tr>
-  assert typeof props.recordset == #array;
+class VTable: Reactor.Component 
+{
 
-  var THes = kids[0][1]; // array of <th>'es
+  function this(props,kids) {
+    assert kids.length == 2; //
+    assert kids[0].tag == #columns; // expect <columns><th>..</th><th>..</th><columns>
+    assert typeof kids[1] == #function; // expect function producing row: <tr><td>..</td><td>..</td></tr>
+    assert typeof props.recordset == #array;
 
-  return 
-    <table fixedlayout>
-      <thead><tr>{THes}</tr></thead>
-      <VTableBody multiselect={props.multiselect} 
-                  recordset={props.recordset}
-                  record={kids[1]} />
+    this.columnHeaders = kids[0][1]; // array of <th>'es
+    this.data = props.recordset;
+    this.multiselect = props.multiselect;
+    this.recordView = kids[1];
+  }
+
+  property recordset(v) {
+    get return this.data;
+    set this.$(tbody).update(this.data = v); 
+  }
+
+  function render() {
+    return <table fixedlayout>
+      <thead><tr>{this.columnHeaders}</tr></thead>
+      <VTableBody multiselect={this.multiselect} 
+                  recordset={this.data}
+                  record={this.recordView} />
     </table>;
+  }
 }
-
 

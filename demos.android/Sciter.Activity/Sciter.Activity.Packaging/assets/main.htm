@@ -1,0 +1,22 @@
+<html theme="dark">
+<head>
+  <title>&#xb5;Sciter</title>
+  <style src="main.css" />
+  <script type="text/tiscript" src="main.tis" />
+</head>
+<header><caption>Sciter.Lite.NativeActivity, FPS: <span#fps /></caption></header>
+<body aria-label="Sciter Frame Body">
+  <toolbar role="toolbar">
+    <button #open accesskey="^O" title="load html" aria-label="Load Document" />
+    <button #open-in-view title="load html in view" aria-label="Load Document in View" />
+    <button #reload accesskey="!F5" title="reload html" disabled aria-label="Reload Document" />
+    <button #help title="Help browser" aria-label="Help" />
+    <hr>
+    <button #inspector title="DOM inspector" aria-label="DOM inspector" />
+    <button|checkbox #system-glass title="Auto glass mode" aria-label="Set Auto Glass Mode"/> 
+    <button|checkbox #glass title="Glass mode" aria-label="Set Glass Mode"/> 
+  </toolbar>
+  <frame #content src="sys-info.htm" aria-label="Content"></frame>
+</body>
+<footer></footer>
+</html>

@@ -1,0 +1,116 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+main { size:*; }
+
+table { border:2dip solid #ccc; background:#fff; size:*; border-spacing:0; }
+table > thead > tr > th { width:*; } // columns widhts
+table > tbody > tr { line-height:1.8em;  }
+table > tbody > tr.group { background:#eee; behavior: clickable; }
+table > tbody > tr:current { background:highlight; color: highlighttext; }
+
+table > tbody > tr.group > th { 
+  background-image:url(stock:arrow-right); 
+  background-repeat:no-repeat;
+  background-size:0.5em 0.5em;
+  background-position:4dip 50%;
+}
+table > tbody > tr.group:expanded > th { background-image:url(stock:arrow-down); }
+
+        </style>
+        <script type="text/tiscript">
+
+include "vlist.tis";
+
+function groupsGenerator() {
+  var out = [];
+  var i = 0;
+  for(var n in 50) {
+    var group = { 
+      group: String.$(Group {n}),
+      key:++i,
+      expanded:true,
+      items: [] 
+    };
+    out.push(group);
+    for(var n in 10)
+      group.items.push 
+      { 
+        key:++i,
+        field1: String.$({n}.1),
+        field2: String.$({n}.2),
+        field3: String.$({n}.3)
+      };
+  }
+  return out;
+}
+
+var groups = groupsGenerator();
+
+function flatList(groups) {
+  var out = [];
+  for(var g in groups) {
+    out.push(g); 
+    if(g.expanded)
+      for(var item in g.items)
+        out.push(item);
+  }
+  return out;
+}
+
+function recordView(record,index) { // function generating single row
+  const isCurrent = this.currentRecord===record
+  if(record.group)
+    return
+      <tr.group key={record.key} :current={isCurrent} :expanded={record.expanded}>
+        <th colspan="3">{record.group}</th>
+      </tr>;
+  else 
+    return
+      <tr key={record.key} :current={isCurrent} >
+        <td>cell {record.field1}</td>
+        <td>cell {record.field2}</td>
+        <td>cell {record.field3}</td>
+      </tr>;
+}
+
+var vtable;
+
+function recordsetView() {
+  return 
+  <VTable recordset={flatList(groups)} @{vtable}>
+    <columns>
+      <th>First</th>
+      <th>Second</th>
+      <th>Third</th>
+    </columns>
+    { recordView }
+  </VTable>;
+}
+
+
+// mount
+$(main).content(recordsetView());
+
+
+event click $(tr.group) {
+  const key = this.attributes["key"];
+  var group = groups.find( :g: g.key == key );
+  assert group;
+  group.expanded = !group.expanded;
+  // request to update with new flatList representation
+  //debug log: vtable, vtable instanceof VTable;
+  vtable.recordset = flatList(groups);
+}
+
+        </script>
+    </head>
+    <body>
+      <p>Demo of simple virtual list component &lt;VList>.</p>
+      <p>The caller shall supply record view producer function.</p>
+      <p>The list supports multiselection (CTRL+CLICK).</p>
+      <main></main>
+    </body>
+</html>

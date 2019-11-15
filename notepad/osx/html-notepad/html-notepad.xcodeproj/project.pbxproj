@@ -11,7 +11,6 @@
 		4926C091217E810800A9B1CF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4926C090217E810800A9B1CF /* Assets.xcassets */; };
 		4926C0A0217E897E00A9B1CF /* sciter-osx-main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4926C09F217E897E00A9B1CF /* sciter-osx-main.mm */; };
 		4926C0A2217E899800A9B1CF /* html-notepad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4926C0A1217E899800A9B1CF /* html-notepad.cpp */; };
-		49446C4C217FEBF3006EA494 /* sciter-osx-64.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 49446C4B217FEBF3006EA494 /* sciter-osx-64.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -21,7 +20,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
-				49446C4C217FEBF3006EA494 /* sciter-osx-64.dylib in Embed Libraries */,
 			);
 			name = "Embed Libraries";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -38,7 +36,6 @@
 		4926C09E217E817300A9B1CF /* html-notepad.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "html-notepad.entitlements"; sourceTree = "<group>"; };
 		4926C09F217E897E00A9B1CF /* sciter-osx-main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "sciter-osx-main.mm"; path = "../../../../include/sciter-osx-main.mm"; sourceTree = "<group>"; };
 		4926C0A1217E899800A9B1CF /* html-notepad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "html-notepad.cpp"; path = "../../../html-notepad.cpp"; sourceTree = "<group>"; };
-		49446C4B217FEBF3006EA494 /* sciter-osx-64.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "sciter-osx-64.dylib"; path = "../../../bin.osx/sciter-osx-64.dylib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,7 +52,6 @@
 		4926C081217E810600A9B1CF = {
 			isa = PBXGroup;
 			children = (
-				49446C4B217FEBF3006EA494 /* sciter-osx-64.dylib */,
 				4926C08C217E810600A9B1CF /* html-notepad */,
 				4926C08B217E810600A9B1CF /* Products */,
 				49446C46217FE961006EA494 /* Frameworks */,

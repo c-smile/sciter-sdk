@@ -1,0 +1,58 @@
+﻿<html><body> <h2>&lt;reactor&gt;&nbsp;element as HTML mounting point</h2>
+	<p>Consider this HTML document:</p>
+	
+	<pre>&lt;html&gt;
+    &lt;head&gt;
+        &lt;script type=&quot;text/tiscript&quot;&gt;
+          var items = [&quot;Veni&quot;,&quot;Vidi&quot;,&quot;Vici&quot;];
+        &lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+       &lt;reactor(ol)&gt;
+         {items.map((item) =&gt; &lt;li&gt;{item}&lt;/li&gt;)}
+       &lt;/reactor&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</pre><p>and note the <code>&lt;reactor&gt;</code> element there. That &lt;reactor&gt; element is so called Reactor's mounting point.</p>
+	<p>When the <code>&lt;reactor&gt;</code> element appears in the DOM it gets evaluated as a script containing SSX literals and the end result for that particular document will be this:</p>
+	<pre>&lt;html&gt;
+    &lt;body&gt;
+       &lt;ol&gt;
+         &lt;li&gt;Veni&lt;/li&gt;
+         &lt;li&gt;Vidi&lt;/li&gt;
+         &lt;li&gt;Vici&lt;/li&gt;
+       &lt;/ol&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</pre>
+	<h2>&lt;reactor&gt; element</h2>
+	<p>The &lt;reactor&gt; element knows about and interprets these two DOM attributes:</p>
+	
+	<ul><li><code>name</code> - string, accepts the following:<ul></ul><ol><li>if it is a string starting from <i>lower case letter</i> then it is treated as <i>DOM element</i> tag, for eample: div, section, ol, li, etc.&nbsp;</li><li>if it starts from a <i>capital letter</i> then it is treated as a name of component - Reactor's function or class declared elsewhere in code.</li><li>if it is <i>omitted</i> then content of the &lt;reactor&gt; element will replace the&nbsp;&lt;reactor&gt; element itself.</li></ol></li>
+		<li><code>src</code> - url. This attribute is used when the <i>name</i> defines Reactor's component (case #2 above). If <i>src</i> is provided then the engine will try to load component from script file loaded from the url.</li>
+		
+		
+		</ul>
+	<p>Example, this document:</p>
+	<pre>&lt;html&gt;
+    &lt;head&gt;
+        &lt;script type=&quot;text/tiscript&quot;&gt;
+          var name = &quot;World&quot;;
+        &lt;/script&gt;
+    &lt;/head&gt;
+    &lt;reactor(body)&gt;
+         &lt;h1&gt;Hello {name}&lt;/h1&gt;
+    &lt;/reactor&gt;
+&lt;/html&gt;</pre>
+
+	<p>&nbsp;after loading will produce exactly this content:</p>
+	<pre>&lt;html&gt;
+    &lt;head&gt;
+        &lt;script type=&quot;text/tiscript&quot;&gt;
+          var name = &quot;World&quot;;
+        &lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+         &lt;h1&gt;Hello world&lt;/h1&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</pre>
+
+	<p></p></body></html>

@@ -22,7 +22,7 @@ struct native_clock: public event_handler
     // ctor
     native_clock() {}
     virtual ~native_clock() {}
-
+        
     virtual bool subscription( HELEMENT he, UINT& event_groups )
     {
       event_groups = HANDLE_DRAW   // it does drawing
@@ -127,6 +127,13 @@ struct native_clock: public event_handler
     
       gfx.state_restore();
 
+      char buffer[16] = { 0 };
+      sprintf(buffer, "%02d:%02d", timeinfo.tm_hour, timeinfo.tm_min);
+
+      //sciter::text text(aux::chars_of(buffer), he);
+      sciter::text text = sciter::text::create_with_style(aux::a2w(buffer), he, const_wchars("font-size:24pt;color:brown"));
+      gfx.draw_text(text, params.area.left + w / 2.0f, params.area.top + h / 4.0f, 5);
+      
       return false;
     
     }

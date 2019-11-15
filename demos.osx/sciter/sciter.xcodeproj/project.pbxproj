@@ -7,12 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		490E8B0D1951ED3A00850B46 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 495189FE18DF683800844B99 /* main.mm */; };
-		490E8B121951ED3A00850B46 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 495189F218DF683800844B99 /* Cocoa.framework */; };
-		490E8B141951ED3A00850B46 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 495189FB18DF683800844B99 /* InfoPlist.strings */; };
-		490E8B151951ED3A00850B46 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49518A0A18DF683800844B99 /* Images.xcassets */; };
-		490E8B161951ED3A00850B46 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 49518A0118DF683800844B99 /* Credits.rtf */; };
-		490E8B171951ED3A00850B46 /* compile-res.sh in Resources */ = {isa = PBXBuildFile; fileRef = 493B9B481940ED2A0014846B /* compile-res.sh */; };
 		493B9B491940ED2A0014846B /* compile-res.sh in Resources */ = {isa = PBXBuildFile; fileRef = 493B9B481940ED2A0014846B /* compile-res.sh */; };
 		495189F318DF683800844B99 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 495189F218DF683800844B99 /* Cocoa.framework */; };
 		495189FD18DF683800844B99 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 495189FB18DF683800844B99 /* InfoPlist.strings */; };
@@ -22,13 +16,11 @@
 		497E3CD3196222C900B2D35A /* window.mm in Sources */ = {isa = PBXBuildFile; fileRef = 497E3CD2196222C900B2D35A /* window.mm */; };
 		49983F4B1E90A11D004409A8 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49983F4A1E90A11D004409A8 /* MainMenu.xib */; };
 		49ADAE961C16A149007BC462 /* behavior_drawing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49ADAE951C16A148007BC462 /* behavior_drawing.cpp */; };
-		49ADAE971C16A149007BC462 /* behavior_drawing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49ADAE951C16A148007BC462 /* behavior_drawing.cpp */; };
 		49D422211BA3473B005E6E36 /* behavior_tabs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49D422201BA3473B005E6E36 /* behavior_tabs.cpp */; };
 		49EC75711BACFB2C00BBCF44 /* behavior_video_generator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49EC75701BACFB2C00BBCF44 /* behavior_video_generator.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		490E8B1B1951ED3A00850B46 /* sciter-32.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "sciter-32.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		490FA449191584C50093BCA0 /* sciter-x-api.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "sciter-x-api.h"; path = "../../include/sciter-x-api.h"; sourceTree = "<group>"; };
 		490FA44A191584C50093BCA0 /* sciter-x-def.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "sciter-x-def.h"; path = "../../include/sciter-x-def.h"; sourceTree = "<group>"; };
 		493B9B481940ED2A0014846B /* compile-res.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "compile-res.sh"; sourceTree = "<group>"; };
@@ -74,18 +66,9 @@
 		49D422221BA347BF005E6E36 /* stdafx.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stdafx.h; sourceTree = "<group>"; };
 		49EC75701BACFB2C00BBCF44 /* behavior_video_generator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = behavior_video_generator.cpp; path = ../../include/behaviors/behavior_video_generator.cpp; sourceTree = "<group>"; };
 		49EC75721BACFBC200BBCF44 /* sciter-x-video-api.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "sciter-x-video-api.h"; path = "../../include/sciter-x-video-api.h"; sourceTree = "<group>"; };
-		49F16FAA19DCAE1C00C048CA /* sciter-osx-64.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "sciter-osx-64.dylib"; path = "../../../osx/sciter-osx/build/sdk/bin.osx/sciter-osx-64.dylib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		490E8B101951ED3A00850B46 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				490E8B121951ED3A00850B46 /* Cocoa.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		495189EC18DF683800844B99 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -150,7 +133,6 @@
 			isa = PBXGroup;
 			children = (
 				495189EF18DF683800844B99 /* sciter.app */,
-				490E8B1B1951ED3A00850B46 /* sciter-32.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -158,7 +140,6 @@
 		495189F118DF683800844B99 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				49F16FAA19DCAE1C00C048CA /* sciter-osx-64.dylib */,
 				495189F218DF683800844B99 /* Cocoa.framework */,
 				495189F418DF683800844B99 /* Other Frameworks */,
 			);
@@ -217,23 +198,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		490E8B0B1951ED3A00850B46 /* sciter-32 */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 490E8B181951ED3A00850B46 /* Build configuration list for PBXNativeTarget "sciter-32" */;
-			buildPhases = (
-				490E8B0C1951ED3A00850B46 /* Sources */,
-				490E8B101951ED3A00850B46 /* Frameworks */,
-				490E8B131951ED3A00850B46 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "sciter-32";
-			productName = sciter;
-			productReference = 490E8B1B1951ED3A00850B46 /* sciter-32.app */;
-			productType = "com.apple.product-type.application";
-		};
 		495189EE18DF683800844B99 /* sciter */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 49518A2018DF683900844B99 /* Build configuration list for PBXNativeTarget "sciter" */;
@@ -261,13 +225,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "andrew fedoniouk";
 				TargetAttributes = {
-					490E8B0B1951ED3A00850B46 = {
-						DevelopmentTeam = 642T6M376L;
-						ProvisioningStyle = Automatic;
-					};
 					495189EE18DF683800844B99 = {
 						DevelopmentTeam = 642T6M376L;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -276,6 +236,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -285,23 +246,11 @@
 			projectRoot = "";
 			targets = (
 				495189EE18DF683800844B99 /* sciter */,
-				490E8B0B1951ED3A00850B46 /* sciter-32 */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		490E8B131951ED3A00850B46 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				490E8B141951ED3A00850B46 /* InfoPlist.strings in Resources */,
-				490E8B151951ED3A00850B46 /* Images.xcassets in Resources */,
-				490E8B161951ED3A00850B46 /* Credits.rtf in Resources */,
-				490E8B171951ED3A00850B46 /* compile-res.sh in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		495189ED18DF683800844B99 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -317,15 +266,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		490E8B0C1951ED3A00850B46 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				49ADAE971C16A149007BC462 /* behavior_drawing.cpp in Sources */,
-				490E8B0D1951ED3A00850B46 /* main.mm in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		495189EB18DF683800844B99 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -368,64 +308,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		490E8B191951ED3A00850B46 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ENABLE_OBJC_ARC = NO;
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				COMBINE_HIDPI_IMAGES = YES;
-				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/../../bin.osx";
-				DEVELOPMENT_TEAM = 642T6M376L;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "sciter/sciter-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					../..,
-				);
-				INFOPLIST_FILE = "sciter/sciter-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/hsmile-axtwzvesxuhmvhalgjokdndftooh/Build/Products/Debug",
-					"/Users/andrew/Desktop/sciter.stable/osx/sciter-osx/build/Debug/../../../../sdk/bin.osx",
-				);
-				OTHER_CFLAGS = "-fshort-wchar";
-				PRODUCT_NAME = "sciter-32";
-				WRAPPER_EXTENSION = app;
-			};
-			name = Debug;
-		};
-		490E8B1A1951ED3A00850B46 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ENABLE_OBJC_ARC = NO;
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				COMBINE_HIDPI_IMAGES = YES;
-				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/../../bin.osx";
-				DEVELOPMENT_TEAM = 642T6M376L;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "sciter/sciter-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					../..,
-				);
-				INFOPLIST_FILE = "sciter/sciter-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/hsmile-axtwzvesxuhmvhalgjokdndftooh/Build/Products/Debug",
-					"/Users/andrew/Desktop/sciter.stable/osx/sciter-osx/build/Debug/../../../../sdk/bin.osx",
-				);
-				OTHER_CFLAGS = "-fshort-wchar";
-				PRODUCT_NAME = "sciter-32";
-				WRAPPER_EXTENSION = app;
-			};
-			name = Release;
-		};
 		49518A1E18DF683900844B99 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -504,7 +386,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = NO;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/../../bin.osx";
 				DEVELOPMENT_TEAM = 642T6M376L;
@@ -520,6 +403,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CFLAGS = "-fshort-wchar";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
@@ -531,7 +415,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = NO;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/../../bin.osx";
 				DEVELOPMENT_TEAM = 642T6M376L;
@@ -547,6 +432,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CFLAGS = "-fshort-wchar";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
@@ -555,15 +441,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		490E8B181951ED3A00850B46 /* Build configuration list for PBXNativeTarget "sciter-32" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				490E8B191951ED3A00850B46 /* Debug */,
-				490E8B1A1951ED3A00850B46 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		495189EA18DF683800844B99 /* Build configuration list for PBXProject "sciter" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -28,48 +28,6 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "490582CA18DB9A8C001F836C"
-               BuildableName = "sciter-osx-64.dylib"
-               BlueprintName = "sciter-osx"
-               ReferencedContainer = "container:../../../osx/sciter-osx/sciter-osx.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "49DB54E81A0AC09400A181E2"
-               BuildableName = "packfolder"
-               BlueprintName = "packfolder"
-               ReferencedContainer = "container:../../../osx/packfolder/packfolder.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "49D1E9231B6C1648006FB89A"
-               BuildableName = "inspector.app"
-               BlueprintName = "inspector"
-               ReferencedContainer = "container:../../demos/inspector.new/inspector.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "49EBD8761F31558B0099EDF5"
                BuildableName = "SciterNotes.app"
                BlueprintName = "notes"
@@ -88,6 +46,34 @@
                BuildableName = "usciter.app"
                BlueprintName = "usciter"
                ReferencedContainer = "container:../../demos/usciter/usciter/usciter.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "49D1E9231B6C1648006FB89A"
+               BuildableName = "inspector.app"
+               BlueprintName = "inspector"
+               ReferencedContainer = "container:../../demos/inspector/inspector.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4926C089217E810600A9B1CF"
+               BuildableName = "html-notepad.app"
+               BlueprintName = "html-notepad"
+               ReferencedContainer = "container:../../notepad/osx/html-notepad/html-notepad.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -110,9 +96,9 @@
       </Testables>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Debug"
-      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
-      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      buildConfiguration = "Release"
+      selectedDebuggerIdentifier = ""
+      selectedLauncherIdentifier = "Xcode.IDEFoundation.Launcher.PosixSpawn"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"

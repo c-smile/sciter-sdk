@@ -1,0 +1,41 @@
+
+namespace VDOM {
+
+  function isElement(vnode) { return typeof vnode == #tuple; }
+  function isText(vnode) { return typeof vnode == #string; }
+
+  function scan(velement,cbe,cbt,stack=null) {
+    if(!stack) stack = [velement];
+    else stack.push(velement);
+
+    if(var kids = velement[1]) {
+      for(var (index,kid) in kids) 
+      {
+        if(isElement(kid)) {
+          if(cbe) { 
+             var r = cbe(kid,stack,index);
+             if(r) kids[index] = r;
+           }
+          scan(kid,cbe,cbt,stack);
+        } else if(isText(kid)) {
+          if(cbt) {
+            var r = cbt(kid,stack,index);
+            if(r) kids[index] = r;
+          }
+        }
+      }
+    }
+    stack.pop();
+  }
+
+  function translate(v) {
+    const xlt = Lang.translate;
+    if( typeof v == #array )
+      for(var vel in v) scan(vel, null, xlt);
+    else  
+      scan(velement, null, xlt);
+    return v;
+  }
+
+
+}

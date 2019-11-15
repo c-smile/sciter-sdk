@@ -551,7 +551,7 @@ BOOL SCAPI SciterRenderOnDirectXTexture(HWINDOW hwnd, HELEMENT elementToRenderOr
  *
  **/
 
- BOOL SCAPI     SciterD2DFactory(void** /*ID2D1Factory ***/ ppf);
+ BOOL SCAPI     SciterD2DFactory(IUnknown** /*ID2D1Factory ***/ ppf);
 
 /** Obtain pointer to IDWriteFactory instance used by the engine:
  *

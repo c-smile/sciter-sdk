@@ -1,0 +1,70 @@
+﻿<html lang="en">
+    <head>
+        <title>Test</title>
+
+        <link href="lang/ru.tis" hreflang="ru" rel="translation" />
+        <link href="lang/en.tis" hreflang="en" rel="translation" />
+
+        <style>
+@import url(../../../+lang/lang.css);
+        </style>
+
+
+        <script type="text/tiscript">
+
+include "../../../+lang/lang.tis";
+
+include "msgbox.tis";
+
+
+var lang = "en";
+
+event change $(form) {
+  lang = this.value.lang;
+  self.language = lang; 
+}
+
+event click $(#show-prompt) {
+
+  var initialData = {
+    name: "Александр",
+    surname: "Пушкин",
+    gender: "m"
+  };
+
+  var r = 
+    <MsgBox|question caption="Question" alignment={-8} translate="true" >
+      <p>What is your name?</p>
+      <form>
+        <label>Name</label><input|text(name) />
+        <label>Surname</label><input|text(surname) />
+        <label>Gender</label><row><button|radio(gender) value="m">Male</button>
+                                  <button|radio(gender) value="f">Female</button></row>
+      </form>
+      <buttons>
+        <button id="ok" role="default-button">OK</button>
+        <button id="cancel" role="cancel-button">Cancel</button>
+      </buttons>
+    </MsgBox> (initialData);
+
+  if(r)
+   <MsgBox|info>
+     <pre>{JSON.stringify(r)}</pre>
+   </MsgBox>();
+
+}
+
+
+        </script>
+    </head>
+    <body>
+
+<form>
+  <button|radio(lang) value="en" checked>English</button> 
+  <button|radio(lang) value="ru">Russian</button> 
+</form>
+
+<button #show-prompt>Show Prompt</button> 
+
+    </body>
+</html>

@@ -1,4 +1,4 @@
-
+include "../../vdom.tis";
 
 function MsgBox(atts,kids) {
 
@@ -22,6 +22,11 @@ function MsgBox(atts,kids) {
     type: atts?.type ?? "information",
     caption: atts?.caption ?? "Sciter"
   };
+
+  if( atts?.translate && Lang ) {
+    VDOM.translate(params.vcontent);
+    VDOM.translate(params.vbuttons);
+  }
 
   // we will pass atts as they are to view.dialog{} + url + parameters
   const dialogDef = (atts || {}).extend {
