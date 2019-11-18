@@ -1,0 +1,94 @@
+
+    html:theme(dark) { var(text-color): #fff; var(back-color):#000; var(disbaled-color): #aaa; }
+    html:theme(light) { var(text-color): #000; var(back-color):#fff; var(disbaled-color): #777;}
+          
+    html { 
+      background:url(starfield.webp) no-repeat 50% 50%;
+      background-size:cover;
+      //background:#fff;
+      var(accent-color): window-accent-color;
+      color: color(text-color);
+      font:system; 
+    }
+
+    html[mode="tests"] {
+      background:#000;
+    }
+
+    body {
+      flow: horizontal;
+      margin:0;
+    }
+
+    html > header {
+      height: var(window-content-top,32dip);
+      background: #000000A0; 
+    }
+
+    html > header > caption {
+      margin-top:*;
+      text-align:center;
+    }
+
+    html > header > caption > span {
+      display:inline-block;
+      width:2em;
+      height:1.2em;
+      font-weight:bold;
+      color:gold;
+    }
+
+    html > footer {
+      height: var(window-content-bottom,32dip);
+      background: #000000A0;
+    }
+   
+    toolbar  
+    {
+      //visibility:none;
+      display:block;
+      flow:vertical; 
+      width:max-content; 
+      padding:3dip; 
+      height:*;
+      background: #000000A0; //rgba(0,0,0,0.5);
+    }
+    toolbar > button
+    {
+      background-position: 50% 50%; 
+      background-repeat:no-repeat;
+      background-size:20dip;
+      padding:0;
+      size:46dip;
+      border-radius:0;
+      overflow:visible;
+      fill: #fff; //color(text-color);
+      stroke:none;
+    }
+
+    toolbar > button:checked {
+      background-color:#555;
+    }
+
+    toolbar > button:disabled { fill:color(disbaled-color); } 
+    
+    frame#content{ size:*; background: transparent ; }
+    frame#content > div#intro
+    { 
+      font: system;
+      background-color:window; padding:3px; 
+      size:*;
+    }
+    frame#content > div#intro > img#arrow { vertical-align:middle; size:0.8em; color:brown; }
+    
+    frame#content.allow-drop
+    {
+        outline:2dip orange solid -2dip;
+    }
+
+    toolbar > button#home   { background-image:url(path:M1472 992v480q0 26-19 45t-45 19h-384v-384h-256v384h-384q-26 0-45-19t-19-45v-480q0-1 .5-3t.5-3l575-474 575 474q1 2 1 6zm223-69l-62 74q-8 9-21 11h-3q-13 0-21-7l-692-577-692 577q-12 8-24 7-13-2-21-11l-62-74q-8-10-7-23.5t11-21.5l719-599q32-26 76-26t76 26l244 204v-195q0-14 9-23t23-9h192q14 0 23 9t9 23v408l219 182q10 8 11 21.5t-7 23.5z); }
+    toolbar > button#tests  { background-size:18dip; background-image:url(path:M1024 1408h640v-128h-640v128zm-384-512h1024v-128h-1024v128zm640-512h384v-128h-384v128zm512 832v256q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-256q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-512v256q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-256q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-512v256q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-256q0-26 19-45t45-19h1664q26 0 45 19t19 45z); }
+
+    toolbar > button#theme  { background-size:24dip; margin-top:*; background-image:url(path:M 15 3 L 15 8 L 17 8 L 17 3 L 15 3 z M 7.5 6.09375 L 6.09375 7.5 L 9.625 11.0625 L 11.0625 9.625 L 7.5 6.09375 z M 24.5 6.09375 L 20.9375 9.625 L 22.375 11.0625 L 25.90625 7.5 L 24.5 6.09375 z M 16 9 C 12.145852 9 9 12.145852 9 16 C 9 19.854148 12.145852 23 16 23 C 19.854148 23 23 19.854148 23 16 C 23 12.145852 19.854148 9 16 9 z M 16 11 C 18.773268 11 21 13.226732 21 16 C 21 18.773268 18.773268 21 16 21 C 13.226732 21 11 18.773268 11 16 C 11 13.226732 13.226732 11 16 11 z M 3 15 L 3 17 L 8 17 L 8 15 L 3 15 z M 24 15 L 24 17 L 29 17 L 29 15 L 24 15 z M 9.625 20.9375 L 6.09375 24.5 L 7.5 25.90625 L 11.0625 22.375 L 9.625 20.9375 z M 22.375 20.9375 L 20.9375 22.375 L 24.5 25.90625 L 25.90625 24.5 L 22.375 20.9375 z M 15 24 L 15 29 L 17 29 L 17 24 L 15 24 z); }
+   
+    hr { margin:0; padding:0; height:0; border:none; border-top: 1px dashed #999; }

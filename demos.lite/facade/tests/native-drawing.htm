@@ -1,0 +1,75 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      html { background: #fff; color:#000; }
+    
+      clock {
+        behavior: native-clock; /* will paint content layer */
+        display:block;
+        size:*;
+      }
+        
+    </style>
+    <script type="text/tiscript">
+    
+    
+      function self.ready() {
+      
+        var clock = $(clock);
+        var path, pathOutline;
+        var w,h;
+        var cycles = 0;
+        
+        var image = clock.nativeImage(20,20);
+        
+        clock.paintBackground = function(gfx) {
+          if( path ) 
+          {
+            gfx.noStroke()
+               .fillLinearGradient(0,0,0,h,color(248,255,248),color(128,200,128))
+               .drawPath(pathOutline)
+               .noFill();
+
+            gfx.strokeColor( color(128,200,128) )
+               .strokeWidth( 3dip )
+               .drawPath(path);
+               
+            gfx.drawImage(image,0,0)
+               .drawImage(image,w-20,0)
+               .drawImage(image,w-20,h-20)
+               .drawImage(image,0,h-20);
+          }
+        }
+        
+        clock.animate( function() {
+          (w,h) = clock.box(#dimension);
+          var t = Date.ticks() / 1000.0;
+          // getting paths from native code
+          path        = clock.nativeGetPath(0,0,w,h,t, false);
+          pathOutline = clock.nativeGetPath(0,0,w,h,t, true);
+          clock.refresh();
+          if(++cycles > 100) {
+            cycles = 0;
+            gc(); // force gc to collect paths 
+          }
+          return true; // animate endlessly
+        });
+
+      }
+    
+    </script>
+  </head>
+<body>
+
+  <h2>Native drawing behavior demo</h2>
+  <p>See: sdk/include/behaviors/behavior_drawing.cpp</p>
+  <p>Face clock gets drawn by native side on content layer</p>
+  <p>Script is drawing the graph on background layer using paths generated on native side</p>
+  
+
+  <clock></clock>
+
+</body>
+</html>

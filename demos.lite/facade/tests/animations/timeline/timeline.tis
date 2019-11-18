@@ -1,0 +1,348 @@
+
+// Sciter Timeline Framework.
+// Inspired by greensock tween/timeline-lite
+
+include "morph.tis";
+
+function inc(delta) { return function(v) { return v + delta; } }
+function tint(luminance, saturation = 0.0, hue = 0.0) { return function(v) { return v.tint(luminance, saturation,hue); }  }
+
+// helper functions to make declarations compatible with CSS syntax
+function translate(x,y) { return [translate:x,y]; }
+function rotate(a) { return [rotate:a]; }
+function scale(x,y=null) { x = x.toFloat(); return [scale:x, y !== null? y.toFloat() : x]; }
+function skew(x,y=null) { return [skew:x, y !== null? y : x]; }
+function rgb(r,g,b) { return color(r,g,b); }
+function rgba(r,g,b,a) { return color(r,g,b,a); }
+
+class Tween 
+{
+  function this(target, params = null , tovars/*:Object*/ = null, fromvars/*:Object*/ = null) 
+              { 
+                params = params || {};
+                assert target: "Cannot tween an undefined reference";
+                this.target = target;
+                this.tovars = tovars ? tovars.clone() : null;
+                this.fromvars = fromvars ? fromvars.clone() : null;
+                this._duration = (params.duration || 0.0).toFloat();
+                this._startTime = (params.start || 0.0).toFloat();
+                var ease = params.ease || Ease.linear;
+                if( typeof ease == #symbol )       ease = Ease[ease];
+                else if( typeof ease == #string )  ease = Ease[symbol(ease)];
+                assert typeof ease == #function: "ease shall be a function";
+                this.ease = ease;   
+                this._reversed = !!params.reversed;
+                this.onStart = params.onStart;
+                this.onStop = params.onStop;
+                this.state = #dormant;
+              }
+              
+  
+  //| Gets or sets the animation's duration, not including any repeats 
+
+  property duration(seconds/*:Float*/) 
+                {
+                  get return this._duration;
+                  set { this._duration = seconds; this.invalidateDuration(); }
+                } 
+                
+  property startTime(seconds/*:Float*/)  
+                {
+                  get return this._startTime;
+                  set { this._startTime = seconds; this.invalidateDuration(); }
+                } 
+
+  property reversed(onoff/*:boolean*/)  
+                {
+                  get return this._reversed;
+                  set { this._reversed = onoff; }
+                } 
+
+                
+  property state(sym)
+                {
+                  get return this._state;
+                  set { 
+                    if( (this._state) == sym ) 
+                      return;
+                    switch(this._state = sym) 
+                    {
+                      case #dormant: this._init(); break;
+                      case #active: this._start(); break;
+                      case #complete: this._stop(); break;
+                      case #cancel: this._cancel(); break;
+                    }
+                  }
+                } 
+                
+  function invalidateDuration()
+                {
+                  if(this.parent) this.parent.invalidateDuration();
+                }
+  
+  function advance(toTime) 
+                {
+                  if( this._state == #cancel )
+                    return false;
+                  this._time = toTime;
+                  var localtime = toTime - this.startTime;
+                  
+                  if( localtime < 0.0 )
+                    return true; // not started yet
+                  if( localtime >= this.duration ) {
+                    if(this.state != #complete) {
+                      this.render( .9999999 ); //1.0 is not included
+                      this.state = #complete;
+                    }
+                    return false; // finished
+                  }
+                  var progress = // 0.0 .. 1.0
+                      localtime / this.duration;
+                  this.state = #active;                    
+                  this.render( progress );
+                  return true; // is active
+                }
+
+  //|
+  //| render it at progress state
+  //|
+  function render(progress /*0.0 ... 1.0*/) 
+                {
+                  var target = this.target;
+                  var fromvars = this.fromvars;
+                  var tovars = this.tovars;
+                  if(this._reversed)
+                    progress = 1.0 - progress;
+                  if( tovars && fromvars )
+                    target.morph(fromvars, tovars, this.ease(progress));
+                }
+
+  function _init()   { if( this.fromvars && !this.tovars ) { this.tovars = this.target.morph(this.fromvars, null); this.render(0.0); } return this; }
+  function _start()  { if( this.tovars && !this.fromvars ) this.fromvars = this.target.morph(null, this.tovars); if( this.onStart ) this.onStart.call(this); return this; }
+  function _stop()   { if( this.onStop ) this.onStop.call(this); return this; }
+  function _cancel() { return this; }
+}
+
+class TweenRepeater : Tween  {
+  
+  this var cycleNo = 0,     // current running cycle
+           repeats = 1,     // total number of repeats
+           swing   = false; // 'true' when each even cycle is running in reversed direction
+           
+  function this(tween, start, nrepeats, doswing, onStart, onStop) 
+              {
+                super(tween);
+                tween.parent = this;
+                this.repeats = nrepeats === #forever ? 10000 : (nrepeats || 1);
+                this.startTime = (start || 0.0).toFloat();
+                this.swing = !!doswing;
+                this.onStart = onStart;
+                this.onStop = onStop;
+              }
+              
+              
+  property duration(seconds/*:Float*/) 
+              {
+                get return this.target.duration * this.repeats;
+                set { this.target.duration = seconds / this.repeats; }
+              }   
+
+  function render(progress /*0.0 ... 1.0*/) 
+              {
+                var target = this.target;
+                var cycle = 1.0 / this.repeats;
+                var cycleNo = (progress / cycle).toInteger();
+                if( cycleNo != this.cycleNo) {
+                  this.cycleNo = cycleNo;
+                  if( this.swing )
+                    this.target.reversed = (cycleNo & 1) != 0;
+                }
+                var cycleStart = cycle * cycleNo;                
+                target.render( (progress - cycleStart) * this.repeats );
+              }
+              
+  function _init()   { this.target._init(); return this; }
+  function _start()  { this.target._start(); return this; }
+  function _stop()   { this.target._stop(); return this; }
+  function _cancel() { this.target._cancel() return this; }
+              
+}
+
+class Timeline : Tween   
+{
+    function this(canvas = self, params) 
+                { 
+                  super(this,params); 
+                  this.canvas = canvas;
+                  this.children = []; 
+                  this.sortChildren = false; 
+                  this.time = 0.0; // local time
+                  this._durationIsValid = true;
+                  this._defaults = null;
+                  this.labels = {}; // named positions
+                }
+                
+    //| returns new timeline set for the "canvas" DOM element 
+    function on(canvas) { return new Timeline(canvas); }
+
+    //| sets defaultParams to be merged with each tween added 
+    function defaults(params)                           { this._defaults = params; return this; }
+
+    function to(target, params, vars)                   { return this._add(target, params, vars, null); }
+		
+		function from(target, params, vars)                 { return this._add(target, params, null, vars); }
+                
+		function fromTo(target, params, fromVars, toVars)   { return this._add(target, params, toVars, fromVars); }
+				
+		function add(child) 
+                {
+                  if (child.parent)
+                    child.parent._remove(child, true); // removes from existing timeline so that it can be properly added to this one.
+
+                  child.parent = this;
+                  
+                  this._durationIsValid = false;
+                  
+                  this.children.push(child);
+                  if (this.sortChildren)
+                    this.children.sort(:a,b: a._startTime - b._startTime );
+                        
+                  return this;
+                }
+                
+    function label( name, position = null ) 
+                {
+                  if( position === null ) this.labels[name] = this.duration; // at current position
+                  else if( position === undefined ) delete this.labels[name]; 
+                  else this.labels[name] = position.toFloat();
+                  return this;
+                }
+                
+    function _add( target, params /*:Object*/ , tovars/*:Object*/, fromvars/*:Object*/)
+                {
+                  params = this._inherit(params);
+                  
+                  var start = params.start;
+                  if(start === undefined)
+                    start = this.duration; // append it to the end
+                    
+                  if(start instanceof Tuple && start.tag == #label)
+                  {
+                    //stdout.println(start, start[0], start[1], this.labels[start[0]]);
+                    start = (this.labels[start[0]] || 0.0) + start[1];
+                  }
+                    
+                    
+                  var repeats = params.repeats; 
+                  var swing = params.swing; 
+                  if( repeats ) {
+                    params.repeats = null;
+                    params.swing = null;
+                    params = params.clone();
+                  } else {
+                    params.start = start;
+                  }
+                  
+                  var toadd;
+                  
+                  if( target !instanceof Array )
+                    toadd = new Tween(target, params , tovars, fromvars);
+                  else 
+                  {
+                    toadd = new Timeline(null, params);
+                    var step = params.interval || 0.0;
+                    var childparams = params.clone();
+                    params.duration = 0.0;
+                    for (var (i,t) in target) {
+                      childparams.start = i * step;
+                      toadd._add( t, childparams, tovars, fromvars );
+                    }
+                  }
+                  
+                  if(repeats) { // create proxy repeater
+                    var onStart = params.onStart;
+                    var onStop = params.onStop;
+                    toadd.onStart = toadd.onStop = null;
+                    toadd = new TweenRepeater(toadd, start, repeats, swing, onStart, onStop);
+                  }
+                  
+                  return this.add(toadd);
+                }
+		
+		function _remove(tween) 
+                {
+                  if (tween.parent === this)
+                    this.children.removeByValue(tween);
+                  return this;
+                }
+		
+		function render(progress) 
+                {
+                  var localtime;
+                  if(this._reversed) progress = 1.0 - progress;
+                  this.time = localtime = progress * this.duration;
+                  for(var tween in this.children.clone())
+                    tween.advance(localtime);
+                }
+    
+    function invalidateDuration() { _durationIsValid = false; super.invalidateDuration(); } 
+    
+    property duration(seconds/*:Float*/) 
+                {
+                  get return _durationIsValid? this._duration : this.calcDuration();
+                  set { this._duration = seconds; if(this.parent) this.parent.invalidateDuration(); }
+                } 
+
+    function calcDuration() 
+                {
+                  var max = 0.0;
+                  var list = this.children;
+                  for(var tween in list) 
+                  {
+                    var td = tween.startTime + tween.duration;
+                    if( max < td ) max = td;
+                  }
+                  this._duration = max;   
+                  this._durationIsValid = true;
+                  return max;
+                }
+                
+    function _init()
+                {
+                  for(var child in this.children) 
+                    child.state = #dormant;  
+                  return super._init(); 
+                }
+                
+    function _start() 
+                { 
+                  if(this.canvas) {
+                    if(this.canvas._timeline)
+                      this.canvas._timeline.state = #cancel;
+                    this.canvas._timeline = this;
+                  }
+                  /*stdout.println("_start"); */
+                  return super._start(); 
+                }
+    function _stop()  { if(this.canvas) this.canvas._timeline = undefined;  /*stdout.println("_stop");*/  /*for(var child in this.children) child.state = #complete;*/  return super._stop();  }
+    function _cancel()  { if(this.canvas) this.canvas._timeline = undefined; /*stdout.println("_cancel"); */ return super._cancel();  }
+    
+    function _inherit(params) {  
+      if( this._defaults ) 
+        for(var (k,v) in this._defaults) 
+          if(params[k] === undefined) params[k] = v;
+      return params;
+    }
+    
+    function play(onStart = null,onStop = null) {
+      if(onStart) this.onStart = onStart;    
+      if(onStop) this.onStop = onStop;
+      this.state = #dormant;
+      function now() { return Date.ticks() / 1000.0; } // in seconds
+      var started = now();
+      var me = this;
+      this.canvas.animate(::me.advance(now() - started));
+    }           
+}
+
+//Tween.defaultTimeline = new Timeline();

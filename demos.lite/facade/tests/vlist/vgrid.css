@@ -1,0 +1,70 @@
+
+
+@set vgrid {
+
+  table:root {
+    prototype: VGrid url(vlist.tis);  
+    font:system;
+    border:1px solid threedlightshadow; 
+    flow:table-fixed; /* enforce fixed layout on the table 
+		                     to avoid column width changes 
+												 when new rows are pumping up */
+    border-spacing:0;
+    padding:0;
+    overflow-x:scroll-indicator;
+  }
+  
+  table:root[resizeable] > thead {
+    behavior:column-resizer;
+  }
+   
+  table:root > thead, 
+  table:root > tbody { border-spacing:0; }
+
+  table:root > tbody 
+  { 
+    behavior: swipe;
+    overflow-y: scroll-indicator;
+    size:*;
+  }
+  
+  th { background: url(theme:column-header-normal) stretch; behavior:clickable; padding:2dip 4dip 4dip 4dip; }
+  th:hover { background: url(theme:column-header-hover) stretch; }
+  th:active { background: url(theme:column-header-pressed) stretch; }
+  
+  td {
+    white-space: nowrap;
+    overflow-x:hidden;
+    text-overflow:ellipsis;
+    line-height:1.8em; padding:0 4dip;
+    border-right:1px solid #ddd;
+  }
+  
+  td:first-child { text-align:center; }
+  
+  td:last-child { border-right:1px solid transparent; }
+  
+  table:root > tbody > tr {
+    behavior:form; /* mission critical: each repeated child is treated as a form so it can accept object values  */
+  } 
+
+  table > tbody > tr.highlighted {
+    background: #da9;
+  }
+
+  table > tbody > tr:current,
+  table > tbody > tr:checked {
+    background: url(theme:list-view-item-selected) stretch;
+  }
+
+  table > tbody > tr:hover {
+    background: url(theme:list-view-item-hover) stretch;
+  }
+
+  table > tbody > tr:current:hover,
+  table > tbody > tr:checked:hover {
+    background: url(theme:list-view-item-selected-hover) stretch;
+  }
+
+
+}

@@ -1,0 +1,610 @@
+
+
+//| 
+//| VirtualList - list view bound with the records array. The list is real time bound with the array - view reflects changes in the array.
+//|
+//| params.container - DOM element, the list containing list items representing records.
+//| params.renderItemView - function(recordNo:integer,record: object, itemEl: Element) - function used to render contents of itemEl by record data, optional.
+//| params.setupItemView - function(recordNo:integer,record: object, itemEl: Element) - function used to setup contents of itemEl after rendering (add classes etc.), optional.
+//| params.getItemData - function(recordNo:integer): object - function gets called on undefined records to fetch record from external source, optional. 
+//|
+
+//|
+//| returns DOM element passed in params.container with the following properties/mthods added:
+//| - list.value - array, read/write, recordset (array of objects).
+//| - list.currentIndex - integer, read/write, index of current record in records array or -1 if there is no current record
+//| - list.current - object, read/write, current record or null if there is no current record.
+//| - list.recordView(record|index) - function returns DOM element, used to render given record (or record at index). May return null if the record is out of sliding window.
+//| - list.recordIndex(element) - function returns index of record correspoding to the DOM element. 
+//|                               DOM element here is either row or its child
+
+function VirtualList(params) {
+
+    const list = params.container; assert list;
+    
+    var   buffer_size = 50;   // sliding buffer size, number of DOM elements in the view, will be recalulated in onSize
+    var   records = null; 
+    var   template = list.first;
+    var   item_height = 10;   // will be adjusted later
+    var   buffer_start = 0;   // index of first buffer element in _records
+    var   visible_items = 0;  // number of visible items in the view
+    var   current_record = undefined;  // current record z
+    var   showRecord = params.renderItemView || null;      // showRecord(index,record, itemElement)
+    var   setupRecord = params.setupItemView || null;  // setupItemView(index,record, itemElement)
+    var   recordData = params.getItemData;
+    var   cache = []; // cache of DOM elements - list items
+    
+    //multiselection support (not yet)
+    //var   selected = params.multiselect ? {} : null; // ATTENTION: if multiselect then each record must have unique .id field
+
+    // requests gc to be called
+    //function dogc() { gc(); }
+        
+    var   setupSetObserver;
+    
+    function recordAt(n) {
+      var r = records[n];
+      if(!r && recordData ) {
+        setupSetObserver(false, true);
+        r = records[n] = recordData(n);
+        setupSetObserver(true, true);
+      }
+      return r;
+    }
+
+    function isContentDependent(list) {
+      if(list.style["max-height"] == "max-content") return true;
+      if(list.style["height"] == "max-content") return true;
+      return false;
+    }
+ 
+    function detachRecordObserver(el) {
+      var record = el.data;
+      if(!record) return;
+      el.data = null;
+      Object.removeObserver(record,el[#vlist-record-observer]);
+      el[#vlist-record-observer] = null;
+    }
+ 
+    function setupRecordObserver(record, el) {
+     
+      function recordObserver() { 
+        if( el[#vlist-record-observer] !== this function)
+          return;
+        var idx = records.indexOf(record);
+        if( idx >= buffer_start && idx < buffer_start + list.length )
+          showRecord(idx, record, el); 
+      }
+      el[#vlist-record-observer] = recordObserver;        
+      Object.addObserver(record,recordObserver);
+      return record;
+    }
+    
+    function removeRecViewer(el) {
+      detachRecordObserver(el);    
+      cache.push(el); 
+      el.detach();    
+      el.state.clear(0xFFFFFFFF); // clear all flags      
+      //list.timer(1s,dogc);     // throttle GC call as DOM object may hold various native resources
+    }
+    
+    function createRecViewer(rec) {
+      var t = cache.pop() || template.clone();
+      assert !t.state.current;
+      t.data = rec;
+      return t;
+    }
+
+    function calcMetrics() // calcs item_height, returns true if buffer_size was increased; 
+    {
+      if(list.first)
+        item_height = list.first.box(#height,#border); // adjust real item height
+      var ch = isContentDependent(list) ? list.parent.box(#height,#inner) : list.box(#height,#client);
+      var vi = ch / (item_height || 10);
+      visible_items = vi;
+      const old_buffer_size = buffer_size;
+      buffer_size = vi + 3;
+      return old_buffer_size < buffer_size;
+    } 
+
+  
+    function pumpAfter(i) { 
+
+      var bso = buffer_start;
+
+      if(i + buffer_size > records.length)
+        i = Integer.max(0, records.length - buffer_size + 1); 
+
+      var bsn = buffer_start = i;
+      
+      if(list.last) {
+        list.last.style#margin-bottom = undefined;
+        list.first.style#margin-top = undefined;
+      }
+      
+      for( var i = bso; i < bsn; ++i)
+        if(!list.first) 
+          break;
+        else {
+          assert list.first;
+          removeRecViewer(list.first);
+        }
+     
+      var ni = bsn + list.length;
+      var niend = Integer.min(ni + buffer_size - list.length, records.length);
+    
+      var items = [];
+      for( var i in (niend - ni))
+      {
+        var rec = recordAt(i + ni);
+        var t = createRecViewer(rec);
+        items.push(t);
+      }
+      list.append(items);
+      for(var (i,t) in items )
+      {
+        var t = items[i];
+        var rec = t.data;
+        setupRecordObserver(rec,t);
+        showRecord(i + ni,rec,t);
+      }      
+    
+      if(list.first) {
+        if(item_height == 10)
+        {
+          const old_buffer_size = buffer_size;
+          calcMetrics();
+          if(item_height != 10 || old_buffer_size != buffer_size)
+          {
+            var niend_new = Integer.min(bsn + buffer_size, records.length);
+            for(var i in (niend - niend_new))
+              removeRecViewer(list.last);
+            niend = niend_new;
+          }
+        }
+
+        list.first.style#margin-top = px( bsn * item_height );
+        if(niend < records.length) {
+          var extra = (records.length - niend) * item_height;
+          list.last.style#margin-bottom = px(extra);
+        }
+      }
+    };
+    
+    function pumpBefore(i) {
+    
+      var nve = Integer.max(0,i) + buffer_size;
+
+      if(list.last) {
+        list.last.style#margin-bottom = undefined;
+        list.first.style#margin-top = undefined;
+      }
+      
+      while( list.length )
+        if( list.last.index + buffer_start < nve) 
+          break;
+        else 
+          removeRecViewer(list.last);
+      
+      var n = list.length ? buffer_start : Integer.min(records.length, i + buffer_size);
+
+      for(--n; n >= 0 ; --n)
+      {
+        var rec = recordAt(n); 
+        var t = createRecViewer(rec);
+        list.prepend(t);
+        setupRecordObserver(rec,t);
+        showRecord(n,rec,t);
+        buffer_start = n;
+        if( list.length >= buffer_size )
+          break;
+      }
+            
+      if(list.first) {
+        list.first.style#margin-top = px( buffer_start * item_height );
+        if(buffer_start + list.length < records.length) {
+          var extra = (records.length - buffer_start - list.length) * item_height;
+          if(extra > 0)
+            list.last.style#margin-bottom = px(extra);
+        }
+      }
+    };
+    
+    function resetView() { 
+    
+      var sy = list.scroll(#top);
+      
+      if(list.first) {
+        list.first.style#margin-top = undefined;
+        list.last.style#margin-bottom = undefined;
+      }
+      
+      function findElementFor(rec) { 
+        for(var el in list) { 
+          if( el.data === rec )
+            return (el, false);
+        }
+        var el = createRecViewer(rec);        
+        return (el, true);
+      }
+
+      if( buffer_start + buffer_size > records.length )
+        buffer_start = records.length - buffer_size;
+     
+      if( buffer_start < 0 )
+        buffer_start = 0;
+        
+      var nend = buffer_start + buffer_size;
+      
+      var i = 0;
+
+      // remove unused:
+      for( i = list.length - 1; i >= 0; --i)
+      {
+        var el = list[i];
+        removeRecViewer(el);
+      }
+      
+      // populate existing
+      for( i = buffer_start; i < nend; ++i)
+      {
+        if( i >= records.length )
+          break;
+        var rec = recordAt(i);
+        var t = createRecViewer(rec);          
+        list.append(t);
+        setupRecordObserver(rec,t);
+        showRecord(i,rec,t);
+      }
+      
+      if(list.first) {
+        var before = buffer_start * item_height;
+        list.first.style#margin-top = px( before );
+        var rest = records.length - (buffer_start + list.length);
+        var after = rest >= 0? rest * item_height : 0;
+        list.last.style#margin-bottom = px(after);
+      }
+      list.scrollTo(0, sy);
+    }
+    
+    function onScrollTo(recNo) 
+    {
+      if( recNo + visible_items >= buffer_start + buffer_size ) {
+        pumpAfter(recNo);
+        list.update();
+      }
+      else if( recNo < buffer_start ) {
+        pumpBefore(recNo);
+        list.update();
+      }
+    }
+
+    var ready = false;
+
+    list.onSize = function() 
+    {
+      if( calcMetrics() ) {
+        if(  buffer_start + buffer_size >= records.length ) {
+          buffer_start = records.length - visible_items + 1;
+          resetView();
+        } else 
+          pumpAfter(list.firstIndex);
+      }
+
+      if(!ready) {
+        ready = true;
+        list.postEvent("ready"); // notify that list is ready to accept data
+      }
+    }
+    
+    list.onScroll = function(evt) 
+    {
+      if( evt.type == Event.SCROLL_POS ) {
+        var sPos = evt.scrollPos / item_height;
+        var mPos = records.length - 1 - visible_items;
+        if( sPos > mPos ) sPos = mPos;
+        if( sPos < 0 ) sPos = 0;
+        onScrollTo( sPos );
+      }
+    };
+    
+    function onRecordsetRangeAdd(start, end) 
+    {
+      if( start <= buffer_start && list.length ) 
+      {  
+        if(list.length < visible_items)
+        {
+          buffer_start += end - start;
+          pumpBefore(buffer_start);
+          return;
+        }
+      
+        var extra = (end - start) * item_height; 
+        var topm = buffer_start * item_height;
+        
+        var sy = list.scroll(#top);
+        
+        buffer_start += (end - start);
+
+        list.first.style#margin-top = px(topm + extra);
+        list.update();
+        list.scrollTo(0, sy + extra);
+      } 
+      else if(start >= buffer_start + buffer_size && list.length) 
+      {
+        var extra = (records.length - buffer_start - list.length) * item_height;
+        if(extra > 0)
+          list.last.style#margin-bottom = px(extra);
+      }
+      else {
+        resetView();
+      }
+    }
+    function onRecordsetRangeUpdate(start, end) 
+    {
+      if( end < buffer_start )
+        return;
+      else if( start > buffer_start + buffer_size )
+        return;
+      resetView();
+    }
+    function onRecordsetRangeDelete(start, end) 
+    {
+      if( end <= buffer_start ) {
+        var oldtop = buffer_start * item_height;
+        buffer_start -= end - start;
+        assert(buffer_start >= 0);
+        var extra = (end - start) * item_height;
+        var sy = list.scroll(#top);
+        list.scrollTo(0, sy - extra);
+        if(list.first)
+          list.first.style#margin-top = px(Integer.max(0,oldtop-extra));
+      }
+      else if( start > buffer_start + buffer_size ) {
+        var extra = (records.length - buffer_start - list.length) * item_height;
+        if(list.last) {
+          if(extra > 0)
+            list.last.style#margin-bottom = px(extra);
+          else
+            list.last.style#margin-bottom = undefined;
+        }
+      }
+      else 
+        resetView();
+    }
+    
+    setupSetObserver = function(apply, silent = false )
+    {
+      if(apply) {
+        // data change event handler 
+        function onRecordSetChange(changedef) { 
+        
+          // changedef here is:
+          //[0] - symbol, one of #add,#update,#delete,#add-range,#delete-range or #update-range
+          //[1] - object or vector, its element(s) was changed;
+          //[2] - symbol or string, property name - for objects
+          //      or start of changed range (index) in arrays  
+          //[3] - end of changed range (index, not inclusive) in arrays  
+          switch(changedef[0]) {
+            case #add-range:    onRecordsetRangeAdd(changedef[2],changedef[3]); break;
+            case #update-range: onRecordsetRangeUpdate(changedef[2],changedef[3]); break;
+            case #delete-range: onRecordsetRangeDelete(changedef[2],changedef[3]); break;
+          }
+        } 
+        onRecordSetChange.list = list;
+        // assign it as an observer    
+        Object.addObserver(records,onRecordSetChange); // subscribe to collection object changes    
+      }
+      else {
+        if( !silent )
+          while(list.last)
+            removeRecViewer(list.last);
+        var thisObserver = null;
+        function cmp( observer ) { if( observer.list == list ) { thisObserver = observer; return true; } }
+        Object.eachObserver(records, cmp);
+        if(thisObserver)
+          Object.removeObserver(records,thisObserver); // unsubscribe
+        current_record = null;
+      }
+    }
+ 
+    list.navigateToStart = function() 
+    { 
+      //buffer_start = 0;   
+      //list.scrollTo(0, 0, false); 
+      resetView(true);
+    };
+
+    list.reset = function(cb) 
+    { 
+      setupSetObserver(false);
+      var idxToGo = cb(records);
+      setupSetObserver(true);      
+      list.clear(); 
+      if( records )
+         pumpAfter.call(list,0); 
+      list.scrollTo(0,0);      
+      if(typeof idxToGo == #integer) {
+        list.post(function() {
+          list.firstIndex = idxToGo;
+        });
+      }
+    };
+    list[#value] = property(v) 
+    {
+      get return records;
+      set { 
+        if(records !== v) {
+          if(records)
+            setupSetObserver(false);  
+          if(records = v)
+            setupSetObserver(true);  
+        }
+        if(list.last) {
+          list.last.style#margin-bottom = undefined;
+          list.first.style#margin-top = undefined;
+        }
+        list.clear(); 
+        if( records )
+          //pumpAfter.call(list,0); 
+          resetView.call(list); 
+        list.scrollTo(0,0);
+      }
+    }
+  
+    list[#offset] = property(v) {
+		  get return buffer_start;
+	  }
+  
+    if(!showRecord) showRecord = function(i,r,el) 
+    {
+      el.value = r; // each item has behavior form so its value is an aggregate 
+      el.state.current = current_record === r;
+      if(setupRecord) setupRecord(i,r,el);
+    };
+        
+    function setCurrent(index, generateEvent = true) {
+      if( var old = list.$(>li:current,>tr:current) ) {
+        if(old.index + buffer_start == index) return; // already set
+        old.state.current = false;
+      }
+      current_record = null;
+      if( index < 0 || index >= records.length )
+        return; // out of records range
+      
+      current_record = recordAt(index);
+      
+      var y = index * item_height;
+      
+      if( index < buffer_start ) {
+        list.scrollTo(0, y, true); 
+      }
+      else if( index >= buffer_start + list.length ) {
+        list.scrollTo(0, y - list.scroll(#height) + item_height,true); 
+      }
+      else {
+        var el = list[index - buffer_start];
+        el.state.current = true;
+        var sy = list.scroll(#top);
+        if( y < sy )
+          list.scrollTo(0, y,true); 
+        else if( y + item_height > sy + list.scroll(#height) )
+          list.scrollTo(0, y - list.scroll(#height) + item_height ,true); 
+      }
+      if(generateEvent)
+        list.postEvent("change");
+    }
+               
+    list.onMouse = function(evt) {
+      if( evt.type == Event.MOUSE_DOWN )
+      {
+        var li = evt.target.$p(li,tr);
+        if( li && li.parent === list )
+          setCurrent(li.index + buffer_start);
+      }
+    }
+    list.onKey = function(evt) {
+      if( evt.type == Event.KEY_DOWN )
+      {
+        switch(evt.keyCode)
+        {
+          case Event.VK_HOME:  setCurrent(0); return true;
+          case Event.VK_END:   setCurrent(records.length - 1); return true;
+          case Event.VK_UP:    setCurrent(Integer.max(0,list.currentIndex - 1)); return true;
+          case Event.VK_DOWN:  setCurrent(Integer.min(records.length - 1, list.currentIndex + 1)); return true;
+          case Event.VK_PRIOR: setCurrent(Integer.max(0,list.currentIndex - visible_items + 1)); return true;
+          case Event.VK_NEXT:  setCurrent(Integer.min(records.length - 1, list.currentIndex + visible_items - 1)); return true;
+        }
+      } 
+    }
+    
+    list.currentIndex = property(v) 
+    {
+      get return records.indexOf(current_record);
+      set { setCurrent(v,false); }
+    } 
+
+    list.currentRecord = property(v) 
+    {
+      get return records.indexOf(current_record) >= 0? current_record : null;
+      set { setCurrent(records.indexOf(v),false); }
+    } 
+
+    list.current = property(v) // alias of the above
+    {
+      get return records.indexOf(current_record) >= 0? current_record : null;
+      set { setCurrent(records.indexOf(v),false); }
+    } 
+
+    list.firstIndex = property(v) {
+      get { 
+        var sy = list.scroll(#top);
+        return sy / item_height;
+      }
+      set {
+        var y = v * item_height;
+        list.scrollTo(0, y, false);
+        onScrollTo(v); 
+      }
+    }     
+    
+    // returns "record view" - DOM element that represents nth record.
+    //         or null if the record is out of the sliding window 
+    list.recordView = function( recordOrIndex ) {
+      var idx = recordOrIndex;
+      if(typeof recordOrIndex != #integer) 
+        idx = records.indexOf(recordOrIndex);
+      if( idx < buffer_start )
+        return null; // out of sliding window
+      else if( idx >= buffer_start + list.length )
+        return null; // out of sliding window
+      return list[idx - buffer_start];
+    }
+
+    // returns index of record of an element 
+    //   element here can be record view or any child inside it
+    list.recordIndex = function(element) {
+      var li = element.$p(li,tr);
+      if( li && li.parent === list )
+        return li.index + buffer_start;
+      // otherwise - undefined;
+    }
+  
+    calcMetrics(); 
+    template.detach();
+    list.clear();
+    if( records )
+      pumpAfter(0);
+    return list;
+}
+
+class VList : Behavior 
+{
+  function attached() { 
+     VirtualList { container: this };
+  }
+  property animating(v) {
+    get return this.state.animating;
+  }
+}
+
+class VGrid : Behavior 
+{
+  function attached() { 
+    this.tbody = this.$(tbody);
+    VirtualList { container: this.tbody  };
+  }
+  
+  property value(v) {
+    set this.tbody.value = v;
+    get return this.tbody.value;
+  }
+  
+  property animating(v) {
+    get return this.tbody.state.animating;
+  }
+  
+ 
+}
+
+

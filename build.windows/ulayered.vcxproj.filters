@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="demos">
+      <UniqueIdentifier>{3DD3490F-A9E7-71C0-7269-1520DE3C6EF1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="demos\ulayered">
+      <UniqueIdentifier>{E7C117BF-D38F-0BC5-BC23-7CEBA890E729}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{89AF369E-F58E-B539-FEA6-40106A051C9B}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\demos\ulayered\ulayered.cpp">
+      <Filter>demos\ulayered</Filter>
+    </ClCompile>
+    <ClCompile Include="..\include\sciter-win-main.cpp">
+      <Filter>include</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

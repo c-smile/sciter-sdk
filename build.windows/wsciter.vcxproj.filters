@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="demos">
+      <UniqueIdentifier>{3DD3490F-A9E7-71C0-7269-1520DE3C6EF1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="demos\sciter">
+      <UniqueIdentifier>{F69CBBA6-E2FF-4A4B-8B85-830177C716CE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="demos\sciter\res">
+      <UniqueIdentifier>{2FE0A8A4-1BD9-C7F6-440B-AD7B3063A702}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{89AF369E-F58E-B539-FEA6-40106A051C9B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\behaviors">
+      <UniqueIdentifier>{FB2C47D4-6743-456A-B0BA-D08B1C1016F2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\demos\sciter\main.cpp">
+      <Filter>demos\sciter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\demos\sciter\sciter.cpp">
+      <Filter>demos\sciter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\demos\sciter\stdafx.cpp">
+      <Filter>demos\sciter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\include\behaviors\behavior_drawing-gdi.cpp">
+      <Filter>include\behaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\include\behaviors\behavior_drawing.cpp">
+      <Filter>include\behaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\include\behaviors\behavior_native_textarea.cpp">
+      <Filter>include\behaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\include\behaviors\behavior_tabs.cpp">
+      <Filter>include\behaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\include\behaviors\behavior_video_generator.cpp">
+      <Filter>include\behaviors</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\demos\sciter\res\dpi-aware.manifest">
+      <Filter>demos\sciter\res</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\demos\sciter\sciter.rc">
+      <Filter>demos\sciter</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

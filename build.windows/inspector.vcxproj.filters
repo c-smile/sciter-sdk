@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="demos">
+      <UniqueIdentifier>{3DD3490F-A9E7-71C0-7269-1520DE3C6EF1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="demos\inspector">
+      <UniqueIdentifier>{633C5059-CFC7-BD1D-D8D8-401244E3191E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="demos\inspector\win-res">
+      <UniqueIdentifier>{57132305-C34A-6B9C-CC54-CFBF380B9295}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{89AF369E-F58E-B539-FEA6-40106A051C9B}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\demos\inspector\inspector.cpp">
+      <Filter>demos\inspector</Filter>
+    </ClCompile>
+    <ClCompile Include="..\include\sciter-win-main.cpp">
+      <Filter>include</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\demos\inspector\win-res\dpi-aware.manifest">
+      <Filter>demos\inspector\win-res</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\demos\inspector\win-res\inspector.rc">
+      <Filter>demos\inspector\win-res</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

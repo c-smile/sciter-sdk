@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="demos.lite">
+      <UniqueIdentifier>{79CF2DC7-6587-6F14-CE8E-4870BA650A05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="demos.lite\glfw">
+      <UniqueIdentifier>{D836F444-44C2-6109-4DD3-E4FDB9DDBD09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="demos.lite\glfw\deps">
+      <UniqueIdentifier>{F34F6B6F-DFDE-F438-88FD-0834746B05DF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="demos.lite\glfw\src">
+      <UniqueIdentifier>{EFA07F7F-5B02-5D8D-E46F-A33F50D0934C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="demos.lite\sciter-glfw-opengl">
+      <UniqueIdentifier>{E1ECF76E-4D05-DF98-16B2-6E3282897332}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{89AF369E-F58E-B539-FEA6-40106A051C9B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\behaviors">
+      <UniqueIdentifier>{FB2C47D4-6743-456A-B0BA-D08B1C1016F2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\demos.lite\sciter-glfw-opengl\aux-fs.h">
+      <Filter>demos.lite\sciter-glfw-opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\demos.lite\sciter-glfw-opengl\stdafx.h">
+      <Filter>demos.lite\sciter-glfw-opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\aux-asset.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\aux-cvt.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\aux-platform.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\aux-slice.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-api.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-behavior.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-debug.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-def.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-dom.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-dom.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-graphics.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-graphics.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-host-callback.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-lite.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-msg.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-request.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-request.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-script.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-threads.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-types.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-value.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-video-api.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-window.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\tiscript-streams.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\tiscript.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\tiscript.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\value.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\value.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\demos.lite\glfw\deps\glad.c">
+      <Filter>demos.lite\glfw\deps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\demos.lite\glfw\src\context.c">
+      <Filter>demos.lite\glfw\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\demos.lite\glfw\src\egl_context.c">
+      <Filter>demos.lite\glfw\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\demos.lite\glfw\src\init.c">
+      <Filter>demos.lite\glfw\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\demos.lite\glfw\src\input.c">
+      <Filter>demos.lite\glfw\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\demos.lite\glfw\src\monitor.c">
+      <Filter>demos.lite\glfw\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\demos.lite\glfw\src\vulkan.c">
+      <Filter>demos.lite\glfw\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\demos.lite\glfw\src\wgl_context.c">
+      <Filter>demos.lite\glfw\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\demos.lite\glfw\src\win32_init.c">
+      <Filter>demos.lite\glfw\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\demos.lite\glfw\src\win32_joystick.c">
+      <Filter>demos.lite\glfw\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\demos.lite\glfw\src\win32_monitor.c">
+      <Filter>demos.lite\glfw\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\demos.lite\glfw\src\win32_time.c">
+      <Filter>demos.lite\glfw\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\demos.lite\glfw\src\win32_tls.c">
+      <Filter>demos.lite\glfw\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\demos.lite\glfw\src\win32_window.c">
+      <Filter>demos.lite\glfw\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\demos.lite\glfw\src\window.c">
+      <Filter>demos.lite\glfw\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\demos.lite\sciter-glfw-opengl\basic.cpp">
+      <Filter>demos.lite\sciter-glfw-opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\include\behaviors\behavior_drawing.cpp">
+      <Filter>include\behaviors</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

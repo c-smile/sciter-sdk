@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{89AF369E-F58E-B539-FEA6-40106A051C9B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="notepad">
+      <UniqueIdentifier>{30BC9E22-9C9B-1DBE-A5B3-A8941112841F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="notepad\windows">
+      <UniqueIdentifier>{8A2E4540-F6B9-B204-FFCA-35F96BD50E05}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\include\sciter-win-main.cpp">
+      <Filter>include</Filter>
+    </ClCompile>
+    <ClCompile Include="..\notepad\html-notepad.cpp">
+      <Filter>notepad</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\notepad\windows\dpi-aware.manifest">
+      <Filter>notepad\windows</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\notepad\windows\notepad.rc">
+      <Filter>notepad\windows</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

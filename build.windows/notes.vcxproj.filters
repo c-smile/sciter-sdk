@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{89AF369E-F58E-B539-FEA6-40106A051C9B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="notes">
+      <UniqueIdentifier>{8E600410-FA74-2CC1-C3F6-CF202FCA28F2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="notes\windows">
+      <UniqueIdentifier>{E850C040-5411-3C77-1D4C-85F489CB8053}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\include\sciter-win-main.cpp">
+      <Filter>include</Filter>
+    </ClCompile>
+    <ClCompile Include="..\notes\notes.cpp">
+      <Filter>notes</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\notes\windows\dpi-aware.manifest">
+      <Filter>notes\windows</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\notes\windows\notes.rc">
+      <Filter>notes\windows</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,66 @@
+
+
+const content = $(frame#content);
+
+var filename = null;
+const file_filter = "files *.htm,*.html,*.svg,*.zip,*.scapp|*.htm;*.html;*.svg;*.zip;*.scapp|"
+   "HTML files only(*.htm,*.html)|*.htm;*.html|"
+   "SVG files only(*.svg)|*.svg|"
+   "SCAPP files only (*.zip,*.scapp)|*.zip;*.scapp|"
+   "All Files (*.*)|*.*";
+   
+
+event click $(button#home)
+{
+  //var fn = view.selectFile(#open,file_filter);
+  //if( fn ) 
+  //  loadFile(fn);
+  self.attributes["mode"] = undefined;
+  content.load("sys-info.htm");
+  return true;
+}
+
+event click $(button#tests)
+{
+  self.attributes["mode"] = "tests";
+  content.load("tests/main.htm");
+  return true;
+}
+
+function setTheme(lightAmbience) {
+  var bg = $(button#glass);
+  if( lightAmbience ) {
+    view.windowBlurbehind = blurbehind ? #light : #none;
+    self.attributes["theme"] = "light";
+    bg.state.checked = true;
+  }
+  else {
+    view.windowBlurbehind = blurbehind ? #dark : #none;
+    self.attributes["theme"] = "dark";
+    bg.state.checked = false;
+  }
+}
+
+function self.ready() {
+
+  var caption = $(header>caption>span);
+  caption.text = "...";
+  
+  var deltas = [1];
+  var ptick = System.ticks;
+  
+  caption.paintContent = function(gfx) {
+    var tick = System.ticks;
+    deltas.push( tick - ptick );
+    if( deltas.length > 10 )
+      deltas.shift();
+    ptick = tick;
+    var avdelta = deltas.reduce(:a,b: a + b) / deltas.length;
+    caption.post(function(){
+      caption.text = (1000 / (avdelta || 1)).toString();
+    });
+    
+  };
+  caption.refresh();
+
+}

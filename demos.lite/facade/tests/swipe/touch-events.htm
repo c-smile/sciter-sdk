@@ -1,0 +1,76 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+      widget#touch-inspector 
+      {
+        prototype: TouchInspector;
+        size:*;
+        border:4dip solid black;
+        margin:1em;
+      }
+      
+      widget#touch-inspector.active { border-color:red; }
+      widget#touch-inspector.inertia { background-color:yellow; }
+
+        div#out {
+            height:300dip;
+            overflow:auto;
+        }
+
+    </style>
+    <script type="text/tiscript">
+
+    const out = $(div#out);
+
+    class TouchInspector: Behavior {
+
+      function onGesture(evt) {
+        switch(evt.type) {
+          case Event.GESTURE_REQUEST:
+            // definition of getures we want:
+            evt.flags = Event.GESTURE_FLAG_ZOOM
+                      | Event.GESTURE_FLAG_ROTATE
+                      | Event.GESTURE_FLAG_PAN_VERTICAL
+                      | Event.GESTURE_FLAG_PAN_HORIZONTAL
+                      | Event.GESTURE_FLAG_TAP1
+                      | Event.GESTURE_FLAG_TAP2
+
+                      | Event.GESTURE_FLAG_PAN_WITH_GUTTER  // PAN modifiers
+                      | Event.GESTURE_FLAG_PAN_WITH_INERTIA //
+                      ;
+            return true;
+
+          case Event.GESTURE_START:  this.handleFlags(evt.flags); this.$show(START); return true;
+          case Event.GESTURE_ZOOM:   this.handleFlags(evt.flags); this.$show(ZOOM dz:{evt.deltaV}); return true;
+          case Event.GESTURE_PAN:    this.handleFlags(evt.flags); this.$show(PAN dx:{evt.deltaX}, dy:{evt.deltaY}); return true;
+          case Event.GESTURE_ROTATE: this.handleFlags(evt.flags); this.$show(ROTATE da:{evt.deltaV}); return true;
+          case Event.GESTURE_TAP1:   this.handleFlags(evt.flags); this.$show(TAP1); return true;
+          case Event.GESTURE_TAP2:   this.handleFlags(evt.flags); this.$show(TAP2); return true;
+        }
+      }
+
+      function $show(args..) {
+        var msg = args.join("");
+        out.$prepend(<div>{msg}</div>);
+        if( out.length > 30 )
+          out.last.remove();
+      }
+      function handleFlags(flags)
+      {
+        if( flags & Event.GESTURE_STATE_END ) this.attributes.removeClass("active");
+        else if( flags & Event.GESTURE_STATE_BEGIN ) this.attributes.addClass("active");
+      }
+    }
+    </script>
+  </head>
+<body>
+  <p>area below is touchable</p>
+  <widget #touch-inspector>
+    <div>Touch area</div>
+  </widget>
+  <div #out></div>
+
+</body>
+</html>

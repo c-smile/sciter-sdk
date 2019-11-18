@@ -1,0 +1,430 @@
+
+
+if( _TARGET_OS ~= "macosx") then  -- we are not auto generating XCode solutions for a while
+                                  -- structure of typical XCode is not trivial - requires manual inputs.
+function osabbr() 
+  if( _TARGET_OS == "macosx") then return "osx" 
+  elseif( _TARGET_OS == "windows") then return "win"
+  elseif( _TARGET_OS == "linux") then return "lnx"
+  else return "unk"
+  end
+end
+
+-- function that setups target dir according to configuration
+function settargetdir() 
+  basedir = basedir or ""
+  targetdir ("bin." .. osabbr() .."/%{cfg.platform}")
+  filter "configurations:*Skia" 
+    targetdir ("bin." .. osabbr() .."/%{cfg.platform}skia")
+  filter {}
+end
+
+workspace "sciter.sdk"
+  configurations { "Debug", "Release" }
+  platforms { "x32", "x64" } 
+
+  cppdialect "C++14" 
+  
+  -- -- location "build"
+  filter "system:windows"
+    configurations { "DebugSkia", "ReleaseSkia" }
+    location "build.windows"
+  filter "system:macosx"
+    location "build.macosx"
+    filter "system:macosx"
+    links { "CoreFoundation.framework", "Cocoa.framework" }
+    buildoptions { "-fobjc-arc" }
+  filter "system:linux"
+    location "build.linux"
+  filter {}
+
+  includedirs { "include" }  
+
+  flags { "MultiProcessorCompile" }
+
+  filter "platforms:x32"
+    architecture "x86"
+  filter "platforms:x64"
+    architecture "x86_64"  
+
+  filter {"platforms:x32", "system:windows"}
+    defines { "WIN32" }
+  filter {"platforms:x64", "system:windows"}
+    defines { "WIN32","WIN64" }      
+
+  filter "configurations:Debug*"
+    defines { "DEBUG", "_DEBUG" }
+    symbols "On"
+
+  filter "configurations:Release*"
+    defines { "NDEBUG"}  
+    optimize "Size"
+    symbols "Off"
+    flags { "LinkTimeOptimization" }
+
+  filter {"system:windows"}
+    defines { "_CRT_SECURE_NO_WARNINGS" } 
+ 
+  filter {}
+
+project "usciter"
+  kind "WindowedApp"
+  language "C++"
+
+  dpiawareness "HighPerMonitor"
+
+  files { "demos/usciter/usciter.cpp" }
+
+  settargetdir()
+
+  filter "system:windows"
+    removeplatforms { "x64" }
+    removeconfigurations { "*skia" }
+    files {"include/sciter-win-main.cpp",
+           "demos/usciter/win-res/usciter.rc",
+           "demos/usciter/win-res/dpi-aware.manifest" }
+    prebuildcommands { 
+      "%{wks.location}..\\bin.win\\packfolder.exe %{wks.location}..\\demos\\usciter\\res %{wks.location}..\\demos\\usciter\\resources.cpp -v \"resources\""
+    }
+
+  filter "system:macosx"
+    files {"include/sciter-osx-main.mm"}
+  filter "system:linux"
+    files {"include/sciter-gtk-main.cpp"}
+    linkoptions { 
+       "`pkg-config gtk+-3.0 --libs`",
+       "`pkg-config fontconfig --libs`",
+       "-fPIC",
+       "-pthread",
+       "-Wl,--no-undefined",
+       "-ldl",
+    }
+
+  filter {}
+
+project "uminimal"
+  kind "WindowedApp"
+  language "C++"
+
+  dpiawareness "HighPerMonitor"
+
+  files { "demos/uminimal/uminimal.cpp" }  
+
+  settargetdir()
+
+  filter "system:windows"
+    removeplatforms { "x64" }
+    removeconfigurations { "*skia" }
+    files {"include/sciter-win-main.cpp"}
+  filter "system:macosx"
+    files {"include/sciter-osx-main.mm"}
+  filter "system:linux"
+    files {"include/sciter-gtk-main.cpp"}
+    linkoptions { 
+       "`pkg-config gtk+-3.0 --libs`",
+       "`pkg-config fontconfig --libs`",
+       "-fPIC",
+       "-pthread",
+       "-Wl,--no-undefined",
+       "-ldl",
+    }
+  filter {}
+
+project "ulayered"
+  kind "WindowedApp"
+  language "C++"
+
+  dpiawareness "HighPerMonitor"
+
+  files { "demos/ulayered/ulayered.cpp" }
+
+  settargetdir() 
+  
+  filter "system:windows"
+    removeplatforms { "x64" }
+    removeconfigurations { "*skia" }
+    files {"include/sciter-win-main.cpp"}
+  filter "system:macosx"
+    files {"include/sciter-osx-main.mm"}
+  filter "system:linux"
+    files {"include/sciter-gtk-main.cpp"}
+    linkoptions { 
+       "`pkg-config gtk+-3.0 --libs`",
+       "`pkg-config fontconfig --libs`",
+       "-fPIC",
+       "-pthread",
+       "-Wl,--no-undefined",
+       "-ldl",
+    }
+  filter {}
+
+project "inspector"
+  kind "WindowedApp"
+  language "C++"
+
+  dpiawareness "HighPerMonitor"
+
+  configuration "windows"
+    prebuildcommands { 
+      "%{wks.location}..\\bin.win\\packfolder.exe %{wks.location}..\\demos\\inspector\\res %{wks.location}..\\demos\\inspector\\resources.cpp -v \"resources\""
+    }
+  configuration {}
+
+  files { "demos/inspector/inspector.cpp" }  
+
+  settargetdir() 
+
+  filter "system:windows"
+    removeplatforms { "x64" }
+    removeconfigurations { "*skia" }
+    files {"include/sciter-win-main.cpp", 
+           "demos/inspector/win-res/inspector.rc", 
+           "demos/inspector/win-res/dpi-aware.manifest" }
+  filter "system:macosx"
+    files {"include/sciter-osx-main.mm", "demos/inspector/mac-res/*.m"}
+  filter "system:linux"
+    files {"include/sciter-gtk-main.cpp"}
+    linkoptions { 
+       "`pkg-config gtk+-3.0 --libs`",
+       "`pkg-config fontconfig --libs`",
+       "-fPIC",
+       "-pthread",
+       "-Wl,--no-undefined",
+       "-ldl",
+    }
+  filter {}
+
+project "notepad"
+  kind "WindowedApp"
+  language "C++"
+
+  removeconfigurations { "*Skia" }
+
+  dpiawareness "HighPerMonitor"
+
+  targetname "html-notepad"
+
+  configuration "windows"
+    prebuildcommands { 
+      "%{wks.location}..\\bin.win\\packfolder.exe %{wks.location}..\\notepad\\res %{wks.location}..\\notepad\\resources.cpp -v \"resources\""
+    }
+  configuration {}  
+
+  files { "notepad/html-notepad.cpp" }
+
+  settargetdir() 
+
+  filter "system:windows"
+    removeplatforms { "x64" }
+    removeconfigurations { "*skia","*lite" }
+    files {"include/sciter-win-main.cpp", 
+           "notepad/windows/dpi-aware.manifest",
+           "notepad/windows/notepad.rc" }
+    includedirs { "notepad/windows" }
+
+  filter "system:macosx"
+    files {"include/sciter-osx-main.mm"}
+  filter "system:linux"
+    files {"include/sciter-gtk-main.cpp"}
+    linkoptions { 
+       "`pkg-config gtk+-3.0 --libs`",
+       "`pkg-config fontconfig --libs`",
+       "-fPIC",
+       "-pthread",
+       "-Wl,--no-undefined",
+       "-ldl",
+    }
+  filter {}
+
+
+project "notes"
+  kind "WindowedApp"
+  language "C++"
+
+  dpiawareness "HighPerMonitor"
+
+  settargetdir() 
+
+  files { "notes/notes.cpp" }
+
+  configuration "windows"
+    prebuildcommands { 
+      "%{wks.location}..\\bin.win\\packfolder.exe %{wks.location}..\\notes\\res %{wks.location}..\\notes\\resources.cpp -v \"resources\""
+    }
+  configuration {}  
+
+  filter "system:windows"
+    removeplatforms { "x64" }
+    removeconfigurations { "*Skia" }
+    files {"include/sciter-win-main.cpp", 
+           "notes/windows/dpi-aware.manifest",
+           "notes/windows/notes.rc" }
+    includedirs { "notes/windows" }
+
+  filter "system:macosx"
+    files {"include/sciter-osx-main.mm"}
+  filter "system:linux"
+    files {"include/sciter-gtk-main.cpp"}
+    linkoptions { 
+       "`pkg-config gtk+-3.0 --libs`",
+       "`pkg-config fontconfig --libs`",
+       "-fPIC",
+       "-pthread",
+       "-Wl,--no-undefined",
+       "-ldl",
+    }
+  filter {}
+
+if _TARGET_OS == "windows" then
+
+ project "wsciter"
+    kind "WindowedApp"
+    language "C++"
+    -- location "build"
+
+    dpiawareness "HighPerMonitor"
+
+    includedirs { "demos/sciter" }  
+
+    files { 
+            "demos/sciter/stdafx.cpp",
+            "demos/sciter/main.cpp",
+            "demos/sciter/sciter.cpp",
+            "demos/sciter/sciter.rc",
+            "include/behaviors/behavior_drawing.cpp",
+            "include/behaviors/behavior_drawing-gdi.cpp",
+            "include/behaviors/behavior_native_textarea.cpp",
+            "include/behaviors/behavior_tabs.cpp",
+            "include/behaviors/behavior_video_generator.cpp",
+            "demos/sciter/res/dpi-aware.manifest" }
+
+    settargetdir() 
+
+  project "ui-framework"
+    kind "WindowedApp"
+    language "C++"
+    -- location "build"
+
+    removeplatforms { "x64" }
+    removeconfigurations { "*Skia" }
+
+    dpiawareness "HighPerMonitor"
+
+    includedirs { "demos/ui-framework" }  
+
+    files { "demos/ui-framework/stdafx.cpp",
+            "demos/ui-framework/ui-framework.cpp",
+            "demos/ui-framework/worker-thread.cpp",
+            "demos/ui-framework/ui-framework.rc" }
+    
+    settargetdir() 
+
+  project "plain-win"
+    kind "WindowedApp"
+    language "C++"
+    -- location "build"
+
+    removeplatforms { "x64" }
+    removeconfigurations { "*Skia" }
+
+    dpiawareness "HighPerMonitor"
+
+    includedirs { "demos/plain-win" }  
+
+    files { "demos/plain-win/stdafx.cpp",
+            "demos/plain-win/plain-win.cpp",
+            "demos/plain-win/plain-win.rc" }
+
+    settargetdir() 
+
+  project "tiscript-sqlite"
+    kind "SharedLib"
+    language "C++"
+
+    removeconfigurations { "*Skia" }
+
+    files { 
+      "sqlite/sqlite-wrap.c",
+      "sqlite/*.cpp",
+      "sqlite/*.h",
+      "sqlite/tiscriptsqlite.def"  }
+
+    settargetdir() 
+
+end
+
+project "glfw-opengl"
+  kind "ConsoleApp"
+  language "C++"
+
+  defines "WINDOWLESS"
+
+  cppdialect "C++17" 
+
+  removeconfigurations { "*Skia" }
+
+  targetdir ("bin." .. osabbr() .."/%{cfg.platform}lite")
+
+  dpiawareness "HighPerMonitor"
+
+  configuration "windows"
+    prebuildcommands { 
+      "%{wks.location}..\\bin.win\\packfolder.exe %{wks.location}..\\demos.lite\\facade %{wks.location}..\\demos.lite\\facade-resources.cpp -v \"resources\""
+    }
+  configuration {}
+
+  -- ours:
+  files { 
+    "include/*.h", 
+    "include/*.hpp",
+    "demos.lite/sciter-glfw-opengl/*.h",
+    "demos.lite/sciter-glfw-opengl/basic.cpp",
+    "include/behaviors/behavior_drawing.cpp"
+  }
+  
+    -- theirs, GLFW:
+  includedirs { 
+    "demos.lite/sciter-glfw-opengl",
+    "demos.lite/glfw/include",
+    "demos.lite/glfw/deps" }  
+
+  files { 
+    "demos.lite/glfw/src/context.c",
+    "demos.lite/glfw/src/egl_context.c",
+    "demos.lite/glfw/src/init.c",
+    "demos.lite/glfw/src/input.c",
+    "demos.lite/glfw/src/monitor.c",
+    "demos.lite/glfw/src/vulkan.c",
+    "demos.lite/glfw/src/window.c",
+    "demos.lite/glfw/deps/glad.c",
+  }
+
+  filter "system:windows"
+    entrypoint "mainCRTStartup"
+    dpiawareness "HighPerMonitor"
+    defines "_GLFW_WIN32"
+    files {
+      "demos.lite/glfw/src/wgl_context.c",
+      "demos.lite/glfw/src/win32_*.c",
+    }
+    links "shlwapi"
+  filter "system:macosx"
+    defines "_GLFW_COCOA"
+  filter "system:linux"  
+    linkoptions { 
+      "-Wall", 
+      "-pthread", "-lm", 
+      "-lX11","-lXrandr","-lXinerama", "-lXcursor",
+      "-lGL", "-lGLU", "-ldl" }
+    defines "_GLFW_X11" -- or "_GLFW_WAYLAND" or "_GLFW_MIR"
+    files {
+      "demos.lite/glfw/src/xkb_unicode.c",
+      "demos.lite/glfw/src/glx_context.c",
+      "demos.lite/glfw/src/posix_*.*",
+      "demos.lite/glfw/src/linux_*.*",
+      "demos.lite/glfw/src/x11_*.*",
+    }
+    
+  filter {}
+
+end 

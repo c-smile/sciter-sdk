@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="sciter" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="../../bin.gtk/sciter" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="../../bin.gtk/sciter" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-march=atom" />
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="`pkg-config gtk+-3.0 --cflags` -std=c++11" />
+			<Add option="-mtune=generic" />
+			<Add directory="../../include" />
+		</Compiler>
+		<Linker>
+			<Add option="`pkg-config gtk+-3.0 --libs` -ldl" />
+		</Linker>
+		<Unit filename="../../include/aux-asset.h" />
+		<Unit filename="../../include/aux-cvt.h" />
+		<Unit filename="../../include/aux-platform.h" />
+		<Unit filename="../../include/aux-slice.h" />
+		<Unit filename="../../include/sciter-x-api.h" />
+		<Unit filename="../../include/sciter-x-behavior.h" />
+		<Unit filename="../../include/sciter-x-debug.h" />
+		<Unit filename="../../include/sciter-x-def.h" />
+		<Unit filename="../../include/sciter-x-dom.h" />
+		<Unit filename="../../include/sciter-x-dom.hpp" />
+		<Unit filename="../../include/sciter-x-host-callback.h" />
+		<Unit filename="../../include/sciter-x-lite.hpp" />
+		<Unit filename="../../include/sciter-x-script.h" />
+		<Unit filename="../../include/sciter-x-threads.h" />
+		<Unit filename="../../include/sciter-x-types.h" />
+		<Unit filename="../../include/sciter-x-value.h" />
+		<Unit filename="../../include/sciter-x-window.hpp" />
+		<Unit filename="../../include/sciter-x.h" />
+		<Unit filename="../../include/tiscript-streams.hpp" />
+		<Unit filename="../../include/tiscript.h" />
+		<Unit filename="../../include/tiscript.hpp" />
+		<Unit filename="../../include/value.h" />
+		<Unit filename="../../include/value.hpp" />
+		<Unit filename="main.cpp" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
