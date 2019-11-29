@@ -1,0 +1,134 @@
+
+namespace Material 
+{
+
+  function Ripple {
+
+   // ripple - expanding disk animation     
+
+    var x1, y1, x2, y2;
+    var x,y;
+    var radii = 0.0;    
+    var maxradii;
+    var fromColor;
+    var toColor;
+    var currentColor;
+      
+    function distance( xt,yt ) { return Math.sqrt((xt - x)*(xt - x) + (yt - y)*(yt - y)); }
+
+    function init(el,evt) {
+      (x1, y1, x2, y2) = el.box(#rect,#border,#self);
+      x = evt.x; y = evt.y;
+      maxradii = Float.max( distance(x1,y1), distance(x1,y2), distance(x2,y1), distance(x2,y2) ); 
+    }
+
+    function paint(gfx) {
+      gfx.pushLayer(#background-area);
+      gfx.fillColor(fromColor);
+      gfx.rectangle(x1, y1, x2 - x1 + 1, y2 - y1 + 1);
+      gfx.fillColor(currentColor);
+      gfx.ellipse(x,y,radii);
+      gfx.popLayer();
+    }
+
+    this << event mousedown (evt) 
+    {
+      fromColor = this.style["-ripple-from-color"];
+      toColor = this.style["-ripple-to-color"];
+      init(this,evt);
+                         
+      function step(progress) {
+        if( !this.state.active )
+          return false;
+        radii = progress * maxradii;
+        //currentColor = Color.morph(fromColor,toColor,progress);
+        currentColor = color(toColor.r,toColor.g,toColor.b,progress);
+        this.refresh();
+      }
+      this.paintContent = paint;
+      this.animate( step, 200ms );
+      return false;
+    }
+
+    this << event mouseup (evt) 
+    {
+      fromColor = this.style["-ripple-from-color"];
+      toColor = this.style["-ripple-to-color"];
+      init(this,evt);
+      maxradii = radii;
+      function step(progress) {
+        if( radii == 0.0 || progress == 1.0 || !this.state.hover) {
+          this.paintContent = null;
+          return false;
+        }
+        radii = (1.0 - progress) * maxradii;
+        //activeColor = color(activeColor.r,activeColor.g,activeColor.b,1.0 - progress);
+        currentColor = color(toColor.r,toColor.g,toColor.b,1.0 - progress);
+        this.refresh();
+      }
+      this.animate( step, 200ms );
+      return false;
+    }
+
+
+  }
+
+
+  class EditBox : Element
+  {
+
+    function attached() 
+    {
+      var caption = this.attributes["caption"] || "{no caption}";
+      this.$append(<caption>{caption}</caption><text>{this.attributes["value"] || ""}</text>);
+    
+      this.editor = this.$(text);
+      this.attributes.toggleClass("is-empty", this.editor.state.empty);
+
+      this.progress = 0.0;
+    }
+
+    property value(v) {
+      get return this.editor.value; 
+      set { 
+        this.editor.value = v.toString();
+        this.attributes.toggleClass("is-empty", !v);
+      }
+    }
+
+    event change { this.attributes.toggleClass("is-empty", this.editor.state.empty); }
+
+    function paint(gfx) 
+    {
+      var bcolor = this.style["-focus-color"] || color(0,0,0);
+      var (x,y,w,h) = this.box(#rectw,#border,#self);
+      var bw = 2 * this.box(#bottom,#border,#padding);
+      gfx.fillColor(bcolor);
+      gfx.rectangle((w - this.progress * w) / 2, y + h - bw, this.progress * w, bw);
+    }
+
+    event focusin 
+    {
+       function step(p) {
+         this.progress = p;
+         this.refresh();
+       }
+       this.paintContent = paint;
+       this.animate(step,200ms);
+    }
+    event focusout 
+    {
+       function step(p) {
+         this.progress = 1.0 - p;
+         this.refresh();
+       }
+       this.animate(step, ::this.paintContent = null, 200ms);
+    }
+  }
+
+  function Toggle()
+  {
+    this.$append(<knob/>);
+  }
+
+}

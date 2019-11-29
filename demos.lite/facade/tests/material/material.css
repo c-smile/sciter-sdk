@@ -1,0 +1,156 @@
+
+.material {font:10pt Roboto, Veradana, sans-serif; }
+
+.material button { style-set: m-button; }
+.material button.flat { style-set: m-button-flat; }
+
+@set m-button < std-button-base {
+  :root { 
+    background: var(lighten4,#000); 
+    box-shadow: #aaa 1dip 2dip 2dip;
+    //border-radius: 2dip;
+    aspect: Material.Ripple url(material.tis);
+    -ripple-from-color: var(lighten3,#000);
+    -ripple-to-color: var(lighten5,#000);
+    cursor:pointer;
+    padding:0.5em 1em;
+  }
+  :root:hover { background: var(lighten3,#000); }
+  :root:active { background: var(lighten5,#000); }
+}
+
+@set m-button-flat < std-button-base {
+  :root { 
+    background: transparent; 
+    aspect: Material.Ripple url(material.tis);
+    -ripple-from-color: var(lighten5,#000);
+    -ripple-to-color: var(lighten3,#000);
+    cursor:pointer;
+  }
+  :root:hover { background: var(lighten5,#000); }
+  :root:active { background: var(lighten3,#000); }
+}
+
+.material editbox { style-set: m-editbox; }
+
+@set m-editbox {
+  :root {
+    prototype: Material.EditBox url(material.tis); 
+    display:block;
+    flow:stack;
+    padding-top:0.5em;
+    border-bottom:1dip solid #eee;
+    -focus-color: var(normal,#000);
+    width:*;
+  }
+  :root > caption { line-height:1.6em; width:*; transform-origin: 0% 0%; color:#777;  }
+  :root > text { 
+    flow:text; cursor:text; white-space:pre; behavior:edit; line-height:1.6em; width:*; height:*; 
+    background:transparent;
+  }
+
+  :root:owns-focus > caption, 
+  :root:not(.is-empty) > caption
+  { 
+    transform: translate(0,-80%) scale(0.7);  
+    transition: transform(quad-out, 160ms); 
+  }
+}
+
+.material checkbox { style-set: m-checkbox; }
+
+@set m-checkbox {
+  :root {
+    behavior:check;
+    display:block;
+    width:max-content;
+    line-height:1.4em;
+    foreground-repeat: no-repeat;
+    foreground-position: 0.2em 50%;
+    foreground-size: 1.2em;
+    padding: * 0.6em * 1.8em;
+    foreground-image: url(path:m 495.18709,197.52453 c -79.3334,0 -147.1667,28.16666 -203.5,84.5 -56.3334,56.33333 -84.5,124.16667 -84.5,203.5 v 831.99997 c 0,79.3334 28.1666,147.1667 84.5,203.5 56.3333,56.3334 124.1666,84.5 203.5,84.5 h 832.00001 c 79.3333,0 147.1666,-28.1666 203.5,-84.5 56.3333,-56.3333 84.5,-124.1666 84.5,-203.5 V 485.52453 c 0,-79.33333 -28.1667,-147.16667 -84.5,-203.5 -56.3334,-56.33334 -124.1667,-84.5 -203.5,-84.5 z m 0,128 h 832.00001 c 44,0 81.6666,15.66666 113,47 31.3333,31.33333 47,69 47,113 v 831.99997 c 0,44 -15.6667,81.6667 -47,113 -31.3334,31.3334 -69,47 -113,47 H 495.18709 c -44,0 -81.6667,-15.6666 -113,-47 -31.3334,-31.3333 -47,-69 -47,-113 V 485.52453 c 0,-44 15.6666,-81.66667 47,-113 31.3333,-31.33334 69,-47 113,-47 z);
+    fill: #777;
+    cursor:pointer;
+  }
+
+  :root:checked {
+    foreground-image: url(path:M813 1299l614-614q19-19 19-45t-19-45l-102-102q-19-19-45-19t-45 19l-467 467-211-211q-19-19-45-19t-45 19l-102 102q-19 19-19 45t19 45l358 358q19 19 45 19t45-19zm851-883v960q0 119-84.5 203.5t-203.5 84.5h-960q-119 0-203.5-84.5t-84.5-203.5v-960q0-119 84.5-203.5t203.5-84.5h960q119 0 203.5 84.5t84.5 203.5z);
+    fill: var(normal,#000);
+    transition: fill(linear, 160ms) foreground-image(linear, 160ms);
+  }
+}
+
+.material radio { style-set: m-radio; }
+
+@set m-radio {
+  :root {
+    behavior:radio;
+    display:block;
+    width:max-content;
+    line-height:1.4em;
+    foreground-repeat: no-repeat;
+    foreground-position: 0.2em 50%;
+    foreground-size: 1.3em;
+    foreground-image: url(path:M896 256q-130 0-248.5 51t-204 136.5-136.5 204-51 248.5 51 248.5 136.5 204 204 136.5 248.5 51 248.5-51 204-136.5 136.5-204 51-248.5-51-248.5-136.5-204-204-136.5-248.5-51zm768 640q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z);
+    padding: * 0.6em * 1.8em;
+    fill: #777;
+    cursor:pointer;
+  }
+
+  :root:checked {
+    foreground-image: url(path:m 895.99994,508.67795 q -78.67478,0 -150.38989,30.86472 -71.71508,30.86473 -123.45889,82.6085 -51.7438,51.7439 -82.60853,123.4589 -30.86472,71.71513 -30.86472,150.38991 0,78.67477 30.86472,150.38982 30.86473,71.7152 82.60853,123.4589 51.74381,51.7438 123.45889,82.6087 71.71511,30.8647 150.38989,30.8647 78.67477,0 150.38996,-30.8647 71.7149,-30.8649 123.4589,-82.6087 51.7437,-51.7437 82.6085,-123.4589 30.8648,-71.71505 30.8648,-150.38982 0,-78.67478 -30.8648,-150.38991 -30.8648,-71.715 -82.6085,-123.4589 -51.7439,-51.74377 -123.4589,-82.6085 -71.71519,-30.86472 -150.38996,-30.86472 z M 896,256 Q 766,256 647.5,307 529,358 443.5,443.5 358,529 307,647.5 256,766 256,896 q 0,130 51,248.5 51,118.5 136.5,204 85.5,85.5 204,136.5 118.5,51 248.5,51 130,0 248.5,-51 118.5,-51 204,-136.5 85.5,-85.5 136.5,-204 51,-118.5 51,-248.5 0,-130 -51,-248.5 Q 1434,529 1348.5,443.5 1263,358 1144.5,307 1026,256 896,256 Z m 768,640 q 0,209 -103,385.5 Q 1458,1458 1281.5,1561 1105,1664 896,1664 687,1664 510.5,1561 334,1458 231,1281.5 128,1105 128,896 128,687 231,510.5 334,334 510.5,231 687,128 896,128 1105,128 1281.5,231 1458,334 1561,510.5 1664,687 1664,896 Z);
+    fill: var(normal,#000);
+    transition: fill(linear, 160ms) foreground-image(linear, 160ms);
+  }
+
+}
+
+.material toggle { style-set: m-toggle; }
+
+@set m-toggle {
+  :root {
+    aspect: Material.Toggle url(material.tis); 
+    behavior:check;
+    display:block;
+    flow:stack;
+    width:3em;
+    height:1em;
+    padding:0.2em;
+    border-radius:0.6em;
+    background-clip:content-box;
+    background:#ccc;
+    cursor:pointer;
+  }
+
+  :root:checked {
+    background-color:var(lighten3,#000); 
+    transition: background-color(linear, 160ms);
+  }
+
+  :root > knob {
+    display:block;
+    background-color:#888; 
+    size:1.4em;
+    margin: -0.2em * -0.2em -0.2em;
+    border-radius:0.7em;
+    box-shadow: #aaa 1dip 2dip 2dip;
+    transform: translate(0em,0);
+  }
+
+  :root:checked > knob {
+    //margin: -0.2em -0.2em -0.2em *;
+    transform: translate(2em,0);
+    background-color:var(normal,#000);
+    transition: background-color(linear, 160ms) transform(quad-out, 160ms);
+  }
+}
+
+
+hbox, .hbox { 
+  display:block; 
+  flow:horizontal;
+  border-spacing:1em;
+  width:*;
+}
+

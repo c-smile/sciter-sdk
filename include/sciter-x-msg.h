@@ -28,6 +28,8 @@ typedef enum SCITER_X_MSG_CODE {
   SXM_RESOLUTION = 4,
   SXM_HEARTBIT = 5,
   SXM_MOUSE = 6,
+  SXM_KEY = 7,
+  SXM_FOCUS = 8,
 } SCITER_X_MSG_CODE;
 
 /** #SCITER_X_MSG common header of message structures passed to SciterProcX */
@@ -76,14 +78,33 @@ typedef struct SCITER_X_MSG_RESOLUTION {
 
 typedef struct SCITER_X_MSG_MOUSE {
   SCITER_X_MSG    header;
-  MOUSE_BUTTONS   button;
   MOUSE_EVENTS    event;
+  MOUSE_BUTTONS   button;
   KEYBOARD_STATES modifiers;
   POINT           pos;
 #ifdef __cplusplus
   SCITER_X_MSG_MOUSE(MOUSE_EVENTS e, MOUSE_BUTTONS b, KEYBOARD_STATES mods, POINT p) : header(SXM_MOUSE), event(e), button(b), modifiers(mods), pos(p) {}
 #endif
 } SCITER_X_MSG_MOUSE;
+
+typedef struct SCITER_X_MSG_KEY {
+  SCITER_X_MSG    header;
+  KEY_EVENTS      event;
+  UINT            code;
+  KEYBOARD_STATES modifiers;
+#ifdef __cplusplus
+  SCITER_X_MSG_KEY(KEY_EVENTS e, UINT c, KEYBOARD_STATES mods) : header(SXM_KEY), event(e), code(c), modifiers(mods) {}
+#endif
+} SCITER_X_MSG_KEY;
+
+typedef struct SCITER_X_MSG_FOCUS {
+  SCITER_X_MSG    header;
+  BOOL            got; // true - got, false - lost
+#ifdef __cplusplus
+  SCITER_X_MSG_FOCUS(BOOL g) : header(SXM_FOCUS), got(g) {}
+#endif
+} SCITER_X_MSG_FOCUS;
+
 
 typedef struct SCITER_X_MSG_HEARTBIT {
   SCITER_X_MSG header;

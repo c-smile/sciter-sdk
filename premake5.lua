@@ -84,7 +84,7 @@ project "usciter"
            "demos/usciter/win-res/usciter.rc",
            "demos/usciter/win-res/dpi-aware.manifest" }
     prebuildcommands { 
-      "%{wks.location}..\\bin.win\\packfolder.exe %{wks.location}..\\demos\\usciter\\res %{wks.location}..\\demos\\usciter\\resources.cpp -v \"resources\""
+      "%{prj.location}..\\bin.win\\packfolder.exe %{prj.location}..\\demos\\usciter\\res %{prj.location}..\\demos\\usciter\\resources.cpp -v \"resources\""
     }
 
   filter "system:macosx"
@@ -166,7 +166,7 @@ project "inspector"
 
   configuration "windows"
     prebuildcommands { 
-      "%{wks.location}..\\bin.win\\packfolder.exe %{wks.location}..\\demos\\inspector\\res %{wks.location}..\\demos\\inspector\\resources.cpp -v \"resources\""
+      "%{prj.location}..\\bin.win\\packfolder.exe %{prj.location}..\\demos\\inspector\\res %{prj.location}..\\demos\\inspector\\resources.cpp -v \"resources\""
     }
   configuration {}
 
@@ -206,7 +206,7 @@ project "notepad"
 
   configuration "windows"
     prebuildcommands { 
-      "%{wks.location}..\\bin.win\\packfolder.exe %{wks.location}..\\notepad\\res %{wks.location}..\\notepad\\resources.cpp -v \"resources\""
+      "%{prj.location}..\\bin.win\\packfolder.exe %{prj.location}..\\notepad\\res %{prj.location}..\\notepad\\resources.cpp -v \"resources\""
     }
   configuration {}  
 
@@ -249,7 +249,7 @@ project "notes"
 
   configuration "windows"
     prebuildcommands { 
-      "%{wks.location}..\\bin.win\\packfolder.exe %{wks.location}..\\notes\\res %{wks.location}..\\notes\\resources.cpp -v \"resources\""
+      "%{prj.location}..\\bin.win\\packfolder.exe %{prj.location}..\\notes\\res %{prj.location}..\\notes\\resources.cpp -v \"resources\""
     }
   configuration {}  
 
@@ -369,7 +369,7 @@ project "glfw-opengl"
 
   configuration "windows"
     prebuildcommands { 
-      "%{wks.location}..\\bin.win\\packfolder.exe %{wks.location}..\\demos.lite\\facade %{wks.location}..\\demos.lite\\facade-resources.cpp -v \"resources\""
+      "%{prj.location}..\\bin.win\\packfolder.exe %{prj.location}..\\demos.lite\\facade %{prj.location}..\\demos.lite\\facade-resources.cpp -v \"resources\""
     }
   configuration {}
 
@@ -390,7 +390,6 @@ project "glfw-opengl"
 
   files { 
     "demos.lite/glfw/src/context.c",
-    "demos.lite/glfw/src/egl_context.c",
     "demos.lite/glfw/src/init.c",
     "demos.lite/glfw/src/input.c",
     "demos.lite/glfw/src/monitor.c",
@@ -404,8 +403,15 @@ project "glfw-opengl"
     dpiawareness "HighPerMonitor"
     defines "_GLFW_WIN32"
     files {
+      "demos.lite/glfw/src/win32_init.c",
+      "demos.lite/glfw/src/win32_joystick.c",
+      "demos.lite/glfw/src/win32_monitor.c",
+      "demos.lite/glfw/src/win32_time.c",
+      "demos.lite/glfw/src/win32_thread.c",
+      "demos.lite/glfw/src/win32_window.c",
       "demos.lite/glfw/src/wgl_context.c",
-      "demos.lite/glfw/src/win32_*.c",
+      "demos.lite/glfw/src/egl_context.c",
+      "demos.lite/glfw/src/osmesa_context.c",
     }
     links "shlwapi"
   filter "system:macosx"
@@ -420,7 +426,10 @@ project "glfw-opengl"
     files {
       "demos.lite/glfw/src/xkb_unicode.c",
       "demos.lite/glfw/src/glx_context.c",
-      "demos.lite/glfw/src/posix_*.*",
+      "demos.lite/glfw/src/egl_context.c",
+      "demos.lite/glfw/src/osmesa_context.c",
+      "demos.lite/glfw/src/posix_thread.*",
+      "demos.lite/glfw/src/posix_time.*",
       "demos.lite/glfw/src/linux_*.*",
       "demos.lite/glfw/src/x11_*.*",
     }

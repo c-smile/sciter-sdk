@@ -17,10 +17,11 @@
         <File Name="../demos.lite/glfw/src/linux_joystick.c"/>
         <File Name="../demos.lite/glfw/src/linux_joystick.h"/>
         <File Name="../demos.lite/glfw/src/monitor.c"/>
+        <File Name="../demos.lite/glfw/src/osmesa_context.c"/>
+        <File Name="../demos.lite/glfw/src/posix_thread.c"/>
+        <File Name="../demos.lite/glfw/src/posix_thread.h"/>
         <File Name="../demos.lite/glfw/src/posix_time.c"/>
         <File Name="../demos.lite/glfw/src/posix_time.h"/>
-        <File Name="../demos.lite/glfw/src/posix_tls.c"/>
-        <File Name="../demos.lite/glfw/src/posix_tls.h"/>
         <File Name="../demos.lite/glfw/src/vulkan.c"/>
         <File Name="../demos.lite/glfw/src/window.c"/>
         <File Name="../demos.lite/glfw/src/x11_init.c"/>
@@ -33,6 +34,7 @@
     <VirtualDirectory Name="sciter-glfw-opengl">
       <File Name="../demos.lite/sciter-glfw-opengl/aux-fs.h"/>
       <File Name="../demos.lite/sciter-glfw-opengl/basic.cpp"/>
+      <File Name="../demos.lite/sciter-glfw-opengl/stdafx.h"/>
     </VirtualDirectory>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
@@ -40,6 +42,9 @@
     <File Name="../include/aux-cvt.h"/>
     <File Name="../include/aux-platform.h"/>
     <File Name="../include/aux-slice.h"/>
+    <VirtualDirectory Name="behaviors">
+      <File Name="../include/behaviors/behavior_drawing.cpp"/>
+    </VirtualDirectory>
     <File Name="../include/sciter-x-api.h"/>
     <File Name="../include/sciter-x-behavior.h"/>
     <File Name="../include/sciter-x-debug.h"/>
@@ -49,7 +54,7 @@
     <File Name="../include/sciter-x-graphics.h"/>
     <File Name="../include/sciter-x-graphics.hpp"/>
     <File Name="../include/sciter-x-host-callback.h"/>
-    <File Name="../include/sciter-x-lite.hpp"/>
+    <File Name="../include/sciter-x-lite-keycodes.h"/>
     <File Name="../include/sciter-x-msg.h"/>
     <File Name="../include/sciter-x-request.h"/>
     <File Name="../include/sciter-x-request.hpp"/>
@@ -82,26 +87,17 @@
       <ResourceCompiler Options=""/>
     </GlobalSettings>
     <Configuration Name="x32|Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
-      <Compiler Options="-m32;-g;-std=c++17;`pkg-config gtk+-3.0 --cflags`;`pkg-config fontconfig --cflags`;-fPIC;-fpermissive;-Wno-reorder;-Wno-unknown-pragmas;-Wno-write-strings;-ldl" C_Options="-m32;-g;`pkg-config gtk+-3.0 --cflags`;`pkg-config fontconfig --cflags`;-fPIC;-fpermissive;-Wno-reorder;-Wno-unknown-pragmas;-Wno-write-strings;-ldl" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
-        <IncludePath Value="../../engine"/>
-        <IncludePath Value="../.."/>
-        <IncludePath Value="../../engine/tool"/>
-        <IncludePath Value="../../engine/gool"/>
-        <IncludePath Value="../../engine/html"/>
-        <IncludePath Value="../../engine/external/uv/include"/>
-        <IncludePath Value="../../engine/external/uv-tls/include"/>
-        <IncludePath Value="../../engine/external/zlib"/>
+      <Compiler Options="-m32;-g;-std=c++17" C_Options="-m32;-g" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
         <IncludePath Value="../include"/>
+        <IncludePath Value="../demos.lite/sciter-glfw-opengl"/>
         <IncludePath Value="../demos.lite/glfw/include"/>
         <IncludePath Value="../demos.lite/glfw/deps"/>
-        <Preprocessor Value="SCITER"/>
-        <Preprocessor Value="MONOLITHIC"/>
         <Preprocessor Value="DEBUG"/>
         <Preprocessor Value="_DEBUG"/>
         <Preprocessor Value="WINDOWLESS"/>
         <Preprocessor Value="_GLFW_X11"/>
       </Compiler>
-      <Linker Required="yes" Options="-m32;-fPIC;-Wall;-pthread;-lm;-lX11;-lXrandr;-lXinerama;-lXcursor;-lGL;-lGLU;-ldl">
+      <Linker Required="yes" Options="-m32;-Wall;-pthread;-lm;-lX11;-lXrandr;-lXinerama;-lXcursor;-lGL;-lGLU;-ldl">
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="../bin.lnx/x32lite/glfw-opengl" IntermediateDirectory="obj/x32/Debug/glfw-opengl" Command="../bin.lnx/x32lite/glfw-opengl" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
@@ -126,26 +122,17 @@
       </Completion>
     </Configuration>
     <Configuration Name="x64|Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
-      <Compiler Options="-m64;-g;-std=c++17;`pkg-config gtk+-3.0 --cflags`;`pkg-config fontconfig --cflags`;-fPIC;-fpermissive;-Wno-reorder;-Wno-unknown-pragmas;-Wno-write-strings;-ldl" C_Options="-m64;-g;`pkg-config gtk+-3.0 --cflags`;`pkg-config fontconfig --cflags`;-fPIC;-fpermissive;-Wno-reorder;-Wno-unknown-pragmas;-Wno-write-strings;-ldl" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
-        <IncludePath Value="../../engine"/>
-        <IncludePath Value="../.."/>
-        <IncludePath Value="../../engine/tool"/>
-        <IncludePath Value="../../engine/gool"/>
-        <IncludePath Value="../../engine/html"/>
-        <IncludePath Value="../../engine/external/uv/include"/>
-        <IncludePath Value="../../engine/external/uv-tls/include"/>
-        <IncludePath Value="../../engine/external/zlib"/>
+      <Compiler Options="-m64;-g;-std=c++17" C_Options="-m64;-g" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
         <IncludePath Value="../include"/>
+        <IncludePath Value="../demos.lite/sciter-glfw-opengl"/>
         <IncludePath Value="../demos.lite/glfw/include"/>
         <IncludePath Value="../demos.lite/glfw/deps"/>
-        <Preprocessor Value="SCITER"/>
-        <Preprocessor Value="MONOLITHIC"/>
         <Preprocessor Value="DEBUG"/>
         <Preprocessor Value="_DEBUG"/>
         <Preprocessor Value="WINDOWLESS"/>
         <Preprocessor Value="_GLFW_X11"/>
       </Compiler>
-      <Linker Required="yes" Options="-m64;-fPIC;-Wall;-pthread;-lm;-lX11;-lXrandr;-lXinerama;-lXcursor;-lGL;-lGLU;-ldl">
+      <Linker Required="yes" Options="-m64;-Wall;-pthread;-lm;-lX11;-lXrandr;-lXinerama;-lXcursor;-lGL;-lGLU;-ldl">
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="../bin.lnx/x64lite/glfw-opengl" IntermediateDirectory="obj/x64/Debug/glfw-opengl" Command="../bin.lnx/x64lite/glfw-opengl" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
@@ -170,25 +157,16 @@
       </Completion>
     </Configuration>
     <Configuration Name="x32|Release" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
-      <Compiler Options="-m32;-flto;-Os;-std=c++17;`pkg-config gtk+-3.0 --cflags`;`pkg-config fontconfig --cflags`;-fPIC;-fpermissive;-Wno-reorder;-Wno-unknown-pragmas;-Wno-write-strings;-ldl" C_Options="-m32;-flto;-Os;`pkg-config gtk+-3.0 --cflags`;`pkg-config fontconfig --cflags`;-fPIC;-fpermissive;-Wno-reorder;-Wno-unknown-pragmas;-Wno-write-strings;-ldl" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
-        <IncludePath Value="../../engine"/>
-        <IncludePath Value="../.."/>
-        <IncludePath Value="../../engine/tool"/>
-        <IncludePath Value="../../engine/gool"/>
-        <IncludePath Value="../../engine/html"/>
-        <IncludePath Value="../../engine/external/uv/include"/>
-        <IncludePath Value="../../engine/external/uv-tls/include"/>
-        <IncludePath Value="../../engine/external/zlib"/>
+      <Compiler Options="-m32;-flto;-Os;-std=c++17" C_Options="-m32;-flto;-Os" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
         <IncludePath Value="../include"/>
+        <IncludePath Value="../demos.lite/sciter-glfw-opengl"/>
         <IncludePath Value="../demos.lite/glfw/include"/>
         <IncludePath Value="../demos.lite/glfw/deps"/>
-        <Preprocessor Value="SCITER"/>
-        <Preprocessor Value="MONOLITHIC"/>
         <Preprocessor Value="NDEBUG"/>
         <Preprocessor Value="WINDOWLESS"/>
         <Preprocessor Value="_GLFW_X11"/>
       </Compiler>
-      <Linker Required="yes" Options="-m32;-flto;-s;-fPIC;-Wall;-pthread;-lm;-lX11;-lXrandr;-lXinerama;-lXcursor;-lGL;-lGLU;-ldl">
+      <Linker Required="yes" Options="-m32;-flto;-s;-Wall;-pthread;-lm;-lX11;-lXrandr;-lXinerama;-lXcursor;-lGL;-lGLU;-ldl">
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="../bin.lnx/x32lite/glfw-opengl" IntermediateDirectory="obj/x32/Release/glfw-opengl" Command="../bin.lnx/x32lite/glfw-opengl" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
@@ -213,25 +191,16 @@
       </Completion>
     </Configuration>
     <Configuration Name="x64|Release" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
-      <Compiler Options="-m64;-flto;-Os;-std=c++17;`pkg-config gtk+-3.0 --cflags`;`pkg-config fontconfig --cflags`;-fPIC;-fpermissive;-Wno-reorder;-Wno-unknown-pragmas;-Wno-write-strings;-ldl" C_Options="-m64;-flto;-Os;`pkg-config gtk+-3.0 --cflags`;`pkg-config fontconfig --cflags`;-fPIC;-fpermissive;-Wno-reorder;-Wno-unknown-pragmas;-Wno-write-strings;-ldl" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
-        <IncludePath Value="../../engine"/>
-        <IncludePath Value="../.."/>
-        <IncludePath Value="../../engine/tool"/>
-        <IncludePath Value="../../engine/gool"/>
-        <IncludePath Value="../../engine/html"/>
-        <IncludePath Value="../../engine/external/uv/include"/>
-        <IncludePath Value="../../engine/external/uv-tls/include"/>
-        <IncludePath Value="../../engine/external/zlib"/>
+      <Compiler Options="-m64;-flto;-Os;-std=c++17" C_Options="-m64;-flto;-Os" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
         <IncludePath Value="../include"/>
+        <IncludePath Value="../demos.lite/sciter-glfw-opengl"/>
         <IncludePath Value="../demos.lite/glfw/include"/>
         <IncludePath Value="../demos.lite/glfw/deps"/>
-        <Preprocessor Value="SCITER"/>
-        <Preprocessor Value="MONOLITHIC"/>
         <Preprocessor Value="NDEBUG"/>
         <Preprocessor Value="WINDOWLESS"/>
         <Preprocessor Value="_GLFW_X11"/>
       </Compiler>
-      <Linker Required="yes" Options="-m64;-flto;-s;-fPIC;-Wall;-pthread;-lm;-lX11;-lXrandr;-lXinerama;-lXcursor;-lGL;-lGLU;-ldl">
+      <Linker Required="yes" Options="-m64;-flto;-s;-Wall;-pthread;-lm;-lX11;-lXrandr;-lXinerama;-lXcursor;-lGL;-lGLU;-ldl">
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="../bin.lnx/x64lite/glfw-opengl" IntermediateDirectory="obj/x64/Release/glfw-opengl" Command="../bin.lnx/x64lite/glfw-opengl" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>

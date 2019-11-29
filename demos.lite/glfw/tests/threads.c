@@ -1,6 +1,6 @@
 //========================================================================
 // Multi-threading test
-// Copyright (c) Camilla Berglund <elmindreda@glfw.org>
+// Copyright (c) Camilla Löwy <elmindreda@glfw.org>
 //
 // This software is provided 'as-is', without any express or implied
 // warranty. In no event will the authors be held liable for any damages
@@ -30,7 +30,7 @@
 
 #include "tinycthread.h"
 
-#include <glad/glad.h>
+#include <glad/gl.h>
 #include <GLFW/glfw3.h>
 
 #include <stdio.h>
@@ -50,6 +50,12 @@ static volatile int running = GLFW_TRUE;
 static void error_callback(int error, const char* description)
 {
     fprintf(stderr, "Error: %s\n", description);
+}
+
+static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, GLFW_TRUE);
 }
 
 static int thread_main(void* data)
@@ -101,12 +107,14 @@ int main(void)
             exit(EXIT_FAILURE);
         }
 
+        glfwSetKeyCallback(threads[i].window, key_callback);
+
         glfwSetWindowPos(threads[i].window, 200 + 250 * i, 200);
         glfwShowWindow(threads[i].window);
     }
 
     glfwMakeContextCurrent(threads[0].window);
-    gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
+    gladLoadGL(glfwGetProcAddress);
     glfwMakeContextCurrent(NULL);
 
     for (i = 0;  i < count;  i++)

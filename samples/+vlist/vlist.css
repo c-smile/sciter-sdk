@@ -13,6 +13,7 @@ vlist > li {
   display:block; 
   padding:0 6dip;
   line-height:31dip;
+  white-space:nowrap;  
   background: linear-gradient(top, #fff, #ddd);
   behavior:form; /* each repeated child is treated as a form so it can accept object values */ 
 } 

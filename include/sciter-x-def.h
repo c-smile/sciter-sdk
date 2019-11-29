@@ -133,6 +133,22 @@ enum SC_LOAD_DATA_RETURN_CODES
 #define SC_GRAPHICS_CRITICAL_FAILURE 0x07
 
 
+/**This notification is sent when the engine needs keyboard to be present on screen
+   E.g. when <input|text> gets focus
+
+ * \param lParam #LPSCN_KEYBOARD_REQUEST
+ *
+ **/
+#define SC_KEYBOARD_REQUEST 0x08
+
+/**This notification is sent when the engine needs some area to be redrawn
+ 
+ * \param lParam #LPSCN_INVLIDATE_RECT
+ *
+ **/
+#define SC_INVALIDATE_RECT 0x09
+
+
 /**Notification callback structure.
  **/
 typedef struct SCITER_CALLBACK_NOTIFICATION
@@ -240,6 +256,26 @@ typedef struct SCN_GRAPHICS_CRITICAL_FAILURE
 } SCN_GRAPHICS_CRITICAL_FAILURE;
 
 typedef SCN_GRAPHICS_CRITICAL_FAILURE* LPSCN_GRAPHICS_CRITICAL_FAILURE;
+
+/**This structure is used by #SC_KEYBOARD_REQUEST notification.
+ *\copydoc SC_KEYBOARD_REQUEST **/
+typedef struct SCN_KEYBOARD_REQUEST {
+  UINT    code; /**< [in] = SC_KEYBOARD_REQUEST */
+  HWINDOW hwnd; /**< [in] HWINDOW of the window this callback was attached to.*/
+  UINT    keyboardMode; /**< [in] 0 - hide keyboard, 1 ... type of keyboard, TBD */
+} SCN_KEYBOARD_REQUEST;
+
+typedef SCN_KEYBOARD_REQUEST *LPSCN_KEYBOARD_REQUEST;
+
+/**This structure is used by #SC_INVALIDATE_RECT notification.
+ *\copydoc SC_INVALIDATE_RECT **/
+typedef struct SCN_INVALIDATE_RECT {
+  UINT    code; /**< [in] = SC_INVALIDATE_RECT */
+  HWINDOW hwnd; /**< [in] HWINDOW of the window this callback was attached to.*/
+  RECT    invalidRect; /**< [in] cumulative invalid rect.*/
+} SCN_INVALIDATE_RECT;
+
+typedef SCN_INVALIDATE_RECT *LPSCN_INVALIDATE_RECT;
 
 
 #include "sciter-x-behavior.h"

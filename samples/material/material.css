@@ -13,6 +13,7 @@
     -ripple-from-color: var(lighten3,#000);
     -ripple-to-color: var(lighten5,#000);
     cursor:pointer;
+    padding:0.25em 0.5em;
   }
   :root:hover { background: var(lighten3,#000); }
   :root:active { background: var(lighten5,#000); }

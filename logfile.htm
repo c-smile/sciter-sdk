@@ -10,7 +10,25 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FFFAFC">4.4.0.2</td><td nowrap valign="top" align="center">14-11-2019</td><td>new:
+    <tr><td valign="top" bgcolor="#FFFAFC">4.4.0.3</td><td nowrap valign="top" align="center">28-11-2019</td><td>
+					
+					
+					<p>new:</p><ul><li>[lite] + support of keyboard and focus events.</li>
+						<li>[android] <ul><li>keyboard support.</li>
+								<li>support of touch scroll in scrollables.&nbsp;</li></ul></li>
+						
+						<li>[lite] + support of popup elements.</li>
+						<li>[Sciter.Lite, mobiles] API: SC_KEYBOARD_REQUEST notification - issued when keyboard needs to be shown - mobiles can show soft keyboard by handling it.</li></ul><p>fixes:
+					</p><ul>
+						
+						
+						
+						
+						
+						
+						
+						<li>[drawing, css] fast path of border-radius if background is a color or gradient (Skia in particular where clipPath operation is slow)</li><li>Fix of AV in animation applied to collapsed element.</li><li>[win] view.dialog intrinsic size fix.</li><li>[css, flexes] fix of horizontal/vertical-alignment in flow:horizontal/vertical-wrap.</li>
+						<li>[css] flex computation fix, see: <a href="https://sciter.com/forums/topic/0-7-cant-work-in-4-4-0-2/">https://sciter.com/forums/topic/0-7-cant-work-in-4-4-0-2/</a>&nbsp;</li><li>[script] fix of <code>Storage.open(path)</code> when path contains non-ascii characters.</li><li>[win] Windows XP support is back.</li><li>[reactor] fix of dynamic SSX reference handling, see: h<a href="https://sciter.com/forums/topic/reactor-merge-issues/">ttps://sciter.com/forums/topic/reactor-merge-issues/ </a>&nbsp;</li><li>[script] <code>class ... detached()</code> call generation when <code>element.remove()</code> is called.</li><li>[script, win] fix of <code>Date.timeZoneName()</code> for timezones that do not use daylight savings.</li></ul></td></tr><tr><td valign="top" bgcolor="#FFFAFC">4.4.0.2</td><td nowrap valign="top" align="center">14-11-2019</td><td>new:
 					<ul><li><b>Sciter.Lite</b> - first builds of Sciter.Lite engine. See: <a href="https://sciter.com/windowless-sciter-android-and-iot-devices/">https://sciter.com/windowless-sciter-android-and-iot-devices/</a> and <a href="https://sciter.com/sciter-lite-on-android-arm64-opengles/">https://sciter.com/sciter-lite-on-android-arm64-opengles/</a>&nbsp;<ul><li>sdk/demos.lite - GLFW based demo of how to use Sciter.Lite in OpenGL context.</li>
 								<li>sdk/demos.android -&nbsp;Sciter.Lite / ARM64 demo in OpenGLES context of Android's Native Activity.&nbsp;</li></ul></li>
 						

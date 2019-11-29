@@ -48,6 +48,9 @@ struct engine {
   int32_t            width     = 0;
   int32_t            height    = 0;
   struct saved_state state;
+  uint32_t           keyboardMode = 0; 
+
+
 };
 
 /**

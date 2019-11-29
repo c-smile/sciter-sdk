@@ -69,7 +69,7 @@
     <ClInclude Include="..\include\sciter-x-host-callback.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\sciter-x-lite.hpp">
+    <ClInclude Include="..\include\sciter-x-lite-keycodes.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\sciter-x-msg.h">
@@ -137,6 +137,9 @@
     <ClCompile Include="..\demos.lite\glfw\src\monitor.c">
       <Filter>demos.lite\glfw\src</Filter>
     </ClCompile>
+    <ClCompile Include="..\demos.lite\glfw\src\osmesa_context.c">
+      <Filter>demos.lite\glfw\src</Filter>
+    </ClCompile>
     <ClCompile Include="..\demos.lite\glfw\src\vulkan.c">
       <Filter>demos.lite\glfw\src</Filter>
     </ClCompile>
@@ -152,10 +155,10 @@
     <ClCompile Include="..\demos.lite\glfw\src\win32_monitor.c">
       <Filter>demos.lite\glfw\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\demos.lite\glfw\src\win32_time.c">
+    <ClCompile Include="..\demos.lite\glfw\src\win32_thread.c">
       <Filter>demos.lite\glfw\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\demos.lite\glfw\src\win32_tls.c">
+    <ClCompile Include="..\demos.lite\glfw\src\win32_time.c">
       <Filter>demos.lite\glfw\src</Filter>
     </ClCompile>
     <ClCompile Include="..\demos.lite\glfw\src\win32_window.c">

@@ -1,6 +1,6 @@
 //========================================================================
 // Simple multi-window test
-// Copyright (c) Camilla Berglund <elmindreda@glfw.org>
+// Copyright (c) Camilla Löwy <elmindreda@glfw.org>
 //
 // This software is provided 'as-is', without any express or implied
 // warranty. In no event will the authors be held liable for any damages
@@ -27,7 +27,7 @@
 //
 //========================================================================
 
-#include <glad/glad.h>
+#include <glad/gl.h>
 #include <GLFW/glfw3.h>
 
 #include <stdio.h>
@@ -56,9 +56,10 @@ static const struct
 
 static void usage(void)
 {
-    printf("Usage: windows [-h] [-b]\n");
+    printf("Usage: windows [-h] [-b] [-f] \n");
     printf("Options:\n");
     printf("  -b create decorated windows\n");
+    printf("  -f set focus on show off for all but first window\n");
     printf("  -h show this help\n");
 }
 
@@ -92,15 +93,19 @@ int main(int argc, char** argv)
 {
     int i, ch;
     int decorated = GLFW_FALSE;
+    int focusOnShow = GLFW_TRUE;
     int running = GLFW_TRUE;
     GLFWwindow* windows[4];
 
-    while ((ch = getopt(argc, argv, "bh")) != -1)
+    while ((ch = getopt(argc, argv, "bfh")) != -1)
     {
         switch (ch)
         {
             case 'b':
                 decorated = GLFW_TRUE;
+                break;
+            case 'f':
+                focusOnShow = GLFW_FALSE;
                 break;
             case 'h':
                 usage();
@@ -122,6 +127,8 @@ int main(int argc, char** argv)
     for (i = 0;  i < 4;  i++)
     {
         int left, top, right, bottom;
+        if (i)
+            glfwWindowHint(GLFW_FOCUS_ON_SHOW, focusOnShow);
 
         windows[i] = glfwCreateWindow(200, 200, titles[i], NULL, NULL);
         if (!windows[i])
@@ -133,7 +140,7 @@ int main(int argc, char** argv)
         glfwSetKeyCallback(windows[i], key_callback);
 
         glfwMakeContextCurrent(windows[i]);
-        gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
+        gladLoadGL(glfwGetProcAddress);
         glClearColor(colors[i].r, colors[i].g, colors[i].b, 1.f);
 
         glfwGetWindowFrameSize(windows[i], &left, &top, &right, &bottom);

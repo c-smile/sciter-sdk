@@ -27,18 +27,8 @@
       <ResourceCompiler Options=""/>
     </GlobalSettings>
     <Configuration Name="x32|Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
-      <Compiler Options="-m32;-g;-std=c++14;`pkg-config gtk+-3.0 --cflags`;`pkg-config fontconfig --cflags`;-fPIC;-fpermissive;-Wno-reorder;-Wno-unknown-pragmas;-Wno-write-strings;-ldl" C_Options="-m32;-g;`pkg-config gtk+-3.0 --cflags`;`pkg-config fontconfig --cflags`;-fPIC;-fpermissive;-Wno-reorder;-Wno-unknown-pragmas;-Wno-write-strings;-ldl" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
-        <IncludePath Value="../../engine"/>
-        <IncludePath Value="../.."/>
-        <IncludePath Value="../../engine/tool"/>
-        <IncludePath Value="../../engine/gool"/>
-        <IncludePath Value="../../engine/html"/>
-        <IncludePath Value="../../engine/external/uv/include"/>
-        <IncludePath Value="../../engine/external/uv-tls/include"/>
-        <IncludePath Value="../../engine/external/zlib"/>
+      <Compiler Options="-m32;-g;-std=c++14" C_Options="-m32;-g" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
         <IncludePath Value="../include"/>
-        <Preprocessor Value="SCITER"/>
-        <Preprocessor Value="MONOLITHIC"/>
         <Preprocessor Value="DEBUG"/>
         <Preprocessor Value="_DEBUG"/>
       </Compiler>
@@ -67,18 +57,8 @@
       </Completion>
     </Configuration>
     <Configuration Name="x64|Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
-      <Compiler Options="-m64;-g;-std=c++14;`pkg-config gtk+-3.0 --cflags`;`pkg-config fontconfig --cflags`;-fPIC;-fpermissive;-Wno-reorder;-Wno-unknown-pragmas;-Wno-write-strings;-ldl" C_Options="-m64;-g;`pkg-config gtk+-3.0 --cflags`;`pkg-config fontconfig --cflags`;-fPIC;-fpermissive;-Wno-reorder;-Wno-unknown-pragmas;-Wno-write-strings;-ldl" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
-        <IncludePath Value="../../engine"/>
-        <IncludePath Value="../.."/>
-        <IncludePath Value="../../engine/tool"/>
-        <IncludePath Value="../../engine/gool"/>
-        <IncludePath Value="../../engine/html"/>
-        <IncludePath Value="../../engine/external/uv/include"/>
-        <IncludePath Value="../../engine/external/uv-tls/include"/>
-        <IncludePath Value="../../engine/external/zlib"/>
+      <Compiler Options="-m64;-g;-std=c++14" C_Options="-m64;-g" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
         <IncludePath Value="../include"/>
-        <Preprocessor Value="SCITER"/>
-        <Preprocessor Value="MONOLITHIC"/>
         <Preprocessor Value="DEBUG"/>
         <Preprocessor Value="_DEBUG"/>
       </Compiler>
@@ -107,18 +87,8 @@
       </Completion>
     </Configuration>
     <Configuration Name="x32|Release" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
-      <Compiler Options="-m32;-flto;-Os;-std=c++14;`pkg-config gtk+-3.0 --cflags`;`pkg-config fontconfig --cflags`;-fPIC;-fpermissive;-Wno-reorder;-Wno-unknown-pragmas;-Wno-write-strings;-ldl" C_Options="-m32;-flto;-Os;`pkg-config gtk+-3.0 --cflags`;`pkg-config fontconfig --cflags`;-fPIC;-fpermissive;-Wno-reorder;-Wno-unknown-pragmas;-Wno-write-strings;-ldl" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
-        <IncludePath Value="../../engine"/>
-        <IncludePath Value="../.."/>
-        <IncludePath Value="../../engine/tool"/>
-        <IncludePath Value="../../engine/gool"/>
-        <IncludePath Value="../../engine/html"/>
-        <IncludePath Value="../../engine/external/uv/include"/>
-        <IncludePath Value="../../engine/external/uv-tls/include"/>
-        <IncludePath Value="../../engine/external/zlib"/>
+      <Compiler Options="-m32;-flto;-Os;-std=c++14" C_Options="-m32;-flto;-Os" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
         <IncludePath Value="../include"/>
-        <Preprocessor Value="SCITER"/>
-        <Preprocessor Value="MONOLITHIC"/>
         <Preprocessor Value="NDEBUG"/>
       </Compiler>
       <Linker Required="yes" Options="-m32;-flto;-s;`pkg-config gtk+-3.0 --libs`;`pkg-config fontconfig --libs`;-fPIC;-pthread;-Wl,--no-undefined;-ldl">
@@ -146,18 +116,8 @@
       </Completion>
     </Configuration>
     <Configuration Name="x64|Release" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
-      <Compiler Options="-m64;-flto;-Os;-std=c++14;`pkg-config gtk+-3.0 --cflags`;`pkg-config fontconfig --cflags`;-fPIC;-fpermissive;-Wno-reorder;-Wno-unknown-pragmas;-Wno-write-strings;-ldl" C_Options="-m64;-flto;-Os;`pkg-config gtk+-3.0 --cflags`;`pkg-config fontconfig --cflags`;-fPIC;-fpermissive;-Wno-reorder;-Wno-unknown-pragmas;-Wno-write-strings;-ldl" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
-        <IncludePath Value="../../engine"/>
-        <IncludePath Value="../.."/>
-        <IncludePath Value="../../engine/tool"/>
-        <IncludePath Value="../../engine/gool"/>
-        <IncludePath Value="../../engine/html"/>
-        <IncludePath Value="../../engine/external/uv/include"/>
-        <IncludePath Value="../../engine/external/uv-tls/include"/>
-        <IncludePath Value="../../engine/external/zlib"/>
+      <Compiler Options="-m64;-flto;-Os;-std=c++14" C_Options="-m64;-flto;-Os" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
         <IncludePath Value="../include"/>
-        <Preprocessor Value="SCITER"/>
-        <Preprocessor Value="MONOLITHIC"/>
         <Preprocessor Value="NDEBUG"/>
       </Compiler>
       <Linker Required="yes" Options="-m64;-flto;-s;`pkg-config gtk+-3.0 --libs`;`pkg-config fontconfig --libs`;-fPIC;-pthread;-Wl,--no-undefined;-ldl">

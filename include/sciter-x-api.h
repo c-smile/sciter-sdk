@@ -39,9 +39,15 @@
 struct SciterGraphicsAPI;
 struct SCITER_X_MSG;
 
+#ifdef WINDOWLESS
+  #define API_VERSION 0x10001
+#else 
+  #define API_VERSION 1
+#endif // !WINDOWLESS
+
 typedef struct _ISciterAPI {
 
-  UINT    version; // is zero for now
+  UINT    version; // API_VERSION
 
   LPCWSTR SCFN( SciterClassName )(void);
   UINT    SCFN( SciterVersion )(BOOL major);
