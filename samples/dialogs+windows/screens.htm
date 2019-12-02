@@ -9,6 +9,7 @@
         size:*;
         border:1px solid red;
         /*image-rendering:optimize-quality;*/
+        font-size:200dip;
       }
       
       canvas.quality {
@@ -24,6 +25,8 @@
     
     function ScreenMap() {
     
+
+      var me = this;
 
       var nmons = View.screens;
       // desktop overall size
@@ -74,9 +77,8 @@
             x: x, y: y, w: w, h: h,
             ax: ax, ay: ay, aw: aw, ah: ah,
             primary: View.screenBox(m,#isPrimary),
-            caption: new Graphics.Text( (m + 1).toString() ),
+            caption: new Graphics.Text( (m + 1).toString() , me),
           };
-          mdef.caption.font("Verdana",200.0);
           monitors.push(mdef);
         }
         return monitors;
@@ -104,9 +106,6 @@
           if(snapshots.length && snapshots[m])
             gfx.drawImage( snapshots[m], mdef.x, mdef.y, mdef.w, mdef.h );
 
-          gfx.fillColor( color(255,255,255) );
-          gfx.lineColor( color(0,0,0) );
-          gfx.lineWidth( 2 );
           gfx.drawText( mdef.caption, mdef.x + mdef.w / 2, mdef.y + mdef.h / 2, 5);
           
           // draw this window projection on the desktop 
