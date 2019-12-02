@@ -4,15 +4,13 @@
 <style></style>
 <script type="text/tiscript">
 
-  include "../decorators.tis";
-
-  @click @on "#show-dialog-1": 
+  event click $(#show-dialog-1)
     {
       var v = view.dialog( self.url("samples/sample-dialog-1.htm"), true, -5); // -5 - in the middle of its parent window
       stdout.$n(sample-dialog-1 result:{v});
     }
 
-  @click @on "#show-dialog-2": 
+  event click $(#show-dialog-2)
     {
       var params = { one: "first", two: "second" }; // parameters to pass
       var v = view.dialog {
@@ -25,7 +23,7 @@
       stdout.printf("sample-dialog-2 result:%v\n",v);
     }
 
-  @click @on "#show-dialog-3": 
+  event click $(#show-dialog-3)
     {
       var params = { one: "one", two: "two" }; // parameters to pass
       var v = view.dialog {
@@ -38,41 +36,47 @@
       stdout.printf("sample-dialog-2 result:%v\n",v);
     }
 
-
-  @click @on "#show-dialog-resizeable": 
+  event click $(#show-dialog-resizeable)
     {
       var v = view.dialog( self.url("samples/sample-dialog-resizeable.htm"));
       stdout.printf("sample-dialog-resizeable result:%v\n",v);
     }
 
-  @click @on "#show-dialog-custom-frame-1": 
+  event click $(#show-dialog-custom-frame-1) 
     {
       var v = view.dialog( self.url("samples/sample-dialog-layred.htm"));
       stdout.printf("sample-dialog-with-custom-frame result:%v\n",v);
     }
 
-  @click @on "#show-dialog-custom-frame-2": 
+  event click $(#show-dialog-custom-frame-2)
     {
       var v = view.dialog( self.url("samples/sample-dialog-custom-frame-solid.htm"));
       stdout.printf("sample-dialog-with-custom-frame result:%v\n",v);
     }
 
-  @click @on "#show-dialog-custom-frame-3": 
+ event click $(#show-dialog-custom-frame-3)
     {
       var v = view.dialog( self.url("samples/sample-dialog-custom-frame-solid-with-shadow.htm"));
       stdout.printf("sample-dialog-with-custom-frame result:%v\n",v);
     }
 
 
-  @click @on "#show-dialog-custom-behavior": 
+  event click $(#show-dialog-custom-behavior)
     {
-      var v = view.dialog( self.url("samples/sample-dailog-with-tabs.htm"));
+      var v = view.dialog {
+        url: $url(samples/sample-dailog-with-tabs.htm),
+      };
       stdout.printf("sample-dailog-with-tabs result:%v\n",v);
     }
 
-  @click @on "#show-hole-dialog": 
+  event click $(#show-hole-dialog)
     {
-      var v = view.dialog( self.url("samples/sample-dialog-layred-hole.htm"));
+      var v = view.dialog
+      { 
+        url : $url(samples/sample-dialog-layred-hole.htm),
+        direct : false
+      };
+
       stdout.printf("sample-dialog-layred-hole.htm result:%v\n",v);
     }
 
