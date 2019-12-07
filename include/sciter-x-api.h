@@ -26,6 +26,9 @@
   #if defined(OSX)
     #include <libproc.h>
   #endif
+  #if defined(ANDROID)
+    #include <dlfcn.h>
+  #endif
 #endif
 
 #if defined(OSX)
@@ -370,6 +373,7 @@ typedef ISciterAPI* (SCAPI *SciterAPI_ptr)();
 
 #elif defined(ANDROID)
 
+#if 1
     EXTERN_C ISciterAPI *SciterAPI();
 
     inline ISciterAPI* _SAPI( ISciterAPI* ext )
@@ -386,6 +390,32 @@ typedef ISciterAPI* (SCAPI *SciterAPI_ptr)();
         //}
         return _api;
     }
+
+#else
+    inline ISciterAPI *_SAPI(ISciterAPI *ext) {
+      static ISciterAPI *_api = NULL;
+      if (ext) _api = ext;
+      if (!_api) {
+        void *lib_sciter_handle = NULL;
+        // 1. try to load from the same folder as this executable
+        lib_sciter_handle = dlopen(SCITER_DLL_NAME, RTLD_LOCAL | RTLD_LAZY);
+        if (!lib_sciter_handle) {
+          fprintf(stderr, "[%s] Unable to load library: %s\n", dlerror(), SCITER_DLL_NAME);
+        }
+
+        SciterAPI_ptr sapi = (SciterAPI_ptr)dlsym(lib_sciter_handle, "SciterAPI");
+        if (!sapi) {
+          fprintf(stderr, "[%s] Unable to get symbol: %s\n", __FILE__, dlerror());
+          exit(EXIT_FAILURE);
+        }
+        _api = sapi();
+        tiscript::ni(_api->TIScriptAPI());
+      }
+      assert(_api);
+      return _api;
+}
+
+#endif
 
 #elif defined(LINUX)
 

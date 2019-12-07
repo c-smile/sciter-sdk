@@ -1,6 +1,6 @@
 
 
-class EditableImage: Behavior {
+class EditableImage: Element {
 
   function attached() { 
     this.refresh();

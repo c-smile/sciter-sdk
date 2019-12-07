@@ -193,20 +193,11 @@ uint get_unicode_char(struct android_app *app, int eventType, uint keyCode, int 
   jclass class_key_event = jniEnv->FindClass("android/view/KeyEvent");
   uint   unicodeKey;
 
-  if (metaState == 0) {
-    jmethodID method_get_unicode_char = jniEnv->GetMethodID(class_key_event, "getUnicodeChar", "()I");
-    jmethodID eventConstructor = jniEnv->GetMethodID(class_key_event, "<init>", "(II)V");
-    jobject eventObj = jniEnv->NewObject(class_key_event, eventConstructor, eventType, keyCode);
-    unicodeKey = (uint)jniEnv->CallIntMethod(eventObj, method_get_unicode_char);
-  } else {
-    jmethodID method_get_unicode_char =
-        jniEnv->GetMethodID(class_key_event, "getUnicodeChar", "(I)I");
-    jmethodID eventConstructor =
-        jniEnv->GetMethodID(class_key_event, "<init>", "(II)V");
-    jobject eventObj = jniEnv->NewObject(class_key_event, eventConstructor, eventType, keyCode);
-
-    unicodeKey = (uint)jniEnv->CallIntMethod(eventObj, method_get_unicode_char, metaState);
-  }
+  jmethodID method_get_unicode_char = jniEnv->GetMethodID(class_key_event, "getUnicodeChar", "(I)I");
+  jmethodID eventConstructor = jniEnv->GetMethodID(class_key_event, "<init>", "(II)V");
+  jobject eventObj = jniEnv->NewObject(class_key_event, eventConstructor, eventType, keyCode);
+  unicodeKey = (uint)jniEnv->CallIntMethod(eventObj, method_get_unicode_char, metaState);
+  
   javaVM->DetachCurrentThread();
   return unicodeKey;
 }
@@ -267,6 +258,14 @@ int32_t engine_handle_input(struct android_app *app, AInputEvent *event) {
         int key_code = AKeyEvent_getKeyCode(event);
         return SciterProcX(engine, SCITER_X_MSG_KEY(KEY_UP, key_code, mods(event)));
       }
+      else if (action == AKEY_EVENT_ACTION_MULTIPLE) {
+        uint key_code = AKeyEvent_getKeyCode(event);
+        uint uc = get_unicode_char(app, AKEY_EVENT_ACTION_MULTIPLE, key_code, AKeyEvent_getMetaState(event));
+        if (!SciterProcX(engine, SCITER_X_MSG_KEY(KEY_CHAR, uc, mods(event))))
+          return TRUE;
+      }
+      
+
       break;
     }
   }
@@ -387,6 +386,7 @@ UINT engine_attach_behavior(LPSCN_ATTACH_BEHAVIOR lpab) {
 }
 
 void android_show_keyboard(struct android_app *app, bool pShow) {
+#if 1
   // Attaches the current thread to the JVM.
   jint lResult;
   jint lFlags = 0;
@@ -441,6 +441,12 @@ void android_show_keyboard(struct android_app *app, bool pShow) {
 
   // Finished with the JVM.
   lJavaVM->DetachCurrentThread();
+#else
+  if(pShow)
+    ANativeActivity_showSoftInput(app->activity, ANATIVEACTIVITY_SHOW_SOFT_INPUT_FORCED);
+  else 
+    ANativeActivity_hideSoftInput(app->activity, ANATIVEACTIVITY_HIDE_SOFT_INPUT_NOT_ALWAYS);
+#endif
 }
 
 UINT engine_keyboard_request(LPSCN_KEYBOARD_REQUEST pnm) {

@@ -118,18 +118,14 @@ int main(int argc, char *argv[])
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
-        // SCITER 
-        {
-          // render Sciter using current OpenGL context
-          SciterProcX(window, SCITER_X_MSG_PAINT());
-        }
-        // SCITER
+        // SCITER - render Sciter using current OpenGL context
+        SciterProcX(window, SCITER_X_MSG_PAINT());
 
         glfwSwapBuffers(window);
       }
 
+      //glfwWaitEventsTimeout(0.016); // 60 FPS
       glfwPollEvents();
-      
     }
 
     SciterProcX(window, SCITER_X_MSG_DESTROY());
@@ -247,6 +243,7 @@ UINT attach_behavior(LPSCN_ATTACH_BEHAVIOR lpab) {
 
 UINT on_invalidate_rect(LPSCN_INVALIDATE_RECT pnm) {
   sciter_needs_drawing = true;
+  //glfwPostEmptyEvent();
   return 0;
 }
 
