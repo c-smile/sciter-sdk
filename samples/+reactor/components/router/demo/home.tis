@@ -1,0 +1,24 @@
+
+class Home : Reactor.Component 
+{
+  function this(props,kids) {}
+
+  function render() {
+     return <section #home> 
+       <h1>Home</h1>
+       <button #test>Test</button>
+     </section>;
+  }
+
+  event click $(button#test) {
+    view.msgbox(#information,"test button @ Home");  
+  }
+
+  function attached() {
+    stdout.println("@ Home");
+  }
+  function detached() {
+    stdout.println("Home gone");
+  }
+
+}

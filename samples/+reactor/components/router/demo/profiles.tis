@@ -1,0 +1,25 @@
+
+
+class Profiles : Reactor.Component 
+{
+  function this(props,kids) {}
+  function render() 
+  {
+     return 
+       <section #profiles> 
+         <h1>Profiles</h1>
+         <button #test>Test me</button>
+       </section>;
+  }  
+
+  event click $(button#test) {
+    view.msgbox(#information,"test button @ Profiles");  
+  }
+
+  function attached() {
+    stdout.println("@ Profiles");
+  }
+  function detached() {
+    stdout.println("Profiles gone");
+  }
+}

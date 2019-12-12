@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+          main { size:*; }
+
+          div.toolbar { flow:horizontal; border-spacing: 0.5em; }
+
+        </style>
+        <script type="text/tiscript">
+
+          include "../router.tis";
+
+          include "home.tis";
+          include "profiles.tis";
+          
+          App.route( "/home", (path) => <Home/> );
+          App.route( "/profiles", (path) => <Profiles/> );
+
+        </script>
+    </head>
+    <reactor(body)>
+      <div.toolbar>
+        <a href="/home">Home</a>
+        <a href="/profiles">Profiles</a>
+      </div>
+      <App.Content />
+    </reactor>
+</html>

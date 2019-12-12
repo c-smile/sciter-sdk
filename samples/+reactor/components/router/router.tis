@@ -1,0 +1,46 @@
+include "sciter:reactor.tis";
+
+namespace App {
+  var routes = [];  // global variable 
+  var currentRoute = null; // current route
+  var content = null; // content host element - instance of class Content below - <main> element
+
+  function navigate(toRoute) {
+    var nextRoute = routes[0]; 
+    for( var route in routes ) {
+      if(toRoute like route.path) {
+        nextRoute = route;
+        break;
+      }
+    }
+    if(currentRoute !== nextRoute) {
+      currentRoute = nextRoute;
+      content.update();
+    }
+  }
+
+  function route( path, factory ) {
+    routes.push {
+      path:path,
+      factory: factory
+    }
+  }
+
+  // <main> - content area where routed content appears
+  class Content : Reactor.Component {
+
+    function this(props,kids) { App.content = this; }
+
+    function render() {
+      var route = App.currentRoute || App.routes[0];
+      return <main>{route.factory(route.path)}</main>;
+    }
+  }
+}
+
+// hyperlink handler
+event ~click $([href]) (evt,hlink) {
+  var path = hlink.attributes["href"];
+  App.navigate(path);
+  return true;
+}
