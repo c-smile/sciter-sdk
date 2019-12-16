@@ -223,14 +223,13 @@ LRESULT CALLBACK window::wnd_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
       ks |= KEYBOARD_STATES::ALT_KEY_PRESSED;
 
     KEY_EVENTS evt;
+    unsigned code;
     switch (message)
     {
-    case WM_KEYDOWN: evt = KEY_EVENTS::KEY_DOWN; break;
-    case WM_KEYUP: evt = KEY_EVENTS::KEY_UP; break;
-    case WM_CHAR: evt = KEY_EVENTS::KEY_CHAR; break;
+    case WM_KEYDOWN: evt = KEY_EVENTS::KEY_DOWN; code = translate_key(wParam);  break;
+    case WM_KEYUP: evt = KEY_EVENTS::KEY_UP; code = translate_key(wParam);  break;
+    case WM_CHAR: evt = KEY_EVENTS::KEY_CHAR; code = wParam;  break;
     }
-
-    unsigned code = translate_key(wParam);
     auto ok = SciterProcX(self, SCITER_X_MSG_KEY(evt, code, KEYBOARD_STATES(ks)));
     if (!ok)
       ok = 0;
