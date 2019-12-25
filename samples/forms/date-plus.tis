@@ -1,0 +1,121 @@
+
+
+class DateRange : Element 
+{
+  this var start = new Date();
+  this var end = new Date();
+  this var pstart = new Date();
+  this var pend = new Date();
+  this var showTime = false;
+  this var invalid = true;
+
+  function attached() {
+    this.showTime = this.attributes.exists("time");
+    this.content(
+      this.vcaption(),
+      <b class="popup" />,
+      this.vpopup());
+    this.state.invalid = true;
+  }
+
+  function vcaption() {
+    var fmt = this.showTime 
+      ? function(dt) { return dt.toLocaleString(#date) + " " + dt.toLocaleString(#time); }
+      : function(dt) { return dt.toLocaleString(#date); };
+
+    return <caption>
+      <span.start.date>{fmt(this.start)}</span>
+      <span.to>&#x22EF;</span>
+      <span.end.date>{fmt(this.end)}</span>
+    </caption>;
+  }
+
+  function vpopup() 
+  {
+    var andTime = this.showTime;
+    const timeStart = () => andTime ? <input|time :value={this.pstart}/> : [];
+    const timeEnd = () => andTime ? <input|time :value={this.pend}/> : []; 
+    return <popup>
+      <div.start><widget|calendar :value={this.pstart}/>{ timeStart() } </div>
+      <div.end><widget|calendar :value={this.pend}/>{ timeEnd() }</div>
+      <footer><button.apply>Apply</button><button.cancel>Cancel</button></footer>
+    </popup>;
+  }
+
+
+  function highlightRange() {
+
+    // convert it to local time
+    var start = new Date(this.pstart.valueOf() + Date.timeZoneOffset());
+    var end = new Date(this.pend.valueOf() + Date.timeZoneOffset());
+
+    for(var td in $$(popup div.start td.day)) {
+      var date = new Date(td.attributes["value"]);
+      td.state.checked = Date.diff(start,date,#days) >= 0 && Date.diff(date,end,#days) >= 0;
+    }
+    for(var td in $$(popup div.end td.day)) {
+      var date = new Date(td.attributes["value"]);
+      td.state.checked = Date.diff(start,date,#days) >= 0 && Date.diff(date,end,#days) >= 0;
+    }
+  }
+
+  function updateCaption() {
+    this.$(caption).merge(this.vcaption());
+  }
+
+  property value(v) {
+    get return [this.start, this.end];
+    set {
+      this.start = v[0];
+      this.end = v[1];
+      this.post(updateCaption);
+    }
+  }
+
+  event click $(b.popup, caption) {
+    if( !this.state.ownspopup ) {
+      this.pstart = this.start;
+      this.pend = this.end;
+      var popup = this.$(popup);
+      popup.merge(this.vpopup());
+      this.highlightRange();
+      this.popup(popup);
+    }
+  }
+
+
+  event change $(popup > div.start > widget, popup > div.start > input) {
+    var date = this.$(div.start widget).value;
+    if(this.showTime) { 
+      var time = this.$(div.start input).value;
+      date = Date.local(date.year,date.month,date.day,time.hour,time.minute,time.second);
+    }
+    this.pstart = date; 
+    this.highlightRange();
+  }
+  event change $(popup > div.end > widget, popup > div.end > input) {
+    var date = this.$(div.end widget).value;
+    if(this.showTime) { 
+      var time = this.$(div.end input).value;
+      date = Date.local(date.year,date.month,date.day,time.hour,time.minute,time.second);
+    }
+    this.pend = date; 
+    this.highlightRange();
+  }
+
+  event click $(popup .apply) (evt,button) {
+    this.start = this.pstart;
+    this.end = this.pend;
+    this.state.invalid = Date.diff(this.start,this.end,#seconds) <= 0;
+    this.post(updateCaption);
+    this.postEvent("change");
+    button.closePopup();
+    return true;
+  }
+
+  event click $(popup .cancel) (evt,button) {
+    button.closePopup();
+    return true;
+  }
+
+}

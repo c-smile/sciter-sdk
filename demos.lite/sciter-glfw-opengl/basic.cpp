@@ -97,6 +97,7 @@ int main(int argc, char *argv[])
 
       sciter::archive::instance().open(aux::elements_of(resources)); // bind resources[] (defined in "facade-resources.cpp") with the archive
       SciterLoadFile(window, WSTR("this://app/main.htm"));
+
     // SCITER-
 
     // NOTE: OpenGL error checks have been omitted for brevity

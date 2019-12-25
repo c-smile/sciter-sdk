@@ -108,7 +108,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>SCITER;SK_DEBUG;WIN32;DEBUG;_DEBUG;_CRT_SECURE_NO_WARNINGS;WINDOWLESS;_GLFW_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\engine\win;..\include;..\demos.lite\sciter-glfw-opengl;..\demos.lite\glfw\include;..\demos.lite\glfw\deps;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..;..\..\engine;..\..\engine\tool;..\..\engine\gool;..\..\engine\html;..\..\engine\external\uv\include;..\..\engine\external\uv-tls\include;..\..\engine\external\zlib;..\include;..\demos.lite\sciter-glfw-opengl;..\demos.lite\glfw\include;..\demos.lite\glfw\deps;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -134,7 +134,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>SCITER;SK_DEBUG;WIN32;WIN64;DEBUG;_DEBUG;_CRT_SECURE_NO_WARNINGS;WINDOWLESS;_GLFW_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\engine\win;..\include;..\demos.lite\sciter-glfw-opengl;..\demos.lite\glfw\include;..\demos.lite\glfw\deps;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..;..\..\engine;..\..\engine\tool;..\..\engine\gool;..\..\engine\html;..\..\engine\external\uv\include;..\..\engine\external\uv-tls\include;..\..\engine\external\zlib;..\include;..\demos.lite\sciter-glfw-opengl;..\demos.lite\glfw\include;..\demos.lite\glfw\deps;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -160,7 +160,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>SCITER;SK_RELEASE;WIN32;NDEBUG;_CRT_SECURE_NO_WARNINGS;WINDOWLESS;_GLFW_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\engine\win;..\include;..\demos.lite\sciter-glfw-opengl;..\demos.lite\glfw\include;..\demos.lite\glfw\deps;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..;..\..\engine;..\..\engine\tool;..\..\engine\gool;..\..\engine\html;..\..\engine\external\uv\include;..\..\engine\external\uv-tls\include;..\..\engine\external\zlib;..\include;..\demos.lite\sciter-glfw-opengl;..\demos.lite\glfw\include;..\demos.lite\glfw\deps;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>MinSpace</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -191,7 +191,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>SCITER;SK_RELEASE;WIN32;WIN64;NDEBUG;_CRT_SECURE_NO_WARNINGS;WINDOWLESS;_GLFW_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\engine\win;..\include;..\demos.lite\sciter-glfw-opengl;..\demos.lite\glfw\include;..\demos.lite\glfw\deps;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..;..\..\engine;..\..\engine\tool;..\..\engine\gool;..\..\engine\html;..\..\engine\external\uv\include;..\..\engine\external\uv-tls\include;..\..\engine\external\zlib;..\include;..\demos.lite\sciter-glfw-opengl;..\demos.lite\glfw\include;..\demos.lite\glfw\deps;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>MinSpace</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>

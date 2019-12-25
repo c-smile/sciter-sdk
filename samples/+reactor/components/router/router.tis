@@ -3,9 +3,10 @@ include "sciter:reactor.tis";
 namespace App {
   var routes = [];  // global variable 
   var currentRoute = null; // current route
-  var content = null; // content host element - instance of class Content below - <main> element
+  var params = null; // params of current route - accessible as App.params in .render() functions
+  var main = null; // <main> host element - instance of class Main below - 
 
-  function navigate(toRoute) {
+  function navigate(toRoute, routeParams = null) {
     var nextRoute = routes[0]; 
     for( var route in routes ) {
       if(toRoute like route.path) {
@@ -13,10 +14,13 @@ namespace App {
         break;
       }
     }
+    params = routeParams;    
     if(currentRoute !== nextRoute) {
       currentRoute = nextRoute;
-      content.update();
+      main.content(main.render()); // note: we are not using reconcilliation here as we need full reload
     }
+    else 
+      main.update();
   }
 
   function route( path, factory ) {
@@ -27,9 +31,9 @@ namespace App {
   }
 
   // <main> - content area where routed content appears
-  class Content : Reactor.Component {
+  class Main : Reactor.Component {
 
-    function this(props,kids) { App.content = this; }
+    function this(props,kids) { App.main = this; }
 
     function render() {
       var route = App.currentRoute || App.routes[0];

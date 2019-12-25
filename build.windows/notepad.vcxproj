@@ -63,7 +63,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>SCITER;SK_DEBUG;WIN32;DEBUG;_DEBUG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\engine\win;..\include;..\notepad\windows;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..;..\..\engine;..\..\engine\tool;..\..\engine\gool;..\..\engine\html;..\..\engine\external\uv\include;..\..\engine\external\uv-tls\include;..\..\engine\external\zlib;..\include;..\notepad\windows;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -73,7 +73,7 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>SCITER;SK_DEBUG;WIN32;DEBUG;_DEBUG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\engine\win;..\include;..\notepad\windows;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..;..\..\engine;..\..\engine\tool;..\..\engine\gool;..\..\engine\html;..\..\engine\external\uv\include;..\..\engine\external\uv-tls\include;..\..\engine\external\zlib;..\include;..\notepad\windows;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -92,7 +92,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>SCITER;SK_RELEASE;WIN32;NDEBUG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\engine\win;..\include;..\notepad\windows;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..;..\..\engine;..\..\engine\tool;..\..\engine\gool;..\..\engine\html;..\..\engine\external\uv\include;..\..\engine\external\uv-tls\include;..\..\engine\external\zlib;..\include;..\notepad\windows;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>MinSpace</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -105,7 +105,7 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>SCITER;SK_RELEASE;WIN32;NDEBUG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\engine\win;..\include;..\notepad\windows;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..;..\..\engine;..\..\engine\tool;..\..\engine\gool;..\..\engine\html;..\..\engine\external\uv\include;..\..\engine\external\uv-tls\include;..\..\engine\external\zlib;..\include;..\notepad\windows;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

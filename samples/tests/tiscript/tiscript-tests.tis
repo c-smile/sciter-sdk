@@ -238,10 +238,12 @@ function Array_test()
   const sx3 = [5,6,7];
   const sx4 = [0, ..sx1, 4, ..sx3];
   assert sx4 == [0,1,2,3,4,5,6,7];
-
   const sx5 = [...genNumbers(5)];
   assert sx5 == [0,1,2,3,4]; 
 
+  const sx0 = [];
+  const sx6 = [...sx0];
+  assert sx6 == [] : "spread of empty array"; 
 
   // addons:
 
