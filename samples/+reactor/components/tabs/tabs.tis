@@ -11,6 +11,10 @@ class Tabs : Reactor.Component {
     this.atts = atts || {};
     this.data = { currentTab: kids[0][0].name || kids[0][0].label };
   }
+
+  function attached() { 
+    this.state.focusable = true; 
+  }
   
   function render() {
 
@@ -36,17 +40,19 @@ class Tabs : Reactor.Component {
     return <tabs><stripe>{labels}</stripe><div>{tabContent}</div></tabs>;
   }
 
-  event click $(stripe>label:not(.selected)) (evt,label) { return this.activateTab(label); }
+  event click $(stripe>label:not(:current)) (evt,label) { return this.activateTab(label); }
 
   event keydown (evt) 
   { 
 
-    var currentLabel = this.$(>stripe>label.selected);
+    var currentLabel = this.$(>stripe>label:current);
 
     switch( evt.keyCode )
     {
       case Event.VK_TAB: 
-        if( evt.ctrlKey ) return this.activateTab( evt.shiftKey? currentLabel.prior : currentLabel.next ); return true;
+        if( evt.ctrlKey ) 
+           return this.activateTab( evt.shiftKey? (currentLabel.prior || currentLabel.parent.last) 
+                                                : (currentLabel.next || currentLabel.parent.first)); return true;
       /*case Event.VK_LEFT: return this.activateTab( currentLabel.prior );
       case Event.VK_RIGHT: return this.activateTab( currentLabel.next );
       case Event.VK_HOME: return this.activateTab( currentLabel.parent.first );
