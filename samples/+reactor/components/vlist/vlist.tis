@@ -43,6 +43,11 @@ class VList : Reactor.Component
     };
   }
 
+  function update(data = null) {
+    super.update(data);
+    this.post(this.resetPaddings);
+  }
+
   function onSize() {
     this.visibleItems = this.box(#height,#client) / this.itemHeight;
     this.swLength = Integer.max(this.swLength,this.visibleItems + 1);

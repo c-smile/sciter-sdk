@@ -1,0 +1,156 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+main { size:*; }
+
+table { border:2dip solid #ccc; background:#fff; size:*; border-spacing:0; }
+table > thead > tr > th { width:*; } // columns widhts
+
+table > tbody > tr { line-height:1.8em; }
+//table > tbody > tr.node { background:#eee; }
+table > tbody > tr:current { background:highlight; color: highlighttext; }
+
+table > tbody > tr > td > caption { padding-left:1em; }
+
+// expanded / collpased state:
+table > tbody > tr.node > td > caption { 
+  behavior: clickable;
+  background-image:url(stock:arrow-right); 
+  background-repeat:no-repeat;
+  background-size: 0.4em 0.6em;
+  background-position:0.3em 50%;
+}
+table > tbody > tr.node:expanded > td > caption { 
+  background-image:url(stock:arrow-down); 
+  background-size:0.6em 0.4em;
+  background-position:0.2em 50%;
+}
+
+// nested levels
+
+caption[level="0"] { margin-left:0; }
+caption[level="1"] { margin-left:1em; }
+caption[level="2"] { margin-left:2em; }
+caption[level="3"] { margin-left:3em; }
+caption[level="4"] { margin-left:4em; }
+
+        </style>
+        <script type="text/tiscript">
+
+include "vlist.tis";
+
+// Generate tree structure
+function treeGenerator() {
+  var out = [];
+  for(var g in 5) 
+  {
+    const key = g.toString();
+    var group = { 
+      key:key,
+      expanded:true,
+      level: 0,
+      name: String.$(item {key}),
+      field1: String.$({key}.1),
+      field2: String.$({key}.2),
+      items: []
+    };
+    out.push(group);
+    for(var n in 3) {
+      const key = group.key + "." + n.toString();
+      var subgroup = 
+      { 
+        key:key,
+        level: 1,
+        name: String.$(item {key}),
+        expanded:true,
+        field1: String.$({key}.1),
+        field2: String.$({key}.2),
+        items: []
+      };
+      group.items.push(subgroup); 
+      for(var sn in 4) {
+        const key = subgroup.key + "." + sn.toString();
+        subgroup.items.push
+        { 
+          key:key,
+          level: 2,
+          name: String.$(item {key}),
+          field1: String.$({key}.1),
+          field2: String.$({key}.2)
+        };        
+      }
+    }
+  }
+  return out;
+}
+
+var tree = treeGenerator();
+debug log: tree;
+
+
+// list flattener - produces flat list from tree structure - only expanded/visible items
+
+function flatList(items) {
+  var out = [];
+  function scanItems(items)  {
+    for(var item in items) {
+      out.push(item);
+      if( item.expanded && item.items && item.items.length )
+        scanItems(item.items);
+    }
+  }
+  scanItems(items);
+  return out;
+}
+
+function recordView(record,index) { // function generating single row
+  const isCurrent = this.currentRecord===record;
+  return
+    <tr key={record.key} 
+          class={record.items ? "node" : "leaf"} 
+          :current={isCurrent} 
+          :expanded={record.expanded} >
+      <td><caption level={record.level}>cell {record.name}</caption></td>
+      <td>cell {record.field1}</td>
+      <td>cell {record.field2}</td>
+    </tr>;
+}
+
+var vtable;
+
+function recordsetView() {
+  return 
+  <VTable recordset={flatList(tree)} @{vtable}>
+    <columns>
+      <th>Name</th>
+      <th>First</th>
+      <th>Second</th>
+    </columns>
+    { recordView }
+  </VTable>;
+}
+
+// mount
+$(main).content(recordsetView());
+
+event click $(tr.node > td > caption) {
+  const key = this.$p(tr).attributes["key"];
+  var group = vtable.recordset.find( :g: g.key == key );
+  assert group;
+  group.expanded = !group.expanded;
+  // request to update with new flatList representation
+  var list = flatList(tree);
+  vtable.recordset = list;
+}
+
+        </script>
+    </head>
+    <body>
+      <p>Demo of simple virtual list component &lt;VList>.</p>
+      <p>The caller shall supply record view producer function.</p>
+      <p>The list supports multiselection (CTRL+CLICK).</p>
+      <main></main>
+    </body>
+</html>
