@@ -37,16 +37,36 @@ button#test { background-size:13dip 13dip; }
 </style>
 
 <script type="text/tiscript">
-  $(#zoom).on("change",function() {
+
+  var zoom = 100;
+
+  function setZoom(z) {
+    if( z <= 50 ) z = 50;
+    else if( z >= 200 ) z = 200;
+    $(#zoom).value = zoom = z;    
     const wrapper = $(div.wrapper);
-    wrapper.style["zoom"] = pr(this.value);
-  });
+    wrapper.style["zoom"] = pr(z);
+    wrapper.update();
+  }
+
+  event change $(#zoom) {
+    setZoom(this.value);
+  }
+
+  event ~mousewheel (evt) { // mousewheel in sinking phase - before any children of the document
+    if(evt.shortcutKey) {
+      setZoom( zoom + evt.wheelDelta * 10);
+      return true; // consume the event
+    }
+  }
+
+
 </script>
 
 </head>
 <body>
 
-  Zoom: <input|hslider #zoom min=25 max=200 value=100 step=25 buddy="zoomv" /> <span #zoomv></span>%
+  Zoom: <input|hslider #zoom min=50 max=200 value=100 step=10 buddy="zoomv" /> <span #zoomv></span>%
 
   <div class="wrapper">
     <div class="page a5">A5
