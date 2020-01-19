@@ -44,7 +44,7 @@ include "vlist.tis";
 // Generate tree structure
 function treeGenerator() {
   var out = [];
-  for(var g in 5) 
+  for(var g in 500) 
   {
     const key = g.toString();
     var group = { 
@@ -87,7 +87,6 @@ function treeGenerator() {
 }
 
 var tree = treeGenerator();
-debug log: tree;
 
 
 // list flattener - produces flat list from tree structure - only expanded/visible items
@@ -143,6 +142,10 @@ event click $(tr.node > td > caption) {
   // request to update with new flatList representation
   var list = flatList(tree);
   vtable.recordset = list;
+}
+
+function self.ready() {
+  vtable.$(tbody).state.focus = true;
 }
 
         </script>
