@@ -37,7 +37,6 @@ function dialog(params)
       var cls = button_def.class ? ("." + button_def.class) : "";
       buttons_html += String.printf("<button%s>%s</button>", cls, button_def.caption || "");
   }
-
   
   var html = 
     "<div.dialog-frame>"
@@ -81,23 +80,17 @@ function dialog(params)
   }
   
   // setup control event handler
-  dlg.onControlEvent = function(evt)
+  dlg << event click $(text.buttons > button) (evt, button)
   {
-    if( evt.type != Event.BUTTON_CLICK || !evt.target.$is(div.dialog-frame > text.buttons > button))
-      return;
     //evt.target is a button on text.buttons bar
-    var button_val = buttons[evt.target.index].value;
+    var button_val = buttons[button.index].value;
     handleValue(button_val);
     return true;
-  }
+  };
   // setup keyboard event handler
-  dlg.onKey = function(evt)
+  dlg << event keydown (evt)
   {
-    if( evt.type != Event.KEY_DOWN)
-      return;
-    
     var cmd;
-    
     if( evt.keyCode == Event.VK_ESCAPE )
       cmd = #cancel;
     else if( evt.keyCode == Event.VK_RETURN )
@@ -113,7 +106,7 @@ function dialog(params)
         return true;
       }  
     }
-  }
+  };
   
   if( params.initial )
     body.value = params.initial;
@@ -125,6 +118,8 @@ function dialog(params)
   //view.update(); 
   var docBody = $(body);
   docBody.attributes.addClass("dialog-shown");
+
+  dlg.post( :: dlg.attributes.addClass("shown") );
 
   var sfocus = view.focus;
   view.eventsRoot = dlg;

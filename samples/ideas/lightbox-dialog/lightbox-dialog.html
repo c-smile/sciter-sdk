@@ -33,7 +33,7 @@
 
     include "lightbox-dialog.tis";
 
-    $(#button1).onClick = function() 
+    event click $(#button1)
     {
       $(#result1).value = "waiting...";
 
@@ -43,7 +43,7 @@
       $(#result1).value = String.printf("result = %v", res);
     }
 
-    $(#button2).onClick = function() 
+    event click $(#button2)
     {
       $(#result2).value = "waiting...";
 
@@ -54,7 +54,7 @@
       $(#result2).value = String.printf("result = %v", res);
     }
 
-    $(#button3).onClick = function() 
+    event click $(#button3)
     {
       $(#result3).value = "waiting...";
 
@@ -73,7 +73,7 @@
       $(#result3).value = String.printf("result = %v", res);
     }
 
-    $(#button4).onClick = function() 
+    event click $(#button4)
     {
       $(#result4).value = "waiting...";
       
@@ -118,17 +118,18 @@
   </form>
   
 </head>
-<body>
-<h1>lightbox dialog demo</h1>
-<p>Input: <input type="text" value="text"></p>
-<p><input type="button" #button1 value="Open Simple Dialog and Wait Until Closed"> <span id="result1"></span></p>
-<p><input type="button" #button2 value="Open Data Dialog and Wait Until Closed"> <span id="result2"></span></p>
-<p><input type="button" #button3 value="Gather Data with Initialization"> <span id="result3"></span></p>
-<p><input type="button" #button4 value="Gather Data and Apply"> <span id="result4"></span></p>
 
-<div style="background:gold; size:100dip;">
-  test
-</div>
+<body>
+  <h1>lightbox dialog demo</h1>
+  <p>Input: <input type="text" value="text"></p>
+  <p><input type="button" #button1 value="Open Simple Dialog and Wait Until Closed"> <span id="result1"></span></p>
+  <p><input type="button" #button2 value="Open Data Dialog and Wait Until Closed"> <span id="result2"></span></p>
+  <p><input type="button" #button3 value="Gather Data with Initialization"> <span id="result3"></span></p>
+  <p><input type="button" #button4 value="Gather Data and Apply"> <span id="result4"></span></p>
+
+  <div style="background:gold; size:100dip;">
+    test
+  </div>
 
 </body>
 </html>

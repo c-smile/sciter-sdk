@@ -1,8 +1,11 @@
 
+@const DIALOG-SHOW-DURATION: 400ms;
+@const DIALOG-SHOW-EASING: quad-in;
+
 body.dialog-shown {
   filter: blur(25dip);
   foreground-color:rgba(0,0,0,0.1);
-  transition: foreground-color(linear,400ms);
+  transition: foreground-color(@DIALOG-SHOW-EASING,@DIALOG-SHOW-DURATION);
 }
 
 /* dialog "window" frame */
@@ -26,6 +29,13 @@ div.dialog-frame
   //border-radius: 0 0 10dip 10dip; /* square top / round bottom */
   cursor:default;
   padding:10px;
+
+  opacity:0.01;
+}
+
+div.dialog-frame.shown {
+  opacity:1.0;
+  transition: opacity(@DIALOG-SHOW-EASING,@DIALOG-SHOW-DURATION);
 }
 
 /* dialog "window" caption */
