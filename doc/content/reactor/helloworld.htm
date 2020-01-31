@@ -1,0 +1,30 @@
+﻿<html><body> 
+	<h2>What Reactor is</h2>
+	
+	<p>The Reactor is just these three features:</p>
+	<ul><li>Native support of <a href="ssx.htm">SSX</a>&nbsp;by script compiler. SSX syntax and expressions are integral parts of Sciter's Script. SSX is conceptually very close to <a href="https://reactjs.org/docs/introducing-jsx.html">JSX</a> in Web Frontend domain.</li>
+		<li>Native implementation of real DOM / virtual DOM reconciliation. <code>Element.merge(velement)</code> is all about this.</li>
+		<li>Optional <code>class Reactor.Component</code> implemented in <u>sciter:reactor.tis</u>. You can see its source <a href="lifecycle.htm#reactor-component">here</a>.</li>
+		
+		</ul>
+	<h2>What Reactor is not</h2>
+	<ul><li>Reactor is not a framework or a library.</li></ul><h2>Hello World</h2>
+	<p>The smallest Sciter's Reactor example:</p>
+	<pre>$(body).content( &lt;h1&gt;Hello, world!&lt;/h1&gt; );</pre>
+	<p>As you would expect, execution of this line will produce this DOM structure:</p>
+	
+	
+	
+	<pre>&lt;body&gt;
+  &lt;h1&gt;Hello, world!&lt;/h1&gt;
+&lt;/body&gt;</pre>
+	
+	<p>Script expression&nbsp;<code>&lt;h1&gt;Hello, world!&lt;/h1&gt;</code> here is a SSX literal.</p><p>Note: you do not need any external pre-compilers to run this code - <a href="ssx.htm">SSX</a>&nbsp;is an integral part of Sciter's Script starting Sciter version 4.4.0.0. Parsing and DOM updates and reconciliation is also implemented natively and does not require any additional libraries.</p>
+	<h2>If Reactor is just a set of features ...</h2>
+	<p>Then it means that you can use these features not just for <a href="https://reactjs.org/">ReactJS</a> alike cases.</p>
+	<p>SSX, for example, can be used in cases where you need to populate existing DOM. All places where you use <code>Element.create()</code> or <code> Element.append() </code> are good candidates for SSX literals usage.</p>
+	<p>And <code>Element.merge()</code> can not just update real DOM from virtual DOM definitions (SSX) but can be used for example when you need to compare or merge two real DOM trees.</p>
+	<h2>Sciter::Reactor and Facebook::ReactJS </h2>
+	<p>Sciter's Reactor uses roughly the same set of idioms and ideas as ReactJS. </p>
+	<p>But Facebook::ReactJS is a JavaScript library and Sciter::Reactor is a native implementation of just two things : <b>SSX</b> and <b>Element.merge()</b>. And that is all needed to achieve ReactJS almost all features&nbsp;in Sciter.</p>
+	<p></p></body></html>

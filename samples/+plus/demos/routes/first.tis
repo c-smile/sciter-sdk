@@ -9,4 +9,15 @@ class FirstController: Element {
     view.msgbox(#information, "Click handled by FirstController");
   };
 
+  event paramchange {
+    this.msg = this.$(#msg);
+    this.msg.text = "FirstController paramchange event: " + Plus.app.param;
+  }
+
+  event reset {
+    this.msg = this.$(#msg);
+    this.msg.text = "FirstController reset event!";
+  }
+
+
 }

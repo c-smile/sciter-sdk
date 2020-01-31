@@ -5,13 +5,14 @@ class VList : Reactor.Component
 {
   const styleset = ["vlist", $url(vlist.css)];
 
-  this var data = []; // recordset
-  this var recordview = null;
-  this var swIndex = 0;
-  this var swLength = 40;
+  this var data = [];        // recordset
+  this var recordview = null;// function producing record markup (a.k.a. record view)
+  this var swIndex = 0;      // scrolling window (buffer) position
+  this var swLength = 40;    // scrolling window (buffer) length
   this var itemHeight = 10;  // will be recalculated later
   this var visibleItems = 1; // will be recalculated later
   this var currentRecord = null; // current record
+  this var anchorRecord = null;  // anchor record ()
   this var selectedRecords = {};
 
   function this(atts,kids) {
@@ -62,7 +63,12 @@ class VList : Reactor.Component
     if( evt.type != Event.SCROLL_POS ) 
       return;
 
-    var rPos = evt.scrollPos / this.itemHeight;  // recordPos
+    this.onScrollChange(evt.scrollPos); 
+  }
+
+  function onScrollChange(scrollPos) 
+  {
+    var rPos = scrollPos / this.itemHeight;  // recordPos
     var mPos = this.data.length - 1 - this.visibleItems; // max recordPos
     if( rPos > mPos ) rPos = mPos;
     if( rPos < 0 ) rPos = 0;
@@ -86,6 +92,7 @@ class VList : Reactor.Component
     Element.update.call(this); // use original Element.update method.
   }
 
+
   function resetPaddings() {
     // set paddings so scrollbar will reflect the reality 
     this.style[#padding-top] = px(this.swIndex * this.itemHeight);
@@ -97,20 +104,65 @@ class VList : Reactor.Component
   }
 
   event mousedown $(li,tr) (evt,li) {
-    if(var cc = this.$(>*:current))
-      cc.state.current = false;
     this.currentRecord = this.data[li.index + this.swIndex];
-    li.state.current = true;
-    if( this.multiselect && evt.ctrlKey ) {
-      if(li.state.checked) {
-        delete this.selectedRecords[this.currentRecord];
-        li.state.checked = false;
-      } else {
-        this.selectedRecords[this.currentRecord] = true;
-        li.state.checked = true;
+    if( this.multiselect ) {
+      if(evt.ctrlKey) {
+        if(li.state.checked) {
+          delete this.selectedRecords[this.currentRecord];
+        } else {
+          this.selectedRecords[this.currentRecord] = true;
+        }
       }
     }
+    this.update();
   }
+
+  function scrollToRecord(recordNo) {
+    var y1 = this.scroll(#top);
+    var y2 = y1 + this.scroll(#height);
+
+    var ry1 = recordNo * this.itemHeight;
+    var ry2 = ry1 + this.itemHeight - 1;
+
+    var scrollPos;
+
+    if( ry1 < y1 ) scrollPos = ry1;
+    else if( ry2 > y2 ) scrollPos = ry2 - (y2 - y1) + 1;
+    else return true;
+
+    this.scrollTo(0,scrollPos,true);
+    this.onScrollChange(scrollPos);
+
+    return false;
+  }
+
+  function setCurrent(recordNo,evt) {
+    if( recordNo < 0 ) recordNo = 0;
+    if( recordNo >= this.data.length ) recordNo = this.data.length - 1;
+    //if(var cc = this.$(>*:current))
+    //  cc.state.current = false;
+    var cr = this.data[recordNo];
+    this.currentRecord = this.data[recordNo];
+    this.scrollToRecord(recordNo);
+    this.update();
+  }
+
+  event keydown (evt) {
+
+    const currentIndex = () => this.data.indexOf(this.currentRecord);
+
+    switch(evt.keyCode)
+    {
+      case Event.VK_HOME:  this.setCurrent(0,evt); return true;
+      case Event.VK_END:   this.setCurrent(this.data.length - 1,evt); return true;
+      case Event.VK_UP:    this.setCurrent(currentIndex() - 1,evt); return true;
+      case Event.VK_DOWN:  this.setCurrent(currentIndex() + 1,evt); return true;
+      case Event.VK_PRIOR: this.setCurrent(currentIndex() - this.visibleItems,evt); return true;
+      case Event.VK_NEXT:  this.setCurrent(currentIndex() + this.visibleItems,evt); return true;
+    }
+  }
+
+
 }
 
 // class component

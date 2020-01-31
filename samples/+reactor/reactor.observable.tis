@@ -1,0 +1,92 @@
+include "sciter:reactor.tis";
+
+function @observable(ns) {
+
+  assert typeof ns == #namespace;
+
+  var list = [];
+
+  function remover(component) {
+     var (index,def) = list.find( def => def.component == component );
+     assert index >= 0;
+     delete list[index];
+  }
+
+  function add(path, component) {
+    path = path %~ "."; // "Data.a.b" -> "a.b" - use local data path here
+    list.push { path: path, component:component };
+    list.sort( (a,b) => b.path.length - a.path.length ); // sort the list in descending length order - 
+                                                         // more specific rules come first
+    return remover;
+  }
+
+  function observeChanges(obj, onchange, path = "") {
+    
+    if( obj && (typeof obj == #object || typeof obj == #namespace)) {
+      var spath = path? path + "." : "";
+      for(var (k,v) in obj)
+        observeChanges(v, onchange, spath + k);
+    }
+    else if( typeof obj == #array ) {
+      var spath = path + "[]";
+      for(var (k,v) in obj) 
+        observeChanges(v, onchange, spath);
+    }
+    else 
+      return;
+
+    function subs(changedef) {
+      var spath = path? path + "." : "";
+      switch(changedef[0]) {
+          case #add:    
+          case #update: spath = spath + changedef[2]; observeChanges(obj[changedef[2]], onchange, spath); break;
+          case #delete: spath = spath + changedef[2]; break; 
+          case #add-range: 
+          case #update-range:
+          {
+            var start = changedef[2], end = changedef[3];
+            spath = path + "[]";
+            if(end > obj.length ) end = obj.length;
+            for(var i = start; i < end; ++i)
+              observeChanges(obj[i], onchange, spath);
+          }
+          break;
+          case #delete-range: spath = path + "[]"; break;
+          default: return;
+        }
+      onchange(spath);
+    }
+
+    subs.add = add;
+        
+    Object.addObserver(obj,subs);
+  }
+  observeChanges(ns,function(path) {
+    //debug change: list,path;
+    var cnt = 0;
+    for( var def in list ) {
+      if(path like def.path ) {
+        def.component.update();
+        ++cnt;
+      } else if(cnt)
+        break;
+    }
+  });
+  return ns;
+}
+
+namespace Reactor {
+  function observe(component,path) {
+    const ns = eval(path ~/ ".");
+    var remover;
+    assert typeof ns == #namespace: "namespace not found";
+    Object.eachObserver(ns, (subs) => {
+       if(var add = subs.add) {
+        remover = add(path,component);
+        return true;
+       }
+    });
+    return remover;
+  }
+}
+

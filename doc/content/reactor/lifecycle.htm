@@ -1,0 +1,114 @@
+﻿<html><body> 
+	<p>Note: this chapter is modelled after <a href="https://reactjs.org/docs/state-and-lifecycle.html">RectJS/State and Lifecycle</a> article. It is conceptionally close but <b>uses different terminology</b>.</p><h2>Data [Model] and Component Lifecycle</h2>
+	<p>Sciter's Reactor, in general, is all about components that employ&nbsp;Model-View-Controller idiom.</p>
+	<p>You have some <i>data</i> to be presented to the user. User is able a) to <i>view</i> the data and manipulate it. Manipulation of data is a set of code functions and event handlers that, as a group, are named as <i>Controller</i>.</p><h3>Component Class</h3><p>Let's transform our <a href="rendering.htm##updating-the-rendered-element">ticking clock sample</a> into reusable Clock component.</p>
+	<p>Each Reactor class based component shall have <code>render()</code> method:</p>
+	
+	<pre>class Clock : Element {
+  function render() {
+    return 
+      &lt;div&gt;
+        &lt;h1&gt;Hello, world!&lt;/h1&gt;
+        &lt;h2&gt;It is {this.time.toLocaleString(#time)}.&lt;/h2&gt;
+      &lt;/div&gt;;
+  }
+}</pre><p>The <code>render()</code> method will be called each time an update happens, but as long as we render <code>&lt;Clock /&gt;</code> into the same DOM node, only a single instance of the <code>Clock</code> class will be used. This lets us use additional features such as local state and lifecycle methods.</p>
+	<h2>Adding Local Data Storage to a Class </h2>
+	<p>By convention local data storage of a component is located in instance's  <code>this.data</code> field: &nbsp;</p>
+	<pre>class Clock: Element 
+{
+  // declaring local data storage with initial value 
+  <u>this var data</u> = { time: new Date() }; 
+
+  function render() {
+    return
+      &lt;div&gt;
+        &lt;h1&gt;Hello, world!&lt;/h1&gt;
+        &lt;h2&gt;It is {<u>this.data</u>.time.toLocaleString(#time)} now.&lt;/h2&gt;
+      &lt;/div&gt;;
+  } 
+} </pre>
+	<p>and our <code>render()</code> method renders now content of <code>this.data</code> fields.</p>
+	<p>Class Clock, in its current version, just renders static time determined at the time of its creation. Let's transform it to a running clock.</p>
+	<h2>Adding Lifecycle Methods to a Class</h2>
+	<p>We want to set up a timer whenever the <code>Clock</code> is rendered to the DOM for the first time - when real DOM element is created. In ReactJS this is called “mounting”. Sciter uses &quot;attached&quot; term for that - function attached() is called when instance of a class is attached to the DOM element:</p>
+	
+	<pre>include &quot;sciter:reactor.tis&quot;;
+
+class Clock: Reactor.Component 
+{
+  this var data = { time: new Date() }; // setting initial state 
+
+  function attached() { // a.k.a. React::componentDidMount
+    this.timer(1s, function() {
+      this.update { time:new Date() };
+      return true; // to keep the timer ticking
+    });
+  }
+
+  function render() {
+    return
+     &lt;div&gt;
+      &lt;h1&gt;Hello, world!&lt;/h1&gt;
+      &lt;h2&gt;It is {this.data.time.toLocaleString(#time)} now.&lt;/h2&gt;
+     &lt;/div&gt;;
+  } 
+} </pre><p>You see here two new entities:</p>
+	<ol><li>Use of&nbsp;<code>Reactor.Component </code> class that is declared in sciter:reactor.tis script.</li>
+		<li>And implementation of the  <code>attached()</code> method that starts ticking timer.</li>
+		</ol>
+	<p>The timer callback function is where the magic happens:</p>
+	<pre>function() {
+  this.update { time:new Date() };
+  return true; // to keep the timer ticking
+}</pre>
+	<p>On each timer tick it calls&nbsp;<code>Reactor.Component.update(newdata) </code> method with the new data.&nbsp;</p>
+	<p>Note: Sciter out of the box provides two lifecycle methods: </p>
+	<ul><li><code>attached()</code> - called by runtime when the element is attached to the DOM tree and</li>
+		<li><code>detached()</code> - when the element is deleted from the DOM tree. In this particular sample we are not using it if to compare our Clock with the <a href="https://reactjs.org/docs/state-and-lifecycle.html#adding-lifecycle-methods-to-a-class">React's one</a>. Timers in Sciter are always created for concrete DOM elements, as soon as element is destroyed all its timers are freed too.</li></ul>
+	<p>And now it is a time to check what that&nbsp;<code>Reactor.Component</code> class is.</p>
+	<h2 id="reactor-component">Class Reactor.Component</h2><p>The <code>Reactor.Component</code> class is defined in &quot;sciter:reactor.tis&quot; resource that is an integral part of Sciter Engine, so it is always available.</p>
+	<p>The class is very simple - it introduces just one method <code>update(newdata)</code>:</p>
+	<pre>namespace Reactor 
+{
+  class Component : Element
+  {
+    function update(newdata) {
+      assert this.data !== newdata; 
+      if(this.data) this.data.extend(newdata); else this.data = newdata;
+      function updater() { this.merge(this.render()); }
+      this.post(updater, true);
+    }
+  }
+}</pre>
+	<p>As you see the <code>update(newdata)</code> does the following:</p>
+	<ol><li><code>this.data.extend(newdata)</code> - this merges newdata into existing this.data object;</li>
+		<li><code>function updater() { this.merge(this.render()); }</code> - defines local update method that <ol></ol><ul><li>calls <code>this.render()</code> method that produces virtual element;</li>
+				<li> calls native <code>Element.merge(velement)</code> method that patches this existing DOM element using velement definition;</li>
+				</ul></li>
+		<li><code>this.post(updater)</code> - shedules the <code>updater()</code> invocation to the next event processing cycle.</li>
+		
+		</ol>
+	<p>The delayed rendering logic ensures that multiple <code>updater()</code> execution requests are collapsed into single updater() invocation request in the event queue. </p><h2>Using Date Correctly</h2>
+	<p>There are three things you should know about <code>update(newdata)</code>.</p><h3>Do Not Modify the Data Field Directly</h3>
+	<p>For example, this will not re-render a component:</p>
+	<pre>// WRONG!
+this.data.comment = &quot;Hello&quot;;</pre>
+	<p>Instead, use update():</p><pre>// Correct
+this.update {comment: &quot;Hello&quot;};</pre>
+	<p>The only place where you can assign <code>this.data</code> is the constructor.</p><h3>Data Updates are Merged</h3>
+	<p>When you call <code>update(newdata)</code>, <code>Reactor.Component</code> merges the object you provide into the current data set.</p>
+	<p>Therefore your code may issue <code>update()</code> requests for different parts of the data and they will end up in single reconciliation action between real DOM element and result of <code>render()</code> call, so these:</p>
+	
+	<pre>clock.update { time:new Date() };
+...
+clock.update { greeting: &quot;Вася&quot; };</pre>
+	<p>will end up in single <code>clock.render()</code> call and screen update.</p>
+	
+	
+	<blockquote><p>Comment to the above. In Sciter, this:&nbsp;</p><pre>obj.method { name:val };</pre><p>is a short form of a method call:</p><pre>obj.method({ name:val });</pre><p>Just a syntax sugar for making our developer's life a bit easier.</p></blockquote>
+	
+	
+	
+
+	</body></html>

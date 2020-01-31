@@ -1,0 +1,211 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+html { font:system; font-size:16pt; }
+
+main {size:*;}
+
+ol.items {size:*; overflow:auto;}
+
+button, input { font-size:inherit; }
+li.item { flow:horizontal; border-spacing:0.25em; }
+li.item > text { white-space:pre; width:*;}
+li.item > img.remove { behavior:button; display:block; margin:* 0; foreground-image:url(stock:cross-x); size:0.5em; visibility:hidden;}
+li.item:hover:not(.editing) > img.remove { visibility:visible; }
+li.item.editing > text { behavior:edit; cursor:text; outline:2dip solid #ddd -2dip; }
+
+header { flow:horizontal; border-spacing:0.25em; }
+header > input.new { display:block; width:*; padding:0.3em; }
+header > span.all { flow:horizontal; border-spacing:0.25em; vertical-align:middle; }
+
+footer {
+  font-size:10pt;
+  flow:horizontal;
+  line-height:2em;
+  border-spacing:1em;
+}
+
+footer > span { display:block;  }
+footer > span.filter { flow:horizontal; border-spacing:0.5em; margin:0 *; }
+footer b { behavior:button; display:block; white-space: nowrap; padding:0 0.5em; }
+footer b:checked { outline:1dip #ccc solid; }
+
+footer b.remove { visibility:hidden; }
+footer.has-done b.remove { visibility:visible; }
+
+p.note { font-size:9pt; color:#888; text-align:center; }
+
+        </style>
+        <script type="text/tiscript">
+
+include "../reactor.observable.tis";        
+
+@observable namespace Todo 
+{
+    var items = [
+     { key: "1", text: "First", done: false },
+     { key: "2", text: "Second", done: true },
+     { key: "3", text: "Third", done: false },
+    ];
+
+    var filter; // undefined, true, false
+
+    function allStatus() 
+    {
+      var alldone = items.filter(item => item.done);
+      if( alldone.length == 0 ) return false;
+      if( alldone.length == items.length ) return true;
+      return undefined; // mixed state
+    }
+    
+    function presentedItems() 
+    {
+      var ff = filter === true ? item => item.done
+             : filter === false ? item => !item.done
+             : item => item;
+      return Todo.items.filter(ff);
+    }
+
+    function pendingItems() 
+    {
+      return Todo.items.filter(item => !item.done);
+    }
+
+    function addNew(text) {
+      items.unshift { key: String.UID(), text:text, done:false };
+    }
+
+    function toggleAllItems(onOff) {
+      for(var item in items) item.done = onOff;
+    }
+
+    function removeDoneItems() {
+      items.splice(0,items.length,...pendingItems());
+    }
+    
+    function getItem(key) {
+      var (idx,item) = Todo.items.find( item => item.key == key );
+      return item;
+    }
+
+    function removeItem(key) {
+      var (idx,item) = Todo.items.find( item => item.key == key );
+      delete Todo.items[idx];
+    }
+}
+
+class ItemsList: Reactor.Component  
+{
+  function this(props,kids) {
+    // this observes changes in "Todo.*",
+    // on any change it will call this.update(),
+    // on element detached we call "unobserve"
+    this.detached = Reactor.observe(this,"Todo.*");
+  }
+
+  function render() {
+    return 
+      <ol.items>
+        { Todo.presentedItems().map( item => <li.item key={item.key} class={item.done ?"done":""}>
+                                                <input|checkbox.done :value={item.done} />
+                                                <text>{item.text}</text>
+                                                <img.remove/></li> ) }
+      </ol>;
+  }
+  event change $(input.done) (evt,input) {
+    var key = input.$p(li).attributes["key"];
+    Todo.getItem(key).done = input.value;
+    return true;
+  }
+
+  event dblclick $(li > text) (evt, text) { this.toggleEditing(text); return true; }
+  event blur $(li > text) (evt, text) { this.toggleEditing(text,false); return true; }
+  event click $(img.remove) (evt, img) { var key = img.$p(li).attributes["key"]; Todo.removeItem(key); return true; }
+
+  function toggleEditing(elText, onOff = undefined) {
+    if(onOff === undefined) onOff = !elText.$is(li.editing>text);
+    if(onOff === false) { 
+      var key = elText.$p(li).attributes["key"];
+      Todo.getItem(key).text = elText.value; 
+    }
+    elText.$p(li).attributes.toggleClass("editing",onOff);
+  }
+}
+
+class ItemCreator: Reactor.Component  {
+
+  function this(props,kids) {
+    this.detached = Reactor.observe(this,"Todo.*");
+  }
+
+  function render() {
+    const allStatus = Todo.allStatus();
+    return <header>
+      <input|text.new novalue="What needs to be done?" />    
+      <span.all>
+        set all as <button.done :disabled={allStatus===true}>done</button> 
+                   <button.pending :disabled={allStatus===false}>pending</button>
+      </span>
+    </header>;
+  }
+
+  event keydown $(input.new) (evt,input) {
+    if ( evt.keyCode == Event.VK_RETURN) {
+      Todo.addNew(input.value);
+      input.value = "";
+      return true;
+    }
+  }
+
+  event click $(button.done) { Todo.toggleAllItems(true); }
+  event click $(button.pending) { Todo.toggleAllItems(false); }
+}
+
+class ItemsFilter: Reactor.Component {
+
+  function this(props,kids) {
+    this.detached = Reactor.observe(this,"Todo.*");
+  }
+
+  function render() {
+    const pending = Todo.pendingItems().length; 
+    const done = Todo.items.length - pending;
+    return <footer class={ done?"has-done":"" }>
+      <span.counter>{pending} item{pending == 1? "":"s"} left</span>
+      <span.filter><b.all :checked={Todo.filter === undefined}>All</b>
+                   <b.pending :checked={Todo.filter === false}>Active</b>
+                   <b.done :checked={Todo.filter === true}>Completed</b></span>
+      <b.remove>Remove completed</b>
+    </footer>;
+  }
+
+  event click $(b.all) { Todo.filter = undefined; }
+  event click $(b.pending) { Todo.filter = false; }
+  event click $(b.done) { Todo.filter = true; }
+  event click $(b.remove) { Todo.removeDoneItems(); }
+
+}
+
+event ~click $(a[href]) (evt,a) {
+  Sciter.launch(a.attributes["href"]);
+  return true; // consume the event, discard default processing
+}
+
+        </script>
+    </head>
+    <body>
+
+      <p.note>This is a functional equivalent of <a href="http://todomvc.com/examples/react/#/">TodoMVC/ReactJs</p></p>
+
+      <reactor(main)>
+        <ItemCreator />
+        <ItemsList />
+        <ItemsFilter />
+      </reactor>
+
+      <p.note>Double-click to edit a todo</p>
+
+    </body>
+</html>

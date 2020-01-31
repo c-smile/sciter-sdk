@@ -10,7 +10,38 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FFFAFC">4.4.0.6</td><td nowrap valign="top" align="center">25-12-2019</td><td>fixes:
+    <tr><td valign="top" bgcolor="#FFFAFC">4.4.0.7</td><td nowrap valign="top" align="center">30-01-2020</td><td>
+					
+					<p>new:</p>
+					<ul><li>[script, decorators] namespaces can be @decorated now too, so functions, classes and namespaces are decoratible.</li>
+						<li>[CSS] + <code>text-decoration-thickness</code> property support: text-decoration-thickness: 1dip;</li>
+						<li>[<b>reactor</b>], new features:<ul><li>+ sdk/samples/+reactor/components/vlist/vtable-tree.htm - <i>table-tree</i> sample.</li>
+								<li>+ The <code>@observable</code> and <code>Reactor.observe(component,path)</code> - &quot;observable Reactor&quot;. Not exactly&nbsp;<a href="https://redux.js.org/">Redux  </a> but functionally close. See samples in /stable/sdk/samples/+reactor/observable</li></ul></li>
+						</ul><p>fixes:
+					</p><ul>
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						<li>[script, regexp] fix of <code>String.split(re)</code>, see: <a href="https://sciter.com/forums/topic/regexp-capturing-parentheses-does-not-remember-the-match-in-split/">https://sciter.com/forums/topic/regexp-capturing-parentheses-does-not-remember-the-match-in-split/</a> &nbsp;</li><li>[behavior:richtext] <code>&lt;htmlarea&gt;</code> fixes:<ul><li> fix of right click on selection.</li>
+								<li>delete range fixes.</li></ul></li>
+						<li>[MacOS] <code>&lt;input|calendar&gt;</code> <code>&lt;input|date&gt;</code> <code>&lt;input|time&gt;</code> fix of <code>lang=&quot;...&quot;</code> handling.</li>
+						<li>[MacOS] <code>View.POPUP_WINDOW</code> windows are&nbsp;derived from <code>NSPanel</code> now. All other windows are <code>NSWindows</code></li><li>[linux/gtk] http client re-enabled.</li><li>ideas/lightbox-dialog sample update: + animations.</li>
+						<li>[CSS] <code>@set a &lt; b {}</code> rules specificity fix.</li><li>[CSS] custom scrollbars, fix of use of variables in vertical/horizontal-scrollbar style sets.</li><li>[CSS,+plus] fix of memory leak in <code>aspect:</code> handling.&nbsp;</li>
+						<li>[windows] <code>window-frame=&quot;extended&quot;</code> shadow around, see: <a href="https://sciter.com/forums/topic/only-add-window-frameextended-has-no-shadow/">https://sciter.com/forums/topic/only-add-window-frameextended-has-no-shadow/</a>&nbsp;</li>
+						<li>[windows] more reliable <code>event mouseleave</code> generation on mouse out of the window.</li><li>[windows] <code>SciterCreateWindow(SW_RESIZEABLE)</code> fix.</li>
+						<li>[windows] fix of child window handling in window-frame != standard windows.</li>
+						<li>[windows] background-repeat handling by D2D/WARP backend.</li><li>[<b>reactor</b>] fixes:   <ul>
+								
+								<li>[ssx] <code>&lt;tag.cls /&gt;</code> class declaration handling.</li><li>Fix of keyboard handling in sdk/samples/+reactor/components/tabs/tabs.tis</li><li><code>:state</code> styles handling, see: <a href="https://sciter.com/forums/topic/maybe-a-bug/">https://sciter.com/forums/topic/maybe-a-bug/</a>&nbsp;</li><li>adding Reactor documentation to SDK's help browser.</li></ul></li>
+						<li>[API] renaming <code>API_VERSION</code> to [API] renaming API_VERSION -&gt; SCITER_API_VERSION to fix <a href="https://sciter.com/forums/topic/how-to-fix-build-error/">https://sciter.com/forums/topic/how-to-fix-build-error/</a>&nbsp;</li><li>[API] <code>SciterElementDelete()</code>, fix of <code>detached()</code> event generation on external behaviors.&nbsp;</li></ul></td></tr><tr><td valign="top" bgcolor="#FFFAFC">4.4.0.6</td><td nowrap valign="top" align="center">25-12-2019</td><td>fixes:
 					<ul>
 						
 						

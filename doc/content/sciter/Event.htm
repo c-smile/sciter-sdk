@@ -365,14 +365,17 @@ VK_F20      VK_F21      VK_F22      VK_F23      VK_F24
     <dd>- Event.POPUP_DISMISSED, the event is posted to the popup owner and <b>after</b> popup window gets removed from screen.</dd>
 		<dt>tooltiprequest</dt>
 		<dd>- Event.TOOLTIP_REQUEST, the event is sent in response to Event.MOUSE_IDLE.</dd>
+		
+		<h4>Element lifecycle events</h4><dt>detached</dt>
+		<dd>- not a bubbling event - is sent to the element itself only before it gets removed from the DOM.</dd>
     
-		<h4>Document lifecycle events</h4><dt>&quot;close&quot;</dt>
+		<h4>Document lifecycle events</h4><dt>close</dt>
     <dd>- Event.DOCUMENT_CLOSE, the event is fired as when document gets removed from its container (view or frame). Only document elements and its containers receive this event.</dd>
-    <dt>&quot;closerequest&quot;</dt>
+    <dt>closerequest</dt>
     <dd>- Event.DOCUMENT_CLOSE_REQUEST, the event is fired to request document removal from its container (view or frame). Only document elements and its containers receive this event. By handling this request application can discard window or document closing by setting <code>event.cancel = true;</code> &nbsp;in event handler.</dd>
-    <dt>&quot;ready&quot;</dt>
+    <dt>ready</dt>
     <dd>- Event.DOCUMENT_READY, the event is fired as when document gets parsed in full and its DOM is established. Only document elements and its containers receive this event.</dd>
-    <dt>&quot;complete&quot;</dt>
+    <dt>complete</dt>
     <dd>- Event.DOCUMENT_COMPLETE, the event is fired as when document have downloaded all resources (images, styles, scripts) it requested . Only document elements and its containers receive this event.</dd>
 		<h4>Command execution events</h4>
     <dt>query:{command}</dt>

@@ -1,0 +1,30 @@
+﻿<html>
+    <body>
+  <h2>Proper use of bound collection observed by @each or @repeat elements</h2>
+	<h3>Bound collections</h3><p>Bound collections are arrays or objects placed inside namespaces bound with DOM:</p>
+	<pre>namespace Data {
+  var listOfRecords = [];
+  ...
+} </pre>
+	<p>And markup:</p>
+	<pre>&lt;main model=&quot;Data&quot;&gt;
+  &lt;ul&gt;
+    &lt;li repeat=&quot;record in listOfRecords&quot;&gt;
+      ... repeatable bound item ...
+    &lt;/li&gt;
+  &lt;/ul&gt;</pre>
+	<p>Note how &nbsp;<code>&lt;li&gt;</code> elements are bound with items in <code>Data.listOfRecords</code> collection.</p>
+	<h3>Proper updates of bound collections</h3><p>In order +plus framework to work optimally bound data collections shall not be recreated but rather updated.&nbsp;</p>
+	<p>While something like this:</p>
+	
+	<pre>Data.listOfRecords = fetchRecordset();</pre><p>will work it may produce far from optimal results.</p>
+	<p>Instead you should update collections without recreating them.&nbsp;</p>
+	<p>Correct examples:&nbsp;</p>
+	<pre>Data.listOfRecords.merge(fetchRecordset()); // merge array with new data</pre>
+  Or
+  <pre>Data.listOfRecords.splice(0,Data.listOfRecords.length,fetchRecordset()); // replace array data</pre>
+
+	<h3>WARNING</h3>
+	
+	<p>Ignoring this rule may lead to memory leak alike behavior in your application.</p></body>
+</html>

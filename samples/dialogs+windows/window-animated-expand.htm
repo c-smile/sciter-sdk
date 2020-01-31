@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style></style>
+        <script type="text/tiscript">
+
+
+event click $(button#expand) {
+  var (x,y,w,h) = view.box(#rectw,#border,#screen);
+  var finalh = h + 300;
+
+  function inc() {
+    h += 6;
+    if( h >= finalh ) {
+      view.move(x,y,w,finalh);
+      return false;
+    }
+    view.move(x,y,w,h);
+    return true;
+  }
+
+  self.timer(10ms,inc);
+
+}
+
+
+        </script>
+    </head>
+    <body>
+
+      <button#expand>Expand</button>
+
+
+    </body>
+</html>

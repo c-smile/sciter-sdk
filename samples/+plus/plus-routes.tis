@@ -16,10 +16,18 @@ function Plus.Application() {
   {
     for( var route in routes ) 
       if( route.path like topath ) {
-        path = topath;
-        param = andparam;
-        main.update(::main.load(self.url(route.url))); // do transactional update to reduce visual effects
-        main.postEvent("routechange");
+        if( path == topath && param == andparam)
+          main.postEvent("reset");
+        else if( path != topath ) {
+          path = route.path;
+          param = andparam;
+          main.update(::main.load(self.url(route.url))); // do transactional update to reduce visual effects
+          main.postEvent("routechange");
+          var (total,free,used) = gc();
+          stdout.println("gc", total,free,used);
+        } else {
+          main.postEvent("paramchange");
+        }
         return;
       }
     throw "Plus.app: unknown path:" + path;  

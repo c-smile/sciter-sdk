@@ -1,0 +1,38 @@
+<html window-frame="transparent">
+    <head>
+        <title>Test</title>
+        <style>
+
+html { background:transparent; }
+body {
+  background: #fff;
+  margin:10dip; // to accomodate box-shadow
+  box-shadow: 2dip 2dip 8dip #888888;
+  border-radius: 5dip;
+  padding:3dip;
+}
+
+body > header { flow:horizontal; }
+body > header > cpation { width:*; }
+
+main { 
+  size:*;
+}
+
+
+        </style>
+        <script type="text/tiscript"></script>
+    </head>
+    <body>
+      <header>
+        <caption role="window-caption">Caption</caption>
+        <button role="window-close">x</button>
+      </header>
+      <main>
+        Content
+      </main>    
+      <footer>
+        Footer
+      </footer>
+    </body>
+</html>

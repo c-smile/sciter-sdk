@@ -180,7 +180,17 @@
     }
       
   }();
-    
+
+
+  event click $(#custom-frame-round) {   
+    view.window {
+          type:View.FRAME_WINDOW,
+          url: self.url("samples/sample-window-custom-frame.htm"),
+          width : 640,
+          height : 480,
+          alignment: 5
+        };
+    }
     
     </script>
   </head>
@@ -192,6 +202,9 @@
   <button #popup>Popup window</button>
   <button #with-params>window with parameters</button>
   <button #ext-frame>window-frame=extended</button>
+
+  <button #custom-frame-round>window-frame=transparent /round corners</button>
+
   <hr>
   <button #tool-full-screen>tool + full screen</button>
   <button #tool-layered>tool + layered</button>

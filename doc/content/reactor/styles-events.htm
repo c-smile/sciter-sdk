@@ -1,0 +1,131 @@
+﻿<html><body> <h2>Defining Default Style</h2><p>Normally you define styles globally in&nbsp;your application. But some components may require some styling (e.g. particular layout) that is specific for their operation.</p>
+	<p>Reactor (Sciter internal code in fact) offers simple way to define component styles using <i>styleset</i> class property in the form <code>[&quot;stylesetname&quot;, &quot;file.css&quot;]</code>.&nbsp;</p>
+	<p>Let's&nbsp;redefine our <code>Clock</code> class that we used earlier :</p>
+	
+	<pre>include &quot;sciter:reactor.tis&quot;;
+
+class Clock: Reactor.Component 
+{
+  const styleset = [&quot;clock&quot;, $url(clock.css)]; // style set declaration
+
+  this var data = { time: new Date() }; // setting initial state 
+
+  function attached() { // a.k.a. React::componentDidMount
+    this.timer(1s, function() {
+      this.update { time:new Date() };
+      return true; // to keep the timer ticking
+    });
+  }
+
+  function render() {
+    return
+     &lt;clock&gt;
+      &lt;div.greeting&gt;Hello, world!&lt;/div&gt;
+      &lt;div&gt;It is {this.data.time.toLocaleString(#time)} now.&lt;/div&gt;
+     &lt;/clock&gt;;
+  } 
+}</pre><p>Where <a href="../script/Globals.htm#url"><code>$url()</code> is a stringizer function</a> that resolves its textual argument to absolute URL using this script file loaction as a base.</p>
+	<p>And here is a content of clock.css file:&nbsp;</p>
+	
+	<pre>@set clock 
+{
+  :root {
+    display: block;
+    flow:vertical;
+  }
+  span.time { 
+    display:inline-block; 
+    white-space:nowrap; 
+  }
+}</pre>
+	<p>Check sample: <u>{sdk}/samples/+reactor/doc-samples/styles-events/clock.htm</u></p><p>As you see it defines independent set of CSS rules that define content (and only content) of our clock component and its internals.</p>
+	<p>General consideration: if component is designed to be used in many applications then its default style set should include only rules needed for layout and those are critical for operation. Each application will add its own styling on top of these default styles. &nbsp;</p>
+	<p>Note that style sets in Sciter are not polluting global list of style rules and so are very effective - reduce time needed for style resolution of DOM elements.&nbsp;</p>
+	<h2>Event Handling in Components</h2>
+	<p>In contrast with ReactJS Sciter does not require any special constructs for handling events - we can use normal (for the Sciter) event handling definitions in classes.</p>
+	<p>Sample of small component that encapsulates search block enclosing&nbsp;&lt;input&gt; and &lt;button&gt; in one entity: &nbsp;&nbsp;</p>
+	
+	
+	
+	<pre>class Search : Reactor.Component {
+
+  this var elInput;
+
+  function render() {
+    return &lt;search&gt;
+        &lt;input|text @(this.elInput) /&gt;
+        &lt;button.do/&gt;
+    &lt;/search&gt;;
+  }
+
+  event click $(button.do) { 
+    this.postEvent(&quot;do-search&quot;, this.elInput.value ); 
+  }
+  event change $(input) { 
+    this.showSuggestionsFor( this.elInput.value ); 
+  }
+
+  property value(v) 
+  {
+     get return this.elInput.value;
+     set this.elInput.value = v;
+  }
+}</pre>
+	<p>In this example we are handling two events: click on the button and change of the input. Nothing is really new here.</p>
+	<h2>HTML Resident Mounting Points</h2>
+	<p>Reactor Components are executable entities even if they look as HTML. </p>
+	<p>Normally in ReactJS you see JSX code only inside <code>&lt;script&gt;</code> sections and JS code files. Example that we saw before already:</p>
+	
+	<pre>function App() {
+  return
+    &lt;main&gt;
+       &lt;Welcome name=&quot;Ivan&quot; /&gt;
+       &lt;Welcome name=&quot;Olga&quot; /&gt;
+       &lt;Welcome name=&quot;Andrew&quot; /&gt;
+    &lt;/main&gt;;
+}
+
+$(main).merge( &lt;App /&gt; );</pre><p>While this works in general it may look non-natural or inconvenient to someone.&nbsp;</p>
+	<p>Alternatively Sciter offers special <code>&lt;reactor&gt;</code> HTML element as a mounting point:</p>
+	
+	
+	
+	
+	<pre>&lt;body&gt;
+   &lt;p&gt;Test of &amp;lt;Tabs&gt; component.&lt;/p&gt;
+      
+   &lt;reactor(Tabs) src=&quot;tabs.tis&quot;&gt;
+     &lt;tab(first) label=&quot;First tab&quot;&gt;First tab content&lt;/tab&gt;
+     &lt;tab(second) label=&quot;Second tab&quot;&gt;Second tab content&lt;/tab&gt;
+     &lt;tab(third) label=&quot;Third tab&quot; src=&quot;tab-content.htm&quot;&gt;&lt;/tab&gt;
+   &lt;/reactor&gt;
+
+&lt;/body&gt;</pre><p>The &lt;reactor&gt; element expects two attributes: </p>
+	<ul><li><i>name</i> - name of component class and</li><li><i>src</i> - url of the script file where that component is defined.</li>
+		</ul>
+	<p>Please note that, while it looks like HTML, content between <code>&lt;reactor&gt;</code> and <code>&lt;/reactor&gt;</code> is parsed by script rules (SSX in this case). Essentially you may think as the whole <code>&lt;reactor&gt;</code> section is just <code>&lt;script&gt;</code> element:</p>
+	
+	
+	
+	
+	<pre>&lt;body&gt;
+   &lt;p&gt;Test of &amp;lt;Tabs&gt; component.&lt;/p&gt;
+      
+   &lt;script type=&quot;text/tiscript+ssx&quot; component=&quot;Tabs&quot; src=&quot;tabs.tis&quot;&gt;
+     &lt;tab(first) label=&quot;First tab&quot;&gt;First tab content&lt;/tab&gt;
+     &lt;tab(second) label=&quot;Second tab&quot;&gt;Second tab content&lt;/tab&gt;
+     &lt;tab(third) label=&quot;Third tab&quot; src=&quot;tab-content.htm&quot;&gt;&lt;/tab&gt;
+   &lt;/script&gt;
+
+&lt;/body&gt;</pre><p>The only major difference of the <code>&lt;reactor&gt;</code>: it is a placeholder element - as soon as component gets instantiated it <i>replaces </i>the <code>&lt;reactor&gt;</code> DOM element. Therefore final DOM after <code>&lt;reactor&gt;</code>'s <i>execution</i> will look like:</p>
+	<pre>&lt;body&gt;
+   &lt;p&gt;Test of &amp;lt;Tabs&gt; component.&lt;/p&gt;
+      
+   &lt;tabs&gt;
+     &lt;tab(first) label=&quot;First tab&quot;&gt;First tab content&lt;/tab&gt;
+     &lt;tab(second) label=&quot;Second tab&quot;&gt;Second tab content&lt;/tab&gt;
+     &lt;tab(third) label=&quot;Third tab&quot; src=&quot;tab-content.htm&quot;&gt;&lt;/tab&gt;
+   &lt;/tabs&gt;
+
+&lt;/body&gt;</pre>
+	<p>Check sample at <u>{sdk}/samples/+reactor/components/tabs/test.htm</u></p></body></html>

@@ -1,0 +1,106 @@
+﻿<html><body> <p>Note: this document is written intentionally close to <a href="https://reactjs.org/docs/components-and-props.html">ReactJS/Components and Props</a>&nbsp;article to highlight differences and similarities with ReactJS.</p>
+	<h2>Components and Props</h2>
+	<p>Conceptually, components are script functions. They accept arbitrary inputs (called “props”) and return virtual elements describing what should appear on the screen.</p>
+	<h2><a href="https://reactjs.org/docs/components-and-props.html#function-and-class-components"></a>Function and Class Components</h2>
+	<p>The simplest way to define a component is to write a script function:</p>
+	<pre>function Welcome(props) {
+  return &lt;h1&gt;Hello, {props.name}&lt;/h1&gt;;
+}</pre>
+	<p>This function is a valid Reactor component because it accepts a single &quot;props&quot; object argument with data and returns a virtual element. We call such components &quot;function components&quot; because they are literally script functions.</p>
+	<p>You can also use classes to define a component:</p>
+	<pre>class Welcome : Element {
+  function this(props) { 
+    this.props = props; 
+  }
+  function render() {
+    return &lt;h1&gt;Hello, {this.props.name}&lt;/h1&gt;;
+  }
+}</pre>
+	<p>These two components will do exactly the same when used.</p>
+	<p>Class-based components have some additional features that we will discuss in the next sections. Until then, we will use function components for their conciseness.</p>
+	<h4>Note: Component names (either functional or class-based) shall start from capital letter.</h4>
+	<h2><a href="https://reactjs.org/docs/components-and-props.html#rendering-a-component"></a>Rendering a Component</h2>
+	<p>Previously, we only encountered Reactor virtual elements that represent DOM tags:</p>
+	
+	<pre>const velement = &lt;div /&gt;;</pre><p>However, elements can also represent user-defined components:</p>
+	
+	<pre>const velement = &lt;Welcome name=&quot;John&quot; /&gt;;</pre><p>When Sciter script compiler sees an element representing a user-defined component, it passes its attributes to this component as a single object. We call this object “props”.</p>
+	<p>For example, this code renders “Hello, Ivan!” on the page:</p>
+	
+	<pre>function Welcome(props) {
+  return &lt;h1&gt;Hello, {props.name}!&lt;/h1&gt;;
+}
+
+const velement = &lt;Welcome name=&quot;Ivan&quot; /&gt;;
+
+$(body).content(velement);
+</pre>
+	<p>Check sample: <u>{sdk}/samples/+reactor/doc-samples/components/1-welcome.htm</u>&nbsp;</p>
+	<p>Let us recap what happens in the example above:</p>
+<ol>
+<li>We call <code>element.content(velement)</code> with the <code>&lt;Welcome name=&quot;Ivan&quot; /&gt;</code> element.&nbsp;</li>
+<li>Sciter runtime calls the <code>Welcome</code> component with <code>{name: &quot;Ivan&quot;}</code> as the props object.</li>
+<li>Our <code>Welcome</code> component returns a <code>&lt;h1&gt;Hello, Sara&lt;/h1&gt;</code> virtual element as the result.</li>
+<li><code>Element.content()</code> function inserts DOM element <code>&lt;h1&gt;Hello, Ivan!&lt;/h1&gt;</code> using that virtual element definition.</li>
+		</ol>
+	<h2>Composing Components</h2>
+	<p>Components can refer to other components in their output. This lets us use the same component abstraction for any level of detail. A button, a form, a dialog, all those may commonly be expressed as components.</p>
+	<p>For example, we can create an <code>App</code> component that renders <code>Welcome</code> many times:</p>
+	<pre>function Welcome(props) {
+  return &lt;h1&gt;Hello, {props.name}!&lt;/h1&gt;;
+}
+
+function App() {
+  return
+    &lt;main&gt;
+       &lt;Welcome name=&quot;Ivan&quot; /&gt;
+       &lt;Welcome name=&quot;Olga&quot; /&gt;
+       &lt;Welcome name=&quot;Andrew&quot; /&gt;
+    &lt;/main&gt;;
+}
+
+$(main).merge( &lt;App /&gt; );</pre>
+	<p>Check sample: <u>{sdk}/samples/+reactor/doc-samples/components/2-composing.htm</u>&nbsp;</p>
+	<h2 id="extracting-components">Extracting Components</h2>
+	<p>Don’t be afraid to split components into smaller components.</p>
+	<p>For example, consider this <code>Comment</code> component:</p>
+	<pre>function Comment(props) {
+  return
+    &lt;div.comment&gt;
+      &lt;div .userinfo&gt;
+        &lt;img .avatar src={props.author.avatarUrl} alt={props.author.name} /&gt;
+        &lt;div .userinfo-name&gt;{props.author.name}&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div .comment-text&gt;{props.text}&lt;/div&gt;
+      &lt;div .comment-date&gt;{formatDate(props.date)}&lt;/div&gt;
+    &lt;/div&gt;;
+}</pre>
+	
+	<p>Check sample: <u>{sdk}/samples/+reactor/doc-samples/components/3-extracting.htm</u>&nbsp;</p><p>It accepts <code>author</code> (an object), <code>text</code> (a string), and <code>date</code> (a date) as props, and describes a comment in a chat implementation for example.</p>
+	<p>This component can be tricky to change and maintain because of all the nesting, and it is also hard to reuse individual parts of it. </p>
+	<p>Let’s extract a few components from it. First, we will extract <code>Avatar</code>:</p>
+	
+	<pre>function Avatar(props) {
+  return
+    &lt;img.avatar
+      src={props.user.avatarUrl}
+      alt={props.user.name}/&gt;;
+}</pre><p>Next, we will extract a <code>UserInfo</code> component that renders an <code>Avatar</code> next to the user’s name:</p>
+	<pre>function UserInfo(props) {
+  return
+    &lt;div.userinfo&gt;
+      &lt;Avatar user={props.user} /&gt;
+      &lt;div.userinfo-name&gt;{props.user.name}&lt;/div&gt;
+    &lt;/div&gt;;
+}</pre>
+	<p>And finally simplified&nbsp;<code>Comment</code> that is composed from the above:</p>
+	<pre>function Comment(props) {
+  return
+  &lt;div.comment&gt;
+   &lt;UserInfo user={props.author} /&gt;
+   &lt;div.comment-text&gt;{props.text}&lt;/div&gt;
+   &lt;div.comment-date&gt;{formatDate(props.date)}&lt;/div&gt;
+  &lt;/div&gt;;
+}</pre>
+	<p>Extracting components might seem like grunt work at first, but having a palette of reusable components pays off in larger apps. A good rule of thumb is that if a part of your UI is used several times (<code>Button</code>, <code>Panel</code>, <code>Avatar</code>), or is complex enough on its own (<code>App</code>, <code>FeedStory</code>, <code>Comment</code>), it is a good candidate to be a reusable component.</p>
+	<p></p></body></html>

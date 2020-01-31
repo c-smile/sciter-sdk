@@ -43,9 +43,9 @@ struct SciterGraphicsAPI;
 struct SCITER_X_MSG;
 
 #ifdef WINDOWLESS
-  #define API_VERSION 0x10001
+  #define SCITER_API_VERSION 0x10001
 #else 
-  #define API_VERSION 1
+  #define SCITER_API_VERSION 1
 #endif // !WINDOWLESS
 
 typedef struct _ISciterAPI {

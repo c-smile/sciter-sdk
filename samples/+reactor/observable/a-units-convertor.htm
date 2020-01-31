@@ -1,0 +1,49 @@
+﻿<html>
+    <head>
+        <title>Test</title>
+        <style></style>
+        <script type="text/tiscript">
+
+include "../reactor.observable.tis";
+
+@observable namespace Data 
+{
+  
+  var celsius = 0;
+
+  property fahrenheit(v) {
+    get return celsius === undefined ? undefined : celsius * 9.0 / 5 + 32;
+    set celsius = v === undefined ? undefined : (v - 32) * 5.0 / 9;
+  }
+
+}
+
+class Temperature: Reactor.Component
+{
+  function this(props,kids) {
+    // we observe any change in "Data.*",
+    // on element detached we call "unobserve"
+    this.detached = Reactor.observe(this,"Data.*");
+  }
+
+  function render() {
+    return <p>
+      <input|number.celsius :value={Data.celsius} />°C and 
+      <input|number.fahrenheit :value={Data.fahrenheit} />°F
+    </p>;
+  }
+
+  event change $(input.celsius) (evt,input) { Data.celsius = input.value; }
+  event change $(input.fahrenheit) (evt,input) { Data.fahrenheit = input.value; }
+}
+
+        </script>
+    </head>
+    <body>
+
+    <p>These inputs are bound with Data.celsius and Data.fahrenheit variables</p>
+
+    <reactor(Temperature)/>
+
+    </body>
+</html>

@@ -54,7 +54,7 @@
       
 	</STYLE>
   <script type="text/tiscript">
-    $(#dyn1-start).onClick = function()
+    event click $(#dyn1-start)
     {
       //stdout.$n(started);
       var progress = $(#dyn1);
@@ -69,7 +69,7 @@
       progress.timer(50,inc);
     }
     
-    $(#dyn1-set).onClick = function()
+    event click $(#dyn1-set)
     {
       var progress = $(#dyn1);
       progress.value = 50; 
@@ -77,9 +77,7 @@
       return true;
     }
     
-    
-    
-    $(#dyn2-start).onClick = function()
+    event click $(#dyn2-start)
     {
       var progress = $(#dyn2);
       progress.value = 0;
@@ -92,7 +90,7 @@
       progress.timer(50,inc);
     }
 
-    $(#dyn3-start).onClick = function()
+    event click $(#dyn3-start)
     {
       var progress = $(#dyn3);
       var check = $(#dyn3-start);

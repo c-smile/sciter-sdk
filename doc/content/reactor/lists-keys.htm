@@ -1,0 +1,22 @@
+﻿<html><body> <h2>Lists and Keys</h2>
+	<p>We can build collections of elements and include them in SSX using curly braces <code>{}</code>.</p><p>Below, we loop through the numbers array using the <code>map()</code> function. We return a <code>&lt;li&gt;</code> element for each item. Finally, we assign the resulting array of elements to listItems:</p><pre>const numbers = [1, 2, 3, 4, 5];
+const listItems = numbers.map((number) =&gt;
+  &lt;li&gt;{number}&lt;/li&gt;
+);</pre><p>Then we include the entire <code>listItems</code> array inside a <code>&lt;ul&gt;</code> element, and render it to the DOM:</p><pre>$(body).content(&lt;ul&gt;{listItems}&lt;/ul&gt;);</pre>
+	<p>The code above will work effectively for static lists that we render with the <code>Element.content(vnodes)</code> function.</p>
+	<p>But if we plan to update the list using <code>Element.merge()</code> we need to add keys to list items. In this case the <code>merge()</code> can effectively perform reconciliation of DOM and its virtual representation.</p>
+	<p>The best way to pick a key is to use a string that uniquely identifies a list item among its siblings. Most often you would use IDs from your data as keys:</p><pre>const todoItems = todos.map((todo) =&gt;
+  &lt;li key={todo.id} status={todo.status}&gt;
+    {todo.text}
+  &lt;/li&gt;);</pre>
+	<p>Note: It is not recommend to use indexes for keys if the order of items may change. This can negatively impact performance and may cause issues with component state. &nbsp;</p>
+	<h4>Keys Must Only Be Unique Among Siblings</h4><p>Keys used within arrays should be unique among their siblings. However they don’t need to be globally unique.&nbsp;</p>
+	<h4><a href="https://reactjs.org/docs/lists-and-keys.html#embedding-map-in-jsx"></a>Embedding map() into SSX expressions</h4>
+	<p>SSX allows to embed&nbsp;any expression in curly braces so we could inline the <code>map()</code> result too:</p><pre>function NumberList(props) {
+  const numbers = props.numbers;
+  return
+    &lt;ul&gt;
+     { numbers.map((number) =&gt; &lt;li key={number.toString()} /&gt;) }
+    &lt;/ul&gt;;
+}</pre>
+	<p></p></body></html>
