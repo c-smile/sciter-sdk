@@ -1,0 +1,106 @@
+<html>
+  <head>
+    <title>Plus: very basic sample</title>
+    <style>
+      @import url(../plus.css); /* the only thing needed to include Plus framework */
+      @import url(../../note.css); 
+      @import url(../../../widgets/switch/switch.css); 
+      
+      html { font:system; }
+      table { width:*; }
+      table input { display: block; vertical-align:middle;}
+      tr.done > td.subject { text-decoration:line-through; }
+      th { width:*; }
+      th[field] { behavior:clickable; }
+
+      th.sorted { background: url(stock:arrow-down) no-repeat 100% 50%; }
+    </style>
+    
+    <script type="text/tiscript">
+
+      include "../plus.tis"; // model below uses @observing decorator defined in plus.tis
+  
+      namespace Todo // our model
+      {  
+        var items = [ {index: 0,subject:"Basic variable binding demo", done:true},
+                      {index: 1,subject:"Basic function binding demo", done:true},
+                      {index: 2,subject:"Basic repeatable demo", done:true},
+                      {index: 3,subject:"Repeatable table", done:true},
+                      {index: 4,subject:"CSS class binding", done:true},
+                      {index: 5,subject:"Repeatable filtering demo", done:false},
+                      {index: 6,subject:"UI events handling, Plus flavour", done:false},
+                    ];
+
+        var sortField = undefined;
+
+        var filter = {
+          status: null,
+          subject: ""
+        };
+
+        var filteredItems = items.clone();        
+
+        @observing "filter.*",
+                   "sortField" 
+          function itemsToView() 
+          {
+
+            function flt(r) {
+              if(filter.status != null && r.done != filter.status) return false;
+              if(filter.subject != "" && r.subject.indexOf(filter.subject) < 0) return false;
+              return true;
+            }
+            var out = Todo.items.filter(flt);
+
+            switch(Todo.sortField) {
+              case #done: out.sort(function(r1,r2) { return !r1.done && r2.done ? -1: 0 }); break;
+              case #index: out.sort(function(r1,r2) { return r1.index - r2.index }); break;
+              case #subject: out.sort(function(r1,r2) { return r1.subject.lexicalCompare(r2.subject) }); break;
+            }
+            
+            // merge 
+            Todo.filteredItems.splice(0,Todo.filteredItems.length, ...out);          
+          }
+      }
+
+      event click $(th[field]) (evt,th) {
+        Todo.sortField = symbol(th.attributes["field"]);
+      }    
+
+    </script>
+  </head>
+
+<body model="Todo"> <!-- define data model we observe -->
+
+  <note>Table below is bound with <code>Todo.items</code> array and uses filtering and ordering (click on column header).
+  <br>The switch allows to select filter you need.</note>
+
+  Show <switch(filter.status)> <!-- defines filter variations -->
+    <option value="null">All</option>
+    <option value="false">Pending</option>
+    <option value="true">Complete</option>
+  </switch>
+
+  <input|text(filter.subject) novalue="text to lookup"/>
+  
+  <!-- the repeateable section bound with the filter variable -->
+  <table border fixedlayout>
+    <thead>
+      <tr>
+        <th field="done" class='{{sorted:sortField == #done}}' >Done</th>
+        <th field="index" class='{{sorted:sortField == #index}}' >Index</th>
+        <th field="subject" class='{{sorted:sortField == #subject}}' >Subject</th>
+      </tr>
+    </thead>
+    <tbody each="item in filteredItems">
+      <tr class="{{done:item.done}}">
+         <td><input|checkbox(item.done)/></td>
+         <td(item.index)/>
+         <td(item.subject).subject/>
+      <tr>
+    </tbody>
+  </table>
+ 
+  
+</body>
+</html>
