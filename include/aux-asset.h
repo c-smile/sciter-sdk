@@ -150,7 +150,7 @@ namespace aux {
 
 }
 
-#if defined(_WINDOWS)
+#if defined(WINDOWS)
 
 namespace com {
 

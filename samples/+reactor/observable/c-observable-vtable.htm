@@ -1,0 +1,95 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+main { size:*; }
+
+table { flow:table-fixed; border:2dip solid #ccc; background:#fff; size:*; border-spacing:0; }
+table > thead > tr > th { width:*; }
+table > tbody > tr { line-height:1.8em; border-left:0.5em solid transparent; }
+table > tbody > tr:current { background:highlight; color: highlighttext; }
+table > tbody > tr:checked { color:red; }
+
+        </style>
+        <script type="text/tiscript">
+
+include "../reactor.observable.tis";
+include "../components/vlist/vlist.tis";
+
+function recordsGenerator() {
+  var out = [];
+  for(var i in 5) out.push 
+    { 
+      key:String.UID(),
+      name: String.$(item {i}),
+      status: rand(2) != 0
+    };
+  return out;
+}
+
+@observable
+  namespace Data 
+{
+  var records = recordsGenerator();
+}
+
+class BoundVTable : Reactor.Component {
+
+  function this(props) {
+    this.detached = Reactor.observe(this,"Data.records*");
+  }
+
+  function render() 
+  {
+      return <VTable multiselect={true} recordset={Data.records} >
+        <columns>
+          <th>Key</th>
+          <th>Name</th>
+          <th>Status</th>
+        </columns>
+        { 
+          function(record,index) { // function generating single row
+            return 
+              <tr key={record.key} 
+               :current={this.currentRecord===record} 
+               :checked={this.isSelected(record)}>
+                <td>{record.key}</td>
+                <td>{record.name}</td>
+                <td>{record.status}</td>
+              </tr>;
+          }
+        }
+      </VTable>
+  }
+}
+
+
+var counter = 0;
+
+event click $(button#insert-record) {
+  Data.records.unshift{
+      key:String.UID(),
+      name: String.$(new item {--counter}),
+      status: rand(2) != 0
+  };
+}
+
+event click $(button#change-record) {
+  Data.records[0].name = String.$(new item {--counter});
+}
+
+        </script>
+    </head>
+    <body>
+      <p>Demo of simple virtual list component &lt;VList>.</p>
+      <p>The caller shall suply record view producer function.</p>
+      <p>The list supports multiselection (CTRL+CLICK).</p>
+
+      <button#insert-record>Insert record</button>
+      <button#change-record>Change first record</button>
+
+      <reactor|BoundVTable />
+
+    </body>
+</html>

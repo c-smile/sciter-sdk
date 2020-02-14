@@ -61,7 +61,7 @@ function flatList(groups) {
 }
 
 function recordView(record,index) { // function generating single row
-  const isCurrent = this.currentRecord===record
+  const isCurrent = this.currentRecord === record;
   if(record.group)
     return
       <tr.group key={record.key} :current={isCurrent} :expanded={record.expanded}>
@@ -80,13 +80,14 @@ var vtable;
 
 function recordsetView() {
   return 
-  <VTable recordset={flatList(groups)} @{vtable}>
+  <VTable recordset={flatList(groups)} 
+          recordview={recordView}
+          @{vtable}>
     <columns>
       <th>First</th>
       <th>Second</th>
       <th>Third</th>
     </columns>
-    { recordView }
   </VTable>;
 }
 
@@ -94,15 +95,13 @@ function recordsetView() {
 // mount
 $(main).content(recordsetView());
 
-
 event click $(tr.group) {
   const key = this.attributes["key"];
   var group = groups.find( :g: g.key == key );
   assert group;
   group.expanded = !group.expanded;
   // request to update with new flatList representation
-  //debug log: vtable, vtable instanceof VTable;
-  vtable.recordset = flatList(groups);
+  vtable.update {recordset:flatList(groups)};
 }
 
         </script>

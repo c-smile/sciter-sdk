@@ -6,10 +6,6 @@
 main { size:*; }
 
 table { border:2dip solid #ccc; background:#fff; size:*; border-spacing:0; }
-table > thead > tr > th { width:*; }
-table > tbody > tr { line-height:1.8em; border-left:0.5em solid transparent; }
-table > tbody > tr:current { background:highlight; color: highlighttext; }
-table > tbody > tr:checked { color:red; }
 
         </style>
         <script type="text/tiscript">
@@ -20,21 +16,23 @@ function recordsGenerator() {
   var out = [];
   for(var i in 5000) out.push 
     { 
-      key:i,
+      key:i.toString(),
       field1: String.$({i}.1),
       field2: String.$({i}.2),
-      field3: String.$({i}.3)
+      field3: String.UID()
     };
   return out;
 }
 
+var table;
+var records = recordsGenerator();
 
 $(main).content( 
-  <VTable multiselect="true" recordset={recordsGenerator()} >
+  <VTable #grid multiselect sortable recordset={records} @{table}>
     <columns>
-      <th>First</th>
-      <th>Second</th>
-      <th>Third</th>
+      <th field="field1">First</th>
+      <th field="field2">Second</th>
+      <th field="field3">Third</th>
     </columns>
     { 
       function(record,index) { // function generating single row
@@ -44,18 +42,31 @@ $(main).content(
            :checked={this.isSelected(record)}>
             <td>cell {record.field1}</td>
             <td>cell {record.field2}</td>
-            <td>cell {record.field3}</td>
+            <td>{record.field3}</td>
           </tr>;
       }
     }
   </VTable>);
 
+event click $(button#check-all) {
+  function reducer(map, record) { map[record.key] = record; return map; } // converts vector to map
+  table.selectedRecords = records.reduce(reducer, {});
+  return true;
+}
+
+event click $(button#clear-all) {
+  table.selectedRecords = {};
+  return true;
+}
+
         </script>
     </head>
     <body>
-      <p>Demo of simple virtual list component &lt;VList>.</p>
+      <p>Demo of simple virtual list component &lt;VTable>.</p>
       <p>The caller shall suply record view producer function.</p>
-      <p>The list supports multiselection (CTRL+CLICK).</p>
+      <p>The grid supports multiselection (CTRL+CLICK) and sorting (CLICK on column header).</p>
       <main></main>
+      <button#check-all>Check All</button>
+      <button#clear-all>Clear All</button>
     </body>
 </html>

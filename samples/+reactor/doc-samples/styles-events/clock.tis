@@ -4,7 +4,11 @@ class Clock: Reactor.Component
 {
   const styleset = ["clock", $url(clock.css)]; // style set declaration
 
-  this var data = { time: new Date() }; // setting initial state 
+  this var time = new Date(); // setting initial state 
+
+  function this(props,kids,states,parent) {
+    stdout.println(props,kids,states,parent);
+  }
 
   function attached() { // a.k.a. React::componentDidMount
     this.timer(1s, function() {
@@ -17,7 +21,7 @@ class Clock: Reactor.Component
     return
      <clock>
       <div.greeting>Hello, world!</div>
-      <div>It is <span.time>{this.data.time.toLocaleString(#time)}</span> now!</div>
+      <div>It is <span.time>{this.time.toLocaleString(#time)}</span> now!</div>
      </clock>;
   } 
 }

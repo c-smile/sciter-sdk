@@ -4,12 +4,12 @@ include "sciter:reactor.tis";
 class Tabs : Reactor.Component {
 
   // "master" style set - gives default and runtime styles critical to the operation 
-  const styleset = [ "tabs", $url(tabs.css) ];
+  const styleset = [tabs: $url(tabs.css) ];
 
   function this(atts,kids) {
     this.kids = kids || [];
     this.atts = atts || {};
-    this.data = { currentTab: kids[0][0].name || kids[0][0].label };
+    this.currentTab = this.currentTab || kids[0][0].name || kids[0][0].label;
   }
 
   function attached() { 
@@ -21,7 +21,8 @@ class Tabs : Reactor.Component {
     const ATTS = 0; // indexes
     const KIDS = 1; 
 
-    var currentTab = this.data.currentTab; 
+    //var currentTab = this.data.currentTab; 
+    var currentTab = this.currentTab;
     var labels = [];
     var tabContent = [];
     var extSource;
@@ -40,7 +41,7 @@ class Tabs : Reactor.Component {
     return <tabs><stripe>{labels}</stripe><div>{tabContent}</div></tabs>;
   }
 
-  event click $(stripe>label:not(:current)) (evt,label) { return this.activateTab(label); }
+  event mousedown $(stripe>label:not(:current)) (evt,label) { return this.activateTab(label); }
 
   event keydown (evt) 
   { 

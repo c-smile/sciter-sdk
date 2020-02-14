@@ -249,7 +249,7 @@ enum GFX_LAYER
   } SIZE, *PSIZE, *LPSIZE;
 
 #if defined(WINDOWLESS)
-  #define HWINDOW LPVOID 
+  #define HWINDOW void * 
 #else 
   #define HWINDOW GtkWidget* //
 #endif

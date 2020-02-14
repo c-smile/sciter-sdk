@@ -1,0 +1,111 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+#grid { 
+  font: system;
+  border:2dip solid #ccc; 
+  background:#fff; 
+  size:*; 
+}
+
+#grid > form.filter {
+  flow:horizontal;
+  padding:0.5em;
+  border-spacing:0.5em;
+  vertical-align:middle;
+}
+
+#grid > div.stats { background:#eee; text-align:center; }
+
+table { size:*; border-spacing:0; }
+table > thead { behavior:column-resizer; }
+//table > thead > tr > th { behavior:clickable; line-height:2em; width:*; text-align:left; padding-left:1em; background-repeat:no-repeat; background-position:0.25em 50%; }
+//table > thead > tr > th[order="asc"] { background-image:url(stock:arrow-down); }
+//table > thead > tr > th[order="desc"] { background-image:url(stock:arrow-up); }
+//table > tbody > tr { line-height:1.8em; border-left:0.5em solid transparent; }
+//table > tbody > tr:current { background:highlight; color: highlighttext; }
+
+        </style>
+        <script type="text/tiscript">
+
+include "vlist.tis";
+
+function recordsGenerator() {
+  var out = [];
+  for(var i in 5000) out.push 
+    { 
+      key:String.UID(),
+      name: String.$(item {i}),
+      status: rand(2) != 0
+    };
+  return out;
+}
+
+var records = recordsGenerator();
+
+
+
+// function providing view of single row
+function recordView(record,index) { 
+  return 
+    <tr key={record.key} 
+     :current={this.currentRecord===record} 
+     :checked={this.isSelected(record)}>
+      <td>{record.name}</td>
+      <td>{record.key}</td>
+      <td>{record.status}</td>
+    </tr>;
+}
+
+function statsView() {
+  return <div.stats>
+      records: <b>{this.filteredset.length}</b> of <b>{this.recordset.length}</b>,
+      selected: <b>{this.selectedRecords.length}</b>
+    </div>
+}
+
+// function returning true if the record matches current filter values (in this variable)
+function recordFilter(record) { 
+  if(this.name && record.name.indexOf(this.name) < 0) return false;
+  if(this.key && record.key.indexOf(this.key) < 0) return false;
+  if(typeof this.status == #boolean && record.status != this.status) return false;
+  return true;
+}
+
+
+function Grid() {
+  return <VTableFiltered recordset={records} 
+                         recordview={recordView}
+                         statsview={statsView}
+                         filter={recordFilter}
+                         multiselect={true} >
+    <filter>
+      <input|text(name) novalue="name" />
+      <input|text(key)  novalue="key" />
+      <select(status)>
+        <option value="undefined">Any status</option>
+        <option value="true">True status</option>
+        <option value="false">False status</option>
+      </select>
+    </filter>
+    <columns>
+      <th field="name">Name</th>
+      <th field="key">Key</th>
+      <th field="status">Status</th>
+    </columns>
+  </VTableFiltered>;  
+}
+
+        </script>
+    </head>
+    <body>
+      <p>Demo of simple virtual list component &lt;VList>.</p>
+      <p>The caller shall supply record view producer function.</p>
+      <p>The list supports multiselection (CTRL+CLICK).</p>
+
+      <reactor|Grid #grid />
+
+    </body>
+</html>

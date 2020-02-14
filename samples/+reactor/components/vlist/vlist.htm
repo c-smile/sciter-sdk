@@ -17,9 +17,11 @@ include "vlist.tis";
 
 function recordsGenerator() {
   var out = [];
-  for(var i in 1000) out.push {key:i};
+  for(var i in 1000) out.push {key:i.toString()};
   return out;
 }
+
+var records = recordsGenerator();
 
 function renderRecord(record,index) {
   return <li key={record.key} 
@@ -29,9 +31,9 @@ function renderRecord(record,index) {
 
 $(main).content(
   <VList
-    multiselect="true"
-    recordset={recordsGenerator()}
-    record={renderRecord} />);
+    multiselect
+    recordset={records}
+    recordview={renderRecord} />);
 
         </script>
     </head>

@@ -2,8 +2,37 @@
     <head>
         <title>Test</title>
         <style></style>
-        <script type="text/tiscript"></script>
+        <script type="text/tiscript">
+
+include "sciter:reactor.tis";        
+
+var ref;
+var refp;
+
+class TestRef : Reactor.Component {
+  function this(props,kids) {}
+  function render() { 
+    return <div><p @{refp}>Hello world with ref</p></div>; 
+  }
+}
+
+function self.ready() {
+
+  $(main).content(<TestRef @{ref} />);
+
+  assert ref.tag == #div;
+  assert refp.tag == #p;
+ 
+  $(pre#out).text = "Test passed: ref:<" + ref.tag + "> element, refp:<" + refp.tag + "> element"; 
+
+}
+
+
+        </script>
     </head>
     <body>
+       <p>Demo of SSX references: @{variable} </p>
+       <main/>
+       <pre#out/>
     </body>
 </html>

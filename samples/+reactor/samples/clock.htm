@@ -8,7 +8,7 @@ include "sciter:reactor.tis";
 
 class Clock: Reactor.Component 
 {
-  this var data = { time: new Date() }; // setting initial state 
+  this var time = new Date(); // setting initial state 
 
   function attached() { // a.k.a. React::componentDidMount
     this.timer(1s, function() {
@@ -21,7 +21,7 @@ class Clock: Reactor.Component
     return
       <div>
         <h1>Hello, world!</h1>
-        <h2>It is {this.data.time.toLocaleString(#time)} now.</h2>
+        <h2>It is {this.time.toLocaleString(#time)} now.</h2>
       </div>;
   } 
 } 

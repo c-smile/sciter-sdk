@@ -69,6 +69,8 @@ public:
 #include "resources.cpp"
 
 int uimain(std::function<int()> run ) {
+    
+  //SciterSetOption(NULL, SCITER_SET_GFX_LAYER, GFX_LAYER_SKIA);
 
   // enable features to be used from script
   SciterSetOption(NULL, SCITER_SET_SCRIPT_RUNTIME_FEATURES, 

@@ -36,6 +36,20 @@ workspace "sciter.sdk"
     buildoptions { "-fobjc-arc" }
   filter "system:linux"
     location "build.linux"
+    defines { "_GNU_SOURCE" }
+    buildoptions {
+     "`pkg-config gtk+-3.0 --cflags`",      
+     "`pkg-config fontconfig --cflags`",
+     "-fPIC",
+     "-Wno-unknown-pragmas",
+     "-Wno-write-strings",
+     "-ldl",
+    }
+    linkoptions { 
+      "-fPIC",
+      "-pthread",
+    }
+
   filter {}
 
   includedirs { "include" }  
@@ -91,6 +105,9 @@ project "usciter"
     files {"include/sciter-osx-main.mm"}
   filter "system:linux"
     files {"include/sciter-gtk-main.cpp"}
+    buildoptions {
+       "`pkg-config gtk+-3.0 --cflags`"
+    }
     linkoptions { 
        "`pkg-config gtk+-3.0 --libs`",
        "`pkg-config fontconfig --libs`",
@@ -280,7 +297,6 @@ if _TARGET_OS == "windows" then
  project "wsciter"
     kind "WindowedApp"
     language "C++"
-    -- location "build"
 
     dpiawareness "HighPerMonitor"
 
@@ -296,6 +312,7 @@ if _TARGET_OS == "windows" then
             "include/behaviors/behavior_native_textarea.cpp",
             "include/behaviors/behavior_tabs.cpp",
             "include/behaviors/behavior_video_generator.cpp",
+            "include/behaviors/behavior_camera_capture.cpp",
             "demos/sciter/res/dpi-aware.manifest" }
 
     settargetdir() 

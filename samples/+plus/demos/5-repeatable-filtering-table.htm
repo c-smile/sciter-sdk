@@ -22,19 +22,20 @@
   
       namespace Todo // our model
       {  
-        var items = [ {index: 0,subject:"Basic variable binding demo", done:true},
-                      {index: 1,subject:"Basic function binding demo", done:true},
-                      {index: 2,subject:"Basic repeatable demo", done:true},
-                      {index: 3,subject:"Repeatable table", done:true},
-                      {index: 4,subject:"CSS class binding", done:true},
-                      {index: 5,subject:"Repeatable filtering demo", done:false},
-                      {index: 6,subject:"UI events handling, Plus flavour", done:false},
+        var items = [ {group: "A",subject:"Basic variable binding demo", done:true},
+                      {group: "A",subject:"Basic function binding demo", done:true},
+                      {group: "B",subject:"Basic repeatable demo", done:true},
+                      {group: "B",subject:"Repeatable table", done:true},
+                      {group: "C",subject:"CSS class binding", done:true},
+                      {group: "A",subject:"Repeatable filtering demo", done:false},
+                      {group: "B",subject:"UI events handling, Plus flavour", done:false},
                     ];
 
         var sortField = undefined;
 
         var filter = {
           status: null,
+          group: "",
           subject: ""
         };
 
@@ -47,14 +48,14 @@
 
             function flt(r) {
               if(filter.status != null && r.done != filter.status) return false;
+              if(filter.group != "" && r.group.indexOf(filter.group) < 0) return false;
               if(filter.subject != "" && r.subject.indexOf(filter.subject) < 0) return false;
               return true;
             }
             var out = Todo.items.filter(flt);
-
             switch(Todo.sortField) {
               case #done: out.sort(function(r1,r2) { return !r1.done && r2.done ? -1: 0 }); break;
-              case #index: out.sort(function(r1,r2) { return r1.index - r2.index }); break;
+              case #group: out.sort(function(r1,r2) { return r1.group.lexicalCompare(r2.group) }); break;
               case #subject: out.sort(function(r1,r2) { return r1.subject.lexicalCompare(r2.subject) }); break;
             }
             
@@ -63,9 +64,25 @@
           }
       }
 
-      event click $(th[field]) (evt,th) {
-        Todo.sortField = symbol(th.attributes["field"]);
+      event click $(th[field]) (evt) {
+        var sym = symbol(this.attributes["field"]);
+        if( sym == Todo.sortField)
+          Todo.sortField = undefined;
+        else
+          Todo.sortField = sym;
       }    
+
+      event click $(#set-all-done) {  for(var item in Todo.items) item.done = true; }
+      event click $(#set-all-pending) {  for(var item in Todo.items) item.done = false; }
+
+      function self.ready() {
+        // populate group select
+        var gs = $(select#group);
+        var groups = Todo.items.reduce(function(acc,r){ acc[r.group] = true; return acc; }, {});
+        for( var group in Object.keys(groups).sort() )
+          gs.options.$append(<option value="{group}">{group}</option>);
+
+      }
 
     </script>
   </head>
@@ -74,32 +91,42 @@
 
   <note>Table below is bound with <code>Todo.items</code> array and uses filtering and ordering (click on column header).
   <br>The switch allows to select filter you need.</note>
-
-  Show <switch(filter.status)> <!-- defines filter variations -->
-    <option value="null">All</option>
-    <option value="false">Pending</option>
-    <option value="true">Complete</option>
-  </switch>
-
-  <input|text(filter.subject) novalue="text to lookup"/>
   
   <!-- the repeateable section bound with the filter variable -->
   <table border fixedlayout>
+    <tbody.filter>
+      <tr>
+        <td>
+          <select(filter.status)> <!-- defines filter variations -->
+            <option value="null">All</option>
+            <option value="false">Pending</option>
+            <option value="true">Complete</option>
+          </select>
+        </td>
+        <td><select(filter.group) #group><option value="">All</option></td>
+        <td>
+          <input|text(filter.subject) novalue="text to lookup"/>
+        </td>
+      </tr>
+    </tbody>
     <thead>
       <tr>
         <th field="done" class='{{sorted:sortField == #done}}' >Done</th>
-        <th field="index" class='{{sorted:sortField == #index}}' >Index</th>
+        <th field="group" class='{{sorted:sortField == #group}}' >Group</th>
         <th field="subject" class='{{sorted:sortField == #subject}}' >Subject</th>
       </tr>
     </thead>
     <tbody each="item in filteredItems">
       <tr class="{{done:item.done}}">
          <td><input|checkbox(item.done)/></td>
-         <td(item.index)/>
+         <td(item.group)/>
          <td(item.subject).subject/>
       <tr>
     </tbody>
   </table>
+
+  <button#set-all-done>Set all done</button>
+  <button#set-all-pending>Set all pending</button>
  
   
 </body>

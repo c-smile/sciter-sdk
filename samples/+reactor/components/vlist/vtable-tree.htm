@@ -141,8 +141,7 @@ event click $(tr.node > td > caption) {
   assert group;
   group.expanded = !group.expanded;
   // request to update with new flatList representation
-  var list = flatList(tree);
-  vtable.recordset = list;
+  vtable.update { recordset : flatList(tree) };
 }
 
         </script>
