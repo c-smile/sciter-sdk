@@ -8,20 +8,27 @@ event click $(#test) {
   var obj = {foo:12, bar:43};
   var arr = [1,2,3,4,5,6,7,8,9,10];
   var v = 12;
-  debug : "debug output, no label";
-  debug info: "info sample, object and array:" obj arr;
-  debug alert: "alert sample, integer and DOM element:" v self;
-  debug warning: "warning sample, namespace:" self.ns;
-  debug custom: "custom label, custom" self.ns;
-  debug foo: "custom label, foo";
-  debug bar: "custom label, bar" obj;
+  var msg = "Hello world";
+  debug (debug output, stringizer form:);
+  debug info (info sample, object and array: {obj} {arr});
+  debug alert (alert sample, integer and DOM element:{this});
+  debug warning (warning sample, namespace: {self.ns});
+  debug custom (custom label, custom: {self.ns});
+  debug foo (custom label, foo);
+  debug bar (custom label {obj});
+
+  // debug, just variables:
+  debug (just variables, simple form:);
+  debug info : obj, arr;
+  debug alert : msg;
+
 }
 
 event click $(#test-assert) {
   var obj = {foo:12, bar:43};
   var arr = [12, 43];
   var v = 12;
-  assert v == 42: "v=" v;
+  assert v == 42: v;
 }
 
         </script>
