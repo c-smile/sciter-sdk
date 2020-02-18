@@ -10,7 +10,7 @@
   <p><code>el.style[&quot;background-color&quot;] = &quot;red&quot;; // is an equivalent of</code></p>
   <p><code>el.style#background-color = &quot;red&quot;; // extended &quot;symbol&quot; notation</code></p>
   <p>To clear particular CSS attribute value that was set in runtime simply assign <em>undefined</em> value to it:</p>
-  <p><font face="Courier New"><code>el.style#background-color = undefined; // </code></font>clear runtime style attribute - its computed value will be determined by normal CSS cascading process.</p>
+  <p> <font face="Courier New"><code>el.style#background-color = undefined; // </code></font>clear runtime style attribute - its computed value will be determined by normal CSS cascading process.</p>
   <dl>
     <h2>Properties</h2>
     <dt>[attname]</dt>
@@ -18,7 +18,7 @@
       <div><em>string</em>, value of style attribute <em>attname </em>(CSS). В <em>attname </em>here is a string or a symbol. Read-write index accessor.</div>
       <p>See <a href="http://www.terrainformatica.com/htmlayout/cssmap.whtm">list of supported names of CSS attributes</a>.</p>
       <p>To clear value of style attribute assign <em>undefined</em> value to it:</p>
-      <p><font face="Courier New">el.style#background-color = undefined;</font></p></dd>
+      <p> <font face="Courier New">el.style#background-color = undefined;</font></p></dd>
     
 		
 		<dt>backgroundImage</dt><dd><i>Image | null</i>, background image if it is defined in CSS.</dd>
@@ -34,7 +34,9 @@
       <div><em>integer</em> | <em>undefined</em>, width in pixels of foreground image if it is available or <em>undefined</em> if foreground image is unavailable.</div></dd>
     <dt>foregroundImageHeight</dt>
     <dd>
-      <div><em>integer</em> | <em>undefined</em>, height in pixels of foreground image if it is available or <em>undefined</em> if foreground image is unavailable.</div></dd>
+      <div><em>integer</em> | <em>undefined</em>, height in pixels of foreground image if it is available or <em>undefined</em> if foreground image is unavailable.</div>
+			</dd><dt>isDormant</dt>
+		<dd>true | false, true if used style of the element has <code>display:none</code> or <code>visibility:none</code> defined - element is excluded from layout and rendering completely.</dd>
     <h2>Methods</h2>
     <dt>clear</dt>
     <dd>
@@ -70,9 +72,9 @@
     <dd>
       <div><strong>( </strong><em>name</em>: string | symbol<strong> ) </strong>returns: value | array</div>
       <p>Returns value of CSS constant defined in CSS. It could be single value for the case (CSS):</p>
-      <p><font face="Courier New">@const SINGLE: #ff007f;</font></p>
+      <p> <font face="Courier New">@const SINGLE: #ff007f;</font></p>
       <p>or array for the case like:</p>
-      <p><font face="Courier New">@const MULTY: 12px 14px;</font></p></dd>
+      <p> <font face="Courier New">@const MULTY: 12px 14px;</font></p></dd>
     <dt>dimension</dt>
     <dd>
       <div>(<em>width</em>: length | int | undefined, <em>height</em>: length | int | undefined [, <em>delayed</em>: false | true] )</div>
@@ -83,7 +85,7 @@ elem.style.height = ... ;
       <p>The only difference is when last parameter <em>delayed</em> = <code>true</code> is provided. With it the method changes dimensions of the element immediately and defers remeasurement of children for some later time. It makes sense to use this method if you need to update dimensions of the <em>overflow:auto | scroll</em> element with many children in response of some frequent events like MOUSE_MOVE (E.g. in custom splitter implementation). In this case mutiple MOUSE_MOVEs will end up in only one remeasurement of element's content.</p></dd>
     <dt>documentRules</dt>
     <dd>
-      <div>(<em/>[<em>callback</em>: function] [, <em>filter</em>: object ] ) : integer</div>
+      <div>(<em></em>[<em>callback</em>: function] [, <em>filter</em>: object ] ) : integer</div>
       <p>Enumerates CSS rules defined and used by the document. Returns number of rules processed.</p>
       <p>Where:</p>
       <ul>

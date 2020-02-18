@@ -24,9 +24,9 @@
     &lt;/body&gt;
 &lt;/html&gt;</pre>
 	<h2>&lt;reactor&gt; element</h2>
-	<p>The &lt;reactor&gt; element knows about and interprets these two DOM attributes:</p>
+	<p>The <code>&lt;reactor&gt;</code> element knows about and interprets these two DOM attributes:</p>
 	
-	<ul><li><code>name</code> - string, accepts the following:<ul></ul><ol><li>if it is a string starting from <i>lower case letter</i> then it is treated as <i>DOM element</i> tag, for eample: div, section, ol, li, etc.&nbsp;</li><li>if it starts from a <i>capital letter</i> then it is treated as a name of component - Reactor's function or class declared elsewhere in code.</li><li>if it is <i>omitted</i> then content of the &lt;reactor&gt; element will replace the&nbsp;&lt;reactor&gt; element itself.</li></ol></li>
+	<ul><li><code>type</code> - string, accepts the following:<ul></ul><ol><li>if it is a string starting from <i>lower case letter</i> then it is treated as <i>DOM element</i> tag, for example: div, section, ol, li, etc.&nbsp;</li><li>if it starts from a <i>capital letter</i> then it is treated as a name of component - Reactor's function or class declared elsewhere in code.</li><li>if it is <i>omitted</i> then content of the &lt;reactor&gt; element will replace the&nbsp;&lt;reactor&gt; element itself.</li></ol></li>
 		<li><code>src</code> - url. This attribute is used when the <i>name</i> defines Reactor's component (case #2 above). If <i>src</i> is provided then the engine will try to load component from script file loaded from the url.</li>
 		
 		
@@ -38,7 +38,7 @@
           var name = &quot;World&quot;;
         &lt;/script&gt;
     &lt;/head&gt;
-    &lt;reactor(body)&gt;
+    &lt;reactor<b>|body</b>&gt;
          &lt;h1&gt;Hello {name}&lt;/h1&gt;
     &lt;/reactor&gt;
 &lt;/html&gt;</pre>
@@ -50,9 +50,9 @@
           var name = &quot;World&quot;;
         &lt;/script&gt;
     &lt;/head&gt;
-    &lt;body&gt;
+    &lt;<b>body</b>&gt;
          &lt;h1&gt;Hello world&lt;/h1&gt;
-    &lt;/body&gt;
+    &lt;/<b>body</b>&gt;
 &lt;/html&gt;</pre>
 
 	<p></p></body></html>

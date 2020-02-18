@@ -182,7 +182,7 @@
         //if(!view.inspectorIsPresent()) // native function, defined in sciter.cpp
         System.exec( System.home("inspector.exe") );
         // give it a time to start ...
-        this.timer(200ms, function() {
+        this.timer(600ms, function() {
           if( var connectToInspector = view.connectToInspector )
             connectToInspector($(frame#content));
         });

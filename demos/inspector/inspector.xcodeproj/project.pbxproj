@@ -16,6 +16,7 @@
 
 /* Begin PBXFileReference section */
 		491DA15C1B6C1A8A000B7A66 /* inspector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = inspector.cpp; sourceTree = "<group>"; };
+		4958E15323F6F23700B7ADF3 /* inspector.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = inspector.entitlements; sourceTree = "<group>"; };
 		49D1E9241B6C1648006FB89A /* inspector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = inspector.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49D1E9281B6C1649006FB89A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		49D1E9291B6C1649006FB89A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -56,6 +57,7 @@
 		49D1E9261B6C1648006FB89A /* inspector */ = {
 			isa = PBXGroup;
 			children = (
+				4958E15323F6F23700B7ADF3 /* inspector.entitlements */,
 				49D1E9471B6C177B006FB89A /* sciter-osx-main.mm */,
 				49D1E9291B6C1649006FB89A /* AppDelegate.h */,
 				49D1E92A1B6C1649006FB89A /* AppDelegate.m */,
@@ -106,7 +108,7 @@
 					49D1E9231B6C1648006FB89A = {
 						CreatedOnToolsVersion = 6.3.2;
 						DevelopmentTeam = 642T6M376L;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -272,12 +274,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = inspector/inspector.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = ../../bin.osx;
 				DEVELOPMENT_TEAM = 642T6M376L;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -286,7 +289,7 @@
 				INFOPLIST_FILE = inspector/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				PRODUCT_BUNDLE_IDENTIFIER = "terrainformatica.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = terrainformatica.dominspector;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
@@ -296,12 +299,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = inspector/inspector.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = ../../bin.osx;
 				DEVELOPMENT_TEAM = 642T6M376L;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -310,7 +314,7 @@
 				INFOPLIST_FILE = inspector/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				PRODUCT_BUNDLE_IDENTIFIER = "terrainformatica.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = terrainformatica.dominspector;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 			};

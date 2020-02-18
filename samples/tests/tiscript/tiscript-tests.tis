@@ -173,6 +173,17 @@ function Array_test()
   assert a1.length == 7 : "splice2";
   assert a1[1] == 5     : "splice3";
   assert a1.last == 10  : "splice4";
+
+  {
+    var a = [0,1,2]; a.splice(0,2,3);
+    assert a == [3,2];
+  }
+  {
+    var a = [0,1,2]; a.splice(0,2,3,4,5);
+    assert a == [3,4,5,2];
+  }
+
+
   
   var a5 = [10,9,8,7,6,5,4,3,2,1];
   var a6 = a5.clone();
@@ -1557,8 +1568,8 @@ function destructurung_assignment_test() {
   }
 
   { // aliasing 
-    var {a:foo,b:bar,c:zap,c:zoo = 4} = obj;
-    assert foo == 1 && bar == 2 && zap == 3 && zoo == 4;
+    var {a:foo,b:bar,c:zap,d:zoo = 4} = obj;
+    assert foo == 1 && bar == 2 && zap == 3 && zoo == 4: foo,bar,zap,zoo;
   }
 
 
