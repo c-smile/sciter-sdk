@@ -43,6 +43,7 @@ class VList : Reactor.Component
 
   function attached() {
     this.paintContent = () => {
+      if(!this.first) return;
       this.itemHeight = Integer.max(10,this.first.box(#height,#border));
       this.visibleItems = this.box(#height,#client) / this.itemHeight; 
       this.paintContent = null; // we need this only once
@@ -56,6 +57,7 @@ class VList : Reactor.Component
   }
 
   function onSize() {
+    if(!this.first) return;    
     this.itemHeight = Integer.max(10,this.first.box(#height,#border));
     var visibleItems = this.box(#height,#client) / this.itemHeight;
     if( this.visibleItems != visibleItems ) 

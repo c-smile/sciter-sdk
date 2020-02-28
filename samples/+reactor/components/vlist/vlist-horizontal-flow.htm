@@ -1,0 +1,130 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+main { size:*; }
+
+vlist {
+  border:2dip solid #ccc; background:#fff;
+  overflow-x:hidden;
+}
+vlist > li { flow:horizontal; }
+vlist > li > i { 
+  display:block;
+  flow:text;
+  font-style: normal;
+  font-size:24dip;
+  line-height:48dip;
+  text-align:center;
+  height:48dip; 
+  width:*;
+  overflow:hidden;
+  border:1dip solid;
+}
+
+        </style>
+        <script type="text/tiscript">
+
+include "vlist.tis";
+
+const EMOJI_RANGES = 
+[ /*[0x0080,0x02AF], 
+  [0x0300,0x03FF], 
+  [0x0600,0x06FF], 
+  [0x0C00,0x0C7F], 
+  [0x1DC0,0x1DFF], 
+  [0x1E00,0x1EFF], 
+  [0x2000,0x209F], 
+  [0x20D0,0x214F], 
+  [0x2190,0x23FF], 
+  [0x2460,0x25FF], 
+  [0x2600,0x27EF], 
+  [0x2900,0x29FF], 
+  [0x2B00,0x2BFF],  
+  [0x2C60,0x2C7F], 
+  [0x2E00,0x2E7F], 
+  [0x3000,0x303F], 
+  [0xA490,0xA4CF], 
+  [0xE000,0xF8FF], 
+  [0xFE00,0xFE0F], 
+  [0xFE30,0xFE4F], 
+  [0x1F000,0x1F02F],
+  [0x1F0A0,0x1F0FF],*/ 
+  [0x1F100,0x1F64F], 
+  [0x1F680,0x1F6FF], 
+  [0x1F910,0x1F96B], 
+  [0x1F980,0x1F9E0]];
+
+function recordsGenerator() {
+  var out = [];
+  for(var range in EMOJI_RANGES)
+    for( var c = range.first; c <= range.last; ++c )
+      out.push {
+        text: String.fromCharCode(c),
+        code: c 
+      };
+  return out;
+}
+
+var emojis = recordsGenerator();
+
+// implements horizontal-flow alike virtual list
+class VEmojiList : VList 
+{
+  const IMAGE_APPROXIMATE_WIDTH = 48dip;
+
+  this var itemsPerRow;
+
+  function this(props,kids) {
+    super({
+      recordset: [],
+      recordview: renderRow 
+    }, kids);
+  }
+  
+  function onSize() 
+  { 
+    super.onSize();
+    //this.timer(40ms, reflowRows);// throttled resize if needed
+    this.reflowRows();
+  }
+
+  // produces rows with number sub items dependent on  
+  function reflowRows() {
+    var w = this.box(#width);
+    var itemsPerRow = Integer.max(1, w / this.toPixels(IMAGE_APPROXIMATE_WIDTH));
+    if(this.itemsPerRow === itemsPerRow)
+      return;
+    this.itemsPerRow = itemsPerRow;
+
+    var all = emojis;
+    var rows = [];
+    for( var n = 0; n < all.length; n += itemsPerRow) { 
+      var emojisInRow = all[n .. n + itemsPerRow]; // slice of the array
+      rows.push {
+        key: emojisInRow.first.text + ":" + emojisInRow.last.text,
+        emojis: emojisInRow
+      }
+    }
+    this.update { recordset: rows };
+  }
+
+  function renderRow(row,index) 
+  {
+    return 
+      <li key={row.key}>
+        { row.emojis.map( emoji => <i key={emoji.text} title={String.printf("0x%x",emoji.code)}>{emoji.text}</i> )}
+      </li>;
+  }
+
+}
+
+        </script>
+    </head>
+    <body>
+
+      <reactor|VEmojiList />
+
+    </body>
+</html>
