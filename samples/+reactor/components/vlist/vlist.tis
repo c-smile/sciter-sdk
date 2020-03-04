@@ -19,6 +19,7 @@ class VList : Reactor.Component
 
   this var recordset = [];
   this var multiselect = false;
+  this var recordsetLength = 0;
 
   this var selectedRecords = {}; // key -> record map
   this var currentRecord = null; // current record
@@ -52,6 +53,10 @@ class VList : Reactor.Component
   }
 
   function update(state = null) {
+    if( var recordset = state?.recordset ) {
+      if((this.swIndex + this.swLength) > recordset.length ) 
+        this.swIndex = Integer.max(0,recordset.length - this.swLength);
+    }
     super.update(state);
     this.post(this.resetPaddings);
   }
@@ -60,11 +65,13 @@ class VList : Reactor.Component
     if(!this.first) return;    
     this.itemHeight = Integer.max(10,this.first.box(#height,#border));
     var visibleItems = this.box(#height,#client) / this.itemHeight;
-    if( this.visibleItems != visibleItems ) 
-    {
+    if( this.visibleItems != visibleItems ) {
       this.visibleItems = visibleItems;
-      this.swLength = Integer.max(10,this.visibleItems + 1);
-      this.timer(40ms, function() {
+      this.timer(40ms, function() 
+      {
+        this.swLength = Integer.max(10,this.visibleItems + 1);
+        if((this.swIndex + this.swLength) > this.recordset.length )
+          this.swIndex = Integer.max(0,this.recordset.length - this.swLength);
         this.merge(this.render());
         this.resetPaddings();
       });
@@ -73,9 +80,7 @@ class VList : Reactor.Component
 
   function onScroll(evt) 
   {
-    if( evt.type != Event.SCROLL_POS ) 
-      return;
-
+    if( evt.type != Event.SCROLL_POS ) return;
     this.onScrollChange(evt.scrollPos); 
   }
 
@@ -128,7 +133,12 @@ class VList : Reactor.Component
     this.update { currentRecord: cr };
   }
 
-  function scrollToRecord(recordNo) {
+  event mouseup $(li,tr) (evt,li) {
+    if(li.state.current)   
+      li.postEvent("item-click");
+  }
+
+  function scrollToRecord(recordNo, animate = false) {
     var y1 = this.scroll(#top);
     var y2 = y1 + this.scroll(#height);
 
@@ -141,7 +151,7 @@ class VList : Reactor.Component
     else if( ry2 > y2 ) scrollPos = ry2 - (y2 - y1) + 1;
     else return true;
 
-    this.scrollTo(0,scrollPos,true);
+    this.scrollTo(0,scrollPos,animate);
     this.onScrollChange(scrollPos);
 
     return false;
@@ -152,7 +162,7 @@ class VList : Reactor.Component
     if( recordNo >= this.recordset.length ) recordNo = this.recordset.length - 1;
     var cr = this.recordset[recordNo];
     this.currentRecord = this.recordset[recordNo];
-    this.scrollToRecord(recordNo);
+    this.scrollToRecord(recordNo,true);
     this.update();
   }
 
@@ -168,6 +178,40 @@ class VList : Reactor.Component
       case Event.VK_DOWN:  this.setCurrent(currentIndex() + 1,evt); return true;
       case Event.VK_PRIOR: this.setCurrent(currentIndex() - this.visibleItems,evt); return true;
       case Event.VK_NEXT:  this.setCurrent(currentIndex() + this.visibleItems,evt); return true;
+      case Event.VK_SPACE:
+      case Event.VK_RETURN:
+        if (var li = this.$(>:current)) {
+          li.postEvent("item-click");
+          return true;
+        }
+        break;
+    }
+  }
+
+  // get/set current record
+  property current(v) {
+    get return this.currentRecord;
+    set this.update {currentRecord: v}
+  }
+
+  // this.current = record; + ensures its visibility 
+  function navigateTo(record) {
+    this.currentRecord = record;
+    if(record) { 
+      var recordNo = this.recordset.indexOf(v);
+      if( recordNo < 0 ) return;
+      this.scrollToRecord(recordNo);
+    }
+    this.update();
+  }  
+
+  // get/set recordset
+  property records(v) {
+    get return this.recordset;
+    set {
+      this.recordset = v || [];
+      this.scrollToRecord(0);
+      this.update();
     }
   }
 
