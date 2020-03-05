@@ -1,0 +1,86 @@
+
+class Tiles : Element 
+{
+
+  this var cells = [[null]];
+
+  function attached() {
+    for(var el in this)
+    {
+      var r = el.attributes["row"].toInteger();
+      var rs = (el.attributes["rows"] || 1).toInteger();
+      var c = el.attributes["col"].toInteger();
+      var cs = (el.attributes["cols"] || 1).toInteger();
+      this.setCellAt(el,r,c,rs,cs);
+    }
+    this.updateLayout();
+  }
+
+  function cellAt(row,col) { return this.cells[row][col]; }
+  function setCellAt(cell,row,col,rows = 1,cols = 1) 
+  { 
+    var tcols = col + cols; 
+    if( tcols > this.ncols ) for( var r in this.cells ) r.length = tcols;
+    var trows = row + rows; 
+    if( trows > this.nrows ) for( var n in (trows - this.nrows)) this.cells.push( new Array(this.ncols) );
+    for( var r = row; r < row + rows; ++r ) 
+      for( var c = col; c < col + cols; ++c )
+        this.cells[r][c] = cell;
+    if(cell) 
+      cell.tile = { row:row, col:col, rows:rows, cols:cols };
+  }
+
+  property ncols(v) { get return this.cells[0].length; }
+  property nrows(v) { get return this.cells.length; }
+
+  function updateLayout() {
+    const size = this.style.variable("cell-size") || 64dip;
+    const spacing = this.style["border-spacing"] || 2dip;
+    var nrows = this.nrows; var ncols = this.ncols;
+    for( var r in nrows ) 
+      for( var c in ncols ) {
+        var cell = this.cellAt(r,c);
+        if( !cell ) continue;
+        var {col,cols,row,rows} = cell.tile;
+        if(row == r && col == c )
+          cell.style.set { margin-left : col * size + col * spacing,
+                           margin-top  : row * size + row * spacing,
+                           width       : cols * size + (cols-1) * spacing,  
+                           height      : rows * size + (rows-1) * spacing }
+      }
+  }
+
+  event mousedragrequest $(div) (evt,cell) { 
+    var (xoff,yoff) = cell.box(#position,#inner,#parent);
+    xoff = evt.x - xoff; yoff = evt.y - yoff;
+    this.doDrag(cell,xoff,yoff); 
+    return true; 
+  }
+
+  function doDrag(cell,xoff,yoff) {
+
+    var ml = cell.style#margin-left;
+    var mt = cell.style#margin-top;
+
+    function mousemove(evt) {
+      cell.style.set { margin-left : px(evt.x - xoff),
+                       margin-top  : px(evt.y - yoff) };
+      view.update(true);
+      return true;
+    }
+
+    var cancelMove = false;
+    cell.state.dragsource = true;
+    this.capture(#strict);
+    this.on("mousemove",mousemove);
+    if(!view.doEvent(#untilMouseUp))
+      cancelMove = true;
+    this.off(mousemove);
+    this.capture(false);
+
+    cell.style.set { margin-left : ml,
+                     margin-top  : mt };
+    cell.state.dragsource = false;
+  }
+
+}

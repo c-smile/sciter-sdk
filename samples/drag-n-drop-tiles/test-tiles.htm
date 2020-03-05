@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+  .tiles {
+    prototype: Tiles url(tiles.tis);
+    flow:stack;
+    border-spacing: 4dip;
+    var(cell-size): 64dip;
+    border:1dip solid;
+  }
+
+  div { background:gold; 
+        transition: margin linear 300ms; }
+
+  div:drag-source 
+  {
+    z-index:1; 
+    box-shadow: 1dip 1dip 3dip #888;
+    background:morph(gold,lighten:25%); 
+  }
+
+        </style>
+        <script type="text/tiscript"></script>
+    </head>
+    <body>
+
+<section.tiles>
+
+  <div row=0 col=0>A</div>
+  <div row=0 col=1 rows=2>B</div>
+  <div row=2 col=0 cols=2>C</div>
+  <div row=1 col=2 rows=2>D</div>
+
+</section>
+
+
+    </body>
+</html>
