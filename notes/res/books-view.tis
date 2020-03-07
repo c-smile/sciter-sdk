@@ -1,110 +1,43 @@
-
-class BooksView : Element 
-{
-  function attached() {
-    this.$content(<option#all><i color=0>&nbsp;</i><span.name>All</span><span.count>{ db.getBookItemsCount(null) }</span></option>);
-    var optionAll = this[0];
-    //this[0].book = null;
-    var me = this;
-    self << event book-selected { me.show();  } 
-    self << event notes-filter-changed { me.show(); } 
-    self << event note-book-changed { me.updateCounters(); } 
-    self << event book-removed { me.show(); }
-    self << event book-updated { me.show(); }
-    self << event book-created { me.show(); }
-    self << event book-mapping-added { me.updateMapping(); }
-    self << event book-mapping-removed { me.updateMapping(); }
-
-    this.show();
-    optionAll.execCommand("set-current");
-  }
-
-  function show() 
-  {
-    var books = db.getBooks();
-    var i = 1;
-    var selopt = this[0];
-    for( var book in books) 
-    {
-      var elBook = this[i];
-      if( !elBook || (elBook.book !== book))
-        this.insert("<option/>", i);  
-      this[i].setBook(book);
-      if( book === currentBook ) 
-        selopt = this[i];
-      ++i;
-    }
-    while(i < this.length) this[i].remove();
-    if( !selopt.state.current )
-      selopt.execCommand("set-current");
-  }
-
-  event change (evt) {
-    if( evt.target !== this ) 
-      return;
-    var option = this.$(option:current);  
-    if( option.book )
-      setCurrentBook(option.book); 
-    else {
-      setCurrentBook(null);
-      setFilterTags(null);
-      setFilterText(null);
-    }
-    return true;
-  }
-
-  function updateCounters() {
-    for( var option in this )
-      option.updateCounter(); 
-  }
-
-  function updateMapping() {
-    for( var option in this ) {
-      option.updateMapping(); 
-    }
-  }  
-
-  event click $(menu#book > li[name=add-book])  (evt) 
-  {
-    this.insert("<option><i> </i><span.name> </span></option>",1);
-    var option = this[1];
-    this.post(::option.EditBookName());
-    return true;
-  }
-
-}
+include "libs/reactor/list.tis";
+//include "sciter:reactor.tis";
 
 // single book in book view
-class BookView : Element 
+class BookView : Reactor.Component 
 {
   this var book;
+  this var isCurrent;
 
-  function firstCharOf(text) {
-    for(var ucode in text)
-      return String.fromCharCode(ucode);
+  function this(props) {
+    this.book = props.book;
+    this.current = props.current;
   }
 
-  function setBook(book) {
-    this.book = book;
-    if( book ) {
-      if(book.isDeleted) {
-        this.$content(<i.trash> </i><span.name>{book.name}</span><span.count>{book.itemsCount}</span>);
-        this.attributes.addClass("trash");
+  function render() {
+    var book = this.book;
+    var count = db.getBookItemsCount(book); 
+
+    if( this.book ) {
+
+      if(book.isDeleted)
+        return <option.trash key={book.id} :current={this.current}>
+          <i.trash> </i>
+          <span.name>{book.name}</span>
+          <span.count>{count}</span></option>;
+      else {
+        var atts = book.mappedTo ? {class:"mapped"}:{};
+        function firstChar() { for(var ucode in book.name) return String.fromCharCode(ucode); }
+
+        return <option key={book.id} {atts} :current={this.current}>
+           <i color={book.color || 0}>{firstChar()}</i>
+           <span.name>{book.name}</span>
+           <span.count>{count}</span></option>;
       }
-      else
-        this.$content(<i color={book.color || 0}>{firstCharOf(book.name)}</i><span.name>{book.name}</span><span.count>{book.itemsCount}</span>);
-    }
+    } 
     else 
-      this.html = "<i> </i><span.name/><span.count/>";   
-  }
-
-  function updateCounter() {
-    this.$(.count).text = db.getBookItemsCount(this.book); 
-  }
-
-  function updateMapping() {
-    if(this.book)
-      this.attributes.toggleClass("mapped",!!this.book.mappedTo); 
+      return <option #all :current={this.current}>
+           <i color="0"> </i>
+           <span.name>All</span>
+           <span.count>{count}</span></option>;
   }
 
 
@@ -231,51 +164,77 @@ class BookView : Element
   event click $(menu#book > li[name=unmap-book]) (evt) {
     this.book.removeMapping();
   }
+}
 
-  // system D&D
-/* not yet 
-  event dragenter (evt) 
+class BooksView : List 
+{
+ 
+  function attached() {
+
+    super.attached();
+
+    //super({ items:[] });
+    //this.$content(<option#all><i color=0>&nbsp;</i><span.name>All</span><span.count>{ db.getBookItemsCount(null) }</span></option>);
+    //var optionAll = this[0];
+    var me = this;
+    self << event book-selected { me.show();  } 
+    self << event notes-filter-changed { me.show(); } 
+    self << event note-book-changed { me.show(); } 
+    self << event book-removed { me.show(); }
+    self << event book-updated { me.show(); }
+    self << event book-created { me.show(); }
+    self << event book-mapping-added { me.show(); }
+    self << event book-mapping-removed { me.show(); }
+
+    //var isCurrent = book === currentBook;
+
+    //this.show();
+    //optionAll.execCommand("set-current");
+    this.show();
+  }
+
+  function render() {
+    var current = this.currentItem;
+    var books = this.items.map( book => <BookView book={book} current={book===current} /> );
+    return <books-view>{books}</books-view>;
+  }
+
+  function show() 
   {
-    if(this.id == "all") return false;
-    if(evt.draggingDataType in [#file,#html,#text])
-    {
-      this.attributes.addClass("active-target");
-      return true;
+    var books = [null, ...db.getBooks()];
+    this.update { items:books };
+  }
+
+  event item-click (evt) {
+    var option = evt.target;  
+    if( option.book )
+      setCurrentBook(option.book); 
+    else {
+      setCurrentBook(null);
+      setFilterTags(null);
+      setFilterText(null);
     }
-  };  
-
-  event dragleave (evt) 
-  {
-    this.attributes.removeClass("active-target");    
-    if(this.id == "all") return false;
     return true;
-  }; 
+  }
 
-  event drag (evt) 
-  {
-    if(this.id == "all") return false;
+  function updateCounters() {
+    for( var option in this )
+      option.updateCounter(); 
+  }
 
-    return true;
-  };  
-
-  event drop (evt) 
-  {
-    this.attributes.removeClass("active-target");
-    if(this.id == "all") return false;
-
-    switch(evt.draggingDataType) {
-      case #file: {
-        var fn = evt.dragging;
-        view.msgbox(#information, String.printf("Dropped:%V",fn));
-        return true;
-      }
-      case #html:
-      case #text: break;
+  function updateMapping() {
+    for( var option in this ) {
+      option.updateMapping(); 
     }
+  }  
 
+  event click $(menu#book > li[name=add-book])  (evt) 
+  {
+    this.insert("<option><i> </i><span.name> </span></option>",1);
+    var option = this[1];
+    this.post(::option.EditBookName());
     return true;
-  };  
-*/
+  }
 
 }
 

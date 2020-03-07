@@ -1,0 +1,16 @@
+
+@set list {
+  :root {
+    display:block;
+    flow:vertical;
+    size:*;
+    overflow-y:scroll-indicator;
+  }
+  :root > li {display:block; }
+
+  :root > li:current { background: #EEE; }  
+  :root:focus > li:current { background: highlight; color:highlighttext }  
+
+}
+
+

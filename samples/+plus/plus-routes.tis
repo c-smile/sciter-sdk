@@ -24,7 +24,7 @@ function Plus.Application() {
           main.update(::main.load(self.url(route.url))); // do transactional update to reduce visual effects
           main.postEvent("routechange");
           var (total,free,used) = gc();
-          stdout.println("gc", total,free,used);
+          //stdout.println("gc", total,free,used);
         } else {
           main.postEvent("paramchange");
         }

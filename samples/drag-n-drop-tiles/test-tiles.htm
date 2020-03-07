@@ -11,9 +11,10 @@
     border:1dip solid;
   }
 
-  div { background:gold; 
-        transition: margin linear 300ms; }
+  div { background:gold;  }
+  div:not(:drag-source) { transition: margin 100ms linear; }
 
+  div:active,
   div:drag-source 
   {
     z-index:1; 
@@ -26,12 +27,14 @@
     </head>
     <body>
 
+<p>Tiles layout. Not complete yet!</p>
+
 <section.tiles>
 
-  <div row=0 col=0>A</div>
-  <div row=0 col=1 rows=2>B</div>
-  <div row=2 col=0 cols=2>C</div>
-  <div row=1 col=2 rows=2>D</div>
+  <div#A row=0 col=0>A</div>
+  <div#B row=0 col=1 rows=2>B</div>
+  <div#C row=2 col=0 cols=2>C</div>
+  <div#D row=1 col=2 rows=2>D</div>
 
 </section>
 

@@ -7,18 +7,17 @@ namespace Navigate {
   function goBack() { 
     if(stackPos == 0) return false;
     var rec = stack[--stackPos];
-    NoteView.current.presentNote(rec.note,rec.htmlarea);
+    NoteView.current.presentNote(rec.note);
     self.postEvent("navigation-history-change");
   }
   function goFore() {  
     if(++stackPos >= stack.length) return false;
     var rec = stack[stackPos];
-    NoteView.current.presentNote(rec.note,rec.htmlarea);
+    NoteView.current.presentNote(rec.note);
     self.postEvent("navigation-history-change");
   }
 
   function goTo(note) {
-    var editor = null;
     if( typeof note == #string ) {
       var id = note;
       if( id like "note:*") 
@@ -36,16 +35,14 @@ namespace Navigate {
 
     var (existingIdx, existingNote) = stack.find( si => si.note === note );
     if( existingIdx >= 0 ) {
-      editor = stack[existingIdx].editor;
       delete stack[existingIdx];
       --stackPos;
-      //debug found: existingIdx;
     } 
     
-    editor = NoteView.current.presentNote(note,editor);
+    NoteView.current.presentNote(note);
 
     stack.length = ++stackPos;
-    stack[stackPos] = { note:note, editor:editor};
+    stack[stackPos] = { note:note };
     self.postEvent("navigation-history-change");
     return true;
   }
@@ -66,6 +63,9 @@ namespace Navigate {
     }
 
     event contextmenusetup (evt) {
+
+      //debug contextmenusetup: this, evt.source;
+
       var menu = evt.source;
       menu.clear();
       for( var si in (this.isForward ? fores():backs()) )

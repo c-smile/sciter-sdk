@@ -56,6 +56,28 @@ function UpdateNotesList(array) {
   return idxToGo;
 }
 
+function GetFilteredNotesSet() {
+  var rs = [];
+  var idxToGo = null;
+  var idx = 0;
+  if( filterEvents ) {
+    for(var note in db.matchingItems(filterTags, filterWords, currentBook, filterEvents))
+    {
+      if(idxToGo === null) {
+        if( note.hasActiveEvent )
+          idxToGo = idx;
+      }
+      rs.push(note);    
+      ++idx;
+    }
+  } else {
+    for(var note in db.matchingItems(filterTags, filterWords, currentBook, filterEvents))
+      rs.push(note);
+  }
+  return (rs,idxToGo);
+}
+
+
 function setFilterTags(tags)
 {
   if(filterTags != tags) {

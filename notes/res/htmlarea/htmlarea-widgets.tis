@@ -1,3 +1,4 @@
+include "../db/db.tis";
 
 class CheckListItem : Element {
 
@@ -134,5 +135,22 @@ class MergeInfo : Element
     if(principal.changedContent)
       debug MergeInfo: "has-changed-content", principal.changedContent;
   }*/  
+}
+
+class NoteLink : Element {
+
+  function attached() {
+    var noteId = this.attributes["href"] ~% ":";
+    if(var note = db.getItem(noteId)) {
+      if(note.book.color !== undefined)
+        this.attributes["color"] = note.book.color.toString();
+      this.text = note.caption;
+    } else {
+      this.attributes.addClass("deleted");
+      this.attributes["title"] = "note has been deleted";
+    }
+  }
+
+
 }
 

@@ -1,0 +1,74 @@
+
+@set vlist {
+  :root {
+    display:block;
+    flow:vertical;
+    size:*;
+    overflow-y:scroll-indicator;
+  }
+  :root > li {display:block; }
+}
+
+@set vtbody {
+  :root {
+    size:*;
+    overflow-y:scroll-indicator;
+  }
+}
+
+@set vtable 
+{
+  table { size:*; padding: 0; flow: table-fixed }
+  
+  tbody {
+    size:*;
+    overflow-y:scroll-indicator;
+  }
+
+  thead > tr { background: #eee; }
+
+  thead > tr > th { 
+    flow:vertical;
+    behavior:clickable; 
+    line-height:1.8em; 
+    font-weight: normal;
+    text-align:left; 
+    width:*;
+  }
+
+  thead > tr > th > text {
+    width:*;
+    max-width:max-content;
+    overflow-x:hidden;    
+    padding-right:0.8em;
+    background-repeat:no-repeat; background-position:100% 50%; 
+    background-size:0.6em; 
+  }
+
+  thead > tr > th[order="asc"] > text { background-image:url(stock:arrow-down); }
+  thead > tr > th[order="desc"] > text { background-image:url(stock:arrow-up); }
+
+  tbody > tr { line-height:1.8em; }
+  tbody > tr:checked { background: morph(highlight,opacity:0.1); }
+  tbody > tr:current { background:highlight; color: highlighttext; }
+  //tbody > tr:checked { color:red; }
+
+  tbody > tr > td { overflow-x:hidden; }   
+
+  table[multiselect] > thead > tr > :first-child { border-left:2em solid transparent; }
+  table[multiselect] > tbody > tr > :first-child { 
+    border-left:2em solid transparent; 
+    foreground-image: url(path:M1312 256h-832q-66 0-113 47t-47 113v832q0 66 47 113t113 47h832q66 0 113-47t47-113v-832q0-66-47-113t-113-47zm288 160v832q0 119-84.5 203.5t-203.5 84.5h-832q-119 0-203.5-84.5t-84.5-203.5v-832q0-119 84.5-203.5t203.5-84.5h832q119 0 203.5 84.5t84.5 203.5z);
+    foreground-size: 0.8em 0.8em;
+    foreground-repeat:no-repeat;
+    foreground-position:0.5em 50%;
+    foreground-image-cursor: pointer;
+    fill: currentcolor; 
+    stroke: none;
+  }
+
+  table[multiselect] > tbody > tr:checked > :first-child { 
+    foreground-image: url(path:M813 1299l614-614q19-19 19-45t-19-45l-102-102q-19-19-45-19t-45 19l-467 467-211-211q-19-19-45-19t-45 19l-102 102q-19 19-19 45t19 45l358 358q19 19 45 19t45-19zm851-883v960q0 119-84.5 203.5t-203.5 84.5h-960q-119 0-203.5-84.5t-84.5-203.5v-960q0-119 84.5-203.5t203.5-84.5h960q119 0 203.5 84.5t84.5 203.5z);
+  }
+
+}

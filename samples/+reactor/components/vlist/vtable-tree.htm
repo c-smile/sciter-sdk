@@ -120,7 +120,7 @@ function recordView(record,index) { // function generating single row
 
 var vtable;
 
-function recordsetView() {
+function RecordsetView() {
   return 
   <VTable recordset={flatList(tree)} @{vtable}>
     <columns>
@@ -131,9 +131,6 @@ function recordsetView() {
     { recordView }
   </VTable>;
 }
-
-// mount
-$(main).content(recordsetView());
 
 event click $(tr.node > td > caption) {
   const key = this.$p(tr).attributes["key"];
@@ -150,6 +147,6 @@ event click $(tr.node > td > caption) {
       <p>Demo of simple virtual list component &lt;VList>.</p>
       <p>The caller shall supply record view producer function.</p>
       <p>The list supports multiselection (CTRL+CLICK).</p>
-      <main></main>
+      <reactor|RecordsetView />
     </body>
 </html>

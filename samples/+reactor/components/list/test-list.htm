@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style></style>
+        <script type="text/tiscript">
+
+include "list.tis";
+
+var items = ["first","second","third"];
+
+function ListTest() {
+  return <List items={items} />
+}
+
+event item-click $(li) (evt,li) {
+  debug itemclick: li;
+}
+
+
+        </script>
+    </head>
+    <body>
+
+<p>Simple list with event item-click generated on mouse click or on VK_SPACE | VK_RETURN</p>
+
+<reactor|ListTest>
+
+    </body>
+</html>

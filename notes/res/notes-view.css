@@ -3,14 +3,11 @@
 
 notes-list 
 { 
-  //font:system;
   display:block; 
+  flow:vertical;
   size:*;
-  overflow: scroll-indicator;
-  prototype: List url(notes-view.tis);
-  //padding-left:1dip;
-  //border-spacing:1dip;
-
+  overflow-y: scroll-indicator;
+  prototype: NotesList url(notes-view.tis);
 }
 
 notes-list > li {
@@ -116,7 +113,7 @@ notes-list > li[book-color=6] { border-color: @FC6; }
 
 notes-view 
 {
-  prototype: NotesView url(notes-view.tis);
+  //prototype: NotesView url(notes-view.tis);
   display:block; 
   flow:vertical; 
   background: var(notes-list-back, #e8e8e8);  

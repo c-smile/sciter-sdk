@@ -60,6 +60,9 @@
         $(button#maximize).attributes.toggleClass("restore", view.windowState == View.WINDOW_MAXIMIZED); 
       } 
     }
+
+    event click $(button#full-screen-on) { view.state = View.WINDOW_FULL_SCREEN; }
+    event click $(button#full-screen-off) { view.state = View.WINDOW_SHOWN; }
     </script>
   </head>
 <header>
@@ -77,5 +80,10 @@
 </header>
 <body>
   Sample of toolbar replaced in window's chrome area.
+
+  <button#full-screen-on>Full screen On</button>
+  <button#full-screen-off>Full screen Off</button>
+
+
 </body>
 </html>

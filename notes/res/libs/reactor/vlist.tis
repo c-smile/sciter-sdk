@@ -1,0 +1,425 @@
+
+include "sciter:reactor.tis";
+
+function isTruthy(prop) {
+  if( prop === undefined ) return false;
+  if( prop === "" ) return true;
+  if( prop === "false" ) return false;
+  return true;
+}
+
+class VList : Reactor.Component 
+{
+  const styleset = ["vlist", $url(vlist.css)];
+
+  this var swIndex = 0;        // scrolling window (buffer) position
+  this var swLength = 40;      // scrolling window (buffer) length
+  this var itemHeight = 10;    // will be recalculated later
+  this var visibleItems = 1;   // will be recalculated later
+
+  this var recordset = [];
+  this var multiselect = false;
+  this var recordsetLength = 0;
+
+  this var selectedRecords = {}; // key -> record map
+  this var currentRecord = null; // current record
+  //this var anchorRecord = null;  // anchor record ()
+
+  function this(props,kids) {
+    this.recordset = props.recordset ?? [],        // recordset
+    this.recordview = props.recordview;            // function producing record markup (a.k.a. record view)    
+    this.multiselect = isTruthy(props.multiselect);
+    assert typeof this.recordset == #array;
+    assert typeof this.recordview == #function;
+  }
+
+  function render() {
+    var items = [];
+    var {recordview, recordset, swIndex, swLength} = this;
+    var end = Integer.min(recordset.length,swIndex + swLength);
+    for( var i = swIndex; i < end; ++i )
+      items.push( recordview.call(this,recordset[i],i) );
+    return <vlist>{items}</vlist>;
+  }
+
+  function attached() {
+    this.paintContent = () => {
+      if(!this.first) return;
+      this.itemHeight = Integer.max(10,this.first.box(#height,#border));
+      this.visibleItems = this.box(#height,#client) / this.itemHeight; 
+      this.paintContent = null; // we need this only once
+      this.post(this.resetPaddings); // as we've discovered height of the single item we need to resetPaddings
+    };
+  }
+
+  function update(state = null) {
+    if( var recordset = state?.recordset ) {
+      if((this.swIndex + this.swLength) > recordset.length ) 
+        this.swIndex = Integer.max(0,recordset.length - this.swLength);
+    }
+    super.update(state);
+    this.post(this.resetPaddings);
+  }
+
+  function onSize() {
+    if(!this.first) return;    
+    this.itemHeight = Integer.max(10,this.first.box(#height,#border));
+    var visibleItems = this.box(#height,#client) / this.itemHeight;
+    if( this.visibleItems != visibleItems ) {
+      this.visibleItems = visibleItems;
+      this.timer(40ms, function() 
+      {
+        this.swLength = Integer.max(10,this.visibleItems + 1);
+        if((this.swIndex + this.swLength) > this.recordset.length )
+          this.swIndex = Integer.max(0,this.recordset.length - this.swLength);
+        this.merge(this.render());
+        this.resetPaddings();
+      });
+    }
+  }
+
+  function onScroll(evt) 
+  {
+    if( evt.type != Event.SCROLL_POS ) return;
+    this.onScrollChange(evt.scrollPos); 
+  }
+
+  function onScrollChange(scrollPos)
+  {
+    var rPos = scrollPos / this.itemHeight;  // recordPos
+    var mPos = this.recordset.length - 1 - this.visibleItems; // max recordPos
+    if( rPos > mPos ) rPos = mPos;
+    if( rPos < 0 ) rPos = 0;
+
+    if( rPos + this.swLength >= this.recordset.length ) {
+      var ni = Integer.max(0,this.recordset.length - this.swLength); 
+      if(this.swIndex == ni) return;
+      this.swIndex = ni; 
+    }
+    else if( rPos + this.visibleItems >= this.swIndex + this.swLength )
+      this.swIndex = rPos; 
+    else if(rPos < this.swIndex)
+      this.swIndex = rPos;
+    else 
+      return;
+
+    // note, we do not use standard Component.update() method here
+    // as this needs to be done synchronously - onScroll is called under scroll animation
+    this.merge(this.render());
+    this.resetPaddings();
+    Element.update.call(this); // use original Element.update method.
+  }
+
+
+  function resetPaddings() {
+    // set paddings so scrollbar will reflect the reality 
+    this.style[#padding-top] = px(this.swIndex * this.itemHeight);
+    this.style[#padding-bottom] = px(Integer.max(0,this.recordset.length - this.swIndex - this.swLength) * this.itemHeight);
+  }
+
+  function isSelected(record) {
+    return this.selectedRecords[record.key] !== undefined;
+  }
+
+  event mousedown $(li,tr) (evt,li) {
+    var cr = this.recordset[li.index + this.swIndex];
+    if( this.multiselect && (evt.ctrlKey || evt.isOnIcon)) {
+      if(li.state.checked)
+        delete this.selectedRecords[cr.key];
+      else
+        this.selectedRecords[cr.key] = cr;
+      this.postEvent("selectionchange");
+    }
+    this.update { currentRecord: cr };
+  }
+
+  event mouseup $(li,tr) (evt,li) {
+    if(li.state.current)   
+      li.postEvent("item-click");
+  }
+
+  function scrollToRecord(recordNo, animate = false) {
+    var y1 = this.scroll(#top);
+    var y2 = y1 + this.scroll(#height);
+
+    var ry1 = recordNo * this.itemHeight;
+    var ry2 = ry1 + this.itemHeight - 1;
+
+    var scrollPos;
+
+    if( ry1 < y1 ) scrollPos = ry1;
+    else if( ry2 > y2 ) scrollPos = ry2 - (y2 - y1) + 1;
+    else return true;
+
+    this.scrollTo(0,scrollPos,animate);
+    this.onScrollChange(scrollPos);
+
+    return false;
+  }
+
+  function setCurrent(recordNo,evt) {
+    if( recordNo < 0 ) recordNo = 0;
+    if( recordNo >= this.recordset.length ) recordNo = this.recordset.length - 1;
+    var cr = this.recordset[recordNo];
+    this.currentRecord = this.recordset[recordNo];
+    this.scrollToRecord(recordNo,true);
+    this.update();
+  }
+
+  event keydown (evt) {
+
+    const currentIndex = () => this.recordset.indexOf(this.currentRecord);
+
+    switch(evt.keyCode)
+    {
+      case Event.VK_HOME:  this.setCurrent(0,evt); return true;
+      case Event.VK_END:   this.setCurrent(this.recordset.length - 1,evt); return true;
+      case Event.VK_UP:    this.setCurrent(currentIndex() - 1,evt); return true;
+      case Event.VK_DOWN:  this.setCurrent(currentIndex() + 1,evt); return true;
+      case Event.VK_PRIOR: this.setCurrent(currentIndex() - this.visibleItems,evt); return true;
+      case Event.VK_NEXT:  this.setCurrent(currentIndex() + this.visibleItems,evt); return true;
+      case Event.VK_RETURN:
+        if (var li = this.$(>:current)) {
+          li.postEvent("item-click");
+          return true;
+        }
+        break;
+    }
+  }
+
+  // get/set current record
+  property current(v) {
+    get return this.currentRecord;
+    set this.update {currentRecord: v}
+  }
+
+  // this.current = record; + ensures its visibility 
+  function navigateTo(record) {
+    this.currentRecord = record;
+    if(record) { 
+      var recordNo = this.recordset.indexOf(v);
+      if( recordNo < 0 ) return;
+      this.scrollToRecord(recordNo);
+    }
+    this.update();
+  }  
+
+  // get/set recordset
+  property records(v) {
+    get return this.recordset;
+    set {
+      this.recordset = v || [];
+      this.scrollToRecord(0);
+      this.update();
+    }
+  }
+
+}
+
+// class component
+class VTableBody : VList 
+{
+  const styleset = ["vtbody", $url(vlist.css)];
+
+  function render() {
+    var items = [];
+    var {recordview, recordset, swIndex, swLength} = this;
+    var end = Integer.min(recordset.length,swIndex + swLength);
+    for( var i = swIndex; i < end; ++i )
+      items.push( recordview.call(this,recordset[i],i) );
+    //debug log: swIndex, swLength, end, items.length;
+    return <tbody>{items}</tbody>;
+  }
+}
+
+class VTable: Reactor.Component 
+{
+  const styleset = ["vtable", $url(vlist.css)];
+
+  this var vtbody;
+
+  this var sortField = undefined; // sorting
+  this var sortOrder = undefined; // true - ascending, false - descending
+
+  function this(props,kids) {
+    assert kids[0].tag == #columns; // expect <columns><th>..</th><th>..</th><columns>
+    this.columnHeaders = kids[0][1]; // array of <th>'es
+    
+    var resort = this.recordset !== props.recordset;
+    this.recordset = props.recordset ?? [];        // recordset
+    this.recordview = props.recordview ?? kids[1]; // function producing record markup (a.k.a. record view)    
+    this.multiselect = isTruthy(props.multiselect);
+    this.sortable = isTruthy(props.sortable);
+
+    assert typeof this.recordset == #array;
+    assert typeof this.recordview == #function;
+
+    this.recordsForView();
+
+  }
+
+  function update(state = null) {
+    super.update(state);
+    this.recordsForView();
+  }
+
+  function render() {
+    var atts = {}; if( this.multiselect ) atts.multiselect = true;
+    return <table fixedlayout {atts} >
+      <thead><tr>{this.columnHeaders}</tr></thead>
+      <VTableBody 
+        recordset={this.sortedset || this.recordset} 
+        multiselect={this.multiselect} 
+        recordview={this.recordview}
+        @{this.vtbody} />
+    </table>;
+  }
+
+  function recordsForView() {
+
+    var rs2view = this.recordset;
+
+    this.sortedset = null;
+
+    if(this.sortField === undefined || this.sortOrder === undefined || !rs2view.length) 
+      return rs2view;
+
+    if(!this.sortable)
+      return rs2view;
+
+    this.sortedset = rs2view = rs2view.clone();
+
+    var field = this.sortField; 
+    var order = this.sortOrder;
+    var comparator;
+
+    switch( typeof rs2view[0][field]) {
+      case #string: 
+         comparator = order == #asc ? (a,b) => a[field].lexicalCompare(b[field],true)
+                                    : (a,b) => b[field].lexicalCompare(a[field],true); 
+         break;
+      case #date:
+         comparator = order == #asc ? (a,b) => a[field].valueOf() - b[field].valueOf()
+                                    : (a,b) => b[field].valueOf() - a[field].valueOf(); 
+         break;
+      case #boolean:
+         comparator = order == #asc ? (a,b) => !a[field] && b[field] ? -1 : 0
+                                    : (a,b) => !b[field] && a[field] ? -1 : 0; 
+         break;
+      case #float: case #integer:
+         comparator = order == #asc ? (a,b) => a[field] - b[field]
+                                    : (a,b) => b[field] - a[field]; 
+         break;
+      default: 
+         return rs2view;
+    }
+    rs2view.sort(comparator);
+    return rs2view;
+  }
+
+  property selectedRecords(v) {
+    get return this.vtbody?.selectedRecords ?? {};
+    set this.vtbody.update{ selectedRecords: v };
+  }
+
+  event click $(th[field]) (evt,th) 
+  {
+    if( !this.sortable ) 
+      return false;
+
+    var field = th.attributes["field"];
+    if(!field) return false;
+    field = symbol(field);
+    if( this.sortField != field )
+      this.sortOrder = #asc;
+    else 
+      switch(this.sortOrder) {
+        case #asc : this.sortOrder = #desc; break;
+        case #desc : this.sortOrder = undefined; break;
+        default: this.sortOrder = #asc;
+      }
+    this.sortField = field;
+    this.transformColumnHeaders();
+    this.recordsForView();
+    this.update();
+  }
+
+  function transformColumnHeaders() {
+    var field = this.sortField;
+    for(var header in this.columnHeaders) {
+      if(header[0].field == field && this.sortOrder !== undefined)
+        header[0].order = this.sortOrder.toString();
+      else
+        header[0].order = "none";
+    }
+  }
+
+}
+
+class VTableFiltered: Reactor.Component 
+{
+  this var vtable = null; // the <table>
+
+  this var filter = null;         
+  this var filterData = {};       // value of <form.filter>, json
+  this var sortField = undefined; // sorting
+  this var sortOrder = true;      // true - ascending, false - descending
+
+  function this(props,kids) {
+    assert kids[0].tag == #filter;        // expect <filter>...</filter>
+    assert kids[1].tag == #columns;       // expect <columns><th>..</th><th>..</th></columns>
+
+    this.filterContent = kids[0][1];      // content of <filter>, array of vnodes
+    this.columnsContent = kids[1][1];     // content of <columns> "element", array of vnodes
+    this.stats = props.statsview;    
+
+    this.filter = props.filter;   // filter function
+    assert typeof this.filter == #function; // record => true/false
+
+    this.recordset = props.recordset ?? [],        // recordset
+    this.recordview = props.recordview;            // function producing record markup (a.k.a. record view)    
+    this.multiselect = props.multiselect;
+    assert typeof this.recordset == #array;
+    assert typeof this.recordview == #function;
+
+    this.filteredset = this.recordsForView();                   // filtered recordset - these are presented records   
+  }
+
+  function render() {
+    return <section.filtered-table>
+      <form.filter>{this.filterContent}</form>
+      <VTable recordset={this.filteredset} 
+              multiselect={this.multiselect} 
+              recordview={this.recordview}
+              @{this.vtable}>
+        <columns>{this.columnsContent}</columns>
+      </VTable>
+      {this.stats ? this.stats.call(this): []}
+    </section>
+  }
+
+  function recordsForView(filterData = null) {
+    if(filterData)
+      this.filterData = filterData;
+    var rs2view = this.recordset.filter(this.filter,this.filterData);
+    return rs2view;
+  }
+
+  property selectedRecords(v) {
+    get return this.vtable?.selectedRecords ?? {};
+    set this.vtable.selectedRecords = v; 
+  }
+
+  event selectionchange {
+    if( this.stats ) // update stats section
+      this[2].merge(this.stats.call(this));
+  }
+
+  event change $(form.filter) (evt,form) {
+    this.update { filteredset: this.recordsForView(form.value) };
+  }
+  
+}
+
+
+

@@ -1,0 +1,124 @@
+
+include "sciter:reactor.tis";
+
+
+class List : Reactor.Component 
+{
+  const styleset = ["list", $url(list.css)];
+
+  this var items = [];
+  this var multiselect = false;
+  this var selectedItems = {}; // item -> true - Set object essentially
+  this var currentItem = null; // current item
+
+  function this(props,kids) {
+    this.items = props.items ?? []; // items
+    if( var iv = props.itemview )
+      this.itemview = iv;           // function producing item markup (a.k.a. item view)
+    this.multiselect = props.multiselect in ["true","",true];
+    assert typeof this.items == #array;
+    assert typeof this.itemview == #function;
+  }
+
+  function attached() {
+    this.state.focusable = true;
+  }
+
+  function render() {
+    var {itemview, items} = this;
+    var nodes = new Array(items.length);
+    for( var (i,item) in items ) {
+      var node = itemview.call(this,item,i);
+      nodes[i] = node;
+    }
+    return <list>{nodes}</list>;
+  }
+
+  function itemview(item,index) {
+    var key = item.key || (VM.entityId(item).toString());
+    return <li key={key} :current={this.currentItem === item}>{item.toString()}</li>;
+  }
+
+  //function update(state = null) {}
+
+  function isSelected(item) {
+    return this.selecteditems[item] !== undefined;
+  }
+
+  event mousedown $(li,tr) (evt,li) {
+    var cr = this.items[li.index];
+    if( this.multiselect && (evt.ctrlKey || evt.isOnIcon)) {
+      if(li.state.checked)
+        delete this.selectedItems[cr];
+      else
+        this.selectedRecords[cr] = true;
+      this.postEvent("selectionchange");
+    }
+    this.update { currentItem: cr };
+  }
+
+  event mouseup $(li,tr) (evt,li) {
+    if(li.state.current)   
+      li.postEvent("item-click");
+  }
+
+  function setCurrent(itemNo,evt) {
+    if( itemNo < 0 ) itemNo = 0;
+    if( itemNo >= this.items.length ) itemNoNo = this.items.length - 1;
+    var cr = this.items[itemNo];
+    this.currentItem = this.items[itemNo];
+    this[itemNo].scrollToView();
+    this.update();
+  }
+
+  event keydown (evt) {
+
+    const currentIndex = () => this.items.indexOf(this.currentItem);
+
+    switch(evt.keyCode)
+    {
+      case Event.VK_HOME:  this.setCurrent(0,evt); return true;
+      case Event.VK_END:   this.setCurrent(this.items.length - 1,evt); return true;
+      case Event.VK_UP:    this.setCurrent(currentIndex() - 1,evt); return true;
+      case Event.VK_DOWN:  this.setCurrent(currentIndex() + 1,evt); return true;
+      //case Event.VK_PRIOR: this.setCurrent(currentIndex() - this.visibleItems,evt); return true;
+      //case Event.VK_NEXT:  this.setCurrent(currentIndex() + this.visibleItems,evt); return true;
+      case Event.VK_SPACE:
+      case Event.VK_RETURN:
+        if (var li = this.$(>:current)) {
+          li.postEvent("item-click");
+          return true;
+        }
+        break;
+    }
+  }
+
+  // get/set current item
+  property current(v) {
+    get return this.currentItem;
+    set this.update {currentItem: v}
+  }
+
+  // this.current = item; + ensures its visibility 
+  function navigateTo(item) {
+    this.currentItem = item;
+    if(item) { 
+      var itemNo = this.items.indexOf(v);
+      if( itemNo < 0 ) return;
+      this.scrollToRecord(itemNo);
+    }
+    this.update();
+  }  
+
+  // get/set items
+  property items(v) {
+    get return this.items;
+    set {
+      this.items = v || [];
+      this.scrollTo(0,0);
+      this.update();
+    }
+  }
+
+}
+

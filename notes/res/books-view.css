@@ -1,5 +1,6 @@
 
-@set books-view < std-select
+// < std-select
+@set books-view 
 {
   :root {
     prototype: BooksView url(books-view.tis);
@@ -14,11 +15,12 @@
     font-rendering-mode:sub-pixel;
     border:none;
     padding:0;
+    overflow:hidden;
   }
   
 
   option {
-    prototype: BookView url(books-view.tis);
+    //prototype: BookView url(books-view.tis);
     color: #fff;
     flow:horizontal;
     padding:0 16dip 0 0;
@@ -43,6 +45,7 @@
   option > i {
     display:block;
     width: length(band-size);
+    height: length(band-size);
     // disc
     background-image: url(path: M1664 896q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z);
     background-repeat:no-repeat;

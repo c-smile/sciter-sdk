@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+@import url(lightbox.css);
+
+body { margin:0; }
+
+        </style>
+        <script type="text/tiscript">
+
+include "lightbox.tis";
+
+event click $(button#show-msgbox) {
+  //var result = await <LightBox>Hello World!</LightBox>;
+  var r = await <LightBox caption="Hi">Universe!</LightBox>();
+  debug log: r;
+}
+
+        </script>
+    </head>
+    <body>
+
+      <input|text value="for testing" />
+
+      <button#show-msgbox>show msgbox</button>
+
+    </body>
+</html>

@@ -90,7 +90,7 @@ function VirtualList(params) {
     
     function createRecViewer(rec) {
       var t = cache.pop() || template.clone();
-      assert !t.state.current;
+      //assert !t.state.current;
       t.data = rec;
       return t;
     }

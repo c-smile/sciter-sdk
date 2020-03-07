@@ -312,6 +312,13 @@ class Note
     db.assignItemToBook(this, delBook);
   }
 
+  function dataForClipboard() {
+    return { 
+      json: { noteid: this.id },
+      html: String.$( <a href="note:{this.id}">{this.caption}</a> ),
+      text: String.$([{this.caption}](note:{this.id}));
+    }
+  }
 
   
 }

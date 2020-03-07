@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+main { flow:horizontal; }
+main > div { width:*; }
+
+        </style>
+        <script type="text/tiscript">
+
+include "sciter:reactor.tis";
+
+class Master : Reactor.Component 
+{
+
+  function render() {
+    return <div>
+      <header>Master</header>
+      <input|text .val value="initial" />
+    </div>;
+  }
+
+  function notify() {
+    this.postEvent("change-master", <p>Master value:{ $(.val).value }</p>);
+  }
+
+  function attached() {  this.notify(); }  
+
+  event change { this.notify(); } 
+}
+
+
+class Slave : Reactor.Component 
+{
+  this var content = []; // nothing here yet - empty content 
+
+  function attached() {
+    // subscribe on global change-master event
+    self.on("change-master.slave", (evt) => this.update {content:evt.data} );
+  }
+  function detached() {
+    // unsubscribe
+    self.off(".slave");
+  }
+
+  function render() {
+    return <div>
+      <header>Slave</header>
+      {this.content}
+    </div>;
+  }
+}
+
+        </script>
+    </head>
+    <body>
+
+     <p>Two decoupled elements that communicate by events only</p>
+
+     <main> 
+       <reactor|Master />
+       <reactor|Slave />
+     </main>
+
+    </body>
+</html>

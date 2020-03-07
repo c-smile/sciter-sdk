@@ -10,7 +10,44 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FFFAFC">4.4.0.8</td><td nowrap valign="top" align="center">13-02-2020</td><td>new:
+    <tr><td valign="top" bgcolor="#FFFAFC">4.4.1.1</td><td nowrap valign="top" align="center">07-03-2020</td><td>
+					
+					<p>new:</p>
+					<ul><li>[DOM,script] <code>element.owner = logicalOwnerElement;</code> - setter implementation:</li>
+						<li>[reactor] new samples: <ul><li>sdk/samples/+reactor/components/portal - a la <a href="https://reactjs.org/docs/portals.html">Portal</a>, Sciter's way;&nbsp;</li>
+								<li>sdk/samples/+reactor/components/portal-alt - also Portal but closer to ReactJS by concept;  </li>
+								<li>sdk/samples/+reactor/components/lightbox;</li>
+								<li>sdk/samples/+reactor/components/list - simple <code>&lt;List&gt;</code> implementation - close to <code>&lt;select|list&gt;</code> built-in;</li>
+								</ul></li>
+						<li>[script] <code>View.all : array of View instances</code> - list of all Sciter windows on screen that belong to current process;</li>
+						<li>[script] <code>VM.entityId(obj)</code> - quasi-unique ID of heap allocated objects, the ID value is semantically close to pointer value of objects in C++.</li>
+						<li>[sample] sdk/samples/drag-n-drop-tiles - <a href="https://packery.metafizzy.co/">Packery</a> alike thing. Note: work in progress.</li>
+						</ul><p>fixes:
+					</p><ul>
+						
+						
+						
+						
+						
+						
+						
+						<li>[osx] <code>&lt;input|text&gt;</code> fix of <code>Event.VK_BACK</code> handling;</li><li>[script,css] <code>element.style.set {... animatible props... }</code> , fix of animation triggering.</li><li>[css/layout] fix of <code>margin:-1*;</code> handling (treated now as margin:0*), see: <a href="https://github.com/c-smile/sciter-sdk/issues/150">https://github.com/c-smile/sciter-sdk/issues/150</a>&nbsp;</li><li>[script] fix <code>element.html = &quot;... &lt;include src='..'&gt;&quot;</code> - case when HTML contains <code>&lt;include&gt;</code> ;</li><li>[windows] <code>window-frame=&quot;extended&quot;</code>, <code>view.state = WINDOW_FULL_SCREEN;</code> fix;</li><li>[reactor] fix of name attributes handling: <a href="https://sciter.com/forums/topic/naming-react-component-doesnt-work-properly/">https://sciter.com/forums/topic/naming-react-component-doesnt-work-properly/</a> ;</li>
+						<li>[reactor] fix of class binding, see the case: <a href="https://sciter.com/forums/topic/reactor-segmentation-fault/#post-64343">https://sciter.com/forums/topic/reactor-segmentation-fault/#post-64343</a> ;</li>
+						<li>[reactor/vlist] fix of sdk/samples/+reactor/components/vlist/vlist.tis update when recordset changes length;</li><li>[script] fix of chained decorators: <code>@bold @italic function foo() {...}</code> ;</li><li>[gtk, build] support of Code::Blocks projects is back;</li><li>[osx] <code>view.clipboard</code> picture support;</li>
+						<li><code>view.clipboard(#get,#file)</code> implementation;</li>
+						<li>[win,osx,lin] unified <code>mouseenter</code>/<code>mouseleave</code> support;</li>
+						</ul>
+					<p>Sciter.Notes project update:</p>
+					<ul><li>started transition to use Reactor.&nbsp;&nbsp;Sciter.Notes uses mix of Reactor components and &quot;classic&quot; behaviors. Essentially Reactor.Component's are used where they make sense and provide benefits;</li>
+						<li>Added ability to make &quot;note:...&quot; hyperlinks; - notes can be dragged from note list to current note editor;</li></ul></td></tr><tr><td valign="top" bgcolor="#FFFAFC">4.4.1.0</td><td nowrap valign="top" align="center">17-02-2020</td><td>new:
+					<ul><li>[Windows, MacOS] Support of Color Fonts, e.g. Emoji. Windows Direct2D backend is required.</li>
+						</ul>
+					<p>fixes:</p>
+					<ul>
+						<li>[script] fix of <code>Array.splice()</code> , see:&nbsp;<a href="https://sciter.com/forums/topic/array-splice-bug/">https://sciter.com/forums/topic/array-splice-bug/</a></li><li>[osx Catalina] fix inspector.app compatibility with Catalina.</li>
+						<li>[osx] fix of word wrapping after quote characters.</li>
+						<li>[samples] fix of sdk/samples/log+debugging/log.htm</li>
+						<li>fix of <code>event dblclick</code> consumption handling, see: <a href="https://sciter.com/forums/topic/disable-middle-mouse-handling/">https://sciter.com/forums/topic/disable-middle-mouse-handling/</a>&nbsp;</li></ul></td></tr><tr><td valign="top" bgcolor="#FFFAFC">4.4.0.8</td><td nowrap valign="top" align="center">13-02-2020</td><td>new:
 					<ul><li>&quot;Reactor 2.0&quot; - new version of Reactor, see:&nbsp;<a href="https://sciter.com/reactor-2-0/">https://sciter.com/reactor-2-0/</a><ul><li>+ new samples in sdk/samples/+reactor/components/vlist/ - sortable, filterable grids.</li>
 								<li>+ sdk/samples/+reactor/observable/c-observable-vtable.htm sample.</li>
 								</ul></li>

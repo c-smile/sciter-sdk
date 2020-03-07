@@ -1,52 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CodeLite_Workspace Name="sciter.sdk" Database="">
-  <Project Name="glfw-opengl" Path="glfw-opengl.project" Active="Yes"/>
-  <Project Name="inspector" Path="inspector.project"/>
-  <Project Name="notepad" Path="notepad.project"/>
-  <Project Name="notes" Path="notes.project"/>
-  <Project Name="ulayered" Path="ulayered.project"/>
-  <Project Name="uminimal" Path="uminimal.project"/>
-  <Project Name="usciter" Path="usciter.project"/>
-  <BuildMatrix>
-    <WorkspaceConfiguration Name="x32|Debug" Selected="no">
-      <Environment/>
-      <Project Name="glfw-opengl" ConfigName="x32|Debug"/>
-      <Project Name="inspector" ConfigName="x32|Debug"/>
-      <Project Name="notepad" ConfigName="x32|Debug"/>
-      <Project Name="notes" ConfigName="x32|Debug"/>
-      <Project Name="ulayered" ConfigName="x32|Debug"/>
-      <Project Name="uminimal" ConfigName="x32|Debug"/>
-      <Project Name="usciter" ConfigName="x32|Debug"/>
-    </WorkspaceConfiguration>
-    <WorkspaceConfiguration Name="x64|Debug" Selected="no">
-      <Environment/>
-      <Project Name="glfw-opengl" ConfigName="x64|Debug"/>
-      <Project Name="inspector" ConfigName="x64|Debug"/>
-      <Project Name="notepad" ConfigName="x64|Debug"/>
-      <Project Name="notes" ConfigName="x64|Debug"/>
-      <Project Name="ulayered" ConfigName="x64|Debug"/>
-      <Project Name="uminimal" ConfigName="x64|Debug"/>
-      <Project Name="usciter" ConfigName="x64|Debug"/>
-    </WorkspaceConfiguration>
-    <WorkspaceConfiguration Name="x32|Release" Selected="no">
-      <Environment/>
-      <Project Name="glfw-opengl" ConfigName="x32|Release"/>
-      <Project Name="inspector" ConfigName="x32|Release"/>
-      <Project Name="notepad" ConfigName="x32|Release"/>
-      <Project Name="notes" ConfigName="x32|Release"/>
-      <Project Name="ulayered" ConfigName="x32|Release"/>
-      <Project Name="uminimal" ConfigName="x32|Release"/>
-      <Project Name="usciter" ConfigName="x32|Release"/>
-    </WorkspaceConfiguration>
-    <WorkspaceConfiguration Name="x64|Release" Selected="yes">
-      <Environment/>
-      <Project Name="glfw-opengl" ConfigName="x64|Release"/>
-      <Project Name="inspector" ConfigName="x64|Release"/>
-      <Project Name="notepad" ConfigName="x64|Release"/>
-      <Project Name="notes" ConfigName="x64|Release"/>
-      <Project Name="ulayered" ConfigName="x64|Release"/>
-      <Project Name="uminimal" ConfigName="x64|Release"/>
-      <Project Name="usciter" ConfigName="x64|Release"/>
-    </WorkspaceConfiguration>
-  </BuildMatrix>
-</CodeLite_Workspace>
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_workspace_file>
+	<Workspace title="sciter.sdk">
+		<Project filename="usciter.cbp" active="1">
+		</Project>
+		<Project filename="uminimal.cbp">
+		</Project>
+		<Project filename="ulayered.cbp">
+		</Project>
+		<Project filename="inspector.cbp">
+		</Project>
+		<Project filename="notepad.cbp">
+		</Project>
+		<Project filename="notes.cbp">
+		</Project>
+		<Project filename="glfw-opengl.cbp">
+		</Project>
+	</Workspace>
+</CodeBlocks_workspace_file>

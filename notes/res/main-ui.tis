@@ -109,9 +109,9 @@ class AddNewNoteKnob : Element
 
   function attached() {
     var me = this;
-    self << event note-blank-shown { me.state.disabled = true; }     
+    //self << event note-blank-shown { me.state.disabled = true; }     
     self << event note-new-created { me.state.disabled = false; }
-    self << event note-shown  { me.state.disabled = false; }  
+    self << event note-shown (evt) { me.state.disabled = !evt.data; }  
     self << event note-updated { me.state.disabled = false; }  
   }
 

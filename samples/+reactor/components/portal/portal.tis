@@ -1,0 +1,18 @@
+include "sciter:reactor.tis";
+
+
+namespace Reactor {
+
+  // 1. "portal" is an arbitrary DOM element that is owned by another DOM element - its "owner"
+  // 2. events in "portal" are routed to the owner
+
+  // createPortal returns function that accepts VDOM to render 
+  // on "portal" DOM element
+
+  function createPortal(owner,container/*existing DOM element*/) {
+    return function(vdom) {
+      container.owner = owner;
+      container.merge(vdom,#only-children);
+    }
+  }
+}

@@ -3,6 +3,9 @@ class Tiles : Element
 {
 
   this var cells = [[null]];
+  this var cellsize = 10; // will be calculated by updateLayout(), in pixels 
+  this var cellspacing = 0;
+  this var placeholder = null; // { isPlaceholder:true, tile:{} }
 
   function attached() {
     for(var el in this)
@@ -11,23 +14,86 @@ class Tiles : Element
       var rs = (el.attributes["rows"] || 1).toInteger();
       var c = el.attributes["col"].toInteger();
       var cs = (el.attributes["cols"] || 1).toInteger();
-      this.setCellAt(el,r,c,rs,cs);
+      this.setCellAt(el,{row:r,col:c,rows:rs,cols:cs});
     }
     this.updateLayout();
   }
 
-  function cellAt(row,col) { return this.cells[row][col]; }
-  function setCellAt(cell,row,col,rows = 1,cols = 1) 
+  function cellAt(row,col) { 
+    if( row < 0 || col < 0 ) return null;
+    if( row >= this.nrows || col >= this.ncols ) return null;
+    return this.cells[row][col]; 
+  }
+
+  function colRange(tile) { var c1 = tile.col; var c2 = c1 + tile.cols - 1; return (c1,c2); }
+  function rowRange(tile) { var r1 = tile.row; var r2 = r1 + tile.rows - 1; return (r1,r2); }
+
+  function setCellAt(cell,tile) 
   { 
-    var tcols = col + cols; 
+    var tcols = tile.col + tile.cols; 
     if( tcols > this.ncols ) for( var r in this.cells ) r.length = tcols;
-    var trows = row + rows; 
+    var trows = tile.row + tile.rows; 
     if( trows > this.nrows ) for( var n in (trows - this.nrows)) this.cells.push( new Array(this.ncols) );
-    for( var r = row; r < row + rows; ++r ) 
-      for( var c = col; c < col + cols; ++c )
+    var (r1,r2) = rowRange(tile);
+    var (c1,c2) = colRange(tile);
+    for( var r = r1; r <= r2; ++r ) 
+      for( var c = c1; c <= c2; ++c )
         this.cells[r][c] = cell;
     if(cell) 
-      cell.tile = { row:row, col:col, rows:rows, cols:cols };
+      cell.tile = tile;
+  }
+
+  function pulloutCell(cell) { // a) removes the cell and b) shifts tiles below it up
+
+    var (r1,r2) = rowRange(cell.tile);
+    var (c1,c2) = colRange(cell.tile);
+    this.setCellAt(null,cell.tile);
+    var nchanges = 0;
+    for(var n in this.nrows) {
+      var changes = nchanges; 
+      for( var r = r1 + 1; r < this.nrows; ++r )
+        for:cols(var c = c1; c <= c2; ++c) {
+          var cell = this.cellAt(r,c);
+          if(!cell) continue;
+          var (tc1,tc2) = colRange(cell.tile);
+          for( var t = tc1; t <= tc2; ++t )
+            if(this.cellAt(r-1,t)) continue cols;
+          this.setCellAt(null,cell.tile);
+          this.setCellAt(cell,{row:r-1,col:cell.tile.col,rows:cell.tile.rows,cols:cell.tile.cols});
+          ++nchanges;
+        }
+      if( changes == nchanges )
+        break;
+    }
+    if( nchanges )
+      this.updateLayout();
+  }
+
+  function injectCellAt(cell,tile) { 
+
+    const shiftTile = (tile,dr,cell) => {
+      var newpos = { col:tile.col, row: tile.row + dr, rows: tile.rows, cols: tile.cols };
+      var (r1,r2) = rowRange(newpos);
+      var (c1,c2) = colRange(newpos);
+
+      var tc = this.cellAt(r1,c1);
+      if( tc === cell )
+        return newpos;
+
+      for( var r = r1; r <= r2; ++r )
+        for( var c = c1; c <= c2; ++c ) {
+          var tc = this.cellAt(r,c);
+          if( !tc ) continue;
+          if( tc === cell) continue;
+          tc.tile = shiftTile(tc.tile, r2 - tc.tile.row + 1,tc);
+        }
+      this.setCellAt(cell,newpos);
+      return newpos;
+    };
+    return shiftTile(tile,0,cell);
+  }
+
+  function compact() { // removes empty columns and rows 
   }
 
   property ncols(v) { get return this.cells[0].length; }
@@ -40,7 +106,7 @@ class Tiles : Element
     for( var r in nrows ) 
       for( var c in ncols ) {
         var cell = this.cellAt(r,c);
-        if( !cell ) continue;
+        if( !cell || cell !instanceof Element) continue;
         var {col,cols,row,rows} = cell.tile;
         if(row == r && col == c )
           cell.style.set { margin-left : col * size + col * spacing,
@@ -48,39 +114,99 @@ class Tiles : Element
                            width       : cols * size + (cols-1) * spacing,  
                            height      : rows * size + (rows-1) * spacing }
       }
+    this.cellsize = this.toPixels(size);
+    this.cellspacing = this.toPixels(spacing);
+  }
+
+  function paintBackground(gfx) {
+    if( var ph = this.placeholder ) {
+      var tile = ph.tile;
+      var s = this.cellsize + this.cellspacing;
+      var x = tile.col * s; var w = tile.cols * s - this.cellspacing;
+      var y = tile.row * s; var h = tile.rows * s - this.cellspacing;
+      gfx.fillColor(color(255,0,0))
+         .rectangle(x,y,w,h);
+    }
   }
 
   event mousedragrequest $(div) (evt,cell) { 
-    var (xoff,yoff) = cell.box(#position,#inner,#parent);
-    xoff = evt.x - xoff; yoff = evt.y - yoff;
-    this.doDrag(cell,xoff,yoff); 
+    this.doDrag(cell,evt); 
     return true; 
   }
 
-  function doDrag(cell,xoff,yoff) {
+  function doDrag(cell,evt) 
+  {
+    var cx = evt.x; var cy = evt.y;
+    
+    var (xoff,yoff) = cell.box(#position,#inner,#parent);
+    xoff = cx - xoff; yoff = cy - yoff;
 
-    var ml = cell.style#margin-left;
-    var mt = cell.style#margin-top;
+    const findInsertPosition = (x,y) => 
+    {
+      var s = this.cellsize + this.cellspacing;
+
+      x = x - xoff + s * cell.tile.cols / 2; // center of tracking rect
+      y = y - yoff + s * cell.tile.rows / 2;
+
+      var r = y / s; var c = x / s;
+      /*
+      var ce = c + cell.tile.cols - 1;
+      for( var i = c; i <= ce; ++i ) {
+        var tc = this.cellAt(r,i);
+        if(tc) {
+          if(tc.tile.row != r) return (null,null);
+          if(tc.tile.col != i) return (null,null);
+        }
+      }
+      */
+      if( r > this.nrows ) r = this.nrows;
+      if( c > this.ncols ) c = this.ncols;
+      //if( r == cell.tile.row && c == cell.tile.col ) return false; // current position
+      return (r,c);
+    }
+
+    const checkPosition = () => {
+      var (r,c) = findInsertPosition(cx,cy);
+      if( r === null ) return;
+      if( this.placeholder ) { 
+        if( r == this.placeholder.tile.row && c == this.placeholder.tile.col ) return true;
+        this.pulloutCell(this.placeholder);
+      }
+      this.placeholder = { isPlaceholder: true };
+      this.injectCellAt(this.placeholder,{ row:r, col:c, rows:cell.tile.rows, cols:cell.tile.cols });
+      this.updateLayout();
+      return false;
+    };
 
     function mousemove(evt) {
       cell.style.set { margin-left : px(evt.x - xoff),
                        margin-top  : px(evt.y - yoff) };
+      cx = evt.x; cy = evt.y;
+
+      this.timer(60ms, checkPosition); // throttling position check
+
       view.update(true);
       return true;
     }
 
     var cancelMove = false;
     cell.state.dragsource = true;
+    this.placeholder = { isPlaceholder: true, tile: cell.tile };
+    //this.pulloutCell(cell);
+   
     this.capture(#strict);
     this.on("mousemove",mousemove);
     if(!view.doEvent(#untilMouseUp))
       cancelMove = true;
     this.off(mousemove);
     this.capture(false);
-
-    cell.style.set { margin-left : ml,
-                     margin-top  : mt };
+    this.timer(0,checkPosition);
+    if(this.placeholder) {
+      this.setCellAt(cell,this.placeholder.tile);
+      this.placeholder = null;
+    }
     cell.state.dragsource = false;
+    this.updateLayout();
   }
 
 }

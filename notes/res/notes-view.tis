@@ -1,60 +1,89 @@
 
-include "libs/vlist.tis";
 
-class List : Element 
+include "libs/reactor/vlist.tis";
+
+
+// that's representation of single note in the list
+class ListNote : Reactor.Component
 {
-  function attached() { 
+  this var note = null;
+  this var isCurrent = false;
 
-    function setupNoteView(recordNo,note, el) {
-      el.attributes["book-color"] = note.book.color || 0; 
-    }
+  function this(props) { 
+    this.note = props.note;
+    this.isCurrent = props.isCurrent; 
+  }
 
-     // item template
-    VirtualList{ container: this, setupItemView: setupNoteView, bufferSize:20 };
-    var records = [];
-    PopulteNotesList(records); 
-    this.value = records;
-    var me = this;
+  function render() {
+    var note = this.note;
+    var urlFrom = note.getMeta("urlFrom");
 
-    function resetList() { me.reset( :records: UpdateNotesList(records) ); }
+    var atts = { "book-color": (note.book.color || 0).toString(); };
+    if( note.hasActiveEvent ) atts.class = "active-event";
 
-    self << event note-created { resetList() };
-    self << event notes-filter-changed { resetList() };
-    self << event book-selected  { resetList() };
-    self << event book-updated (evt) { var book = evt.data; for(var item in me) item.onBookUpdate(book); }
-    self << event tag-updated (evt) { var tag = evt.data; for(var item in me) item.onTagUpdate(tag); }
+    var text = urlFrom ? <text>from:<span.www>{URL.parse(urlFrom).hostname}</span></text>
+                       : <text/>;
 
-    //self << event events-changed(evt) {}
+    var tags = note.tags.filter( tag => tag.isCustom && tag.color )
+                        .map( tag => <tag color={tag.color}>{tag.name}</tag>);
 
-    self << event note-book-changed (evt) { 
-      var data = evt.data;
-      var note = data[0];      
-      var fromBook = data[1]; 
-      if( note.book === db.getDeletedBook() && currentBook !== db.getDeletedBook()) 
-        // note "deleted" so
-        records.removeByValue(note);
-      else if( currentBook && note.book !== currentBook )
-        // note moved out of current book
-        records.removeByValue(note);
-      else 
-        for(var li in me) {
-          if( li.note === note ) {
-            li.onBookUpdate(book);
-            break;
-          }
-        }
-    }
+    return <li {atts} :current={this.isCurrent} key={note.id}>
+               <div><picture :value={note.preview} /><caption>{note.caption}</caption>{text}</div>
+               <tags>{tags}</tags></li>;
 
+  }
+
+  event mousedragrequest {
+    var data = this.note.dataForClipboard();
+    var r = view.performDrag( this, data, #copy );
+    return true;
+  };
+
+
+}
+
+
+// NOTE: this component is instantiated as normal DOM element -
+//       not by SSX, so we call super() ( VList.this() ) in attached()
+//       rather than in its constructor.
+//       Constructors are not called on subclassing
+class NotesList : VList 
+{
+ 
+  function attached() 
+  { 
+    const renderItem = (note,index) => <ListNote note={note} isCurrent={ this.currentRecord === note } />; 
     
+    super({ 
+       recordset:this.notes,
+       recordview:renderItem
+    },[]);
+
+    const updateList = (reset = false) => {
+      var (records,indexToGo) = GetFilteredNotesSet();
+      this.records = records;
+      if( typeof indexToGo == #integer )
+        this.post(:: this.scrollToRecord(indexToGo,false) );
+    }
+    const updateCurrent = (node) => this.current = node;
+   
+    self << event note-created { updateList() };
+    self << event notes-filter-changed { updateList() };
+    self << event book-selected  { updateList() };
+    self << event book-updated { updateList() };
+    self << event tag-updated { updateList() };
+    self << event note-book-changed { updateList() };
+
+    self << event show-note (evt) { updateCurrent(evt.data); }  
+    self << event start-new-note (evt) { updateCurrent(null); } 
+    self << event note-shown (evt) { updateCurrent(evt.data); }
+
+    updateList();
 
   }
-  property animating(v) {
-    get return this.state.animating;
-  }
 
-  event change {
+  event item-click {
     var note = this.currentRecord;
-    //this.postEvent("show-note", note);
     Navigate.goTo(note);
     return true;
   }
@@ -64,57 +93,6 @@ class List : Element
     return true;
   }
 
-}
-
-class NotesView : Element 
-{
-  function attached() {
-
-    const list = this.$(notes-list);
-        
-    self << event show-note (evt) { list.currentRecord = evt.data; }  
-    self << event start-new-note (evt) { list.currentRecord = null; } 
-    //self << event note-updated (evt) { btnAddNew.state.disabled = false; /*list.currentRecord = evt.data;*/ }  
-  }
- 
-}
-
-
-// that's represantation of single note in the list
-class ListNote : Element 
-{
-  property value(note) {
-    get { return this.note; } 
-    set { 
-      this.note = note;
-      this.$(picture).value = note.preview;
-      this.$(caption).value = note.caption;
-      if( var urlFrom = note.getMeta("urlFrom") )
-        this.$(text).$content(from:<span.www>{URL.parse(urlFrom).hostname}</span>);
-      else
-        this.$(text).clear();
-      this.attributes.toggleClass("active-event", note.hasActiveEvent);
-      this.onTagsChange(note);
-    } 
-  }
-
-  function onTagsChange(onNote) {
-    if( this.note !== onNote ) return;
-    var tags = this.$(tags);
-    tags.clear();
-    for( var tag in onNote.tags )
-      if(tag.isCustom && tag.color)
-        tags.$append(<tag color={tag.color}>{tag.name}</tag>);
-  }
-
-  function onTagUpdate(tag) {
-    if(this.note.containsTags(tag))
-      this.onTagsChange(this.note);
-  }
-  function onBookUpdate(book) {
-    if(this.note.book === book)
-      this.attributes["book-color"] = book.color || 0; 
-  }
 }
 
 class EventsKnob : Element 
@@ -131,15 +109,16 @@ class EventsKnob : Element
     //desc is { startedEvents: int,  - num notes with just started events 
     //          activeEvents: int,  - active event notes with note.startDate < now < note.endNote
     //          totalEvents : int } - all pending events - with now < note.endNote including those in future
+    
     //if( desc.startedEvents ) this.startHeartBeat();
 
     if( desc.totalEvents == 0 ) 
       this.clear();
     else if( desc.activeEvents )
-      this.$content(<span.active>{desc.activeEvents}</span>
-                    <span.total>{desc.totalEvents}</span>);
+      this.content(<span.active>{desc.activeEvents}</span>,
+                   <span.total>{desc.totalEvents}</span>);
     else 
-      this.$content(<span.total>{desc.totalEvents}</span>);
+      this.content(<span.total>{desc.totalEvents}</span>);
   }
 
   /*function startHeartBeat() {

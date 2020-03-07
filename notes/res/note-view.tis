@@ -70,25 +70,30 @@ class NoteView : Element
   }
 
   // gets the note, ensures that note exists
-
-  function presentNote(note, htmlarea ) {
-    //debug presentNote: note, htmlarea;
-
+  /*function presentNote(note, htmlarea ) 
+  {
     if( !note && !htmlarea && this.htmlarea.attributes.exists("initial") )
       htmlarea = this.htmlarea;
     else {
       if(this.note && this.htmlarea.saveNote())
         db.commit();
       this.htmlarea.detach();
-
       if( !htmlarea )
-        htmlarea = Element.create([htmlarea: {content-style:"htmlarea/htmlarea.css"}]);
+        htmlarea = Element.create(<htmlarea content-style="htmlarea/htmlarea.css"/>);
       this.insert(htmlarea,1);
       this.htmlarea = htmlarea;
     }
     this.showNote(note);
-    return htmlarea;
+    return htmlarea; // returns newly created htmlarea
+  }*/
+
+  function presentNote(note) 
+  {
+    if(this.note && this.htmlarea.saveNote())
+      db.commit();
+    this.showNote(note);
   }
+  
 
   function provideNote() 
   {
@@ -111,15 +116,11 @@ class NoteView : Element
           note.lock = true; // user did not express desire to lock it - lock it by default
       this.htmlarea.loadNote(note);
       this.tags.loadNote(note);
-      if(note)
-        this.postEvent("note-shown",note);
-      else
-        this.postEvent("note-blank-shown");
-
+      this.postEvent("note-shown",note);
     }
     this.updateState();    
     this.bookSelector.value = note ? note.book.id : db.defaultBook().id;
-    if(!this.note || !this.note.lock) 
+    if(!this.note /* || !this.note.lock*/) 
       this.post( () => this.htmlarea.state.focus = true );
 
   }
@@ -142,6 +143,7 @@ class NoteView : Element
     if( this.note ) {
       this.toolbar.$(button.edit).state.disabled = false;
       this.toolbar.$(button.save).state.disabled = false;
+      this.toolbar.$(button.anchor).state.disabled = false;
       this.toolbar.$(button.print).state.disabled = !platformSupportsPrinting;
       this.toolbar.attributes["mode"] = this.note.lock ? "viewing" : "editing";
       this.htmlarea.state.readonly = !!this.note.lock; 
@@ -174,7 +176,8 @@ class NoteView : Element
 
     } else {
       this.toolbar.$(button.edit).state.disabled = true;
-      this.toolbar.$(button.save).state.disabled = true;      
+      this.toolbar.$(button.save).state.disabled = true;   
+      this.toolbar.$(button.anchor).state.disabled = true;   
       this.toolbar.$(button.print).state.disabled = true;
       this.toolbar.attributes["mode"] = "editing";
       this.htmlarea.state.readonly = false;
@@ -229,6 +232,11 @@ class NoteView : Element
     return true;
   }
 
+  event click $(button#hyperlink-note) {
+    var data = this.note.dataForClipboard();
+    view.clipboard(#put, data);
+    return true;
+  }
 
   event change $(select.book) (evt) { 
     if( this.note ) {

@@ -1,3 +1,6 @@
+
+@import url(../color.css);
+
 // styling of widgets inside the editor:
 
 
@@ -29,5 +32,41 @@ dir > li.mixed {
   fill:#aaa;  
 }
 
+html a:link[href^="note:"] {
+  prototype:NoteLink url(htmlarea-widgets.tis);
+  fill:#DDD;
+  //color:#800000;
+}
 
+html a:link[href^="note:"]::before { 
+  display:inline-block;
+  content:"";
+  width:1.4em;
+  height:1.2em;
+  background-image: url(path:M1408 928v-480q0-26-19-45t-45-19h-480q-42 0-59 39-17 41 14 70l144 144-534 534q-19 19-19 45t19 45l102 102q19 19 45 19t45-19l534-534 144 144q18 19 45 19 12 0 25-5 39-17 39-59zm256-512v960q0 119-84.5 203.5t-203.5 84.5h-960q-119 0-203.5-84.5t-84.5-203.5v-960q0-119 84.5-203.5t203.5-84.5h960q119 0 203.5 84.5t84.5 203.5z);
+  background-repeat: no-repeat;
+  background-position: 0 50%;
+  background-size: 1.2em 1.2em;
+  stroke-width:1px;
+  stroke:blue;
+  padding-right: 2em; 
+  vertical-align:middle;
+  padding:0;
+  text-decoration:none;
+}
+
+html a:link[href^="note:"][color=0] { fill: @FC0; }
+html a:link[href^="note:"][color=1] { fill: @FC1; }
+html a:link[href^="note:"][color=2] { fill: @FC2; }
+html a:link[href^="note:"][color=3] { fill: @FC3; }
+html a:link[href^="note:"][color=4] { fill: @FC4; }
+html a:link[href^="note:"][color=5] { fill: @FC5; }
+html a:link[href^="note:"][color=6] { fill: @FC6; }
+
+html a:link[href^="note:"].deleted {
+  text-decoration:line-through; 
+  color: #999;
+  fill:#eee;
+  stroke:#eee;
+}
 

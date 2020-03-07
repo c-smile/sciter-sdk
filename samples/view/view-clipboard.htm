@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style></style>
+        <script type="text/tiscript">
+
+include "sciter:reactor.tis";
+
+class Clipboard : Reactor.Component {
+
+  this var items = [];
+
+  function render() {
+    return <ul>
+    { 
+      this.items.map(item => <li>#{item.type} : <pre>{item.data}</pre></li>)
+    }
+    </ul>;
+  }
+}
+
+event click $(button#clipboard) {
+
+  var items = [];
+
+  view.clipboard( type => items.push(type));
+
+  items = items.map(function(type) {
+    var (d1,d2) = view.clipboard(#get,type);
+    return {
+      type: type,
+      data: type == #url || type == #html ? String.printf("%V : %V", d1,d2) 
+                                          : String.printf("%V", d1)
+    }
+  });
+
+  $(#clipboard-content).update { items: items }
+}
+
+        </script>
+    </head>
+    <body>
+
+      <button#clipboard>Show clipboard content</button>
+
+      <reactor|Clipboard #clipboard-content />
+
+    </body>
+</html>

@@ -1,0 +1,84 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+#sidepanel {
+  position:absolute;
+  top:0;
+  right:0;
+  background: gold;
+  padding:1em;
+}
+
+        </style>
+        <script type="text/tiscript">
+
+include "sciter:reactor.tis";
+include "portal.tis";
+
+
+class SidePanel : Reactor.Component
+{
+  this var sidepanel = Element.create(<div #sidepanel></div>);
+
+  function this(props,kids,states,parent) 
+  {
+    this.params = { children: kids, parent: parent };
+  }
+
+  function attached() {
+    self.append(this.sidepanel);
+  }
+
+  function detached() {
+    this.sidepanel.detach(); 
+  }
+
+  function render() {
+    return Reactor.createPortal(this.params.parent,this.params.children,this.sidepanel);
+  }
+}
+
+
+class Main : Reactor.Component {
+
+  this var counter = 0;
+
+  event click $(button.portal.up) { 
+    this.update {counter: this.counter + 1};
+    return true;
+  }
+  event click $(button.portal.down) { 
+    this.update {counter: this.counter - 1}; 
+    return true;
+  }
+
+  event change $(input) (evt,input){
+    this.update {counter: input.value}; 
+  }
+
+  function render() {
+    return <main> 
+      <div> 
+        counter: <input|integer :value={this.counter} step="1"/> 
+      </div>
+      <SidePanel>
+        <p>That is a "portal" element,<br/>
+           rendered outside of host element.</p>
+        <p>Counter: {this.counter} </p> 
+        <button.portal.up>+</button>
+        <button.portal.down>-</button>
+      </SidePanel>
+    </main>;
+  }
+
+}
+        </script>
+    </head>
+    <body>
+
+     <reactor|Main />
+
+    </body>
+</html>

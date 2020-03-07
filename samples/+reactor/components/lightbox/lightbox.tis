@@ -1,0 +1,75 @@
+include "sciter:reactor.tis";
+
+function LightBox(props,kids) 
+{
+
+  var caption = props?.caption ?? "(no caption)";
+
+  var header;
+  var content;
+  var footer;
+
+  var previousEventRoot = null;
+
+  switch(kids.length) 
+  {
+    case 3: [header,content,footer] = kids; 
+            break;
+    case 2: [content,footer] = kids; 
+            header = <caption>{caption}</caption>; 
+            break;
+    case 1: content = <div>{kids[0]}</div>; 
+            header = <caption>{caption}</caption>; 
+            footer = <footer><button(ok)>OK</button></footer>; 
+            break;
+    default: throw "LightBox: invalid markup";
+  }
+
+  var lightbox;
+  var oath = promise();  
+
+  function closeWith(button) 
+  {
+    var name = button.attributes["name"];
+    oath(true,[symbol(name)]);
+    self.attributes.removeClass("lightbox");
+    lightbox.state.expanded = false;
+    view.eventsRoot = previousEventRoot;
+    lightbox << event animationend {
+      lightbox.remove();  
+    }
+  }
+
+  function show() {
+
+    //var lightboxstyle = self.$(>head>style.lightbox);
+    //if( !lightboxstyle )
+    //  lightboxstyle = self.$(>head).append(<style.lightbox src={$url(lightbox.css)} />);
+    //lightboxstyle.activate();
+
+    self.attributes.addClass("lightbox");
+
+    self.append(<lightbox {props}>{header}{content}{footer}</lightbox>);
+
+    lightbox = self.last;
+
+    lightbox << event click $(footer button[name]) (evt,button) {
+      closeWith(button);
+      return true;
+    };
+
+    lightbox.state.expanded = true; // for animation purposes 
+
+    // document modal thing:
+    previousEventRoot = view.eventsRoot;
+    view.eventsRoot = lightbox;
+
+
+    return oath;
+  }
+
+  return show;
+
+
+} 
+

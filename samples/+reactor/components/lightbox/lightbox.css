@@ -1,0 +1,47 @@
+
+html.lightbox > body {
+  foreground-color: #cccccccc;
+  transition: foreground-color(linear,200ms);
+}
+
+lightbox { style-set: lightbox; }
+
+@set lightbox {
+
+  :root {
+    display:block;
+    position:fixed;
+    width:max-content;
+    min-width: 300dip; 
+    max-width: 90%; 
+    top:*; left:*; right:*; bottom:*;
+    background:#fff;
+    box-shadow: 1dip 5dip 8dip #888888;
+    opacity:0.1;
+  }
+
+  :root:expanded {
+    opacity: 1.0;
+    transition: opacity(linear,200ms);
+  }
+
+  // caption
+  :root > :nth-child(1) {
+    padding:1em;
+  }
+
+  // content
+  :root > :nth-child(2) {
+    padding:1em;
+  }
+
+  // footer
+  :root > :nth-child(3) {
+    flow:horizontal;
+    horizontal-align:center;
+    padding:1em; 
+    //border-top:1dip solid #888;
+    background:#eee;
+  }
+
+}
