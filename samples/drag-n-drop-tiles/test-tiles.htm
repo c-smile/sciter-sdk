@@ -7,6 +7,7 @@
     prototype: Tiles url(tiles.tis);
     flow:stack;
     border-spacing: 4dip;
+    padding:4dip;
     var(cell-size): 64dip;
     border:1dip solid;
   }
@@ -19,7 +20,8 @@
   {
     z-index:1; 
     box-shadow: 1dip 1dip 3dip #888;
-    background:morph(gold,lighten:25%); 
+    opacity:0.75;
+    transition: opacity(200ms,linear);
   }
 
         </style>
@@ -27,14 +29,18 @@
     </head>
     <body>
 
-<p>Tiles layout. Not complete yet!</p>
-
 <section.tiles>
 
-  <div#A row=0 col=0>A</div>
-  <div#B row=0 col=1 rows=2>B</div>
-  <div#C row=2 col=0 cols=2>C</div>
-  <div#D row=1 col=2 rows=2>D</div>
+  <div row=0 col=0>1</div>
+  <div row=0 col=1 rows=2>2</div>
+  <div row=1 col=0>3</div>
+  <div row=2 col=0 rows=2 cols=2>4</div>
+  <div row=0 col=2 cols=2>5</div>
+  <div row=1 col=2 rows=2 cols=2>6 - Drag me!</div>
+  <div row=3 col=2>7</div>
+  <div row=0 col=4 rows=2>8</div>
+  <div row=2 col=4>9</div>
+  <div row=3 col=3 cols=2>10</div>
 
 </section>
 
