@@ -11,7 +11,7 @@ namespace Reactor {
 
   function createPortal(owner,container/*existing DOM element*/) {
     return function(vdom) {
-      container.owner = owner;
+      container.post( :: container.owner = owner );
       container.merge(vdom,#only-children);
     }
   }
