@@ -24,14 +24,14 @@
         
         $(#result).text = String.printf("result=%d, recordsAffected=%d",r,recordsAffected);
 
-    var rs = db.exec("select * from stocks order by price");
-    if ( rs instanceof Recordset )
-      showRecordset(rs);
-    else
-      $(#result).text = "Wrong type:" + rs;
+        var rs = db.exec("select * from stocks order by price");
+        if ( rs instanceof SQLite.Recordset )
+          showRecordset(rs);
+        else
+          $(#result).text = "Wrong type:" + rs;
 
-    showSchema(db);  
-    db.close();
+        showSchema(db);  
+        db.close();
   }
   
   function showRecordset(rs)

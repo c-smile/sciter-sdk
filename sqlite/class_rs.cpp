@@ -7,11 +7,13 @@ using namespace tiscript;
 
 const char *CLASSNAME = "Recordset";
 
+static pinned rs_class;
+
 // used by DB.exec() to create an RS object
 value RS_create(VM* vm, sqlite3_stmt *pst)
 {
-  value cls = get_prop(vm,get_current_ns(vm),CLASSNAME);
-  value rs_obj = create_object(vm,cls);
+  value rs_obj = create_object(vm,rs_class);
+  assert(is_native_object(rs_obj));
   set_native_data(rs_obj,pst);
   return rs_obj;
 }
@@ -253,7 +255,7 @@ void init_rs_class( VM *vm )
     const_def()
   };
 
-  static class_def rs_class = 
+  static class_def rs_class_def = 
   {
     CLASSNAME,
     methods,
@@ -264,5 +266,6 @@ void init_rs_class( VM *vm )
     finalize,
     iterator
   };
-  tiscript::define_class(vm,&rs_class, get_current_ns(vm));
+  rs_class.attach(vm);
+  rs_class = tiscript::define_class(vm,&rs_class_def, get_current_ns(vm));
 }
