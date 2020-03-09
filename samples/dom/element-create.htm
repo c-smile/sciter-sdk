@@ -11,29 +11,25 @@
 
           function self.ready() {
             // create 
-            var p = Element.create([p: "paragraph 1"]);
+            var p = Element.create(<p>paragraph 1</p>);
             $(body).append(p);
 
-            $(body).append([p: "paragraph 2"]);
+            $(body).append(<p>paragraph 2</p>);
 
-            $(body).append([p: {class:"foo"}, 
-                             "paragraph 3 ",
-                             [strong:"with compound"],
-                             " content"
-                           ]);
+            $(body).append(<p.foo>paragraph 3 <strong>with compound</strong> content</p>);
 
-            $(body).append([p: {class:"bar"}, 
-                             [
-                               "paragraph 4 ",
-                               [strong:"with list of"],
-                               " children"
-                             ]
-                           ]);
+            var list = [
+              "paragraph 4 ",
+              <strong>with list of</strong>,
+              " children"
+            ];
+
+            $(body).append(<p.bar>{list}</p>);
           }
 
         </script>
     </head>
     <body>
-       <h1>Demo of <code>Element.create()</code> function that uses DOM creation microformat.</h1> 
+       <h1>Demo of <code>Element.create()</code> function that uses SSX literals.</h1> 
     </body>
 </html>

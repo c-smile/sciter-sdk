@@ -64,7 +64,7 @@
         event click $(button#touch-file) {
           var fn = folderView.fullPath(this.prior.value);
           var now = new Date();
-          System.utime(fn,now,now).then( ok ).catch( fail );
+          System.utimes(fn,now,now).then( ok ).catch( fail );
         }
 
 

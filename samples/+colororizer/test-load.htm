@@ -3,14 +3,14 @@
 	<style>
 		@import url(colorizer.css);
     
-    plaintext { min-height:400px; }
+    pre { size:*; overflow:auto; }
     
 	</style>
 
 	<script type="text/tiscript">
   
     async function loader() {
-		  var str = await view.request { url:self.url("colorizer.tis"), output:#string };
+		  var [str,status] = await view.request { url:self.url("colorizer.tis"), output:#string };
 			$(pre).load(str, "tis");
     }
 

@@ -32,7 +32,7 @@
 enum GFX_LAYER
 {
     GFX_LAYER_GDI = 1, GFX_LAYER_CG = 1, /*Mac OS*/ GFX_LAYER_CAIRO = 1, /*GTK*/
-    GFX_LAYER_WARP = 2,
+    GFX_LAYER_WARP = 2, GFX_LAYER_D2D_WARP = 2,
     GFX_LAYER_D2D = 3,
     GFX_LAYER_SKIA = 4,
     GFX_LAYER_SKIA_OPENGL = 5,
@@ -130,6 +130,8 @@ enum GFX_LAYER
 
   typedef unsigned int UINT;
   typedef int INT;
+  typedef unsigned int UINT32;
+  typedef int INT32;
   typedef unsigned long long UINT64;
   typedef long long INT64;
 
@@ -209,6 +211,8 @@ enum GFX_LAYER
   #endif
   typedef unsigned int UINT;
   typedef int INT;
+  typedef unsigned int UINT32;
+  typedef int INT32;
   typedef unsigned long long UINT64;
   typedef long long INT64;
 

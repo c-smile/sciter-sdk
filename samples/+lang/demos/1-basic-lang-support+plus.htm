@@ -14,6 +14,8 @@
     </style>
     
     <script type="text/tiscript">
+
+      include "../lang.tis"; // NOTE: loading lang.tis first, ahead of Plus.  
     
       $(select#lang).onValueChanged = function() { self.language = this.value; }
       
@@ -32,7 +34,7 @@
     <p><dfn>UI language</dfn><include src=lang-selector.htm /></p>
       
     <label.dfn>Matches</label> : <input|integer(matches) min=0 max=100 step=1 >
-    <p><var(matches)>There are # matches in the box</var>.</p> 
+    <p><var(matches) #test>There are # matches in the box</var>.</p> 
   </body>
 </html>
 

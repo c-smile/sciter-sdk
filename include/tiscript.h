@@ -1,6 +1,8 @@
 #ifndef __tis_h__
 #define __tis_h__
 
+#include "sciter-x-types.h"
+
 #if defined(__GNUC__)
   #define TIS_CDECL /*__attribute__((cdecl))*/
 #else
