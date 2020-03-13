@@ -1,0 +1,18 @@
+
+
+// helper of <input|date> to accept values as JSON style strings
+
+class DateString : Element {
+
+  property value(v) {
+
+    get return this.state.value?.toISOString(true);
+    set {
+      if(typeof v == #string) 
+        this.state.value = new Date(v);
+      else 
+        this.state.value = v;
+    }
+  }
+
+}

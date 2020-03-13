@@ -1,7 +1,13 @@
 <html>
     <head>
         <title>Test</title>
-        <style></style>
+        <style>
+
+          input[type="date"] {
+            prototype: DateString url(date-string.tis);
+          }
+
+        </style>
         <script type="text/tiscript">
 
           include "../formation.tis";
@@ -14,17 +20,18 @@
                InstallCardExt: {
                   AvailableHookups: {
                     Blinker: true,
-                    Hood: "some text"
+                    Hood: "some text",
+                    Date: "2018-08-24T00:00:00Z",
                   }
                }
              };
            }
 
-        event click $(button#show) 
-        {
-           var val = frm.value;
-           $(pre#out).value = JSON.stringify(val,"  ");
-         }
+          event click $(button#show) 
+          {
+            var val = frm.value;
+            $(pre#out).value = JSON.stringify(val,"  ");
+          }
 
 
         </script>
@@ -37,6 +44,7 @@
       <section #state>
         <input|checkbox(InstallCardExt.AvailableHookups.Blinker) /> 
         <input|text(InstallCardExt.AvailableHookups.Hood) /> 
+        <input|date(InstallCardExt.AvailableHookups.Date) /> 
       </section>
       <pre#out />
     </body>
