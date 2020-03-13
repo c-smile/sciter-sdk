@@ -81,8 +81,10 @@ namespace formation {
     fp[#value] = property(v) { get return getValues(); set setValues(v); }
     fp[#object] = property(v) { get return val; }
     
-    fp.prototype = Formation;
-    f.prototype = fp;    
+    //fp.prototype = Formation;
+    //f.prototype = fp;    
+    Object.setPrototypeOf(fp,Formation);
+    Object.setPrototypeOf(f,fp);    
 
     function addNamedItem(fo, name, el) {
       if( typeof name == #array) 
@@ -290,8 +292,10 @@ namespace formation {
     fp[#container] = property(v) { get return container; set container = v; }
     fp[#value] = property(v) { get return gather(); set render(v); }
     fp[#object] = property(v) { get return val; }    
-    fp.prototype = Repeatable;
-    f.prototype = fp;    
+    //fp.prototype = Repeatable;
+    //f.prototype = fp;    
+    Object.setPrototypeOf(fp,Repeatable);
+    Object.setPrototypeOf(f,fp);    
     
     container[#formation] = property(v) { get return f; }
     //WRONG for <select>: container[#value] = property(v) { get return gather(); set render(v); } 
