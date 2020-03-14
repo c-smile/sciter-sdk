@@ -68,6 +68,7 @@
         position:absolute;
         right:8dip;
         top:8dip;
+        transition: width sine-out 400ms, height sine-out 400ms, background-color sine-out 400ms;
       }
 
       section#info > ul { size:max-content; clear:both; } 
@@ -75,7 +76,7 @@
       section#info:hover {
         background-color:rgba(200,200,200,0.75);
         size:max-content;
-        transition: size(sine-out,400ms,100ms) background-color(sine-out,400ms);
+        //transition: width(sine-out,400ms,100ms) height(sine-out,400ms,100ms) background-color(sine-out,400ms);
       }
 
   </style>

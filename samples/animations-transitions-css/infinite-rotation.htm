@@ -2,53 +2,37 @@
   <head>
     <title></title>
     <style>
-    
-      .spin { aspect: Spin; }
-      
+
+      @keyframes rotate { 
+        from { transform: rotate(0deg); } 
+        to { transform: rotate(360deg); }
+      }
+          
       div.spin 
       { 
-        size:100px;
+        size:100dip;
         background:gold;
-        border:2px solid;
+        border:2dip solid;
         margin:*;
+      }
+
+      div.spin.animate {
+        animation: 3s infinite linear rotate;      
+      }
+
+      div.spin.animate.paused {
+        animation-play-state: paused;
       }
     
     </style>
     <script type="text/tiscript">
-    
-    function Spin() {
-    
-      var angle = 0;
-      var paused = false;
-      
-      function run() {
-        this.animate( function() 
-        {
-          if( paused ) 
-            return false;
-          ++angle;
-          this.style["transform"] = [rotate: angle * 1grad];
-          return true;
-        });
-      }
-      
-      this.pause = function(onOff) {
-        paused = onOff;
-        if(!paused)
-          run.call(this);
-      };
-      
-      // restart animation when window gets shown:
-      view.on("statechange", function() {
-        if( view.state == View.WINDOW_SHOWN )
-          run.call(this super);
-      });
-      
-      run.call(this);
-    }
+
+    self.timer(20ms, function() {
+      $(div.spin).attributes.addClass("animate");
+    });
     
     $(#pause).on("click", function() {
-      $(div.spin).pause(this.value);
+      $(div.spin).attributes.toggleClass("paused", this.value);
     });
     
     
@@ -57,7 +41,7 @@
 <body>
   <button|checkbox #pause>Pause</button>
 
-  <div.spin title="Voulez-Vous?">
+  <div.spin>
     Voulez-Vous Danser?
   </div>
   

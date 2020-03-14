@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style></style>
+        <script type="text/tiscript">
+
+include "sciter:reactor.tis";
+
+var data = 42;
+var html = "Hello <b>world</b>!";
+
+var elMain;
+
+class App : Reactor.Component {
+
+  function render() {
+    // note, :data=... is element.data = ...;
+    //       :html=... is element.html = ...;
+    return <main @{elMain}>
+      <div :html={html} :data={data} />
+    </main>
+  } 
+}
+
+event click $(button#update) {
+  data += 1;
+  html += "!";
+  elMain.update();
+}
+
+        </script>
+    </head>
+    <body>
+       <button#update>Update</button>
+       <reactor|App />
+    </body>
+</html>

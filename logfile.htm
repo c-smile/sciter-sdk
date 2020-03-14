@@ -10,7 +10,22 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FFFAFC">4.4.1.3</td><td nowrap valign="top" align="center">09-03-2020</td><td>fixes:
+    <tr><td valign="top" bgcolor="#FFFAFC">4.4.1.4</td><td nowrap valign="top" align="center">14-03-2020</td><td>new:
+					<ul><li>[css] + support of <code>animation</code> property and <code>@keyframes</code> declaration. See updated samples in sdk/samples/animations-transitions-css/inifinite***.htm</li>
+						<li>[SSX/reactor] ssx is allowed to pass properties to DOM elements using &quot;state properties&quot;, so this<pre>&lt;div :data={someData} :html={someHtml} /&gt;</pre>
+							<p>is an equivalent of&nbsp;</p>
+							
+							
+							<pre>var div = Element.create(&lt;div/&gt;);
+div.data = someData;
+div.html = someHtml;</pre></li>
+						</ul>
+					<p>fixes:</p>
+					<ul><li>[script] fix of GC issue in mouse event handlers.</li>
+						<li>[+formation] demo updates and fixes of warnings.</li>
+						<li>[windows] <code>MOUSE_IDLE</code> event generation on captions of windows with custom frame.&nbsp;</li>
+						<li>[premake] sciter.static.vcxproj generates .PDB file in .LIB output folder, e.g. sciter/lib.win/x32/</li>
+						<li>[script] <code>element.append(&quot;non-ascii chars&quot;)</code> fix.</li></ul></td></tr><tr><td valign="top" bgcolor="#FFFAFC">4.4.1.3</td><td nowrap valign="top" align="center">09-03-2020</td><td>fixes:
 					<ul><li>fix of samples mentioned here:&nbsp;<a href="https://sciter.com/forums/topic/sqlite-examples-broken/#post-64385">https://sciter.com/forums/topic/sqlite-examples-broken/#post-64385</a></li></ul></td></tr><tr><td valign="top" bgcolor="#FFFAFC">4.4.1.2</td><td nowrap valign="top" align="center">08-03-2020</td><td>fixes:
 					<ul><li>[css] fix of CSS3 style transition handling;</li>
 						<li>[reactor] fix of sdk/samples/+reactor/components/portal/ demo, see:&nbsp;<a href="https://sciter.com/forums/topic/naming-react-component-doesnt-work-properly/#post-64371">https://sciter.com/forums/topic/naming-react-component-doesnt-work-properly/#post-64371</a></li>

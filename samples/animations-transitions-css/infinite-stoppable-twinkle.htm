@@ -1,50 +1,35 @@
 <html>
   <head>
     <style>
-    
-      img.twinkle { 
-        aspect: Twinkle; 
-        transform:scale(1); 
-        transition:transform sine-in-out 600ms; 
+
+      @keyframes twinkle { 
+        from { transform: scale(1); } 
+        50% { transform: scale(1.6); } 
+        to { transform: scale(1); }
       }
-      
-      img.twinkle:expanded { transform: scale(2);  }
+
+      img.twinkle { width:32dip; vertical-align:middle; }
+    
+      img.twinkle.animate {
+        animation:10 sine-in-out 600ms twinkle alternate; 
+      }
     
     </style>
     <script type="text/tiscript">
-    
-    function Twinkle() 
-    {
-      function flipflop() { 
-        debug log: "flipflop";
-        this.state.expanded = !this.state.expanded; 
-      }
-    
-      this.start = function() {
-        this.state.expanded = true; // triggers transition/animation
-        this.on("animationend.twinkle", flipflop );
-      } 
-      
-      this.stop = function() {
-        this.state.expanded = false; 
-        this.off("animationend.twinkle");
-      } 
-     
-    }
 
     function self.ready() { 
-      self.post(::$(#heart).start());
+      self.timer(20ms, ::$(#heart).attributes.addClass("animate"));
     }
     
-    $(button#stop) << event click() {
-      $(#heart).stop();
+    event click $(button#stop) {
+      $(#heart).attributes.removeClass("animate");
     }
     
     </script>
   </head>
 <body>
 
-  <p>From Sciter with love! <img.twinkle #heart src="sciter:icon-copy-sign.png"></p>   
+  <p>From Sciter with love! <img.twinkle #heart src="../animations/tutorial-parts/heart.png"></p>   
 
   <button #stop>Stop twinkling</button>
 

@@ -3,31 +3,31 @@
     <title></title>
     <style>
     
-      .flipflop { aspect: FlipFlop; }
+      @keyframes flipflop { 
+        from { transform: rotate(30deg); } 
+        to { transform: rotate(-30deg); }
+      }
+
       
       div.flipflop 
       { 
-        size:100dip;
+        width:max-content;
         background:gold;
         border:2dip solid;
         margin:*;
-        transform: rotate(-30deg);
-        transition: transform cubic-in-out 600ms;
+        padding: 1em 2em;
       }
-      
+
       div.flipflop.on {
-        transform: rotate(+30deg);
-      } 
+        animation: 1200ms infinite alternate flipflop;      
+      }
     
     </style>
     <script type="text/tiscript">
     
-    function FlipFlop() {
-      function toggle() { this.attributes.toggleClass("on"); }
-      this.on("animationend", toggle );
-      this.post(::toggle.call(this));
-    }
-    
+      self.timer(20ms,:: $(div.flipflop).attributes.addClass("on") );
+
+
     </script>
   </head>
 <body>
