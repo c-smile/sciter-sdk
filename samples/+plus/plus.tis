@@ -508,7 +508,7 @@ const Plus = function() {
       var root = thisModel(this);
       var thing = this; 
       var thingParent = thing.parent;
-      var thingIndex = thing.index;
+      var thingIndex = thing.nodeIndex;
       const placeholder = Node.createComment("");
       thing.insertNodeAfter(placeholder);
       thing.@["repeat"] = undefined;
@@ -546,7 +546,6 @@ const Plus = function() {
         if(nindex) repeatable_root[nindex] = idx; 
         Object.setPrototypeOf(repeatable_root,root);// repeatable namespace is derived from parent namespace
         domitem.$model = repeatable_root; // repeated element is holding local $model now for its descendannts.
-        //thingParent.insert(domitem,domItemIdx + thingIndex);
         lastNode.insertNodeAfter(domitem);
         // if something in the record has changed we need to notify list observers
         if( typeof val == #object && !Object.eachObserver(val, fun => fun.name == rqUpdateCollectionObserves) )
@@ -567,7 +566,7 @@ const Plus = function() {
         node = node.nextNode;
         while( node ) {
           var domitem = node;
-          if( !domitem.isElement ) { node = node.nextNode; continue; }
+          if( !domitem.isElement || !domitem.$model ) { node = node.nextNode; continue; }
           var elval = domitem.$model && domitem.$model[nitem]; 
           if(elval !== undefined)
             Object.removeObserver(elval,rqRenderList);
