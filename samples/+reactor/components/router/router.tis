@@ -17,7 +17,8 @@ namespace App {
     params = routeParams;    
     if(currentRoute !== nextRoute) {
       currentRoute = nextRoute;
-      main.content(main.render()); // note: we are not using reconcilliation here as we need full reload
+      const mainContent = main.render()[1];
+      main.content(mainContent); // note: we are not using reconcilliation here as we need full reload
     }
     else 
       main.update();
