@@ -45,7 +45,7 @@ class VGrid: Element
 
   function attached() 
   {
-    this.sb = Element.create([widget: {type:"vscrollbar"}]);
+    this.sb = Element.create(<widget|vscrollbar/>);
     this.ds = null; // data source
     this.firstRowNo = 0; // num of first visible row in ds.
     this.visibleRows = 0; // num of rows visible in full.
@@ -53,7 +53,7 @@ class VGrid: Element
     this.currentRow = null; // index of current row. 
     
     // DOM structure initialization:
-    var table = Element.create([table:""]);
+    var table = Element.create(<table/>);
     this.table = table;    
     
     this.insert(table);
@@ -105,14 +105,14 @@ class VGrid: Element
       if( this.thead ) this.thead.detach(false);
       if( this.tbody ) this.tbody.detach(false);      
 
-      this.table.insert( this.thead = Element.create([thead:[]]));
-      this.table.insert( this.tbody = Element.create([tbody:[]]));
+      this.table.insert( this.thead = Element.create(<thead/>));
+      this.table.insert( this.tbody = Element.create(<tbody/>));
       
       // header row generation
-      var hr = Element.create([tr:[]]);
+      var hr = Element.create(<tr/>);
       for( var cd in columnDefs )
       {
-        hr.insert(Element.create([th:cd.caption]));
+        hr.insert(Element.create(<th>{cd.caption}</th>));
         if( cd#sortOrder )
           hr.last.@#sortType = cd#sortOrder;
       }
@@ -120,9 +120,9 @@ class VGrid: Element
       // generation of data rows
       for( var r = 0; r < VGrid.BUF_ROWS; ++r)
       {
-        var dr = Element.create([tr: {hidden:true}]); // hidden by default
+        var dr = Element.create(<tr hidden="true" />); // hidden by default
         for( var cd in columnDefs )
-          dr.insert(new Element("td"));
+          dr.insert(Element.create(<td/>));
         this.tbody.insert(dr);
       }
     }        
