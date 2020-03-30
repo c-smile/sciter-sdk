@@ -1,0 +1,40 @@
+﻿<html>
+  <head>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>Audio object</h1>
+  <p>Represents playing audio.</p>
+  <p>To playback audio resource create audio object by calling <code>view.audio(url):Audio</code> and invoking <code>.play()</code> method on returned object.</p>
+  <dl>
+    <h2>Properties</h2>
+    <dt>status</dt>
+    <dd>
+      <div>integer, one of <code>Audio.STOPPED</code>, <code>Audio.PAUSED</code>, <code>Audio.PLAYING</code>.</div></dd>
+    
+		
+		<dt>progress</dt><dd>float, playback progress, number in range 0.0 ... 1.0 </dd>
+    <h2>Methods</h2>
+    <dt>play</dt>
+    <dd>
+      <div><strong>()  </strong> returns: Audio</div>
+      <p>Starts playback.</p>
+      <p>Returns the Audio object itself allowing to chain the call.</p></dd>
+    <dt>pause</dt>
+    <dd>
+      <div><strong>(</strong><strong>)</strong> returns: Audio</div>
+      <p>Pauses playback, use play() to continue paused audio.
+</p></dd>
+    <dt>stop</dt>
+    <dd><strong>(</strong><strong>)</strong> returns: Audio &nbsp; &nbsp; &nbsp;&nbsp;<p>Stops playback and disposes the object.&nbsp;</p></dd>
+    <dt>volume</dt>
+    <dd>
+      <div><strong>(</strong> [volumeToSet:float] <strong>) </strong> returns: Audio | float</div>
+      <p>Sets playback volume, &nbsp;<i>volumeToSet</i> must be a float in range 0.0 ... 1.0.</p></dd>
+    <h2>Events</h2><dt>heartbit</dt><dd>The event is generated regularly during playback. Subscribe to it by:
+			<pre>audio &lt;&lt; event heartbit { ... }</pre>
+			</dd><dt>stop</dt>
+		<dd>The event is generated at the end of playback. The audio object gets disposed after the event.<pre>audio &lt;&lt; event stop { ... }</pre></dd>
+		</dl>
+</body>
+</html>

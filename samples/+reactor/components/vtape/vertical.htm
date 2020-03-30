@@ -1,0 +1,87 @@
+<html>
+<head>
+  <style>
+
+    
+    main {  
+      flow:grid(1 3 5,
+                2 4 6);
+      border-spacing:10dip; height:*; 
+    }
+              
+    tape 
+    {
+      width:300dip;
+      height:*;
+      border:1dip solid #AAA;
+      background-color: gold;
+      foreground-image: url(images/cover.png);
+      foreground-repeat: expand;
+      foreground-position: 32 16 32 16; 
+    }
+
+    tape > div
+    {
+      border:1dip solid #aaa;
+      flow: grid(1 1,
+                 2 3); 
+      border-spacing:6dip;
+      margin:10dip;
+      padding:4dip;
+      background-color: white;
+      min-height:64dip;
+    }
+    tape > div > caption
+    {
+      background-color: #DDD;
+      margin:-4dip -4dip 4dip -4dip;
+      padding:4dip;
+    }
+    tape > div > .content { width:*; }
+    tape > div > img { max-width:64dip; }
+
+  </style>  
+  <script type="text/tiscript">
+    include "items-source.tis";
+    include "tape.tis";
+
+    function itemRenderer(item) {
+      return <div.item key={item.key.toString()}>
+        <caption>{item.caption}</caption>
+        <img src={item.image} />
+        <div.content :html={item.content} />
+      </div>;
+    }
+    
+    function App() {
+      return 
+        <main>
+          <caption>Normal scroll</caption>
+          <Tape dataSource={LoremIpsum.provider} itemView={itemRenderer} />
+          <caption>List with kinetic scroll</caption>
+          <Tape dataSource={LoremIpsum.provider} itemView={itemRenderer} isKinetic={true} />
+          <caption>List with kinetic scroll, initially at the end</caption>
+          <Tape dataSource={LoremIpsum.provider} itemView={itemRenderer} isKinetic={true} atEnd={true}/>
+        </main>;
+    }
+    
+    event buffer-change $(div#tape) (evt)
+    {
+      var data = evt.data;
+      $(pre#status).text = String.printf("Buffer: first record %d, last record %d", data[0], data[1]);
+    }
+        
+  </script>  
+</head>
+<body>
+  <h1>Virtual list sample</h1>
+  <p>This sample demonstrates so called virtual list. Virtual list is using items source that contains potentially unknown list of items. 
+     As number of items is unknown then we cannot show standard scrollbar in general. 
+     This list is using fixed buffer of DOM elements (TapeV.BUFFER_SIZE = 20) so rendering speed is independent of number of items in the item-source list.</p>
+  <p>Use mouse wheel to scroll the list.</p>
+
+  <reactor|App />
+  
+  <pre #status>.</pre>
+</body>
+</html>

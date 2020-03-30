@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style></style>
+        <script type="text/tiscript">
+
+          event click $(#play) (evt, button) 
+          {
+
+            var meter = $(#play-status);
+
+            button.state.disabled = true;
+            var audio = view.audio(self.url("hasta-lavista-baby.mp3")).volume(0.5);
+
+            audio << event heartbit { meter.value = (audio.progress * 100).toInteger(); }
+                  << event stop { button.state.disabled = false;  meter.value = 100; };
+
+            audio.play();
+          }
+
+        </script>
+    </head>
+    <body>
+
+       <button#play>Play sound</button> <meter #play-status max="100" />
+
+    </body>
+</html>

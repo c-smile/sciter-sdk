@@ -1,0 +1,301 @@
+
+include "sciter:reactor.tis";
+
+
+class Tape : Reactor.Component 
+{
+  const styleset = [tape: $url(tape.css)];
+
+  this var dataSource;
+  this var itemView;
+  this var isKinetic;
+  this var atEnd;
+
+  function this(props) {
+    //setting these:
+    //  tape.dataSource;
+    //  tape.itemView;
+    //  tape.isKinetic;
+    //  tape.atEnd;
+    this.extend(props);
+  }
+
+  function render() {
+    var content = this.renderContent();
+    return <tape>{content}</tape>;
+  }
+
+  function update(props = null) {
+    if( props ) {
+      this.extend(props);
+      if(props.dataSource || props.itemView)
+        this.resetList();
+    } 
+    else super.update();
+  }
+
+  function renderContent() { return []; }
+
+  function attached()  // installs scroll engine on this
+                       // will add this.resetList() method
+  {
+    const BUFFER_SIZE = 20;      // this is a max number of items in buffer
+                                 // this number has to be at least twice bigger than number of visible items.
+    const BUFFER_CHUNK_SIZE = 10;// this is a number of items that will be fetched from items source on scroll to fill the buffer.
+    const SCROLL_DELTA = 60;     // dip, for mouse wheel, non-kinetic
+    
+    const SCROLL_KINETIC_DELTA = 20;       // dip, for mouse wheel, kinetic
+    const SCROLL_KINETIC_DECEL = 0.86;     // deceleration 
+    const SCROLL_KINETIC_OUT_DECEL = 0.74; // deceleration when head/tail reached
+    const SCROLL_KINETIC_STEP_DELAY =  View.ANIMATION_TIMER_SPAN; // milliseconds
+
+    const tape = this;
+
+    const elementUpdate = Element.update; // original Element.update()  
+
+    var velocity = 0;
+
+    var scrollDown;
+    var scrollUp;
+
+    var touchPosX;
+    var touchPosY;
+    var isOut = false;
+    var stopAnimation;
+
+    var itemsBuffer = [];
+
+    function scrollStepDown(scrollDelta, noOverflow = false)
+    {
+      var (scroll_left,scroll_top, scroll_right, scroll_bottom) = tape.scroll(#rect);
+      var content_height = tape.box(#height,#content);
+      
+      function fetchMore()
+      {
+        var key = itemsBuffer.last.key;
+        var chunk = tape.dataSource(key,BUFFER_CHUNK_SIZE);
+        if(chunk.length == 0) 
+          return true; // nothing was inserted - no more records. true - to mark end reached
+        itemsBuffer.push(...chunk);
+
+        var vnodes = itemsBuffer.map( (item) => tape.itemView.call(tape,item) );
+        tape.merge(<content>{vnodes}</content>,#only-children);
+        elementUpdate.call(tape);
+
+        content_height = tape.box(#height,#content);
+        
+        // drop first items that exceed BUFFER_SIZE
+        vnodes.splice(0,itemsBuffer.length - BUFFER_SIZE);        
+        itemsBuffer.splice(0,itemsBuffer.length - BUFFER_SIZE);
+        tape.merge(<content>{vnodes}</content>,#only-children);
+        elementUpdate.call(tape);
+        
+        var content_height_after = tape.box(#height,#content); // adjust scroll position as
+        scroll_top += content_height_after - content_height;   // we've removed first items.
+        content_height = content_height_after;
+        tape.postEvent("buffer-change", [itemsBuffer.first.key,itemsBuffer.last.key]);
+        return false;
+      }
+      
+      var scrolly = scroll_top + scrollDelta;
+      
+      if( scroll_bottom < scrollDelta) {
+        // we need to pump more items in this virtual list:
+        isOut = fetchMore();
+        if(isOut && noOverflow) { 
+          scrolly = content_height - tape.scroll(#height);
+          isOut = false;
+        }
+        else 
+          scrolly = scroll_top + scrollDelta;
+      }
+      else   
+        isOut = false;
+
+      tape.scrollTo( scroll_left, scrolly, false, true );
+    }
+      
+    function scrollStepUp(scrollDelta, noOverflow = false)
+    {
+      var (scroll_left,scroll_top, scroll_right, scroll_bottom) = tape.scroll(#rect);
+         
+      function fetchMore()
+      {
+        var prev_top = tape.first.box(#top,#inner,#parent);
+        var key = itemsBuffer.first.key;
+        var chunk = tape.dataSource(key,-BUFFER_CHUNK_SIZE);
+        if(chunk.length == 0) 
+          return true; // nothing was inserted - no more records. true - to mark end reached
+        itemsBuffer.unshift(...chunk); 
+        if(itemsBuffer.length > BUFFER_SIZE)
+          itemsBuffer.length = BUFFER_SIZE; // prune the buffer
+        var vnodes = itemsBuffer.map( (item) => tape.itemView.call(tape,item) );
+        tape.merge(<content>{vnodes}</content>,#only-children);
+        elementUpdate.call(tape);
+        var new_top = tape[chunk.length].box(#top,#inner,#parent);
+        scroll_top = new_top - prev_top; // adjust scroll position.
+        tape.postEvent("buffer-change", [itemsBuffer.first.key,itemsBuffer.last.key]);
+        return false;
+      }
+
+      var scrolly = scroll_top - scrollDelta;
+    
+      if( scrolly < 0 )
+      {
+        // we need to pump more items in this virtual list:      
+        isOut = fetchMore();
+        if(isOut && noOverflow) {
+          scrolly = 0;
+          isOut = false;
+        }
+        else 
+          scrolly = scroll_top - scrollDelta;
+      } 
+      else
+        isOut = false;
+      tape.scrollTo( scroll_left, scrolly, false, true );
+    }
+    
+    function scrollEnded()
+    {
+      function animateBackTop(distance) 
+      {
+        var scroll_y = tape.scroll(#top);
+        var target_y = 0;
+        var target_y_half = scroll_y / 2;
+        var v = 1;
+        tape.animate(
+         :{
+            scroll_y += v;
+            if( scroll_y >= target_y ) { tape.scrollTo( 0, target_y, false, true ); isOut = false; return 0; }
+            tape.scrollTo( 0, scroll_y, false, true );
+            if( scroll_y < target_y_half ) ++v;  
+            else if(--v == 0) v = 1;
+            return SCROLL_KINETIC_STEP_DELAY;
+          });
+      }
+      function animateBackBottom(distance) 
+      {
+        var scroll_y = tape.scroll(#top);
+        var target_y = scroll_y - distance;
+        var target_y_half = scroll_y - distance / 2;
+        var v = 1;
+        tape.animate(
+         :{
+            scroll_y -= v;
+            if( scroll_y <= target_y ) { tape.scrollTo( 0, target_y, false, true ); isOut = false; return 0; }
+            tape.scrollTo( 0, scroll_y, false, true );
+            if( scroll_y > target_y_half ) ++v;  
+            else  if( --v == 0 ) v = 1;
+            return SCROLL_KINETIC_STEP_DELAY;
+          });
+      }
+    
+      var firstTop = tape.first.box(#top,#margin,#parent);
+      var lastBottom = tape.last.box(#bottom,#margin,#parent);
+      var height = tape.box(#height,#inner);
+      if( firstTop > 0 )
+        animateBackTop(firstTop);
+      else if( lastBottom < height )
+        animateBackBottom(height - lastBottom );
+    }
+    
+    function doScrollAnimation()
+    {
+      if( tape.state.animating ) return;
+      function animationStep()
+      {
+        velocity *= isOut ? SCROLL_KINETIC_OUT_DECEL : SCROLL_KINETIC_DECEL;
+        if( Math.abs(velocity) < 0.5 || stopAnimation) 
+        {
+          tape.post(scrollEnded);
+          return 0;
+        }
+        var v = velocity.toInteger();
+        if( v < 0 ) scrollStepUp(-v); else scrollStepDown(v);
+        return SCROLL_KINETIC_STEP_DELAY;
+      }
+      tape.animate(animationStep);
+    }
+
+    function scrollDownNormal(scrollDelta = SCROLL_DELTA) { 
+      return scrollStepDown(scrollDelta * tape.toPixels(1dip,#height), true); 
+    }
+    function scrollUpNormal(scrollDelta = SCROLL_DELTA)   { 
+      return scrollStepUp(scrollDelta * tape.toPixels(1dip,#height), true); 
+    }
+    
+    function scrollDownKinetic(scrollDelta = SCROLL_KINETIC_DELTA)
+    {
+      var v = (velocity || 0.0);
+      velocity = v + scrollDelta * tape.toPixels(1dip,#height);
+      doScrollAnimation();
+    }
+
+    function scrollUpKinetic(scrollDelta = SCROLL_KINETIC_DELTA)
+    {
+      var v = (velocity || 0.0);
+      velocity = v - scrollDelta * tape.toPixels(1dip,#height);
+      doScrollAnimation();
+    }
+
+    tape << event mousewheel (evt)
+    {
+      if( !isOut ) {
+        if(evt.wheelDelta < 0 ) 
+          scrollDown();
+        else
+          scrollUp();
+      }
+      return true;
+    }
+
+    tape << event mousedown (evt) {
+      if( evt.mainButton ) {
+        touchPosX = evt.x;
+        touchPosY = evt.y;
+      }
+    }
+
+    tape << event mousemove (evt) {
+      if( evt.mainButton ) {
+        var delta = evt.y - touchPosY;
+        touchPosX = evt.x;
+        touchPosY = evt.y;
+        delta < 0 ? scrollStepDown(-delta) : scrollStepUp(delta);
+      }
+    } 
+
+    function initList() {
+      if(tape.isKinetic) { scrollDown = scrollDownKinetic; scrollUp = scrollUpKinetic; }
+      else               { scrollDown = scrollDownNormal;  scrollUp = scrollUpNormal; }
+      // initial list setup:
+      if(tape.atEnd) {
+        itemsBuffer = tape.dataSource(null, -BUFFER_SIZE);
+        tape.post(function() {
+          elementUpdate.call(tape);
+          tape.scrollTo( 0, 10000, false, false );
+        });
+      }
+      else
+        itemsBuffer = tape.dataSource(null, BUFFER_SIZE);
+      var vnodes = itemsBuffer.map( (item) => tape.itemView.call(tape,item) );
+      tape.merge(<content>{vnodes}</content>,#only-children);
+      isOut = false;
+    }
+    
+    tape.resetList = initList;
+    tape.renderContent = function () {
+      //var key = itemsBuffer.last.key;
+      //var chunk = tape.dataSource(key,BUFFER_SIZE);
+      return itemsBuffer.map( (item) => tape.itemView.call(tape,item) );
+    }
+
+    //self.post(initList);
+
+    initList();
+
+  }
+
+
+}

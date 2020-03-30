@@ -21,8 +21,12 @@
 				<p>Equivalent of <code>const name = &quot;...&quot;; obj.(name) = val;</code></p>
 				</dd><dt>entityId</dt>
 			<dd>(entity: any) : integer<p>Returns &quot;unique&quot; identifier of an entity. For heap allocated entities (object, array, string, etc) it returns some sequential number (int32). &nbsp;For value types (integer, float, length, etc.) it returns value of hash(entity). Note that uniqueness of id is not strict - there is very low but still probability of conflicts.</p></dd></dl>
-    <h2>Prperties</h2>
+    <h2>Properties</h2>
     <dt>unhandledExceptionHandler</dt>
-    <dd>r/w, function - global unhandled exception handler. Accepts <code>function(err) : true | false</code> that will receive error object. If that function returns <em>true</em> then the exception is considered as handled and will not be output to stderr port.</dd></dl>
+    <dd>r/w, function - global unhandled exception handler. Accepts <code>function(err) : true | false</code> that will receive error object. If that function returns <em>true</em> then the exception is considered as handled and will not be output to stderr port.</dd>
+		<dt>pendingAsyncTasks</dt>
+		<dd>r-only - list of pending (active) async tasks:&nbsp;<pre>for (var task in VM.pendingAsyncTasks)
+  debug task: task.function.fullName; 
+</pre></dd></dl>
 </body>
 </html>

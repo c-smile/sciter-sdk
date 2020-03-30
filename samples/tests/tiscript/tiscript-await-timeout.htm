@@ -13,7 +13,7 @@
     
       async function do_async_stuff()
       {
-          var result = await timeout(1s, 42); 
+          var result = await timeout(5s, 42); 
           stdout.println("A",result); //prints '42' 1 second after 'timeout' is invoked (as expected)
           return result;
       }
@@ -24,6 +24,15 @@
           task.then(function(result) {
               stdout.println("B",result);
           });
+
+          self.timer(500ms, function() {
+            var tlist = VM.pendingAsyncTasks;
+            for (var task in tlist) 
+              debug task: task.function, task.function?.fullName;
+            return tlist.length > 0;
+          });
+
+
       });
     
     </script>

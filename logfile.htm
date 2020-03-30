@@ -10,7 +10,34 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FFFAFC">4.4.1.4</td><td nowrap valign="top" align="center">14-03-2020</td><td>new:
+    <tr><td valign="top" bgcolor="#FFFAFC">4.4.1.5</td><td nowrap valign="top" align="center">30-03-2020</td><td>new:
+					<ul><li><code>view.audio(url):Audio</code> - audio playback object to play MP3,WAV sounds. I have plans to extend this to support audio recording and streaming but only playback for a while;</li>
+						<li>[reactor] + sdk/samples/+reactor/components/vtape - virtual list with variable item heights;</li>
+						<li>[script] <code>VM.pendingAsyncTasks</code> property - list of running async functions;</li>
+						</ul>
+					<p>fixes:</p>
+					<ul><li>[script] fix of <code>el.style#z-index = Z;</code> handling;</li>
+						<li>[css] fix of <code>transition: visibility ...;</code> &nbsp;handling;</li>
+						<li>[script] <code>array.indexOf(el)</code> uses now <code>array[i] === el</code> operator rather than <code>==</code>. See: <a href="https://sciter.com/forums/topic/how-to-fix-this-runtime-error/">https://sciter.com/forums/topic/how-to-fix-this-runtime-error/</a>&nbsp;</li>
+						<li>[gdi+] fix of rendering artefacts when border-radius is used;</li>
+						<li>[reactor] fix of <code>&lt;el key={k}&gt;</code> handling when k is not a string;</li>
+						<li>[reactor] router fix, see: <a href="https://sciter.com/forums/topic/element-content-creates-a-child-in-reactor-router/">https://sciter.com/forums/topic/element-content-creates-a-child-in-reactor-router/</a>&nbsp;</li>
+						<li>[Windows,x64] fix of high memory consumption (styles);</li>
+						<li>[Windows] handling maximized dimensions of direct_window;</li>
+						<li>[sample] fix of sdk/samples/ideas/callout/callout.tis;</li>
+						<li>[script] handling <code>element.html = &quot;&quot;</code>;</li>
+						<li>[gtk] clipboard put text fix;</li>
+						<li>[plus] Fix of <code>&lt;... repeat=&quot;...&quot;&gt;</code> handling, see: <a href="https://sciter.com/forums/topic/elements-disappear-after-using-plus-repeat-in-a-tag/">https://sciter.com/forums/topic/elements-disappear-after-using-plus-repeat-in-a-tag/</a>&nbsp;</li>
+						<li>fix of infinite loop in some cases of <code>float: left | right;</code> dynamic update;</li>
+						<li><code>&lt;select&gt;</code>&nbsp;fix of &quot;second click&quot; issue;</li>
+						<li>[DOM] <code>self.style.documentRules()</code> update fix;</li>
+						<li>[windows] <code>view.windowResizable = true | false</code> fix;</li>
+						<li>[DOM] <code>var map = form.value;</code> fix for custom <code>.value</code> handlers;</li>
+						<li>[DOM] <code>element.insert(VDOM)</code> fix when the element is not connected to the DOM;</li>
+						<li>[script] fix of possible AV in <code>Object.setPrototypeOf()</code>;</li>
+						<li>[windows] fix of emoji rendering, see: <a href="https://sciter.com/forums/topic/emoji-without-spaces/">https://sciter.com/forums/topic/emoji-without-spaces/</a> ;</li>
+						<li>[script] fix of <code>element.state.clear(0xFFFFFFFF)</code>;</li>
+						<li>[layout] fix of AV in <code>table.style[&quot;display&quot;] = &quot;block&quot;;</code> that is a wrong usage of display property, but shall not crash.</li></ul></td></tr><tr><td valign="top" bgcolor="#FFFAFC">4.4.1.4</td><td nowrap valign="top" align="center">14-03-2020</td><td>new:
 					<ul><li>[css] + support of <code>animation</code> property and <code>@keyframes</code> declaration. See updated samples in sdk/samples/animations-transitions-css/inifinite***.htm</li>
 						<li>[SSX/reactor] ssx is allowed to pass properties to DOM elements using &quot;state properties&quot;, so this<pre>&lt;div :data={someData} :html={someHtml} /&gt;</pre>
 							<p>is an equivalent of&nbsp;</p>
