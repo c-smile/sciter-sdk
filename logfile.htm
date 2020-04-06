@@ -10,7 +10,13 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FAFFFC">4.4.2.4</td><td nowrap valign="top" align="center">04-04-2020</td><td>aaa</td></tr>
+    <tr><td valign="top" bgcolor="#FAFFFC">4.4.2.4</td><td nowrap valign="top" align="center">2020-04-06</td><td>New:
+					<ul><li>&quot;Styles 2.0&quot; - deep refactoring of CSS handling inside the engine. For the motivation please read the article:&nbsp;<a href="https://terrainformatica.com/2020/04/05/styles-2-0-in-sciter-and-beyond/">https://terrainformatica.com/2020/04/05/styles-2-0-in-sciter-and-beyond/</a></li>
+						<li>[script] <code>gc(factor);</code> - allows to reclaim/free not used heap space.</li>
+						</ul>
+					<p>Fixes:</p>
+					<ul><li>Fix of problem with synthetic <code>&lt;tbody&gt;</code> handling. While <code>&lt;tbody&gt;</code> can be ommited in markup of simple tables it is desired to put it there explicitly.</li>
+						<li>[behavior:column-resizer] generates <code>event statechange</code> when user will resize columns.</li></ul></td></tr>
     </tbody>
   </table>
 	<p>Previous log items: <a href="logfile-2.htm">logfile-2.htm</a>.</p>
