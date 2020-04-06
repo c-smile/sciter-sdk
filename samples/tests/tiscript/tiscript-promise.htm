@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style></style>
+        <script type="text/tiscript">
+
+function timer(dur) {
+  var oath = promise(); 
+  self.timer(dur,function() { oath(true,[true]); }, true);
+  return oath;
+}
+
+namespace Data {
+
+  var bar = 42;
+  
+  function foo() {
+    timer(1s).then( :: stdout.println("then 1",bar) )
+             .finally( :: stdout.println("finally 1",bar) )
+  }
+
+  function zoo() {
+    timer(2s).then( :: stdout.println("then 2",Data.bar) )
+             .finally( :: stdout.println("finally 2",Data.bar) )
+  }
+
+}
+
+function self.ready() {
+  Data.foo();
+  Data.zoo();
+}
+
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
