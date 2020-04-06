@@ -9,17 +9,15 @@
     }
   </style>
   <script type="text/tiscript">
-  
-    include "../decorators.tis";
-    
+   
     const HTML_FILES = "HTML Files (*.htm,*.html)|*.HTM;*.HTML|All Files (*.*)|*.*";
 
-    @click @on "#load" : {
+    event click $(#load) {
       var fn = view.selectFile(#load, HTML_FILES , "html" );
       if( fn ) $(richtext).load(fn);
     }
     
-    @click @on "#save" : {
+    event click $(#save) {
       var fn = view.selectFile(#save, HTML_FILES , "html", "rtext.htm", "‘File name:");
       if( fn ) $(richtext).save(fn);
     }

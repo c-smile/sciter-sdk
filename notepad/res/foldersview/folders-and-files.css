@@ -29,7 +29,6 @@ open-files > li {
   padding:0 2em;
   height:max-content;
   line-height:1.8em;
-  cursor:pointer;
   word-break: break-all; 
   @LIST-ITEM-NORMAL; 
   @LIST-ITEM-HOVER;
@@ -40,6 +39,7 @@ open-files > li:current { @LIST-ITEM-CURRENT; }
 
 open-files > li::marker { 
   // close button
+  cursor:pointer;
   size:1.8em;
   margin:* 0 * *;
   foreground-image: url(path:M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z);
@@ -47,6 +47,7 @@ open-files > li::marker {
   foreground-position: 50% 50%;
   foreground-size:0.5em;
   fill:color(text-color);
+  z-index:1;
 }
 
 open-files > li.changed {

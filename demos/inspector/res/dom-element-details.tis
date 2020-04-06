@@ -45,6 +45,8 @@ class ElementDetails : Element
           var fn = (rule.file %~ "/") || rule.file;
           styleRulesList.$append(<header><span.selector>{rule.selector}</span><a href='{rule.file}' line={rule.lineNo} >{fn}({rule.lineNo})</a></header>); 
         }
+        else if(rule.type == "default-style")
+          styleRulesList.$append(<header><span.selector>intrinsic</span></header>); 
         else if(rule.type == "inline-style")
           styleRulesList.$append(<header><span.selector>@style:</span></header>); 
         else if(rule.type == "runtime-style")

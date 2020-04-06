@@ -38,10 +38,14 @@
       $(form).on("change", function() {
         var flow = this.value.flow;     
         g.style#size = "max-content"; 
-        if( flow == "grid" )
+        if( flow == "grid" ) {
           g.style#flow = grid_flow;
-        else if( flow == "rows" )
+          g.style#width = undefined;
+        }
+        else if( flow == "rows" ) {
           g.style#flow = rows_flow;
+          g.style#width = undefined;
+        }
         else if( flow == "hf" ) {
           g.style#flow = "horizontal-flow";
           g.style#width = fx(100);

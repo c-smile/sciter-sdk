@@ -217,6 +217,18 @@ function self.ready() {
       } catch(e) {}
     });
   
+
+    if( "-debug" in view.argv() ) {
+        const inspector = System.PLATFORM == "Windows" ? "inspector.exe" : "inspector";
+        System.exec( System.home("inspector.exe") );
+        // give it a time to start ...
+        this.timer(400ms, function() {
+          if( var connectToInspector = view.connectToInspector )
+              connectToInspector();
+          });
+    }
+
+
 }
 
 function self.closing() {

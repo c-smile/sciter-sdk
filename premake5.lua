@@ -94,7 +94,10 @@ project "usciter"
   filter "system:windows"
     removeplatforms { "x64" }
     removeconfigurations { "*skia" }
-    files {"include/sciter-win-main.cpp",
+    files {"include/sciter-*.h",
+           "include/sciter-*.hpp",
+           "include/aux-*.*",
+           "include/sciter-win-main.cpp",
            "demos/usciter/win-res/usciter.rc",
            "demos/usciter/win-res/dpi-aware.manifest" }
     prebuildcommands { 
@@ -303,6 +306,9 @@ if _TARGET_OS == "windows" then
     includedirs { "demos/sciter" }  
 
     files { 
+            "include/sciter-*.h",
+            "include/sciter-*.hpp",
+            "include/aux-*.*",
             "demos/sciter/stdafx.cpp",
             "demos/sciter/main.cpp",
             "demos/sciter/sciter.cpp",

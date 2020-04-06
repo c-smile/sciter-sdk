@@ -117,9 +117,15 @@ for(var (k,v) in Foo )
       </dd>
     <dt>gc</dt>
     <dd>
-      <div><strong>( )</strong> : ( :string<em>total</em>:integer, <em>free</em><em>used</em></div>
+      <div><strong>(</strong> [<strong>factor</strong>:integer] <strong>)</strong> : <em>total</em>:integer, <em>free</em>:integer<em> </em><em>, used</em>: integer</div>
       <p>Invokes garbage collector and returns: total VM heap memory size, &nbsp;size of free area in the heap and size of used area by the script. total = free + used;</p>
-      <p>Note that VM requests twice as <em>total</em> number of bytes from the system.</p></dd>
+			<p>If <i>factor</i> is provided then the engine will try to reclaim allocated heap using the following rules:</p>
+			<ul><li>factor == 0 - heap will take only <i>used</i> bytes, and do free space of the heap will be 0;</li>
+				<li>factor == 1 - <i>free</i> space will be set to <i>used</i> bytes;</li>
+				<li>factor == 2&nbsp;- <i>free</i> space will be twice big of <i>used</i> bytes;</li>
+				<li>etc.</li></ul>
+      
+			<p>Recommended value is 1.&nbsp;</p><p>Note that VM requests twice as <em>total</em> number of bytes from the system.</p></dd>
     <dt>crackUrl</dt>
     <dd>
       <div><strong>( </strong><em>url</em>:string<strong> )</strong></div>

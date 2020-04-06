@@ -83,6 +83,7 @@
 
         $(input#size).on("change", function() {
           var sz = this.value;
+          debug log: sz;
           body.style.variables {
             sza: dip(sz),
             szb: dip(sz*1.6),

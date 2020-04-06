@@ -79,10 +79,13 @@ int uimain(std::function<int()> run ) {
   frame *pwin = new frame(needs_debugger);
 
   // note: this:://app URL is dedicated to the sciter::archive content associated with the application
+  //auto t = GetTickCount();
   pwin->load( WSTR("this://app/boot.htm") );
-
   pwin->expand();
+  //t = GetTickCount() - t;
+  //SetWindowText()
 
+  
   return run();
 
 }

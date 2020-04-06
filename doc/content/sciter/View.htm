@@ -1,13 +1,13 @@
 ﻿<html>
   <head>
-    <meta name="generator" content="h-smile:richtext">
+    <meta name="generator" content="h-smile:richtext"/>
   </head>
 <body>
   <h1>View object</h1>
   <p>Represents window where this script is running.</p>
   <p> <strong>view</strong> - current view object (of the running script) is accessible through global <em>view</em> variable.</p>
   <dl>
-    <dt>WINDOW_MINIMIZED<br>WINDOW_MAXIMIZED<br>WINDOW_HIDDEN<br>WINDOW_SHOWN<br>WINDOW_FULL_SCREEN</dt>
+    <dt>WINDOW_MINIMIZED<br/>WINDOW_MAXIMIZED<br/>WINDOW_HIDDEN<br/>WINDOW_SHOWN<br/>WINDOW_FULL_SCREEN</dt>
     <dd>Values of <em>view.state</em> property.</dd>
     <h2>Properties</h2>
     <dt>root</dt>
@@ -41,9 +41,9 @@ view.<u>eventsRoot</u> = null;
     <dt>windowTopmost</dt>
     <dd> <font color="#999999">r/w</font> - boolean, <em>true</em> if the window is at the topmost level;</dd>
     <dt>windowMinSize</dt>
-    <dd> <font color="#999999">r/w</font> - (x:integer,y:integer), min window dimension constraints. User cannot make window smaller than these;<br>Example: <code>view.minSize = (160,100);</code></dd>
+    <dd> <font color="#999999">r/w</font> - (x:integer,y:integer), min window dimension constraints. User cannot make window smaller than these;<br/>Example: <code>view.minSize = (160,100);</code></dd>
     <dt>windowMaxSize</dt>
-    <dd> <font color="#999999">r/w</font> - (x:integer,y:integer), max window dimension constraints. User cannot make window larger than these;<br>Example: <code>view.maxSize = (1600,1000);</code></dd>
+    <dd> <font color="#999999">r/w</font> - (x:integer,y:integer), max window dimension constraints. User cannot make window larger than these;<br/>Example: <code>view.maxSize = (1600,1000);</code></dd>
     <dt>windowIcon</dt>
     <dd> <font color="#999999">r/w</font> - window icon, the property accepts: <code>null</code> - set default icon, <code>&quot;url&quot;</code> - string, url of window icon or instance of <code>Image</code>.</dd>
     <dt>windowBlurbehind</dt>
@@ -178,7 +178,7 @@ if( fn ) view.<strong>load</strong>(fn);
       <div>Samples:</div>
       <ol>
         <li> <code>view.msgbox(#information, &quot;I am fine!&quot;);</code> - will show simple message;</li>
-        <li> <code>view.msgbox(#question, &quot;Be or not to be?&quot;, &quot;Huh?&quot;, <br>[ {id:#yes, text:&quot;To be&quot;}, {id:#no, text:&quot;Not to be&quot;} ] );</code></li></ol></dd>
+        <li> <code>view.msgbox(#question, &quot;Be or not to be?&quot;, &quot;Huh?&quot;, <br/>[ {id:#yes, text:&quot;To be&quot;}, {id:#no, text:&quot;Not to be&quot;} ] );</code></li></ol></dd>
     <dt>window</dt>
     <dd>
       <div> <strong>( </strong>params:object<strong> ) </strong>:<em>View</em> - view object of created window.</div>
@@ -248,7 +248,7 @@ if( fn ) view.<strong>load</strong>(fn);
     <dd>
       <div> <strong>(#get</strong>, <em>dataType</em>: symbol<strong>)</strong> : string | object | Image;</div>
       <p>Fetches data from the clipboard in format defined by the dataType parameter. For list of allowed values see previous method definition.</p>
-      <p>Note: for the <strong>#html</strong> format this function returns two values: source URL (if any) and html data per se. <br>To get both of them use this : <code>var (url, html) = view.clipboard(#get, #html);</code></p></dd>
+      <p>Note: for the <strong>#html</strong> format this function returns two values: source URL (if any) and html data per se. <br/>To get both of them use this : <code>var (url, html) = view.clipboard(#get, #html);</code></p></dd>
     <dt>clipboard</dt>
     <dd>
       <div> <strong>(#put</strong>, data: string | object | Image <strong>)</strong> : undefined;</div>
@@ -286,7 +286,7 @@ if( fn ) view.<strong>load</strong>(fn);
     <dt>cursorLocation</dt>
     <dd>
       <div> <strong>(</strong> <strong>)</strong> : (x:int, y: int)</div>
-      <p>Returns cursor location relative to client area of the view:<br><code>var (x,y) = view.cursorLocation();</code></p></dd>
+      <p>Returns cursor location relative to client area of the view:<br/><code>var (x,y) = view.cursorLocation();</code></p></dd>
     <dt>on</dt>
     <dd>
       <div> <strong>(</strong> <strong>nameandns</strong>: string, <strong>handler</strong>: function <strong>)</strong> : view</div>
@@ -331,7 +331,9 @@ if( fn ) view.<strong>load</strong>(fn);
 				<li><code>view.trayIcon( <b>#remove</b> ) : boolean</code> - &nbsp;removes tray icon from system status bar.</li>
 				</ul>
 			<p>When tray icon is created the view will start receiving <a href="#trayicon-click">trayicon-click</a> events.</p>
-			<p>Sample: <u>sdk/samples/trayicon</u>&nbsp;</p></dd></dl>
+			<p>Sample: <u>sdk/samples/trayicon</u></p>
+			</dd><dt>audio</dt>
+		<dd><b>( url</b>: string <b>)</b> : Audio<p>Creates <a href="Audio.htm">Audio</a> object that allows to play .mp3, .flac and .wav sounds</p></dd></dl>
   
 	<h2>Notifications</h2>
 	<dl><dt>onRequest(rq: <a href="Request.htm">Request</a>)</dt>
@@ -355,7 +357,7 @@ if( fn ) view.<strong>load</strong>(fn);
     <dt>&quot;statechange&quot;</dt>
     <dd>Event is generated when state of the view (maximized, minimized, hidden, shown ) was changed. See View<em>.state</em> property.</dd>
     <dt>&quot;resolutionchange&quot;</dt>
-    <dd>Event is generated when window PPI (pixels per inch scale factor) changes. To get actual pixels-per-inch value use: <br><code>var ppi = (1in).toFloat(#px);</code> and to get pixels-per-dip: &nbsp;<br><code>var ppdip = (1dip).toFloat(#px);</code></dd>
+    <dd>Event is generated when window PPI (pixels per inch scale factor) changes. To get actual pixels-per-inch value use: <br/><code>var ppi = (1in).toFloat(#px);</code> and to get pixels-per-dip: &nbsp;<br/><code>var ppdip = (1dip).toFloat(#px);</code></dd>
     <dt>&quot;mediachange&quot;</dt>
     <dd>Event is generated when one of media variables changes (including resolution change), for example when number of monitors or color depth changes.</dd>
     <dt>&quot;replacement-start&quot;</dt>

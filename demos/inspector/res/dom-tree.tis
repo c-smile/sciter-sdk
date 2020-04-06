@@ -1,4 +1,5 @@
-﻿
+﻿include "sciter:reactor.tis";
+
 class DomTree : Element
 {
   function attached() {
@@ -135,6 +136,7 @@ class DomTree : Element
    
   function appendRoot(caption, path, isFolder)
   {
+    this.clear();
     var rn = appendOption(this, caption, path, isFolder? true: undefined);
     if(isFolder) {
       var bodyNode = expandOption(rn);
@@ -203,12 +205,5 @@ class DomTree : Element
       assert false : "TODO navigateToElement";
   }
   
-  /*
-  App.onElementHighlighted.push(show);
-  App.onElementContentChanged.push( function(uid) {
-    if( !uid || !onNodeModelChanged(uid))
-      showRoot();
-  });
-  */
 }
 

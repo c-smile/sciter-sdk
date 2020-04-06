@@ -18,6 +18,83 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\aux-asset.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\aux-cvt.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\aux-platform.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\aux-slice.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-om.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-api.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-behavior.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-debug.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-def.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-dom.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-dom.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-graphics.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-graphics.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-host-callback.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-lite-keycodes.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-msg.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-request.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-request.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-script.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-threads.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-types.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-value.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-video-api.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x-window.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-x.h">
+      <Filter>include</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="..\demos\sciter\main.cpp">
       <Filter>demos\sciter</Filter>
     </ClCompile>

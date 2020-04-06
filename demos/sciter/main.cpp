@@ -61,7 +61,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
   //sciter::debug_output_console console; -- use this instead of the above to output data to console window - that black scarry thing.
 
   // SciterAppendMasterCSS test, adding <checkbox>text</checkbox> element.
-  //const char* def = "checkbox { display:inline-block; display-model:inline-inside; style-set: \"std-checkbox\"; }";
+  //const char* def = "checkbox { display:inline-block; style-set: \"std-checkbox\"; }";
   //SciterAppendMasterCSS((const byte*)def,UINT(strlen(def))); 
 
   //SciterSetOption(NULL, SCITER_SET_UX_THEMING, TRUE);

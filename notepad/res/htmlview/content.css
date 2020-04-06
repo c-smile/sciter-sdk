@@ -186,12 +186,13 @@ th:not(:selected):hover(left) { foreground-color: color(selection-highlight-colo
     behavior:clickable;
     prototype: MetaEditor url(content-widgets.tis);
     display:block;
-    line-height:18dip;
+    line-height:10pt;
     width:max-content;
     max-width:100%;
     height:*;
-    max-height:18dip;
-    font:system;
+    max-height:10pt;
+    font:8.5pt monospace;
+    font-weight:400;
     margin-left:*;
     margin-top:0;
     margin-right:0;

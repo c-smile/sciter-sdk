@@ -15,6 +15,7 @@ namespace Outline
     function attached() {
       this._depth = undefined;
       this.color = this.style.variable("marker-color") || color(255,0,0,0.25);
+      //debug log: this,this.root.url();
     }
 
     function getMarkerWidth() {
@@ -195,11 +196,11 @@ namespace Outline
     }
 
     function paintBackground(gfx) {
-      //if(!root || !root.state.visited) {
-      //  root = null;
-      //  this.setupRoot();
-      //}
-      offset = this.$(body).box(#left,#border,#parent) - this.toPixels(6dip,#width);
+      const body = this.$(body);
+      if( body )
+        offset = body.box(#left,#border,#parent) - this.toPixels(6dip,#width);
+      else 
+        offset = 16;
     }   
 
     event ~mousemove (evt) {

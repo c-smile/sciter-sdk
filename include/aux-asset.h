@@ -6,71 +6,20 @@
   #endif
   #define _WINSOCKAPI_
   #include <windows.h>
-#else
-  #include <atomic>
 #endif
+
+#include <atomic>
+#include "sciter-om.h"
 
 namespace aux {
 
-  namespace atomic {
-
-    #if defined(_WINDOWS) || defined(WINDOWS)
-
-      typedef volatile long counter_t;
-      inline long _inc(counter_t& v)               {    return InterlockedIncrement((LPLONG)&v);  }
-      inline long _inc(counter_t& v,long by)       {    return InterlockedExchangeAdd((LPLONG)&v,by);  }
-      inline long _dec(counter_t& v)               {    return InterlockedDecrement((LPLONG)&v);  }
-      inline long _set(counter_t& v, long nv)      {    return InterlockedExchange((LPLONG)&v, nv);  }
-      inline long _set_when_eq(counter_t& v, long to_set, long eq_to) { return InterlockedCompareExchange ((LPLONG)&v,to_set,eq_to); }
-
-    #elif defined(__GNUC__) && (__GNUC__ < 4 || (__GNUC__ == 4 && __GNUC_MINOR__ <= 8) )
-
-      typedef long counter_t;
-      inline long _inc(counter_t& v)               {    return __sync_add_and_fetch(&v,1);  }
-      inline long _inc(counter_t& v,long by)       {    return __sync_add_and_fetch(&v,by);  }
-      inline long _dec(counter_t& v)               {    return __sync_add_and_fetch(&v,-1);  }
-      inline long _set(counter_t& v, long nv)      {    return __sync_lock_test_and_set(&v,nv);  }
-      inline long _set_when_eq(counter_t& v, long to_set, long eq_to) { return __sync_val_compare_and_swap(&v,eq_to,to_set);
-                                                                       /*long t(v); if(t == eq_to) v = to_set; return t;*/ }
-    #else
-
-      typedef std::atomic<long> counter_t;
-      inline long _inc(counter_t& v)               {    return ++v;  }
-      inline long _inc(counter_t& v,long by)       {    return v += by;  }
-      inline long _dec(counter_t& v)               {    return --v;  }
-      inline long _set(counter_t& v, long nv)      {    return v.exchange(nv);  }
-      inline long _set_when_eq(counter_t& v, long to_set, long eq_to) { long t(v); v.compare_exchange_strong(eq_to,to_set); return t; }
-
-    #endif
-
-      struct counter
-      {
-        counter_t cv;
-        counter():cv(0) {}
-        counter(long iv):cv(iv) {}
-        counter& operator=(long nv) { _set(cv,nv); return *this; }
-        operator long() const { return cv; }
-        long operator++() { return _inc(cv); }
-        long operator--() { return _dec(cv); }
-      };
-  } // atomic
-
-
-  // COM::IUnknown alike thing:
-  class iasset {
-  public:
-    // mandatory:
-    virtual long  add_ref() = 0;
-    virtual long  release() = 0;
-    // optional:
-    virtual bool  get_interface(const char* name, iasset** out) = 0;
-  };
+  using iasset = sciter::om::entity;
 
 
   // intrusive add_ref/release counter
   class asset: public virtual iasset
   {
-    atomic::counter _ref_cntr;
+    std::atomic<long> _ref_cntr;
   public:
     asset ():_ref_cntr(0) {}
     asset (const asset&/*r*/):_ref_cntr(0) {}
@@ -102,7 +51,7 @@ namespace aux {
   };
 
   //asset - yet another shared_ptr
-  //        R here is something derived from the asset above
+  //        R here is something derived from the iasset (sciter::om::entity) above
   template <class R>
   class asset_ptr
   {

@@ -4,7 +4,7 @@
 
 
 // applied to ::marker of named or IDed elements in htmlarea 
-class LinkMarker 
+class LinkMarker : Element
 {
   event click {
     const name = this.owner.attributes["id"] || this.owner.attributes["name"];
@@ -22,7 +22,7 @@ class LinkMarker
   }
 }
 
-class MetaEditor {
+class MetaEditor : Element {
 
   function attached() {
     var text = "<" + this.owner.tag;
