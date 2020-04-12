@@ -11,34 +11,34 @@
               
     tape 
     {
-      width:300dip;
+      width:*; min-width:300dip;
       height:*;
       border:1dip solid #AAA;
       background-color: gold;
       foreground-image: url(images/cover.png);
       foreground-repeat: expand;
-      foreground-position: 32 16 32 16; 
+      foreground-position: 32px 16px 32px 16px; 
     }
 
-    tape > div
+    tape > items > div
     {
       border:1dip solid #aaa;
       flow: grid(1 1,
                  2 3); 
       border-spacing:6dip;
-      margin:10dip;
-      padding:4dip;
+      margin:12dip;
+      padding:6dip;
       background-color: white;
       min-height:64dip;
     }
-    tape > div > caption
+    tape > items > div > caption
     {
       background-color: #DDD;
-      margin:-4dip -4dip 4dip -4dip;
-      padding:4dip;
+      margin:-6dip;
+      padding:6dip;
     }
-    tape > div > .content { width:*; }
-    tape > div > img { max-width:64dip; }
+    tape > items > div > .content { width:*; }
+    tape > items > div > img { max-width:64dip; }
 
   </style>  
   <script type="text/tiscript">
@@ -46,7 +46,7 @@
     include "tape.tis";
 
     function itemRenderer(item) {
-      return <div.item key={item.key.toString()}>
+      return <div.item key={item.key.toString()} index={item.index}>
         <caption>{item.caption}</caption>
         <img src={item.image} />
         <div.content :html={item.content} />

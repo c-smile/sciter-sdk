@@ -10,15 +10,24 @@
     
     event click $(#full-screen) 
     {
-      view.state = this.value ? View.WINDOW_FULL_SCREEN : View.WINDOW_SHOWN;
+      //view.state = this.value ? View.WINDOW_FULL_SCREEN : View.WINDOW_SHOWN;
+      view.state = View.WINDOW_FULL_SCREEN
     }
 
     event click $(#full-workspace) 
     {
-      view.state = View.WINDOW_SHOWN;
-      var (x,y,w,h) = view.screenBox(#workarea,#rectw);
-      view.move(x,y,w,h); 
+      view.state = View.WINDOW_MAXIMIZED;
+      //var (x,y,w,h) = view.screenBox(#workarea,#rectw);
+      //view.move(x,y,w,h); 
     }
+
+    event click $(#normal) 
+    {
+      view.state = View.WINDOW_SHOWN;
+      //var (x,y,w,h) = view.screenBox(#workarea,#rectw);
+      //view.move(x,y,w,h); 
+    }
+
 
     event click $(#close) {
       view.close();
@@ -35,6 +44,7 @@
   
   <button|radio(mode) #full-screen>Full screen</button>
   <button|radio(mode) #full-workspace>Full workspace</button>
+  <button|radio(mode) #normal checked>Normal</button>
   <button #close>Close</button>
 </body>
 </html>

@@ -45,8 +45,23 @@ namespace LoremIpsum
 
   // returns [] starting after (length>0) or before key (length<0)  
   function provider(key,length) {
-
     var out = [];
+
+    if( typeof key == #integer ) {
+      // that is item index rather than key
+      var idx = key;
+      var end = Integer.min(idx + (length || MAX_ITEMS),MAX_ITEMS);
+      //debug navigateTo: idx,end;
+      for(var n = idx; n < end; ++n) 
+        out.push { 
+          key: n.toString(), // I am using N here for demo purposes, in reality it should be some uid 
+          caption: "item " + n, 
+          content: ipsums[n % ipsums.length],
+          image: images[n % images.length],
+          index: n // position if this record in RS (for scrollbar purposes)
+        };  
+    }
+
     if( length > 0 )
     {
       // forward
@@ -55,13 +70,13 @@ namespace LoremIpsum
       //debug forward: idx,end;
       for(var n = idx; n < end; ++n) 
         out.push { 
-          key: n,
+          key: n.toString(), // I am using N here for demo purposes, in reality it should be some uid 
           caption: "item " + n, 
           content: ipsums[n % ipsums.length],
-          image: images[n % images.length]
+          image: images[n % images.length],
+          index: n // position if this record in RS (for scrollbar purposes)
         };  
     }
-
     else // length < 0
     {
       // backward
@@ -69,13 +84,17 @@ namespace LoremIpsum
       var first = Integer.max(0,idx + length + 1);
       for(var n = idx; n >= first; --n) 
         out.unshift { 
-          key: n,
+          key: n.toString(),
           caption: "item " + n, 
           content: ipsums[n % ipsums.length],
-          image: images[n % images.length]
+          image: images[n % images.length],
+          index: n 
         };  
     }
-    return out;
+
+    (this function).totalItems = MAX_ITEMS;
+
+    return out; 
   }
   
 }
