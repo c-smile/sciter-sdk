@@ -64,6 +64,19 @@ public:
     FUNCTION_0("testImageGeneration", test_image_generation);
   END_FUNCTION_MAP
 
+  /* sample of handling DOM events, click on <button#foo> here:
+  virtual bool handle_event(HELEMENT, BEHAVIOR_EVENT_PARAMS& params) {
+    sciter::dom::element target = params.heTarget;
+    switch (params.cmd) {
+      case BUTTON_CLICK: 
+        if (target.test("button#foo")) {
+          target.set_html((const unsigned char*)"foo", 3);
+          return true;
+        }
+    }
+    return false;
+  }*/
+
 };
 
 #include "resources.cpp"
