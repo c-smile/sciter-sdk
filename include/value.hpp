@@ -23,6 +23,10 @@
   #include <string>
   #include <functional>
   #include <stdexcept>
+#ifdef CPP11
+  #include <initializer_list>
+  #include <utility>
+#endif
 
   #include "aux-slice.h"
   #include "aux-cvt.h"
@@ -141,6 +145,14 @@
         return v;
       }
 
+#ifdef CPP11
+      /** Create an array object initialized with the given values. */
+      static value make_array(std::initializer_list<value> list)
+      {
+        return value::make_array(static_cast<unsigned>(list.size()), list.begin());
+      }
+#endif
+
       /** Creates an empty json key/value map (object in JS terms) 
           The map can be populated by map.set_item(key,val); */
       static value make_map(  )
@@ -149,6 +161,19 @@
         ValueIntDataSet(&v, INT(0), T_MAP, 0);
         return v;
       }
+      
+#ifdef CPP11
+      /** Create a map object initialized with the given key/value pairs. */
+      static value make_map(std::initializer_list<std::pair<value, value>> list)
+      {
+        value result = value::make_map();
+        for (auto& item : list)
+        {
+          result.set_item(item.first, item.second);
+        }
+        return result;
+      }
+#endif
       
       static value secure_string(const WCHAR* s, size_t slen)
       {
