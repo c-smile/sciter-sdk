@@ -10,7 +10,18 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FAFFFC">4.4.2.9</td><td nowrap valign="top" align="center">2020-04-18</td><td>Fixes:
+    <tr><td valign="top" bgcolor="#FAFFFC">4.4.2.10</td><td nowrap valign="top" align="center">2020-04-20</td><td>
+					
+					<p>New:</p>
+					<ul><li>[html/css] <code>home://</code> url schema - home:// root gets resolved to folder of sciter.dll.</li></ul><p>Fixes:
+					</p><ul><li>[css] fix of intrinsic style of <code>&lt;i&gt;</code>,<code>&lt;u&gt;</code>, etc.</li>
+						<li>[css] border-radius: <code>var(foo,10px)</code> - fix of variable use in border radius;</li>
+						<li>[win] fix of child windows on <code>window-frame=&quot;extended&quot;</code>;</li>
+						<li>[css, high-dpi] on_dpi_changed, fix of fonts recalculation when moving window between screens with different DPI;</li>
+						<li>[css] <code>position:absolute</code> / <code>display:inline-block</code> fix of auto width calculation;</li>
+						<li>[css] <code>list-marker-color</code> handling fix;</li>
+						<li>[windows] <code>view.state = View.WINDOW_FULL_SCREEN;</code> in usciter.exe fix.</li>
+						<li><code>&lt;input|text value=&quot;something&quot;&gt;</code> initialization fix.</li></ul></td></tr><tr><td valign="top" bgcolor="#FAFFFC">4.4.2.9</td><td nowrap valign="top" align="center">2020-04-18</td><td>Fixes:
 					<ul><li>speed up of document parsing/loading;</li>
 						<li>[css] line-height: height(100%); handling fix;</li></ul></td></tr><tr><td valign="top" bgcolor="#FAFFFC">4.4.2.8</td><td nowrap valign="top" align="center">2020-04-16</td><td>Fixes:
 					<ul><li>[css] fix, visibility switch handling: <a href="https://sciter.com/forums/topic/inconsistent-behavior-of-element-visibility-that-is-based-on-attribute-value/">https://sciter.com/forums/topic/inconsistent-behavior-of-element-visibility-that-is-based-on-attribute-value/</a>&nbsp;</li>
