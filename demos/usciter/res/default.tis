@@ -19,20 +19,22 @@ var debugIsActive = false;
 
 function loadFile(fn)
 {
+  liveReload.reset();
+
   filename = fn;
   content.load(fn);
   $(button#reload).state.disabled = false;
   inspectorButton.state.disabled = false;
   if(debugIsActive)
     view.launchDebugView();
+
   var croot = content[0];
-  var title = croot.$(head>title); 
-  // testing nativeApi:
-  var rootUid =  native.getElementUid(croot);
-  if( title )
-    view.caption =  String.printf("Sciter(%d):%s", rootUid, title.text || ""); 
-  else 
-    view.caption =  String.printf("Sciter(%d)",rootUid); 
+  var title = croot.$(head>title);
+  if(title) {
+    title = String.printf("uSciter: %s", title.text || "");
+    view.windowCaption = title;
+    $(window-caption).text = title;
+  }
 }
 
 event click $(button#open)
@@ -41,15 +43,12 @@ event click $(button#open)
   if( fn ) 
   {
     loadFile(fn);
-    // getting root node of the frame
-    //var croot = content[0];
-    //var title = croot.$(head>title); 
-    //if( title )
-    //  view.title(title.text); // calling native method defined in sciter.h 
   }
 }
+
 event click $(button#reload)
 {
+  liveReload.reset();
   if( filename ) {
     content.load(filename);
     if(debugIsActive)
@@ -113,9 +112,115 @@ event click $(button#glass)
   saveState();
 }
 
-Settings.add 
+var liveReload = {
+  enabled: false,
+  urls: {},
+  timestamp: 0,
+  onRequestResponse: null,
+};
+
+function liveReload.reset() {
+  // clear already tracked URLs
+  // and wait for the new ones.
+  liveReload.urls = {};
+}
+
+function liveReload.reload() {
+  // reload the current file
+  liveReload.reset();
+
+  if( filename ) {
+    content.load(filename);
+    if(debugIsActive)
+      view.launchDebugView();
+  }
+}
+
+function liveReload.monitor() {
+
+  function scheduleReload(time) {
+    self.timer(3000, liveReload.reload);
+  }
+
+  var prev = liveReload.timestamp;
+  var next = prev;
+
+  for(var url in liveReload.urls) {
+    var time = liveReload.getTime(url);
+    if(time > prev) {
+      next = time > next ? time : next;
+    }
+  }
+
+  // last time checked
+  liveReload.timestamp = new Date();
+
+  if(next > prev) {
+    scheduleReload(next);
+  }
+
+  return true;
+}
+
+function liveReload.getTime(url) {
+  var path = URL.toPath(url);
+  var stats = System.sync.stat(path);
+  return stats?.mtime;
+}
+
+event click $(button#live-reload)
 {
-  store: function(data) 
+  if(!this.value) {
+    // disable
+    liveReload.enabled = false;
+    self.timer(0, liveReload.reload);
+    return;
+  }
+
+  // enable URL checking every second
+  liveReload.enabled = true;
+  self.timer(1000, liveReload.monitor);
+
+  // save the original handler
+  if(!liveReload.onRequestResponse)
+    liveReload.onRequestResponse = view.onRequestResponse;
+
+  // install a new hook
+  view.onRequestResponse = function(rq) {
+
+    function isTracked(rq, url) {
+      if(!liveReload.enabled)
+        return false;
+
+      var rt = rq.requestDataType;
+      if(rt == Request.DATA_HTML || rt == Request.DATA_STYLE)
+        return true;
+
+      var ext = (url %~ ".").toLowerCase();
+      if(ext == "htm" || ext == "html" || ext == "css")
+        return true;
+
+      return false;
+    }
+
+    // check this resource
+    var url = rq.responseUrl || rq.requestUrl;
+    var reloadable = isTracked(rq, url) && liveReload.getTime(url);
+
+    // add a new URL to track
+    if(reloadable) {
+      liveReload.urls[url] = 0;
+    }
+
+    // call the original handler
+    if(liveReload.onRequestResponse)
+      liveReload.onRequestResponse(rq);
+  }
+}
+
+Settings.add
+{
+  store: function(data)
     {
       data.glass = {
         useSystem : $(button#system-glass).state.checked;  
