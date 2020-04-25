@@ -7,12 +7,14 @@
 #include "sciter-x-threads.h"
 #include "sciter-x-dom.hpp"
 #include "sciter-x-host-callback.h"
+#include "sciter-x-request.hpp"
 #include <deque>
 
 extern HINSTANCE ghInstance;
 
 namespace sciter
 {
+
   class frame
     : public aux::asset
     , public sciter::host<frame>
@@ -50,6 +52,28 @@ namespace sciter
     void           enable_debugger(bool onoff) { SciterSetOption(get_hwnd(),SCITER_SET_DEBUG_MODE,onoff?TRUE:FALSE); }
 
     sciter::value  debug(unsigned argc, const sciter::value* arg);
+
+    virtual LRESULT on_load_data(LPSCN_LOAD_DATA pnmld)
+    {
+      LPCBYTE pb = 0; UINT cb = 0;
+      aux::wchars wu = aux::chars_of(pnmld->uri);
+
+      // for testing purposes, delayed data delivery
+      if (wu.like(WSTR("test:*")))
+      {
+        sciter::thread(deliver_data_thread, sciter::request(pnmld->requestId));
+        return LOAD_MYSELF; // mark request as pending
+      }
+      return sciter::host<frame>::on_load_data(pnmld);
+    }
+
+    // for testing purposes, delayed data delivery
+    static void deliver_data_thread(sciter::request rq) {
+      // simulate tough job of data downloading
+      sciter::sync::sleep(200);
+      // let Sciter know that data is delivered. 
+      rq.succeeded(200, (LPCBYTE)"hello world", 11);
+    }
     
   protected:
     frame();
