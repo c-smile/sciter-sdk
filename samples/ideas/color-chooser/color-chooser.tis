@@ -52,6 +52,7 @@ class ColorChooser: Element
   function showPopup()
   {
       var pe = this.getPopupElement();
+      pe.popupOwner = this;
       this.popup( pe, 2); // show our popup underneath of this element
   }
   
@@ -83,8 +84,8 @@ class ColorChooser: Element
         var cell = evt.target.selectParent("td"); // find td container
         if(cell) 
         {
-          this.owner.value = cell.style["background-color"]; // notify our owner
-          this.owner.onClick(this.owner);
+          this.popupOwner.value = cell.style["background-color"]; // notify our owner
+          this.popupOwner.onClick(this.owner);
         }
         this.state.popup = false; // hide popup
         return true; // to prevent its handling in the button
