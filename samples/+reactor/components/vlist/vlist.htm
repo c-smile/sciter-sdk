@@ -29,11 +29,20 @@ function renderRecord(record,index) {
      :checked={this.isSelected(record)}>This is an item # {index}.</li>;
 }
 
+var vlist;
+
 $(main).content(
   <VList
     multiselect
     recordset={records}
-    recordview={renderRecord} />);
+    recordview={renderRecord}
+    @{vlist} />);
+
+event click $(#go) {
+  var rn = $(#record-number).value;
+  vlist.navigateTo(records[rn]);
+  
+}
 
         </script>
     </head>
@@ -41,6 +50,11 @@ $(main).content(
       <p>Demo of simple virtual list component &lt;VList>.</p>
       <p>The caller shall suply record view producer function.</p>
       <p>The list supports multiselection (CTRL+CLICK).</p>
+
+      <form>
+        Record <input|integer #record-number min=0 max=1000 novalue="#" step="10" /> <button#go>Go</button> 
+      </form>
+
       <main></main>
     </body>
 </html>

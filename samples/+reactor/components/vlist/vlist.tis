@@ -112,9 +112,18 @@ class VList : Reactor.Component
 
 
   function resetPaddings() {
-    // set paddings so scrollbar will reflect the reality 
-    this.style[#padding-top] = px(this.swIndex * this.itemHeight);
-    this.style[#padding-bottom] = px(Integer.max(0,this.recordset.length - this.swIndex - this.swLength) * this.itemHeight);
+    var top = this.swIndex * this.itemHeight;
+    const middle = this.swLength * this.itemHeight;
+    const total = this.recordset.length * this.itemHeight;
+    var bottom = total - middle - top;
+    if( bottom < 0 ) {
+      bottom = 0; 
+      top = Integer.max(0,total - middle);
+    } else if(bottom + top + middle < total)
+      bottom = top = 0;
+    this.style[#padding-top] = px(top);
+    this.style[#padding-bottom] = px(bottom);
+    Element.update.call(this); // use original Element.update method.
   }
 
   function isSelected(record) {
@@ -198,7 +207,7 @@ class VList : Reactor.Component
   function navigateTo(record) {
     this.currentRecord = record;
     if(record) { 
-      var recordNo = this.recordset.indexOf(v);
+      var recordNo = this.recordset.indexOf(record);
       if( recordNo < 0 ) return;
       this.scrollToRecord(recordNo);
     }
@@ -225,10 +234,15 @@ class VTableBody : VList
   function render() {
     var items = [];
     var {recordview, recordset, swIndex, swLength} = this;
+
+    if((swIndex + swLength) > recordset.length ) 
+      swIndex = this.swIndex = Integer.max(0,recordset.length - swLength);
+
     var end = Integer.min(recordset.length,swIndex + swLength);
     for( var i = swIndex; i < end; ++i )
       items.push( recordview.call(this,recordset[i],i) );
     //debug log: swIndex, swLength, end, items.length;
+    //debug stacktrace;
     return <tbody>{items}</tbody>;
   }
 }
@@ -256,12 +270,12 @@ class VTable: Reactor.Component
     assert typeof this.recordview == #function;
 
     this.recordsForView();
-
   }
 
   function update(state = null) {
     super.update(state);
     this.recordsForView();
+    this.vtbody.post(this.vtbody.resetPaddings);
   }
 
   function render() {
@@ -315,6 +329,7 @@ class VTable: Reactor.Component
          return rs2view;
     }
     rs2view.sort(comparator);
+
     return rs2view;
   }
 
