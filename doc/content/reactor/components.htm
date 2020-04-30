@@ -19,6 +19,32 @@
 	<p>These two components will do exactly the same when used.</p>
 	<p>Class-based components have some additional features that we will discuss in the next sections. Until then, we will use function components for their conciseness.</p>
 	<h4>Note: Component names (either functional or class-based) shall start from capital letter.</h4>
+	<h3>Component-functions and component constructors signatures</h3>
+	
+	<p>Full declaration of component functions and constructors may look like as:&nbsp;</p><pre>function FunctionComponent(props,kids,states) {} </pre>
+	<p>Where:</p>
+	<ul><li><i>props</i> are passed attributes;</li>
+		<li><i>kids</i> are child, content VNodes;</li>
+		<li>and <i>states</i> are state flags ( declared by prepending <code>:</code> to names). State flags (attributes) do not participate in reconciliation.</li>
+		</ul>
+	<p>Example, this declaration:</p>
+	
+	
+	
+	<pre>&lt;FunctionComponent mode=&quot;start&quot; :value=&quot;foo&quot;&gt;
+   &lt;div&gt;bar&lt;/div&gt;
+&lt;/FunctionComponent&gt;</pre><p>will get call of FunctionComponent() with this parameters:</p>
+	<ul><li><i>props</i> -&gt; <code>{ mode: &quot;start&quot; }</code></li>
+		<li><i>kids</i> -&gt; <code>[ &lt;div&gt;bar&lt;/div&gt; ]</code></li>
+		<li>states -&gt; <code>{ value: &quot;foo&quot; }</code></li>
+		</ul>
+	<p>Constructors of class components follow the same convention with the only difference - additional <i>parent</i> parameter</p>
+	
+	
+	
+	<pre>class ClassComponent: Reactor.Component {
+   function ClassComponent(props,kids,states,parent) {} 
+}</pre><p>The <i>parent</i> argument receives DOM element - future or existing container DOM element.</p>
 	<h2><a href="https://reactjs.org/docs/components-and-props.html#rendering-a-component"></a>Rendering a Component</h2>
 	<p>Previously, we only encountered Reactor virtual elements that represent DOM tags:</p>
 	

@@ -48,6 +48,8 @@ view.<u>eventsRoot</u> = null;
     <dd> <font color="#999999">r/w</font> - window icon, the property accepts: <code>null</code> - set default icon, <code>&quot;url&quot;</code> - string, url of window icon or instance of <code>Image</code>.</dd>
     <dt>windowBlurbehind</dt>
     <dd> <font color="#999999">r/w</font> - window blur-behind effect, the property accepts: <code>#auto</code> | <code>#ultra-dark</code> | <code>#dark</code> | <code>#light</code> | <code>#ultra-light</code> | <code>#none</code> values. If this flag is set then the window window is semitransparent. Root document shall use <code>html { background:transparent; }</code> in order to see desktop behind the window.</dd>
+		<dt>windowFrame</dt>
+		<dd>r/w - window frame type, the property accepts one of: <code>#standard</code> | <code>#extended</code> | <code>#solid</code> | <code>#solid-with-shadow</code> | <code>#transparent</code> values. After loading the property matches value of <code>window-frame</code> attribute of its root <code>&lt;html&gt;</code> document.</dd>
     <h2>Methods</h2>
     <dt> <strike>this</strike></dt>
     <dd>(non-constructable)</dd>

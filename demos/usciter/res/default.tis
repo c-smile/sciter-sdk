@@ -2,6 +2,7 @@
 const APP_NAME = "usciter.app";
 include "settings.tis";
 include "drop-zone.tis";
+include "live-reload.tis";
 
 const native = view.nativeApi();
 
@@ -19,20 +20,22 @@ var debugIsActive = false;
 
 function loadFile(fn)
 {
+  liveReload.reset();
+
   filename = fn;
   content.load(fn);
   $(button#reload).state.disabled = false;
   inspectorButton.state.disabled = false;
   if(debugIsActive)
     view.launchDebugView();
+
   var croot = content[0];
-  var title = croot.$(head>title); 
-  // testing nativeApi:
-  var rootUid =  native.getElementUid(croot);
-  if( title )
-    view.caption =  String.printf("Sciter(%d):%s", rootUid, title.text || ""); 
-  else 
-    view.caption =  String.printf("Sciter(%d)",rootUid); 
+  var title = croot.$(head>title);
+  if(title) {
+    title = String.printf("uSciter: %s", title.text || "");
+    view.windowCaption = title;
+    $(window-caption).text = title;
+  }
 }
 
 event click $(button#open)
@@ -41,15 +44,12 @@ event click $(button#open)
   if( fn ) 
   {
     loadFile(fn);
-    // getting root node of the frame
-    //var croot = content[0];
-    //var title = croot.$(head>title); 
-    //if( title )
-    //  view.title(title.text); // calling native method defined in sciter.h 
   }
 }
+
 event click $(button#reload)
 {
+  liveReload.reset();
   if( filename ) {
     content.load(filename);
     if(debugIsActive)
@@ -113,9 +113,33 @@ event click $(button#glass)
   saveState();
 }
 
-Settings.add 
+var liveReload = new LiveReload(function() {
+  if( filename ) {
+    content.load(filename);
+    if(debugIsActive)
+      view.launchDebugView();
+  }
+});
+
+event click $(button#live-reload)
 {
-  store: function(data) 
+  if(this.value) {
+    liveReload.start();
+  } else {
+    liveReload.stop();
+  }
+}
+
+event change-detected {
+  $(button#live-reload).state.visited = true;
+}
+event change-processed {
+  $(button#live-reload).state.visited = false;
+}
+
+Settings.add
+{
+  store: function(data)
     {
       data.glass = {
         useSystem : $(button#system-glass).state.checked;  

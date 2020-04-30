@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style></style>
+        <script type="text/tiscript">
+
+function self.ready() {
+  $(form).value = { windowFrame: view.windowFrame };
+}
+
+event change $(form) {
+  view.windowFrame = symbol($(form).value.windowFrame);
+}
+
+        </script>
+    </head>
+    <body>
+
+<form>
+  <button|radio(windowFrame) value="standard">standard</button> 
+  <button|radio(windowFrame) value="extended">extended</button>
+  <button|radio(windowFrame) value="solid">solid</button>
+  <button|radio(windowFrame) value="solid-with-shadow">solid-with-shadow</button>
+</form>
+
+    </body>
+</html>

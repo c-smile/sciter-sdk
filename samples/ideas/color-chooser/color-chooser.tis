@@ -18,7 +18,9 @@ class ColorChooser: Element
   // this behavior has been attached to the element, setup its shape.
   function attached()
   {
-    this.html = "<button role='apply'><span.current-color /></button><button role='popup' />";
+    this.content(<button role="apply"><span.current-color /></button>,<button role="popup" />);
+    if( var currentColor = this.attributes["value"] )
+      this.value = currentColor;
   }
   
   // get popup element, create it if needed

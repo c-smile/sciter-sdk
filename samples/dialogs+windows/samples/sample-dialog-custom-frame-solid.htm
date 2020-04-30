@@ -65,6 +65,10 @@
     event click $(#close-dialog) { view.close( $(textarea).value ) }
     event click $(#cancel-dialog) { view.close( null ); }
 
+    function self.ready() {
+      $(textarea).state.focus = true; 
+    }
+
     </script>
 </head>
 <body>

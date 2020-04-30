@@ -1,4 +1,4 @@
-<html>
+﻿<html>
   <head>
     <meta name="source" content="http://www.terrainformatica.com/wiki/doku.php?id=h-smile:built-in-behaviors:edit"/>
     <meta name="generator" content="h-smile:richtext"/>
@@ -52,15 +52,25 @@
         
         
         
-  <h2>Methods</h2>
+  <h2>Script API</h2>
+	<p>Note: API of plaintext is accessible on element by using <i>.plaintext.</i> interface modifier:</p>
+	
+	
+	<pre>const editor = $(plaintext#editor);
+editor.<u>plaintext</u>.load(&quot;file://users/documents/readme.txt&quot;);</pre><h3>Properties</h3>
+	<dl><dt><code>plaintext.content</code></dt><dd> <ul><li>read, returns <b>string</b> - text with \r\n line separators; &nbsp;</li><li>write, accepts either <b>string</b> with \r\n line separators or <b>array of strings</b>.</li></ul>
+			</dd>
+		<dt><code>plaintext.lines</code></dt>
+		<dd>read-only, <b>integer</b>, reports number of lines&nbsp;</dd></dl>
+	<h3>Methods</h3>
   <dl>
-    <dt><code>loadDocument</code></dt>
+    <dt><code>plaintext.load</code></dt>
     <dd><code>(url:string): true|false</code> 
         <p>loads file from URL into the editor;</p></dd>
-    <dt><code>saveDocument</code></dt>
+    <dt><code>plaintext.save</code></dt>
     <dd><code>(url:string): true|false</code> 
-        <p>saves content to file;</p></dd>
-    <dt><code>setContent</code></dt>
+        <p>saves content to file defined by the file url;</p></dd>
+    <dt><code>plaintext.appendLine</code></dt>
     <dd><code>(text:string):&nbsp;true|false</code>
         <p>sets content from the string;</p></dd>
     <dt><code>setContent</code></dt>
