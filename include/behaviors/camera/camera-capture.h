@@ -139,7 +139,7 @@ namespace camera {
     unsigned                  m_width;
     unsigned                  m_height;
 
-    aux::asset_ptr<sciter::video_destination> dest;
+    sciter::om::hasset<sciter::video_destination> dest;
 
 	};
 

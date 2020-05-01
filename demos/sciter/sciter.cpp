@@ -58,7 +58,7 @@ namespace sciter
       _first->_prev = this;
     _next = _first;
     _first = this;
-    add_ref();
+    asset_add_ref();
   }
 
   bool frame::setup(const wchar_t* url, HWND parent)
@@ -109,7 +109,7 @@ namespace sciter
     }
     _hwnd = 0;
     if(and_release)
-      release();
+      asset_release();
   }
 
   frame* frame::ptr(HWND hwnd)

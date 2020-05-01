@@ -13,6 +13,9 @@
     <Filter Include="include">
       <UniqueIdentifier>{89AF369E-F58E-B539-FEA6-40106A051C9B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="sqlite">
+      <UniqueIdentifier>{F71C5A1C-E3BE-84F2-CC79-9846B8BA0B43}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\aux-asset.h">
@@ -25,6 +28,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\aux-slice.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sciter-om-def.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\sciter-om.h">
@@ -90,6 +96,18 @@
     <ClInclude Include="..\include\sciter-x.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\sqlite\sciter-sqlite.h">
+      <Filter>sqlite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sqlite\sqlite-wrap.h">
+      <Filter>sqlite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sqlite\sqlite3.h">
+      <Filter>sqlite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sqlite\sqlite3ext.h">
+      <Filter>sqlite</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\demos\usciter\usciter.cpp">
@@ -97,6 +115,15 @@
     </ClCompile>
     <ClCompile Include="..\include\sciter-win-main.cpp">
       <Filter>include</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sqlite\sciter-sqlite-db.cpp">
+      <Filter>sqlite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sqlite\sciter-sqlite-rs.cpp">
+      <Filter>sqlite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sqlite\sqlite-wrap.c">
+      <Filter>sqlite</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,8 +1,8 @@
 ﻿<html>
   <head>
-    <meta name="source">
-    <meta name="source">
-    <meta name="generator" content="h-smile:richtext">
+    <meta name="source"/>
+    <meta name="source"/>
+    <meta name="generator" content="h-smile:richtext"/>
   </head>
 <body>
   <h1>behavior:masked-edit</h1>
@@ -37,14 +37,16 @@
   <dl>
     <h2>Methods</h2>
     
-		<dl><dt>copy(exec:bool):bool</dt>
-			<dd>- if <i>exec</i> is <i>true</i> copies current content to clipboard else checks if the input field is filled in full - returns true in this case.</dd>
-			<dt>paste(exec:bool):bool</dt>
-			<dd>- if <i>true</i> makes an attempt to paste clipboard content into the input. Returns <i>true</i> on success.</dd>
-			<dt>selectAll(exec:bool)</dt>
-			<dd>- if&nbsp;<i>exec</i> is <i>true</i> selects all editable fields in the input.</dd>
-			<dt>mask(array of field definitions)&nbsp;</dt>
-			<dd> <p>- allows to define structure of masked input &quot;manually&quot; and with more control.</p>
+		<dl><dt>masked.selectGroup</dt>
+			<dd>(group:integer)<p>Selects particular editing group.&nbsp;</p></dd>
+			<dt>masked.selectAll</dt>
+			<dd>()<p>Selects all editing groups.</p>
+				</dd></dl><h2>Properties</h2><dl>
+			<dt>masked.mask&nbsp;</dt>
+			<dd> 
+				
+				<p>read/write property, either a <b>string</b> or an <b>array</b> of definitions.;</p>
+				<p>This property allows to define structure of masked input &quot;manually&quot; and with more control.</p>
            <p>Mask definition is an array of strings (rendered as static separators) and objects. Each object defines editable regions and may have following fields:</p>
 				<ul><li><code>type: #integer | #text | #enum </code> - defines type of the region, mandatory;</li>
 					<li><code>width: integer</code> - defines length of the region in characters, mandatory;</li>
@@ -55,8 +57,7 @@
 					<li><code>filter: &quot;a~z&quot;</code> - defines filter of allowed characters in this type:#text field, optional.</li>
 					</ul>
 				</dd>
-      <dt>mask() : array</dt>
-			<dd>returns array of field definitions as the above.</dd></dl>
+      <dt></dt></dl>
     
 <h2>Events</h2>
     <dt>EDIT_VALUE_CHANGED / event change</dt>
@@ -65,7 +66,7 @@
 		<dd>- posted when editor will highlight other editable group.</dd></dl>
   <h2>Value</h2>
   
-	<p>Is either <code>string</code>  or <code>array of values</code>  whe mask was defined by <code>this.mask([definitions])</code> call.</p>
+	<p>Is either <code>string</code>  or <code>array of values</code> &nbsp;when mask was defined by <code>this.masked.mask = [definitions]</code> call.</p>
   <h2>Examples</h2>
   <p>Declaration of IP4 address input field:</p><pre>&lt;input|masked mask=&quot;000.000.000.000&quot;&gt;
 </pre>
@@ -84,7 +85,7 @@
             { type:&quot;integer&quot;, width:3, min:0, max:255, leading-zero:true }, &quot;.&quot;,
             { type:&quot;integer&quot;, width:3, min:0, max:255, leading-zero:true }, &quot;.&quot;,
             { type:&quot;integer&quot;, width:3, min:0, max:255, leading-zero:true } ];
-  this.mask(ipmask); // initialization of fields and separators
+  this.masked.mask = ipmask; // initialization of fields and separators
 }</pre>
 </body>
 </html>

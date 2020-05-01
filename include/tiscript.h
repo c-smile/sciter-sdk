@@ -28,7 +28,7 @@ typedef unsigned char byte;
 typedef tiscript_VM* HVM;
 
 // pinned tiscript_value, val here will survive GC.
-typedef struct tiscript_pvalue
+typedef OBSOLETE struct tiscript_pvalue
 {
    tiscript_value val;
    struct tiscript_VM* vm;
@@ -41,7 +41,7 @@ typedef bool TISAPI  tiscript_stream_output(struct tiscript_stream* tag, int v);
 typedef const WCHAR* TISAPI tiscript_stream_name(struct tiscript_stream* tag);
 typedef void TISAPI  tiscript_stream_close(struct tiscript_stream* tag);
 
-typedef struct tiscript_stream_vtbl // stream instance
+typedef OBSOLETE struct tiscript_stream_vtbl // stream instance
 {
   tiscript_stream_input*    input;
   tiscript_stream_output*   output;
@@ -49,7 +49,7 @@ typedef struct tiscript_stream_vtbl // stream instance
   tiscript_stream_close*    close;
 } tiscript_stream_vtbl;
 
-typedef struct tiscript_stream
+typedef OBSOLETE struct tiscript_stream
 {
   tiscript_stream_vtbl* _vtbl;
 } tiscript_stream;
@@ -81,7 +81,7 @@ typedef void  TISAPI tiscript_on_gc_copy(void* instance_data, tiscript_value new
 // callback used for
 typedef void TISAPI tiscript_callback(tiscript_VM *c,void* prm);
 
-typedef struct tiscript_method_def
+typedef OBSOLETE struct tiscript_method_def
 {
   void*             dispatch; // a.k.a. VTBL
   UINT32            id;
@@ -91,7 +91,7 @@ typedef struct tiscript_method_def
   tiscript_value    payload;  // must be zero
 } tiscript_method_def;
 
-typedef struct tiscript_prop_def
+typedef OBSOLETE struct tiscript_prop_def
 {
   void*                dispatch; // a.k.a. VTBL
   UINT32               id;
@@ -105,7 +105,7 @@ typedef struct tiscript_prop_def
 #define TISCRIPT_CONST_FLOAT  1
 #define TISCRIPT_CONST_STRING 2
 
-typedef struct tiscript_const_def
+typedef OBSOLETE struct tiscript_const_def
 {
   const char *name;
   union _val
@@ -118,7 +118,7 @@ typedef struct tiscript_const_def
 } tiscript_const_def;
 
 
-typedef struct tiscript_class_def
+typedef OBSOLETE struct tiscript_class_def
 {
    const char*   name;      // having this name
    tiscript_method_def*   methods;    // with these methods
@@ -132,7 +132,7 @@ typedef struct tiscript_class_def
    tiscript_value         prototype;  // superclass, prototype for the class (or 0)
 } tiscript_class_def;
 
-typedef struct tiscript_native_interface
+typedef OBSOLETE struct tiscript_native_interface
 {
   // create new tiscript_VM [and make it current for the thread].
   tiscript_VM*   (TISAPI *create_vm)(unsigned features /*= 0xffffffff*/, unsigned heap_size /*= 1*1024*1024*/, unsigned stack_size /*= 64*1024*/);

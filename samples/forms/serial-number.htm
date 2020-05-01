@@ -46,9 +46,9 @@
       function attached()
       {
         // setup the mask:
-        this.mask(imask);
+        this.masked.mask = imask;
         var init = this.attributes["value"];
-        if( init ) this.value = init.scanf("%s - %s - %s - %s - %s");
+        if( init ) this.state.value = init.scanf("%s - %s - %s - %s - %s");
       }
       
       function onControlEvent(evt)

@@ -59,20 +59,6 @@ namespace sciter {
     
   }
 
-
-  bool window::load( aux::bytes utf8_html, const WCHAR* base_url)
-  {
-     return FALSE != ::SciterLoadHtml(_hwnd,utf8_html.start,utf8_html.length, base_url);
-  }
-  bool window::load( aux::chars utf8_html, const WCHAR* base_url)
-  {
-     return FALSE != ::SciterLoadHtml(_hwnd,(LPCBYTE)utf8_html.start,utf8_html.length, base_url);
-  }
-  bool window::load( const WCHAR* url)
-  {
-     return FALSE != ::SciterLoadFile(_hwnd,url);
-  }
-
   void window::collapse() {
     if(_hwnd) [nswindow(_hwnd) performMiniaturize:nsview(_hwnd)];
   }
@@ -87,12 +73,8 @@ namespace sciter {
 
   window::window( UINT creationFlags, RECT frame): _hwnd(NULL)
   {
+     asset_add_ref();
     _hwnd = ::SciterCreateWindow(creationFlags, (frame.right - frame.left) > 0 ? &frame: NULL,NULL,this,NULL);
-    if( _hwnd ) {
-      add_ref();
-      setup_callback();
-      sciter::attach_dom_event_handler(get_hwnd(),this);
-    }
   }
 
 }

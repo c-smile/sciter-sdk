@@ -6,25 +6,26 @@
       flow:horizontal-flow;
       border-spacing: 1em;
     }
+    body > * { width:*; }
     form 
     { 
       width: max-content;  
-      border: 1px solid;
-      padding:4px;
-      margin:4px;
+      border: 1dip solid;
+      padding:4dip;
+      margin:4dip;
     }
-    form input { margin:4px; font:10pt verdana; vertical-align:middle; }
+    form input { margin:4dip; vertical-align:middle; }
     form input[type="phone"] 
     { 
       behavior: masked-edit;
       prototype:Phone; 
       
-      padding:3px; 
+      padding:3dip; 
       background-image:url(theme:edit-normal); 
       background-repeat:stretch; 
-      font-family: consolas monospace;
-      width: min-intrinsic;
-      height: min-intrinsic;
+      font-family: consolas, monospace;
+      width: min-content;
+      height: min-content;
       white-space:pre;
     }
     input[type="phone"] > span { display:inline-block; }
@@ -34,7 +35,7 @@
     {
       behavior: masked-edit;
       prototype:IPAddress;
-      padding:3px; 
+      padding:3dip; 
       background-image:url(theme:edit-normal); 
       background-repeat:stretch; 
       font-family: consolas monospace;
@@ -48,9 +49,9 @@
 
     form > caption 
     {
-      margin:-4px -4px 4px -4px;
-      padding:4px;
-      border-bottom: 1px solid black;
+      margin:-4dip -4dip 4dip -4dip;
+      padding:4dip;
+      border-bottom: 1dip solid black;
       background: #DDD;
     }
     form button.show { margin-left:*; display:block;}
@@ -60,7 +61,7 @@
     pre#out
     {
       clear:left;
-      border:1px solid gray;
+      border:1dip solid gray;
       background: #F5F5DC;
       -spaces-per-tab:2;
     }
@@ -84,11 +85,10 @@
         if( area_codes ) area_codes = area_codes.split(",");
         else             area_codes = { type:"text", length:3, filter:"0~9" };
         // setup the mask:
-        var mask = [
+        this.masked.mask = [
                 "(", area_codes, ") ", // area code  
                 { type:"text", width:3, filter:"0~9", min:3 }, " ",
                 { type:"text", width:4, filter:"0~9", min:4 } ];
-        this.mask(mask);
       }
       property value(v)
       {
@@ -116,7 +116,7 @@
       function attached()
       {
         // setup the mask:
-        this.mask(ipmask);
+        this.masked.mask = ipmask;
         var init = this.attributes["value"];
         if( init ) this.value = init.scanf("%d.%d.%d.%d");
       }
@@ -125,7 +125,8 @@
   </script>  
 </head>
 <body>
- <h1>Masked input modes</h1>
+  <h1>Masked input modes</h1>
+  
   <h2>Phone inputs</h2>
   <form>
     <caption>Simple</caption>

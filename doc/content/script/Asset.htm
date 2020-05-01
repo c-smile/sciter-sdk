@@ -1,0 +1,31 @@
+﻿<html>
+  <head>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body class="root">
+  <h1>Asset</h1>
+  <p>Asset is a quasi-object that represents native assets in&nbsp;script.</p>
+	<p>In a nutshell asset is non-extendable object with fixed set of methods and properties that are defined completely in native code. 
+</p>
+	<p>The Asset is a namespace that defines following methods:</p><dl>
+    <h2>Constants</h2>
+    <dd>N/A</dd>
+    <h2>Properties</h2>
+    <dt></dt>
+    <dd>N/A</dd>
+    <h2>Methods</h2>
+    <dt>typeOf</dt>
+    <dd>( obj: asset ) : symbol<p>Returns type name that was defined on native side. In order to test native entity for particular type use this:</p>
+			
+			<pre>if( obj instanceof Asset &amp;&amp; Asset.typeOf(obj) == #Recordset)
+  ...</pre></dd>
+    <dt>dispose&nbsp;</dt>
+		<dd>( obj: asset&nbsp;) returns : true | false<p>Disposes (frees) native object. This will lead to invocation of native <code>passport-&gt;asset_release(asset)</code> function.</p>
+			</dd><dt>hasMethod</dt>
+		<dd>( obj: asset, name: symbol ) returns : true | false<p>Returns true if the asset has native method with the <i>name.</i></p></dd>
+		<dt>hasProperty</dt>
+		<dd>( obj: asset, name: symbol ) returns : true | false<p>Returns true if the asset has native property with the <i>name.</i></p></dd>
+
+
+</dl></body>
+</html>

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4902C4F0245BA68F0000CFEE /* sqlite-wrap.c in Sources */ = {isa = PBXBuildFile; fileRef = 4902C4EC245BA68E0000CFEE /* sqlite-wrap.c */; };
+		4902C4F2245BA68F0000CFEE /* sciter-sqlite-db.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4902C4EE245BA68E0000CFEE /* sciter-sqlite-db.cpp */; };
+		4902C4F3245BA68F0000CFEE /* sciter-sqlite-rs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4902C4EF245BA68E0000CFEE /* sciter-sqlite-rs.cpp */; };
 		492B36CD20EC59D400E479B4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 492B36CC20EC59D400E479B4 /* AppDelegate.m */; };
 		492B36CF20EC59D500E479B4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 492B36CE20EC59D500E479B4 /* Assets.xcassets */; };
 		492B36D220EC59D500E479B4 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 492B36D020EC59D500E479B4 /* MainMenu.xib */; };
@@ -16,6 +19,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4902C4EC245BA68E0000CFEE /* sqlite-wrap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "sqlite-wrap.c"; path = "../../../sqlite/sqlite-wrap.c"; sourceTree = "<group>"; };
+		4902C4EE245BA68E0000CFEE /* sciter-sqlite-db.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "sciter-sqlite-db.cpp"; path = "../../../sqlite/sciter-sqlite-db.cpp"; sourceTree = "<group>"; };
+		4902C4EF245BA68E0000CFEE /* sciter-sqlite-rs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "sciter-sqlite-rs.cpp"; path = "../../../sqlite/sciter-sqlite-rs.cpp"; sourceTree = "<group>"; };
 		492B36C820EC59D400E479B4 /* usciter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = usciter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		492B36CB20EC59D400E479B4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		492B36CC20EC59D400E479B4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -42,6 +48,9 @@
 		492B36BF20EC59D400E479B4 = {
 			isa = PBXGroup;
 			children = (
+				4902C4EE245BA68E0000CFEE /* sciter-sqlite-db.cpp */,
+				4902C4EF245BA68E0000CFEE /* sciter-sqlite-rs.cpp */,
+				4902C4EC245BA68E0000CFEE /* sqlite-wrap.c */,
 				49C45B7B226923A000E67ACC /* behavior_video_generator.cpp */,
 				492B36DC20EC674300E479B4 /* usciter.cpp */,
 				492B36CA20EC59D400E479B4 /* usciter */,
@@ -156,9 +165,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4902C4F3245BA68F0000CFEE /* sciter-sqlite-rs.cpp in Sources */,
+				4902C4F0245BA68F0000CFEE /* sqlite-wrap.c in Sources */,
 				492B36CD20EC59D400E479B4 /* AppDelegate.m in Sources */,
 				49C45B7C226923A000E67ACC /* behavior_video_generator.cpp in Sources */,
 				492B36DD20EC674300E479B4 /* usciter.cpp in Sources */,
+				4902C4F2245BA68F0000CFEE /* sciter-sqlite-db.cpp in Sources */,
 				492B36DF20EC677500E479B4 /* sciter-osx-main.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

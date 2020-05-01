@@ -1,124 +1,97 @@
 
 namespace SQLite
 {  
-  include library "tiscript-sqlite"; // places its DB and Recordset objects in SQLite namespace.
-                                     // Use include inside namespace if you expect conflicting names.
+  const engine = view.uSciter.SQLite;
 
-  include "commondataprovider.tis";   
+  function isRecordset(rs) {
+    return rs && (rs instanceof Asset) && (Asset.typeOf(rs) == #Recordset);
+  }
+
+  function isDatabase(db) {
+    return db && (db instanceof Asset) && (Asset.typeOf(db) == #DB);
+  }
+
+  function open(path) {
+    return engine.open(path);
+  }
+
+
   // returns map of table definitions found in the DB
-  function DB.tables()
+  function tablesIn(db)
   {
-    var rs = this.exec("SELECT name,sql FROM sqlite_master WHERE type='table' ORDER BY name;" );
+    assert isDatabase(db);
+    var rs = db.exec("SELECT name,sql FROM sqlite_master WHERE type='table' ORDER BY name;" );
     var names = {};
-    if ( rs instanceof Recordset )
-      do names[rs#name] = rs#sql while( rs.next() );
+    if ( isRecordset(rs) )
+      do names[rs["name"]] = rs["sql"] while( rs.next() );
     return names;
   }
   // returns map of indexes found in the DB
-  function DB.indexes()
+  function indexesIn(db)
   {
-    var rs = this.exec("SELECT name,sql FROM sqlite_master WHERE type='index' ORDER BY name;" );
+    assert isDatabase(db);
+    var rs = db.exec("SELECT name,sql FROM sqlite_master WHERE type='index' ORDER BY name;" );
     var names = {};
-    if ( rs instanceof Recordset )
-      do names[rs#name] = rs#sql while( rs.next() );
+    if ( isRecordset(rs) )
+      do names[rs["name"]] = rs["sql"] while( rs.next() );
     return names;
     
   }
   
   // fills the table DOM element by data from the Recordset: 
-  function Recordset.present( tbl )
+
+  function tableFrom(rs) // returns VDOM of table
   {
-    tbl.clear();
-    var tr = new Element("tr");
-    for (var n = 0; n < this.length; ++n)
+    var headers = [];
+    for (var n in rs.length)
     {
-      var th = new Element("th", this.name(n)); 
-      th.@#title = String.printf("%s:%s:%s", this.name(n,#database), this.name(n,#table), this.name(n,#field) );
-      tr.insert(th);
+      const title = String.printf("%s:%s:%s", rs.name(n,#database), rs.name(n,#table), rs.name(n,#field));
+      headers.push(<th title={title}>{rs.name(n)}</th>);
     } 
-    tbl.insert(tr);
-    // data rows:
-    do 
-    {
-      tr = new Element("tr");
-      for (var v in this)
-      {
-        var td = new Element("td", v.toString()); 
-        tr.insert(td);
-      } 
-      tbl.insert(tr);
-    } while( this.next() );
+
+    var rows = [];
+   
+    function cells() {
+      var list = [];
+      for (var v in rs)
+        list.push(<td>{v}</td>);
+      return list;
+    }
+
+    do { rows.push(<tr>{cells()}</tr>); } while( rs.next() );
+    
+    return <table>
+      <thead><tr>{headers}</tr></thead>
+      <tbody>{rows}</tbody>
+    </table>;
   }
 
-  // fills the table DOM element (tbody + thead) by data from the Recordset:
-  function Recordset.present_tbody( tbl )
-  {
-    tbl.clear();
-    var thead;
-    var tbody;
-    tbl.insert( thead = Element.create{ thead });
-    tbl.insert( tbody = Element.create{ tbody });
-    
-    var tr = new Element("tr");
-    for (var n = 0; n < this.length; ++n)
-    {
-      var th = new Element("th", this.name(n)); 
-      tr.insert(th);
-    } 
-    thead.insert(tr);
-    // data rows:
-    do 
-    {
-      tr = new Element("tr");
-      for (var v in this)
-      {
-        var td = new Element("td", v.toString()); 
-        tr.insert(td);
-      } 
-      tbody.insert(tr);
-    } while( this.next() );
-  }
-  
   // Returns object constructed from current row as { field1: value1, field2: value2, etc. }
   // Not too much effective but someone may need it
-  function Recordset.rowAsObject()
+  function rowAsObject(rs)
   {
-    var names = this.names;
-    if( !names )
-    {
-      names = [];
-      for (var n = 0; n < this.length; ++n)
-        names.push( symbol(this.name(n)) );
-      this.names = names;
-    }
-    var obj = {}; var n = 0;    
+    var names = [];
+    for (var n in rs.length)
+      names.push(rs.name(n));
+    var obj = {};
+    var n = 0;
     for (var v in this)
       obj[names[n++]] = v;
     return obj;
   }
   
-  function Recordset.getColumnIndexes()
-  {
-    var r = {};
-    for(var i = 0; i < this.length; i++)
-    {
-      r[symbol(this.name(i, #field))] = i;
-    }
-    return r;
-  }
-  
-  function Recordset.asArray()
+  function rowsAsArray(rs)
   {
     var data = [];
     do {
-      var item = [];
-      for( var v in this )
-         item.push(v);
+      var row = [];
+      for( var v in rs ) row.push(v);
       data.push(item);
-    } while( this.next() );
+    } while( rs.next() );
     return data;
   }
 
+/*
   // TODO: it is more optimal to store in Julian datetime format,
   // unfortunetly nor class Data neither Datetime control do not support Julian calendar
   function obj2str(p)
@@ -192,120 +165,7 @@ namespace SQLite
     }
     return result;
   }
+*/  
   
-  // for using with /samples/ideas/virtual-grid
-  // select rowid column (SELECT rowid, ...), it will be hidden and
-  // you will be able to get table record rowid from virtual grid row index.
-  // rowid column is created automatically by sqlite, so no need for you to worry about that.
-
-  // this.columns = [ { allowSorting: true }] allows user sorting of the column
-
-
-  class SqliteDataProvider : CommonDataProvider
-  {
-    
-    function this(rowset)
-    {
-      this.columns = [];
-      
-      if( !(rowset instanceof Recordset) )
-      {
-        if( rowset === DB.DONE )
-        {
-          this.data = [];
-          return; // empty rowset
-        }
-        else
-          throw String.printf("Sqlite error %d", rowset);
-      }
-
-      this.rowid = [];
-      var rowid_column = null;
-      this.schema = {};
-         
-      for (var n = 0; n < rowset.length; ++n)
-      {
-        var name = rowset.name(n);      
-        if( name == "rowid" ) rowid_column = n;
-        else
-        {
-          this.schema[symbol(rowset.name(n, #field))] = n;
-          this.columns.push( { caption: name, allowSorting: true } );
-        }
-      }
-
-      this.createDefaultSortMapping();
-
-      if( rowid_column !== null )
-        this.data = this.asArray(rowset, rowid_column);
-      else this.data = rowset.asArray();
-
-      this.grid = null;
-    }
-    
-    function findGridId(table_rowid)
-    {
-      return this.rowid.indexOf(table_rowid);
-    }
-
-    function asArray(rowset, rowid_column)
-    {   
-      var data = [];
-      var rowid = this.rowid;
-      do {
-        var item = [];
-        var k = 0;
-        for( var v in rowset )
-        {
-          if( k == rowid_column )
-            rowid.push(v);
-          else
-            item.push(v);
-          k++;
-        }
-        data.push(item);
-      } while( rowset.next() );
-      return data;    
-    }
-    
-    function cellData(rowNo, field_symbol)
-    {
-      return this.data[rowNo][this.schema[field_symbol]];
-    }
-    
-    // dataObj: { field_name: value }
-    function updateRow(rowNo, dataObj)
-    {
-      var me = this.grid;
-      var rowData = this.data[rowNo];
-      for(var i in dataObj)
-      {
-        var colNo = this.schema[i];
-        if( colNo !== undefined )
-          rowData[colNo] = dataObj[i];      
-      }
-      if( this.grid )
-        this.grid.timer(5, :{ me.updateRow(rowNo); return false; });
-    }
-      
-    // can be called before bindDataSource to prevent
-    // setting table cells data twice
-    
-    // sortOrder - #ascending and #decending
-    function updateSorting(columnIndex, sortOrder) 
-    {
-      var src = this.data;        
-      var rowid = this.ds.rowid;
-      
-      for(var k = 0; k < rowid.lenth; k++)
-        src[k].push(rowid[k]);
-      
-      super.updateSorting(columnIndex, sortOrder);
-      rowid = this.ds.rowid;
-      for(var k = 0; k < rowid.lenth; k++)
-        rowid[k] = src[k].pop();
-    }
-
-  }  
 }
 

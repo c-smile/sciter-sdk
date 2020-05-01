@@ -61,8 +61,7 @@ namespace LoremIpsum
           index: n // position if this record in RS (for scrollbar purposes)
         };  
     }
-
-    if( length > 0 )
+    else if( length > 0 )
     {
       // forward
       var idx = key ? key.toInteger() + 1 : 0;

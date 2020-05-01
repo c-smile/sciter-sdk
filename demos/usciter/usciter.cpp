@@ -2,67 +2,35 @@
 #include "sciter-x-window.hpp"
 #include "sciter-x-graphics.hpp"
 
-//#include "behaviors/behavior_video_generator.cpp"
+#include "../sqlite/sciter-sqlite.h"
 
-// native API demo
 
-// native functions exposed to script
 
-static int native_get_element_uid(sciter::value vel) {
-  sciter::dom::element el = (HELEMENT)vel.get_object_data();
-  return (int)el.get_element_uid();
-}
-
-static sciter::value native_api() {
-
-  sciter::value api_map;
-
-  api_map.set_item(sciter::value("getElementUid"), sciter::vfunc( native_get_element_uid ) );
-  return api_map;
-
-  /* the above returns this:
-    return {
-      getElementUid(): {native_get_element_uid}
-    }
-  */
-
-}
-
-static sciter::value test_image_access(sciter::value vimg)
-{
-  sciter::image img = sciter::image::from(vimg); /// failed in this code
-  UINT w, h;
-  img.dimensions(w,h);
-  sciter::bytes_writer bw;
-  img.save(bw, SCITER_IMAGE_ENCODING_RAW);
-  return sciter::value();
-}
-
-static sciter::value test_image_generation()
-{
-  BYTE pixmap[10 * 10 * 4];
-  memset(pixmap, 0, sizeof(pixmap));
-  // image data
-  for (int i = 0; i < 10 * 10 * 4; i += 4)
-  {
-    pixmap[i] = i / 4;
-    pixmap[i + 1] = 255 - i / 4;
-    pixmap[i + 2] = 255;
-    pixmap[i + 3] = 255;
-  }
-  sciter::image img = sciter::image::create(10, 10, true, pixmap);
-  return img.to_value();
-}
-
-class frame: public sciter::window {
+class uSciter: public sciter::window {
 public:
-  frame() : window(SW_TITLEBAR | SW_RESIZEABLE | SW_CONTROLS | SW_MAIN | SW_GLASSY | SW_ENABLE_DEBUG) {}
+  uSciter() : window(SW_TITLEBAR | SW_RESIZEABLE | SW_CONTROLS | SW_MAIN | SW_GLASSY | SW_ENABLE_DEBUG) {}
 
-  BEGIN_FUNCTION_MAP
-    FUNCTION_0("nativeApi", native_api);
-    FUNCTION_1("testImageAccess", test_image_access);
-    FUNCTION_0("testImageGeneration", test_image_generation);
-  END_FUNCTION_MAP
+  //int foo(int p) { return p + 42; }
+  //int bar(int p1, int p2) { return p1 + p2; }
+  //std::vector<int> vector() { return {1,2,3}; }
+  
+  sciter::value get_SQLite() {
+    sqlite::SQLite* pe = new sqlite::SQLite();
+    if (pe)
+      return sciter::value::wrap_asset(pe);
+    else
+      return sciter::value();
+  }
+
+  SOM_PASSPORT_BEGIN(uSciter)
+    //SOM_FUNCS(
+      //SOM_FUNC(foo), 
+      //SOM_FUNC(bar), 
+      //SOM_FUNC(vector),
+    //)
+    SOM_PROPS(SOM_RO_VIRTUAL_PROP(SQLite,get_SQLite))
+  SOM_PASSPORT_END
+
 
   /* sample of handling DOM events, click on <button#foo> here:
   virtual bool handle_event(HELEMENT, BEHAVIOR_EVENT_PARAMS& params) {
@@ -82,8 +50,6 @@ public:
 #include "resources.cpp"
 
 int uimain(std::function<int()> run ) {
-    
-  //SciterSetOption(NULL, SCITER_SET_GFX_LAYER, GFX_LAYER_SKIA);
 
   // enable features to be used from script
   SciterSetOption(NULL, SCITER_SET_SCRIPT_RUNTIME_FEATURES, 
@@ -98,7 +64,7 @@ int uimain(std::function<int()> run ) {
 
   sciter::archive::instance().open(aux::elements_of(resources)); // bind resources[] (defined in "resources.cpp") with the archive
 
-  frame *pwin = new frame();
+  uSciter *pwin = new uSciter();
 
   // example, setting "usciter" media variable, check https://sciter.com/forums/topic/debugging-issues/  
   SciterSetMediaType(pwin->get_hwnd(), WSTR("desktop,usciter"));

@@ -54,9 +54,8 @@ namespace sciter
 
   }
 
-  class window : public aux::asset
+  class window : public sciter::event_handler
                , public sciter::host<window>
-               , public sciter::event_handler
   {
     friend sciter::host<window>;
   public:
@@ -68,18 +67,39 @@ namespace sciter
     void expand( bool maximize = false); // show or maximize
     void dismiss(); // delete the window
 
-    bool load( aux::bytes utf8_html, const WCHAR* base_url = 0 );
-    bool load( aux::chars utf8_html, const WCHAR* base_url = 0 );
-    bool load( const WCHAR* url );
+    bool load(aux::bytes utf8_html, const WCHAR* base_url = 0)
+    {
+      bind(); return FALSE != ::SciterLoadHtml(_hwnd, utf8_html.start, UINT(utf8_html.length), base_url);
+    }
+    bool load(aux::chars utf8_html, const WCHAR* base_url = 0)
+    {
+      bind(); return FALSE != ::SciterLoadHtml(_hwnd, (LPCBYTE)utf8_html.start, UINT(utf8_html.length), base_url);
+    }
+    bool load(const WCHAR* url)
+    {
+      bind(); return FALSE != ::SciterLoadFile(_hwnd, url);
+    }
 
   // sciter::host traits:
     HWINDOW   get_hwnd() const { return _hwnd; }
     HINSTANCE get_resource_instance() const { return application::hinstance(); }
 
+    //sciter::om::iasset
+    static const char* interface_name() { return "window.sciter.com"; }
+
   protected:
+
+    void bind() {
+      if (_hwnd && !_bound) {
+        _bound = true;
+        setup_callback();
+        sciter::attach_dom_event_handler(get_hwnd(), this);
+      }
+    }
+
     virtual LRESULT on_engine_destroyed() 
     { 
-      _hwnd = 0; asset::release(); 
+      _hwnd = 0; asset_release(); 
       return 0; 
     }
 
@@ -89,6 +109,7 @@ namespace sciter
 #endif
   private:
      HWINDOW _hwnd;
+     bool    _bound = false;
    };
 }
 

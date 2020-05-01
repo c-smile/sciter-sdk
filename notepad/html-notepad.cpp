@@ -58,7 +58,7 @@ int uimain(std::function<int()> run ) {
   auto args = sciter::application::argv();
   bool needs_debugger = std::find(args.cbegin(), args.cend(), WSTR("-debug")) != args.cend();
 
-  aux::asset_ptr<frame> pwin = new frame(needs_debugger);
+  sciter::om::hasset<frame> pwin = new frame(needs_debugger);
 
   // note: this:://app URL is dedicated to the sciter::archive content associated with the application
 

@@ -269,6 +269,9 @@ typedef struct _ISciterAPI {
 
   BOOL SCFN(SciterProcX)(HWINDOW hwnd, SCITER_X_MSG* pMsg ); // returns TRUE if handled
 
+  UINT64 SCFN(SciterAtomValue)(const char* name); // 
+  BOOL   SCFN(SciterAtomNameCB)(UINT64 atomv, LPCSTR_RECEIVER* rcv, LPVOID rcv_param);
+
 } ISciterAPI;
 
 typedef ISciterAPI* (SCAPI *SciterAPI_ptr)();
@@ -685,5 +688,9 @@ inline ISciterAPI *_SAPI(ISciterAPI *ext) {
      return SAPI()->SciterProcX(hwnd, (SCITER_X_MSG*)(&msg));
   }
 #endif
+
+  inline UINT64 SCAPI SciterAtomValue(const char* name) { return SAPI()->SciterAtomValue(name); }
+
+ 
 
 #endif

@@ -87,7 +87,10 @@ project "usciter"
 
   dpiawareness "HighPerMonitor"
 
-  files { "demos/usciter/usciter.cpp" }
+  files { "demos/usciter/usciter.cpp",
+          "sqlite/*.h",
+          "sqlite/*.cpp",
+          "sqlite/sqlite-wrap.c" }
 
   settargetdir()
 
@@ -360,6 +363,7 @@ if _TARGET_OS == "windows" then
 
     settargetdir() 
 
+--[[
   project "tiscript-sqlite"
     kind "SharedLib"
     language "C++"
@@ -373,6 +377,7 @@ if _TARGET_OS == "windows" then
       "sqlite/tiscriptsqlite.def"  }
 
     settargetdir() 
+]]--
 
 end
 

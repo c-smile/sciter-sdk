@@ -38,7 +38,7 @@ namespace sciter
     archive():har(0) {}
     // open archive blob:
     bool open( LPCBYTE data, UINT data_length ) { close(); har = SAPI()->SciterOpenArchive(data,data_length); return har != 0; }
-    bool open( aux::bytes data ) { return open( data.start, data.length ); }
+    bool open( aux::bytes data ) { return open( data.start, UINT(data.length) ); }
     void close() { if(har) SAPI()->SciterCloseArchive(har); har = 0; }
     // get archive item:
     aux::bytes get( LPCWSTR path ) {
@@ -148,7 +148,7 @@ namespace sciter
           // try to get them from archive first
           aux::bytes adata = archive::instance().get(wu.start+11);
           if (adata.length)
-            ::SciterDataReady(pnmld->hwnd, pnmld->uri, adata.start, adata.length);
+            ::SciterDataReady(pnmld->hwnd, pnmld->uri, adata.start, UINT(adata.length));
           else {
 #ifdef _DEBUG
             auto console = debug_output::instance();

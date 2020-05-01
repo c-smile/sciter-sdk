@@ -10,7 +10,19 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#FAFFFC">4.4.2.13</td><td nowrap valign="top" align="center">2020-04-29</td><td>
+    <tr><td valign="top" bgcolor="#fff7e6">4.4.3.14</td><td nowrap valign="top" align="center">2020-05-01</td><td>New:
+					<ul><li>SOM ( Sciter Object Model ) feature - modern way to expose native code (native assets) to script in OOP way. See <a href="https://sciter.com/native-code-exposure-to-script/">this blog post</a>.&nbsp;<ul><li>[script runtime] <code>Asset</code> namespace to deal with native assets;</li>
+								<li>started migration of built-in behaviors to this new mechanism: plaintext, masked, edit, textarea for now;</li>
+								<li><code>behavior:tabs</code> native behavior demo has been migrated to SOM;</li>
+								<li>SQLite wrapper is refactored to use SOM and SQLite is now linked statically to usciter[.app,.exe];</li>
+								<li>SOM makes tiscript API obsolete. If you use it, consider porting to SOM as tiscript API will be removed in future.</li>
+								</ul></li>
+						
+						</ul><p>Fixes:</p>
+					<ul><li>[behavior:masked] fixes;</li>
+						<li>[richtext] spellchecker highlighting fixes;&nbsp;</li>
+						<li>[css] internal ensureVisible functionality uses CSS (scroll-manner) to determine need of scroll animation.</li>
+						<li>[script] fix of <code>graphics.fillColor(clr) </code> when <i>clr</i> is a named CSS variable.</li></ul></td></tr><tr><td valign="top" bgcolor="#FAFFFC">4.4.2.13</td><td nowrap valign="top" align="center">2020-04-29</td><td>
 					
 					<p>New:</p>
 					<ul><li><code>view.windowFrame = #standard | #extended | #solid | #solid-with-shadow | #transparent;</code> property to set window frame at runtime;</li>

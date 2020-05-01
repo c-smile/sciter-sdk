@@ -92,7 +92,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	HACCEL hAccelTable;
 
   {
-    aux::asset_ptr<sciter::main_frame> wnd = new sciter::main_frame(file_name.c_str());
+    sciter::om::hasset<sciter::main_frame> wnd = new sciter::main_frame(file_name.c_str());
 
 	  if (!wnd || !wnd->is_valid())
     {

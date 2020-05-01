@@ -22,7 +22,7 @@ SAMPLE:
 struct camera_stream: public event_handler
 {
     com::ptr<camera::capture> pcapt;
-    aux::asset_ptr<sciter::video_destination> rendering_site;
+    sciter::om::hasset<sciter::video_destination> rendering_site;
     // ctor
     camera_stream() {}
     virtual ~camera_stream() {}

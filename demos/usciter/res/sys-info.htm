@@ -97,6 +97,8 @@
   	  $(#os-type).text = System.HANDHELD_OS? "handheld":"desktop";
   	  $(#os-version).text = System.OS;
       $(#gfx-backend).text = view.backendName;
+
+      $(#sqlite-version).text = view.uSciter.SQLite.version;
     }
 
     event click $(a[href]) {
@@ -124,6 +126,8 @@
 	  <header#sciter>The Sciter</header>
 	  <dt>version:</dt>	   <dd #version></dd>
     <dt>revision:</dt>   <dd #revision></dd>
+    <header>SQLite</header>
+    <dt>version:</dt>    <dd #sqlite-version></dd>
     <header>System</header>
 	  <dt>OS type:</dt>	   <dd #os-type></dd>
 	  <dt>OS version:</dt> <dd #os-version></dd>

@@ -21,7 +21,7 @@ SAMPLE:
 
 struct video_generated_stream: public event_handler
 {
-    aux::asset_ptr<sciter::video_destination> rendering_site;
+    sciter::om::hasset<sciter::video_destination> rendering_site;
     // ctor
     video_generated_stream() {}
     virtual ~video_generated_stream() {}
@@ -48,14 +48,11 @@ struct video_generated_stream: public event_handler
       if( !reason )
         return true; // first phase, consume the event to mark as we will provide frames
 
-
-
       rendering_site = (sciter::video_destination*) reason;
-			aux::asset_ptr<sciter::fragmented_video_destination> fsite;
+      sciter::om::hasset<sciter::fragmented_video_destination> fsite;
 
-      if(rendering_site->get_interface(FRAGMENTED_VIDEO_DESTINATION_INAME,(aux::iasset**)fsite.target()))
+      if(rendering_site->asset_get_interface(FRAGMENTED_VIDEO_DESTINATION_INAME,fsite.target()))
       {
-			  //start_generation( rendering_site );
         sciter::thread(generation_thread,fsite);
       }
 
@@ -63,7 +60,7 @@ struct video_generated_stream: public event_handler
     }
 
 	static void generation_thread(sciter::fragmented_video_destination* dst) {
-		  aux::asset_ptr<sciter::fragmented_video_destination> rendering_site = dst;
+      sciter::om::hasset<sciter::fragmented_video_destination> rendering_site = dst;
       // simulate video stream
       sciter::sync::sleep(100);
 

@@ -16,9 +16,8 @@ namespace sciter
 {
 
   class frame
-    : public aux::asset
+    : public sciter::event_handler
     , public sciter::host<frame>
-    , public sciter::event_handler
   {
     HWND   _hwnd;
     frame *_next,*_prev; // linked list of all frames

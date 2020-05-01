@@ -30,12 +30,17 @@
 
   #include "aux-slice.h"
   #include "aux-cvt.h"
+  #include "sciter-x-types.h"
 
   #pragma warning( push )
   #pragma warning(disable:4786) //identifier was truncated...
 
+  struct som_asset_t;
+
   namespace sciter
   {
+
+    typedef unsigned char byte;
 
     template<typename TC>
       inline size_t str_length(const TC* src ) { 
@@ -90,12 +95,17 @@
 
       value( const WCHAR* s, unsigned int slen = 0 ) { ValueInit(this); ValueStringDataSet(this, LPCWSTR(s), (slen || !s)? slen : (unsigned int)str_length(s), 0); }
       value( const string& s ) { ValueInit(this); ValueStringDataSet(this, LPCWSTR(s.c_str()), UINT(s.length()), 0); }
-      value( const astring& s ) { aux::a2w as(s.c_str()); ValueInit(this); ValueStringDataSet(this, LPCWSTR(as.c_str()), UINT(as.length()), UT_STRING_SYMBOL); }
-      value( aux::wchars ws )   { ValueInit(this); ValueStringDataSet(this, LPCWSTR(ws.start), ws.length, 0); }
-
-      value( aux::bytes bs )    { ValueInit(this); ValueBinaryDataSet(this, bs.start, bs.length, T_BYTES, 0); }
+      value( const astring& s ) { aux::utf2w as(s.c_str()); ValueInit(this); ValueStringDataSet(this, LPCWSTR(as.c_str()), UINT(as.length()), UT_STRING_SYMBOL); }
+      value( aux::wchars ws )   { ValueInit(this); ValueStringDataSet(this, LPCWSTR(ws.start), UINT(ws.length), 0); }
+      value( aux::bytes bs )    { ValueInit(this); ValueBinaryDataSet(this, bs.start, UINT(bs.length), T_BYTES, 0); }
+      value( const std::vector<byte>& bs) { ValueInit(this); ValueBinaryDataSet(this, &bs[0], UINT(bs.size()), T_BYTES, 0); }
 
       value( const value* arr, unsigned n )  { ValueInit(this); for( unsigned i = 0; i < n; ++i ) set_item(int(i),arr[i]); }
+   template<typename T>
+      value(const std::vector<T>& vec) { ValueInit(this); for (unsigned i = 0; i < vec.size(); ++i) set_item(int(i), value(vec[i])); }
+   template<typename T, size_t N>
+      value(const std::array<T,N>& arr) { ValueInit(this); for (unsigned i = 0; i < N; ++i) set_item(int(i), value(arr[i])); }
+
 #ifdef CPP11
       value( const native_function_t& nfr );
 #endif
@@ -105,7 +115,7 @@
 #ifdef WIN32
       static value date( FILETIME ft, bool is_utc = true /* true if ft is UTC*/ )  { value t; ValueInt64DataSet(&t, *((INT64*)&ft), T_DATE, is_utc); return t;} 
 #endif
-      static value symbol( aux::wchars wc ) { value t; ValueInit(&t); ValueStringDataSet(&t, LPCWSTR(wc.start), wc.length , 0xFFFF); return t; }
+      static value symbol( aux::wchars wc ) { value t; ValueInit(&t); ValueStringDataSet(&t, LPCWSTR(wc.start), UINT(wc.length) , 0xFFFF); return t; }
 
       /** set color value, abgr - a << 24 | b << 16 | g << 8 | r, where a,b,g,r are bytes */
       static value color(UINT abgr) { value t; ValueInit(&t); ValueIntDataSet(&t, abgr, T_COLOR, 0); return t; }
@@ -132,6 +142,16 @@
       { 
         return value( aux::chars_of(s) );
       }
+      static value make_string(const WCHAR* s, size_t len)
+      {
+        return value(aux::wchars(s,len));
+      }
+
+      static value make_bytes(const byte* s, size_t len)
+      {
+        return value(aux::bytes(s, len));
+      }
+
 
       /** Creates an array of values packaged into the value 
           Creates an empty array if called with length == 0 */
@@ -192,6 +212,17 @@
         return v;
       }
 
+      static value make_error(const char* s) // returns string representing error. 
+                                              // if such value is used as a return value from native function
+                                              // the script runtime will throw an error in script rather than returning that value.
+      {
+        value v;
+        if (!s) return v;
+        aux::a2w ws(s);
+        ValueStringDataSet(&v, ws.c_str(), UINT(ws.length()), UT_STRING_ERROR);
+        return v;
+      }
+
       bool is_undefined() const { return t == T_UNDEFINED; }
       bool is_bool() const { return t == T_BOOL; }
       bool is_int() const { return t == T_INT; }
@@ -203,6 +234,7 @@
       bool is_currency() const { return t == T_CURRENCY; }
       bool is_map() const { return t == T_MAP; }
       bool is_array() const { return t == T_ARRAY; }
+      bool is_array_like() const { return t == T_ARRAY || (t == T_OBJECT && u == UT_OBJECT_ARRAY); }
       bool is_function() const { return t == T_FUNCTION; }
       bool is_bytes() const { return t == T_BYTES; }
       bool is_object() const { return t == T_OBJECT; }
@@ -210,13 +242,17 @@
       // if it is a native functor reference
       bool is_native_function() const { return !!ValueIsNativeFunctor(this); }
 
+      bool is_asset() const { return t == T_ASSET; }
+
       bool is_color() const { return t == T_COLOR; }
       bool is_duration() const { return t == T_DURATION; }
       bool is_angle() const { return t == T_ANGLE; }
       
-      bool is_null() const { return t == T_NULL; }
+      bool is_null() const { return t == T_NULL && u == 0; }
+      bool is_nothing() const { return t == T_NULL && u == UT_NULL_NOTHING; }
 
       static value null() { value n; n.t = T_NULL; return n; }
+      static value nothing() { value n; n.t = T_UNDEFINED; n.u = UT_NULL_NOTHING; return n; }
 
       bool operator == (const value& rs) const 
       {
@@ -250,22 +286,23 @@
       }
       string get(const WCHAR* defv) const
       {
-        aux::wchars wc;
-        if(ValueStringData(this, (LPCWSTR*) &wc.start,&wc.length) == HV_OK)
-          return aux::make_string(wc); 
+        LPCWSTR c; UINT l;
+        if(ValueStringData(this, &c,&l) == HV_OK)
+          return aux::make_string(aux::wchars(c,l));
         return string(defv);
       }
       aux::wchars get_chars() const
       {
-        aux::wchars s;
-        ValueStringData(this,(LPCWSTR*)&s.start,&s.length);
-        return s;
+        LPCWSTR c; UINT l;
+        if (ValueStringData(this, &c, &l) == HV_OK)
+          return aux::wchars(c, l);
+        return aux::wchars();
       }
       aux::bytes get_bytes() const 
       {
-        aux::bytes bs;
-        ValueBinaryData(this,&bs.start,&bs.length);
-        return bs;
+        LPCBYTE b; UINT l;
+        ValueBinaryData(this,&b,&l);
+        return aux::bytes(b,l);
       }
 
       UINT get_color(UINT defv = 0) const 
@@ -303,6 +340,19 @@
       }
 #endif
 
+      som_asset_t* get_asset() {
+        if (!is_asset()) return nullptr;
+        INT64 v;
+        if (ValueInt64Data(this, &v) != HV_OK) return nullptr;
+        return reinterpret_cast<som_asset_t*>(v);
+      }
+
+      static value wrap_asset(som_asset_t* pass) {
+        value r;
+        ValueInt64DataSet(&r, (UINT64)pass, T_ASSET, 0);
+        return r;
+      }
+
       bool get(bool defv) const 
       {
         int v;
@@ -310,15 +360,15 @@
         return defv;
       }
 
-      template<typename T> T get() const;
+      template<typename T> T get() const { return getter(static_cast<T*>(0)); }
 
-      static value from_string(const WCHAR* s, unsigned int len = 0, VALUE_STRING_CVT_TYPE ct = CVT_SIMPLE)
+      static value from_string(const WCHAR* s, size_t len = 0, VALUE_STRING_CVT_TYPE ct = CVT_SIMPLE)
       {
         value t;
         if( s ) 
         {
-          if(len == 0) len = (unsigned int)str_length(s);
-          ValueFromString( &t, LPCWSTR(s), len, ct );
+          if(len == 0) len = str_length(s);
+          ValueFromString( &t, s, UINT(len), ct );
         }
         return t;
       }
@@ -477,8 +527,6 @@
       // Below this point are TISCRIPT/SCITER related methods
       //
 
-//#if defined(HAS_TISCRIPT)
-
       bool is_object_native() const   {  return t == T_OBJECT && u == UT_OBJECT_NATIVE; }
       bool is_object_array() const    {  return t == T_OBJECT && u == UT_OBJECT_ARRAY; }
       bool is_object_function() const {  return t == T_OBJECT && u == UT_OBJECT_FUNCTION; }
@@ -494,12 +542,6 @@
         ValueBinaryDataSet(this,(LPCBYTE)pv,1,T_OBJECT,0);
       }
       
-      // T_OBJECT only, class name of the object: e.g. Array, Function, etc. or custom class name.
-      //std_wstring get_object_class_name() const
-      //{
-      //  assert(is_object());
-      //  return get(L"");
-      //}
       // T_OBJECT/UT_OBJECT_FUNCTION only, call TS function
       // 'self' here is what will be known as 'this' inside the function, can be undefined for invocations of global functions 
       value call( int argc, const value* argv, value self = value(), const WCHAR* url_or_script_name = 0) const
@@ -521,8 +563,6 @@
         ValueIsolate(this);
       }
 
-//#endif //defined(HAS_TISCRIPT)
-          
       // "smart" or "soft" equality test
       static bool equal(const value& v1, const value& v2)
       {
@@ -550,16 +590,31 @@
         }
         return false;
       }
-    };
 
-    template<> inline int value::get<int>() const           { return get(0); }
-    template<> inline unsigned value::get<unsigned>() const { return (unsigned)get(0); }
-    template<> inline bool value::get<bool>() const         { return get(false); }
-    template<> inline double value::get<double>() const     { return get(0.0); }
-    template<> inline float value::get<float>() const       { return (float)get(0.0); }
-    template<> inline string value::get<string>() const     { return to_string(); }
-    //template<> inline const value& value::get<const value&>() const  { return *this; }
-    template<> inline value value::get<value>() const       { return *this; }
+      // C++ is so ... C++, sigh. Welcome to ugly thunks, gentlemen: 
+      int      getter(int*) const { return get(0); }
+      unsigned getter(unsigned*) const { return (unsigned)get(0); }
+      bool     getter(bool*) const { return get(false); }
+      double   getter(double*) const { return get(0.0); }
+      float    getter(float*) const { return (float)get(0.0); }
+      string   getter(string*) const { return to_string(); }
+      astring  getter(astring*) const { auto chars = aux::w2utf(to_string())(); return astring(chars.start, chars.end()); }
+      value    getter(value*) const { return *this; }
+
+      std::vector<byte> 
+               getter(std::vector<byte>*) const { aux::bytes bs = get_bytes(); return std::vector<byte>(bs.start, bs.end()); }
+
+      template<typename T> std::vector<T> 
+               getter(std::vector<T>*) const {
+                 std::vector<T> out;
+                 if (this->is_array_like()) { 
+                   int n = this->length();
+                   for (int i = 0; i < n; ++i) out.push_back(this->get_item(i).get<T>());
+                 }
+                 return out;
+               }
+
+    };
       
     // value by key bidirectional proxy/accessor 
     class value_key_a
@@ -606,7 +661,6 @@
     }
 
   }
-
 
 
 #ifdef CPP11

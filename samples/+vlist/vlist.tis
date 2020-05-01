@@ -423,6 +423,7 @@ function VirtualList(params) {
       list.clear(); 
       if( records )
          pumpAfter.call(list,0); 
+      list.onSize();
       list.scrollTo(0,0);      
       if(typeof idxToGo == #integer) {
         list.post(function() {

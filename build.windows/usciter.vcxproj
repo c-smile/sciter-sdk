@@ -126,6 +126,7 @@
     <ClInclude Include="..\include\aux-cvt.h" />
     <ClInclude Include="..\include\aux-platform.h" />
     <ClInclude Include="..\include\aux-slice.h" />
+    <ClInclude Include="..\include\sciter-om-def.h" />
     <ClInclude Include="..\include\sciter-om.h" />
     <ClInclude Include="..\include\sciter-x-api.h" />
     <ClInclude Include="..\include\sciter-x-behavior.h" />
@@ -147,10 +148,17 @@
     <ClInclude Include="..\include\sciter-x-video-api.h" />
     <ClInclude Include="..\include\sciter-x-window.hpp" />
     <ClInclude Include="..\include\sciter-x.h" />
+    <ClInclude Include="..\sqlite\sciter-sqlite.h" />
+    <ClInclude Include="..\sqlite\sqlite-wrap.h" />
+    <ClInclude Include="..\sqlite\sqlite3.h" />
+    <ClInclude Include="..\sqlite\sqlite3ext.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\demos\usciter\usciter.cpp" />
     <ClCompile Include="..\include\sciter-win-main.cpp" />
+    <ClCompile Include="..\sqlite\sciter-sqlite-db.cpp" />
+    <ClCompile Include="..\sqlite\sciter-sqlite-rs.cpp" />
+    <ClCompile Include="..\sqlite\sqlite-wrap.c" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\demos\usciter\win-res\dpi-aware.manifest" />

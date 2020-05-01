@@ -57,11 +57,20 @@
 	
 	
 	<pre>const editor = $(plaintext#editor);
-editor.<u>plaintext</u>.load(&quot;file://users/documents/readme.txt&quot;);</pre><h3>Properties</h3>
+editor.<u>plaintext</u>.load(&quot;file://users/documents/readme.txt&quot;);</pre>
+	<h3>Index accessor and enumeration</h3>
+	<dl><dt><code>plaintext[index:integer]</code></dt><dd>string, get/set text line at given position.</dd>
+		<dt><code>for(var line in el.plaintext)</code>&nbsp;</dt>
+		<dd>string, allows to enumerate text lines one by one.&nbsp;</dd></dl>
+	<h3>Properties</h3>
 	<dl><dt><code>plaintext.content</code></dt><dd> <ul><li>read, returns <b>string</b> - text with \r\n line separators; &nbsp;</li><li>write, accepts either <b>string</b> with \r\n line separators or <b>array of strings</b>.</li></ul>
 			</dd>
 		<dt><code>plaintext.lines</code></dt>
-		<dd>read-only, <b>integer</b>, reports number of lines&nbsp;</dd></dl>
+		<dd>read-only, <b>integer</b>, reports number of lines;</dd>
+		<dt><code>plaintext.selectionStart<br/>plaintext.selectionEnd</code></dt>
+		<dd>read-only, [lineNumber, linePosition], returns array that contains two elements: line number and position inside the line;</dd>
+		<dt><code>plaintext.selectionText</code></dt>
+		<dd>read-only, selected text or empty sting if there is no selection or selection is collapsed.</dd></dl>
 	<h3>Methods</h3>
   <dl>
     <dt><code>plaintext.load</code></dt>
@@ -70,12 +79,14 @@ editor.<u>plaintext</u>.load(&quot;file://users/documents/readme.txt&quot;);</pr
     <dt><code>plaintext.save</code></dt>
     <dd><code>(url:string): true|false</code> 
         <p>saves content to file defined by the file url;</p></dd>
-    <dt><code>plaintext.appendLine</code></dt>
-    <dd><code>(text:string):&nbsp;true|false</code>
-        <p>sets content from the string;</p></dd>
-    <dt><code>setContent</code></dt>
-    <dd><code>(text:string, selStart:integer, selEnd:integer):&nbsp;true|false</code>
-        <p>sets content from the <i>text</i> and selection from&nbsp;given <i>selStart</i> and <i>selEnd</i>;</p></dd><dt><code>getContent</code></dt><dd><code>() : [string, integer, integer] </code><p>returns content and selection as an array of three elements;</p>
+    
+		
+		<dt><code>plaintext.selectRange</code></dt><dd><code>(startLine:integer, startPosition:integer, endLine:integer, endPosition:integer)</code> <p>selects text range;</p></dd><dt><code>plaintext.appendLine</code></dt>
+    <dd><code>(text:string | lines: array): true|false</code>
+        <p>appends line at the end of the text;</p></dd>
+    <dt><code>plaintext.insertLine</code></dt>
+    <dd><code>(at: integer, text:string | lines: array): true|false</code>
+        <p>inserts line at position <i>n</i>;</p></dd><dt><code>plaintext.removeLine</code></dt><dd><code>(at : integer [, count: integer) : true|false </code><p>removes line[s] at position;</p>
         </dd>
     </dl>
 </body>

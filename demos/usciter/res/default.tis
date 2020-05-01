@@ -4,8 +4,6 @@ include "settings.tis";
 include "drop-zone.tis";
 include "live-reload.tis";
 
-const native = view.nativeApi();
-
 const content = $(frame#content);
 const inspectorButton = $(button#inspector);
 

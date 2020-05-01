@@ -15,7 +15,7 @@
     
       function gotfocus(evt) {
         if(evt.reason == BY_TAB_NEXT || evt.reason == BY_TAB_PREV)
-          this.doSelectAll();
+          this.edit.selectAll();
       }
       this.on("focusin", gotfocus );
     }

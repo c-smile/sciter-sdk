@@ -84,19 +84,6 @@ namespace sciter {
       return true;
     }
   }
-
-  bool window::load( aux::bytes utf8_html, const WCHAR* base_url)
-  {
-     return FALSE != ::SciterLoadHtml(_hwnd,utf8_html.start,utf8_html.length, base_url);
-  }
-  bool window::load( aux::chars utf8_html, const WCHAR* base_url)
-  {
-     return FALSE != ::SciterLoadHtml(_hwnd,(LPCBYTE)utf8_html.start,utf8_html.length, base_url);
-  }
-  bool window::load( const WCHAR* url)
-  {
-     return FALSE != ::SciterLoadFile(_hwnd,url);
-  }
   
   LRESULT window::on_message( HWINDOW hwnd, UINT msg, WPARAM wParam, LPARAM lParam, BOOL& pHandled )
   {
@@ -125,12 +112,8 @@ namespace sciter {
 
   window::window( UINT creationFlags, RECT frame): _hwnd(NULL)
   {
-    add_ref();
+    asset_add_ref();
     _hwnd = ::SciterCreateWindow(creationFlags,&frame,&msg_delegate,this,NULL);
-    if( _hwnd ) {
-      setup_callback();
-      sciter::attach_dom_event_handler(get_hwnd(),this);
-    }
   }
 
 }

@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
 		<Option title="usciter" />
 		<Option pch_mode="2" />
-		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug|x32">
 				<Option output="../bin.lnx/x32/usciter" prefix_auto="0" extension_auto="0" />
@@ -12,6 +11,8 @@
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-m32" />
+					<Add option="-g" />
 					<Add option="-m32" />
 					<Add option="-g" />
 					<Add option="-std=c++14" />
@@ -45,6 +46,9 @@
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-m32" />
+					<Add option="-flto" />
+					<Add option="-Os" />
 					<Add option="-m32" />
 					<Add option="-flto" />
 					<Add option="-Os" />
@@ -82,6 +86,8 @@
 				<Compiler>
 					<Add option="-m64" />
 					<Add option="-g" />
+					<Add option="-m64" />
+					<Add option="-g" />
 					<Add option="-std=c++14" />
 					<Add option="-DSCITER" />
 					<Add option="-DMONOLITHIC" />
@@ -116,6 +122,9 @@
 					<Add option="-m64" />
 					<Add option="-flto" />
 					<Add option="-Os" />
+					<Add option="-m64" />
+					<Add option="-flto" />
+					<Add option="-Os" />
 					<Add option="-std=c++14" />
 					<Add option="-DSCITER" />
 					<Add option="-DMONOLITHIC" />
@@ -143,11 +152,24 @@
 				</Linker>
 			</Target>
 		</Build>
-		<Unit filename="../demos/usciter/usciter.cpp" />
-		<Unit filename="../include/sciter-gtk-main.cpp" />
-		<Extensions>
-			<code_completion />
-			<debugger />
-		</Extensions>
+		<Unit filename="../demos/usciter/usciter.cpp">
+		</Unit>
+		<Unit filename="../include/sciter-gtk-main.cpp">
+		</Unit>
+		<Unit filename="../sqlite/sciter-sqlite-db.cpp">
+		</Unit>
+		<Unit filename="../sqlite/sciter-sqlite-rs.cpp">
+		</Unit>
+		<Unit filename="../sqlite/sciter-sqlite.h">
+		</Unit>
+		<Unit filename="../sqlite/sqlite-wrap.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../sqlite/sqlite-wrap.h">
+		</Unit>
+		<Unit filename="../sqlite/sqlite3.h">
+		</Unit>
+		<Unit filename="../sqlite/sqlite3ext.h">
+		</Unit>
 	</Project>
 </CodeBlocks_project_file>
