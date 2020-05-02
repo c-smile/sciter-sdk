@@ -3,32 +3,20 @@
 <style>
 </style>
 <script type="text/tiscript">
-  include library "tiscript-sqlite";
 
-  // returns current record as an object: 
-  property Recordset.record(v)
-  {
-    get
-    {
-      var obj = {};
-      for( var n in this.length ) 
-        obj[this.name(n)] = this[n];
-      return obj;
-    }
-  }
+  include "sqlite.tis";
 
   event click $(#test) ()
   {
-    var db = DB.open(":memory:");
+    var db = SQLite.open(":memory:");
     db.exec("create table employee (firstName text, secondName text)" );
     db.exec("insert into employee values ('abcd','efgh')" );
     var rs = db.exec("SELECT firstName, secondName FROM employee");
     
-    // Three ways of gettting the same field's value 
-    view.msgbox(rs["firstName"]);
-    view.msgbox(rs#firstName);
-    var rec = rs.record;
-    view.msgbox(rec.firstName);
+    var obj = SQLite.rowAsObject(rs);
+
+    view.msgbox(#information, String.printf("%V",obj));
+    rs.close();
     db.close();
   }
 </script>

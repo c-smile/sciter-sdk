@@ -75,7 +75,7 @@ namespace SQLite
       names.push(rs.name(n));
     var obj = {};
     var n = 0;
-    for (var v in this)
+    for (var v in rs)
       obj[names[n++]] = v;
     return obj;
   }
