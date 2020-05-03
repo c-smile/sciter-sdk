@@ -23,7 +23,8 @@ class Tape : Reactor.Component
 
   function render() {
     var content = this.renderContent();
-    return <tape><items @{this.arena}>{content}</items><scrollbar @{this.scrollbar}/></tape>;
+    var atts = this.atEnd ? {atend:true} : {};
+    return <tape><items @{this.arena} {atts} >{content}</items><scrollbar @{this.scrollbar}/></tape>;
   }
 
   function update(props = null) {
@@ -96,6 +97,12 @@ class Tape : Reactor.Component
     }
 
     function scrollTo(x,y,animate) {
+
+      var (scroll_left,scroll_top, scroll_right, scroll_bottom) = arena.scroll(#rect);
+      if( scroll_top <= 0 && scroll_bottom <= 0) {
+        arena.scrollTo(0,0,false,false);
+        return;
+      }
       arena.scrollTo(x,y,false,animate);
       if(!scrollbar) return;
       var height = arena.box(#height);
@@ -335,9 +342,7 @@ class Tape : Reactor.Component
       }
     }
 
-    scrollbar << event mouseenter(evt) {
-      debug aa: this;
-    }
+    //scrollbar << event mouseenter(evt) { }
 
     scrollbar << event mousedown(evt) { 
       var (x1,y1,x2,y2) = scrollbar.box(#rect);

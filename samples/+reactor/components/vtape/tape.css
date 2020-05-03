@@ -15,6 +15,11 @@
     size:*;
   }
 
+  :root > items[atend]
+  {
+    vertical-align:bottom;
+  }
+
   :root > scrollbar { 
     display:block;
     width:6dip;
