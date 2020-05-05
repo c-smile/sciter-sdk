@@ -86,8 +86,8 @@ enum VALUE_UNIT_TYPE_OBJECT
     UT_OBJECT_ERROR = 5,    // type T_OBJECT of type Error
 };
 
-enum VALUE_UNIT_NULL {
-  UT_NULL_NOTHING = 1
+enum VALUE_UNIT_UNDEFINED {
+  UT_NOTHING = 1 // T_UNDEFINED && UT_NOTHING -  'nothing' a.k.a. 'void' value in script 
 };
 
 // Sciter or TIScript specific

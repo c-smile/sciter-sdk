@@ -51,6 +51,7 @@ namespace sqlite {
         return sciter::value();
     }
     SOM_PASSPORT_BEGIN(SQLite)
+      SOM_PASSPORT_FLAGS(SOM_EXTENDABLE_OBJECT) // allow SQLite to be extended as a namespace
       SOM_FUNCS(SOM_FUNC(open))
       SOM_PROPS(SOM_RO_PROP(version))
     SOM_PASSPORT_END

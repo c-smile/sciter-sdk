@@ -13,22 +13,18 @@ public:
   //int foo(int p) { return p + 42; }
   //int bar(int p1, int p2) { return p1 + p2; }
   //std::vector<int> vector() { return {1,2,3}; }
-  
-  sciter::value get_SQLite() {
-    sqlite::SQLite* pe = new sqlite::SQLite();
-    if (pe)
-      return sciter::value::wrap_asset(pe);
-    else
-      return sciter::value();
+
+  int get_windowHandle() {
+    return (int)(intptr_t)get_hwnd();
   }
 
   SOM_PASSPORT_BEGIN(uSciter)
     //SOM_FUNCS(
-      //SOM_FUNC(foo), 
-      //SOM_FUNC(bar), 
+      //SOM_FUNC(foo),
+      //SOM_FUNC(bar),
       //SOM_FUNC(vector),
     //)
-    SOM_PROPS(SOM_RO_VIRTUAL_PROP(SQLite,get_SQLite))
+    SOM_PROPS(SOM_RO_VIRTUAL_PROP(windowHandle,get_windowHandle))
   SOM_PASSPORT_END
 
 
@@ -36,7 +32,7 @@ public:
   virtual bool handle_event(HELEMENT, BEHAVIOR_EVENT_PARAMS& params) {
     sciter::dom::element target = params.heTarget;
     switch (params.cmd) {
-      case BUTTON_CLICK: 
+      case BUTTON_CLICK:
         if (target.test("button#foo")) {
           target.set_html((const unsigned char*)"foo", 3);
           return true;
@@ -52,11 +48,13 @@ public:
 int uimain(std::function<int()> run ) {
 
   // enable features to be used from script
-  SciterSetOption(NULL, SCITER_SET_SCRIPT_RUNTIME_FEATURES, 
-                          ALLOW_FILE_IO | 
-                          ALLOW_SOCKET_IO | 
+  SciterSetOption(NULL, SCITER_SET_SCRIPT_RUNTIME_FEATURES,
+                          ALLOW_FILE_IO |
+                          ALLOW_SOCKET_IO |
                           ALLOW_EVAL |
                           ALLOW_SYSINFO );
+
+  SciterSetGlobalAsset(new sqlite::SQLite()); // adding SQLite as a global namespace object
 
 #ifdef _DEBUG
 //  sciter::debug_output_console console; //- uncomment it if you will need console window
@@ -66,11 +64,11 @@ int uimain(std::function<int()> run ) {
 
   uSciter *pwin = new uSciter();
 
-  // example, setting "usciter" media variable, check https://sciter.com/forums/topic/debugging-issues/  
+  // example, setting "usciter" media variable, check https://sciter.com/forums/topic/debugging-issues/
   SciterSetMediaType(pwin->get_hwnd(), WSTR("desktop,usciter"));
 
   bool loaded = false;
-  
+
   const std::vector<sciter::string>& argv = sciter::application::argv();
 
   // usciter.exe -o file-to-open.htm

@@ -138,13 +138,17 @@ class ValueView : Element
             case #NativeFunction:
               return ("native-function()", #function);
             default:
-              //if( cls )
-              //  return (String.printf("%s %s{%s}", typ, cls, formatMap(props,exp)), #object-like);
-              //else if( varval.tag == #proxy )
-              if( props && props.length)
-                return (String.printf("%s{%s}", typ, formatMap(props,false)), #object-like);
-              else
-                return (String.printf("%s", typ), false);
+              if( cls ) {
+                if( props && props.length)
+                  return (String.printf("%s(%s){%s}", typ, cls, formatMap(props,exp)), #object-like);
+                else
+                  return (String.printf("%s(%s){}", typ, cls), #object-like);
+              } else {
+                if( props && props.length)
+                  return (String.printf("%s{%s}", typ, formatMap(props,false)), #object-like);
+                else
+                  return (String.printf("%s", typ), false);
+              }
           }
         }
         return (String.printf("[%s:%s]", varval.tag, formatArray(varval,exp)), #tuple);

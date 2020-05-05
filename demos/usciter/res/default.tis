@@ -32,7 +32,8 @@ function loadFile(fn)
   if(title) {
     title = String.printf("uSciter: %s", title.text || "");
     view.windowCaption = title;
-    $(window-caption).text = title;
+    if(var capEl = $(window-caption))
+      capEl.text = title;
   }
 }
 

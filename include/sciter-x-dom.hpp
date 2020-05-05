@@ -39,22 +39,6 @@ namespace dom
     virtual bool on_element(HELEMENT he) = 0;
   };
 
-  inline VOID SC_CALLBACK _LPCBYTE2ASTRING( LPCBYTE bytes, UINT num_bytes, LPVOID param )
-  {
-      sciter::astring* s = (sciter::astring*)param;
-      *s = sciter::astring((const char*)bytes,num_bytes);
-  }
-  inline VOID SC_CALLBACK _LPCWSTR2STRING( LPCWSTR str, UINT str_length, LPVOID param )
-  {
-      sciter::string* s = (sciter::string*)param;
-      *s = sciter::string(str,str_length);
-  }
-  inline VOID SC_CALLBACK _LPCSTR2ASTRING( LPCSTR str, UINT str_length, LPVOID param )
-  {
-      sciter::astring* s = (sciter::astring*)param;
-      *s = sciter::astring(str,str_length);
-  }
-
   class element;
 
 /**DOM node - element, comment, text */

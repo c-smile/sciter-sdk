@@ -389,6 +389,22 @@ typedef VOID SC_CALLBACK LPCBYTE_RECEIVER( LPCBYTE str, UINT num_bytes, LPVOID p
   #endif
 
   #define WSTR(quote) ((const WCHAR*)_WSTR(quote))
+
+  inline VOID SC_CALLBACK _LPCBYTE2ASTRING(LPCBYTE bytes, UINT num_bytes, LPVOID param)
+  {
+    std::string* s = (std::string*)param;
+    *s = std::string((const char*)bytes, num_bytes);
+  }
+  inline VOID SC_CALLBACK _LPCWSTR2STRING(LPCWSTR str, UINT str_length, LPVOID param)
+  {
+    std::ustring* s = (std::ustring*)param;
+    *s = std::ustring(str, str_length);
+  }
+  inline VOID SC_CALLBACK _LPCSTR2ASTRING(LPCSTR str, UINT str_length, LPVOID param)
+  {
+    std::string* s = (std::string*)param;
+    *s = std::string(str, str_length);
+  }
   
 #else
   #define EXTERN_C extern

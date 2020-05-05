@@ -249,10 +249,10 @@
       bool is_angle() const { return t == T_ANGLE; }
       
       bool is_null() const { return t == T_NULL && u == 0; }
-      bool is_nothing() const { return t == T_NULL && u == UT_NULL_NOTHING; }
-
       static value null() { value n; n.t = T_NULL; return n; }
-      static value nothing() { value n; n.t = T_UNDEFINED; n.u = UT_NULL_NOTHING; return n; }
+
+      bool is_nothing() const { return t == T_UNDEFINED && u == UT_NOTHING; }
+      static value nothing() { value n; n.t = T_UNDEFINED; n.u = UT_NOTHING; return n; }
 
       bool operator == (const value& rs) const 
       {

@@ -14,6 +14,7 @@
 #endif
 
 UINT64 SCAPI SciterAtomValue(const char* name);
+UINT64 SCAPI SciterAtomNameCB(UINT64 atomv, LPCSTR_RECEIVER* rcv, LPVOID rcv_param);
 
 typedef BOOL(*som_prop_getter_t)(som_asset_t* thing, SOM_VALUE* p_value);
 typedef BOOL(*som_prop_setter_t)(som_asset_t* thing, const SOM_VALUE* p_value);
@@ -43,10 +44,15 @@ struct som_method_def_t {
 #endif
 };
 
+enum som_passport_flags {
+  SOM_SEALED_OBJECT = 0x00,    // not extendable
+  SOM_EXTENDABLE_OBJECT = 0x01 // extendable, asset may have new properties added 
+};
+
 // definiton of object (the thing) access interface 
 // this structure should be statically allocated - at least survive last instance of the engine 
 struct som_passport_t {
-  void*              reserved;
+  UINT64             flags;
   som_atom_t         name;         // class name 
   som_item_getter_t  item_getter;  // var item_val = thing[k];
   som_item_setter_t  item_setter;  // thing[k] = item_val;
@@ -106,6 +112,7 @@ struct som_passport_t {
      return &st; \
    }
 
+#define SOM_PASSPORT_FLAGS(fs) st.flags = fs;
 
 #define SOM_FUNCS(...) \
      static som_method_def_t methods[] = { __VA_ARGS__ }; \
@@ -331,9 +338,30 @@ namespace sciter {
         }
       };
 
+      inline std::string atom_name(UINT64 atomv) {
+        std::string s;
+        SciterAtomNameCB(atomv, &_LPCSTR2ASTRING, &s);
+        return s;
+      }
+
+
+      // returns pack of asset's properties as a map
+      inline SOM_VALUE asset_to_map(som_asset_t *ptr) {
+        if (auto psp = asset_get_passport(ptr)) {
+          SOM_VALUE map;
+          for (size_t n = 0; n < psp->n_properties; ++n) {
+            SOM_VALUE val;
+            if (psp->properties[n].getter(ptr, &val))
+              map.set_item(atom_name(psp->properties[n].name).c_str(), val);
+          }
+          return map;
+        }
+        return SOM_VALUE();
+      }
 
 
   }
 }
+
 
 #endif // __cplusplus

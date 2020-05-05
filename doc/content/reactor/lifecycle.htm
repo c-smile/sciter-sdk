@@ -18,17 +18,17 @@
 	<pre>class Clock: Element 
 {
   // declaring local data storage with initial value 
-  <u>this var data</u> = { time: new Date() }; 
+  <u>this var time</u> = new Date(); 
 
   function render() {
     return
       &lt;div&gt;
         &lt;h1&gt;Hello, world!&lt;/h1&gt;
-        &lt;h2&gt;It is {<u>this.data</u>.time.toLocaleString(#time)} now.&lt;/h2&gt;
+        &lt;h2&gt;It is {<u>this.</u>time.toLocaleString(#time)} now.&lt;/h2&gt;
       &lt;/div&gt;;
   } 
 } </pre>
-	<p>and our <code>render()</code> method renders now content of <code>this.data</code> fields.</p>
+	<p>and our <code>render()</code> method renders now content of <code>this</code> properties.</p>
 	<p>Class Clock, in its current version, just renders static time determined at the time of its creation. Let's transform it to a running clock.</p>
 	<h2>Adding Lifecycle Methods to a Class</h2>
 	<p>We want to set up a timer whenever the <code>Clock</code> is rendered to the DOM for the first time - when real DOM element is created. In ReactJS this is called “mounting”. Sciter uses &quot;attached&quot; term for that - function attached() is called when instance of a class is attached to the DOM element:</p>
@@ -37,7 +37,7 @@
 
 class Clock: Reactor.Component 
 {
-  this var data = { time: new Date() }; // setting initial state 
+  this var time = new Date(); // setting initial state 
 
   function attached() { // a.k.a. React::componentDidMount
     this.timer(1s, function() {
@@ -50,7 +50,7 @@ class Clock: Reactor.Component
     return
      &lt;div&gt;
       &lt;h1&gt;Hello, world!&lt;/h1&gt;
-      &lt;h2&gt;It is {this.data.time.toLocaleString(#time)} now.&lt;/h2&gt;
+      &lt;h2&gt;It is {this.time.toLocaleString(#time)} now.&lt;/h2&gt;
      &lt;/div&gt;;
   } 
 } </pre><p>You see here two new entities:</p>
@@ -73,30 +73,29 @@ class Clock: Reactor.Component
 {
   class Component : Element
   {
-    function update(newdata) {
-      assert this.data !== newdata; 
-      if(this.data) this.data.extend(newdata); else this.data = newdata;
-      function updater() { this.merge(this.render()); }
-      this.post(updater, true);
+    function update(newdata = null) {
+      assert !newdata || typeof newdata == #object; 
+      if(newdata) this.extend(newdata);
+      this.post(() =&gt; this.merge(this.render()),true);
     }
   }
 }</pre>
 	<p>As you see the <code>update(newdata)</code> does the following:</p>
-	<ol><li><code>this.data.extend(newdata)</code> - this merges newdata into existing this.data object;</li>
+	<ol><li><code>this.extend(newdata)</code> - this merges newdata with properties of this object;</li>
 		<li><code>function updater() { this.merge(this.render()); }</code> - defines local update method that <ol></ol><ul><li>calls <code>this.render()</code> method that produces virtual element;</li>
 				<li> calls native <code>Element.merge(velement)</code> method that patches this existing DOM element using velement definition;</li>
 				</ul></li>
-		<li><code>this.post(updater)</code> - shedules the <code>updater()</code> invocation to the next event processing cycle.</li>
+		<li><code>this.post(updater)</code> - schedules the <code>updater()</code> invocation to the next event processing cycle.</li>
 		
 		</ol>
-	<p>The delayed rendering logic ensures that multiple <code>updater()</code> execution requests are collapsed into single updater() invocation request in the event queue. </p><h2>Using Date Correctly</h2>
-	<p>There are three things you should know about <code>update(newdata)</code>.</p><h3>Do Not Modify the Data Field Directly</h3>
+	<p>The delayed rendering logic ensures that multiple <code>updater()</code> execution requests are collapsed into single <code>updater()</code> invocation request in the event queue. </p><h2>Using Data&nbsp;Correctly</h2>
+	<p>There are three things you should know about <code>update(newdata)</code>.</p><h3>Do Not Modify the Data (state) Fields Directly</h3>
 	<p>For example, this will not re-render a component:</p>
 	<pre>// WRONG!
-this.data.comment = &quot;Hello&quot;;</pre>
+this.comment = &quot;Hello&quot;;</pre>
 	<p>Instead, use update():</p><pre>// Correct
 this.update {comment: &quot;Hello&quot;};</pre>
-	<p>The only place where you can assign <code>this.data</code> is the constructor.</p><h3>Data Updates are Merged</h3>
+	<p>The only place where you can assign properties directly is the constructor.</p><h3>Data Updates are Merged</h3>
 	<p>When you call <code>update(newdata)</code>, <code>Reactor.Component</code> merges the object you provide into the current data set.</p>
 	<p>Therefore your code may issue <code>update()</code> requests for different parts of the data and they will end up in single reconciliation action between real DOM element and result of <code>render()</code> call, so these:</p>
 	

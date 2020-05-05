@@ -365,6 +365,10 @@ class Tape : Reactor.Component
       }
     }
 
+    tape.itemSource.onNewItem = function(index) {
+      navigateTo(index);
+    }
+
     function initList() {
       if(tape.isKinetic) { scrollDown = scrollDownKinetic; scrollUp = scrollUpKinetic; }
       else               { scrollDown = scrollDownNormal;  scrollUp = scrollUpNormal; }
@@ -397,6 +401,11 @@ class Tape : Reactor.Component
 
     initList();
 
+  }
+
+  function detached() {
+    // unsubscribe
+    this.itemSource.onNewItem = null; 
   }
 
 

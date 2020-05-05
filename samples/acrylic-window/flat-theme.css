@@ -67,6 +67,7 @@ html {
     width:max-content;
     height:1.4em;
     padding:0 0 0 42dip;
+    border-radius:0.7em;
     cursor:pointer;
   }
 
@@ -77,7 +78,7 @@ html {
     height:1.05em;
     background:var(back,threedlight);
     border:length(border-width) solid color(border);
-    border-radius:height(50%);
+    border-radius:0.7em;
     margin:* * * 0.21em;
     foreground-image:url(stock:disk);
     foreground-repeat:no-repeat;

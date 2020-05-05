@@ -10,8 +10,11 @@
  
   event click $(#test)
   {  
-    var db = view.uSciter.SQLite.open(":memory:"); // in memory, temporary DB
+    var db = SQLite.open(":memory:"); // in memory, temporary DB
            //view.uSciter.openDb("d:/test.db");
+
+    debug log: db;
+
     var r = db.exec("create table stocks (date text, trans text, symbol text, qty real, price real)" );
         self#result.text = r.toString();
         // as a string   
@@ -22,6 +25,9 @@
         db.exec("insert into stocks values (?,?,?,?,?)", ["2006-04-06", "SELL", "IBM", 500, 53.00] );
 
     var rs = db.exec("select * from stocks order by price");
+
+    debug log: rs;
+
     if ( rs )
       showRecordset(rs);
     else

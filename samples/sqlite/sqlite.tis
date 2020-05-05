@@ -1,38 +1,29 @@
 
-namespace SQLite
-{  
-  const engine = view.uSciter.SQLite;
-
-  function isRecordset(rs) {
+  function SQLite.isRecordset(rs) {
     return rs && (rs instanceof Asset) && (Asset.typeOf(rs) == #Recordset);
   }
 
-  function isDatabase(db) {
+  function SQLite.isDatabase(db) {
     return db && (db instanceof Asset) && (Asset.typeOf(db) == #DB);
   }
 
-  function open(path) {
-    return engine.open(path);
-  }
-
-
   // returns map of table definitions found in the DB
-  function tablesIn(db)
+  function SQLite.tablesIn(db)
   {
-    assert isDatabase(db);
+    assert SQLite.isDatabase(db);
     var rs = db.exec("SELECT name,sql FROM sqlite_master WHERE type='table' ORDER BY name;" );
     var names = {};
-    if ( isRecordset(rs) )
+    if ( SQLite.isRecordset(rs) )
       do names[rs["name"]] = rs["sql"] while( rs.next() );
     return names;
   }
   // returns map of indexes found in the DB
-  function indexesIn(db)
+  function SQLite.indexesIn(db)
   {
-    assert isDatabase(db);
+    assert SQLite.isDatabase(db);
     var rs = db.exec("SELECT name,sql FROM sqlite_master WHERE type='index' ORDER BY name;" );
     var names = {};
-    if ( isRecordset(rs) )
+    if ( SQLite.isRecordset(rs) )
       do names[rs["name"]] = rs["sql"] while( rs.next() );
     return names;
     
@@ -40,7 +31,7 @@ namespace SQLite
   
   // fills the table DOM element by data from the Recordset: 
 
-  function tableFrom(rs) // returns VDOM of table
+  function SQLite.tableFrom(rs) // returns VDOM of table
   {
     var headers = [];
     for (var n in rs.length)
@@ -68,7 +59,7 @@ namespace SQLite
 
   // Returns object constructed from current row as { field1: value1, field2: value2, etc. }
   // Not too much effective but someone may need it
-  function rowAsObject(rs)
+  function SQLite.rowAsObject(rs)
   {
     var names = [];
     for (var n in rs.length)
@@ -80,7 +71,7 @@ namespace SQLite
     return obj;
   }
   
-  function rowsAsArray(rs)
+  function SQLite.rowsAsArray(rs)
   {
     var data = [];
     do {
@@ -166,6 +157,5 @@ namespace SQLite
     return result;
   }
 */  
-  
-}
+ 
 
