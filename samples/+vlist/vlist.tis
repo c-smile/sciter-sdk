@@ -299,7 +299,7 @@ function VirtualList(params) {
     
     list.onScroll = function(evt) 
     {
-      if( evt.type == Event.SCROLL_POS ) {
+      if( evt.type == Event.SCROLL_POS && evt.scrollAxis == #vertical) {
         var sPos = evt.scrollPos / (item_height || 10);
         var mPos = records.length - 1 - visible_items;
         if( sPos > mPos ) sPos = mPos;
