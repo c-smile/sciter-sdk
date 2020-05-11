@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+      div.to-drag {
+        width: max-content;
+        padding:0.25em 0.5em;
+      }
+      div.to-drag:drag-source {
+        background-color:gold;
+      }
+    </style>
+    <script type="text/tiscript">
+    
+      $(div) << event mousedragrequest (evt) {
+        var data = {
+          text: this.text,
+        };
+
+        var r = view.performDrag( this, data, #copy );
+        
+        stdout.println(r);
+        return true;
+      };      
+      
+    </script>
+  </head>
+<body>
+  <div.to-drag>Text to drag</div>
+      
+  
+</body>
+</html>

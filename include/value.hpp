@@ -32,6 +32,10 @@
   #include "aux-cvt.h"
   #include "sciter-x-types.h"
 
+#if _MSC_VER < 1600 // MSVC version < 8
+     #include "nullptr.hpp"
+#endif
+
   #pragma warning( push )
   #pragma warning(disable:4786) //identifier was truncated...
 
@@ -103,10 +107,9 @@
       value( const value* arr, unsigned n )  { ValueInit(this); for( unsigned i = 0; i < n; ++i ) set_item(int(i),arr[i]); }
    template<typename T>
       value(const std::vector<T>& vec) { ValueInit(this); for (unsigned i = 0; i < vec.size(); ++i) set_item(int(i), value(vec[i])); }
+#ifdef CPP11
    template<typename T, size_t N>
       value(const std::array<T,N>& arr) { ValueInit(this); for (unsigned i = 0; i < N; ++i) set_item(int(i), value(arr[i])); }
-
-#ifdef CPP11
       value( const native_function_t& nfr );
 #endif
           
@@ -598,7 +601,9 @@
       double   getter(double*) const { return get(0.0); }
       float    getter(float*) const { return (float)get(0.0); }
       string   getter(string*) const { return to_string(); }
+#ifdef CPP11
       astring  getter(astring*) const { auto chars = aux::w2utf(to_string())(); return astring(chars.start, chars.end()); }
+#endif
       value    getter(value*) const { return *this; }
 
       std::vector<byte> 

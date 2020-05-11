@@ -1,7 +1,6 @@
 #pragma once
 
 #include <cstring>
-#include <atomic>
 #include <cassert>
 
 struct som_passport_t;
@@ -22,7 +21,9 @@ struct som_asset_t {
   som_asset_class_t* isa;
 };
 
-#ifdef __cplusplus
+#ifdef CPP11
+
+#include <atomic>
 
 namespace sciter {
 
@@ -30,25 +31,6 @@ namespace sciter {
 
     template <class R> class hasset;
 
-#if 0
-    struct iasset
-    {
-      // mandatory:
-      virtual long  asset_add_ref() { return 0; };
-      virtual long  asset_release() { return 0; };
-      // can be used to as to get interface as to check if the thing supports the feature
-      virtual bool  get_interface(const char* name, iasset** out = nullptr) {
-        if( 0 != strcmp(name, interface_name())) return false;
-        if(out) { this->asset_add_ref(); *out = this; }
-        return true;
-      } 
-      virtual som_passport_t* get_passport() const { return nullptr; }
-
-      static const char* interface_name() { return "asset.sciter.com"; }
-      template<class C> hasset<C> interface_of() { hasset<C> p; get_interface(C::interface_name(), (iasset**)p.target()); return p; }
-
-    };
-#else
     template <class A>
     class iasset : public som_asset_t
     {
@@ -87,7 +69,6 @@ namespace sciter {
       //template<class C> hasset<C> interface_of() { hasset<C> p; get_interface(C::interface_name(), p.target()); return p; }
     };
 
-#endif
 
     inline long asset_add_ref(som_asset_t *ptr) {
       assert(ptr);

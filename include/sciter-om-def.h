@@ -21,6 +21,8 @@ typedef BOOL(*som_prop_setter_t)(som_asset_t* thing, const SOM_VALUE* p_value);
 typedef BOOL(*som_item_getter_t)(som_asset_t* thing, const SOM_VALUE* p_key, SOM_VALUE* p_value);
 typedef BOOL(*som_item_setter_t)(som_asset_t* thing, const SOM_VALUE* p_key, const SOM_VALUE* p_value);
 typedef BOOL(*som_item_next_t)(som_asset_t* thing, SOM_VALUE* p_idx /*in/out*/, SOM_VALUE* p_value);
+typedef BOOL(*som_any_prop_getter_t)(som_asset_t* thing, UINT64 propSymbol, SOM_VALUE* p_value);
+typedef BOOL(*som_any_prop_setter_t)(som_asset_t* thing, UINT64 propSymbol, const SOM_VALUE* p_value);
 typedef BOOL(*som_method_t)(som_asset_t* thing, UINT argc, const SOM_VALUE* argv, SOM_VALUE* p_result);
 typedef void(*som_dispose_t)(som_asset_t* thing);
 
@@ -54,14 +56,17 @@ enum som_passport_flags {
 struct som_passport_t {
   UINT64             flags;
   som_atom_t         name;         // class name 
+  const som_property_def_t* properties; size_t n_properties; // virtual property thunks
+  const som_method_def_t*   methods; size_t n_methods;       // method thunks
   som_item_getter_t  item_getter;  // var item_val = thing[k];
   som_item_setter_t  item_setter;  // thing[k] = item_val;
   som_item_next_t    item_next;    // for(var item in thisThing)
-  const som_property_def_t* properties; size_t n_properties; // virtual property thunks
-  const som_method_def_t*   methods; size_t n_methods;       // method thunks
+  // any property "inteceptors" 
+  som_any_prop_getter_t  prop_getter;  // var prop_val = thing.k; 
+  som_any_prop_setter_t  prop_setter;  // thing.k = prop_val;
 };
 
-#ifdef __cplusplus
+#ifdef CPP11
 
 #define SOM_FUNC(name) som_method_def_t( #name,\
     sciter::om::member_function<decltype(&TC::name)>::n_params,\
@@ -86,13 +91,20 @@ struct som_passport_t {
     &sciter::om::member_getter_function<decltype(&TC::prop_getter)>::thunk<&TC::prop_getter>)
 
 #define SOM_ITEM_SET(func) \
-    st.item_setter = &sciter::om::member_set_accessor<decltype(&TC::func)>::thunk<&TC::func>;
+    st.item_setter = &sciter::om::item_set_accessor<decltype(&TC::func)>::thunk<&TC::func>;
 
 #define SOM_ITEM_GET(func) \
-    st.item_getter = &sciter::om::member_get_accessor<decltype(&TC::func)>::thunk<&TC::func>;
+    st.item_getter = &sciter::om::item_get_accessor<decltype(&TC::func)>::thunk<&TC::func>;
 
 #define SOM_ITEM_NEXT(func) \
-    st.item_next = &sciter::om::member_next_accessor<decltype(&TC::func)>::thunk<&TC::func>;
+    st.item_next = &sciter::om::item_next_accessor<decltype(&TC::func)>::thunk<&TC::func>;
+
+#define SOM_PROP_SET(func) \
+    st.prop_setter = &sciter::om::prop_set_accessor<decltype(&TC::func)>::thunk<&TC::func>;
+
+#define SOM_PROP_GET(func) \
+    st.prop_getter = &sciter::om::prop_get_accessor<decltype(&TC::func)>::thunk<&TC::func>;
+
 
 #define SOM_PASSPORT_BEGIN(classname) \
    static const char* interface_name() { return #classname; } \
@@ -191,8 +203,7 @@ namespace sciter {
         }
       };
 
-// func() const  variants of the above
-      
+      // func() const  variants of the above
       template <class Type, class Ret>
       struct member_function<Ret(Type::*)() const> {
         enum { n_params = 0 };
@@ -244,18 +255,19 @@ namespace sciter {
       };
 
 
-    template <class Type> struct member_set_accessor;
+    template <class Type> struct item_set_accessor;
 
     template <class Type, class TK, class TV>
-      struct member_set_accessor<bool(Type::*)(TK,TV)> {
+      struct item_set_accessor<bool(Type::*)(TK,TV)> {
         template <bool(Type::*Func)(TK,TV)>
         static BOOL thunk(som_asset_t* thing, const SOM_VALUE* p_key, const SOM_VALUE* p_value)
           { return (static_cast<Type*>(thing)->*Func)(p_key->get<TK>(), p_value->get<TV>()) ? TRUE : FALSE; }};
 
-    template <class Type> struct member_get_accessor;
+    template <class Type> struct item_get_accessor;
 
+    // val operator[key];
     template <class Type, class TK, class TV>
-      struct member_get_accessor<bool(Type::*)(TK, TV)> {
+      struct item_get_accessor<bool(Type::*)(TK, TV)> {
         template <bool(Type::*Func)(TK, TV)>
         static BOOL thunk(som_asset_t* thing, const SOM_VALUE* p_key, SOM_VALUE* p_value)
         {
@@ -268,9 +280,9 @@ namespace sciter {
         }
       };
 
-    // get_prop() const; variant of the above  
+    // val operator[key] const; variant of the above  
     template <class Type, class TK, class TV>
-      struct member_get_accessor<bool(Type::*)(TK, TV) const> {
+      struct item_get_accessor<bool(Type::*)(TK, TV) const> {
         template <bool(Type::*Func)(TK, TV) const>
         static BOOL thunk(som_asset_t* thing, const SOM_VALUE* p_key, SOM_VALUE* p_value)
         {
@@ -283,10 +295,10 @@ namespace sciter {
         }
       };
 
-    template <class Type> struct member_next_accessor;
+    template <class Type> struct item_next_accessor;
 
     template <class Type, class TValRef, class TIndexRef>
-      struct member_next_accessor<bool(Type::*)(TIndexRef,TValRef)>
+      struct item_next_accessor<bool(Type::*)(TIndexRef,TValRef)>
       {
         template <bool(Type::*Func)(TIndexRef, TValRef)>
         static BOOL thunk(som_asset_t* thing, SOM_VALUE* p_index, SOM_VALUE* p_value)
@@ -344,6 +356,59 @@ namespace sciter {
         return s;
       }
 
+      template <class Type> struct prop_set_accessor;
+
+      // bool set_any_prop(som_atom_t name, TV val);
+      template <class Type, class TV>
+      struct prop_set_accessor<bool(Type::*)(som_atom_t, TV)> {
+        template <bool(Type::*Func)(som_atom_t, TV)>
+        static BOOL thunk(som_asset_t* thing, som_atom_t name, const SOM_VALUE* p_value)
+        {
+          return (static_cast<Type*>(thing)->*Func)(name, p_value->get<TV>()) ? TRUE : FALSE;
+        }
+      };
+
+      // bool set_any_prop(const std::string& name, TV val);
+      template <class Type, class TV>
+      struct prop_set_accessor<bool(Type::*)(const std::string&,  TV)> {
+        template <bool(Type::*Func)(const std::string&,TV)>
+        static BOOL thunk(som_asset_t* thing, UINT64 name, const SOM_VALUE* p_value)
+        {
+          return (static_cast<Type*>(thing)->*Func)(atom_name(name), p_value->get<TV>()) ? TRUE : FALSE;
+        }
+      };
+
+      template <class Type> struct prop_get_accessor;
+
+      // bool get_any_prop(som_atom_t name, TV& val);
+      template <class Type, class TV>
+      struct prop_get_accessor<bool(Type::*)(som_atom_t, TV)> {
+        template <bool(Type::*Func)(som_atom_t,TV)>
+        static BOOL thunk(som_asset_t* thing, som_atom_t name, SOM_VALUE* p_value)
+        {
+          typename std::remove_reference<TV>::type val;
+          if ((static_cast<Type*>(thing)->*Func)(name, val)) {
+            *p_value = SOM_VALUE(val);
+            return TRUE;
+          }
+          return FALSE;
+        }
+      };
+
+      // bool get_any_prop(const std::string& name, TV& val);
+      template <class Type, class TV>
+      struct prop_get_accessor<bool(Type::*)(const std::string&, TV)> {
+        template <bool(Type::*Func)(const std::string&,TV)>
+        static BOOL thunk(som_asset_t* thing, som_atom_t name, SOM_VALUE* p_value)
+        {
+          typename std::remove_reference<TV>::type val;
+          if ((static_cast<Type*>(thing)->*Func)(atom_name(name), val)) {
+            *p_value = SOM_VALUE(val);
+            return TRUE;
+          }
+          return FALSE;
+        }
+      };
 
       // returns pack of asset's properties as a map
       inline SOM_VALUE asset_to_map(som_asset_t *ptr) {
@@ -358,7 +423,6 @@ namespace sciter {
         }
         return SOM_VALUE();
       }
-
 
   }
 }

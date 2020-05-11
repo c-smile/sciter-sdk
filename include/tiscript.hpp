@@ -8,6 +8,10 @@
 
 #include "tiscript-streams.hpp"
 
+#if _MSC_VER < 1600 // MSVC version < 8
+     #include "nullptr.hpp"
+#endif
+
 namespace tiscript
 {
   inline tiscript_native_interface* ni(tiscript_native_interface* ni = nullptr)

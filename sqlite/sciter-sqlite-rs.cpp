@@ -153,4 +153,19 @@ namespace sqlite {
       return false;
   }
 
+  bool Recordset::get_prop(const std::string& field_name, sciter::value& val) {
+    int n = 0;
+    int total = sqlite3_column_count(pst);
+
+    for (n = 0; n < total; ++n)
+    {
+      aux::chars cn = aux::chars_of((const CHAR*)sqlite3_column_name(pst, n));
+      if (aux::chars_of(field_name) == cn) {
+        val = field_to_value(n);
+        return true;
+      }
+    }
+    return false;
+  }
+
 }

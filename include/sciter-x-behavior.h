@@ -101,7 +101,12 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
   struct INITIALIZATION_PARAMS
   {
     UINT cmd; // INITIALIZATION_EVENTS
+#ifdef CPP11
     som_passport_t* passport = nullptr;
+#else
+    som_passport_t* passport;
+    INITIALIZATION_PARAMS() : passport( nullptr ) {}
+#endif
   };
 
   enum DRAGGING_TYPE

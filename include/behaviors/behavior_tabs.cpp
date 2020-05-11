@@ -37,9 +37,6 @@ SAMPLE:
       return true;
     }
 
-    // the only behavior_factory method:
-    virtual event_handler* create(HELEMENT he) { return this; }
-
     virtual void attached(HELEMENT he)
     {
       self = he;

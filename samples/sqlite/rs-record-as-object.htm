@@ -1,0 +1,29 @@
+<html>
+<head>
+<style>
+</style>
+<script type="text/tiscript">
+
+  include "sqlite.tis";
+
+  event click $(#test) ()
+  {
+    var db = SQLite.open(":memory:");
+    db.exec("create table employee (firstName text, secondName text)" );
+    db.exec("insert into employee values ('abcd','efgh')" );
+    var rs = db.exec("SELECT firstName, secondName FROM employee");
+    
+    // demo of bool Recordset::get_prop(const std::string& field_name, sciter::value& val) 
+    // function invocation:
+    const {firstName,secondName} = rs;
+    
+    view.msgbox(#information, String.printf("firstName:%V, secondName:%V",firstName,secondName));
+    rs.close();
+    db.close();
+  }
+</script>
+</head>
+<body>
+  <button #test>Test it</button>
+</body>
+</html>

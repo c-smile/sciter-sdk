@@ -4,20 +4,19 @@
     <style>
     
       frame {size:*;}
+
+      section { flow: horizontal }
+      section > * { width:*; }
+
+      img { vertical-align:middle; }
+      code { display:inline-block; width:max-content; }
     
     </style>
     <script type="text/tiscript">
     
-      include "tis/test.tis";
-      
-      // init native API 
-      
-      !function(){
-        if( !view.api )
-          View.api = view.nativeApi(); // getting API and assigning it to global View.api veriable seen by all windows
-      }();
-     
-      $(#test).on("click", function() {
+          
+      event click $(#test) 
+      {
         view.window {
                 type: View.FRAME_WINDOW,
                  url: self.url("main.htm"),
@@ -26,26 +25,40 @@
               height: 600,
            alignment: 5 // center of the screen  
         };
-      });      
+      }      
       
-      $(form#native-test).on("change", function() {
+      event change $(form#native-test) {
         var v = this.value;
-        var res = view.api.math.sum(v.a, v.b);
+        // accessing native namespace NativeMath 
+        var res = NativeMath.sum(v.a, v.b);
         this.value = { r: res };
         return true;
-      });
+      }
+
+      function self.ready() {
+        // accessing native helloWorld() method defined in C++ class frame: 
+        $(#message).text = view.frame.helloWorld();
+        $(img#native).value = view.frame.generatedImage();
+      }
+
     
     </script>
   </head>
 <body>
   <button #test>Open another one</button>
-  <form #native-test>
-    <text>Native API test</text>
-    <input|integer(a) /> + <input|integer(b) /> = <output(r) /> (computed by native_sum(int a, int b))
-  </form>
-  
-  <p id="message"></p>
+
+  <section>
+    <form #native-test>
+      <text>Native API test</text>
+      <input|integer(a) /> + <input|integer(b) /> = <output(r) /> (computed by <code>NativeMath.sum(int a, int b)</code>)
+    </form>
+    <div>   
+      <p><em id="message" /> - produced by native <code>frame::helloWorld()</code> </p>
+      <p><img id="native" /> - produced by native <code>frame::generatedImage()</code> </p>
+    </div>
+  </section>
   <frame src="images/globe.svg" />
+
 
 </body>
 </html>

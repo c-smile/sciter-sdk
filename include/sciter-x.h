@@ -17,6 +17,10 @@
 #ifndef __SCITER_X__
 #define __SCITER_X__
 
+#if __cplusplus > 199711L
+#define CPP11
+#endif
+
 #include "sciter-x-types.h"
 #include "sciter-x-def.h"
 #include "sciter-x-dom.h"

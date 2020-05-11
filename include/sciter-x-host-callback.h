@@ -138,9 +138,11 @@ namespace sciter
             ::SciterDataReady(pnmld->hwnd, pnmld->uri, pb, cb);
           else {
 #ifdef _DEBUG
+#ifdef CPP11
             auto console = debug_output::instance();
             if (console)
               console->printf("LOAD FAILURE:%S\n", pnmld->uri);
+#endif
 #endif
             return LOAD_DISCARD;
           }
@@ -151,9 +153,11 @@ namespace sciter
             ::SciterDataReady(pnmld->hwnd, pnmld->uri, adata.start, UINT(adata.length));
           else {
 #ifdef _DEBUG
+#ifdef CPP11
             auto console = debug_output::instance();
             if (console)
               console->printf("LOAD FAILURE:%S\n", pnmld->uri);
+#endif
 #endif
             return LOAD_DISCARD;
           }

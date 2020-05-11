@@ -612,6 +612,7 @@ namespace dom
       SciterCombineURL(he,inOutURL,bufferSize);
     }
 
+#ifdef CPP11
     sciter::string combine_url(const sciter::string& relative_url) const
     {
       WCHAR buffer[4096] = {0};
@@ -622,6 +623,7 @@ namespace dom
       SciterCombineURL(he,buffer,4096);
       return sciter::string(buffer);
     }
+#endif
 
   /**Set inner or outer html of the element.
     * \param html \b const \b unsigned \b char*, UTF-8 encoded string containing html text
@@ -684,7 +686,11 @@ namespace dom
       char buffer[2049]; buffer[0]=0;
       va_list args;
       va_start ( args, selector );
+#if _MSC_VER == 1400
+      vsnprintf( buffer, sizeof(buffer), _TRUNCATE, selector, args );
+#else
       vsnprintf( buffer, sizeof(buffer), selector, args );
+#endif
       va_end ( args );
       find_first_callback find_first;
       select_elements( &find_first, buffer); // find first element satisfying given CSS selector
@@ -697,12 +703,17 @@ namespace dom
       char buffer[2049]; buffer[0]=0;
       va_list args;
       va_start ( args, selector );
+#if _MSC_VER == 1400
+      vsnprintf( buffer, sizeof(buffer), _TRUNCATE, selector, args );
+#else
       vsnprintf( buffer, sizeof(buffer), selector, args );
+#endif
       va_end ( args );
       select_elements( cb, buffer); // find all elements satisfying given CSS selector
       //assert(find_first.hfound);
     }
 
+#ifdef CPP11
     std::vector<sciter::dom::element> 
       find_all(const char* selector, ...) const
     {
@@ -718,6 +729,7 @@ namespace dom
       this->find_all(&cb, selector);
       return cb.elements;
     }
+#endif
 
     // will find first parent satisfying given css selector(s)
     HELEMENT find_nearest_parent(const char* selector, ...) const
@@ -725,7 +737,11 @@ namespace dom
       char buffer[2049]; buffer[0]=0;
       va_list args;
       va_start ( args, selector );
+#if _MSC_VER == 1400
+      vsnprintf( buffer, sizeof(buffer), _TRUNCATE, selector, args );
+#else
       vsnprintf( buffer, sizeof(buffer), selector, args );
+#endif
       va_end ( args );
 
       HELEMENT heFound = 0;
@@ -740,8 +756,11 @@ namespace dom
       char buffer[2049]; buffer[0]=0;
       va_list args;
       va_start ( args, selector );
-      vsnprintf( buffer, sizeof(buffer), selector, args );
+#if _MSC_VER == 1400
+      vsnprintf( buffer, sizeof(buffer), _TRUNCATE, selector, args );
+#else
       va_end ( args );
+#endif
       HELEMENT heFound = 0;
       SCDOM_RESULT r = SciterSelectParent(he, buffer, 1, &heFound);
       assert(r == SCDOM_OK); (void)r;

@@ -168,7 +168,10 @@ template <typename T >
         else length = 0;
       }
 
-      explicit operator bool() const { return length > 0; }
+#ifdef CPP11
+      explicit
+#endif
+      operator bool() const { return length > 0; }
 
       T operator *() const { return length ? start[0] : T(); }
 

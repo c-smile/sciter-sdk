@@ -21,7 +21,7 @@ end
 
 workspace "sciter.sdk"
   configurations { "Debug", "Release" }
-  platforms { "x32", "x64" } 
+  platforms { "x32", "x64", "arm64" } 
 
   cppdialect "C++14" 
   
@@ -29,6 +29,8 @@ workspace "sciter.sdk"
   filter "system:windows"
     configurations { "DebugSkia", "ReleaseSkia" }
     location "build.windows"
+    links { "shell32", "advapi32", "ole32", "oleaut32", "comdlg32" }
+    systemversion "latest"
   filter "system:macosx"
     location "build.macosx"
     filter "system:macosx"
@@ -60,11 +62,16 @@ workspace "sciter.sdk"
     architecture "x86"
   filter "platforms:x64"
     architecture "x86_64"  
+  filter "platforms:arm64"
+    architecture "ARM64"  
+
 
   filter {"platforms:x32", "system:windows"}
     defines { "WIN32" }
   filter {"platforms:x64", "system:windows"}
     defines { "WIN32","WIN64" }      
+  filter {"platforms:arm64", "system:windows"}
+    defines { "WIN32","WIN64", "ARM64" }      
 
   filter "configurations:Debug*"
     defines { "DEBUG", "_DEBUG" }
@@ -135,8 +142,9 @@ project "uminimal"
 
   settargetdir()
 
+
   filter "system:windows"
-    removeplatforms { "x64" }
+    removeplatforms { "x64","arm64" }
     removeconfigurations { "*skia" }
     files {"include/sciter-win-main.cpp"}
   filter "system:macosx"
@@ -164,7 +172,7 @@ project "ulayered"
   settargetdir() 
   
   filter "system:windows"
-    removeplatforms { "x64" }
+    removeplatforms { "x64","arm64" } 
     removeconfigurations { "*skia" }
     files {"include/sciter-win-main.cpp"}
   filter "system:macosx"
@@ -308,6 +316,8 @@ if _TARGET_OS == "windows" then
 
     includedirs { "demos/sciter" }  
 
+    removeplatforms { "arm64" } 
+
     files { 
             "include/sciter-*.h",
             "include/sciter-*.hpp",
@@ -331,7 +341,7 @@ if _TARGET_OS == "windows" then
     language "C++"
     -- location "build"
 
-    removeplatforms { "x64" }
+    removeplatforms { "x64","arm64" }
     removeconfigurations { "*Skia" }
 
     dpiawareness "HighPerMonitor"
@@ -350,7 +360,7 @@ if _TARGET_OS == "windows" then
     language "C++"
     -- location "build"
 
-    removeplatforms { "x64" }
+    removeplatforms { "x64","arm64" }
     removeconfigurations { "*Skia" }
 
     dpiawareness "HighPerMonitor"
@@ -442,6 +452,7 @@ project "glfw-opengl"
       "demos.lite/glfw/src/osmesa_context.c",
     }
     links "shlwapi"
+    removeplatforms { "arm64" }
   filter "system:macosx"
     defines "_GLFW_COCOA"
   filter "system:linux"  
