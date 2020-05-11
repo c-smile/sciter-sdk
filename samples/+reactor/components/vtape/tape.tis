@@ -365,7 +365,7 @@ class Tape : Reactor.Component
       }
     }
 
-    tape.itemSource.onNewItem = function(index) {
+    tape.dataSource.onNewItem = function(index) {
       navigateTo(index);
     }
 
