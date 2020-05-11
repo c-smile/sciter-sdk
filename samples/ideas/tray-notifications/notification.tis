@@ -48,6 +48,8 @@ class Notification : Element
     // set initial "off stage" state 
     msg.attributes["state"] = "initial";
     
+    msg.update(); // we are requesting .box() below so we need it to be valid at this point.
+
     // measure its real sizes
     var (w,h) = msg.box(#dimension,#border);
     
