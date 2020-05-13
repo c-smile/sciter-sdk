@@ -647,7 +647,11 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
     // event handler can be attached to the element as a "behavior" (see below)
     // or by sciter::dom::element::attach( event_handler* eh )
 
+#ifdef CPP11
     struct event_handler : public sciter::om::asset<event_handler>
+#else
+    struct event_handler
+#endif
     {
       event_handler() // EVENT_GROUPS flags
       {
