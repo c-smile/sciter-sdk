@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style></style>
+        <script type="text/tiscript">
+
+        view << event activate (status) {
+          $(#activation-status).text = status.toString();
+        }
+
+        event click $(button#start) {
+          this.timer(5s, function() {
+            view.activate(#toFront);
+          });
+        } 
+
+        </script>
+    </head>
+    <body>
+      <button#start>Start 5s timer</button> 
+      <div#activation-status /> 
+    </body>
+</html>

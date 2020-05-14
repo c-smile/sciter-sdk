@@ -49,6 +49,14 @@ static bool sciter_needs_drawing = true;
 int main(int argc, char *argv[])
 {
     SciterSetOption(NULL, SCITER_SET_UX_THEMING, TRUE);
+
+    // these two calls are optional, used here to enable communication with inspector.exe (CTRL+SHIFT+I with running inspector) 
+    SciterSetOption(NULL, SCITER_SET_SCRIPT_RUNTIME_FEATURES,
+      ALLOW_FILE_IO |
+      ALLOW_SOCKET_IO |
+      ALLOW_EVAL |
+      ALLOW_SYSINFO);
+    SciterSetOption(NULL, SCITER_SET_DEBUG_MODE, TRUE);
     
     glfwSetErrorCallback(error_callback);
 

@@ -9,9 +9,9 @@
   event click $(#test) ()
   {
     var db = SQLite.open(":memory:");
-    db.exec("create table employee (firstName text, secondName text)" );
+    db.exec("create table employee (name text, surname text)" );
     db.exec("insert into employee values ('abcd','efgh')" );
-    var rs = db.exec("SELECT firstName, secondName FROM employee");
+    var rs = db.exec("SELECT name,surname FROM employee");
     
     var obj = SQLite.rowAsObject(rs);
 

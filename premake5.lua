@@ -1,4 +1,9 @@
 
+newoption {
+   trigger     = "windowsxp",
+   description = "Will add Windows XP support"
+}
+
 
 if( _TARGET_OS ~= "macosx") then  -- we are not auto generating XCode solutions for a while
                                   -- structure of typical XCode is not trivial - requires manual inputs.
@@ -18,6 +23,16 @@ function settargetdir()
     targetdir ("bin." .. osabbr() .."/%{cfg.platform}skia")
   filter {}
 end
+
+if _OPTIONS["windowsxp"] then 
+
+  filter {"system:windows", "action:vs2015", "platforms:not arm64" }
+    toolset "v140_xp"
+  filter {"system:windows", "action:vs2017", "platforms:not arm64" }
+    toolset "v141_xp"
+  filter {}
+end    
+
 
 workspace "sciter.sdk"
   configurations { "Debug", "Release" }
@@ -246,6 +261,7 @@ project "notepad"
   settargetdir() 
 
   filter "system:windows"
+    systemversion "latest"
     removeplatforms { "x64" }
     removeconfigurations { "*skia","*lite" }
     files {"include/sciter-win-main.cpp", 

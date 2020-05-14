@@ -6,18 +6,22 @@ popup#notification { style-set: notification-message; }
   :root {
     prototype: Notification url(notification.tis);
     background: transparent;
-    margin:20dip;
+    margin:20dip 0;
     size: max-content;
     display:block;
     visibility:none;
     transform: translate(0,0); opacity:1.0;
     font:system;
   }
+
+  :root:not([state=initial]) {
+    transition: transform linear 500ms, opacity linear 500ms;
+  }
   
   :root[state] {visibility:visible;}
   :root[state=initial] { transform: translate(0,100%); opacity:0.0; } /* offstage */
-  :root[state=shown]   { transform: translate(0,0);    opacity:1.0; transition: transform(quad-out,500ms) opacity(linear,500ms);  }
-  :root[state=closed]  { transform: translate(100%,0); opacity:0.0; transition: transform(linear,500ms) opacity(linear,500ms);  }
+  :root[state=shown]   { transform: translate(0,0);    opacity:1.0; transition: }
+  :root[state=closed]  { transform: translate(100%,0); opacity:0.0; transition: }
 
   :root > div {
     background: gold;

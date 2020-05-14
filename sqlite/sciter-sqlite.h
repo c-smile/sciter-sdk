@@ -117,7 +117,7 @@ namespace sqlite {
         SOM_RO_VIRTUAL_PROP(length,get_length) 
       )
       SOM_ITEM_GET(get_item)
-      SOM_PROP_GET(get_prop)
+      //SOM_PROP_GET(get_prop) -- see https://sciter.com/forums/topic/recordset-props-fails-if-data-has-column-name/
       SOM_ITEM_NEXT(get_next)
     SOM_PASSPORT_END
 

@@ -12,6 +12,8 @@
     <h2>Properties</h2>
     <dt>root</dt>
     <dd> <font color="#999999">r - </font><em>Element</em>, root element of a document loaded into the view.</dd>
+		<dt>all</dt>
+		<dd>r - Array of View instances, the property returns list of all Sciter windows in the GUI thread.&nbsp;</dd>
     <dt>windowState</dt>
     <dd> <font color="#999999">r/w</font> - state of the window. Applicable only for top-level windows. Accepts values: <code>View.WINDOW_MINIMIZED,</code> <code>View.WINDOW_MAXIMIZED</code>, <code>View.WINDOW_HIDDEN</code>, <code>View.WINDOW_SHOWN</code> or <code>View.WINDOW_FULL_SCREEN</code>.</dd>
     <dt>focus</dt>
@@ -203,7 +205,8 @@ if( fn ) view.<strong>load</strong>(fn);
     <dd>
       <div> <strong>( </strong>[<em>retval</em>: any]<strong> ) </strong>: undefined</div>
       <p>closes current view (or dialog if it is view of dialog window). <em>retval</em> is any scripting object - return value of the <em>dialog</em>() function.</p></dd>
-    <dt>doEvent</dt>
+<dt>activate</dt>
+		<dd>([<b>#toFront</b>]) : true | false<p>Activates the window by making it focused window. &nbsp;If #toFront is provided then the window gets moved in front of stack order of screen windows.</p></dd><dt>doEvent</dt>
     <dd>
       <div> <strong>( </strong>[<em>#wait</em> | <em>#nowait</em> | <em>#all</em>] | #untilMouseUp<strong> )</strong> : undefined</div>
       <p>Passes control to the operating system. Control is returned after the operating system has finished processing next event in its event queue. This method is used for implementing modal document loops.</p>
@@ -306,25 +309,7 @@ if( fn ) view.<strong>load</strong>(fn);
     .on(&quot;size.mymodule&quot;,foo);
 </pre></dd>
     <dt>request</dt>
-    <dd>
-      <div> <strong>( </strong> <b>params</b>: object<strong>) </strong>: <em>undefined</em>.</div>
-      <p>Sends HTTP request with <em>params</em> object having following fields:</p>
-      <ul>
-        <li> <strong>type</strong> - <em>symbol</em>, HTTP verb, one of : <strong>#get</strong>, <strong>#post</strong>, <strong>#put</strong> or <strong>#delete</strong>, default: #get ;</li>
-        <li> <strong>url</strong> - string, url;</li>
-        <li> <strong>protocol</strong> - <em>symbol</em>, &nbsp;one of <strong>#basic</strong>, <strong>#multipart</strong> and <strong>#json</strong> &nbsp;;</li>
-        <li> <strong>params</strong> - <em>object</em>, HTTP request parameters;</li>
-        <li> <strong>headers</strong> - <em>objec</em>t, additional HTTP request headers;</li>
-        <li> <strong>success</strong> - <em>function(data,status)</em>, callback function to be called on successful completion.</li>
-        <li> <strong>error</strong> - <em>function(err,status)</em>, callback function to be called on request failure.</li>
-        <li> <strong>complete</strong> - <em>function(data or err,status)</em>, callback function to be called on request completion (either success or error).</li>
-        <li> <strong>progress</strong> - <em>function(bytesReceived, totalBytes)</em>, callback function to be called on each chunk of data received. <em>bytesReceived</em> is an integer - number of bytes received so far and <em>totalBytes</em> is an integer - total bytes as reported by server in HTTP's &quot;content-length&quot; field. <em>totalBytes</em> can be <em>undefined</em> if server does not report it.</li>
-        <li> <strong>toFile - </strong><em>string</em>, if provided shall contain path of the file where to store the response. Used in file download scenarios.</li>
-        <li> <strong>proxyHost</strong>, <strong>proxyPort</strong> - <em>string</em>, <em>integer</em>. If these two are provided then the request will go through that proxy host.</li>
-        <li> <strong>output</strong> - symbol, one of <strong>#string</strong> | <strong>#stream</strong> | <strong>#bytes</strong> | <strong>#json</strong>. If provided forces <em>data</em> to be reported as instance of String, Stream, Bytes or a value - result of JSON parsing.</li>
-				<li><b>noCache</b> - true | false, if <i>true</i> then request will not use reading from cache nor writing the request response to cache.&nbsp;</li></ul>
-      <p>Sample: <u>sdk/samples/communication/file-download.htm</u> and <u>sdk/samples/communication/http.tis</u></p>
-			</dd><dt>trayIcon</dt>
+    <dt>trayIcon</dt>
 		<dd><b>(</b> <i></i><b>param</b> : symbol | object <b>)</b> : many<p>Defines parameters of tray icon for the window. Accepts following parameters:</p>
 			<ul><li><code>view.trayIcon { <b>image</b>: Image, <b>text</b>: string } : boolean</code> creates tray icon for the window, parameters:<ul><li><i>image</i> is an instance of <a href="Image.htm">Image</a> class, mandatory - bitmap of system specific size (e.g. for MacOS 20x20px png);</li>
 						<li><i>text</i> is string - tooltip text that will appear on mouse over the icon.</li>
@@ -334,8 +319,17 @@ if( fn ) view.<strong>load</strong>(fn);
 				</ul>
 			<p>When tray icon is created the view will start receiving <a href="#trayicon-click">trayicon-click</a> events.</p>
 			<p>Sample: <u>sdk/samples/trayicon</u></p>
-			</dd><dt>audio</dt>
-		<dd><b>( url</b>: string <b>)</b> : Audio<p>Creates <a href="Audio.htm">Audio</a> object that allows to play .mp3, .flac and .wav sounds</p></dd></dl>
+			</dd>
+		<dd><b>(</b> <i></i><b>param</b> : symbol | object <b>)</b> : many<p>Defines parameters of tray icon for the window. Accepts following parameters:</p>
+			<ul><li><code>view.trayIcon { <b>image</b>: Image, <b>text</b>: string } : boolean</code> creates tray icon for the window, parameters:<ul><li><i>image</i> is an instance of <a href="Image.htm">Image</a> class, mandatory - bitmap of system specific size (e.g. for MacOS 20x20px png);</li>
+						<li><i>text</i> is string - tooltip text that will appear on mouse over the icon.</li>
+						</ul></li>
+				<li><code>view.trayIcon( <b>#place</b> ) : (x,y,w,h)</code> - returns location of the tray icon in screen coordinates.</li>
+				<li><code>view.trayIcon( <b>#remove</b> ) : boolean</code> - &nbsp;removes tray icon from system status bar.</li>
+				</ul>
+			<p>When tray icon is created the view will start receiving <a href="#trayicon-click">trayicon-click</a> events.</p>
+			<p>Sample: <u>sdk/samples/trayicon</u></p>
+			</dd></dl>
   
 	<h2>Notifications</h2>
 	<dl><dt>onRequest(rq: <a href="Request.htm">Request</a>)</dt>
