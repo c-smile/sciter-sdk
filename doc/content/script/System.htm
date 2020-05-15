@@ -1,4 +1,4 @@
-﻿<html>
+<html>
 <body>
   <h1>System object</h1>
   <p class="note">Methods of this object are not always available to the script - they depend on feature parameters of VM creation.</p>
@@ -37,20 +37,20 @@
         <li><code>#Windows</code></li>
         <li><code>#OSX</code></li>
         <li><code>#Linux</code></li>
-				
+
       </ul>
-			
+
     </dd><dt>EOL</dt>
 		<dd>- string, platform specific end-of-line sequence, on Windows &quot;\r\n&quot; and on others &quot;\n&quot;.&nbsp;</dd>
-    
+
     <h2>Properties</h2>
     <dt>language</dt>
     <dd>The abbreviated name of the language, ISO Standard 639 names.</dd>
     <dt>country</dt>
     <dd>Country/region name, based on ISO Standard 3166.</dd>
     <dt>ticks</dt>
-    <dd>High resolution timer. Return an integer representing the time ellapsed since the engine started in milliseconds</dd>
-    
+    <dd>High resolution timer. Return an integer representing the time elapsed since the engine started in milliseconds</dd>
+
     <h2>Methods</h2>
     <dt>scanFiles</dt>
     <dd>
@@ -116,13 +116,13 @@
 		<dd><b>(</b> <i>path</i>: string,  <i></i>mode: integer <b>)&nbsp;</b>: <i>promise</i> (true | error code on failure)<p>Changes file mode bits. The function calls <a href="http://man7.org/linux/man-pages/man2/chmod.2.html">chmod</a>&nbsp;system function.</p>
 			</dd>
 <dt>watch</dt>
-		<dd><b>(</b> <i>path</i>: string <b>)&nbsp;</b>: <i>FileMonitor</i> <p>Creates FileMonitor object that will receive change notifications on a file or folder content. The only public method of FileMonitor is <code>close()</code> - stop monitoring and dispose the monitor.&nbsp;The FileMonitor instance supports change and rename events:</p><pre>var watcher = null;  
-if( watcher ) 
+		<dd><b>(</b> <i>path</i>: string <b>)&nbsp;</b>: <i>FileMonitor</i> <p>Creates FileMonitor object that will receive change notifications on a file or folder content. The only public method of FileMonitor is <code>close()</code> - stop monitoring and dispose the monitor.&nbsp;The FileMonitor instance supports change and rename events:</p><pre>var watcher = null;
+if( watcher )
     watcher.close();
 var path = ...;
 // create file monitor and subscribe to events:
 that.watcher = System.watch(path)
-          &lt;&lt; event change (path) { ... change detected ... } 
+          &lt;&lt; event change (path) { ... change detected ... }
           &lt;&lt; event rename (path) { ... change detected ... };</pre></dd>
   </dl>
 </body>
