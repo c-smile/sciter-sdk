@@ -78,6 +78,33 @@ section#main[state=4] > div:nth-child(8) { visibility:visible; }
 //section#main[state=4] > widget:nth-child(7) { border-color:blue; } 
 
 widget.shortcuts     { background:#f3f2db; }
-widget.license       { background:#d8e8d0; }
+widget.license       { background:#f9eec3; }
 widget.check-version { background:#f5c9d8; }
-widget.donate        { background:#f9eec3; }
+widget.donate        { background:#d8e8d0; line-height:1.6em;}
+
+widget.donate a.donate-link {
+  display:block;
+  cursor:pointer;
+  color:inherit;
+  text-decoration:none;
+  font-size:90%;
+}
+
+widget.donate img.smile { 
+  width:1.2em; 
+  vertical-align:middle; 
+}
+
+
+@keyframes twinkle { 
+  from { transform: translate(0,0); } 
+  50% { transform: translate(20%,0); } 
+  to { transform: translate(0,0); }
+}
+
+widget.donate img.smile:ready {
+  animation:4 sine-in-out 600ms alternate twinkle;
+}  
+
+
+

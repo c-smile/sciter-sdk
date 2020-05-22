@@ -8,14 +8,12 @@
   <p> <strong>view</strong> - current view object (of the running script) is accessible through global <em>view</em> variable.</p>
   <dl>
     <dt>WINDOW_MINIMIZED<br/>WINDOW_MAXIMIZED<br/>WINDOW_HIDDEN<br/>WINDOW_SHOWN<br/>WINDOW_FULL_SCREEN</dt>
-    <dd>Values of <em>view.state</em> property.</dd>
+    <dd>Values of <em>view.<a href="#windowState">windowState</a></em> property.</dd>
     <h2>Properties</h2>
     <dt>root</dt>
     <dd> <font color="#999999">r - </font><em>Element</em>, root element of a document loaded into the view.</dd>
 		<dt>all</dt>
 		<dd>r - Array of View instances, the property returns list of all Sciter windows in the GUI thread.&nbsp;</dd>
-    <dt>windowState</dt>
-    <dd> <font color="#999999">r/w</font> - state of the window. Applicable only for top-level windows. Accepts values: <code>View.WINDOW_MINIMIZED,</code> <code>View.WINDOW_MAXIMIZED</code>, <code>View.WINDOW_HIDDEN</code>, <code>View.WINDOW_SHOWN</code> or <code>View.WINDOW_FULL_SCREEN</code>.</dd>
     <dt>focus</dt>
     <dd> <font color="#999999">r/w</font> - <em>Element</em>, current element that has input focus. To set new element in focus use view.focus = el;</dd>
     <dt>eventsRoot</dt>
@@ -52,6 +50,8 @@ view.<u>eventsRoot</u> = null;
     <dd> <font color="#999999">r/w</font> - window blur-behind effect, the property accepts: <code>#auto</code> | <code>#ultra-dark</code> | <code>#dark</code> | <code>#light</code> | <code>#ultra-light</code> | <code>#none</code> values. If this flag is set then the window window is semitransparent. Root document shall use <code>html { background:transparent; }</code> in order to see desktop behind the window.</dd>
 		<dt>windowFrame</dt>
 		<dd>r/w - window frame type, the property accepts one of: <code>#standard</code> | <code>#extended</code> | <code>#solid</code> | <code>#solid-with-shadow</code> | <code>#transparent</code> values. After loading the property matches value of <code>window-frame</code> attribute of its root <code>&lt;html&gt;</code> document.</dd>
+    <dt id="windowState">windowState</dt>
+    <dd> <font color="#999999">r/w</font> - state of the window. Applicable only for top-level windows. Accepts values: <code>View.WINDOW_MINIMIZED,</code> <code>View.WINDOW_MAXIMIZED</code>, <code>View.WINDOW_HIDDEN</code>, <code>View.WINDOW_SHOWN</code> or <code>View.WINDOW_FULL_SCREEN</code>.</dd>
     <h2>Methods</h2>
     <dt> <strike>this</strike></dt>
     <dd>(non-constructable)</dd>
@@ -71,9 +71,9 @@ view.<u>eventsRoot</u> = null;
         <li> <strong>part</strong> - one of symbolic constants <strong>#left</strong>, <strong>#top</strong>, <strong>#right</strong>, <strong>#bottom</strong>, <strong>#width</strong> or <strong>#height</strong>. Defines part of box (rectangle) to return. Additionally #part may accept the following constants:</li>
         <ul>
           <li> <strong>#rect</strong> - (x1,y1,x2,y2) metrics;</li>
-          <li> <strong>#rectw</strong> - metrics as (x,y,width,height), <em>default</em>;</li>
+          <li> <strong>#rectw</strong> - metrics as (x, y, width, height), <em>default</em>;</li>
           <li> <strong>#position</strong> - (x,y)<em>,</em></li>
-          <li> <strong>#dimension</strong> - (width,height)<em>,</em></li></ul>
+          <li> <strong>#dimension</strong> - (width, height)<em>,</em></li></ul>
         <li> <strong>edge</strong>, one of view:</li>
         <ul>
           <li> <strong>#border</strong> - border box edge - OS window border bounds,</li>
@@ -96,20 +96,15 @@ view.<u>eventsRoot</u> = null;
         <li> <strong>part</strong>, one of view:</li>
         <ul>
           <li> <strong>#rect</strong> - (x1,y1,x2,y2) metrics, <em>default</em>;</li>
-          <li> <strong>#rectw</strong> - metrics as (x,y,width,height);</li>
+          <li> <strong>#rectw</strong> - metrics as (x, y, width, height);</li>
           <li> <strong>#position</strong> - (x,y) position of the screen on cumulative surface that includes all monitors;&nbsp;</li>
-          <li> <strong>#dimension</strong> - (width,height) of the screen<em>;</em></li></ul>
+          <li> <strong>#dimension</strong> - (width, height) of the screen<em>;</em></li></ul>
         <li> <strong>screenNo - </strong>integer, optional. If provided returns metrics of particular screen. If omitted returns metrics of this window screen.</li></ul></dd>
-    <dt>move</dt>
-    <dd>
-      <div> <strong>( </strong><em>x</em>:int, <em>y</em>:int [, <em>clientCoordinates</em>: true | false]<strong> ) </strong>:void</div>
-      <p>Replaces window of the view (dialog or frame) on the screen. This method is applicable only for standalone Sciter.</p>
-      <p>If <em>clientCoordinates</em> is <em>true</em> x and y are interpretted as a desired position of the client area on the screen.</p></dd>
     <dt>move</dt>
     <dd>
       <div> <strong>( </strong><em>x</em>:int, <em>y</em>:int, <em>width</em>:int, <em>height</em>:int [, <em>clientCoordinates</em>: true | false] <strong>) </strong>:void</div>
       <p>Replaces window and changes dimension of the view (dialog or frame) on the screen. This method is applicable only for standalone Sciter.</p>
-      <p>If <em>clientCoordinates</em> is <em>true</em> x,y, <em>width</em> and <em>height</em> are interpreted&nbsp;as a desired position/size of the client area on the screen.</p></dd>
+      <p>If <em>clientCoordinates</em> is <em>true</em> x, y, <em>width</em> and <em>height</em> are interpreted&nbsp;as a desired position/size of the client area on the screen.</p></dd>
     <dt>mediaVar</dt>
     <dd>
       <div> <strong>(</strong><i>name</i>:string [, <i>valueToSet</i>: any]<strong>)</strong> : value | undefined</div>
@@ -206,7 +201,10 @@ if( fn ) view.<strong>load</strong>(fn);
       <div> <strong>( </strong>[<em>retval</em>: any]<strong> ) </strong>: undefined</div>
       <p>closes current view (or dialog if it is view of dialog window). <em>retval</em> is any scripting object - return value of the <em>dialog</em>() function.</p></dd>
 <dt>activate</dt>
-		<dd>([<b>#toFront</b>]) : true | false<p>Activates the window by making it focused window. &nbsp;If #toFront is provided then the window gets moved in front of stack order of screen windows.</p></dd><dt>doEvent</dt>
+		<dd>([<b>#toFront</b>]) : true | false<p>Activates the window by making it focused window. &nbsp;If #toFront is provided then the window gets moved in front of stack order of screen windows.</p>
+			</dd><dt>audio</dt>
+		<dd>( url :string ) :&nbsp;Audio<p>Creates <a href="Audio.htm">Audio</a> playback object.</p></dd>
+    <dt>doEvent</dt>
     <dd>
       <div> <strong>( </strong>[<em>#wait</em> | <em>#nowait</em> | <em>#all</em>] | #untilMouseUp<strong> )</strong> : undefined</div>
       <p>Passes control to the operating system. Control is returned after the operating system has finished processing next event in its event queue. This method is used for implementing modal document loops.</p>
@@ -269,9 +267,7 @@ if( fn ) view.<strong>load</strong>(fn);
 }  </pre><p>Please note that <i>json</i> clipboard  format is Sciter specific. You can use it to pass data between Sciter applications.</p>
 			<p>You can set multiple data items at once (e.g. <i>text</i> and <i>html</i> together). Destination application will pick up format it understands in particular context.&nbsp;</p>
 			</dd><dt>focusable</dt>
-		<dd>(<b>#next | #prior | #first | #last</b>, [<b>from</b>:Element]) : Element<p>The method returns next/previous/first/last focusable element in TAB order, either <i>from</i> element or from current element in focus.</p></dd>
-    <dt>performDrag</dt>
-    <dd>((<strong>element</strong>:Element | <b>img</b>: Image, <b>xOffset</b>: integer, <b>yOffset</b>: integer), <strong>data</strong>:Object, ddMode: <strong>#any</strong> | <strong>#copy</strong> | <strong>#move</strong>) : <strong>null</strong> | <strong>#copy</strong> | <strong>#move</strong>
+		<dd>(<b>#next | #prior | #first | #last</b>, [<b>from</b>:Element]) : Element<p>The method returns next/previous/first/last focusable element in TAB order, either <i>from</i> element or from current element in focus.</p></dd><dt>performDrag</dt><dd>((<strong>element</strong>:Element | <b>img</b>: Image, <b>xOffset</b>: integer, <b>yOffset</b>: integer), <strong>data</strong>:Object, ddMode: <strong>#any</strong> | <strong>#copy</strong> | <strong>#move</strong>) : <strong>null</strong> | <strong>#copy</strong> | <strong>#move</strong>
       <p>Performs system drag and drop operation.</p>
       <p> <em>element</em> is a DOM element that is used as a drag image, alternatively you can provide <i>image</i> and x/y icon offset as a drag image.</p>
       <p> <em>data</em> is an object that contain following properties:</p>
@@ -298,38 +294,15 @@ if( fn ) view.<strong>load</strong>(fn);
       <p>Attaches the <em>handler</em> to one of view (window) related events.</p>
       <p> <em>nameandns</em> - string that contains one of <a href="#event-names">the event names</a> at the bottom and optionally arbitrary namespace name in the form &quot;name.namespace&quot;.</p></dd>
     <dt>off</dt>
-    <dd>
-      <div> <strong>(</strong> <strong>eventname</strong>: string | <strong>handler</strong>: function <strong>)</strong> : view</div>
-      <p>Detaches event handler either by name or by function itself.</p>
-      <p>eventname here is either &quot;name&quot;, full &quot;name.namepsace&quot; or just &quot;.namepsace&quot;. Example:</p>
-      <pre>view.off(&quot;.mymodule&quot;);
-</pre>
-      <p>will unsubscribe both event handlers set by the code:</p>
-      <pre>view.on(&quot;move.mymodule&quot;,foo)
-    .on(&quot;size.mymodule&quot;,foo);
-</pre></dd>
-    <dt>request</dt>
-    <dt>trayIcon</dt>
-		<dd><b>(</b> <i></i><b>param</b> : symbol | object <b>)</b> : many<p>Defines parameters of tray icon for the window. Accepts following parameters:</p>
-			<ul><li><code>view.trayIcon { <b>image</b>: Image, <b>text</b>: string } : boolean</code> creates tray icon for the window, parameters:<ul><li><i>image</i> is an instance of <a href="Image.htm">Image</a> class, mandatory - bitmap of system specific size (e.g. for MacOS 20x20px png);</li>
-						<li><i>text</i> is string - tooltip text that will appear on mouse over the icon.</li>
-						</ul></li>
-				<li><code>view.trayIcon( <b>#place</b> ) : (x,y,w,h)</code> - returns location of the tray icon in screen coordinates.</li>
-				<li><code>view.trayIcon( <b>#remove</b> ) : boolean</code> - &nbsp;removes tray icon from system status bar.</li>
-				</ul>
-			<p>When tray icon is created the view will start receiving <a href="#trayicon-click">trayicon-click</a> events.</p>
-			<p>Sample: <u>sdk/samples/trayicon</u></p>
-			</dd>
-		<dd><b>(</b> <i></i><b>param</b> : symbol | object <b>)</b> : many<p>Defines parameters of tray icon for the window. Accepts following parameters:</p>
-			<ul><li><code>view.trayIcon { <b>image</b>: Image, <b>text</b>: string } : boolean</code> creates tray icon for the window, parameters:<ul><li><i>image</i> is an instance of <a href="Image.htm">Image</a> class, mandatory - bitmap of system specific size (e.g. for MacOS 20x20px png);</li>
-						<li><i>text</i> is string - tooltip text that will appear on mouse over the icon.</li>
-						</ul></li>
-				<li><code>view.trayIcon( <b>#place</b> ) : (x,y,w,h)</code> - returns location of the tray icon in screen coordinates.</li>
-				<li><code>view.trayIcon( <b>#remove</b> ) : boolean</code> - &nbsp;removes tray icon from system status bar.</li>
-				</ul>
-			<p>When tray icon is created the view will start receiving <a href="#trayicon-click">trayicon-click</a> events.</p>
-			<p>Sample: <u>sdk/samples/trayicon</u></p>
-			</dd></dl>
+    <dd> <div><strong>(</strong> <strong>nameandns</strong>: string |&nbsp;<strong>handler</strong>: function <strong>)</strong> : view</div><p>Detaches event handler either by name or namespace or by function reference.</p></dd>
+    <dt>trayIcon</dt><dd>
+      
+      <p>Defines parameters of tray icon for the window. Accepts following parameters:</p>
+			
+			
+			
+			 </dd>
+  </dl>
   
 	<h2>Notifications</h2>
 	<dl><dt>onRequest(rq: <a href="Request.htm">Request</a>)</dt>

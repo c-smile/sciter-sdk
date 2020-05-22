@@ -98,21 +98,25 @@
 		<li><code>edit:delete-table-rows</code> - deletes selected rows;</li>
 		<li><code>edit:delete-table-columns</code> - deletes selected columns;</li>
 		<li><code>edit:split-table-cells</code> - splits spanned cell into multiple cells.</li></ul>
-  <h2>Methods</h2>
+  
+	<h2>Properties</h2>
+	<dl><dt><code>richtext.url</code></dt>
+		<dd>- r/w, string, url of loaded document.</dd></dl><h2>Methods</h2>
   <dl>
-    <dt><code>loadDocument</code></dt>
+    <dt><code>richtext.load</code></dt>
     <dd><code>(url:string): true|false</code> 
         <p>loads file from URL into the editor;</p></dd>
-    <dt><code>saveDocument</code></dt>
-    <dd><code>(url:string): true|false</code> 
+    <dt><code>richtext.load</code></dt>
+    <dd><code>(html: string | bytes, url: string): true|false</code> 
+        <p>loads content from bytes or string (html source) into the editor;</p></dd><dt><code>richtext.save</code></dt>
+    <dd><code>(fileUrl:string): true|false</code> 
         <p>saves content to a file;</p></dd>
-    <dt><code>emptyDocument</code></dt>
+    <dt><code>richtext.loadEmpty</code></dt>
     <dd><code>():&nbsp;true|false</code>
         <p>initializes the editor by empty document;</p></dd>
-    <dt><code>sourceToContent</code></dt>
+    <dt><code>richtext.sourceToContent</code></dt>
     <dd><code>(html:string, url:string, selStart:integer, selEnd:integer):&nbsp;true|false</code>
-        <p>The method&nbsp;sets content from the <i>html</i> and selection from&nbsp;given <i>selStart</i> and <i>selEnd</i>.</p>
-			<p>This method does incremental content update - supposed to be used when you need to update content from HTML source  code view as it preserves undo/redo operational stack.&nbsp;</p></dd><dt><code>contentToSource</code></dt><dd><code>() : [html:string, selStart:integer, selEnd:integer] </code><p>returns content and selection as an array of three elements;</p>
+        <p>The method&nbsp;sets content from the <i>html</i> and selection from given <i>selStart</i> and <i>selEnd</i>.&nbsp;</p></dd><dt><code>richtext.contentToSource</code></dt><dd><code>() : [html:string, url:string, selStart:integer, selEnd:integer] </code><p>returns content and selection as an array of three elements;</p>
         </dd>
     </dl>
 </body>

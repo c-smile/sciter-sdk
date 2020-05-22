@@ -44,9 +44,9 @@ class Editor : Element
     this.docUrl = fileUrl;
     this.dirUrl = folderUrl;
     if( !this.isNew )
-      return this.htmlview.loadDocument(fileUrl);
+      return this.htmlview.richtext.load(fileUrl);
     else
-      return this.htmlview.emptyDocument();
+      return this.htmlview.richtext.loadEmpty();
   }
 
   function saveDocument(saveAs = false) {
@@ -63,18 +63,18 @@ class Editor : Element
         return false;
       // TODO-DO-DO: reparent URLs, please!
       this.postEvent("doc-name-change",false);  
-      this.htmlview.setDocumentUrl(this.docUrl = url);      
+      this.htmlview.richtext.url = this.docUrl = url;      
     }
     if(this.viewMode == #source)  
     {
       var r = this.textview.getContent();
-      this.htmlview.sourceToContent(r[0], this.docUrl, r[1], r[2]);
+      this.htmlview.richtext.sourceToContent(r[0], this.docUrl, r[1], r[2]);
     } else if(this.viewMode == #markdown) {
       var r = this.markview.getHTMLContent();
-      this.htmlview.sourceToContent(r[0], this.docUrl, r[1], r[2]);
+      this.htmlview.richtext.sourceToContent(r[0], this.docUrl, r[1], r[2]);
     }
 
-    if(!this.htmlview.saveDocument(this.docUrl)) {
+    if(!this.htmlview.richtext.save(this.docUrl)) {
       view.msgbox(#alert, "Cannot save document:" + URL.toPath(this.docUrl));
       return false;
     }
@@ -90,7 +90,7 @@ class Editor : Element
       if(this.viewMode == #source)  
         bytes = Bytes.fromString(this.textview.value,"utf-8");
       else 
-        bytes = this.htmlview.contentToBytes();
+        bytes = this.htmlview.richtext.contentToBytes();
       return { url: this.docUrl, folderUrl: this.folderUrl, content: bytes.compress().toString("base64") };
     }
     else 
@@ -98,7 +98,7 @@ class Editor : Element
   }
   function restoreContent(def) {
     if( def.content ) {
-      this.htmlview.bytesToContent(Bytes.fromString(def.content,"base64").decompress(), def.url);
+      this.htmlview.richtext.bytesToContent(Bytes.fromString(def.content,"base64").decompress(), def.url);
       this.docUrl = def.url;
       this.folderUrl = def.folderUrl;
       this.htmlChanged = true;
@@ -155,16 +155,16 @@ class Editor : Element
         return;
       switch(v) {
         case #source: {
-          var r = this.htmlview.contentToSource(); // r[0] - text, r[1] - anchor pos, r[2] - caret pos 
+          var [html,url,startPos,endPos] = this.htmlview.richtext.contentToSource(); 
           this.attributes["mode"] = "source";
-          this.textview.setText(r[0],r[1],r[2]);
+          this.textview.setText(html,startPos,endPos);
           cel = this.textview;
         } break;
         case #wysiwyg: {
           this.textChanged = false;
           var r = currentMode == #source ? this.textview.getContent() : this.markview.getHTMLContent();
           this.attributes["mode"] = "wysiwyg";        
-          this.htmlview.sourceToContent(r[0], this.docUrl, r[1], r[2]);
+          this.htmlview.richtext.sourceToContent(r[0], this.docUrl, r[1], r[2]);
           cel = this.htmlview;
         } break;
         case #markdown: {

@@ -1,10 +1,10 @@
-<html>
+﻿<html>
   <head>
     <meta name="generator" content="h-smile:richtext"/>
   </head>
 <body>
   <h1>Event object</h1>
-  <p>Represents user interface event. Events and correspondent event handlers are defined in <a href="Events.htm">Events</a>.</p>
+  <p>Represents user interface event. Events and corresponding event handlers are defined in <a href="Events.htm">Events</a>.</p>
   <dl>
     <h2>Constants</h2>
     <h3>Event Group codes (used with Element.subscribe() method)</h3>
@@ -280,8 +280,8 @@ VK_F20      VK_F21      VK_F22      VK_F23      VK_F24
       <p><code>#json</code> - returns value - json value.</p>
 			</dd><dt>keyPressed</dt>
 		<dd>(<b>vkKeyCode</b>: integer) : true | false<p>Class (static) function, reports true if key is pressed. Can be used to check state of for example CAPSLOCK or&nbsp;NUMLOCK keys :&nbsp;</p>
-
-			<pre>if( Event.keyPressed(Event.VK_CAPITAL) )
+			
+			<pre>if( Event.keyPressed(Event.VK_CAPITAL) ) 
   ... CAPSLOCK is pressed ... </pre></dd></dl>
   <h2 id="symbolic-event-names">Symbolic event names</h2>
   <p>Symbolic event names are used by <code>Element.subscribe(&quot;name&quot;, ...)</code>, <code>Element.on(&quot;name&quot;, ...)</code>, <code>Event.match(&quot;name&quot;, ...)</code> and <code>event <i>name</i>&nbsp;() {}</code> script functions.</p>
@@ -322,7 +322,7 @@ VK_F20      VK_F21      VK_F22      VK_F23      VK_F24
     <dd>- Event.CONTENT_CHANGED, &nbsp;received by the element when its content gets changed - DOM elements added or removed. &nbsp;</dd>
     <dt>inputlangchange</dt>
     <dd>- Event.INPUT_LANGUAGE_CHANGED, &nbsp;received by the focus element when the user changes input language. &nbsp;event.data is a string - ISO lang-country code.</dd>
-
+    
 		<h4>Mouse events</h4><dt>mousedown</dt>
     <dd>- Event.MOUSE_DOWN event;</dd>
     <dt>mouseup</dt>
@@ -335,7 +335,7 @@ VK_F20      VK_F21      VK_F22      VK_F23      VK_F24
     <dd>- Event.MOUSE_LEAVE event, mouse left the element.</dd>
     <dt>mousedragrequest</dt>
     <dd>- Event.MOUSE_DRAG_REQUEST event, drag condition (mouse pressed and moved) is detected.</dd>
-
+    
 		<h4>Focus events</h4><dt>focusin</dt>
     <dd>- Event.FOCUS_IN, the focusin event is sent to an element when it, or any element inside of it, gains focus. If focus stays inside some container then the container will not receive the event.</dd>
     <dt>focusout</dt>
@@ -344,14 +344,14 @@ VK_F20      VK_F21      VK_F22      VK_F23      VK_F24
     <dd>- Event.GOT_FOCUS, the focus event is sent to an element when it gains focus. Event.target is the element that got focus.</dd>
     <dt>blur</dt>
     <dd>- Event.LOST_FOCUS, the focus event is sent to an element when it loses focus. Event.target is the element that lost focus.</dd>
-
+    
 		<h4>Keyboard events</h4><dt>keydown</dt>
     <dd>- Event.KEY_DOWN, the keydown event is fired when a key is pressed down. Event.keyCode is virtual key code - one of Event.VK_**** values.</dd>
     <dt>keyup</dt>
     <dd>- Event.KEY_UP, the keyup event is fired when a key is released. Event.keyCode is virtual key code - one of Event.VK_**** values.</dd>
     <dt>keypress</dt>
     <dd>- Event.KEY_CHAR, the keypress event is fired when the element receives character value. Event.keyCode is a UNICODE code point of the character.</dd>
-
+    
 		<h4>Scroll event</h4><dt>scroll</dt>
     <dd>- scroll event;</dd>
 		<h4>Popup and tooltip events</h4>
@@ -359,16 +359,16 @@ VK_F20      VK_F21      VK_F22      VK_F23      VK_F24
     <dd>- Event.POPUP_REQUEST, the event is fired as a first phase of popup creation, when window for it is not created. event.source is the popup element. Use this event to popuplate content of the popup.</dd>
     <dt>popupready</dt>
     <dd>- Event.POPUP_READY, the event is fired as a last phase of popup creation, when window for it is created. event.source is the popup element.</dd>
-
-
+    
+		
 		<dt>popupdismissing</dt><dd>-&nbsp;Event.POPUP_DISMISSING,&nbsp;the event is sent&nbsp;<b>before</b> popup window gets removed from screen. The event is sent to the element itself while popup is still visible (but about to be closed).</dd><dt>popupdismissed</dt>
     <dd>- Event.POPUP_DISMISSED, the event is posted to the popup owner and <b>after</b> popup window gets removed from screen.</dd>
 		<dt>tooltiprequest</dt>
 		<dd>- Event.TOOLTIP_REQUEST, the event is sent in response to Event.MOUSE_IDLE.</dd>
-
+		
 		<h4>Element lifecycle events</h4><dt>detached</dt>
 		<dd>- not a bubbling event - is sent to the element itself only before it gets removed from the DOM.</dd>
-
+    
 		<h4>Document lifecycle events</h4><dt>close</dt>
     <dd>- Event.DOCUMENT_CLOSE, the event is fired as when document gets removed from its container (view or frame). Only document elements and its containers receive this event.</dd>
     <dt>closerequest</dt>
@@ -382,7 +382,7 @@ VK_F20      VK_F21      VK_F22      VK_F23      VK_F24
     <dd>- the event is fired to query readiness to execute the {command}. E.g. &quot;query:edit:paste&quot; event gets sent to check if the element is able to paste content from clipboard at the moment. The element can set event.result field to report availability of the command. Command can have additional command parameters in event.data field.</dd>
     <dt>exec:{command}</dt>
     <dd>- the event is fired to execute the {command}. E.g. &quot;query:edit:paste&quot; event is sent to the element to execute paste from clipboard.</dd>
-
+		
 		<h4>System drag and drop events</h4>
 		<dt>dragaccept</dt>
 		<dd>- fired before any other <code>drag***</code> events, a.k.a. <code>Event.X_WILL_ACCEPT_DROP</code> . &quot;Will the element accept the <code>event.dragging</code> data?&quot;. The element shall return <code>true</code> from the handler in order to receive all other drag/drop events.</dd><dt>drag</dt>

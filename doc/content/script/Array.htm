@@ -1,4 +1,4 @@
-<html>
+﻿<html>
   <head>
     <meta name="GENERATOR" content="BLOCKNOTE.NET"/>
     <meta name="source"/>
@@ -83,7 +83,7 @@
     <dt>sort</dt>
     <dd>
       <div><strong>( [compareFunction] )</strong> returns: array</div>
-      <p>Sorts elements of the array in ascending order. If the <em>compareFunction</em> provided it is used for comparing elements during sort. В <em>compareFunction</em> shall accept two values in parameters and return -1, 0 or +1 as a result.</p></dd>
+      <p>Sorts elements of the array in ascending order. If the <em>compareFunction</em> provided it is used for comparing elements during sort. <em>compareFunction</em> shall accept two values in parameters and return -1, 0 or +1 as a result.</p></dd>
     <dt>indexOf</dt>
     <dd>
       <div><strong>( </strong><em>value</em> [, <em>notfound</em> = -1] <strong>)</strong> returns: int | <em>notfound</em></div>
@@ -153,10 +153,10 @@ var squares = numbers.map(:el:el*el); // make new array of
 				</ul>
 			<p>If <i>thisArg</i> is provided then it is passed as <i>this</i> variable into the predicate calls.</p>
 			<p>The function returns as found index and as the element and so it can be used as:</p>
-
+			
 			<pre>var (i,v) = someArr.find(:el: el.id == &quot;foo&quot; ); // value and index, or
 var v = someArr.find(:el: el.id == &quot;foo&quot; ); // just value</pre>
-
+			
 			</dd>
     <dt>some</dt>
     <dd><strong>( </strong><b>predicate</b>:function [, <b>thisArg</b>: object]<strong> )</strong> :  true | false <p> Calls <i>predicate</i> function for each element of the array until the predicate returns &quot;truthy&quot; value and returns <i>true</i>. If there is no element in the array for which the predicate is true then the method returns <i>false</i>.</p>

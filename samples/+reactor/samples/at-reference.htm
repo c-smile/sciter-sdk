@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style></style>
+        <script type="text/tiscript">
+
+include "sciter:reactor.tis";
+
+function MyButtonWithData(props) {
+  var data = props.data || {};
+  return <button @{ @.data = data }>Check my data</button>;
+}
+
+const someData = {foo:"bar"};
+
+function Main() {
+  return <main>
+    <MyButtonWithData data={someData}/>
+  </main>;
+}
+
+event click $(button) {
+  view.msgbox(#info, String.printf("button.data=%V",this.data));
+}
+
+        </script>
+    </head>
+    <body>
+
+<reactor|Main/>
+
+    </body>
+</html>

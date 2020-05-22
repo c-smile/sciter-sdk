@@ -81,7 +81,7 @@ pre { width:max-content; padding:4dip; background:#eef; }
         </style>
         <script type="text/tiscript">
 
-event click $(a[href]) {
+event ~click $(a[href]) {
   Sciter.launch(this.attributes["href"]);
   return true;
 }
@@ -106,7 +106,10 @@ function self.ready() {
     <section#main>
       <widget.shortcuts>Keyboard shortcuts</widget> <div#shortcuts><include src="shortcuts.htm" /></div>
       <widget.license>License</widget>              <div><frame #license src="license.htm" content-style="license.css" /></div>
-      <widget.donate>Better html-notepad</widget>   <div#donate><include src="donate.htm" /></div>      
+      <widget.donate>
+            <a.donate-link href="https://html-notepad.com/to-make-it-better/#help-to-develop">
+            <p>Improve your karma<br>even more <img.smile src="smile.gif"></p> 
+            <p>Donate to HTML-NOTEPAD<br>development!</p></a></widget>  <div#donate><include src="donate.htm" /></div>      
       <widget.check-version>Check version</widget>  <div#check-version><include src="check-version.htm" /></div>
     </section>
   </body>

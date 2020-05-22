@@ -21,21 +21,17 @@ public:
   {
   }
 
-  BEGIN_FUNCTION_MAP
-    FUNCTION_0("argv", get_argv);
-    FUNCTION_0("version", get_version);
-  END_FUNCTION_MAP
-
-  sciter::value  get_argv() {
+  std::vector<sciter::value>  get_argv() {
     std::vector<sciter::value> vargs;
     for (auto& arg : sciter::application::argv())
       vargs.push_back(sciter::value(arg));
-    return sciter::value::make_array(UINT(vargs.size()), &vargs[0]);
+    return vargs;
   }
 
-  sciter::value  get_version() {
-    return sciter::value(WSTR(APP_VERSION));
-  }
+  SOM_PASSPORT_BEGIN(frame)
+    SOM_PROPS(SOM_RO_VIRTUAL_PROP(argv, get_argv))
+  SOM_PASSPORT_END
+
 
 };
 

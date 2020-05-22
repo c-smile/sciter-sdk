@@ -39,6 +39,8 @@ workspace "sciter.sdk"
   platforms { "x32", "x64", "arm64" } 
 
   cppdialect "C++14" 
+
+  staticruntime "On"
   
   -- -- location "build"
   filter "system:windows"

@@ -5,7 +5,7 @@ class Version : Element
   function attached() 
   {
     try {
-      this.version = view.version();
+      this.version = Sciter.version;
       this.$(var#current-version).text = this.version;
     } catch(e) {
     }
