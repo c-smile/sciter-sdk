@@ -382,7 +382,7 @@ struct SciterGraphicsAPI
   // pop clip layer previously set by gPushClipBox or gPushClipPath
   GRAPHIN_RESULT
         SCFN(gPopClip) ( HGFX hgfx);
-
+    
   // image painter
 
     GRAPHIN_RESULT
@@ -414,6 +414,8 @@ struct SciterGraphicsAPI
   GRAPHIN_RESULT
         SCFN(vUnWrapText) ( const VALUE* fromValue, HTEXT *phtext);
 
+  GRAPHIN_RESULT
+        SCFN(gFlush) (HGFX hgfx);
 
 
 };

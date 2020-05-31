@@ -1,0 +1,144 @@
+include "sciter:reactor.tis";
+
+const APP_NAME = "sciter-quark";
+
+include "settings.tis";
+include "data.tis";
+include "utils.tis";
+include "package.tis";
+
+function self.ready() // a.k.a. main()
+{
+  Settings.restore();
+  checkForImageMagic(function(found) {
+    if(found) return;
+    self.post(function() {
+       view.msgbox(#alert, "ImageMagic convert utility not found\nPlease install it and run again!");
+    })
+  });
+}
+
+class ProjectsView : Reactor.Component 
+{
+
+  function attached() {
+    var me = this;
+    self << event current-project-property-change { me.update(); } 
+    self << event current-project-change { me.update(); } 
+  }
+
+  function render() 
+  {
+     const Option = project =>
+        <option value={project.id}>
+          <img src={ URL.fromPath(project.logo) } /> {project.name}
+        </option>;
+
+    return <section#projects> 
+      <toolbar>
+        <button.new title="new project" />
+        <button.clone :disabled={!Data.project} title="clone project" />
+        <button.delete :disabled={!Data.project} title="delete project" />
+      </toolbar>
+      <select|list :value={ Data.project?.id } >{Data.projects.map(Option)}</select>
+    </section>;
+  } 
+
+  event click $(button.new) { Data.addNewProject(); }
+  event click $(button.clone) { Data.cloneCurrentProject(); }
+  event change $(select) (evt,select) {  Data.selectProject(select.value); }
+} 
+
+class ProjectView : Reactor.Component {
+
+  this var form = null;
+
+  function attached() {
+    var me = this;
+    self << event current-project-change { 
+      me.merge(me.render());
+      if(me.form) {
+        me.form.value = Data.project;
+        $(button#assemble).state.disabled = !validate(Data.project);
+      }
+    }
+    if(Data.project)
+      this.update();
+  }
+
+  function detached() {
+    debug detached: this;
+  }
+
+  function validate(vals) {
+    return vals.name 
+        && vals.exe
+        && vals.resources
+        && vals.targets.length
+        && vals.out;
+  }
+
+  function renderEmpty() {
+     return <section#project>
+       <div.introduction>
+          <img.arrow src="stock:arrow-left"/> Create new project
+          <h1>Sciter.Quark v.{Sciter.version}</h1> 
+       </div>
+     </section>
+  }
+
+  function render() {
+
+    if(!Data.project)
+      return this.renderEmpty();
+
+    //var atts = Data.project ?{}:{disabled:true};
+    //debug render: atts;
+
+    return <section#project :disabled={!Data.project}>
+      <form @{this.form}>
+        <label>Project</label>
+              <input|text(name) novalue="project name"/>
+        <label>Executable</label>
+              <input|text(exe) novalue="executable name (no ext)"/>
+        <label>Icon</label>
+              <FileSelector(logo) novalue="SVG icon" />
+        <label>Resources</label>
+              <FolderSelector(resources) novalue="app resources folder"/>
+        <label>Product</label>
+              <input|text(productName) novalue="product name"/>
+        <label>Version</label>
+              <input|text(productVersion) novalue="product version"/>
+        <label>Copyright</label>
+              <input|text(productCopyright) novalue="product copyright"/>
+        <label>Targets</label>
+            <select|select(targets) multiple="checkmarks">
+              <option value="winX32">Windows</option>
+              <option value="winARM64">Windows/ARM</option>
+              <option value="macX64">Mac OSX</option>
+              <option value="macARM64" disabled>Mac OSX/ARM</option>
+              <option value="linuxX64">Linux</option>
+              <option value="linuxARM64" disabled>Linux/ARM</option>
+              <option value="ios" disabled>iOS</option>
+              <option value="android" disabled>Android</option>
+            </select>
+        <label>Output</label>
+            <FolderSelector(out) novalue="output folder"/>
+      </form>
+      <LogRunner />
+      <button#assemble disabled>Assemble</button>
+    </section>
+  }
+
+  event change $(form) (evt,form) { 
+    var vals = form.value;
+    Data.updateCurrentProject(vals);
+    $(button#assemble).state.disabled = !validate(vals);
+  }
+
+  event click $(button#assemble) {
+    assemble(Data.project);
+  }
+  
+} 
+

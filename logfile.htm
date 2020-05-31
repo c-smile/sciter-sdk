@@ -10,7 +10,18 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#fff7e6">4.4.3.19</td><td nowrap valign="top" align="center">2020-05-22</td><td>Fixes:
+    <tr><td valign="top" bgcolor="#fff7e6">4.4.3.20</td><td nowrap valign="top" align="center">2020-05-31</td><td>New:
+					<ul><li><a href="https://quark.sciter.com/">Sciter Quark</a> - Sciter Application Packager - takes scapp.exe and custom HTML/CSS/script resources and produces monolithic executables from them. See: sdk/quark (sources) and sdk/bin.quark - bootstrap starters;</li>
+						<li>[Skia/OpenGL] demo of native OpenGL drawing sdk/include/behaviors/behavior_drawing-opengl.cpp and sdk/samples/behaviors/opengl-drawing.htm - works on Sciter versions with Skia backend;&nbsp;</li>
+						<li>[Graphic API] + <code>GRAPHIN_RESULT SCFN(gFlush) (HGFX hgfx);</code> -&gt; <code>sciter::graphics::flush()</code> - commit batches to GPU;</li>
+						</ul>
+					<p>Fixes:</p>
+					<ul><li>[Reactor] various regression fixes;</li>
+						<li>[JPEG/Exif] rotated jpeg images handling;</li>
+						<li>[windows] fix of <code>view.clipboard(#put|#get, image)</code> ;</li>
+						<li>[&lt;plaintext&gt;] fix of drag-n-drop non-text handling from external sources;</li>
+						<li>[windows] Skia backend, CPU requirement is relaxed to SSE2;</li>
+						<li>[SOM] Fix of <a href="https://sciter.com/forums/topic/wsciter-4-4-3-19-crash-in-behavior_tabs-cpp/">https://sciter.com/forums/topic/wsciter-4-4-3-19-crash-in-behavior_tabs-cpp/</a></li></ul></td></tr><tr><td valign="top" bgcolor="#fff7e6">4.4.3.19</td><td nowrap valign="top" align="center">2020-05-22</td><td>Fixes:
 					<ul>
 						
 						

@@ -1,0 +1,184 @@
+
+@const DARK_BASE: #333344;
+@const LIGHT_BASE: #f3f3f8;
+
+html { 
+  background: transparent; 
+  width:680dip;
+  height:680dip;
+}
+
+body { 
+  margin:0; 
+  font:system;
+}
+
+body > frameset {
+  size:*;
+}
+
+section#projects {
+  background: @DARK_BASE;
+  color:#fff;
+  width:200dip;
+}
+
+section#projects > toolbar {
+  background:transparent;
+  width:*;
+  padding:3dip;
+  border-bottom:1dip solid morph(@DARK_BASE,lighten:20%);
+}
+
+section#projects > toolbar > button { 
+  size:2.4em; 
+  padding:0; 
+  fill:#f3f3f8;
+  stroke:none;
+  foreground-size:1.2em;
+  foreground-position:50% 50%;
+  foreground-repeat:no-repeat;
+}
+
+section#projects > toolbar > button:disabled {
+  fill:morph(@DARK_BASE,lighten:20%);
+}
+
+button.new {
+  foreground-image: url(path:M1344 800v64q0 14-9 23t-23 9h-352v352q0 14-9 23t-23 9h-64q-14 0-23-9t-9-23v-352h-352q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h352v-352q0-14 9-23t23-9h64q14 0 23 9t9 23v352h352q14 0 23 9t9 23zm128 448v-832q0-66-47-113t-113-47h-832q-66 0-113 47t-47 113v832q0 66 47 113t113 47h832q66 0 113-47t47-113zm128-832v832q0 119-84.5 203.5t-203.5 84.5h-832q-119 0-203.5-84.5t-84.5-203.5v-832q0-119 84.5-203.5t203.5-84.5h832q119 0 203.5 84.5t84.5 203.5z);
+}
+
+button.clone {
+  foreground-image: url(path:M1664 1632v-1088q0-13-9.5-22.5t-22.5-9.5h-1088q-13 0-22.5 9.5t-9.5 22.5v1088q0 13 9.5 22.5t22.5 9.5h1088q13 0 22.5-9.5t9.5-22.5zm128-1088v1088q0 66-47 113t-113 47h-1088q-66 0-113-47t-47-113v-1088q0-66 47-113t113-47h1088q66 0 113 47t47 113zm-384-384v160h-128v-160q0-13-9.5-22.5t-22.5-9.5h-1088q-13 0-22.5 9.5t-9.5 22.5v1088q0 13 9.5 22.5t22.5 9.5h160v128h-160q-66 0-113-47t-47-113v-1088q0-66 47-113t113-47h1088q66 0 113 47t47 113z);
+}
+
+button.delete {
+  margin-left:*;
+  foreground-image: url(path:M1344 800v64q0 14-9 23t-23 9h-832q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h832q14 0 23 9t9 23zm128 448v-832q0-66-47-113t-113-47h-832q-66 0-113 47t-47 113v832q0 66 47 113t113 47h832q66 0 113-47t47-113zm128-832v832q0 119-84.5 203.5t-203.5 84.5h-832q-119 0-203.5-84.5t-84.5-203.5v-832q0-119 84.5-203.5t203.5-84.5h832q119 0 203.5 84.5t84.5 203.5z);
+}  
+
+
+section#projects > select
+{
+  display:block;
+  background: transparent;
+  color:#fff;
+  size:*; // spans all available space
+  border:none;
+  overflow:scroll-indicator;
+}
+
+section#projects > select > option {
+  font-size:14pt;
+  line-height:2em;
+  color: #fff;
+}
+
+section#projects > select > option:current {
+  background: morph(@DARK_BASE,lighten:20%);
+}
+
+section#projects > select > option > img {
+  size:2em;
+  foreground-size:1.6em;
+  margin: 0 0.25em;
+  vertical-align:middle;
+}
+
+section#project {
+  background: #f3f3f8;
+  color:#000;
+  padding:6dip 3dip 3dip 1dip;
+  width:*;
+  border-spacing: 3dip;
+}
+
+section#project > form {
+  size:*;
+  flow: row(label,input select fileselector);
+  border-spacing: 3dip;
+}
+
+section#project > form > label {
+  display:block;
+  line-height: 2em;
+  white-space: nowrap;
+  vertical-align:top;
+  text-align:right;
+  width:max-content;
+}
+
+section#project > form input {
+  display:block;
+  width:*;
+  border-radius:none;
+}
+
+section#project > form button {
+  display:block;
+  width:2em;
+  height:*;
+  padding:0;
+}
+
+section#project > form > select 
+{
+  display:block;
+  width:*;
+  height:max-content;
+  padding:4dip;
+}
+
+option {
+  line-height:1.6em;
+}
+
+section#project > plaintext {
+  font:system;
+  padding:3dip;
+  background-color: morph(@LIGHT_BASE,lighten:2%);
+  size:*;
+  overflow:scroll-indicator;
+}
+
+section#project > plaintext > text.stderr {
+  color:red;
+}
+section#project > plaintext > text.result {
+  color:green;
+}
+
+
+button#assemble {
+  display:block;
+  background: linear-gradient(to bottom, morph(@DARK_BASE,lighten:30%), @DARK_BASE );
+  color:#fff;
+  border-color:#333;
+  padding:0.25em 1em;
+  margin:6dip *; // in the middle
+}
+
+button#assemble:hover {
+  background: linear-gradient(to bottom, morph(@DARK_BASE,lighten:40%), morph(@DARK_BASE,lighten:10%) );
+}
+
+button#assemble:active {
+   background: @DARK_BASE;
+}
+
+button#assemble:disabled {
+  opacity:0.5;
+}
+
+div.introduction {
+  size:*;
+}
+
+div.introduction img.arrow {
+  vertical-align:middle;
+}
+
+div.introduction > h1 {
+  margin:* 0; // flex it to the middle
+  text-align: center;
+}

@@ -36,7 +36,7 @@ struct video_generated_stream: public event_handler
       he = he;
     }
 
-    virtual void detached  (HELEMENT he ) { delete this; }
+    virtual void detached  (HELEMENT he ) { asset_release(); }
     virtual bool on_event (HELEMENT he, HELEMENT target, BEHAVIOR_EVENTS type, UINT_PTR reason )
     {
       if(type != VIDEO_BIND_RQ)

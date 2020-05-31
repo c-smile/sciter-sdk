@@ -59,7 +59,7 @@ struct native_textarea: public event_handler
     { 
       if (this_hwnd)
         ::DestroyWindow(this_hwnd);
-      delete this; 
+      asset_release();
     }
 
     virtual bool handle_method_call(HELEMENT he, METHOD_PARAMS& params) { 

@@ -1,0 +1,1 @@
+../../bin.osx/scapp ../../quark/index.htm

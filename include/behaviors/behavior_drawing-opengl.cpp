@@ -1,9 +1,7 @@
 #include "stdafx.h"
 #include "sciter-x.h"
 #include "sciter-x-behavior.h"
-#include "sciter-x-threads.h"
-
-//#include <thread>
+#include "sciter-x-graphics.hpp"
 
 #if defined(WINDOWS)
   #define WIN32_LEAN_AND_MEAN
@@ -25,127 +23,118 @@
   #include <GL/glx.h>
 #endif
 
-struct  context {
-   HWND  hwnd;
-   HGLRC mainGLRC;
-   bool  done;
-   sciter::sync::event event_draw;
-   sciter::sync::event event_draw_complete;
-};
-
-void opengl_thread(context* ctx)
-{
-
-  HDC    hdc = GetDC(ctx->hwnd);
-  HGLRC  hglrc = wglCreateContext(hdc); ;
-
-  wglShareLists(ctx->mainGLRC,hglrc);
-
-  // make it the calling thread's current rendering context 
-  wglMakeCurrent(hdc, hglrc);
-
-  //Set up the orthographic projection so that coordinates (0, 0) are in the top left
-  //and the minimum and maximum depth is -10 and 10. To enable depth just put in
-  //glEnable(GL_DEPTH_TEST)
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  glOrtho(0, 640, 480, 0, -10, 10);
-
-  //Back to the modelview so we can draw stuff 
-  glMatrixMode(GL_MODELVIEW);
-  glLoadIdentity();
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Clear the screen and depth buffer
-
-  for(;;) {
-
-    ctx->event_draw.wait();
-    if(ctx->done)
-     break;
-
-    wglMakeCurrent(hdc, hglrc); // ?
-
-    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glPushMatrix();         //Make sure our transformations don't affect any other transformations in other code
-    glTranslatef(0, 0, 10);  //Translate rectangle to its assigned x and y position
-                            //Put other transformations here
-    glBegin(GL_QUADS);      //We want to draw a quad, i.e. shape with four sides
-    glColor3f(1, 0, 0);     //Set the colour to red 
-    glVertex2f(0, 0);       //Draw the four corners of the rectangle
-    glVertex2f(0, 480);
-    glVertex2f(640,480);
-    glVertex2f(640, 0);
-    glEnd();
-    glPopMatrix();
-
-    glFlush();
-
-    ctx->event_draw_complete.signal();
-  
-  }
-
-  // make the rendering context not current  
-  wglMakeCurrent(NULL, NULL);
-  // delete the rendering context  
-  wglDeleteContext(hglrc);
-
-  ReleaseDC(ctx->hwnd,hdc);
-
-  //ctx->event_draw_complete.signal();
-}
-
-
 
 namespace sciter
 {
 /*
-BEHAVIOR: native-clock
-  - draws content layer using sciter-x-graphics.hpp primitives.
-
 SAMPLE:
    See: samples/behaviors/native-drawing.htm
 */
 
 struct molehill_opengl: public event_handler
 {
-    context* ctx;
+    HWND  hwnd = NULL;
+    HGLRC mainGLRC = NULL;
+    HGLRC thisGLRC = NULL;
+    HDC   hdc = NULL;
+
+    float   theta = 0;
+    INT32   color1 = 0xFF0000;
+    INT32   color2 = 0x00FF00;
+    INT32   color3 = 0x0000FF;
 
     // ctor
-    molehill_opengl(): ctx(nullptr) {}
+    molehill_opengl() {}
     virtual ~molehill_opengl() {}
 
     virtual bool subscription( HELEMENT he, UINT& event_groups )
     {
-      event_groups = HANDLE_DRAW;   // it does drawing
+      event_groups = HANDLE_ALL;   // it does drawing
       return true;
     }
 
     virtual void attached  (HELEMENT he ) 
     {
-      ctx = new context();
-      ctx->hwnd = dom::element(he).get_element_hwnd(true);
-      ctx->mainGLRC = wglGetCurrentContext();
-      sciter::thread(opengl_thread,ctx);
+      hwnd = dom::element(he).get_element_hwnd(true);
     }
     virtual void detached  (HELEMENT he ) { 
-      ctx->done = true;
-      ctx->event_draw.signal();
-      //ctx->event_draw_complete.wait();
-      //delete ctx;
-      delete this; 
+      wglDeleteContext(thisGLRC);
+      ReleaseDC(hwnd, hdc);
+      asset_release(); 
+    }
+
+    void init_drawing() {
+
+      if (!mainGLRC) {
+        mainGLRC = wglGetCurrentContext();
+        hdc = GetDC(hwnd);
+        thisGLRC = wglCreateContext(hdc);
+        wglShareLists(mainGLRC, thisGLRC);
+      }
+
+    }
+
+    void set_color(INT32 clr) {
+      glColor3f(
+        (clr & 0xFF) / 255.0f,
+        ((clr >> 8) & 0xFF) / 255.0f,
+        ((clr >> 16) & 0xFF) / 255.0f);
     }
 
     virtual bool handle_draw   (HELEMENT he, DRAW_PARAMS& params ) 
     {
-      if( params.cmd != DRAW_CONTENT ) return false; // drawing only content layer
-       
-      ctx->event_draw.signal();
-      //ctx->event_draw_complete.wait();
+      if( params.cmd != DRAW_CONTENT ) 
+        return false; // drawing only content layer
 
-      //return false;
+      HGLRC currentGLRC = wglGetCurrentContext();
+      if (!currentGLRC)
+        return false;
+
+      sciter::graphics gfx(params.gfx);
+
+      gfx.flush(); // we need to flush current command buffers in order our own 
+                   // commands to appear on top of them. 
+      init_drawing();
+
+      // Do our own OpenGL drawing:
+
+      // make it the current rendering context 
+      wglMakeCurrent(hdc, thisGLRC);
+
+      //--- glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // do not clear what is drawn underneath
+
+      glPushMatrix();
+      glRotatef(theta, 0.0f, 0.0f, 1.0f);
+      glBegin(GL_TRIANGLES);
+      set_color(color1); glVertex2f(0.0f, 1.0f);
+      set_color(color2); glVertex2f(0.87f, -0.5f);
+      set_color(color3); glVertex2f(-0.87f, -0.5f);
+      glEnd();
+      glPopMatrix();
+
+      glFlush();
+
+      // make the rendering context not current  
+      wglMakeCurrent(hdc, currentGLRC);
 
       return true; // done drawing
     
     }
+    
+
+    // script API
+
+    SOM_PASSPORT_BEGIN_EX(molehill,molehill_opengl)
+      //SOM_FUNCS()
+      SOM_PROPS(
+        SOM_PROP(theta),
+        SOM_PROP(color1),
+        SOM_PROP(color2),
+        SOM_PROP(color3)
+      )
+    SOM_PASSPORT_END
+
+
 
 };
 

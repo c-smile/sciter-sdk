@@ -223,15 +223,16 @@ event click $(button#inspector)
   if( var connectToInspector = view.connectToInspector ) {
 
     const SUFFIX = { Windows: ".exe", OSX: ".app" };
+    const PREFIX = { Windows: "", OSX: "../../../" };
 
-    var inspectorPath = System.home("inspector" + (SUFFIX[System.PLATFORM] || ""));
+    var inspectorPath = System.home((PREFIX[System.PLATFORM] || "") + "inspector" + (SUFFIX[System.PLATFORM] || ""));
     
     if( !System.scanFiles(inspectorPath) ) {
       view.msgbox(#alert, "Cannot find " + inspectorPath);
       return;
     }
     Sciter.launch(inspectorPath);
-    self.timer(300ms, function() { connectToInspector($(frame#content)) });
+    self.timer(500ms, function() { connectToInspector($(frame#content)) });
     
   }
 }

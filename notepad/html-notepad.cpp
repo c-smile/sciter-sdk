@@ -5,7 +5,7 @@
 #include "version.h"
 
 #if defined(WINDOWS)
-  #include <VersionHelpers.h>
+  //#include <VersionHelpers.h>
   #define FLAGS (SW_TITLEBAR | SW_RESIZEABLE | SW_CONTROLS | SW_MAIN | SW_GLASSY)
 #elif defined(OSX)
   #define FLAGS (SW_TITLEBAR | SW_RESIZEABLE | SW_CONTROLS | SW_MAIN | SW_GLASSY)
@@ -58,6 +58,7 @@ int uimain(std::function<int()> run ) {
 
   // note: this:://app URL is dedicated to the sciter::archive content associated with the application
 
+ /*
 #if defined(WINDOWS)
   if(IsWindows7SP1OrGreater())
     pwin->load( WSTR("this://app/frame-windows.htm") );
@@ -68,6 +69,9 @@ int uimain(std::function<int()> run ) {
 #else
   pwin->load( WSTR("this://app/frame-else.htm") );
 #endif
+*/
+  pwin->load(WSTR("this://app/index.htm"));
+
   pwin->expand();
 
   return run();

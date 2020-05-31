@@ -3,22 +3,125 @@
     <title></title>
     <style>
     
-      html {background:gold;}
+      html {background:transparent;}
+
+      body {
+        flow:stack; // sandwich - canvas.opengl at bottom, side-panel on top   
+        margin:0;
+      }
     
       canvas.opengl {
         behavior:molehill-opengl;
         display:block;
-        size:640dip 480dip;
+        size:*; // spans whole container
         border:1dip solid;
       }
     
-    
+      section#side-panel 
+      {
+        font:system;
+        background-color: rgba(140,140,140,0.7);
+        width:200dip;
+        height:*;
+        margin-left:*; /*attached to the right side*/
+        padding:10dip;
+        border-left: rgba(240,240,240,0.5) solid 1dip;
+        transform: translate(95%, 0);
+      }
+      section#side-panel:hover 
+      {
+        transform: translate(0%, 0);
+        transition: transform(quad-out, 300ms, 200ms); /*300ms transition, 200ms delay to start */
+      }
+      
+      section#side-panel > p 
+      {
+        background:rgba(255,255,255,0.8);
+        padding:0.5em 1em;
+        border-radius: 4dip;
+      }
+      
+      form 
+      {
+        flow:row(label,input); /*organized in table having one <label> and one <input> per row */
+      }   
+
+      form > label { white-space:nowrap; }
+
+      form > input.hue {
+        display:block; 
+        border:none;
+        height: 3dip;
+        width:90dip;
+        margin:0 *;
+        background: linear-gradient(left, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
+      }
+      
+
+
     </style>
-    <script type="text/tiscript"></script>
+    <script type="text/tiscript">
+
+      const elOpenGL = $(canvas.opengl);
+
+      var rotationAngleDelta = 3deg;
+
+      event change $(form) (evt,form) {
+        function hue2color(hue) { return Color.hsv(hue,1.0,1.0) }
+        var vals = form.value;
+        elOpenGL.molehill.color1 = hue2color(vals.hue1);
+        elOpenGL.molehill.color2 = hue2color(vals.hue2);
+        elOpenGL.molehill.color3 = hue2color(vals.hue3);
+        rotationAngleDelta = vals.speed * 3deg;
+      } 
+
+      function self.ready() {
+
+        function int2hue(i) { 
+          var (H,S,V) = color(i).toHSV(); 
+          return H;
+        }
+
+        $(form).value = {
+          hue1: int2hue(elOpenGL.molehill.color1),
+          hue2: int2hue(elOpenGL.molehill.color2),
+          hue3: int2hue(elOpenGL.molehill.color3),
+        };
+      }
+
+      elOpenGL.animate(function() {
+        elOpenGL.molehill.theta += rotationAngleDelta; 
+        elOpenGL.refresh();
+        return true; // 60FPS;
+      });
+
+
+    </script>
   </head>
 <body>
 
   <canvas.opengl />
+
+  <section id="side-panel">
+    <p>Demonstration of input elements handling in OpenGL window</p>
+    <form>
+      <label>speed:</label><input(speed) type="hslider" value=1.0 min=0.0 max=2.0 />
+      <label>color 1:</label><input.hue(hue1) type="hslider" value=0 min=0 max=360 />
+      <label>color 2:</label><input.hue(hue2) type="hslider" value=0 min=0 max=360 />
+      <label>color 3:</label><input.hue(hue3) type="hslider" value=0 min=0 max=360 />
+    </form>
+    <hr />
+    <input|text value="Hello world!"> 
+    <hr />
+    <button #append>Append</button> 
+    <button #open>Open</button> 
+    <select>
+      <option>First</option>
+      <option>Second</option>
+      <option>Third</option>
+    </select>
+    <input type=calendar />
+  </section>  
 
 </body>
 </html>

@@ -94,7 +94,12 @@ namespace sciter
     }     
     
     ShowWindow(_hwnd, SW_SHOW);
-    
+
+    /*dom::element frame = root_el.find_first("frame");
+    frame.set_style_attribute("transform", L"translate(10dip, 10dip)");
+    auto attrval = frame.get_style_attribute("transform");
+    attrval = attrval;*/
+        
     return true;
   }
 

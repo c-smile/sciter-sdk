@@ -1,0 +1,105 @@
+include "sciter:reactor.tis";
+
+class FileSelector : Reactor.Component 
+{
+  const styleset = ["fileselector", $url(utils.css)];
+  this var name;
+  this var novalue;
+  this var type = "file";
+
+  function this(props) { 
+    this.extend(props); 
+  }
+
+  function render() {
+    return <fileselector {{class:this.type}}>
+      <input|text name={this.name} novalue={this.novalue}/>
+      <button.select/>
+    </fileselector>;
+  }
+
+  property value(v) {
+    get return this.$(input).value;
+    set this.$(input).value = v;
+  }
+
+  event click $(button.select) { 
+    var fn = this.doSelect(); 
+    if(fn) {
+      this.$(input).value = URL.toPath(fn); 
+      this.postEvent("change");
+    }
+    return true;
+  }
+
+  function doSelect() {
+    return view.selectFile(#open,"SVG Files (*.svg)|*.svg|All Files (*.*)|*.*" , "svg");
+  }
+}
+
+class FolderSelector : FileSelector {
+
+  function this(props) { 
+    super(props);
+    this.type = "folder";
+  }
+
+  function doSelect() {
+    return view.selectFolder();
+  }
+}
+
+// process runner + log 
+class LogRunner : Reactor.Component
+{
+  this var lines = [];
+  var me;
+
+  function attached() { me = this; }
+
+  function render() {
+    if(this.lines.length) this.post(() => this.last.scrollToView()); // ensure last line is visible
+    return <plaintext id="log" readonly="">
+      { this.lines.map( (line,index) => <text key={index} {{class:line.type}}>{line.text}</text> ) }
+    </plaintext>;
+  }
+
+  function add(text,type = #stdout) {
+    // using 'me' here so it can be used as a class method too 
+    me.lines.push { type:type, text:text };
+    me.update();
+  }
+
+  // whendone( status, text: array of strings )
+  function run(exepath, args, whendone = null) { 
+    me.add( exepath + " " + args.join(" "), #initial);
+    var proxy = System.Process.exec(exepath,args);
+    
+    proxy << event stdout(text) { me.add(text,#stdout); };
+    proxy << event stderr(text) { me.add(text,#stderr); };
+    proxy << event terminate(status) { if(whendone) whendone(status,me.lines.map(line => line.text)) };
+
+    return proxy;
+  }
+
+  function clear() {
+    me.lines = [];
+    me.update();
+  }
+
+}
+
+function checkForImageMagic( resultCb ) {
+  var signatureFound = false;
+
+  if( System.PLATFORM != #Windows )
+  	return; // we need it only on Windows so far
+  
+  var proc = System.Process.exec("convert",["-version"]); // 'convert' is an IM utility we need
+  if(!proc) { self.post( :: resultCb(false) ) }
+  else {       
+    proc << event stdout(text) { signatureFound = signatureFound || text.indexOf("ImageMagic") >= 0; };
+    proc << event terminate(status) { resultCb(signatureFound) };
+  }
+}
+

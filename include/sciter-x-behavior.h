@@ -50,6 +50,8 @@
       HANDLE_EXCHANGE              = 0x1000, /**< system drag-n-drop */
       HANDLE_GESTURE               = 0x2000, /**< touch input events */
 
+      HANDLE_SOM                   = 0x8000, /**< som_asset_t request */
+
       HANDLE_ALL                   = 0xFFFF, /*< all of them */
 
       SUBSCRIPTIONS_REQUEST        = 0xFFFFFFFF, /**< special value for getting subscription flags */
@@ -101,11 +103,23 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
   struct INITIALIZATION_PARAMS
   {
     UINT cmd; // INITIALIZATION_EVENTS
-#ifdef CPP11
-    som_passport_t* passport = nullptr;
-#else
-    som_passport_t* passport;
-    INITIALIZATION_PARAMS() : passport( nullptr ) {}
+  };
+
+  enum SOM_EVENTS
+  {
+    SOM_GET_PASSPORT = 0,
+    SOM_GET_ASSET = 1
+  };
+
+  struct SOM_PARAMS
+  {
+    UINT cmd; // SOM_EVENTS
+    union {
+      som_passport_t* passport;
+      som_asset_t*    asset;
+    } data;
+#ifdef __cplusplus
+    SOM_PARAMS() : data() {}
 #endif
   };
 
@@ -816,11 +830,20 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
                   pThis->detached(he);
                 }
                 else if (p->cmd == BEHAVIOR_ATTACH) {
-                  p->passport = pThis->asset_get_passport();
                   pThis->attached(he);
                 }
                 return true;
               }
+            case HANDLE_SOM:
+              {
+                SOM_PARAMS *p = (SOM_PARAMS *)prms;
+                if (p->cmd == SOM_GET_PASSPORT)
+                  p->data.passport = pThis->asset_get_passport();
+                else if (p->cmd == SOM_GET_ASSET)
+                  p->data.asset = static_cast<som_asset_t*>(pThis); // note: no add_ref
+                return true;
+              }
+
             case HANDLE_MOUSE: {  MOUSE_PARAMS *p = (MOUSE_PARAMS *)prms; return pThis->handle_mouse( he, *p );  }
             case HANDLE_KEY:   {  KEY_PARAMS *p = (KEY_PARAMS *)prms; return pThis->handle_key( he, *p ); }
             case HANDLE_FOCUS: {  FOCUS_PARAMS *p = (FOCUS_PARAMS *)prms; return pThis->handle_focus( he, *p ); }

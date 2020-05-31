@@ -108,7 +108,7 @@ struct gdi_drawing: public event_handler
     }
 
     virtual void attached  (HELEMENT he ) { }
-    virtual void detached  (HELEMENT he ) { delete this; }
+    virtual void detached  (HELEMENT he ) { asset_release(); }
     
     virtual bool handle_draw   (HELEMENT he, DRAW_PARAMS& params ) 
     {

@@ -1,0 +1,113 @@
+
+async function convertSvgToIco(inp,outp) {
+  const args = ["-density","256x256","-background","transparent",inp,"-define","icon:auto-resize","-colors","256",outp];
+  var r = await LogRunner.run("magick",args);
+  if(r != 0) throw "convertSvgToIco: failed to produce .ICO file";
+}
+
+function checkFile(path) {
+  if(System.scanFiles(path)) return path;
+  return false;
+}
+
+function getPackfolderPath() {
+  if(System.PLATFORM == #Windows)
+    return checkFile(System.home("../packfolder.exe") ) 
+        || checkFile(System.home("../../bin.win/packfolder.exe"));
+  else if(System.PLATFORM == #OSX)
+    return checkFile(System.home("packfolder") ) 
+        || checkFile(System.home("../../bin.osx/packfolder"));
+  else if(System.PLATFORM == #Linux)
+    return  checkFile(System.home("../packfolder") ) 
+        || checkFile(System.home("../../bin.lnx/packfolder"));
+}
+
+function getScappPath(target) {
+  switch(target) {
+    case "winX32": return checkFile( System.home("../x32/scapp.exe") ) || checkFile( System.home("../../bin.win/x32/scapp.exe"));
+    case "winARM64": return checkFile( System.home("../arm64/scapp.exe") ) || checkFile(System.home("../../bin.win/arm64/scapp.exe"));
+    case "macX64": return checkFile( System.home("scapp") ) || checkFile(System.home("../../bin.osx/scapp"));
+    case "linuxX64": return checkFile( System.home("../x64/scapp") ) || checkFile( System.home("../../bin.lnx/x64/scapp"));
+  }
+}
+
+async function packageResources(folder,datfile) {
+
+  const packfolder = getPackfolderPath();
+  if(!packfolder)
+    throw "packageResources: no packfolder executable found";
+  const args = [folder,datfile,"-binary"];
+  var r = await LogRunner.run(packfolder,args);
+  if(r != 0) throw "packfolder: failed to produce .dat file";
+}
+
+function makePath(dir,subdirs,nameext) {
+  var path = dir;
+  for(var sub in subdirs) {
+    path += "/";
+    path += sub;
+    if(System.scanFiles(path)) continue;
+    if(!System.sync.mkdir(path)) throw "makePath: cannot create dir:" + path; 
+  }
+  //debug log: dir, path,nameext;
+  return path + "/" + nameext;
+}
+
+function assembleExe(target,scapp,datfile,exefile, params = null) {
+
+  var r = view.scapp.assembleExe(scapp,datfile,exefile,params);
+  var msg;
+  switch(r) {
+    case 0: LogRunner.add(String.$({target} Done!),#result); break;
+    case 1: LogRunner.add(String.$({target} Done, but no metadata update),#result); break;
+    case -1: LogRunner.add(String.$({target} FAILURE, no .dat file), #stderr); break;
+    case -2: LogRunner.add(String.$({target} FAILURE opening output file), #stderr); break;
+    case -3: LogRunner.add(String.$({target} FAILURE writing output file), #stderr); break;
+  }
+}
+
+async function assemble(params) {
+
+  LogRunner.clear();
+
+  const datfile = params.out + "/" + params.exe + ".dat";
+  const icofile = params.out + "/" + params.exe + ".ico";
+
+  try {
+    await packageResources(params.resources,datfile);
+    for( var target in params.targets ) 
+    {
+      switch(target) {
+        case "winX32": {
+          await convertSvgToIco(params.logo,icofile);
+          const scapp = checkFile( System.home("../x32/scapp.exe") ) || checkFile( System.home("../../bin.win/x32/scapp.exe"));
+          const exefile = makePath(params.out, ["windows","x32"], params.exe + ".exe");
+          var p = {}.extend(params,{icofile:icofile});
+          assembleExe(target,scapp,datfile,exefile,p);
+        } break;
+        case "winARM64": {
+          await convertSvgToIco(params.logo,icofile);
+          const scapp = checkFile( System.home("../arm64/scapp.exe") ) || checkFile(System.home("../../bin.win/arm64/scapp.exe"));
+          const exefile = makePath(params.out, ["windows","arm64"], params.exe + ".exe");
+          var p = {}.extend(params,{icofile:icofile});
+          assembleExe(target,scapp,datfile,exefile,p);
+        } break;
+        case "macX64": { // TODO: build proper .app bundle folder here
+          const scapp = checkFile( System.home("scapp") ) || checkFile( System.home("../../bin.osx/scapp"));
+          const exefile = makePath(params.out, ["macos","x64"], params.exe);
+          assembleExe(target,scapp,datfile,exefile);
+        } break;
+        case "linuxX64": {
+          const scapp = checkFile( System.home("../x64/scapp") ) || checkFile( System.home("../../bin.lnx/x64/scapp"));
+          const exefile = makePath(params.out, ["linux","x64"], params.exe);
+          assembleExe(target,scapp,datfile,exefile);
+        } break;
+      }
+    }
+  } 
+  catch(e) 
+  {
+    LogRunner.add(e, #stderr);
+  }
+}
+

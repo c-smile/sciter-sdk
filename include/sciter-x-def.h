@@ -323,7 +323,7 @@ typedef SCN_INVALIDATE_RECT *LPSCN_INVALIDATE_RECT;
 /**Load HTML file.
  *
  * \param[in] hWndSciter \b HWINDOW, Sciter window handle.
- * \param[in] url \b LPCWSTR, either absolute URL of HTML file to load. "file://...", "http://...", "res:***", "this://app/***" or absolute file path.
+ * \param[in] url \b LPCWSTR, either absolute URL of HTML file to load. "file://...", "http://...", "res:...", "this://app/..." or absolute file path.
  * \return \b BOOL, \c TRUE if the text was parsed and loaded successfully, \c FALSE otherwise.
  **/
  BOOL SCAPI     SciterLoadFile(HWINDOW hWndSciter, LPCWSTR url);

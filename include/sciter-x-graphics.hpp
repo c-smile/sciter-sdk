@@ -782,6 +782,12 @@ namespace sciter
       GRAPHIN_RESULT r = gapi()->gPopClip( hgfx); 
       assert(r == GRAPHIN_OK); (void)(r);
     }
+
+    void flush() {
+      assert(hgfx);
+      GRAPHIN_RESULT r = gapi()->gFlush(hgfx);
+      assert(r == GRAPHIN_OK); (void)(r);
+    }
   };
 
   class painter

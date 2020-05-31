@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef __SCITER_OM_DEF_H__
+#define __SCITER_OM_DEF_H__
+
 #include "sciter-x-types.h"
 #include "sciter-x-value.h"
 
@@ -48,21 +51,21 @@ struct som_method_def_t {
 
 enum som_passport_flags {
   SOM_SEALED_OBJECT = 0x00,    // not extendable
-  SOM_EXTENDABLE_OBJECT = 0x01 // extendable, asset may have new properties added 
+  SOM_EXTENDABLE_OBJECT = 0x01 // extendable, asset may have new properties added
 };
 
-// definiton of object (the thing) access interface 
-// this structure should be statically allocated - at least survive last instance of the engine 
+// definiton of object (the thing) access interface
+// this structure should be statically allocated - at least survive last instance of the engine
 struct som_passport_t {
   UINT64             flags;
-  som_atom_t         name;         // class name 
+  som_atom_t         name;         // class name
   const som_property_def_t* properties; size_t n_properties; // virtual property thunks
   const som_method_def_t*   methods; size_t n_methods;       // method thunks
   som_item_getter_t  item_getter;  // var item_val = thing[k];
   som_item_setter_t  item_setter;  // thing[k] = item_val;
   som_item_next_t    item_next;    // for(var item in thisThing)
-  // any property "inteceptors" 
-  som_any_prop_getter_t  prop_getter;  // var prop_val = thing.k; 
+  // any property "inteceptors"
+  som_any_prop_getter_t  prop_getter;  // var prop_val = thing.k;
   som_any_prop_setter_t  prop_setter;  // thing.k = prop_val;
 };
 
@@ -153,21 +156,21 @@ namespace sciter {
 
     template <class Type> struct member_function;
 
-    template <class Type, class Ret> 
+    template <class Type, class Ret>
       struct member_function<Ret(Type::*)()> {
         enum { n_params = 0 };
         template <Ret(Type::*Func)()> static BOOL thunk(som_asset_t* thing, UINT argc, const SOM_VALUE* argv, SOM_VALUE* p_result)
-          { 
+          {
             try { *p_result = SOM_VALUE((static_cast<Type*>(thing)->*Func)()); return TRUE; }
             catch (exception& e) { *p_result = SOM_VALUE::make_error(e.what()); return TRUE; }
-          } 
+          }
       };
-    
-    template <class Type, class Ret, class P0> 
+
+    template <class Type, class Ret, class P0>
       struct member_function<Ret(Type::*)(P0)> {
         enum { n_params = 1 };
         template <Ret(Type::*Func)(P0)> static BOOL thunk(som_asset_t* thing, UINT argc, const SOM_VALUE* argv, SOM_VALUE* p_result)
-          { 
+          {
             try { *p_result = SOM_VALUE((static_cast<Type*>(thing)->*Func)(argv[0].get<P0>())); return TRUE; }
             catch (exception& e) { *p_result = SOM_VALUE::make_error(e.what()); return TRUE; }
           }
@@ -177,7 +180,7 @@ namespace sciter {
       struct member_function<Ret(Type::*)(P0,P1)> {
         enum { n_params = 2 };
         template <Ret(Type::*Func)(P0,P1)> static BOOL thunk(som_asset_t* thing, UINT argc, const SOM_VALUE* argv, SOM_VALUE* p_result)
-          { 
+          {
             try { *p_result = SOM_VALUE((static_cast<Type*>(thing)->*Func)(argv[0].get<P0>(), argv[1].get<P1>())); return TRUE; }
             catch (exception& e) { *p_result = SOM_VALUE::make_error(e.what()); return TRUE; }
           }
@@ -272,15 +275,15 @@ namespace sciter {
         static BOOL thunk(som_asset_t* thing, const SOM_VALUE* p_key, SOM_VALUE* p_value)
         {
             typename std::remove_reference<TV>::type val;
-            if ((static_cast<Type*>(thing)->*Func)(p_key->get<TK>(), val)) { 
-              *p_value = SOM_VALUE(val); 
-              return TRUE; 
+            if ((static_cast<Type*>(thing)->*Func)(p_key->get<TK>(), val)) {
+              *p_value = SOM_VALUE(val);
+              return TRUE;
             }
-            return FALSE; 
+            return FALSE;
         }
       };
 
-    // val operator[key] const; variant of the above  
+    // val operator[key] const; variant of the above
     template <class Type, class TK, class TV>
       struct item_get_accessor<bool(Type::*)(TK, TV) const> {
         template <bool(Type::*Func)(TK, TV) const>
@@ -334,7 +337,7 @@ namespace sciter {
         {
           //try { *p_value = SOM_VALUE((static_cast<Type*>(thing)->*Func)()); return TRUE; }
           //catch (exception& e) { *p_value = SOM_VALUE::make_error(e.what()); return TRUE; }
-          *p_value = SOM_VALUE((static_cast<Type*>(thing)->*Func)()); 
+          *p_value = SOM_VALUE((static_cast<Type*>(thing)->*Func)());
           return TRUE;
         }
       };
@@ -345,7 +348,7 @@ namespace sciter {
         {
           //try { bool r = (static_cast<Type*>(thing)->*Func)(p_value->get<P0>()); return r; }
           //catch (exception& e) { *p_value = SOM_VALUE::make_error(e.what()); return TRUE; }
-          bool r = (static_cast<Type*>(thing)->*Func)(p_value->get<P0>()); 
+          bool r = (static_cast<Type*>(thing)->*Func)(p_value->get<P0>());
           return r;
         }
       };
@@ -429,3 +432,5 @@ namespace sciter {
 
 
 #endif // __cplusplus
+
+#endif

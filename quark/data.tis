@@ -1,0 +1,67 @@
+
+include "settings.tis";
+
+namespace Data 
+{ 
+
+  var projects = [];  // all projects 
+  var project = null; // current project
+
+  function addNewProject() {
+    project = {
+      id : String.UID(),
+      name : "{new}",
+      exe : "",
+      logo: "",
+      resources: "",
+      productVersion: "",
+      productCopyright: "",
+      productName: "",
+      targets: [],
+      out : "",
+    };
+    projects.push(Data.project);
+    self.postEvent("current-project-change");
+    enqueueSaveState();
+  }
+
+  function cloneCurrentProject() {
+    project = project.clone();
+    project.id = String.UID();
+    project.name += " copy";
+    projects.push(project);
+    self.postEvent("current-project-change");
+    enqueueSaveState();
+  }
+
+  function selectProject(pid) {
+    if( typeof pid == #object ) 
+      project = pid;
+    else 
+      project = projects.find( p => p.id == pid );
+    self.postEvent("current-project-change");
+  }
+
+  function updateCurrentProject(data) {
+    project.extend(data);
+    self.postEvent("current-project-property-change");
+    enqueueSaveState();
+  }
+
+}
+
+Settings.add {
+  uiStateStore: function(data) 
+    {
+      data.projects = Data.projects;
+    },
+  uiStateRestore: function(data) 
+    {
+      if( !data.projects ) 
+        Data.addNewProject();
+      else {
+        Data.projects = data.projects; 
+        self.post(()=>Data.selectProject(Data.projects[0]));
+      }
+    }
+};

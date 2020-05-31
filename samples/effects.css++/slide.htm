@@ -12,35 +12,51 @@
         border-spacing:6px;
       }
 
-      div.container.slide-top:hover    { transition: slide-top(quad-in-out,400ms); }
-      div.container.slide-bottom:hover { transition: slide-bottom(quad-in-out,400ms); }
-      div.container.slide-left:hover   { transition: slide-left(quad-in-out,400ms); }
-      div.container.slide-right:hover  { transition: slide-right(quad-in-out,400ms); }
+      div.container.slide-top    { transition: slide-top(quad-in-out,400ms); }
+      div.container.slide-bottom { transition: slide-bottom(quad-in-out,400ms); }
+      div.container.slide-left   { transition: slide-left(quad-in-out,400ms); }
+      div.container.slide-right  { transition: slide-right(quad-in-out,400ms); }
       
       div.container
       {
         size:432dip 324dip;
         background:#777;
-        assigned!: self.$1(picture).src = "images/photo1.jpg";
+        prototype:Photo;
       }
-      
-      div.container:hover
-      {
-        assigned!: self.$1(picture).src = "images/photo2.jpg"; // because of slide-*** transition
-                                                               // all content changes have to be made in transactional manner:
-                                                               // using CSSS! assigned! that triggers all new changes from old
-                                                               // state of the element to the new state. 
-      }
-      
+     
+     
       div.container > picture
       {
         size:*;
       }
       
-
     
     </style>
-    <script type="text/tiscript"></script>
+    <script type="text/tiscript">
+
+      class Photo: Element {
+
+        function attached() {
+          this.$(picture).attributes["src"] = $url(images/photo1.jpg);  
+        }
+
+        event mouseenter {
+          this.update(function() {
+            this.$(picture).attributes["src"] = $url(images/photo2.jpg);  
+          });
+          
+        }
+        event mouseleave (evt) {
+          this.update(function() {
+            this.$(picture).attributes["src"] = $url(images/photo1.jpg);  
+          });
+        }
+        
+      }
+
+      
+
+    </script>
   </head>
 <body>
   Hover the image:

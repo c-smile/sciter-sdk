@@ -59,6 +59,11 @@ SAMPLE:
 
     }
 
+    virtual void detached(HELEMENT he)
+    {
+      asset_release();
+    }
+
     virtual bool on_mouse(HELEMENT he, HELEMENT target, UINT event_type, POINT pt, UINT mouseButtons, UINT keyboardStates)
     {
       if (event_type != MOUSE_DOWN && event_type != MOUSE_DCLICK /*&& event_type != DROP*/)
