@@ -34,6 +34,15 @@ namespace Data
     enqueueSaveState();
   }
 
+  function deleteCurrentProject() {
+    var (index,p) = projects.find( p => p === project );
+    delete projects[index];
+    project = projects[0];
+    self.postEvent("current-project-change");
+    enqueueSaveState();
+  }
+
+
   function selectProject(pid) {
     if( typeof pid == #object ) 
       project = pid;

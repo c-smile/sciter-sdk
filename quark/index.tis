@@ -46,6 +46,7 @@ class ProjectsView : Reactor.Component
 
   event click $(button.new) { Data.addNewProject(); }
   event click $(button.clone) { Data.cloneCurrentProject(); }
+  event click $(button.delete) { Data.deleteCurrentProject(); }
   event change $(select) (evt,select) {  Data.selectProject(select.value); }
 } 
 
@@ -66,10 +67,6 @@ class ProjectView : Reactor.Component {
       this.update();
   }
 
-  function detached() {
-    debug detached: this;
-  }
-
   function validate(vals) {
     return vals.name 
         && vals.exe
@@ -84,19 +81,16 @@ class ProjectView : Reactor.Component {
           <img.arrow src="stock:arrow-left"/> Create new project
           <h1>Sciter.Quark v.{Sciter.version}</h1> 
        </div>
-     </section>
+     </section>;
   }
 
   function render() {
 
-    //if(!Data.project)
-    //  return this.renderEmpty();
+    if(!Data.project)
+      return this.renderEmpty();
 
-    //var atts = Data.project ?{}:{disabled:true};
-    //debug render: atts;
-
-    return <section#project :disabled={!Data.project}>
-      <form @{this.form}>
+    return <section#project>
+      <form @{this.form} :disabled={!Data.project}>
         <label>Project</label>
               <input|text(name) novalue="project name"/>
         <label>Executable</label>
@@ -127,7 +121,7 @@ class ProjectView : Reactor.Component {
       </form>
       <LogRunner />
       <button#assemble disabled>Assemble</button>
-    </section>
+    </section>;
   }
 
   event change $(form) (evt,form) { 

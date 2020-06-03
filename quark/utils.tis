@@ -58,6 +58,7 @@ class LogRunner : Reactor.Component
   function attached() { me = this; }
 
   function render() {
+    me = this;
     if(this.lines.length) this.post(() => this.last.scrollToView()); // ensure last line is visible
     return <plaintext id="log" readonly="">
       { this.lines.map( (line,index) => <text key={index} {{class:line.type}}>{line.text}</text> ) }
