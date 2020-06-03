@@ -80,7 +80,7 @@ class ProjectView : Reactor.Component {
 
   function renderEmpty() {
      return <section#project>
-       <div.introduction>
+       <div.introduction #introduction>
           <img.arrow src="stock:arrow-left"/> Create new project
           <h1>Sciter.Quark v.{Sciter.version}</h1> 
        </div>
@@ -89,8 +89,8 @@ class ProjectView : Reactor.Component {
 
   function render() {
 
-    if(!Data.project)
-      return this.renderEmpty();
+    //if(!Data.project)
+    //  return this.renderEmpty();
 
     //var atts = Data.project ?{}:{disabled:true};
     //debug render: atts;
