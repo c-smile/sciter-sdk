@@ -71,6 +71,7 @@ class ProjectView : Reactor.Component {
     return vals.name 
         && vals.exe
         && vals.resources
+        && vals.targets 
         && vals.targets.length
         && vals.out;
   }
