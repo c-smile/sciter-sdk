@@ -89,17 +89,3 @@ class LogRunner : Reactor.Component
 
 }
 
-function checkForImageMagic( resultCb ) {
-  var signatureFound = false;
-
-  if( System.PLATFORM != #Windows )
-  	return; // we need it only on Windows so far
-  
-  var proc = System.Process.exec("convert",["-version"]); // 'convert' is an IM utility we need
-  if(!proc) { self.post( :: resultCb(false) ) }
-  else {       
-    proc << event stdout(text) { signatureFound = signatureFound || text.indexOf("ImageMagic") >= 0; };
-    proc << event terminate(status) { resultCb(signatureFound) };
-  }
-}
-

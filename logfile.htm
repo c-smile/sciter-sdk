@@ -10,7 +10,13 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#fff7e6">4.4.3.20</td><td nowrap valign="top" align="center">2020-05-31</td><td>New:
+    <tr><td valign="top" bgcolor="#fff7e6">4.4.3.21</td><td nowrap valign="top" align="center">2020-06-04</td><td>Fixes:
+					<ul><li>[svg] use color CSS values, regression fix.</li>
+						<li>[windows/skia backend] minimal CPU vector extensions level is relaxed to SSX2;</li>
+						<li>[Linux] Window transparency and window-frame=&quot;transparent&quot; handling.</li>
+						<li>[Quark] ImageMagick issue. Quark is using &nbsp;&quot;magick&quot; command rather than old &quot;convert&quot;. Folder existence validations added.</li>
+						<li>[reactor] one more fix in reconciliation engine.</li>
+						<li>[windows] Image copy/paste, clipboard CF_DIB format support to transfer images with alpha.</li></ul></td></tr><tr><td valign="top" bgcolor="#fff7e6">4.4.3.20</td><td nowrap valign="top" align="center">2020-05-31</td><td>New:
 					<ul><li><a href="https://quark.sciter.com/">Sciter Quark</a> - Sciter Application Packager - takes scapp.exe and custom HTML/CSS/script resources and produces monolithic executables from them. See: sdk/quark (sources) and sdk/bin.quark - bootstrap starters;</li>
 						<li>[Skia/OpenGL] demo of native OpenGL drawing sdk/include/behaviors/behavior_drawing-opengl.cpp and sdk/samples/behaviors/opengl-drawing.htm - works on Sciter versions with Skia backend;&nbsp;</li>
 						<li>[Graphic API] + <code>GRAPHIN_RESULT SCFN(gFlush) (HGFX hgfx);</code> -&gt; <code>sciter::graphics::flush()</code> - commit batches to GPU;</li>

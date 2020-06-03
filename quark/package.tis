@@ -1,4 +1,33 @@
 
+
+function checkForImageMagic( resultCb ) {
+  var signatureFound = false;
+
+  if( System.PLATFORM != #Windows )
+    return; // we need it only on Windows so far
+  
+  var proc = System.Process.exec("magick",["-version"]); // 'convert' is an IM utility we need
+  if(!proc) { self.post( :: resultCb(false) ) }
+  else {       
+    proc << event stdout(text) { signatureFound = signatureFound || text.indexOf("ImageMagic") >= 0; };
+    proc << event terminate(status) { resultCb(signatureFound) };
+  }
+}
+
+function checkFolder(folderPath, forWriting = false) 
+{
+  const S_IFDIR = 0x4000;
+  const S_IWRITE = 0x0080;
+  const S_IREAD = 0x0100;
+
+  const modes = forWriting ? (S_IFDIR | S_IWRITE) : (S_IFDIR | S_IREAD);
+
+  if(var stat = System.sync.stat(folderPath))
+    return (stat.mode & modes) == modes;
+  return false;
+}
+
+
 async function convertSvgToIco(inp,outp) {
   const args = ["-density","256x256","-background","transparent",inp,"-define","icon:auto-resize","-colors","256",outp];
   var r = await LogRunner.run("magick",args);
@@ -38,7 +67,7 @@ async function packageResources(folder,datfile) {
     throw "packageResources: no packfolder executable found";
   const args = [folder,datfile,"-binary"];
   var r = await LogRunner.run(packfolder,args);
-  if(r != 0) throw "packfolder: failed to produce .dat file";
+  if(r != 0) throw String.$(packfolder: failed to produce {datfile} file);
 }
 
 function makePath(dir,subdirs,nameext) {
@@ -69,6 +98,17 @@ function assembleExe(target,scapp,datfile,exefile, params = null) {
 async function assemble(params) {
 
   LogRunner.clear();
+
+  if(!checkFolder(params.resources, false)) {
+    LogRunner.add(String.$(Error: {params.resources} is not a readable folder), #stderr);
+    return;
+  }
+
+  if(!checkFolder(params.out, true)) {
+    LogRunner.add(String.$(Error: {params.out} is not a writeable folder), #stderr);
+    return;
+  }
+
 
   const datfile = params.out + "/" + params.exe + ".dat";
   const icofile = params.out + "/" + params.exe + ".ico";
