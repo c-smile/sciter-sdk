@@ -77,7 +77,7 @@
     do {
       var row = [];
       for( var v in rs ) row.push(v);
-      data.push(item);
+      data.push(row);
     } while( rs.next() );
     return data;
   }
