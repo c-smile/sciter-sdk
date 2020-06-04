@@ -180,6 +180,7 @@ const Lang = function() {
     var fmt = xlation[text]; 
     if( !fmt ) { if(notfound) notfound[text] = #text; }
     else return typeof fmt == #function ? fmt.call(this, val) : fmt.replace("#",val.toString() );
+    return text;
   }
 
   // <output> updater
