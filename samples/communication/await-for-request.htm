@@ -10,7 +10,6 @@
         {
           try {
             var [text,response] = await view.request { url: url, output: #string };
-            //debug log: text,response;
             $(pre#out).text = text;
           } catch(e) {
             $(pre#out).text = String.$( HTTP status: {e.data.status}, response length: {e.data.response.length} );

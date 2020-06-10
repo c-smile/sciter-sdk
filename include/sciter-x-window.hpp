@@ -60,8 +60,12 @@ namespace sciter
     friend sciter::host<window>;
   public:
     window( UINT creationFlags, RECT frame = RECT() );
+    //virtual ~window() {}
 
     bool is_valid() const { return _hwnd != 0; }
+
+    virtual long asset_add_ref() { return asset::asset_add_ref(); }
+    virtual long asset_release() { return asset::asset_release(); }
 
     void collapse(); // minimize
     void expand( bool maximize = false); // show or maximize
@@ -99,7 +103,7 @@ namespace sciter
 
     virtual LRESULT on_engine_destroyed() 
     { 
-      _hwnd = 0; asset_release(); 
+      _hwnd = 0; asset_release();
       return 0; 
     }
 

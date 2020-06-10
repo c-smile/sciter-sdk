@@ -13,7 +13,8 @@
   <h2>Attributes</h2>
   <p>that this behavior knows about:</p>
   <ul>
-    <li><code>readonly</code> - &nbsp;declares that element is read only.</li></ul>
+    <li><code>readonly</code> - &nbsp;declares that element is read only.</li>
+		<li><code>spellcheck</code> - boolean, &quot;true&quot; | &quot;false&quot;, enable/disable spell checking.</li></ul>
   <h2>Model</h2>
   <p>Plaintext parses each line of text into separate &lt;text&gt; element: </p>
   <pre>&lt;plaintext&gt;
@@ -42,7 +43,11 @@
     <li>CTRL+X</li>
     <li>CTRL+V</li>
     <li>CTRL+Z</li>
-    <li>CTRL+(LEFT)SHIFT and CTRL+(RIGHT)SHIFT - in forms having the <code>dir</code> attribute these key combinations switches between <code>dir=&quot;ltr&quot;</code> and <code>dir=&quot;rtl&quot;</code>.</li></ul><h2>Commands</h2><p>Commands supported by the behavior through <code>Element.execCommand()</code> and <code>Element.queryMethods()</code>:&nbsp;</p><ul><li><code>&quot;edit:cut&quot;</code> - cut selection - copy selection to the clipboard and remove it;</li><li><code>&quot;edit:copy&quot;</code> - copy selection to the clipboard;</li><li><code>&quot;edit:paste&quot;</code> - paste content of the clipboard;</li><li><code>&quot;edit:selectall&quot;</code> - select whole content of the element;</li><li><code>&quot;edit:undo&quot;</code> - undo last editing operation;</li><li><code>&quot;edit:redo&quot;</code> - redo last operation that was undone;</li><li><code>&quot;edit:delete-next&quot;</code> - if there is a selection - delete selected content, otherwise delete next character;</li><li><code>&quot;edit:delete-prev&quot;</code> - if there is a selection - delete selected content, otherwise delete previous character;</li><li><code>&quot;edit:delete-word-next&quot;</code> - if there is a selection - delete selected content, otherwise delete next word;</li><li><code>&quot;edit:delete-word-prev&quot;</code> - if there is a selection - delete selected content, otherwise delete previous word;</li></ul>
+    <li>CTRL+(LEFT)SHIFT and CTRL+(RIGHT)SHIFT - in forms having the <code>dir</code> attribute these key combinations switches between <code>dir=&quot;ltr&quot;</code> and <code>dir=&quot;rtl&quot;</code>.</li></ul><h2>Commands</h2><p>Commands supported by the behavior through <code>Element.execCommand()</code> and <code>Element.queryMethods()</code>:&nbsp;</p><ul><li><code>&quot;edit:cut&quot;</code> - cut selection - copy selection to the clipboard and remove it;</li><li><code>&quot;edit:copy&quot;</code> - copy selection to the clipboard;</li><li><code>&quot;edit:paste&quot;</code> - paste content of the clipboard;</li><li><code>&quot;edit:selectall&quot;</code> - select whole content of the element;</li><li><code>&quot;edit:undo&quot;</code> - undo last editing operation;</li><li><code>&quot;edit:redo&quot;</code> - redo last operation that was undone;</li><li><code>&quot;edit:delete-next&quot;</code> - if there is a selection - delete selected content, otherwise delete next character;</li><li><code>&quot;edit:delete-prev&quot;</code> - if there is a selection - delete selected content, otherwise delete previous character;</li><li><code>&quot;edit:delete-word-next&quot;</code> - if there is a selection - delete selected content, otherwise delete next word;</li><li><code>&quot;edit:delete-word-prev&quot;</code> - if there is a selection - delete selected content, otherwise delete previous word;</li>
+		<li><code>&quot;edit:insert-break&quot;</code> - inserts line break;</li>
+		<li><code>&quot;edit:insert-text&quot;</code> - inserts text at current position:&nbsp;<code>element.execCommand(&quot;edit:insert-text&quot;, text);</code> </li>
+		<li>navigational commands, move caret:<ul><li><code>&quot;navigate:backward&quot;</code>&nbsp;</li><li><code>&quot;navigate:word-start</code></li><li><code>&quot;navigate:forward&quot;</code></li><li><code>&quot;navigate:word-end</code></li><li><code>&quot;navigate:up&quot;</code></li><li><code>&quot;navigate:down&quot;</code></li><li><code>&quot;navigate:line-start&quot;</code></li><li><code>&quot;navigate:line-end&quot;</code></li><li><code>&quot;navigate:start</code></li><li><code>&quot;navigate:end&quot;</code></li></ul></li>
+		</ul>
         
         
         
@@ -59,7 +64,7 @@
 	<pre>const editor = $(plaintext#editor);
 editor.<u>plaintext</u>.load(&quot;file://users/documents/readme.txt&quot;);</pre>
 	<h3>Index accessor and enumeration</h3>
-	<dl><dt><code>plaintext[index:integer]</code></dt><dd>string, get/set text line at given position.</dd>
+	<dl><dt><code>plaintext[index:integer]</code></dt><dd>string, get/set text line at given position. Use it as: <code>var firstLine = el.plaintext[0];</code></dd>
 		<dt><code>for(var line in el.plaintext)</code>&nbsp;</dt>
 		<dd>string, allows to enumerate text lines one by one.&nbsp;</dd></dl>
 	<h3>Properties</h3>

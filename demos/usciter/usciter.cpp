@@ -62,7 +62,7 @@ int uimain(std::function<int()> run ) {
 
   sciter::archive::instance().open(aux::elements_of(resources)); // bind resources[] (defined in "resources.cpp") with the archive
 
-  uSciter *pwin = new uSciter();
+  sciter::om::hasset<uSciter> pwin = new uSciter();
 
   // example, setting "usciter" media variable, check https://sciter.com/forums/topic/debugging-issues/
   SciterSetMediaType(pwin->get_hwnd(), WSTR("desktop,usciter"));

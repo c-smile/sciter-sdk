@@ -28,6 +28,8 @@
     <dd>- <em>integer</em>, one DATA_*** values above, type of requested data.</dd>
 		<dt>requestUrl</dt>
 		<dd>- <i>string</i>, requested URL.</dd>
+		<dt>requestHeaders</dt>
+		<dd>- <i>map</i>(object) - request header fields as a map.</dd>
 		<dt>response</dt>
 		<dd>- <i>string, value, stream or byte array</i> - data requested. Particular type is depends on <code>output</code> parameter of <code>view.request()</code> method.</dd>
 		<dt>responseData&nbsp;</dt>
@@ -37,7 +39,7 @@
 		<dt>responseUrl</dt>
 		<dd>- <i>string</i>, response URL ( can be different from requestUrl due to redirections ).</dd>
 		<dt>responseHeaders</dt>
-		<dd>- <i>map</i>(object) - response fields as a map.</dd>
+		<dd>- <i>map</i>(object) - response header fields as a map.</dd>
 		<dt>isConsumed</dt>
 		<dd>- <i>boolean</i>, true if the request is consumed (by destination element).</dd>
 		<dt>isSucceeded</dt>

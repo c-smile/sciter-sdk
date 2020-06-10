@@ -57,6 +57,7 @@ function getScappPath(target) {
     case "winARM64": return checkFile( System.home("../arm64/scapp.exe") ) || checkFile(System.home("../../bin.win/arm64/scapp.exe"));
     case "macX64": return checkFile( System.home("scapp") ) || checkFile(System.home("../../bin.osx/scapp"));
     case "linuxX64": return checkFile( System.home("../x64/scapp") ) || checkFile( System.home("../../bin.lnx/x64/scapp"));
+    case "linuxARM32": return checkFile( System.home("../arm32/scapp") ) || checkFile( System.home("../../bin.lnx/arm32/scapp"));
   }
 }
 
@@ -140,6 +141,11 @@ async function assemble(params) {
         case "linuxX64": {
           const scapp = checkFile( System.home("../x64/scapp") ) || checkFile( System.home("../../bin.lnx/x64/scapp"));
           const exefile = makePath(params.out, ["linux","x64"], params.exe);
+          assembleExe(target,scapp,datfile,exefile);
+        } break;
+        case "linuxARM32": {
+          const scapp = checkFile( System.home("../arm32/scapp") ) || checkFile( System.home("../../bin.lnx/arm32/scapp"));
+          const exefile = makePath(params.out, ["linux","arm32"], params.exe);
           assembleExe(target,scapp,datfile,exefile);
         } break;
       }

@@ -36,7 +36,7 @@ end
 
 workspace "sciter.sdk"
   configurations { "Debug", "Release" }
-  platforms { "x32", "x64", "arm64" } 
+  platforms { "x32", "x64", "arm32", "arm64" } 
 
   cppdialect "C++14" 
 
@@ -81,6 +81,8 @@ workspace "sciter.sdk"
     architecture "x86_64"  
   filter "platforms:arm64"
     architecture "ARM64"  
+  filter "platforms:arm32"
+    architecture "ARM"  
 
 
   filter {"platforms:x32", "system:windows"}

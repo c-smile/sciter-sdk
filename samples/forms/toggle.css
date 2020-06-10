@@ -35,11 +35,11 @@
     fill:window;
     stroke:threedshadow;
     stroke-width:1dip;
+    transition:foreground-position-left linear 120ms, background-color linear 120ms;
   }
   :root:checked::marker {
     foreground-position:14dip 50%;
-    background:highlight;
-    transition:foreground-position(quint-in,120ms,quint-out,120ms) background-color(linear,120ms);
+    background:highlight;   
   }
 
   :root > option:first-child { visibility:visible; }

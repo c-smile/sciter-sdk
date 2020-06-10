@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <title></title>
+    <style></style>
+    <script type="text/tiscript">
+
+      function getRemoteText(url) 
+      {
+        var rq;
+
+        function onSuccess(data,status) {
+          $(pre#out).text = data;
+          debug rq: rq, rq.responseHeaders;
+        }
+
+        function onError(err,status) {
+          $(pre#out).text = err + "\nbody:" + err.data.response;
+          //debug rq: rq, rq.responseHeaders, err.data.response, rq.responseData.toString("utf-8");
+          //debug rq: rq, err.data.response;
+        }
+
+        rq = view.request { 
+          url: url, 
+          output: #string, 
+          success: onSuccess,
+          error: onError,
+        };
+      }
+
+    
+      event click $(button#getExisting){
+         getRemoteText("https://sciter.com/test/text.txt");
+      }
+      event click $(button#getNonExisting){
+         getRemoteText("https://sciter.com/foobar");
+      }
+
+      
+    </script>
+  </head>
+<body>
+
+  <p>This example demonstrates use of <code>await</code> statement</p>
+ 
+  <button #getExisting>get existing remote text</button>
+  <button #getNonExisting>try to get non existing remote file</button>
+
+  <pre#out></out>
+
+</body>
+</html>

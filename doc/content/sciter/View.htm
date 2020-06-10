@@ -296,12 +296,36 @@ if( fn ) view.<strong>load</strong>(fn);
     <dt>off</dt>
     <dd> <div><strong>(</strong> <strong>nameandns</strong>: string |&nbsp;<strong>handler</strong>: function <strong>)</strong> : view</div><p>Detaches event handler either by name or namespace or by function reference.</p></dd>
     <dt>trayIcon</dt><dd>
-      
       <p>Defines parameters of tray icon for the window. Accepts following parameters:</p>
-			
-			
-			
 			 </dd>
+    <dt>request</dt>
+      <dd>
+      <div> <strong>( </strong> <b>params</b>: object<strong>) </strong>: <em>undefined</em>.</div>
+      <p>Sends HTTP request with <em>params</em> object having following fields:</p>
+      <ul>
+        <li> <strong>type</strong> - <em>symbol</em>, HTTP verb, one of : <strong>#get</strong>, <strong>#post</strong>, <strong>#put</strong> or <strong>#delete</strong>, default: #get ;</li>
+        <li> <strong>url</strong> - string, url;</li>
+        <li> <strong>protocol</strong> - <em>symbol</em>, &nbsp;one of <strong>#basic</strong>, <strong>#multipart</strong> and <strong>#json</strong> &nbsp;;</li>
+        <li> <strong>params</strong> - <em>object</em>, HTTP request parameters;</li>
+        <li> <strong>headers</strong> - <em>objec</em>t, additional HTTP request headers;</li>
+        <li> <strong>success</strong> - <em>function(data,status)</em>, callback function to be called on successful completion.</li>
+        <li> <strong>error</strong> - <em>function(err,status)</em>, callback function to be called on request failure.</li>
+        <li> <strong>complete</strong> - <em>function(data or err,status)</em>, callback function to be called on request completion (either success or error).</li>
+        <li> <strong>progress</strong> - <em>function(bytesReceived, totalBytes)</em>, callback function to be called on each chunk of data received. <em>bytesReceived</em> is an integer - number of bytes received so far and <em>totalBytes</em> is an integer - total bytes as reported by server in HTTP's &quot;content-length&quot; field. <em>totalBytes</em> can be <em>undefined</em> if server does not report it.</li>
+        <li> <strong>toFile</strong> - <strong>  </strong><em>string</em>, if provided shall contain path of the file where to store the response. Used in file download scenarios.</li>
+        <li> <strong>proxyHost</strong>, <strong>proxyPort</strong> - <em>string</em>, <em>integer</em>. If these two are provided then the request will go through that proxy host.</li>
+        <li> <strong>output</strong> - symbol, one of <strong>#string</strong> | <strong>#stream</strong> | <strong>#bytes</strong> | <strong>#json</strong>. If provided forces <em>data</em> to be reported as instance of String, Stream, Bytes or a value - result of JSON parsing.</li>
+        <li><b>noCache</b> - true | false, if <i>true</i> then request will not use reading from cache nor writing the request response to cache.&nbsp;</li></ul>
+      <p>Sample: <u>sdk/samples/communication/file-download.htm</u> and <u>sdk/samples/communication/http.tis</u></p>
+			<p>Note, use this to get body of server error response: </p>
+			
+			
+			
+			<pre>function(err,status) { 
+  var serverErrorMessage = err.data.response; 
+  ... 
+}</pre>
+      </dd>       
   </dl>
   
 	<h2>Notifications</h2>

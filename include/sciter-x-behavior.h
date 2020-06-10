@@ -836,12 +836,16 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
               }
             case HANDLE_SOM:
               {
+#ifdef CPP11
                 SOM_PARAMS *p = (SOM_PARAMS *)prms;
                 if (p->cmd == SOM_GET_PASSPORT)
                   p->data.passport = pThis->asset_get_passport();
                 else if (p->cmd == SOM_GET_ASSET)
                   p->data.asset = static_cast<som_asset_t*>(pThis); // note: no add_ref
                 return true;
+#else           
+                return false;
+#endif   
               }
 
             case HANDLE_MOUSE: {  MOUSE_PARAMS *p = (MOUSE_PARAMS *)prms; return pThis->handle_mouse( he, *p );  }

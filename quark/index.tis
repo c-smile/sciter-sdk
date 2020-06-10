@@ -109,11 +109,12 @@ class ProjectView : Reactor.Component {
         <label>Targets</label>
             <select|select(targets) multiple="checkmarks">
               <option value="winX32">Windows</option>
-              <option value="winARM64">Windows/ARM</option>
+              <option value="winARM64">Windows/ARM64</option>
               <option value="macX64">Mac OSX</option>
-              <option value="macARM64" disabled>Mac OSX/ARM</option>
+              <option value="macARM64" disabled>Mac OSX/ARM64</option>
               <option value="linuxX64">Linux</option>
-              <option value="linuxARM64" disabled>Linux/ARM</option>
+              <option value="linuxARM32">Linux/ARM32</option>
+              <option value="linuxARM64" disabled>Linux/ARM64</option>
               <option value="ios" disabled>iOS</option>
               <option value="android" disabled>Android</option>
             </select>

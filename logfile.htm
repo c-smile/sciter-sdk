@@ -10,7 +10,18 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#fff7e6">4.4.3.21</td><td nowrap valign="top" align="center">2020-06-04</td><td>Fixes:
+    <tr><td valign="top" bgcolor="#fff7e6">4.4.3.22</td><td nowrap valign="top" align="center">2020-06-09</td><td>New:
+					<ul><li>+ <code>event tripleclick {}</code></li>
+						<li>+ <code>Request.requestHeaders</code>, <code>Request.responseHeaders</code> + sample /sdk/samples/communication/request-response.htm&nbsp;&nbsp;</li>
+						</ul>
+					<p>Fixes:</p>
+					<ul><li>[script] <code>new RegExp(re)</code> is prohibited now, constructor accepts only string.</li>
+						<li>[script] <code>String.urlUnescape()</code> fix.</li>
+						<li>[windows] fix of Skia backend &quot;wide&quot; font rendering on some fonts (e.g. Chinese). &nbsp;</li>
+						<li><code>sciter::value::from_string()</code>, memory leak fix.</li>
+						<li><code>Element.request()</code>, GC issue fix.</li>
+						<li>[script] <code>new Path()</code> fix.</li>
+						<li>TAB-to-set-focus handling fix.</li></ul></td></tr><tr><td valign="top" bgcolor="#fff7e6">4.4.3.21</td><td nowrap valign="top" align="center">2020-06-04</td><td>Fixes:
 					<ul><li>[svg] use color CSS values, regression fix.</li>
 						<li>[windows/skia backend] minimal CPU vector extensions level is relaxed to SSX2;</li>
 						<li>[Linux] Window transparency and window-frame=&quot;transparent&quot; handling.</li>

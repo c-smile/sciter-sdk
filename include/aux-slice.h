@@ -117,7 +117,7 @@ template <typename T >
 
       int last_index_of( T e ) const
       {
-        for( unsigned int i = length; i > 0 ;) if( start[--i] == e ) return i;
+        for( size_t i = length; i > 0 ;) if( start[--i] == e ) return int(i);
         return -1;
       }
 
@@ -125,12 +125,12 @@ template <typename T >
       {
         if( s.length > length ) return -1;
         if( s.length == 0 ) return -1;
-        unsigned int l = length - s.length;
+        size_t l = length - s.length;
         for( unsigned int i = 0; i < l ; ++i)
           if( start[i] == *s.start )
           {
             const T* p = s.start;
-            unsigned int last = i + s.length;
+            size_t last = i + s.length;
             for( unsigned int j = i + 1; j < last; ++j )
               if( *(++p) != start[j])
                 goto next_i;
@@ -145,15 +145,15 @@ template <typename T >
         if( s.length > length ) return -1;
         if( s.length == 0 ) return -1;
         const T* ps = s.end() - 1;
-        for( unsigned int i = length; i > 0 ; )
+        for( size_t i = length; i > 0 ; )
           if( start[--i] == *ps )
           {
             const T* p = ps;
-            unsigned int j, first = i - s.length + 1;
+            size_t j, first = i - s.length + 1;
             for( j = i; j > first; )
               if( *(--p) != start[--j])
                 goto next_i;
-            return j;
+            return int(j);
             next_i: continue;
           }
         return -1;
