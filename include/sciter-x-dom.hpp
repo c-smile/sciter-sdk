@@ -686,11 +686,7 @@ namespace dom
       char buffer[2049]; buffer[0]=0;
       va_list args;
       va_start ( args, selector );
-#if _MSC_VER == 1400
-      vsnprintf( buffer, sizeof(buffer), _TRUNCATE, selector, args );
-#else
       vsnprintf( buffer, sizeof(buffer), selector, args );
-#endif
       va_end ( args );
       find_first_callback find_first;
       select_elements( &find_first, buffer); // find first element satisfying given CSS selector
@@ -703,11 +699,7 @@ namespace dom
       char buffer[2049]; buffer[0]=0;
       va_list args;
       va_start ( args, selector );
-#if _MSC_VER == 1400
-      vsnprintf( buffer, sizeof(buffer), _TRUNCATE, selector, args );
-#else
       vsnprintf( buffer, sizeof(buffer), selector, args );
-#endif
       va_end ( args );
       select_elements( cb, buffer); // find all elements satisfying given CSS selector
       //assert(find_first.hfound);
@@ -737,11 +729,7 @@ namespace dom
       char buffer[2049]; buffer[0]=0;
       va_list args;
       va_start ( args, selector );
-#if _MSC_VER == 1400
-      vsnprintf( buffer, sizeof(buffer), _TRUNCATE, selector, args );
-#else
       vsnprintf( buffer, sizeof(buffer), selector, args );
-#endif
       va_end ( args );
 
       HELEMENT heFound = 0;
@@ -756,11 +744,8 @@ namespace dom
       char buffer[2049]; buffer[0]=0;
       va_list args;
       va_start ( args, selector );
-#if _MSC_VER == 1400
-      vsnprintf( buffer, sizeof(buffer), _TRUNCATE, selector, args );
-#else
+      vsnprintf( buffer, sizeof(buffer), selector, args );
       va_end ( args );
-#endif
       HELEMENT heFound = 0;
       SCDOM_RESULT r = SciterSelectParent(he, buffer, 1, &heFound);
       assert(r == SCDOM_OK); (void)r;

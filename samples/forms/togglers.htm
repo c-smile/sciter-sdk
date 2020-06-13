@@ -3,12 +3,12 @@
   <title></title>
 <style>
 
-  @import url(toggler.css);
+  @import url(toggle.css);
 
   body { font:system;  }
 
   form { flow:row(label,button); border-spacing: 1em; }
-  form > label { min-width:max-content; text-align:right; display:block; }
+  form > label { min-width:max-content; text-align:right; display:block; vertical-align:middle; }
 
   button.switch { flow: stack; }  
   button.switch > caption { display:block; visibility:hidden; }  
@@ -45,14 +45,14 @@
         <caption .false>in off state</caption>
       </button>
     <label>Toggler:</label>
-      <button|toggler checked=false name="toggler">
-        <caption .true>True</caption>
-        <caption .false>False</caption>
+      <button|toggle name="toggler">
+        <option>True</option>
+        <option>False</option>
       </button>
     <label>Toggler(checked) :</label>
-      <button|toggler checked name="togglerChecked">
-        <caption .true>Truth</caption>
-        <caption .false>Falsehood</caption>
+      <button|toggle checked name="togglerChecked">
+        <option>Truth</option>
+        <option>Falsehood</option>
       </button>
   </form>
   <pre #out></pre>

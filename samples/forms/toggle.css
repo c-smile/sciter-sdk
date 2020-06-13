@@ -35,13 +35,14 @@
     fill:window;
     stroke:threedshadow;
     stroke-width:1dip;
-    transition:foreground-position-left linear 120ms, background-color linear 120ms;
+    //transition:foreground-position circ-in-out 100ms, background-color linear 100ms;
   }
   :root:checked::marker {
     foreground-position:14dip 50%;
     background:highlight;   
   }
 
+  :root > option { text-align: start; }
   :root > option:first-child { visibility:visible; }
   :root > option:last-child { visibility:hidden; }
   :root:checked > option:first-child { visibility:hidden; }
@@ -49,7 +50,5 @@
   
 } 
 
-toggle {
-  style-set: std-toggle;
-}
+toggle, button[type="toggle"] { style-set: std-toggle; }
 

@@ -16,6 +16,7 @@
 					<Add option="-m32" />
 					<Add option="-g" />
 					<Add option="-std=c++14" />
+					<Add option="-DDEVICE=desktop" />
 					<Add option="-D_GNU_SOURCE" />
 					<Add option="-DDEBUG" />
 					<Add option="-D_DEBUG" />
@@ -50,6 +51,7 @@
 					<Add option="-flto" />
 					<Add option="-Os" />
 					<Add option="-std=c++14" />
+					<Add option="-DDEVICE=desktop" />
 					<Add option="-D_GNU_SOURCE" />
 					<Add option="-DNDEBUG" />
 					<Add option="`pkg-config fontconfig --cflags`" />
@@ -83,6 +85,7 @@
 					<Add option="-m64" />
 					<Add option="-g" />
 					<Add option="-std=c++14" />
+					<Add option="-DDEVICE=desktop" />
 					<Add option="-D_GNU_SOURCE" />
 					<Add option="-DDEBUG" />
 					<Add option="-D_DEBUG" />
@@ -117,6 +120,7 @@
 					<Add option="-flto" />
 					<Add option="-Os" />
 					<Add option="-std=c++14" />
+					<Add option="-DDEVICE=desktop" />
 					<Add option="-D_GNU_SOURCE" />
 					<Add option="-DNDEBUG" />
 					<Add option="`pkg-config fontconfig --cflags`" />
@@ -148,6 +152,7 @@
 					<Add option="-g" />
 					<Add option="-g" />
 					<Add option="-std=c++14" />
+					<Add option="-DDEVICE=desktop" />
 					<Add option="-D_GNU_SOURCE" />
 					<Add option="-DDEBUG" />
 					<Add option="-D_DEBUG" />
@@ -179,6 +184,7 @@
 					<Add option="-flto" />
 					<Add option="-Os" />
 					<Add option="-std=c++14" />
+					<Add option="-DDEVICE=desktop" />
 					<Add option="-D_GNU_SOURCE" />
 					<Add option="-DNDEBUG" />
 					<Add option="`pkg-config fontconfig --cflags`" />
@@ -209,6 +215,7 @@
 					<Add option="-g" />
 					<Add option="-g" />
 					<Add option="-std=c++14" />
+					<Add option="-DDEVICE=desktop" />
 					<Add option="-D_GNU_SOURCE" />
 					<Add option="-DDEBUG" />
 					<Add option="-D_DEBUG" />
@@ -240,6 +247,7 @@
 					<Add option="-flto" />
 					<Add option="-Os" />
 					<Add option="-std=c++14" />
+					<Add option="-DDEVICE=desktop" />
 					<Add option="-D_GNU_SOURCE" />
 					<Add option="-DNDEBUG" />
 					<Add option="`pkg-config fontconfig --cflags`" />

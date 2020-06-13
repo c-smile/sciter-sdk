@@ -14,18 +14,12 @@
  */
 
 
-#if defined(_WIN32_WCE) || defined(UNDER_CE)
-  #define PLATFORM_WINCE
-  #define WINDOWS
-#elif defined(WIN64) || defined(_WIN64) || defined(_M_X64)
-  #define PLATFORM_DESKTOP
+#if defined(WIN64) || defined(_WIN64) || defined(_M_X64)
   #define WINDOWS
   #define X64BITS
 #elif defined(WIN32) || defined(_WIN32)
-  #define PLATFORM_DESKTOP
   #define WINDOWS
 #elif defined(__APPLE__)
-  #define PLATFORM_OSX
   #define OSX
   #define UTF8_CHARS // const char* is UTF8 sequence
   #ifdef __x86_64__
@@ -33,7 +27,6 @@
   #endif
   #define POSIX
 #elif defined( __linux__ )
-  #define PLATFORM_LINUX
   #ifndef LINUX
     #define LINUX
   #endif

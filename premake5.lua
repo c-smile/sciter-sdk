@@ -4,6 +4,20 @@ newoption {
    description = "Will add Windows XP support"
 }
 
+newoption {
+   trigger     = "device",
+   value       = "DESKTOP|HANDHELD|IOT",
+   description = "target device",
+   default     = "DESKTOP",
+   allowed = {
+      { "DESKTOP",   "Desktop machine" },
+      { "HANDHELD",  "Mobile device" },
+      { "IOT",       "IoT device" }
+   }
+}
+
+defines { "DEVICE=" .. _OPTIONS["device"] }
+
 
 if( _TARGET_OS ~= "macosx") then  -- we are not auto generating XCode solutions for a while
                                   -- structure of typical XCode is not trivial - requires manual inputs.
@@ -54,7 +68,7 @@ workspace "sciter.sdk"
     links { "CoreFoundation.framework", "Cocoa.framework" }
     buildoptions { "-fobjc-arc" }
   filter "system:linux"
-    location "build.linux"
+    location("build.linux/" .. string.lower(_OPTIONS["device"]))
     defines { "_GNU_SOURCE" }
     buildoptions {
      "`pkg-config gtk+-3.0 --cflags`",      
