@@ -12,47 +12,45 @@
         border-spacing:6px;
       }
 
-      div.container.slide-over-top:hover    { transition: slide-over-top(quad-in-out,800ms); }
-      div.container.slide-over-bottom:hover { transition: slide-over-bottom(quad-in-out,800ms); }
-      div.container.slide-over-left:hover   { transition: slide-over-left(quad-in-out,800ms); }
-      div.container.slide-over-right:hover  { transition: slide-over-right(quad-in-out,800ms); }
+      div.container.slide-over-top    { transition: slide-over-top(quad-in-out,800ms); }
+      div.container.slide-over-bottom { transition: slide-over-bottom(quad-in-out,800ms); }
+      div.container.slide-over-left   { transition: slide-over-left(quad-in-out,800ms); }
+      div.container.slide-over-right  { transition: slide-over-right(quad-in-out,800ms); }
       
       div.container
       {
+        prototype: HoverChanger;
         size:432dip 324dip;
         background:#777;
-        assigned!: self.$1(picture).src = "images/photo1.jpg";
       }
       
-      div.container:hover
-      {
-        assigned!: self.$1(picture).src = "images/photo2.jpg"; // bacause of slide-over-*** transition
-                                                               // all content changes have to be made in transactional manner:
-                                                               // using CSSS! assigned! that triggers all new changes from old
-                                                               // state of the element to the new state. 
-      }
+      div.container > picture { size:*; }
       
-      div.container > picture
-      {
-        size:*;
-      }
       
-
-    
     </style>
-    <script type="text/tiscript"></script>
+    <script type="text/tiscript">
+    
+      class HoverChanger : Element {
+
+        function setSrc(url) { this.update( () => this.$(picture).attributes["src"] = url ) }
+      
+        event mouseenter { this.setSrc("images/photo2.jpg") }
+        event mouseleave { this.setSrc("images/photo1.jpg") }
+      }
+    
+    </script>
   </head>
 <body>
   Hover the image:
   <div .area>
     <caption>transition: slide-over-top(quad-in-out,800ms):</caption>
-    <div .container .slide-over-top ><picture/></div>
+    <div .container .slide-over-top ><picture src="images/photo1.jpg"/></div>
     <caption>transition: slide-over-bottom(quad-in-out,800ms):</caption>
-    <div .container .slide-over-bottom ><picture/></div>
+    <div .container .slide-over-bottom ><picture src="images/photo1.jpg"/></div>
     <caption>transition: slide-over-left(quad-in-out,800ms):</caption>
-    <div .container .slide-over-left  ><picture/></div>
+    <div .container .slide-over-left  ><picture src="images/photo1.jpg"/></div>
     <caption>transition: slide-over-right(quad-in-out,800ms):</caption>
-    <div .container .slide-over-right ><picture/><div>
+    <div .container .slide-over-right ><picture src="images/photo1.jpg"/><div>
   </div>
 </body>
 </html>

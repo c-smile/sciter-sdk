@@ -12,63 +12,45 @@
         border-spacing:6px;
       }
 
-      div.container.slide-top    { transition: slide-top(quad-in-out,400ms); }
-      div.container.slide-bottom { transition: slide-bottom(quad-in-out,400ms); }
-      div.container.slide-left   { transition: slide-left(quad-in-out,400ms); }
-      div.container.slide-right  { transition: slide-right(quad-in-out,400ms); }
+      div.container.slide-top    { transition: slide-top(quad-in-out,800ms); }
+      div.container.slide-bottom { transition: slide-bottom(quad-in-out,800ms); }
+      div.container.slide-left   { transition: slide-left(quad-in-out,800ms); }
+      div.container.slide-right  { transition: slide-right(quad-in-out,800ms); }
       
       div.container
       {
+        prototype: HoverChanger;
         size:432dip 324dip;
         background:#777;
-        prototype:Photo;
-      }
-     
-     
-      div.container > picture
-      {
-        size:*;
       }
       
-    
+      div.container > picture { size:*; }
+      
+      
     </style>
     <script type="text/tiscript">
+    
+      class HoverChanger : Element {
 
-      class Photo: Element {
-
-        function attached() {
-          this.$(picture).attributes["src"] = $url(images/photo1.jpg);  
-        }
-
-        event mouseenter {
-          this.update(function() {
-            this.$(picture).attributes["src"] = $url(images/photo2.jpg);  
-          });
-          
-        }
-        event mouseleave (evt) {
-          this.update(function() {
-            this.$(picture).attributes["src"] = $url(images/photo1.jpg);  
-          });
-        }
-        
-      }
-
+        function setSrc(url) { this.update( () => this.$(picture).attributes["src"] = url ) }
       
-
+        event mouseenter { this.setSrc("images/photo2.jpg") }
+        event mouseleave { this.setSrc("images/photo1.jpg") }
+      }
+    
     </script>
   </head>
 <body>
   Hover the image:
   <div .area>
-    <caption>transition: slide-top(quad-in-out,400ms):</caption>
-    <div .container .slide-top #test ><picture/></div>
-    <caption>transition: slide-bottom(quad-in-out,400ms):</caption>
-    <div .container .slide-bottom ><picture/></div>
-    <caption>transition: slide-left(quad-in-out,400ms):</caption>
-    <div .container .slide-left  ><picture/></div>
-    <caption>transition: slide-right(quad-in-out,400ms):</caption>
-    <div .container .slide-right ><picture/><div>
+    <caption>transition: slide-top(quad-in-out,800ms):</caption>
+    <div .container .slide-top ><picture src="images/photo1.jpg"/></div>
+    <caption>transition: slide-bottom(quad-in-out,800ms):</caption>
+    <div .container .slide-bottom ><picture src="images/photo1.jpg"/></div>
+    <caption>transition: slide-left(quad-in-out,800ms):</caption>
+    <div .container .slide-left  ><picture src="images/photo1.jpg"/></div>
+    <caption>transition: slide-right(quad-in-out,800ms):</caption>
+    <div .container .slide-right ><picture src="images/photo1.jpg"/><div>
   </div>
 </body>
 </html>
