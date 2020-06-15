@@ -10,15 +10,6 @@
       input.custom span.today-caption { content:"Сегодня"; }
 
       //:invalid {color:red;}
-      
-      button#to-set-time 
-      {
-        click!: self.$1p(.group).$1(input#time-to-set).now();
-      }
-      button#to-clear-time 
-      {
-        click!: self.$1p(.group).$1(input#time-to-set):value = null;
-      }
 
       /* Example: localization of input|date for Russian language */
       input:lang(ru) span.year:empty { content:"гггг"; }
@@ -31,6 +22,16 @@
       input:lang(ru) span.second:empty { content:"с"; }
       
     </style>
+
+    <script type="text/tiscript">
+      event click $(#to-set-time) {
+        this.$p(.group).$(#time-to-set).value = new Date();
+      }
+      event click $(#to-clear-time) {
+        this.$p(.group).$(#time-to-set).value = null;
+      }
+
+    </script>
 
 	</head>
 	<body>
