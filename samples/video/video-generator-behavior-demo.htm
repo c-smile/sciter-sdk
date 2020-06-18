@@ -41,6 +41,14 @@
         };
         video.detach();
         host.root.$(body).append(video);
+
+        host.on("closing", function(evt) {
+          // detach
+          video.detach();
+          body.append(video);
+          $(#show-detached).value = false;
+        });
+
       } else {
         video.detach();
         self.$(body).append(video);
