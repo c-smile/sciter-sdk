@@ -53,6 +53,8 @@ struct native_textarea: public event_handler
                                  rc.left, rc.top, rc.right - rc.left, rc.bottom - rc.top,
                                  parent, NULL, THIS_HINSTANCE, 0);
 
+      ::SendMessage(this_hwnd, WM_SETFONT, (WPARAM)GetStockObject(DEFAULT_GUI_FONT), true);
+
       self.attach_hwnd(this_hwnd);
     }
     virtual void detached  (HELEMENT he ) 
