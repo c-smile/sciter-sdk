@@ -1,0 +1,316 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		492D6ABB249EAD53001029B5 /* sqlite3ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 492D6AB3249EAD53001029B5 /* sqlite3ext.h */; };
+		492D6ABC249EAD53001029B5 /* sciter-sqlite.h in Headers */ = {isa = PBXBuildFile; fileRef = 492D6AB4249EAD53001029B5 /* sciter-sqlite.h */; };
+		492D6ABD249EAD53001029B5 /* sqlite-wrap.h in Headers */ = {isa = PBXBuildFile; fileRef = 492D6AB5249EAD53001029B5 /* sqlite-wrap.h */; };
+		492D6ABE249EAD53001029B5 /* sqlite-wrap.c in Sources */ = {isa = PBXBuildFile; fileRef = 492D6AB6249EAD53001029B5 /* sqlite-wrap.c */; };
+		492D6ABF249EAD53001029B5 /* sqlite3.h in Headers */ = {isa = PBXBuildFile; fileRef = 492D6AB7249EAD53001029B5 /* sqlite3.h */; };
+		492D6AC0249EAD53001029B5 /* sciter-sqlite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 492D6AB8249EAD53001029B5 /* sciter-sqlite.cpp */; };
+		492D6AC1249EAD53001029B5 /* sciter-sqlite-rs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 492D6AB9249EAD53001029B5 /* sciter-sqlite-rs.cpp */; };
+		492D6AC2249EAD53001029B5 /* sciter-sqlite-db.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 492D6ABA249EAD53001029B5 /* sciter-sqlite-db.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		492D6A80249EA82A001029B5 /* sciter-sqlite.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = "sciter-sqlite.dylib"; sourceTree = BUILT_PRODUCTS_DIR; };
+		492D6AB3249EAD53001029B5 /* sqlite3ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sqlite3ext.h; path = ../sqlite/sqlite3ext.h; sourceTree = "<group>"; };
+		492D6AB4249EAD53001029B5 /* sciter-sqlite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "sciter-sqlite.h"; path = "../sqlite/sciter-sqlite.h"; sourceTree = "<group>"; };
+		492D6AB5249EAD53001029B5 /* sqlite-wrap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "sqlite-wrap.h"; path = "../sqlite/sqlite-wrap.h"; sourceTree = "<group>"; };
+		492D6AB6249EAD53001029B5 /* sqlite-wrap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "sqlite-wrap.c"; path = "../sqlite/sqlite-wrap.c"; sourceTree = "<group>"; };
+		492D6AB7249EAD53001029B5 /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sqlite3.h; path = ../sqlite/sqlite3.h; sourceTree = "<group>"; };
+		492D6AB8249EAD53001029B5 /* sciter-sqlite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "sciter-sqlite.cpp"; path = "../sqlite/sciter-sqlite.cpp"; sourceTree = "<group>"; };
+		492D6AB9249EAD53001029B5 /* sciter-sqlite-rs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "sciter-sqlite-rs.cpp"; path = "../sqlite/sciter-sqlite-rs.cpp"; sourceTree = "<group>"; };
+		492D6ABA249EAD53001029B5 /* sciter-sqlite-db.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "sciter-sqlite-db.cpp"; path = "../sqlite/sciter-sqlite-db.cpp"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		492D6A7E249EA82A001029B5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		492D6A77249EA82A001029B5 = {
+			isa = PBXGroup;
+			children = (
+				492D6ABA249EAD53001029B5 /* sciter-sqlite-db.cpp */,
+				492D6AB9249EAD53001029B5 /* sciter-sqlite-rs.cpp */,
+				492D6AB8249EAD53001029B5 /* sciter-sqlite.cpp */,
+				492D6AB4249EAD53001029B5 /* sciter-sqlite.h */,
+				492D6AB6249EAD53001029B5 /* sqlite-wrap.c */,
+				492D6AB5249EAD53001029B5 /* sqlite-wrap.h */,
+				492D6AB7249EAD53001029B5 /* sqlite3.h */,
+				492D6AB3249EAD53001029B5 /* sqlite3ext.h */,
+				492D6A81249EA82A001029B5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		492D6A81249EA82A001029B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				492D6A80249EA82A001029B5 /* sciter-sqlite.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		492D6A7C249EA82A001029B5 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				492D6ABF249EAD53001029B5 /* sqlite3.h in Headers */,
+				492D6ABD249EAD53001029B5 /* sqlite-wrap.h in Headers */,
+				492D6ABC249EAD53001029B5 /* sciter-sqlite.h in Headers */,
+				492D6ABB249EAD53001029B5 /* sqlite3ext.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		492D6A7F249EA82A001029B5 /* sciter-sqlite */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 492D6A84249EA82A001029B5 /* Build configuration list for PBXNativeTarget "sciter-sqlite" */;
+			buildPhases = (
+				492D6A7C249EA82A001029B5 /* Headers */,
+				492D6A7D249EA82A001029B5 /* Sources */,
+				492D6A7E249EA82A001029B5 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "sciter-sqlite";
+			productName = "sciter-sqlite";
+			productReference = 492D6A80249EA82A001029B5 /* sciter-sqlite.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		492D6A78249EA82A001029B5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1150;
+				ORGANIZATIONNAME = "Andrew Fedoniouk";
+				TargetAttributes = {
+					492D6A7F249EA82A001029B5 = {
+						CreatedOnToolsVersion = 11.5;
+					};
+				};
+			};
+			buildConfigurationList = 492D6A7B249EA82A001029B5 /* Build configuration list for PBXProject "sciter-sqlite" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 492D6A77249EA82A001029B5;
+			productRefGroup = 492D6A81249EA82A001029B5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				492D6A7F249EA82A001029B5 /* sciter-sqlite */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		492D6A7D249EA82A001029B5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				492D6AC1249EAD53001029B5 /* sciter-sqlite-rs.cpp in Sources */,
+				492D6AC2249EAD53001029B5 /* sciter-sqlite-db.cpp in Sources */,
+				492D6ABE249EAD53001029B5 /* sqlite-wrap.c in Sources */,
+				492D6AC0249EAD53001029B5 /* sciter-sqlite.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		492D6A82249EA82A001029B5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = ../include;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SYMROOT = ../bin.osx;
+			};
+			name = Debug;
+		};
+		492D6A83249EA82A001029B5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = ../include;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SYMROOT = ../bin.osx;
+			};
+			name = Release;
+		};
+		492D6A85249EA82A001029B5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CONFIGURATION_BUILD_DIR = ../bin.osx;
+				DEPLOYMENT_LOCATION = NO;
+				DEVELOPMENT_TEAM = 642T6M376L;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				EXECUTABLE_PREFIX = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SYMROOT = ../../bin.osx/;
+			};
+			name = Debug;
+		};
+		492D6A86249EA82A001029B5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CONFIGURATION_BUILD_DIR = ../bin.osx;
+				DEPLOYMENT_LOCATION = NO;
+				DEVELOPMENT_TEAM = 642T6M376L;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				EXECUTABLE_PREFIX = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SYMROOT = ../../bin.osx/;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		492D6A7B249EA82A001029B5 /* Build configuration list for PBXProject "sciter-sqlite" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				492D6A82249EA82A001029B5 /* Debug */,
+				492D6A83249EA82A001029B5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		492D6A84249EA82A001029B5 /* Build configuration list for PBXNativeTarget "sciter-sqlite" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				492D6A85249EA82A001029B5 /* Debug */,
+				492D6A86249EA82A001029B5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 492D6A78249EA82A001029B5 /* Project object */;
+}

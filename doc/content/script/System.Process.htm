@@ -21,8 +21,9 @@
       <div><strong>( event</strong>: string<strong>, callback</strong>: function<strong> )</strong> : this</div>
       <p>Subscribes the callback function to one of process events:</p>
       <ul>
-        <li><strong>&quot;stdout&quot;</strong> -&gt; <code>function(text:string)</code>, child process has printed&nbsp;the text in its <i>stdout</i> stream;</li>
-        <li><strong>&quot;stderr&quot;</strong> -&gt; <code>function(text:string)</code>, child process has printed the text in its <i>stderr</i> stream;</li>
+        <li><strong>&quot;stdout&quot;</strong> -&gt; <code>function(text:string)</code>, child process has printed&nbsp;the <i>text</i> in its <i>stdout</i> stream;</li>
+        <li><strong>&quot;stderr&quot;</strong> -&gt; <code>function(text:string)</code>, child process has printed the <i>text</i> in its <i>stderr</i> stream;</li>
+				<li><b>&quot;stdin&quot;</b> -&gt; <code>function()</code>, child process has received data its <i>stdin</i> stream that was sent by&nbsp;<code>.send(data)</code>.</li>
         <li><strong>&quot;terminate&quot;</strong> -&gt; <code>function(status: integer)</code>, process terminated with the status code;</li></ul>
       <p>The event name may contain &quot;.namespace&quot; part that can be used in .off() call.</p></dd>
     <dt>off</dt>
@@ -32,8 +33,9 @@
       <p>Event name may contain only namespace part, so this: <code>socket.off(&quot;.namespace&quot;)</code> will unsubscribe all handlers that were set with that namespace.</p></dd>
     <dt>send</dt>
     <dd>
-      <div><strong>( data</strong>: string <strong>)</strong></div>
-      <p>The method sends data to the stdin stream of the child process.</p></dd>
+      <div><strong>( data</strong>: string <strong>)</strong> : this<strong> </strong></div>
+      <p>The method sends data to the stdin stream of the child process.</p>
+			<p>If called more than once, this method shall be invoked only after completion of previous send operation (after receiving event stdin).</p></dd>
     <dt>terminate</dt>
     <dd>
       <div><strong>( )</strong></div>

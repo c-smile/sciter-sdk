@@ -682,6 +682,12 @@ namespace aux
       if(wstr)
         init(wstr,wcslen(wstr));
     }
+    explicit w2oem(const WCHAR* wstr, size_t sz) :buffer(0), n(0)
+    {
+      local[0] = 0;
+      if (wstr)
+        init(wstr, sz);
+    }
     explicit w2oem(const std::wstring& wstr):buffer(0),n(0)
     {
       local[0] = 0;

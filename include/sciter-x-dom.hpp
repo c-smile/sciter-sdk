@@ -18,7 +18,6 @@
 #pragma warning(disable:4786) //identifier was truncated...
 #pragma warning(disable:4100) //unreferenced formal parameter
 
-#include "tiscript.hpp"
 #include "sciter-x-dom.h"
 #include <algorithm>
 #include <vector>
@@ -1113,23 +1112,6 @@ namespace dom
     {
       SCITER_VALUE rv;
       SCDOM_RESULT r = SciterGetExpando(he, &rv, force_create);
-      assert(r == SCDOM_OK); (void)r;
-      return rv;
-    }
-
-    // get scripting object associated with this DOM element
-    tiscript::value get_object(bool force_create = false)
-    {
-      tiscript::value rv;
-      SCDOM_RESULT r = SciterGetObject(he, &rv, force_create);
-      assert(r == SCDOM_OK); (void)r;
-      return rv;
-    }
-
-    tiscript::value get_namespace()
-    {
-      tiscript::value rv;
-      SCDOM_RESULT r = SciterGetElementNamespace(he, &rv);
       assert(r == SCDOM_OK); (void)r;
       return rv;
     }

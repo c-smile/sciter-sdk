@@ -61,6 +61,7 @@ workspace "sciter.sdk"
     configurations { "DebugSkia", "ReleaseSkia" }
     location "build.windows"
     links { "shell32", "advapi32", "ole32", "oleaut32", "comdlg32" }
+    removeplatforms "arm32"
     systemversion "latest"
   filter "system:macosx"
     location "build.macosx"
@@ -338,6 +339,26 @@ project "notes"
        "-Wl,--no-undefined",
        "-ldl",
     }
+  filter {}
+
+-- sciter extension library - SQLite
+project "sciter-sqlite"
+
+  kind "SharedLib"
+  language "C++"
+
+  targetprefix "" -- do not prepend it with "lib..."
+
+  files { "sqlite/*.h",
+          "sqlite/*.cpp",
+          "sqlite/sqlite-wrap.c" }
+
+  settargetdir()
+
+  removeconfigurations { "*skia" }  
+
+  filter "system:windows"
+    files {"sqlite/sciter-sqlite.def" }
   filter {}
 
 if _TARGET_OS == "windows" then

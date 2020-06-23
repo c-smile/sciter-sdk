@@ -53,7 +53,7 @@
   :root:not(.is-empty) > caption
   { 
     transform: translate(0,-80%) scale(0.7);  
-    transition: transform(quad-out, 160ms); 
+    transition: transform quad-out 160ms; 
   }
 }
 

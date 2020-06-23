@@ -45,7 +45,7 @@
                                                  a.k.a. notifications from intrinsic behaviors */
       HANDLE_METHOD_CALL           = 0x0200, /**< behavior specific methods */
       HANDLE_SCRIPTING_METHOD_CALL = 0x0400, /**< behavior specific methods */
-      HANDLE_TISCRIPT_METHOD_CALL  = 0x0800, /**< behavior specific methods using direct tiscript::value's */
+      //HANDLE_TISCRIPT_METHOD_CALL  = 0x0800, /**< behavior specific methods using direct tiscript::value's */
 
       HANDLE_EXCHANGE              = 0x1000, /**< system drag-n-drop */
       HANDLE_GESTURE               = 0x2000, /**< touch input events */
@@ -603,14 +603,6 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
       SCITER_VALUE        result; ///< return value
   } SCRIPTING_METHOD_PARAMS;
 
-  typedef struct TISCRIPT_METHOD_PARAMS
-  {
-      tiscript_VM*   vm;
-      tiscript_value tag;    ///< method id (symbol)
-      tiscript_value result; ///< return value
-      // parameters are accessible through tiscript::args.
-  } TISCRIPT_METHOD_PARAMS;
-
   // GET_VALUE/SET_VALUE methods params
   struct VALUE_PARAMS 
   {
@@ -771,11 +763,6 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
           return on_script_call(he, params.name, params.argc, params.argv, params.result);
         }
 
-      virtual bool handle_scripting_call(HELEMENT he, TISCRIPT_METHOD_PARAMS& params )
-        {
-          return on_script_call(he, params.vm, params.tag, params.result);
-        }
-
 
       //
       // alternative set of event handlers (aka old set).
@@ -798,10 +785,6 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
       // will end up with on_script_call(he, "my-method" , 2, argv, retval );
       // where argv[0] will be 1 and argv[1] will be "one".
       virtual bool on_script_call(HELEMENT he, LPCSTR name, UINT argc, const SCITER_VALUE* argv, SCITER_VALUE& retval) { return false; }
-
-      // Calls from TIScript. Override this if you want your own methods accessible directly from tiscript engine.
-      // Use tiscript::args to access parameters.
-      virtual bool on_script_call(HELEMENT he, tiscript_VM* pvm, tiscript_value tag, tiscript_value& retval) { return false; }
 
       // notification events from builtin behaviors - synthesized events: BUTTON_CLICK, VALUE_CHANGED
       // see enum BEHAVIOR_EVENTS
@@ -860,8 +843,7 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
             case HANDLE_SIZE:  {  pThis->handle_size(he); return false; }
             // call using sciter::value's (from CSSS!)
             case HANDLE_SCRIPTING_METHOD_CALL: { SCRIPTING_METHOD_PARAMS* p = (SCRIPTING_METHOD_PARAMS *)prms; return pThis->handle_scripting_call(he, *p ); }
-            // call using tiscript::value's (from the script)
-            case HANDLE_TISCRIPT_METHOD_CALL: { TISCRIPT_METHOD_PARAMS* p = (TISCRIPT_METHOD_PARAMS *)prms; return pThis->handle_scripting_call(he, *p ); }
+            //OBSOLETE: case HANDLE_TISCRIPT_METHOD_CALL: { TISCRIPT_METHOD_PARAMS* p = (TISCRIPT_METHOD_PARAMS *)prms; return pThis->handle_scripting_call(he, *p ); }
 			      case HANDLE_GESTURE :  { GESTURE_PARAMS *p = (GESTURE_PARAMS *)prms; return pThis->handle_gesture(he, *p ); }
             case HANDLE_EXCHANGE: { EXCHANGE_PARAMS *p = (EXCHANGE_PARAMS *)prms; return pThis->handle_exchange(he, *p); }
 			      default:

@@ -1,3 +1,5 @@
+  if(!SQLite)
+    include library "sciter-sqlite";
 
   function SQLite.isRecordset(rs) {
     return rs && (rs instanceof Asset) && (Asset.typeOf(rs) == #Recordset);

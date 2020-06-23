@@ -212,12 +212,6 @@ namespace sciter
       }
       HELEMENT get_root() { return root(); }
 
-      HVM get_vm() 
-      { 
-        return SciterGetVM(static_cast< BASE* >(this)->get_hwnd());
-      }
-
-
       // call scripting function defined in the global namespace
       SCITER_VALUE  call_function(LPCSTR name, UINT argc, SCITER_VALUE* argv )
       {
@@ -293,7 +287,9 @@ namespace sciter
     if(wcsncmp(uri,L"//",2) == 0)
       uri += 2;
 
-    WCHAR achURL[MAX_PATH]; wcsncpy(achURL, uri, MAX_PATH);
+    WCHAR achURL[MAX_PATH]; 
+    
+    wcsncpy_s(achURL, uri, MAX_PATH);
 
     LPWSTR pszName = achURL;
 
@@ -315,7 +311,7 @@ namespace sciter
       hrsrc = ::FindResourceW(hinst, pszName, pszExt);
 
     if (!hrsrc)
-      return false; // resource not found here - proceed with default loader
+      return false; // resource not found here - proceed with the default loader
 
     // Load specified resource and check if ok
 

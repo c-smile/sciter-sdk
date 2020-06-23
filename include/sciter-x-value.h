@@ -28,7 +28,5 @@
 #else
   typedef VALUE SCITER_VALUE;
 #endif
-
- typedef void SCAPI SciterLibraryInitFunc(SCITER_VALUE* plibobject);
-
+   
 #endif

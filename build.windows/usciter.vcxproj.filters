@@ -75,9 +75,6 @@
     <ClInclude Include="..\include\sciter-x-request.hpp">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\sciter-x-script.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\sciter-x-threads.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -120,6 +117,9 @@
       <Filter>sqlite</Filter>
     </ClCompile>
     <ClCompile Include="..\sqlite\sciter-sqlite-rs.cpp">
+      <Filter>sqlite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sqlite\sciter-sqlite.cpp">
       <Filter>sqlite</Filter>
     </ClCompile>
     <ClCompile Include="..\sqlite\sqlite-wrap.c">

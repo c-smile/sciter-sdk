@@ -281,21 +281,23 @@ some.selectParent(printel, &quot;div&quot;);
       <p>Invalidates area occupied by the element on the screen. If <em>x</em> , <em>y</em>, <em>width</em>, <em>height </em>(coordinates of area inside element) are provided then it invalidates only that portion. This method is useful if you are using Graphics for rendering on element surface area.</p></dd>
     <dt>animate</dt>
     <dd>
-      <div> <strong>( nextStep</strong>: function [, <b>whenEnded</b>: function] [, <strong>duration</strong>: duration | integer]<strong> )</strong> : undefined</div>
-      <p>Starts animation on the element. <em>nextStep</em> is a function that executes animation step (changes dimension, opacity, etc.). This function is called with <em>this</em> set to the element itself and should return:</p>
+      <div> <strong>( step</strong>: function [, <b>completion</b>: function] [, <strong>duration</strong>: duration | integer]<strong> )</strong> : Element</div>
+			<p>or</p>
+			<p><strong>{ step</strong>: function [, <b>completion</b>: function] [, <strong>duration</strong>: duration]<strong> }</strong> : Element</p>
+      <p>Starts animation on the element. <em>step</em> is a function that executes animation step (changes dimension, opacity, etc.). This function is called with <em>this</em> set to the element itself and should return:</p>
 			<ul><li> <i>true</i> - to continue animation with system defined FPS;</li>
 				<li> <i>integer</i>&nbsp;- milliseconds, delay to next animation step  call, if <code>0</code> stop animation;</li>
 				<li> <i>duration</i> -&nbsp;delay to next animation step  call, stop animation if the duration is zero;</li>
 				
 				<li>false - stop animation;</li></ul>
-      <p>If <em>whenEnded</em> function is provided it will be called on the end of the animation.</p>
+      <p>If <em>completion</em> function is provided it will be called at the end of the animation.</p>
       <p>The <em>duration</em> is total duration of the animation in milliseconds. If it is provided then signature of the <em>nextStep</em> function is expected to be:</p>
 			
-			<pre>function nextStep(progress: float) {} 
+			<pre>function step(progress: float) {} 
 </pre>
 			
 			<p>where <i>progress</i> is a float number from 0.0 to 1.0 - progress of the animation. The <i>nextStep</i> function will always receive <i>progress</i> == 1.0 as the very last step.</p><p>Otherwise step callback function is expected to have no parameters:</p>
-			<pre>function nextStep() {} 
+			<pre>function step() {} 
 </pre></dd>
     <dt>box</dt>
     <dd>

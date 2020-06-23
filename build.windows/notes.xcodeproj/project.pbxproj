@@ -1,0 +1,285 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CC6004CCC621C13E0020C30C /* notes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02DD2BB44B4E0FE68FECE1F4 /* notes.cpp */; };
+		F28E1163E3857F554F88FFA3 /* sciter-win-main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D29D708B6AEA563D993156CB /* sciter-win-main.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		02DD2BB44B4E0FE68FECE1F4 /* notes.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = notes.cpp; path = ../notes/notes.cpp; sourceTree = "<group>"; };
+		0866BEA20BD790D48D4434E2 /* notes.exe */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = notes.exe; path = notes.exe; sourceTree = BUILT_PRODUCTS_DIR; };
+		6182D2F224EE94A463923932 /* notes.rc */ = {isa = PBXFileReference; lastKnownFileType = text; name = notes.rc; path = ../notes/windows/notes.rc; sourceTree = "<group>"; };
+		82F1F5D89DBE648AA18EFC18 /* dpi-aware.manifest */ = {isa = PBXFileReference; lastKnownFileType = text; name = "dpi-aware.manifest"; path = "../notes/windows/dpi-aware.manifest"; sourceTree = "<group>"; };
+		D29D708B6AEA563D993156CB /* sciter-win-main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "sciter-win-main.cpp"; path = "../include/sciter-win-main.cpp"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9F0EB312425A3C445D2B0952 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		06898349A0A5F7BBECE14189 /* notes */ = {
+			isa = PBXGroup;
+			children = (
+				5E8C725002DF100215175890 /* include */,
+				5329727AA33D072C25BB38BA /* notes */,
+				A6C936B49B3FADE6EA134CF4 /* Products */,
+			);
+			name = notes;
+			sourceTree = "<group>";
+		};
+		5329727AA33D072C25BB38BA /* notes */ = {
+			isa = PBXGroup;
+			children = (
+				02DD2BB44B4E0FE68FECE1F4 /* notes.cpp */,
+				5C4B37B6735DD2E86379CDF6 /* windows */,
+			);
+			name = notes;
+			sourceTree = "<group>";
+		};
+		5C4B37B6735DD2E86379CDF6 /* windows */ = {
+			isa = PBXGroup;
+			children = (
+				82F1F5D89DBE648AA18EFC18 /* dpi-aware.manifest */,
+				6182D2F224EE94A463923932 /* notes.rc */,
+			);
+			name = windows;
+			sourceTree = "<group>";
+		};
+		5E8C725002DF100215175890 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				D29D708B6AEA563D993156CB /* sciter-win-main.cpp */,
+			);
+			name = include;
+			sourceTree = "<group>";
+		};
+		A6C936B49B3FADE6EA134CF4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0866BEA20BD790D48D4434E2 /* notes.exe */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0A204A4838C69E3A9207F888 /* notes */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8D49FB71309584A34B6651B1 /* Build configuration list for PBXNativeTarget "notes" */;
+			buildPhases = (
+				9607AE1010C857E500CD1376 /* Prebuild */,
+				0EF633B2B241BCE4CD1289F2 /* Resources */,
+				78A34D091BEED63B36BFA349 /* Sources */,
+				9F0EB312425A3C445D2B0952 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = notes;
+			productInstallPath = "$(HOME)/Applications";
+			productName = notes;
+			productReference = 0866BEA20BD790D48D4434E2 /* notes.exe */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "notes" */;
+			compatibilityVersion = "Xcode 3.2";
+			hasScannedForEncodings = 1;
+			mainGroup = 06898349A0A5F7BBECE14189 /* notes */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0A204A4838C69E3A9207F888 /* notes.exe */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0EF633B2B241BCE4CD1289F2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9607AE1010C857E500CD1376 /* Prebuild */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Prebuild;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n...\\bin.win\\packfolder.exe ...\\notes\\res ...\\notes\\resources.cpp -v \"resources\"";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		78A34D091BEED63B36BFA349 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F28E1163E3857F554F88FFA3 /* sciter-win-main.cpp in Sources */,
+				CC6004CCC621C13E0020C30C /* notes.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		41D1C1B78A42A5E9CEE177F7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = ../bin.win/arm64;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = "\"$(HOME)/Applications\"";
+				PRODUCT_NAME = notes;
+				WRAPPER_EXTENSION = exe;
+			};
+			name = Debug;
+		};
+		440C26716C46DF2353E26CB1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = ../bin.win/arm64;
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = "\"$(HOME)/Applications\"";
+				PRODUCT_NAME = notes;
+				WRAPPER_EXTENSION = exe;
+			};
+			name = Release;
+		};
+		A5BAEE324906776463D74472 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEVICE=DESKTOP",
+					WIN32,
+					WIN64,
+					ARM64,
+					NDEBUG,
+					_CRT_SECURE_NO_WARNINGS,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OBJROOT = obj/arm64/Release/notes;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"-lshell32",
+					"-ladvapi32",
+					"-lole32",
+					"-loleaut32",
+					"-lcomdlg32",
+				);
+				SYMROOT = ../bin.win/arm64;
+				USER_HEADER_SEARCH_PATHS = (
+					../include,
+					../notes/windows,
+				);
+			};
+			name = Release;
+		};
+		B70DB5F807214AAA899F7C38 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEVICE=DESKTOP",
+					WIN32,
+					WIN64,
+					ARM64,
+					DEBUG,
+					_DEBUG,
+					_CRT_SECURE_NO_WARNINGS,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OBJROOT = obj/arm64/Debug/notes;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-lshell32",
+					"-ladvapi32",
+					"-lole32",
+					"-loleaut32",
+					"-lcomdlg32",
+				);
+				SYMROOT = ../bin.win/arm64;
+				USER_HEADER_SEARCH_PATHS = (
+					../include,
+					../notes/windows,
+				);
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "notes" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B70DB5F807214AAA899F7C38 /* Debug */,
+				B70DB5F807214AAA899F7C38 /* Debug */,
+				A5BAEE324906776463D74472 /* Release */,
+				A5BAEE324906776463D74472 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		8D49FB71309584A34B6651B1 /* Build configuration list for PBXNativeTarget "notes.exe" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				41D1C1B78A42A5E9CEE177F7 /* Debug */,
+				41D1C1B78A42A5E9CEE177F7 /* Debug */,
+				440C26716C46DF2353E26CB1 /* Release */,
+				440C26716C46DF2353E26CB1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+};
+rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}

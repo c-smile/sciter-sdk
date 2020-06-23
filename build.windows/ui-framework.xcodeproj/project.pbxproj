@@ -1,0 +1,237 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8A4E2DB6E58F8128B8E9CBF6 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9568A7EF06925B0E08520BE /* stdafx.cpp */; };
+		D78063002EE5D5F2E0F3F140 /* worker-thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 947C1728C67561DA40549D68 /* worker-thread.cpp */; };
+		E01353344D3B61A64ECE5174 /* ui-framework.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 898F691CD6F25F4E4D115F5C /* ui-framework.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		42FD48922DE96E8475CF36D2 /* ui-framework.exe */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "ui-framework.exe"; path = "ui-framework.exe"; sourceTree = BUILT_PRODUCTS_DIR; };
+		898F691CD6F25F4E4D115F5C /* ui-framework.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "ui-framework.cpp"; path = "../demos/ui-framework/ui-framework.cpp"; sourceTree = "<group>"; };
+		947C1728C67561DA40549D68 /* worker-thread.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "worker-thread.cpp"; path = "../demos/ui-framework/worker-thread.cpp"; sourceTree = "<group>"; };
+		D9568A7EF06925B0E08520BE /* stdafx.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = stdafx.cpp; path = "../demos/ui-framework/stdafx.cpp"; sourceTree = "<group>"; };
+		F20E7200B57A33B2F41DD840 /* ui-framework.rc */ = {isa = PBXFileReference; lastKnownFileType = text; name = "ui-framework.rc"; path = "../demos/ui-framework/ui-framework.rc"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6D8DC5026E40C1F4E2229342 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		82BF6B392F222B6BEDAAA179 /* ui-framework */ = {
+			isa = PBXGroup;
+			children = (
+				D9568A7EF06925B0E08520BE /* stdafx.cpp */,
+				898F691CD6F25F4E4D115F5C /* ui-framework.cpp */,
+				F20E7200B57A33B2F41DD840 /* ui-framework.rc */,
+				947C1728C67561DA40549D68 /* worker-thread.cpp */,
+				A6C936B49B3FADE6EA134CF4 /* Products */,
+			);
+			name = "ui-framework";
+			sourceTree = "<group>";
+		};
+		A6C936B49B3FADE6EA134CF4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				42FD48922DE96E8475CF36D2 /* ui-framework.exe */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C6155638EC3B85EA53427C78 /* ui-framework */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5BC90D615C7C0A53D05DDBA1 /* Build configuration list for PBXNativeTarget "ui-framework" */;
+			buildPhases = (
+				DD7545A2DE284294520A13E2 /* Resources */,
+				47225EF947D55BEBBBB72D39 /* Sources */,
+				6D8DC5026E40C1F4E2229342 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ui-framework";
+			productInstallPath = "$(HOME)/Applications";
+			productName = "ui-framework";
+			productReference = 42FD48922DE96E8475CF36D2 /* ui-framework.exe */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "ui-framework" */;
+			compatibilityVersion = "Xcode 3.2";
+			hasScannedForEncodings = 1;
+			mainGroup = 82BF6B392F222B6BEDAAA179 /* ui-framework */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C6155638EC3B85EA53427C78 /* ui-framework.exe */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DD7545A2DE284294520A13E2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		47225EF947D55BEBBBB72D39 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8A4E2DB6E58F8128B8E9CBF6 /* stdafx.cpp in Sources */,
+				E01353344D3B61A64ECE5174 /* ui-framework.cpp in Sources */,
+				D78063002EE5D5F2E0F3F140 /* worker-thread.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		11BF8BE8834AA45A324BCA28 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEVICE=DESKTOP",
+					WIN32,
+					DEBUG,
+					_DEBUG,
+					_CRT_SECURE_NO_WARNINGS,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OBJROOT = "obj/x32/Debug/ui-framework";
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-lshell32",
+					"-ladvapi32",
+					"-lole32",
+					"-loleaut32",
+					"-lcomdlg32",
+				);
+				SYMROOT = ../bin.win/x32;
+				USER_HEADER_SEARCH_PATHS = (
+					../include,
+					"../demos/ui-framework",
+				);
+			};
+			name = Debug;
+		};
+		743A002274ECFD14E8CECE62 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEVICE=DESKTOP",
+					WIN32,
+					NDEBUG,
+					_CRT_SECURE_NO_WARNINGS,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OBJROOT = "obj/x32/Release/ui-framework";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"-lshell32",
+					"-ladvapi32",
+					"-lole32",
+					"-loleaut32",
+					"-lcomdlg32",
+				);
+				SYMROOT = ../bin.win/x32;
+				USER_HEADER_SEARCH_PATHS = (
+					../include,
+					"../demos/ui-framework",
+				);
+			};
+			name = Release;
+		};
+		7F8B3BA7B06F3399C38769E7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = ../bin.win/x32;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = "\"$(HOME)/Applications\"";
+				PRODUCT_NAME = "ui-framework";
+				WRAPPER_EXTENSION = exe;
+			};
+			name = Debug;
+		};
+		D60BDC61CFCD98D309CC9AA1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = ../bin.win/x32;
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = "\"$(HOME)/Applications\"";
+				PRODUCT_NAME = "ui-framework";
+				WRAPPER_EXTENSION = exe;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "ui-framework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				11BF8BE8834AA45A324BCA28 /* Debug */,
+				743A002274ECFD14E8CECE62 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		5BC90D615C7C0A53D05DDBA1 /* Build configuration list for PBXNativeTarget "ui-framework.exe" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7F8B3BA7B06F3399C38769E7 /* Debug */,
+				D60BDC61CFCD98D309CC9AA1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+};
+rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}

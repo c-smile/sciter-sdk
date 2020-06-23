@@ -89,6 +89,8 @@ int uimain(std::function<int()> run ) {
     pwin->load(WSTR("this://app/default-win.htm"));
 #elif defined(OSX)
     pwin->load(WSTR("this://app/default-osx.htm"));
+#elif defined(LINUX)
+    pwin->load(WSTR("this://app/default-lnx.htm"));
 #else // too many of them differnt
     pwin->load(WSTR("this://app/default-else.htm"));
 #endif // WINDOWS

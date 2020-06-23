@@ -1,0 +1,469 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		033CE2FD9D96CBEFD9CF313D /* behavior_drawing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C2720A51A082157F18666E5 /* behavior_drawing.cpp */; };
+		0C76EEFF7F987BF1E05DBD3F /* behavior_video_generator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8A235187E583763927C717C7 /* behavior_video_generator.cpp */; };
+		2C11E74CFA353AFE81438D8C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAA7E0B415E93426E9437EF4 /* main.cpp */; };
+		34CE33ADA7EFC09F08B501ED /* behavior_native_textarea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 85959655E0F5BB0723395C95 /* behavior_native_textarea.cpp */; };
+		7737E27DCE4D8AEFFA9620BD /* behavior_camera_capture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2854D92583A0295771D20F65 /* behavior_camera_capture.cpp */; };
+		8EEA79C1E60022331248B801 /* behavior_drawing-opengl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D33E1A292E896A5B1CBB5069 /* behavior_drawing-opengl.cpp */; };
+		918E921970312D8B25133059 /* behavior_tabs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C6B73014C0E563386630941 /* behavior_tabs.cpp */; };
+		C3514B56D57B2808096C1196 /* sciter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78986D1E725A2990AC592B5E /* sciter.cpp */; };
+		E3576F56F5814C0829723596 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE42511EB8040D90F2030F5E /* stdafx.cpp */; };
+		FA8AF45FC1EFAF514CA7829F /* behavior_drawing-gdi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9761DCE784C96F9921C36327 /* behavior_drawing-gdi.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		07FCC36238E0BB544BF8F1A2 /* sciter.rc */ = {isa = PBXFileReference; lastKnownFileType = text; name = sciter.rc; path = ../demos/sciter/sciter.rc; sourceTree = "<group>"; };
+		0BFD2CCFA44A1281D291130F /* sciter-x-window.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; name = "sciter-x-window.hpp"; path = "../include/sciter-x-window.hpp"; sourceTree = "<group>"; };
+		0C92150DF0D91D3F74C64B4D /* sciter-x-debug.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "sciter-x-debug.h"; path = "../include/sciter-x-debug.h"; sourceTree = "<group>"; };
+		0D35DEE5DB59329762678525 /* sciter-om-def.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "sciter-om-def.h"; path = "../include/sciter-om-def.h"; sourceTree = "<group>"; };
+		150613BBF4232DEDD02C89FB /* sciter-x-video-api.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "sciter-x-video-api.h"; path = "../include/sciter-x-video-api.h"; sourceTree = "<group>"; };
+		1D9E3BD161B20D0355839211 /* sciter-x-request.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "sciter-x-request.h"; path = "../include/sciter-x-request.h"; sourceTree = "<group>"; };
+		2854D92583A0295771D20F65 /* behavior_camera_capture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = behavior_camera_capture.cpp; path = ../include/behaviors/behavior_camera_capture.cpp; sourceTree = "<group>"; };
+		322FE6FF262F3071AB1A453F /* dpi-aware.manifest */ = {isa = PBXFileReference; lastKnownFileType = text; name = "dpi-aware.manifest"; path = "../demos/sciter/res/dpi-aware.manifest"; sourceTree = "<group>"; };
+		379670FF1BDD79319FCAA73F /* sciter-x-dom.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; name = "sciter-x-dom.hpp"; path = "../include/sciter-x-dom.hpp"; sourceTree = "<group>"; };
+		3A34D933CFAB98653E47EF73 /* sciter-x-api.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "sciter-x-api.h"; path = "../include/sciter-x-api.h"; sourceTree = "<group>"; };
+		4528DB6F550E07A1418191AF /* sciter-x-host-callback.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "sciter-x-host-callback.h"; path = "../include/sciter-x-host-callback.h"; sourceTree = "<group>"; };
+		4A3645A1E2832B5310CA2BE1 /* sciter-x-graphics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "sciter-x-graphics.h"; path = "../include/sciter-x-graphics.h"; sourceTree = "<group>"; };
+		4BA5D1CDE11C90FF4FB8E80D /* sciter-x-msg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "sciter-x-msg.h"; path = "../include/sciter-x-msg.h"; sourceTree = "<group>"; };
+		4C6B73014C0E563386630941 /* behavior_tabs.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = behavior_tabs.cpp; path = ../include/behaviors/behavior_tabs.cpp; sourceTree = "<group>"; };
+		5390CBE5755C7917B211A225 /* sciter-x.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "sciter-x.h"; path = "../include/sciter-x.h"; sourceTree = "<group>"; };
+		615FA3B7899A5C697135E9F7 /* aux-cvt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "aux-cvt.h"; path = "../include/aux-cvt.h"; sourceTree = "<group>"; };
+		6290A09141ADBAC31DB716D1 /* sciter-x-request.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; name = "sciter-x-request.hpp"; path = "../include/sciter-x-request.hpp"; sourceTree = "<group>"; };
+		6F633B3D32CEFCEF7172A17D /* aux-asset.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "aux-asset.h"; path = "../include/aux-asset.h"; sourceTree = "<group>"; };
+		70F8F7DA13E71E8CA30CFE1A /* wsciter.exe */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = wsciter.exe; path = wsciter.exe; sourceTree = BUILT_PRODUCTS_DIR; };
+		73296C15B73D3D47AB0EC255 /* sciter-x-threads.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "sciter-x-threads.h"; path = "../include/sciter-x-threads.h"; sourceTree = "<group>"; };
+		765D34619129A31394FA3AA1 /* sciter-x-graphics.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; name = "sciter-x-graphics.hpp"; path = "../include/sciter-x-graphics.hpp"; sourceTree = "<group>"; };
+		78986D1E725A2990AC592B5E /* sciter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sciter.cpp; path = ../demos/sciter/sciter.cpp; sourceTree = "<group>"; };
+		7C2720A51A082157F18666E5 /* behavior_drawing.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = behavior_drawing.cpp; path = ../include/behaviors/behavior_drawing.cpp; sourceTree = "<group>"; };
+		85959655E0F5BB0723395C95 /* behavior_native_textarea.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = behavior_native_textarea.cpp; path = ../include/behaviors/behavior_native_textarea.cpp; sourceTree = "<group>"; };
+		8A235187E583763927C717C7 /* behavior_video_generator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = behavior_video_generator.cpp; path = ../include/behaviors/behavior_video_generator.cpp; sourceTree = "<group>"; };
+		8E499C29A07378DBD4646269 /* sciter-x-script.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "sciter-x-script.h"; path = "../include/sciter-x-script.h"; sourceTree = "<group>"; };
+		9761DCE784C96F9921C36327 /* behavior_drawing-gdi.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "behavior_drawing-gdi.cpp"; path = "../include/behaviors/behavior_drawing-gdi.cpp"; sourceTree = "<group>"; };
+		9B15673F33624CF161A94D7F /* sciter-x-behavior.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "sciter-x-behavior.h"; path = "../include/sciter-x-behavior.h"; sourceTree = "<group>"; };
+		A6AA6EFF3C212E31AABD853F /* sciter-x-dom.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "sciter-x-dom.h"; path = "../include/sciter-x-dom.h"; sourceTree = "<group>"; };
+		A6D76F9D3C4E2ECFAAEA85DD /* sciter-x-def.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "sciter-x-def.h"; path = "../include/sciter-x-def.h"; sourceTree = "<group>"; };
+		B739005D7AA4C20FB948669D /* aux-slice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "aux-slice.h"; path = "../include/aux-slice.h"; sourceTree = "<group>"; };
+		BAA7E0B415E93426E9437EF4 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../demos/sciter/main.cpp; sourceTree = "<group>"; };
+		BE42511EB8040D90F2030F5E /* stdafx.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = stdafx.cpp; path = ../demos/sciter/stdafx.cpp; sourceTree = "<group>"; };
+		CCB36D69B0FA759B34E7A3A9 /* sciter-x-types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "sciter-x-types.h"; path = "../include/sciter-x-types.h"; sourceTree = "<group>"; };
+		CDF5E739B23CEF6B362A1D79 /* sciter-x-value.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "sciter-x-value.h"; path = "../include/sciter-x-value.h"; sourceTree = "<group>"; };
+		D33E1A292E896A5B1CBB5069 /* behavior_drawing-opengl.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "behavior_drawing-opengl.cpp"; path = "../include/behaviors/behavior_drawing-opengl.cpp"; sourceTree = "<group>"; };
+		D4AFF9AD981BBB5FD6BF5FED /* sciter-om.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "sciter-om.h"; path = "../include/sciter-om.h"; sourceTree = "<group>"; };
+		E93362E3F9188F15E58C1923 /* sciter-x-lite-keycodes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "sciter-x-lite-keycodes.h"; path = "../include/sciter-x-lite-keycodes.h"; sourceTree = "<group>"; };
+		F4B532078A2BF139F8C84847 /* aux-platform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "aux-platform.h"; path = "../include/aux-platform.h"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		05C5104AAA17ADFCBC4FF68A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5E8C725002DF100215175890 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				6F633B3D32CEFCEF7172A17D /* aux-asset.h */,
+				615FA3B7899A5C697135E9F7 /* aux-cvt.h */,
+				F4B532078A2BF139F8C84847 /* aux-platform.h */,
+				B739005D7AA4C20FB948669D /* aux-slice.h */,
+				759EAD619DD966138574F3A1 /* behaviors */,
+				0D35DEE5DB59329762678525 /* sciter-om-def.h */,
+				D4AFF9AD981BBB5FD6BF5FED /* sciter-om.h */,
+				3A34D933CFAB98653E47EF73 /* sciter-x-api.h */,
+				9B15673F33624CF161A94D7F /* sciter-x-behavior.h */,
+				0C92150DF0D91D3F74C64B4D /* sciter-x-debug.h */,
+				A6D76F9D3C4E2ECFAAEA85DD /* sciter-x-def.h */,
+				A6AA6EFF3C212E31AABD853F /* sciter-x-dom.h */,
+				379670FF1BDD79319FCAA73F /* sciter-x-dom.hpp */,
+				4A3645A1E2832B5310CA2BE1 /* sciter-x-graphics.h */,
+				765D34619129A31394FA3AA1 /* sciter-x-graphics.hpp */,
+				4528DB6F550E07A1418191AF /* sciter-x-host-callback.h */,
+				E93362E3F9188F15E58C1923 /* sciter-x-lite-keycodes.h */,
+				4BA5D1CDE11C90FF4FB8E80D /* sciter-x-msg.h */,
+				1D9E3BD161B20D0355839211 /* sciter-x-request.h */,
+				6290A09141ADBAC31DB716D1 /* sciter-x-request.hpp */,
+				8E499C29A07378DBD4646269 /* sciter-x-script.h */,
+				73296C15B73D3D47AB0EC255 /* sciter-x-threads.h */,
+				CCB36D69B0FA759B34E7A3A9 /* sciter-x-types.h */,
+				CDF5E739B23CEF6B362A1D79 /* sciter-x-value.h */,
+				150613BBF4232DEDD02C89FB /* sciter-x-video-api.h */,
+				0BFD2CCFA44A1281D291130F /* sciter-x-window.hpp */,
+				5390CBE5755C7917B211A225 /* sciter-x.h */,
+			);
+			name = include;
+			sourceTree = "<group>";
+		};
+		5FD97381F2E4CC733B19C1C1 /* wsciter */ = {
+			isa = PBXGroup;
+			children = (
+				8A2CBBB8DA40506A5CBE81F8 /* demos */,
+				5E8C725002DF100215175890 /* include */,
+				A6C936B49B3FADE6EA134CF4 /* Products */,
+			);
+			name = wsciter;
+			sourceTree = "<group>";
+		};
+		759EAD619DD966138574F3A1 /* behaviors */ = {
+			isa = PBXGroup;
+			children = (
+				2854D92583A0295771D20F65 /* behavior_camera_capture.cpp */,
+				9761DCE784C96F9921C36327 /* behavior_drawing-gdi.cpp */,
+				D33E1A292E896A5B1CBB5069 /* behavior_drawing-opengl.cpp */,
+				7C2720A51A082157F18666E5 /* behavior_drawing.cpp */,
+				85959655E0F5BB0723395C95 /* behavior_native_textarea.cpp */,
+				4C6B73014C0E563386630941 /* behavior_tabs.cpp */,
+				8A235187E583763927C717C7 /* behavior_video_generator.cpp */,
+			);
+			name = behaviors;
+			sourceTree = "<group>";
+		};
+		77E848631AD66F15A9FC4EA3 /* sciter */ = {
+			isa = PBXGroup;
+			children = (
+				BAA7E0B415E93426E9437EF4 /* main.cpp */,
+				DC2F0F1CDCE20C0E50C3DD5C /* res */,
+				78986D1E725A2990AC592B5E /* sciter.cpp */,
+				07FCC36238E0BB544BF8F1A2 /* sciter.rc */,
+				BE42511EB8040D90F2030F5E /* stdafx.cpp */,
+			);
+			name = sciter;
+			sourceTree = "<group>";
+		};
+		8A2CBBB8DA40506A5CBE81F8 /* demos */ = {
+			isa = PBXGroup;
+			children = (
+				77E848631AD66F15A9FC4EA3 /* sciter */,
+			);
+			name = demos;
+			sourceTree = "<group>";
+		};
+		A6C936B49B3FADE6EA134CF4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				70F8F7DA13E71E8CA30CFE1A /* wsciter.exe */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DC2F0F1CDCE20C0E50C3DD5C /* res */ = {
+			isa = PBXGroup;
+			children = (
+				322FE6FF262F3071AB1A453F /* dpi-aware.manifest */,
+			);
+			name = res;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B0343C8021BF54F2D0C07AC0 /* wsciter */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F40058A99852F65BAA8B3EE9 /* Build configuration list for PBXNativeTarget "wsciter" */;
+			buildPhases = (
+				75AC90EA19FF2E9C2C37772A /* Resources */,
+				DF59AA4183AC47F395E49081 /* Sources */,
+				05C5104AAA17ADFCBC4FF68A /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = wsciter;
+			productInstallPath = "$(HOME)/Applications";
+			productName = wsciter;
+			productReference = 70F8F7DA13E71E8CA30CFE1A /* wsciter.exe */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "wsciter" */;
+			compatibilityVersion = "Xcode 3.2";
+			hasScannedForEncodings = 1;
+			mainGroup = 5FD97381F2E4CC733B19C1C1 /* wsciter */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B0343C8021BF54F2D0C07AC0 /* wsciter.exe */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		75AC90EA19FF2E9C2C37772A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DF59AA4183AC47F395E49081 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2C11E74CFA353AFE81438D8C /* main.cpp in Sources */,
+				C3514B56D57B2808096C1196 /* sciter.cpp in Sources */,
+				E3576F56F5814C0829723596 /* stdafx.cpp in Sources */,
+				7737E27DCE4D8AEFFA9620BD /* behavior_camera_capture.cpp in Sources */,
+				FA8AF45FC1EFAF514CA7829F /* behavior_drawing-gdi.cpp in Sources */,
+				8EEA79C1E60022331248B801 /* behavior_drawing-opengl.cpp in Sources */,
+				033CE2FD9D96CBEFD9CF313D /* behavior_drawing.cpp in Sources */,
+				34CE33ADA7EFC09F08B501ED /* behavior_native_textarea.cpp in Sources */,
+				918E921970312D8B25133059 /* behavior_tabs.cpp in Sources */,
+				0C76EEFF7F987BF1E05DBD3F /* behavior_video_generator.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		0C714B6AB0C3E91CC2FC31AA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEVICE=DESKTOP",
+					WIN32,
+					WIN64,
+					NDEBUG,
+					_CRT_SECURE_NO_WARNINGS,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OBJROOT = obj/x64/Release/wsciter;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"-lshell32",
+					"-ladvapi32",
+					"-lole32",
+					"-loleaut32",
+					"-lcomdlg32",
+				);
+				SYMROOT = ../bin.win/x64;
+				USER_HEADER_SEARCH_PATHS = (
+					../include,
+					../demos/sciter,
+				);
+			};
+			name = Release;
+		};
+		2AA178F2CD8F9FA45CB57F32 /* ReleaseSkia */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEVICE=DESKTOP",
+					WIN32,
+					WIN64,
+					NDEBUG,
+					_CRT_SECURE_NO_WARNINGS,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OBJROOT = obj/x64/ReleaseSkia;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"-lshell32",
+					"-ladvapi32",
+					"-lole32",
+					"-loleaut32",
+					"-lcomdlg32",
+				);
+				SYMROOT = ../bin.win/x64skia;
+				USER_HEADER_SEARCH_PATHS = (
+					../include,
+					../demos/sciter,
+				);
+			};
+			name = ReleaseSkia;
+		};
+		392F05B83C9FD7EABE0C7BF8 /* DebugSkia */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEVICE=DESKTOP",
+					WIN32,
+					WIN64,
+					DEBUG,
+					_DEBUG,
+					_CRT_SECURE_NO_WARNINGS,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OBJROOT = obj/x64/DebugSkia;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-lshell32",
+					"-ladvapi32",
+					"-lole32",
+					"-loleaut32",
+					"-lcomdlg32",
+				);
+				SYMROOT = ../bin.win/x64skia;
+				USER_HEADER_SEARCH_PATHS = (
+					../include,
+					../demos/sciter,
+				);
+			};
+			name = DebugSkia;
+		};
+		4CC5B2EF75006BA15C9BF92F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = ../bin.win/x64;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = "\"$(HOME)/Applications\"";
+				PRODUCT_NAME = wsciter;
+				WRAPPER_EXTENSION = exe;
+			};
+			name = Debug;
+		};
+		780D3531C5702B633B8F2B71 /* ReleaseSkia */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = ../bin.win/x64skia;
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = "\"$(HOME)/Applications\"";
+				PRODUCT_NAME = wsciter;
+				WRAPPER_EXTENSION = exe;
+			};
+			name = ReleaseSkia;
+		};
+		8472D57747DE972986823BB7 /* DebugSkia */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = ../bin.win/x64skia;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = "\"$(HOME)/Applications\"";
+				PRODUCT_NAME = wsciter;
+				WRAPPER_EXTENSION = exe;
+			};
+			name = DebugSkia;
+		};
+		C39B653066E6EE6281B7BB70 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEVICE=DESKTOP",
+					WIN32,
+					WIN64,
+					DEBUG,
+					_DEBUG,
+					_CRT_SECURE_NO_WARNINGS,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OBJROOT = obj/x64/Debug/wsciter;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-lshell32",
+					"-ladvapi32",
+					"-lole32",
+					"-loleaut32",
+					"-lcomdlg32",
+				);
+				SYMROOT = ../bin.win/x64;
+				USER_HEADER_SEARCH_PATHS = (
+					../include,
+					../demos/sciter,
+				);
+			};
+			name = Debug;
+		};
+		DBC145A9FD8CF2DB3A421BE9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = ../bin.win/x64;
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = "\"$(HOME)/Applications\"";
+				PRODUCT_NAME = wsciter;
+				WRAPPER_EXTENSION = exe;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "wsciter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C39B653066E6EE6281B7BB70 /* Debug */,
+				C39B653066E6EE6281B7BB70 /* Debug */,
+				0C714B6AB0C3E91CC2FC31AA /* Release */,
+				0C714B6AB0C3E91CC2FC31AA /* Release */,
+				392F05B83C9FD7EABE0C7BF8 /* DebugSkia */,
+				392F05B83C9FD7EABE0C7BF8 /* DebugSkia */,
+				2AA178F2CD8F9FA45CB57F32 /* ReleaseSkia */,
+				2AA178F2CD8F9FA45CB57F32 /* ReleaseSkia */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		F40058A99852F65BAA8B3EE9 /* Build configuration list for PBXNativeTarget "wsciter.exe" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4CC5B2EF75006BA15C9BF92F /* Debug */,
+				4CC5B2EF75006BA15C9BF92F /* Debug */,
+				DBC145A9FD8CF2DB3A421BE9 /* Release */,
+				DBC145A9FD8CF2DB3A421BE9 /* Release */,
+				8472D57747DE972986823BB7 /* DebugSkia */,
+				8472D57747DE972986823BB7 /* DebugSkia */,
+				780D3531C5702B633B8F2B71 /* ReleaseSkia */,
+				780D3531C5702B633B8F2B71 /* ReleaseSkia */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+};
+rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}

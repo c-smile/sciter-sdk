@@ -30,13 +30,30 @@
 #include "sciter-om.h"
 
 #if defined(__cplusplus) && !defined( PLAIN_API_ONLY )
-
-// C++, namespace sciter things
-#include "sciter-x-dom.hpp"
-#include "sciter-x-host-callback.h"
-#include "sciter-x-debug.h"
-//#include "sciter-x-threads.h"
+  // C++, namespace sciter things
+  #include "sciter-x-dom.hpp"
+  #include "sciter-x-host-callback.h"
+  #include "sciter-x-debug.h"
 #endif
 
+/** Signatire of Sciter extension library entry point 
+  * \param psapi #ISciterAPI - Sciter API to be used inside the DLL.
+  * \param plibobject #SCITER_VALUE* - value to initialize, can be native functor, sciter::om::asset, array, map, etc.
+  * \return TRUE, if it populates plibobject;
+  *
+  * The DLL should have function exported with the name "SciterLibraryInit" and wit this signature.
+  * In script such sciter extension library can be imported as: 
+  *
+  *  include library "name-without-extension";
+  *
+ **/
+
+typedef BOOL SCAPI SciterLibraryInitFunc(ISciterAPI* psapi, SCITER_VALUE* plibobject);
+
+
+
+
 #endif
+
+
 

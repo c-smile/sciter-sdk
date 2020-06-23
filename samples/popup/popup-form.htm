@@ -11,13 +11,13 @@
     </style>
     <script type="text/tiscript">
     
-      $(#show) << event click { 
-        this.popup( $(popup#test));
+      $(#test) << event click { 
+        this.popup( $(popup));
       }
     
     </script>
         
-    <popup #test>
+    <popup>
       <form>
         <label>name</label><input type=text>
         <label>surname</label><input type=text>
@@ -28,7 +28,7 @@
   </head>
 <body>
 
-  <button #show>Show popup</button>
+  <button #test>Show popup</button>
 
 </body>
 </html>

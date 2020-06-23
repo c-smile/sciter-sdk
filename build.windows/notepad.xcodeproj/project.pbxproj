@@ -1,0 +1,285 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4DB351B61073B2286DA88FF6 /* html-notepad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4418911E285F9950AC4CC75E /* html-notepad.cpp */; };
+		F28E1163E3857F554F88FFA3 /* sciter-win-main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D29D708B6AEA563D993156CB /* sciter-win-main.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		122F3366FD1B5958450121A6 /* html-notepad.exe */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "html-notepad.exe"; path = "html-notepad.exe"; sourceTree = BUILT_PRODUCTS_DIR; };
+		12F4C358A86B828A1707D998 /* notepad.rc */ = {isa = PBXFileReference; lastKnownFileType = text; name = notepad.rc; path = ../notepad/windows/notepad.rc; sourceTree = "<group>"; };
+		4418911E285F9950AC4CC75E /* html-notepad.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "html-notepad.cpp"; path = "../notepad/html-notepad.cpp"; sourceTree = "<group>"; };
+		C7338BBAC6D66EEC012B21FA /* dpi-aware.manifest */ = {isa = PBXFileReference; lastKnownFileType = text; name = "dpi-aware.manifest"; path = "../notepad/windows/dpi-aware.manifest"; sourceTree = "<group>"; };
+		D29D708B6AEA563D993156CB /* sciter-win-main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "sciter-win-main.cpp"; path = "../include/sciter-win-main.cpp"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		33F365D634A662C8A8883416 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5E8C725002DF100215175890 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				D29D708B6AEA563D993156CB /* sciter-win-main.cpp */,
+			);
+			name = include;
+			sourceTree = "<group>";
+		};
+		6C6E10ABFF79699D47AE5EEB /* notepad */ = {
+			isa = PBXGroup;
+			children = (
+				5E8C725002DF100215175890 /* include */,
+				97C2BC3E3C1559F04E4DA27E /* notepad */,
+				A6C936B49B3FADE6EA134CF4 /* Products */,
+			);
+			name = notepad;
+			sourceTree = "<group>";
+		};
+		957157D8BB97878A229E7E18 /* windows */ = {
+			isa = PBXGroup;
+			children = (
+				C7338BBAC6D66EEC012B21FA /* dpi-aware.manifest */,
+				12F4C358A86B828A1707D998 /* notepad.rc */,
+			);
+			name = windows;
+			sourceTree = "<group>";
+		};
+		97C2BC3E3C1559F04E4DA27E /* notepad */ = {
+			isa = PBXGroup;
+			children = (
+				4418911E285F9950AC4CC75E /* html-notepad.cpp */,
+				957157D8BB97878A229E7E18 /* windows */,
+			);
+			name = notepad;
+			sourceTree = "<group>";
+		};
+		A6C936B49B3FADE6EA134CF4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				122F3366FD1B5958450121A6 /* html-notepad.exe */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		868B368CACB1663E13B85CCC /* notepad */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 222EAE3522E1AB2796C37C75 /* Build configuration list for PBXNativeTarget "notepad" */;
+			buildPhases = (
+				9607AE1010C857E500CD1376 /* Prebuild */,
+				A3DAE676A48DE368186FB4B6 /* Resources */,
+				0D87FFCD0E3AFCBF821CCE0D /* Sources */,
+				33F365D634A662C8A8883416 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = notepad;
+			productInstallPath = "$(HOME)/Applications";
+			productName = notepad;
+			productReference = 122F3366FD1B5958450121A6 /* html-notepad.exe */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "notepad" */;
+			compatibilityVersion = "Xcode 3.2";
+			hasScannedForEncodings = 1;
+			mainGroup = 6C6E10ABFF79699D47AE5EEB /* notepad */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				868B368CACB1663E13B85CCC /* html-notepad.exe */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A3DAE676A48DE368186FB4B6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9607AE1010C857E500CD1376 /* Prebuild */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Prebuild;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n...\\bin.win\\packfolder.exe ...\\notepad\\res ...\\notepad\\resources.cpp -v \"resources\"";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0D87FFCD0E3AFCBF821CCE0D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F28E1163E3857F554F88FFA3 /* sciter-win-main.cpp in Sources */,
+				4DB351B61073B2286DA88FF6 /* html-notepad.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		2614BA7B56F8B26D6A10E8BB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = ../bin.win/arm64;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = "\"$(HOME)/Applications\"";
+				PRODUCT_NAME = "html-notepad";
+				WRAPPER_EXTENSION = exe;
+			};
+			name = Debug;
+		};
+		44F060353EB21CA778B11E75 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = ../bin.win/arm64;
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = "\"$(HOME)/Applications\"";
+				PRODUCT_NAME = "html-notepad";
+				WRAPPER_EXTENSION = exe;
+			};
+			name = Release;
+		};
+		5B6C719AFEB7FACC1988C7DA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEVICE=DESKTOP",
+					WIN32,
+					WIN64,
+					ARM64,
+					DEBUG,
+					_DEBUG,
+					_CRT_SECURE_NO_WARNINGS,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OBJROOT = obj/arm64/Debug/notepad;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-lshell32",
+					"-ladvapi32",
+					"-lole32",
+					"-loleaut32",
+					"-lcomdlg32",
+				);
+				SYMROOT = ../bin.win/arm64;
+				USER_HEADER_SEARCH_PATHS = (
+					../include,
+					../notepad/windows,
+				);
+			};
+			name = Debug;
+		};
+		DCB71A548109B80693420094 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEVICE=DESKTOP",
+					WIN32,
+					WIN64,
+					ARM64,
+					NDEBUG,
+					_CRT_SECURE_NO_WARNINGS,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OBJROOT = obj/arm64/Release/notepad;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"-lshell32",
+					"-ladvapi32",
+					"-lole32",
+					"-loleaut32",
+					"-lcomdlg32",
+				);
+				SYMROOT = ../bin.win/arm64;
+				USER_HEADER_SEARCH_PATHS = (
+					../include,
+					../notepad/windows,
+				);
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "notepad" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5B6C719AFEB7FACC1988C7DA /* Debug */,
+				5B6C719AFEB7FACC1988C7DA /* Debug */,
+				DCB71A548109B80693420094 /* Release */,
+				DCB71A548109B80693420094 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		222EAE3522E1AB2796C37C75 /* Build configuration list for PBXNativeTarget "html-notepad.exe" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2614BA7B56F8B26D6A10E8BB /* Debug */,
+				2614BA7B56F8B26D6A10E8BB /* Debug */,
+				44F060353EB21CA778B11E75 /* Release */,
+				44F060353EB21CA778B11E75 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+};
+rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}

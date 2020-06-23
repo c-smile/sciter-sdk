@@ -13,6 +13,7 @@
           html { 
             padding: window-frame-width;             
           	background:transparent; /*border:2dip solid #aaa;*/; 
+            overflow:none;
           }
 
           html > body { margin:0; }
@@ -41,12 +42,12 @@
           html > header > window-buttons > window-button[role="window-close"]:hover { background:rgb(232,17,35); stroke:#fff; }
 
           html > header > window-buttons > window-button[role="window-maximize"] { foreground-image: url(path:M0 0 H9 V9 H0 Z); }
+          html[window-state="maximized"] > header > window-buttons > window-button[role="window-maximize"] { foreground-image: url(path:M0 2 h8 v8 h-8 Z M2 2 v-2 h8 v8 h-2); }
 
-          html[state="maximized"] > header > window-buttons > window-button[role="window-maximize"] { foreground-image: url(path:M0 2 h8 v8 h-8 Z M2 2 v-2 h8 v8 h-2); }
           html > header > window-buttons > window-button[role="window-minimize"] { foreground-image: url(path:M0 0 M0 4.5 H9 M9 9); }
 
           @media platform == "OSX" {
-            html > header > window-buttons { display:none; }
+            html > header > window-buttons { visibility:none; }
             html > header > window-caption { margin-left:6em; }
           }
 
@@ -58,8 +59,12 @@
           body > section { padding-top: @WINDOW-CAPTION-HEIGHT; height:*;}
 
           body > section.n1 {  width:0.2*; }
-          body > section.n2 {  width:0.3*; background:morph(color(back),opacity:0.6);}
-          body > section.n3 {  width:0.5*; background:color(back); padding:1em; }
+          body > section.n2 {  width:0.3*; background:morph(color(back),opacity:0.6); }
+          body > section.n3 {  width:0.5*; background:color(back); }
+
+          body > section.n3 > div {  size:*; overflow:scroll-indicator; padding:1em; }
+
+          
 
 
           icon {
@@ -166,7 +171,9 @@
       </li>
    </section>
    <section.n3>
-     <include src="flat-theme-elements.htm">
+     <div>
+        <include src="flat-theme-elements.htm">
+     </div>
    </section>
 </body>
 <!--<footer>Foo</footer>-->

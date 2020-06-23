@@ -159,6 +159,21 @@ template <typename T >
         return -1;
       }
 
+      template <class Y>
+      bool starts_with(const slice<Y> &s) const {
+        if (length < s.length)
+          return false;
+        slice t(start, s.length);
+        return t == s;
+      }
+
+      bool ends_with(const slice &s) const {
+        if (length < s.length)
+          return false;
+        slice t(start + length - s.length, s.length);
+        return t == s;
+      }
+
       void prune(size_t from_start, size_t from_end = 0)
       {
         size_t s = from_start >= length? length : from_start;
@@ -167,6 +182,18 @@ template <typename T >
         if( s < e ) length = e-s;
         else length = 0;
       }
+
+      bool split(const slice &delimeter, slice &head, slice &tail) const {
+        int d = index_of(delimeter);
+        if (d < 0)
+          return false;
+        const T *s = start;
+        size_t   l = length;
+        head = slice(s, d);
+        tail = slice(s + d + delimeter.length, l - d - delimeter.length);
+        return true;
+      }
+
 
 #ifdef CPP11
       explicit

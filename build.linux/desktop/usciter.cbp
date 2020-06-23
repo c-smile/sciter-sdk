@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="usciter" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug|x32">
+				<Option output="../../bin.lnx/x32/usciter" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/x32/Debug/usciter" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-m32" />
+					<Add option="-g" />
+					<Add option="-std=c++14" />
+					<Add option="-DDEVICE=DESKTOP" />
+					<Add option="-D_GNU_SOURCE" />
+					<Add option="-DDEBUG" />
+					<Add option="-D_DEBUG" />
+					<Add option="`pkg-config fontconfig --cflags`" />
+					<Add option="-fPIC" />
+					<Add option="-Wno-unknown-pragmas" />
+					<Add option="-Wno-write-strings" />
+					<Add option="-ldl" />
+					<Add option="`pkg-config gtk+-3.0 --cflags`" />
+					<Add directory="../../include" />
+				</Compiler>
+				<Linker>
+					<Add option="-m32" />
+					<Add option="`pkg-config gtk+-3.0 --libs`" />
+					<Add option="`pkg-config fontconfig --libs`" />
+					<Add option="-fPIC" />
+					<Add option="-pthread" />
+					<Add option="-Wl,--no-undefined" />
+					<Add option="-ldl" />
+				</Linker>
+			</Target>
+			<Target title="Release|x32">
+				<Option output="../../bin.lnx/x32/usciter" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/x32/Release/usciter" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-m32" />
+					<Add option="-flto" />
+					<Add option="-Os" />
+					<Add option="-std=c++14" />
+					<Add option="-DDEVICE=DESKTOP" />
+					<Add option="-D_GNU_SOURCE" />
+					<Add option="-DNDEBUG" />
+					<Add option="`pkg-config fontconfig --cflags`" />
+					<Add option="-fPIC" />
+					<Add option="-Wno-unknown-pragmas" />
+					<Add option="-Wno-write-strings" />
+					<Add option="-ldl" />
+					<Add option="`pkg-config gtk+-3.0 --cflags`" />
+					<Add directory="../../include" />
+				</Compiler>
+				<Linker>
+					<Add option="-m32" />
+					<Add option="-flto" />
+					<Add option="-s" />
+					<Add option="`pkg-config gtk+-3.0 --libs`" />
+					<Add option="`pkg-config fontconfig --libs`" />
+					<Add option="-fPIC" />
+					<Add option="-pthread" />
+					<Add option="-Wl,--no-undefined" />
+					<Add option="-ldl" />
+				</Linker>
+			</Target>
+			<Target title="Debug|x64">
+				<Option output="../../bin.lnx/x64/usciter" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/x64/Debug/usciter" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-m64" />
+					<Add option="-g" />
+					<Add option="-std=c++14" />
+					<Add option="-DDEVICE=DESKTOP" />
+					<Add option="-D_GNU_SOURCE" />
+					<Add option="-DDEBUG" />
+					<Add option="-D_DEBUG" />
+					<Add option="`pkg-config fontconfig --cflags`" />
+					<Add option="-fPIC" />
+					<Add option="-Wno-unknown-pragmas" />
+					<Add option="-Wno-write-strings" />
+					<Add option="-ldl" />
+					<Add option="`pkg-config gtk+-3.0 --cflags`" />
+					<Add directory="../../include" />
+				</Compiler>
+				<Linker>
+					<Add option="-m64" />
+					<Add option="`pkg-config gtk+-3.0 --libs`" />
+					<Add option="`pkg-config fontconfig --libs`" />
+					<Add option="-fPIC" />
+					<Add option="-pthread" />
+					<Add option="-Wl,--no-undefined" />
+					<Add option="-ldl" />
+				</Linker>
+			</Target>
+			<Target title="Release|x64">
+				<Option output="../../bin.lnx/x64/usciter" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/x64/Release/usciter" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-m64" />
+					<Add option="-flto" />
+					<Add option="-Os" />
+					<Add option="-std=c++14" />
+					<Add option="-DDEVICE=DESKTOP" />
+					<Add option="-D_GNU_SOURCE" />
+					<Add option="-DNDEBUG" />
+					<Add option="`pkg-config fontconfig --cflags`" />
+					<Add option="-fPIC" />
+					<Add option="-Wno-unknown-pragmas" />
+					<Add option="-Wno-write-strings" />
+					<Add option="-ldl" />
+					<Add option="`pkg-config gtk+-3.0 --cflags`" />
+					<Add directory="../../include" />
+				</Compiler>
+				<Linker>
+					<Add option="-m64" />
+					<Add option="-flto" />
+					<Add option="-s" />
+					<Add option="`pkg-config gtk+-3.0 --libs`" />
+					<Add option="`pkg-config fontconfig --libs`" />
+					<Add option="-fPIC" />
+					<Add option="-pthread" />
+					<Add option="-Wl,--no-undefined" />
+					<Add option="-ldl" />
+				</Linker>
+			</Target>
+			<Target title="Debug|arm32">
+				<Option output="../../bin.lnx/arm32/usciter" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/arm32/Debug/usciter" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-std=c++14" />
+					<Add option="-DDEVICE=DESKTOP" />
+					<Add option="-D_GNU_SOURCE" />
+					<Add option="-DDEBUG" />
+					<Add option="-D_DEBUG" />
+					<Add option="`pkg-config fontconfig --cflags`" />
+					<Add option="-fPIC" />
+					<Add option="-Wno-unknown-pragmas" />
+					<Add option="-Wno-write-strings" />
+					<Add option="-ldl" />
+					<Add option="`pkg-config gtk+-3.0 --cflags`" />
+					<Add directory="../../include" />
+				</Compiler>
+				<Linker>
+					<Add option="`pkg-config gtk+-3.0 --libs`" />
+					<Add option="`pkg-config fontconfig --libs`" />
+					<Add option="-fPIC" />
+					<Add option="-pthread" />
+					<Add option="-Wl,--no-undefined" />
+					<Add option="-ldl" />
+				</Linker>
+			</Target>
+			<Target title="Release|arm32">
+				<Option output="../../bin.lnx/arm32/usciter" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/arm32/Release/usciter" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-flto" />
+					<Add option="-Os" />
+					<Add option="-std=c++14" />
+					<Add option="-DDEVICE=DESKTOP" />
+					<Add option="-D_GNU_SOURCE" />
+					<Add option="-DNDEBUG" />
+					<Add option="`pkg-config fontconfig --cflags`" />
+					<Add option="-fPIC" />
+					<Add option="-Wno-unknown-pragmas" />
+					<Add option="-Wno-write-strings" />
+					<Add option="-ldl" />
+					<Add option="`pkg-config gtk+-3.0 --cflags`" />
+					<Add directory="../../include" />
+				</Compiler>
+				<Linker>
+					<Add option="-flto" />
+					<Add option="-s" />
+					<Add option="`pkg-config gtk+-3.0 --libs`" />
+					<Add option="`pkg-config fontconfig --libs`" />
+					<Add option="-fPIC" />
+					<Add option="-pthread" />
+					<Add option="-Wl,--no-undefined" />
+					<Add option="-ldl" />
+				</Linker>
+			</Target>
+			<Target title="Debug|arm64">
+				<Option output="../../bin.lnx/arm64/usciter" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/arm64/Debug/usciter" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-std=c++14" />
+					<Add option="-DDEVICE=DESKTOP" />
+					<Add option="-D_GNU_SOURCE" />
+					<Add option="-DDEBUG" />
+					<Add option="-D_DEBUG" />
+					<Add option="`pkg-config fontconfig --cflags`" />
+					<Add option="-fPIC" />
+					<Add option="-Wno-unknown-pragmas" />
+					<Add option="-Wno-write-strings" />
+					<Add option="-ldl" />
+					<Add option="`pkg-config gtk+-3.0 --cflags`" />
+					<Add directory="../../include" />
+				</Compiler>
+				<Linker>
+					<Add option="`pkg-config gtk+-3.0 --libs`" />
+					<Add option="`pkg-config fontconfig --libs`" />
+					<Add option="-fPIC" />
+					<Add option="-pthread" />
+					<Add option="-Wl,--no-undefined" />
+					<Add option="-ldl" />
+				</Linker>
+			</Target>
+			<Target title="Release|arm64">
+				<Option output="../../bin.lnx/arm64/usciter" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/arm64/Release/usciter" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-flto" />
+					<Add option="-Os" />
+					<Add option="-std=c++14" />
+					<Add option="-DDEVICE=DESKTOP" />
+					<Add option="-D_GNU_SOURCE" />
+					<Add option="-DNDEBUG" />
+					<Add option="`pkg-config fontconfig --cflags`" />
+					<Add option="-fPIC" />
+					<Add option="-Wno-unknown-pragmas" />
+					<Add option="-Wno-write-strings" />
+					<Add option="-ldl" />
+					<Add option="`pkg-config gtk+-3.0 --cflags`" />
+					<Add directory="../../include" />
+				</Compiler>
+				<Linker>
+					<Add option="-flto" />
+					<Add option="-s" />
+					<Add option="`pkg-config gtk+-3.0 --libs`" />
+					<Add option="`pkg-config fontconfig --libs`" />
+					<Add option="-fPIC" />
+					<Add option="-pthread" />
+					<Add option="-Wl,--no-undefined" />
+					<Add option="-ldl" />
+				</Linker>
+			</Target>
+		</Build>
+		<Unit filename="../../demos/usciter/usciter.cpp" />
+		<Unit filename="../../include/sciter-gtk-main.cpp" />
+		<Unit filename="../../sqlite/sciter-sqlite-db.cpp" />
+		<Unit filename="../../sqlite/sciter-sqlite-rs.cpp" />
+		<Unit filename="../../sqlite/sciter-sqlite.cpp" />
+		<Unit filename="../../sqlite/sciter-sqlite.h" />
+		<Unit filename="../../sqlite/sqlite-wrap.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../sqlite/sqlite-wrap.h" />
+		<Unit filename="../../sqlite/sqlite3.h" />
+		<Unit filename="../../sqlite/sqlite3ext.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

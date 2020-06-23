@@ -7,6 +7,9 @@
          background: #ddd; text-align:center;}
   </style>  
   <script type="text/tiscript">
+
+  if(!SQLite)
+    include library "sciter-sqlite";
  
   event click $(#test)
   {  
@@ -26,8 +29,6 @@
 
     var rs = db.exec("select * from stocks order by price");
 
-    debug log: rs;
-
     if ( rs )
       showRecordset(rs);
     else
@@ -39,6 +40,7 @@
 
   function showRecordset(rs)
   {
+    debug show: rs; 
     
     var headers = [];
     for (var n in rs.length)
@@ -57,7 +59,7 @@
     }
 
     do { rows.push(<tr>{cells()}</tr>); } while( rs.next() );
-    
+
     self.$(body).append(<table>
       <thead><tr>{headers}</tr></thead>
       <tbody>{rows}</tbody>
@@ -66,7 +68,7 @@
 
 
   function self.ready() {
-    if(!view.uSciter) 
+    if(!SQLite) 
       $(body).content(<h1>Open this sample in usciter!</h1>);
   }
 

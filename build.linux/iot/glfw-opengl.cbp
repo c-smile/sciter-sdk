@@ -1,0 +1,477 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="glfw-opengl" />
+		<Option pch_mode="2" />
+		<Build>
+			<Target title="Debug|x32">
+				<Option output="../../bin.lnx/x32lite/glfw-opengl" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/x32/Debug/glfw-opengl" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-m32" />
+					<Add option="-g" />
+					<Add option="-m32" />
+					<Add option="-g" />
+					<Add option="-std=c++17" />
+					<Add option="-DDEVICE=IOT" />
+					<Add option="-D_GNU_SOURCE" />
+					<Add option="-DDEBUG" />
+					<Add option="-D_DEBUG" />
+					<Add option="-DWINDOWLESS" />
+					<Add option="-D_GLFW_X11" />
+					<Add option="`pkg-config gtk+-3.0 --cflags`" />
+					<Add option="`pkg-config fontconfig --cflags`" />
+					<Add option="-fPIC" />
+					<Add option="-Wno-unknown-pragmas" />
+					<Add option="-Wno-write-strings" />
+					<Add option="-ldl" />
+					<Add directory="../../include" />
+					<Add directory="../../demos.lite/sciter-glfw-opengl" />
+					<Add directory="../../demos.lite/glfw/include" />
+					<Add directory="../../demos.lite/glfw/deps" />
+				</Compiler>
+				<Linker>
+					<Add option="-m32" />
+					<Add option="-fPIC" />
+					<Add option="-Wall" />
+					<Add option="-pthread" />
+					<Add option="-lm" />
+					<Add option="-lX11" />
+					<Add option="-lXrandr" />
+					<Add option="-lXinerama" />
+					<Add option="-lXcursor" />
+					<Add option="-lGL" />
+					<Add option="-lGLU" />
+					<Add option="-ldl" />
+				</Linker>
+			</Target>
+			<Target title="Release|x32">
+				<Option output="../../bin.lnx/x32lite/glfw-opengl" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/x32/Release/glfw-opengl" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-m32" />
+					<Add option="-flto" />
+					<Add option="-Os" />
+					<Add option="-m32" />
+					<Add option="-flto" />
+					<Add option="-Os" />
+					<Add option="-std=c++17" />
+					<Add option="-DDEVICE=IOT" />
+					<Add option="-D_GNU_SOURCE" />
+					<Add option="-DNDEBUG" />
+					<Add option="-DWINDOWLESS" />
+					<Add option="-D_GLFW_X11" />
+					<Add option="`pkg-config gtk+-3.0 --cflags`" />
+					<Add option="`pkg-config fontconfig --cflags`" />
+					<Add option="-fPIC" />
+					<Add option="-Wno-unknown-pragmas" />
+					<Add option="-Wno-write-strings" />
+					<Add option="-ldl" />
+					<Add directory="../../include" />
+					<Add directory="../../demos.lite/sciter-glfw-opengl" />
+					<Add directory="../../demos.lite/glfw/include" />
+					<Add directory="../../demos.lite/glfw/deps" />
+				</Compiler>
+				<Linker>
+					<Add option="-m32" />
+					<Add option="-flto" />
+					<Add option="-s" />
+					<Add option="-fPIC" />
+					<Add option="-Wall" />
+					<Add option="-pthread" />
+					<Add option="-lm" />
+					<Add option="-lX11" />
+					<Add option="-lXrandr" />
+					<Add option="-lXinerama" />
+					<Add option="-lXcursor" />
+					<Add option="-lGL" />
+					<Add option="-lGLU" />
+					<Add option="-ldl" />
+				</Linker>
+			</Target>
+			<Target title="Debug|x64">
+				<Option output="../../bin.lnx/x64lite/glfw-opengl" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/x64/Debug/glfw-opengl" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-m64" />
+					<Add option="-g" />
+					<Add option="-m64" />
+					<Add option="-g" />
+					<Add option="-std=c++17" />
+					<Add option="-DDEVICE=IOT" />
+					<Add option="-D_GNU_SOURCE" />
+					<Add option="-DDEBUG" />
+					<Add option="-D_DEBUG" />
+					<Add option="-DWINDOWLESS" />
+					<Add option="-D_GLFW_X11" />
+					<Add option="`pkg-config gtk+-3.0 --cflags`" />
+					<Add option="`pkg-config fontconfig --cflags`" />
+					<Add option="-fPIC" />
+					<Add option="-Wno-unknown-pragmas" />
+					<Add option="-Wno-write-strings" />
+					<Add option="-ldl" />
+					<Add directory="../../include" />
+					<Add directory="../../demos.lite/sciter-glfw-opengl" />
+					<Add directory="../../demos.lite/glfw/include" />
+					<Add directory="../../demos.lite/glfw/deps" />
+				</Compiler>
+				<Linker>
+					<Add option="-m64" />
+					<Add option="-fPIC" />
+					<Add option="-Wall" />
+					<Add option="-pthread" />
+					<Add option="-lm" />
+					<Add option="-lX11" />
+					<Add option="-lXrandr" />
+					<Add option="-lXinerama" />
+					<Add option="-lXcursor" />
+					<Add option="-lGL" />
+					<Add option="-lGLU" />
+					<Add option="-ldl" />
+				</Linker>
+			</Target>
+			<Target title="Release|x64">
+				<Option output="../../bin.lnx/x64lite/glfw-opengl" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/x64/Release/glfw-opengl" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-m64" />
+					<Add option="-flto" />
+					<Add option="-Os" />
+					<Add option="-m64" />
+					<Add option="-flto" />
+					<Add option="-Os" />
+					<Add option="-std=c++17" />
+					<Add option="-DDEVICE=IOT" />
+					<Add option="-D_GNU_SOURCE" />
+					<Add option="-DNDEBUG" />
+					<Add option="-DWINDOWLESS" />
+					<Add option="-D_GLFW_X11" />
+					<Add option="`pkg-config gtk+-3.0 --cflags`" />
+					<Add option="`pkg-config fontconfig --cflags`" />
+					<Add option="-fPIC" />
+					<Add option="-Wno-unknown-pragmas" />
+					<Add option="-Wno-write-strings" />
+					<Add option="-ldl" />
+					<Add directory="../../include" />
+					<Add directory="../../demos.lite/sciter-glfw-opengl" />
+					<Add directory="../../demos.lite/glfw/include" />
+					<Add directory="../../demos.lite/glfw/deps" />
+				</Compiler>
+				<Linker>
+					<Add option="-m64" />
+					<Add option="-flto" />
+					<Add option="-s" />
+					<Add option="-fPIC" />
+					<Add option="-Wall" />
+					<Add option="-pthread" />
+					<Add option="-lm" />
+					<Add option="-lX11" />
+					<Add option="-lXrandr" />
+					<Add option="-lXinerama" />
+					<Add option="-lXcursor" />
+					<Add option="-lGL" />
+					<Add option="-lGLU" />
+					<Add option="-ldl" />
+				</Linker>
+			</Target>
+			<Target title="Debug|arm32">
+				<Option output="../../bin.lnx/arm32lite/glfw-opengl" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/arm32/Debug/glfw-opengl" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-g" />
+					<Add option="-std=c++17" />
+					<Add option="-DDEVICE=IOT" />
+					<Add option="-D_GNU_SOURCE" />
+					<Add option="-DDEBUG" />
+					<Add option="-D_DEBUG" />
+					<Add option="-DWINDOWLESS" />
+					<Add option="-D_GLFW_X11" />
+					<Add option="`pkg-config gtk+-3.0 --cflags`" />
+					<Add option="`pkg-config fontconfig --cflags`" />
+					<Add option="-fPIC" />
+					<Add option="-Wno-unknown-pragmas" />
+					<Add option="-Wno-write-strings" />
+					<Add option="-ldl" />
+					<Add directory="../../include" />
+					<Add directory="../../demos.lite/sciter-glfw-opengl" />
+					<Add directory="../../demos.lite/glfw/include" />
+					<Add directory="../../demos.lite/glfw/deps" />
+				</Compiler>
+				<Linker>
+					<Add option="-fPIC" />
+					<Add option="-Wall" />
+					<Add option="-pthread" />
+					<Add option="-lm" />
+					<Add option="-lX11" />
+					<Add option="-lXrandr" />
+					<Add option="-lXinerama" />
+					<Add option="-lXcursor" />
+					<Add option="-lGL" />
+					<Add option="-lGLU" />
+					<Add option="-ldl" />
+				</Linker>
+			</Target>
+			<Target title="Release|arm32">
+				<Option output="../../bin.lnx/arm32lite/glfw-opengl" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/arm32/Release/glfw-opengl" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-flto" />
+					<Add option="-Os" />
+					<Add option="-flto" />
+					<Add option="-Os" />
+					<Add option="-std=c++17" />
+					<Add option="-DDEVICE=IOT" />
+					<Add option="-D_GNU_SOURCE" />
+					<Add option="-DNDEBUG" />
+					<Add option="-DWINDOWLESS" />
+					<Add option="-D_GLFW_X11" />
+					<Add option="`pkg-config gtk+-3.0 --cflags`" />
+					<Add option="`pkg-config fontconfig --cflags`" />
+					<Add option="-fPIC" />
+					<Add option="-Wno-unknown-pragmas" />
+					<Add option="-Wno-write-strings" />
+					<Add option="-ldl" />
+					<Add directory="../../include" />
+					<Add directory="../../demos.lite/sciter-glfw-opengl" />
+					<Add directory="../../demos.lite/glfw/include" />
+					<Add directory="../../demos.lite/glfw/deps" />
+				</Compiler>
+				<Linker>
+					<Add option="-flto" />
+					<Add option="-s" />
+					<Add option="-fPIC" />
+					<Add option="-Wall" />
+					<Add option="-pthread" />
+					<Add option="-lm" />
+					<Add option="-lX11" />
+					<Add option="-lXrandr" />
+					<Add option="-lXinerama" />
+					<Add option="-lXcursor" />
+					<Add option="-lGL" />
+					<Add option="-lGLU" />
+					<Add option="-ldl" />
+				</Linker>
+			</Target>
+			<Target title="Debug|arm64">
+				<Option output="../../bin.lnx/arm64lite/glfw-opengl" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/arm64/Debug/glfw-opengl" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-g" />
+					<Add option="-std=c++17" />
+					<Add option="-DDEVICE=IOT" />
+					<Add option="-D_GNU_SOURCE" />
+					<Add option="-DDEBUG" />
+					<Add option="-D_DEBUG" />
+					<Add option="-DWINDOWLESS" />
+					<Add option="-D_GLFW_X11" />
+					<Add option="`pkg-config gtk+-3.0 --cflags`" />
+					<Add option="`pkg-config fontconfig --cflags`" />
+					<Add option="-fPIC" />
+					<Add option="-Wno-unknown-pragmas" />
+					<Add option="-Wno-write-strings" />
+					<Add option="-ldl" />
+					<Add directory="../../include" />
+					<Add directory="../../demos.lite/sciter-glfw-opengl" />
+					<Add directory="../../demos.lite/glfw/include" />
+					<Add directory="../../demos.lite/glfw/deps" />
+				</Compiler>
+				<Linker>
+					<Add option="-fPIC" />
+					<Add option="-Wall" />
+					<Add option="-pthread" />
+					<Add option="-lm" />
+					<Add option="-lX11" />
+					<Add option="-lXrandr" />
+					<Add option="-lXinerama" />
+					<Add option="-lXcursor" />
+					<Add option="-lGL" />
+					<Add option="-lGLU" />
+					<Add option="-ldl" />
+				</Linker>
+			</Target>
+			<Target title="Release|arm64">
+				<Option output="../../bin.lnx/arm64lite/glfw-opengl" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/arm64/Release/glfw-opengl" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-flto" />
+					<Add option="-Os" />
+					<Add option="-flto" />
+					<Add option="-Os" />
+					<Add option="-std=c++17" />
+					<Add option="-DDEVICE=IOT" />
+					<Add option="-D_GNU_SOURCE" />
+					<Add option="-DNDEBUG" />
+					<Add option="-DWINDOWLESS" />
+					<Add option="-D_GLFW_X11" />
+					<Add option="`pkg-config gtk+-3.0 --cflags`" />
+					<Add option="`pkg-config fontconfig --cflags`" />
+					<Add option="-fPIC" />
+					<Add option="-Wno-unknown-pragmas" />
+					<Add option="-Wno-write-strings" />
+					<Add option="-ldl" />
+					<Add directory="../../include" />
+					<Add directory="../../demos.lite/sciter-glfw-opengl" />
+					<Add directory="../../demos.lite/glfw/include" />
+					<Add directory="../../demos.lite/glfw/deps" />
+				</Compiler>
+				<Linker>
+					<Add option="-flto" />
+					<Add option="-s" />
+					<Add option="-fPIC" />
+					<Add option="-Wall" />
+					<Add option="-pthread" />
+					<Add option="-lm" />
+					<Add option="-lX11" />
+					<Add option="-lXrandr" />
+					<Add option="-lXinerama" />
+					<Add option="-lXcursor" />
+					<Add option="-lGL" />
+					<Add option="-lGLU" />
+					<Add option="-ldl" />
+				</Linker>
+			</Target>
+		</Build>
+		<Unit filename="../../demos.lite/glfw/deps/glad.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../demos.lite/glfw/src/context.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../demos.lite/glfw/src/egl_context.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../demos.lite/glfw/src/glx_context.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../demos.lite/glfw/src/init.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../demos.lite/glfw/src/input.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../demos.lite/glfw/src/linux_joystick.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../demos.lite/glfw/src/linux_joystick.h">
+		</Unit>
+		<Unit filename="../../demos.lite/glfw/src/monitor.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../demos.lite/glfw/src/osmesa_context.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../demos.lite/glfw/src/posix_thread.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../demos.lite/glfw/src/posix_thread.h">
+		</Unit>
+		<Unit filename="../../demos.lite/glfw/src/posix_time.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../demos.lite/glfw/src/posix_time.h">
+		</Unit>
+		<Unit filename="../../demos.lite/glfw/src/vulkan.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../demos.lite/glfw/src/window.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../demos.lite/glfw/src/x11_init.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../demos.lite/glfw/src/x11_monitor.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../demos.lite/glfw/src/x11_platform.h">
+		</Unit>
+		<Unit filename="../../demos.lite/glfw/src/x11_window.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../demos.lite/glfw/src/xkb_unicode.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../demos.lite/sciter-glfw-opengl/aux-fs.h">
+		</Unit>
+		<Unit filename="../../demos.lite/sciter-glfw-opengl/basic.cpp">
+		</Unit>
+		<Unit filename="../../demos.lite/sciter-glfw-opengl/stdafx.h">
+		</Unit>
+		<Unit filename="../../include/aux-asset.h">
+		</Unit>
+		<Unit filename="../../include/aux-cvt.h">
+		</Unit>
+		<Unit filename="../../include/aux-platform.h">
+		</Unit>
+		<Unit filename="../../include/aux-slice.h">
+		</Unit>
+		<Unit filename="../../include/behaviors/behavior_drawing.cpp">
+		</Unit>
+		<Unit filename="../../include/nullptr.hpp">
+		</Unit>
+		<Unit filename="../../include/sciter-om-def.h">
+		</Unit>
+		<Unit filename="../../include/sciter-om.h">
+		</Unit>
+		<Unit filename="../../include/sciter-x-api.h">
+		</Unit>
+		<Unit filename="../../include/sciter-x-behavior.h">
+		</Unit>
+		<Unit filename="../../include/sciter-x-debug.h">
+		</Unit>
+		<Unit filename="../../include/sciter-x-def.h">
+		</Unit>
+		<Unit filename="../../include/sciter-x-dom.h">
+		</Unit>
+		<Unit filename="../../include/sciter-x-dom.hpp">
+		</Unit>
+		<Unit filename="../../include/sciter-x-graphics.h">
+		</Unit>
+		<Unit filename="../../include/sciter-x-graphics.hpp">
+		</Unit>
+		<Unit filename="../../include/sciter-x-host-callback.h">
+		</Unit>
+		<Unit filename="../../include/sciter-x-lite-keycodes.h">
+		</Unit>
+		<Unit filename="../../include/sciter-x-msg.h">
+		</Unit>
+		<Unit filename="../../include/sciter-x-request.h">
+		</Unit>
+		<Unit filename="../../include/sciter-x-request.hpp">
+		</Unit>
+		<Unit filename="../../include/sciter-x-threads.h">
+		</Unit>
+		<Unit filename="../../include/sciter-x-types.h">
+		</Unit>
+		<Unit filename="../../include/sciter-x-value.h">
+		</Unit>
+		<Unit filename="../../include/sciter-x-video-api.h">
+		</Unit>
+		<Unit filename="../../include/sciter-x-window.hpp">
+		</Unit>
+		<Unit filename="../../include/sciter-x.h">
+		</Unit>
+		<Unit filename="../../include/value.h">
+		</Unit>
+		<Unit filename="../../include/value.hpp">
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

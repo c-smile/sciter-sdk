@@ -18,7 +18,6 @@
 #include "sciter-x-request.h"
 #include "sciter-x-msg.h"
 #include "value.h"
-#include "tiscript.hpp"
 
 #if !defined(WINDOWS)
   #include <stdlib.h>
@@ -43,9 +42,9 @@ struct SciterGraphicsAPI;
 struct SCITER_X_MSG;
 
 #ifdef WINDOWLESS
-  #define SCITER_API_VERSION 0x10005
-#else 
-  #define SCITER_API_VERSION 5
+  #define SCITER_API_VERSION 0x10006
+#else
+  #define SCITER_API_VERSION 6
 #endif // !WINDOWLESS
 
 typedef struct _ISciterAPI {
@@ -184,8 +183,8 @@ typedef struct _ISciterAPI {
   SCDOM_RESULT SCFN( SciterGetValue)( HELEMENT he, VALUE* pval );
   SCDOM_RESULT SCFN( SciterSetValue)( HELEMENT he, const VALUE* pval );
   SCDOM_RESULT SCFN( SciterGetExpando)( HELEMENT he, VALUE* pval, BOOL forceCreation );
-  SCDOM_RESULT SCFN( SciterGetObject)( HELEMENT he, tiscript_value* pval, BOOL forceCreation );
-  SCDOM_RESULT SCFN( SciterGetElementNamespace)(  HELEMENT he, tiscript_value* pval);
+  SCDOM_RESULT SCFN( SciterGetObject)( HELEMENT he, void* pval, BOOL forceCreation );
+  SCDOM_RESULT SCFN( SciterGetElementNamespace)(  HELEMENT he, void* pval);
   SCDOM_RESULT SCFN( SciterGetHighlightedElement)(HWINDOW hwnd, HELEMENT* phe);
   SCDOM_RESULT SCFN( SciterSetHighlightedElement)(HWINDOW hwnd, HELEMENT he);
 //|
@@ -240,14 +239,11 @@ typedef struct _ISciterAPI {
   UINT SCFN( ValueInvoke )( const VALUE* pval, VALUE* pthis, UINT argc, const VALUE* argv, VALUE* pretval, LPCWSTR url);
   UINT SCFN( ValueNativeFunctorSet )( VALUE* pval, NATIVE_FUNCTOR_INVOKE*  pinvoke, NATIVE_FUNCTOR_RELEASE* prelease, VOID* tag );
   BOOL SCFN( ValueIsNativeFunctor )( const VALUE* pval);
-
-  // tiscript VM API
-  tiscript_native_interface*  SCFN(TIScriptAPI)();
-
-  HVM  SCFN( SciterGetVM )( HWINDOW hwnd );
-
-  BOOL SCFN( Sciter_v2V ) (HVM vm, tiscript_value script_value, VALUE* value, BOOL isolate);
-  BOOL SCFN( Sciter_V2v ) (HVM vm, const VALUE* valuev, tiscript_value* script_value);
+  // used to be script VM API
+  LPVOID reserved1;
+  LPVOID reserved2;
+  LPVOID reserved3;
+  LPVOID reserved4;
 
   HSARCHIVE SCFN( SciterOpenArchive ) (LPCBYTE archiveData, UINT archiveDataLength);
   BOOL SCFN( SciterGetArchiveItem ) (HSARCHIVE harc, LPCWSTR path, LPCBYTE* pdata, UINT* pdataLength);
@@ -269,7 +265,7 @@ typedef struct _ISciterAPI {
 
   BOOL SCFN(SciterProcX)(HWINDOW hwnd, SCITER_X_MSG* pMsg ); // returns TRUE if handled
 
-  UINT64 SCFN(SciterAtomValue)(const char* name); // 
+  UINT64 SCFN(SciterAtomValue)(const char* name); //
   BOOL   SCFN(SciterAtomNameCB)(UINT64 atomv, LPCSTR_RECEIVER* rcv, LPVOID rcv_param);
   BOOL   SCFN(SciterSetGlobalAsset)(som_asset_t* pass);
 
@@ -279,7 +275,7 @@ typedef ISciterAPI* (SCAPI *SciterAPI_ptr)();
 
 // getting ISciterAPI reference:
 
-#ifdef STATIC_LIB
+#if defined(STATIC_LIB) || defined(SCITER_BUILD)
 
     EXTERN_C ISciterAPI* SCAPI SciterAPI();
 
@@ -290,7 +286,7 @@ typedef ISciterAPI* (SCAPI *SciterAPI_ptr)();
        {
           _api = SciterAPI();
 #if defined(__cplusplus) && !defined(PLAIN_API_ONLY)
-          tiscript::ni(_api->TIScriptAPI());
+//          tiscript::ni(_api->TIScriptAPI());
 #endif
        }
        assert(_api);
@@ -309,9 +305,9 @@ typedef ISciterAPI* (SCAPI *SciterAPI_ptr)();
             SciterAPI_ptr sciterAPI = (SciterAPI_ptr) GetProcAddress(hm, "SciterAPI");
             if( sciterAPI ) {
               _api = sciterAPI();
-#if defined(__cplusplus) && !defined(PLAIN_API_ONLY)
-              tiscript::ni( _api->TIScriptAPI() );
-#endif
+//#if defined(__cplusplus) && !defined(PLAIN_API_ONLY)
+//              tiscript::ni( _api->TIScriptAPI() );
+//#endif
             } else {
               FreeLibrary(hm);
             }
@@ -369,7 +365,7 @@ typedef ISciterAPI* (SCAPI *SciterAPI_ptr)();
                 exit(EXIT_FAILURE);
             }
             _api = sapi();
-            tiscript::ni( _api->TIScriptAPI() );
+            //tiscript::ni( _api->TIScriptAPI() );
         }
         assert(_api);
         return _api;
@@ -383,9 +379,9 @@ typedef ISciterAPI* (SCAPI *SciterAPI_ptr)();
     inline ISciterAPI* _SAPI( ISciterAPI* ext )
     {
         static ISciterAPI* _api = NULL;
-        if( ext ) 
+        if( ext )
           _api = ext;
-        else 
+        else
           _api = SciterAPI();
         assert(_api);
         //if (!sapi) {
@@ -413,7 +409,6 @@ typedef ISciterAPI* (SCAPI *SciterAPI_ptr)();
           exit(EXIT_FAILURE);
         }
         _api = sapi();
-        tiscript::ni(_api->TIScriptAPI());
       }
       assert(_api);
       return _api;
@@ -473,7 +468,6 @@ inline ISciterAPI *_SAPI(ISciterAPI *ext) {
       exit(EXIT_FAILURE);
     }
     _api = sapi();
-    tiscript::ni(_api->TIScriptAPI());
   }
   assert(_api);
   return _api;
@@ -616,8 +610,8 @@ inline ISciterAPI *_SAPI(ISciterAPI *ext) {
   inline SCDOM_RESULT SCAPI SciterGetValue( HELEMENT he, VALUE* pval ) { return SAPI()->SciterGetValue( he,pval ); }
   inline SCDOM_RESULT SCAPI SciterSetValue( HELEMENT he, const VALUE* pval ) { return SAPI()->SciterSetValue( he, pval ); }
   inline SCDOM_RESULT SCAPI SciterGetExpando( HELEMENT he, VALUE* pval, BOOL forceCreation ) { return SAPI()->SciterGetExpando( he, pval, forceCreation ); }
-  inline SCDOM_RESULT SCAPI SciterGetObject( HELEMENT he, tiscript_value* pval, BOOL forceCreation ) { return SAPI()->SciterGetObject( he, pval, forceCreation ); }
-  inline SCDOM_RESULT SCAPI SciterGetElementNamespace(  HELEMENT he, tiscript_value* pval) { return SAPI()->SciterGetElementNamespace( he,pval); }
+  //inline SCDOM_RESULT SCAPI SciterGetObject( HELEMENT he, void* pval, BOOL forceCreation ) { return SAPI()->SciterGetObject( he, pval, forceCreation ); }
+  //inline SCDOM_RESULT SCAPI SciterGetElementNamespace(  HELEMENT he, void* pval) { return SAPI()->SciterGetElementNamespace( he,pval); }
   inline SCDOM_RESULT SCAPI SciterGetHighlightedElement(HWINDOW hwnd, HELEMENT* phe) { return SAPI()->SciterGetHighlightedElement(hwnd, phe); }
   inline SCDOM_RESULT SCAPI SciterSetHighlightedElement(HWINDOW hwnd, HELEMENT he) { return SAPI()->SciterSetHighlightedElement(hwnd,he); }
   inline SCDOM_RESULT SCAPI SciterNodeAddRef(HNODE hn) { return SAPI()->SciterNodeAddRef(hn); }
@@ -639,7 +633,7 @@ inline ISciterAPI *_SAPI(ISciterAPI *ext) {
   inline SCDOM_RESULT SCAPI SciterCreateTextNode(LPCWSTR text, UINT textLength, HNODE* phnode) { return SAPI()->SciterCreateTextNode(text,textLength,phnode); }
   inline SCDOM_RESULT SCAPI SciterCreateCommentNode(LPCWSTR text, UINT textLength, HNODE* phnode) { return SAPI()->SciterCreateCommentNode(text,textLength,phnode); }
 
-  inline HVM   SCAPI SciterGetVM( HWINDOW hwnd )  { return SAPI()->SciterGetVM(hwnd); }
+  //inline HVM   SCAPI SciterGetVM( HWINDOW hwnd )  { return SAPI()->SciterGetVM(hwnd); }
 
   inline UINT SCAPI ValueInit ( VALUE* pval ) { return SAPI()->ValueInit(pval); }
   inline UINT SCAPI ValueClear ( VALUE* pval ) { return SAPI()->ValueClear(pval); }
@@ -669,10 +663,6 @@ inline ISciterAPI *_SAPI(ISciterAPI *ext) {
   inline UINT SCAPI ValueInvoke ( const VALUE* pval, VALUE* pthis, UINT argc, const VALUE* argv, VALUE* pretval, LPCWSTR url) { return SAPI()->ValueInvoke ( pval, pthis, argc, argv, pretval, url); }
   inline UINT SCAPI ValueNativeFunctorSet (VALUE* pval, NATIVE_FUNCTOR_INVOKE*  pinvoke, NATIVE_FUNCTOR_RELEASE* prelease, VOID* tag ) { return SAPI()->ValueNativeFunctorSet ( pval, pinvoke,prelease,tag); }
   inline BOOL SCAPI ValueIsNativeFunctor ( const VALUE* pval) { return SAPI()->ValueIsNativeFunctor (pval); }
-
-  // conversion between script (managed) value and the VALUE ( com::variant alike thing )
-  inline BOOL SCAPI Sciter_v2V(HVM vm, const tiscript_value script_value, VALUE* out_value, BOOL isolate) { return SAPI()->Sciter_v2V(vm,script_value,out_value, isolate); }
-  inline BOOL SCAPI Sciter_V2v(HVM vm, const VALUE* value, tiscript_value* out_script_value) { return SAPI()->Sciter_V2v(vm,value,out_script_value); }
 
 #if defined(WINDOWS) && !defined(WINDOWLESS)
   inline BOOL SCAPI SciterCreateOnDirectXWindow(HWINDOW hwnd, IUnknown* pSwapChain) { return SAPI()->SciterCreateOnDirectXWindow(hwnd,pSwapChain); }

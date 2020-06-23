@@ -49,7 +49,7 @@
 #endif
 
 //#include <string>
-#include "tiscript.h"
+//#include "tiscript.h"
 
 #pragma warning(disable:4786) //identifier was truncated...
 #pragma warning(disable:4100) //unreferenced formal parameter
@@ -973,7 +973,7 @@ SCDOM_RESULT SCAPI SciterGetExpando( HELEMENT he, VALUE* pval, BOOL forceCreatio
  *  ATTN!: if you plan to store the reference or use it inside code that calls script VM functions
  *         then you should use tiscript::pinned holder for the value.
  **/
-SCDOM_RESULT SCAPI SciterGetObject( HELEMENT he, tiscript_value* pval, BOOL forceCreation );
+SCDOM_RESULT SCAPI SciterGetObject( HELEMENT he, void* pval, BOOL forceCreation );
 
 /** SciterGetElementNamespace - get namespace of document of the DOM element.
  * \param[in] he \b HELEMENT, element which expando will be retrieved.
@@ -983,7 +983,7 @@ SCDOM_RESULT SCAPI SciterGetObject( HELEMENT he, tiscript_value* pval, BOOL forc
  *         then you should use tiscript::pinned holder for the value.
  **/
 
-SCDOM_RESULT SCAPI SciterGetElementNamespace(  HELEMENT he, tiscript_value* pval);
+SCDOM_RESULT SCAPI SciterGetElementNamespace(  HELEMENT he, void* pval);
 
 // get/set highlighted element. Used for debugging purposes.
 SCDOM_RESULT SCAPI SciterGetHighlightedElement(HWINDOW hwnd, HELEMENT* phe);
