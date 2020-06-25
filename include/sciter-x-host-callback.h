@@ -288,8 +288,11 @@ namespace sciter
       uri += 2;
 
     WCHAR achURL[MAX_PATH]; 
-    
+#if defined(_MSC_VER)    
     wcsncpy_s(achURL, uri, MAX_PATH);
+#else
+    wcsncpy(achURL, uri, MAX_PATH);
+#endif
 
     LPWSTR pszName = achURL;
 

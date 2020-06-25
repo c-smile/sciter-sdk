@@ -10,11 +10,16 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#fff7e6">4.4.3.24</td><td nowrap valign="top" align="center">2020-06-22</td><td>
+    <tr><td valign="top" bgcolor="#fff7e6">4.4.3.25</td><td nowrap valign="top" align="center">2020-06-25</td><td>Fixes:
+					<ul><li>[animation] fix of stack overflow on multiple animations on the same element.</li>
+						<li>[reactor] <code>@{...,...}</code> support of multiple expressions.</li>
+						<li>[Windows, System.Process] OEM encoding.</li>
+						<li>[osx] event doubleclick fix.</li></ul></td></tr><tr><td valign="top" bgcolor="#fff7e6">4.4.3.24</td><td nowrap valign="top" align="center">2020-06-22</td><td>
 					
 					<p>New:</p>
 					<ul><li>support of window-frame=&quot;extended&quot; on Linux. usciter on Linux uses extended frame too now.&nbsp;</li>
-						<li>[sciter and quark] <code>include library &quot;name&quot;;</code> and <code>SciterLibraryInit()</code> in dll support. sdk/sqlite updated to build sciter-sqlite.dll/so</li></ul><p>Fixes:
+						<li>[sciter and quark] <code>include library &quot;name&quot;;</code> and <code>SciterLibraryInit()</code> in dll support. sdk/sqlite updated to build sciter-sqlite.dll/so. Can be used as demo of native Quark extensions.</li>
+						<li>[linux/raspberry] libsciter-gtk.so ARM32 build.</li></ul><p>Fixes:
 					</p><ul>
 						
 						
@@ -23,7 +28,11 @@
 						
 						
 						
-						<li>fix of <a href="https://sciter.com/forums/topic/window-frameextended-maximize-button-bug-on-ubuntu-20/">https://sciter.com/forums/topic/window-frameextended-maximize-button-bug-on-ubuntu-20/</a>&nbsp;</li><li>fix of <a href="https://sciter.com/forums/topic/sciter-library-tries-to-load-itself/">https://sciter.com/forums/topic/sciter-library-tries-to-load-itself/</a>&nbsp;</li><li>[css] <code>font-size: var(name);</code> fix.</li><li>[gtk] <code>syle.cursor(image)</code> fix.</li><li>[css] <code>%</code> calculation fixes in <code>calc()</code>'s&nbsp;</li><li>[css] fix of animation restart issue. See: <a href="https://sciter.com/forums/topic/removeclass/">https://sciter.com/forums/topic/removeclass/</a>&nbsp;</li><li>fix of AV on popup click, see: <a href="https://sciter.com/forums/topic/sciter-crash-while-popup-processing/">https://sciter.com/forums/topic/sciter-crash-while-popup-processing/</a>&nbsp;</li>
+						
+						
+						
+						<li>[osx] fix of https://sciter.com/forums/topic/sw_resizeable-is-always-enabled-on-osx/&nbsp;</li>
+						<li>[osx] graphics artefacts fixes.</li><li>[osx] <code>event tripleclick</code> fix.</li><li>[API] sdk/include/tiscript.h and the whole tiscript API - gone, removed from SDK.</li><li>fix of <a href="https://sciter.com/forums/topic/window-frameextended-maximize-button-bug-on-ubuntu-20/">https://sciter.com/forums/topic/window-frameextended-maximize-button-bug-on-ubuntu-20/</a>&nbsp;</li><li>fix of <a href="https://sciter.com/forums/topic/sciter-library-tries-to-load-itself/">https://sciter.com/forums/topic/sciter-library-tries-to-load-itself/</a>&nbsp;</li><li>[css] <code>font-size: var(name);</code> fix.</li><li>[gtk] <code>syle.cursor(image)</code> fix.</li><li>[css] <code>%</code> calculation fixes in <code>calc()</code>'s&nbsp;</li><li>[css] fix of animation restart issue. See: <a href="https://sciter.com/forums/topic/removeclass/">https://sciter.com/forums/topic/removeclass/</a>&nbsp;</li><li>fix of AV on popup click, see: <a href="https://sciter.com/forums/topic/sciter-crash-while-popup-processing/">https://sciter.com/forums/topic/sciter-crash-while-popup-processing/</a>&nbsp;</li>
 						<li>samples cleanup from old CSSS! stuff.</li><li><code>element.onSize = fcn</code>; preventing &quot;event loop&quot; condition.</li><li>[css] <code>flow:stack</code>, hit-test and mouse event handling fixes.</li>
 						<li>[xdom] <code>element.style[&quot;prop&quot;]</code> fixes when the value resolves to CSS variable, see: <a href="https://sciter.com/forums/topic/material-bug/">https://sciter.com/forums/topic/material-bug/</a>&nbsp;</li>
 						<li>[xdom] <code>element.animate {...}</code> variant - supports &quot;call by object&quot; notation.</li>

@@ -1,1 +1,1 @@
-../../bin.lnx/x64/scapp ../../quark/index.htm
+../../bin.lnx/arm32/scapp ../../quark/index.htm
