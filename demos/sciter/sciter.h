@@ -116,7 +116,7 @@ namespace sciter
       FUNCTION_2("open",  open);
       FUNCTION_0("getNativeFunctorTest", get_native_functor_test);
       FUNCTION_0("inspectorIsPresent", inspector_is_present);
-      //FUNCTION_1("testArray",  testArray);
+      FUNCTION_1("testExpando",  testExpando);
       CHAIN_FUNCTION_MAP(frame);
     END_FUNCTION_MAP
 
@@ -125,6 +125,16 @@ namespace sciter
     sciter::value open(sciter::value url, sciter::value param = sciter::value());
     sciter::value get_native_functor_test();
     sciter::value inspector_is_present();
+
+    sciter::value testExpando(const sciter::value& data)
+    {
+      sciter::dom::element el = this->get_root();
+      sciter::dom::element el2 = sciter::dom::element::from_value(data);
+      sciter::value val = el.as_value();
+      call_function("logValue", val);
+      call_function("logValue", data);
+      return sciter::value();
+    }
 
     /*sciter::value testArray(const sciter::value& data)
     {

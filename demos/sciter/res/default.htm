@@ -103,6 +103,9 @@
          "SCAPP files only (*.zip,*.scapp)|*.ZIP;*.SCAPP|"
          "All Files (*.*)|*.*";
 
+      function logValue(v) {
+        debug logval: v, typeof v;
+      }
 
       function loadFile(fn)
       {

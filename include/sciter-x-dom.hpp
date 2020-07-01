@@ -1107,16 +1107,20 @@ namespace dom
       assert(r == SCDOM_OK); (void)r;
     }
 
-    // get scripting object associated with this DOM element
-    SCITER_VALUE get_expando(bool force_create = false)
+    // wrap DOM element reference into sciter::value
+    SCITER_VALUE as_value()
     {
       SCITER_VALUE rv;
-      SCDOM_RESULT r = SciterGetExpando(he, &rv, force_create);
+      SCDOM_RESULT r = SciterGetExpando(he, &rv, TRUE);
       assert(r == SCDOM_OK); (void)r;
       return rv;
     }
 
-
+    static element from_value(const SCITER_VALUE& v) {
+      element el = (HELEMENT)v.get_object_data();
+      return el;
+    }
+    
     struct find_first_callback: callback
     {
       HELEMENT hfound;

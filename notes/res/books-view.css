@@ -57,6 +57,7 @@
     //font-weight: bold;
     color:transparent;
     text-align:center;
+    transition: background-size linear @ADUR, color linear @ADUR;    
   }
 
   option.mapped {
@@ -81,7 +82,6 @@
   :root:collapsed > option > i {
     background-size: 24dip 24dip;
     color:#000;
-    transition: background-size(linear,@ADUR) color(linear,@ADUR);
   }
 
   option > span.name {

@@ -36,8 +36,8 @@ enum VALUE_TYPE
     T_FUNCTION = 11,   // named tuple , like array but with name tag
     T_BYTES = 12,      // sequence of bytes - e.g. image data
     T_OBJECT = 13,     // scripting object proxy (TISCRIPT/SCITER)
-    T_DOM_OBJECT = 14,  // DOM object, use get_object_data to get HELEMENT 
-    //T_RESOURCE = 15,  // 15 - other thing derived from tool::resource
+    //T_DOM_OBJECT = 14,  // DOM object, use get_object_data to get HELEMENT 
+    T_RESOURCE = 15,  // 15 - other thing derived from tool::resource
     //T_RANGE = 16,     // 16 - N..M, integer range.
     T_DURATION = 17,   // double, seconds
     T_ANGLE = 18,      // double, radians

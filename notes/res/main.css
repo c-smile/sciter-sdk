@@ -79,9 +79,9 @@ html {
   var(hover-highlight): morph(highlight,opacity:10%);
 }
 
-@media blur-behind {
-  html { background-color:transparent; }
-}
+//@media blur-behind {
+//  html { background-color:transparent; }
+//}
 
 body {
   flow:stack;

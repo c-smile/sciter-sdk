@@ -1,0 +1,96 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+main { size:*; }
+
+vlist {
+  border:2dip solid #ccc; background:#fff;
+  overflow-x:hidden;
+}
+vlist > li { flow:horizontal; }
+vlist > li > picture { 
+  width:*;
+  height:40dip;
+  overflow:hidden;
+  border:1dip solid;
+  foreground-size:cover;
+}
+
+        </style>
+        <script type="text/tiscript">
+
+include "vlist.tis";
+
+function recordsGenerator() {
+  var out = [];
+  for(var n in 1000)
+    out.push {
+      url: $url(pic300x200.jpg),
+      key: n.toString() 
+    };
+  return out;
+}
+
+var pictures = recordsGenerator();
+
+// implements horizontal-flow alike virtual list
+class PicList : VList 
+{
+  const IMAGE_APPROXIMATE_WIDTH = 60dip;
+
+  this var itemsPerRow;
+
+  function this(props,kids) {
+    super({
+      recordset: [],
+      recordview: renderRow 
+    }, kids);
+  }
+  
+  function onSize() 
+  { 
+    super.onSize();
+    //this.timer(40ms, reflowRows);// throttled resize if needed
+    this.reflowRows();
+  }
+
+  // produces rows with number sub items dependent on  
+  function reflowRows() {
+    var w = this.box(#width);
+    var itemsPerRow = Integer.max(1, w / this.toPixels(IMAGE_APPROXIMATE_WIDTH));
+    if(this.itemsPerRow === itemsPerRow)
+      return;
+    this.itemsPerRow = itemsPerRow;
+
+    var all = pictures;
+    var rows = [];
+    for( var n = 0; n < all.length; n += itemsPerRow) { 
+      var picturesInRow = all[n .. n + itemsPerRow]; // slice of the array
+      rows.push {
+        key: picturesInRow.first.key + ":" + picturesInRow.last.key,
+        pictures: picturesInRow
+      }
+    }
+    this.update { recordset: rows };
+  }
+
+  function renderRow(row,index) 
+  {
+    return 
+      <li key={row.key}>
+        { row.pictures.map( pic => <picture key={pic.key} src={pic.url}/> )}
+      </li>;
+  }
+
+}
+
+        </script>
+    </head>
+    <body>
+
+      <reactor|PicList />
+
+    </body>
+</html>

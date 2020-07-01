@@ -241,7 +241,7 @@
       bool is_function() const { return t == T_FUNCTION; }
       bool is_bytes() const { return t == T_BYTES; }
       bool is_object() const { return t == T_OBJECT; }
-      bool is_dom_element() const { return t == T_DOM_OBJECT; }
+      //bool is_dom_element() const { return t == T_DOM_OBJECT; }
       // if it is a native functor reference
       bool is_native_function() const { return !!ValueIsNativeFunctor(this); }
 
