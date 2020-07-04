@@ -2,10 +2,8 @@
 const Plus = function() {
                           
   function thisModel(el) {
-    for(var p = el; p; p = p.parent) {
-      //p.style.display;
+    for(var p = el; p; p = p.parent)
       if(var dr = p.$model) return dr;
-    }
     return null;
   }
   function thisNamespaceModel(el) {
@@ -254,19 +252,23 @@ const Plus = function() {
   {
     var mo = this.@["model"];
     var pmo = thisModel(this.parent); // parent model
+
     if( pmo ) // model inside model
     {
       var (coll,key) = Object.referenceOf(pmo, mo);
-      this.$model = coll[key];
-      setPrototype(this.$model,pmo);
-      setupModelChangeHandler( coll, key, function(val) { 
-        assert typeof val == #object || 
-               typeof val == #class  ||
-               typeof val == #namespace : "data model must be an object ";
-        this super.$model = val; 
-        setPrototype(this super.$model,pmo);
-        rebindSubtree(this super,val);
-      });      
+      if(this.$model = coll[key]) {
+        setPrototype(this.$model,pmo);
+        setupModelChangeHandler( coll, key, function(val) { 
+          assert typeof val == #object || 
+                 typeof val == #class  ||
+                 typeof val == #namespace : "data model must be an object ";
+          this super.$model = val; 
+          setPrototype(this super.$model,pmo);
+          rebindSubtree(this super,val);
+        });      
+      }
+      else
+        this.$model = eval(mo); 
     }
     else 
       this.$model = mo? eval(mo) : self.ns; 
