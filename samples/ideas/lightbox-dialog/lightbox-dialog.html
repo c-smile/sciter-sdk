@@ -10,9 +10,7 @@
     background-color: white;
     padding:10dip;
     size:*;
-    //foreground-color: rgba(255,255,255,0.0);
   }
-
 
   form { 
     font:system; 
@@ -20,10 +18,10 @@
   }
 
   
-  form#data-dialog > table > tr > td:nth-child(1)
+  form#data-dialog td:nth-child(1)
   {
     white-space:nowrap;
-    //text-align:right;
+    text-align:right;
     vertical-align:top;
   }
   
@@ -95,13 +93,13 @@
     }
 
   </script>
-  
-  <form #simple-dialog caption="Simple!">
-    <input type="text" #test />
-    <label>Title:</label>
+
+  <form#simple-dialog caption="Simple!">
+    <label>Title:</label>  
+    <input type="text" />
   </form>
 
-  <form #data-dialog caption="Please identify yourself:">
+  <form#data-dialog caption="Please identify yourself:">
     <table>
       <tr><td>First name:</td>
           <td><input name="first-name" type="text" /></td></tr>
@@ -116,6 +114,7 @@
           <td><textarea name="secret-wish" rows=4 cols=30 /></td></tr>
     </table>
   </form>
+
   
 </head>
 

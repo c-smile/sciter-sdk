@@ -5,7 +5,7 @@
 body.dialog-shown {
   filter: blur(25dip);
   foreground-color:rgba(0,0,0,0.1);
-  transition: foreground-color(@DIALOG-SHOW-EASING,@DIALOG-SHOW-DURATION);
+  transition: foreground-color @DIALOG-SHOW-EASING @DIALOG-SHOW-DURATION;
 }
 
 /* dialog "window" frame */
@@ -13,9 +13,9 @@ div.dialog-frame
 {
   position:absolute;
   font: system;
-  width: 300dip;
+  width: max-content;
+  min-width: 300dip
   height: max-content;
-  min-width: min-content;
   left: *;
   right: *;
   top: 0.4*;
