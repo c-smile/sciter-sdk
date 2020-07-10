@@ -5,18 +5,16 @@
   
     frame#content 
     {
-      transition: blend(cubic-in-out,800ms);
+      transition: blend cubic-in-out 800ms;
     }
   
   </style>
   <script type="text/tiscript">
     
-    self.onControlEvent = function(evt)
+    event change $(button[name=at])
     {
-      if( evt.type == Event.BUTTON_STATE_CHANGED && evt.target.$is([name=at]))
-      {
-        $(frame#content).style#transition = evt.target.text + "(cubic-in-out,800ms)"; 
-      }
+      $(frame#content).style#transition = [this.text, "cubic-in-out", 800ms]; 
+      return true;
     }
    
   </script>
@@ -50,7 +48,7 @@
     <a href="docs/photo2.htm" target="content">docs/photo2.htm</a>
   </div>
   
-  <frame #content src="docs/html32.htm" />
+  <frame #content src="docs/photo1.htm" />
   
 </body>
 </html>

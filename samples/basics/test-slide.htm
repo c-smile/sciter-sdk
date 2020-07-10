@@ -2,8 +2,7 @@
   <head>
     <title>Script interaction with CSS transforms</title>
     <style>
-      html { overflow:auto; /*vertical-scrollbar:"std-v-scrollbar";*/ background:white; }
-      body { flow:vertical; } // overflow:auto; vertical-align:middle; horizontal-align:right;
+      html { background:white; }
      
       widget#stack
       {
@@ -23,42 +22,33 @@
         margin:10px;
         padding:10px;
         size:*;
-        visibility:hidden;
-      }
-      
-      widget#stack > section:current
-      {
-        z-index:1; 
+        opacity:1;
         visibility:visible;
+        transform:translate(0%,0dip);
+        transition: transform cubic-out 0.5s, opacity linear 0.5s, visibility linear 0.5s;
+      }
+
+      widget#stack > section[slide=left] /* slide is on the left side */ 
+      {
+        opacity:0;
+        visibility:hidden;
+        transform:translate(-100%,0dip);
+      }
+      widget#stack > section[slide=right] /* slide is yet on the right side */ 
+      {
+        opacity:0;
+        visibility:hidden;
+        transform:translate(100%,0dip);
+      }
+      widget#stack > section[slide=current]
+      {
+        z-index:1; // it is always on top
         foreground-image:url(images/close.png);
         foreground-position:100% 0;
         foreground-repeat:no-repeat;
         foreground-clip: margin-box;
       }
-      
-      widget#stack > section[sliding=left] /* from left to right */ 
-      {
-        opacity:0;
-        transform:translate(-100%,0);
-      }
-      widget#stack > section[sliding=right] /* from right to left*/ 
-      {
-        opacity:0;
-        transform:translate(100%,0);
-      }
-      widget#stack > section[sliding=run]
-      {
-        opacity:1.0;
-        transform:translate(0%,0);
-        transition: transform(cubic-out,0.5s,none) 
-                    opacity(linear,0.5s,none);
-      }
-      widget#stack > section:animating
-      {
-        z-index:2; // it is always on top of current
-        visibility:visible;
-      }
-        
+       
 
     </style>
 
@@ -68,43 +58,46 @@
     {
       function animationDone(evt)
       {
-        if(evt.reason == 0 && evt.data == #style)
+        if(evt.target === this) // only section animations
         {
           var idx = this.index;
-          this.attributes["sliding"] = undefined;
-          this.state.current = true;
           prevBtn.state.disabled = idx == 0; 
           nextBtn.state.disabled = idx == stack.length-1; 
-          this.unsubscribe(animationDone);
+          this.off(animationDone);
           return true;
         }
       }
-      function animationStart(el,direction)
-      {
-        self.state.focus = true;
+
+      function showNext(direction) {
         prevBtn.state.disabled = true; 
         nextBtn.state.disabled = true; 
-        el.attributes["sliding"] = direction; // reset to initial animation state.
-        el.post(:: this.attributes["sliding"] = "run" );    // set to final animation state - triggers animation.
-        el.subscribe(animationDone,Event.BEHAVIOR_EVENT,Event.ANIMATION);
+
+        var current = stack.$([slide=current]); 
+        var index = current.index + direction; 
+        if( index < 0 || index >= stack.length )
+          return;
+        
+        var newCurrent = stack[index];
+
+        for( var (idx, el) in stack ) {
+          if(idx < index) el.attributes["slide"] = "left";
+          else if(idx > index) el.attributes["slide"] = "right";
+          else el.attributes["slide"] = "current";
+        }
+        //el.attributes["slide"] = direction; // reset to initial animation state.
+        newCurrent.on("animationend",animationDone);
       }
       
-      prevBtn << event click()
-      {
-        var current = stack.$(:root>:current);
-        var new_current = stack[current.index-1];
-        animationStart(new_current,"left");
-      }
-      nextBtn << event click()
-      {
-        var current = stack.$(:root>:current);
-        var new_current = stack[current.index+1];
-        animationStart(new_current,"right");
-      }
-      if(stack.length)
-        stack[0].state.current = true;
+      prevBtn.on("click", function() { showNext(-1); return true; });
+      nextBtn.on("click", function() { showNext(+1); return true; });
+
       prevBtn.state.disabled = true; 
       nextBtn.state.disabled = stack.length == 0; 
+      
+      // setup intitial position 
+      for(var (index,child) in stack)
+        child.attributes["slide"] = index ? "right" : "current";
+
     }  
     
     wizard($(widget#stack),$(button#prev),$(button#next));

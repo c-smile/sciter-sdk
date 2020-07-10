@@ -2,9 +2,13 @@
   <head>
     <title>CSS level 3 'transform' demo</title>
     <style>
+
+      @import url(../note.css); 
+
       html { background:transparent; }
       p
       {
+        behavior:check;
         font:18pt verdana;
         padding:15px;
         margin:40px;
@@ -18,43 +22,44 @@
         margin:0;
         width:max-intrinsic;
         transform-origin:left bottom;
+        transition: transform bounce-in 0.5s;
+        //transform:rotate(0deg);
       }
       
-      p.rotated:hover
+      p.rotated:checked
       {
         transform:rotate(90deg);
-        transition: transform(bounce-in,0.5s,bounce-out);
       }
       
       p.translated
       {
+        transition: transform linear 0.5s;        
       }
-      p.translated:hover
+      p.translated:checked
       {
         transform:translate(40px,0);
-        transition: transform(linear,0.5s);
       }
       
       p.skew
       {
+        transition: transform linear 0.5s;
       }
       
-      p.skew:hover
+      p.skew:checked
       {
         transform-origin:left center;
         transform:skew(45deg,0) scale(1.0,0.6);
-        transition: transform(linear,0.5s);
       }
       p.scale
       {
         width:25%;
         margin:0 *;
+        transition: transform bounce-in 0.5s;
       }
      
-      p.scale:hover
+      p.scale:checked
       {
         transform:scale(2);
-        transition: transform(bounce-in,0.5s,bounce-out);
       }
       
        p.rotated-scaled 
@@ -62,17 +67,20 @@
         margin:40px *;
         width:max-intrinsic;
         //transform-origin:left bottom;
+        transition: transform quart-out 0.5s;
       }
       
-      p.rotated-scaled:hover
+      p.rotated-scaled:checked
       {
         transform:rotate(30deg) scale(.5);
-        transition: transform(quart-out,0.5s,quart-in);
+        
       }
     
     </style>
   </head>
 <body>
+  
+  <note>Click on element to see the effect</note>
 
   <p class="rotated">Rotated <a href="#">ht</a></p>
   <p class="translated">Translated <a href="#">ht</a></p>

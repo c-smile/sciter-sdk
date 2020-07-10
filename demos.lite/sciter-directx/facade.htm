@@ -1,0 +1,122 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+    body { 
+      size:*;
+      overflow:hidden; 
+      flow:stack;
+      margin:0;
+    }
+    
+    body > section 
+    {
+      size:*; /* sections spans whole window surface */
+    }
+    
+    body > section#back-layer 
+    {
+      background: radial-gradient(75% 75%, circle farthest-side, white, orange, rgb(0,0,204));
+      color:#fff;
+      overflow:hidden;
+    }
+    
+    body > section#back-layer > h1:hover 
+    {
+      color: red;
+    }
+
+    section#fore-layer {
+      font: system;
+      background-color: rgba(140,140,140,0.7);
+      width: 18em;
+      height: *;
+      margin-left: *; /*attached to the right side*/
+      padding: 1em;
+      border-left: rgba(240,240,240,0.5) solid 1dip;
+      transform: translate(19em, 0);
+      transition: transform quad-out 300ms; /* 300ms transition */
+      overflow: hidden;
+      flow: vertical;
+      border-spacing: 4dip;
+    }
+
+    section#fore-layer:hover 
+    {
+      transform: translate(0em, 0);
+    }
+    
+    section#fore-layer > p 
+    {
+      background:rgba(255,255,255,0.8);
+      padding:0.5em 1em;
+      border-radius: 4dip;
+    }
+    
+    form 
+    {
+      flow:row(label,input); /*organized in table having one <label> and one <input> per row */
+    }
+    
+    
+    </style>
+    <script type="text/tiscript">
+
+      $(#machine).text = Sciter.machineName();
+
+      var counter = 0;
+
+      event click $(button#append)
+      {
+        $(section#back-layer).$append(<h1#test>{++counter }</h1>);
+      }
+
+      /*
+      event click $(button#open) {
+        var fn = view.selectFile(#open,
+          "HTML Files (*.htm,*.html)|*.HTM;*.HTML|All Files (*.*)|*.*" , "html" );
+      } */
+
+      event change $(input#rotation-speed) {
+         // calling native method:
+         view.setRotationSpeed(this.value);
+      }
+
+      event change $(input#color-speed) {
+         // calling native method:
+         view.setColorSpeed(this.value);
+      }
+
+    </script>
+  </head>
+<body>
+
+  <section id="back-layer">
+    <h1>Minimal Sciter DirectX Application</h1>
+    <p>Running on <em #machine /> machine</p>
+  </section>
+
+  <section id="fore-layer">
+    <p>Demonstration of input elements handling in DirectX window</p>
+    <form>
+      <label>rotation:</label><input id="rotation-speed" type="hslider" value=1.0 min=0.0 max=2.0 />
+      <label>colorizing:</label><input id="color-speed" type="hslider" value=1.0 min=0.0 max=2.0 />
+    </form>
+    <hr />
+    <input|text value="Hello world!"> 
+    <hr />
+    <div>
+      <button #append>Append</button> 
+      <button #open>Open</button> 
+      <select>
+        <option>First</option>
+        <option>Second</option>
+        <option>Third</option>
+      </select>
+    </div>
+    <widget type=calendar />
+  </section>
+
+</body>
+</html>

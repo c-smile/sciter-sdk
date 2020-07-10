@@ -129,9 +129,10 @@ typedef VOID SC_CALLBACK ELEMENT_BITMAP_RECEIVER(LPCBYTE rgba, INT x, INT y, UIN
 typedef enum SCITER_PAINT_TARGET_TYPE {
   SPT_DEFAULT   = 0,  /**< default rendering target - window surface */    
   SPT_RECEIVER  = 1,  /**< target::receiver fields are valid */    
-  SPT_DC        = 2,  /**< target::dc is valid */
-  SPT_OPENGL    = 3,  /**< target is not used - caller shall set current context on its side  */
-  SPT_OPENGLES  = 4,  /**< target is not used - caller shall set current context on its side  */
+  SPT_SURFACE   = 2,  /**< target::pSurface is valid */
+  //SPT_OPENGL    = 3,  /**< target is not used - caller shall set current context on its side  */
+  //SPT_OPENGLES  = 4,  /**< target is not used - caller shall set current context on its side  */
+  //SPT_
 } SCITER_PAINT_TARGET_TYPE;
 
 typedef struct SCITER_X_MSG_PAINT {
@@ -140,7 +141,7 @@ typedef struct SCITER_X_MSG_PAINT {
       BOOL     isFore;     /**< [in] if element is not null tells if that element is fore-layer.*/    
       UINT     targetType; /**< [in] one of #SCITER_PAINT_TARGET_TYPE values */
       union {
-        HDC hdc;
+        LPVOID pSurface;   /**< [in] must be IDXGISurface* */
         struct {
           VOID*                    param;
           ELEMENT_BITMAP_RECEIVER* callback;

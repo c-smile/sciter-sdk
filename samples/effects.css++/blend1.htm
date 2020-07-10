@@ -17,9 +17,11 @@
         color:red;
         
       }
-      div.area.case1:hover  { transition: blend(linear,400ms); }
-      div.area.case2:hover  { transition: blend(cubic-in,400ms); }
-      div.area.case3:hover  { transition: blend(quad-in,400ms,quad-out); }
+      div.area.case1:hover  { transition: blend linear 400ms ; }
+      div.area.case2:hover  { transition: blend cubic-in-out 400ms; }
+
+      div.area.case3  { transition: blend quad-out 400ms; }
+      div.area.case3:hover  { transition: blend quad-in 400ms; }
       
       div.area.area:active 
       {
@@ -31,9 +33,10 @@
     <script type="text/tiscript"></script>
   </head>
 <body>
-  <div .area.case1>transition:blend(linear,400ms)</div>
-  <div .area.case2>transition:blend(cubic-in,400ms)</div>
-  <div .area.case3>transition:blend(quad-in,400ms,quad-out)</div>
+  <div .area.case1>transition:blend linear 400ms</div>
+  <div .area.case2>transition:blend cubic-in-out 400ms</div>
+  <div .area.case3>hover: transition:blend quad-in 400ms<br>
+                   leave: transition:blend quad-out 400ms</div>
 
 </body>
 </html>

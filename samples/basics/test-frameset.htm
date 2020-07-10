@@ -32,6 +32,11 @@
         margin:10px;
         padding:4px;
         width:50%;
+        transition: transform cubic-out 0.5s,
+                    color linear 1s,
+                    background-color linear 1s,
+                    border-color linear 1s;
+
       }
       
       ul.panel > li.shown 
@@ -40,10 +45,6 @@
         background-color:rgb(255,255,255);
         border-color:rgba(255,0,0,1.0);
         transform:translate(0px,0);
-        transition: transform(cubic-out,0.5s)
-                    color(linear,1s)
-                    background-color(linear,1s)
-                    border-color(linear,1s);
       }
       
             

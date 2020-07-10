@@ -36,12 +36,12 @@
     }
     
     function self.ready() {
+
       view.state = View.WINDOW_SHOWN;
 
       view << event statechange {
         $(button#maximize).attributes.toggleClass("restore", view.windowState == View.WINDOW_MAXIMIZED); 
       } 
-    
       self.timer(1s, change);
     }
 

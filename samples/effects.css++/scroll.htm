@@ -12,10 +12,10 @@
         border-spacing:6px;
       }
 
-      div.container.scroll-top    { transition: scroll-top(quad-in-out,800ms); }
-      div.container.scroll-bottom { transition: scroll-bottom(quad-in-out,800ms); }
-      div.container.scroll-left   { transition: scroll-left(quad-in-out,800ms); }
-      div.container.scroll-right  { transition: scroll-right(quad-in-out,800ms); }
+      div.container.scroll-top    { transition: scroll-top quad-in-out 800ms; }
+      div.container.scroll-bottom { transition: scroll-bottom quad-in-out 800ms; }
+      div.container.scroll-left   { transition: scroll-left quad-in-out 800ms; }
+      div.container.scroll-right  { transition: scroll-right quad-in-out 800ms; }
       
       div.container
       {
@@ -43,13 +43,13 @@
 <body>
   Hover the image:
   <div .area>
-    <caption>transition: scroll-top(quad-in-out,800ms):</caption>
+    <caption>transition: scroll-top quad-in-out 800ms:</caption>
     <div .container .scroll-top ><picture src="images/photo1.jpg"/></div>
-    <caption>transition: scroll-bottom(quad-in-out,800ms):</caption>
+    <caption>transition: scroll-bottom quad-in-out 800ms:</caption>
     <div .container .scroll-bottom ><picture src="images/photo1.jpg"/></div>
-    <caption>transition: scroll-left(quad-in-out,800ms):</caption>
+    <caption>transition: scroll-left quad-in-out 800ms:</caption>
     <div .container .scroll-left  ><picture src="images/photo1.jpg"/></div>
-    <caption>transition: scroll-right(quad-in-out,800ms):</caption>
+    <caption>transition: scroll-right quad-in-out 800ms:</caption>
     <div .container .scroll-right ><picture src="images/photo1.jpg"/><div>
   </div>
 </body>

@@ -10,9 +10,9 @@
       overflow:auto;
       size:*;
       background:radial-gradient(100% 100%, ellipse farthest-side, orange, gold 25%, white);
-      border:3px solid brown;
+      //border:3px solid brown;
       border-spacing:10px;
-      flow:horizontal-wrap;
+      flow:vertical;
     }
     
     div#content > p { margin:0; width:200px; }
@@ -21,32 +21,29 @@
   </style>
   <script type="text/tiscript">
   
-    include "../decorators.tis"; 
-    
+   
     var content = $(div#content);
     var i = 0;
       
-    @click @on "[name=at]" 
-      function(evt)
-      {
-        $(div#content).style#transition = evt.target.text + "(cubic-in-out,800ms)"; 
-      }
+    event click $(button[name=at])
+    {
+      $(div#content).style#transition = [this.text, "cubic-in-out", 800ms]; 
+    }
     
-    @click @on "#generate"
-      function(evt)
+    event click $(button#generate)
+    {
+      function randomColor() { return String.printf("#%02x%02x%02x",rand(256),rand(256),rand(256)); }
+      function updater() // updater will clear content and generate 
+                         // random paragraphs using random layout manager
       {
-        function randomColor() { return String.printf("#%02x%02x%02x",rand(256),rand(256),rand(256)); }
-        function updater() // updater will clear content and generate 
-                           // random paragraphs using random layout manager
-        {
-          content.clear();
-          content.style#flow = ["vertical", "horizontal-flow"][++i & 1]; //rand(2)
-          
-          for(var i = 0; i < 10 + rand(40); ++i )
-            content.$append(<p style="background:{randomColor()}">Item #{i}</p>);
-        }
-        content.update(updater); // "transactioned" update using worker function    
+        content.clear();
+        content.style#flow = ["vertical", "horizontal-flow"][++i & 1]; //rand(2)
+        
+        for(var i = 0; i < 10 + rand(40); ++i )
+          content.$append(<p style="background:{randomColor()}">Item #{i}</p>);
       }
+      content.update(updater); // "transactioned" update using worker function    
+    }
    
   </script>
   </head>

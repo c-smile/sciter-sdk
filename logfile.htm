@@ -10,7 +10,21 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#fff7e6">4.4.3.26</td><td nowrap valign="top" align="center">2020-07-01</td><td>Fixes:
+    <tr><td valign="top" bgcolor="#fff7e6">4.4.3.27</td><td nowrap valign="top" align="center">2020-07-10</td><td>New:
+					<ul><li>[Sciter.Lite] DirectX (IDXGISurface) rendering target (additionally to OpenGL).<ul><li>+ sdk/demos.lite/sciter-directx demo.</li></ul></li>
+						
+						</ul>
+					<p>Fixes:</p>
+					<ul><li><code>html { size:50% }</code> (on root document) is back - sets initial size of window's client area to be of 50% of workspace of current monitor.&nbsp;</li>
+						<li>[css] mem leak in <code>linear-gradient/radial-gradient</code> handling;</li>
+						<li>[api] <code>SciterCreateWindow(...SW_TOOL...)</code> will not show window on taskbar.</li>
+						<li>[css] <code>back/foreground-image: url(path:...)</code> fixes;</li>
+						<li>[css] <code>transition: blend ease duration;</code> format support, sdk/samples/effects.css++/*.* updated accordingly.</li>
+						<li>[win] suppressing &quot;ding&quot; sound on handled alt+something;</li>
+						<li>[+plus] model inside frames fix;</li>
+						<li>[richtext] fix of AV on un-<code>&lt;pre&gt;</code> operation.</li>
+						<li>[gtk,reactor] <code>&lt;select&gt;</code> AV fix;</li>
+						<li>[reactor] fix of <code>:hover</code>, <code>:checked</code>, etc. handling in reactor component style sets. See: <a href="https://sciter.com/forums/topic/vtable-hover-works-only-when-scrolling/">https://sciter.com/forums/topic/vtable-hover-works-only-when-scrolling/</a>&nbsp;</li></ul></td></tr><tr><td valign="top" bgcolor="#fff7e6">4.4.3.26</td><td nowrap valign="top" align="center">2020-07-01</td><td>Fixes:
 					<ul>
 						
 						

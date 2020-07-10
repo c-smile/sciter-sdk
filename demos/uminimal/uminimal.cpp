@@ -38,7 +38,7 @@ static sciter::value test_image_access(sciter::value vimg)
 
 class frame: public sciter::window {
 public:
-  frame() : window(SW_TITLEBAR | SW_RESIZEABLE | SW_CONTROLS | SW_MAIN | SW_ENABLE_DEBUG) {}
+  frame() : window(SW_TITLEBAR | SW_RESIZEABLE | SW_CONTROLS /*| SW_TOOL*/ | SW_MAIN | SW_ENABLE_DEBUG) {}
 
   SOM_PASSPORT_BEGIN(frame)
 
