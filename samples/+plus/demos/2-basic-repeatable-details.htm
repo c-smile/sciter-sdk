@@ -18,12 +18,12 @@
         flow:row(label,output); 
         border-spacing: 1em 0;  
         height:0; 
+        transition: height linear 200ms, background-color linear 200ms, visibility linear 200ms;
       }
       ol > li:checked > div.details { 
         background-color:gold;
         visibility:visible; 
         height:4em; 
-        transition: height(linear, 200ms) background-color(linear, 200ms);
       }
       
       ol > li > div.details:animating { visibility:visible; /* visible while animating */ }
