@@ -38,7 +38,7 @@ namespace sciter
     , public sciter::host<lite>
   {
   public:
-    lite(UINT backend = GFX_LAYER_SKIA_OPENGL) {
+    lite(UINT backend = GFX_LAYER_SKIA_OPENGL) { // or GFX_LAYER_D2D
       BOOL r = SciterProcX(this, SCITER_X_MSG_CREATE(backend, FALSE));
       assert(r);
       if (r) {
@@ -50,8 +50,8 @@ namespace sciter
       SciterProcX(this, SCITER_X_MSG_DESTROY());
     }
 
-    virtual long asset_add_ref() { return asset::asset_add_ref(); }
-    virtual long asset_release() { return asset::asset_release(); }
+    virtual long asset_add_ref() { return 0; /* life cycle is governed by owner */ }
+    virtual long asset_release() { return 0; /* life cycle is governed by owner */ }
 
     bool load(aux::bytes utf8_html, const WCHAR* base_url = 0)
     {
@@ -70,9 +70,7 @@ namespace sciter
     HWINDOW   get_hwnd() const { return (LPVOID)this; }
     HINSTANCE get_resource_instance() const { return NULL; }
 
-    //sciter::om::iasset
-    //static const char* interface_name() { return "window.sciter.com"; }
-    
+   
 
   protected:
 

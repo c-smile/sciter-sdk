@@ -217,7 +217,6 @@ function content.onExchange(evt)
 }*/
 
 
-
 event click $(button#inspector)
 {
   if( var connectToInspector = view.connectToInspector ) {
@@ -240,3 +239,4 @@ event click $(button#inspector)
 function self.ready() {
   Settings.restore();
 }
+

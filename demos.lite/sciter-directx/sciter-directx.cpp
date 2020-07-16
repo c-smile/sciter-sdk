@@ -766,8 +766,8 @@ void Render()
     //
     // Clear the back buffer
     //
-    float ClearColor[4] = { 0.0f, 0.125f, 0.3f, 1.0f }; // red, green, blue, alpha
-    g_pImmediateContext->ClearRenderTargetView( g_pRenderTargetView, ClearColor );
+    //float ClearColor[4] = { 0.0f, 0.125f, 0.3f, 1.0f }; // red, green, blue, alpha
+    //g_pImmediateContext->ClearRenderTargetView( g_pRenderTargetView, ClearColor );
 
 // SCITER +
     // render HTML document, back layer (if any)

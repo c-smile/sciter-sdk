@@ -10,7 +10,26 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#fff7e6">4.4.3.27</td><td nowrap valign="top" align="center">2020-07-10</td><td>New:
+    <tr><td valign="top" bgcolor="#fff7e6">4.4.3.28</td><td nowrap valign="top" align="center">2020-07-16</td><td>Fixes:
+					<ul>
+						
+						
+						<li>[Windows] use of DirectComposition is off by default as does not solve any major problems really;</li>
+						<li><code>&lt;select|tree&gt;</code> VK_LEFT|RIGHT handling fix;</li>
+						<li>[DOM] <code>Element.remove()</code>, fix of resource cleanup;&nbsp;</li>
+						<li>[Windows] a11y fixes;</li>
+						<li>[Windows, Sciter.Lite, DirectX] fix of surface cleanup;</li>
+						<li>[Windows] <code>window-frame=&quot;extended&quot;</code> window positioning fixes;</li>
+						<li>[+plus] sdk/samples/+plus/demos/M-repeatble-in-repeatable.htm sample update to use @repeatable;</li><li>Fix of padding handling in <code>overflow:hidden-scroll</code>, see: <a href="https://sciter.com/forums/topic/text-indent-with-input-bug/">https://sciter.com/forums/topic/text-indent-with-input-bug/</a>&nbsp;</li><li>[API] <code>sciter::dom::element::fire_event</code> / <code>SciterFireEvent</code>, fix of CUSTOM/&quot;name&quot; send/post:<pre>     sciter::dom::element el = self-&gt;get_root();
+     BEHAVIOR_EVENT_PARAMS evt;
+     evt.cmd = CUSTOM;
+     evt.he = evt.heTarget = el;
+     evt.name = WSTR(&quot;hello&quot;);
+     evt.data = sciter::string(WSTR(&quot;world&quot;));
+     assert(el.fire_event(evt,false));</pre>and in script:<pre>event hello(evt) {
+ assert evt.data == &quot;world&quot;;
+}</pre></li><li>[Element.request] fix of handling status codes &gt; 200 and &lt; 300;</li>
+						<li>[Sciter.Lite/d2d] fix of handling SCITER_X_MSG_PAINT of root element;</li></ul></td></tr><tr><td valign="top" bgcolor="#fff7e6">4.4.3.27</td><td nowrap valign="top" align="center">2020-07-10</td><td>New:
 					<ul><li>[Sciter.Lite] DirectX (IDXGISurface) rendering target (additionally to OpenGL).<ul><li>+ sdk/demos.lite/sciter-directx demo.</li></ul></li>
 						
 						</ul>
@@ -66,7 +85,8 @@
 						<li>[script] fix of AV in async function handling;</li>
 						<li><code>event tripleclick</code> generation tuning;</li></ul></td></tr><tr><td valign="top" bgcolor="#fff7e6">4.4.3.22</td><td nowrap valign="top" align="center">2020-06-09</td><td>New:
 					<ul><li>+ <code>event tripleclick {}</code></li>
-						<li>+ <code>Request.requestHeaders</code>, <code>Request.responseHeaders</code> + sample /sdk/samples/communication/request-response.htm&nbsp;&nbsp;</li>
+						<li>+ <code>Request.requestHeaders</code>, <code>Request.responseHeaders</code> + sample /sdk/samples/communication/request-response.htm
+&nbsp;&nbsp;</li>
 						</ul>
 					<p>Fixes:</p>
 					<ul><li>[script] <code>new RegExp(re)</code> is prohibited now, constructor accepts only string.</li>

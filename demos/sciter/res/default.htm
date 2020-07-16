@@ -195,6 +195,11 @@
         Settings.restore();
       }
 
+      event hello (evt) {
+        view.msgbox(#information,"Got hello to " + evt.data );
+        return true;
+      }
+
   </script>
 
   </head>

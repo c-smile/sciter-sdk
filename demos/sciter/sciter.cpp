@@ -163,6 +163,21 @@ namespace sciter
     case WM_CLOSE: 
       if(self->on_close())
         break;
+#ifdef DEBUG
+    case WM_KEYDOWN:
+      switch (wParam) {
+        case VK_F3: {
+          sciter::dom::element el = self->get_root();
+          BEHAVIOR_EVENT_PARAMS evt;
+          evt.cmd = CUSTOM;
+          evt.he = evt.heTarget = el;
+          evt.name = WSTR("hello");
+          evt.data = sciter::string(WSTR("world"));
+          assert(el.fire_event(evt,false));
+        } break;
+      }
+#endif
+
     default:
       if(self && self->on_message(message,wParam,lParam,lr))
         return lr;

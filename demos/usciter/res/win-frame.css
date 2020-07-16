@@ -12,11 +12,11 @@ html > header { width:*; /*background-color: color(back-color);*/ }
 
 html > header { width:*; flow:horizontal; height:window-caption-height; margin:0; } 
 html > header > window-caption { display:block; line-height:window-caption-height; width:*; padding:0 1em; color:color(text-color); }
-html > header > window-buttons { display:block; flow:horizontal; width:max-content; height:2em; }
+html > header > window-buttons { display:block; flow:horizontal; width:max-content; height:*; }
 html > header > window-buttons > window-button { 
   behavior:clickable; 
   display:block; 
-  height:window-button-height; 
+  height:*; 
   width:window-button-width; 
   foreground-size: 11dip;
   foreground-repeat: no-repeat;
