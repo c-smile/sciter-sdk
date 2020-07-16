@@ -347,7 +347,7 @@ const Plus = function() {
   
   function crackEachExpression(text) // parse iterator expression: each="[index,]item in collection[|extra]"
   {
-    const RE = /(([a-z0-9]+)?\,?([a-z0-9]+)?) in ([^|]+)(\|(.+))?/i;  
+    const RE = /(([a-z0-9_]+)?\,?([a-z0-9_]+)?) in ([^|]+)(\|(.+))?/i;  
     var parts = text.match(RE);
     if( !parts ) 
       throw "Unrecognized @each format:" + text;
