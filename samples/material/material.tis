@@ -79,12 +79,9 @@ namespace Material
 
     function attached() 
     {
-      var caption = this.attributes["caption"] || "{no caption}";
-      this.$append(<caption>{caption}</caption><text>{this.attributes["value"] || ""}</text>);
-    
+      this.content([<caption/>,<text>{this.attributes["value"] || ""}</text>]);
       this.editor = this.$(text);
       this.attributes.toggleClass("is-empty", this.editor.state.empty);
-
       this.progress = 0.0;
     }
 
