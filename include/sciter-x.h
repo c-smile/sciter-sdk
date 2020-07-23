@@ -18,7 +18,9 @@
 #define __SCITER_X__
 
 #if __cplusplus > 199711L
-#define CPP11
+  #define CPP11
+#elif _MSC_VER >= 1600
+  #define CPP11
 #endif
 
 #include "sciter-x-types.h"

@@ -343,12 +343,21 @@
       }
 #endif
 
-      som_asset_t* get_asset() {
+      som_asset_t* get_asset() const {
         if (!is_asset()) return nullptr;
         INT64 v;
         if (ValueInt64Data(this, &v) != HV_OK) return nullptr;
         return reinterpret_cast<som_asset_t*>(v);
       }
+
+      // sqlite::Recordset* prs = val.get_asset<sqlite::Recordset>()
+      template <typename AT> AT* get_asset() const { 
+        som_asset_t* pass = get_asset();
+        if (pass && (pass->isa == AT::get_asset_class()))
+          return static_cast<AT*>(pass);
+        return nullptr;
+      }
+      
 
       static value wrap_asset(som_asset_t* pass) {
         value r;
