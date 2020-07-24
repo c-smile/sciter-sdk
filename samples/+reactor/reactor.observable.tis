@@ -62,12 +62,13 @@ function @observable(ns) {
         
     Object.addObserver(obj,subs);
   }
+
   observeChanges(ns,function(path) {
     //debug change: list,path;
     var cnt = 0;
     for( var def in list ) {
       if(path like def.path ) {
-        def.component.update();
+        def.component.post(def.component.update,true); // collapse multiple updates
         ++cnt;
       } else if(cnt)
         break;

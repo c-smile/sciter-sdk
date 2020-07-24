@@ -29,11 +29,11 @@ class Probe : Reactor.Component
   }
 
   function update(what = null) {
-    ++this.updateCounter;
     super.update(what);
   }
 
   function render() {
+    ++this.updateCounter;
     return <p>updates of {this.path} {this.updateCounter}</p>;
   }
 }
@@ -48,12 +48,18 @@ event click $(button#change-arr) {
   debug: Data.sub.arr[1];
 }
 
+event click $(button#change-bar-foo) {
+  Data.sub.obj.foo += 1;
+  Data.sub.obj.bar += 1;
+}
+
 
         </script>
     </head>
     <body>
 
 <button#change-bar>Change Data.sub.obj.bar</button> 
+<button#change-bar-foo>Change Data.sub.obj.bar and foo</button> 
 <button#change-arr>Change Data.sub.arr[1]</button> 
 
 <reactor|Probe path="Data.sub.obj.*" />
