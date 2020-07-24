@@ -98,7 +98,10 @@ include "../reactor.observable.tis";
 
 class ItemsList: Reactor.Component  
 {
-  function this(props,kids) {
+  //function this(props,kids) {}
+
+  function attached() 
+  {
     // this observes changes in "Todo.*",
     // on any change it will call this.update(),
     // on element detached we call "unobserve"

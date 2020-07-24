@@ -20,7 +20,9 @@ include "../reactor.observable.tis";
 
 class Temperature: Reactor.Component
 {
-  function this(props,kids) {
+  //function this(props,kids) {}
+
+  function attached() {
     // we observe any change in "Data.*",
     // on element detached we call "unobserve"
     this.detached = Reactor.observe(this,"Data.*");

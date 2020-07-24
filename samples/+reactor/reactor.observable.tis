@@ -6,14 +6,15 @@ function @observable(ns) {
 
   var list = [];
 
-  function remover(component) {
-     var (index,def) = list.find( def => def.component == component );
-     assert index >= 0;
-     delete list[index];
+  function remover(component = null) {
+    component = component || this; 
+    var (index,def) = list.find( def => def.component === component );
+    assert index >= 0;
+    delete list[index];
   }
 
   function add(path, component) {
-    path = path %~ "."; // "Data.a.b" -> "a.b" - use local data path here
+    path = path ~% "."; // "Data.a.b" -> "a.b" - use local data path here
     list.push { path: path, component:component };
     list.sort( (a,b) => b.path.length - a.path.length ); // sort the list in descending length order - 
                                                          // more specific rules come first

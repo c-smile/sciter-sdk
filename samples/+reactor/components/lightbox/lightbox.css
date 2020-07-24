@@ -1,7 +1,9 @@
 
+
+body { transition: foreground-color linear 200ms; }
+
 html.lightbox > body {
   foreground-color: #cccccccc;
-  transition: foreground-color(linear,200ms);
 }
 
 lightbox { style-set: lightbox; }
@@ -18,11 +20,11 @@ lightbox { style-set: lightbox; }
     background:#fff;
     box-shadow: 1dip 5dip 8dip #888888;
     opacity:0.1;
+    transition: opacity linear 200ms;
   }
 
   :root:expanded {
     opacity: 1.0;
-    transition: opacity(linear,200ms);
   }
 
   // caption

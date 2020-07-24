@@ -34,34 +34,42 @@ function recordsGenerator() {
   var records = recordsGenerator();
 }
 
-class BoundVTable : Reactor.Component {
+class BoundVTable : VTable {
 
-  function this(props) {
-    this.detached = Reactor.observe(this,"Data.records*");
+  this var path;
+
+  function this(props,kids) {
+    this.path = props.observe;
+    assert this.path;
+    super(props,kids);
   }
 
-  function render() 
-  {
-      return <VTable multiselect={true} recordset={Data.records} >
-        <columns>
-          <th>Key</th>
-          <th>Name</th>
-          <th>Status</th>
-        </columns>
-        { 
-          function(record,index) { // function generating single row
-            return 
-              <tr key={record.key} 
-               :current={this.currentRecord===record} 
-               :checked={this.isSelected(record)}>
-                <td>{record.key}</td>
-                <td>{record.name}</td>
-                <td>{record.status}</td>
-              </tr>;
-          }
+  function attached() {
+    this.detached = Reactor.observe(this,this.path);
+  }
+}
+
+function DemoTable() 
+{
+    return <BoundVTable multiselect={true} recordset={Data.records} observe="Data.records*">
+      <columns>
+        <th>Key</th>
+        <th>Name</th>
+        <th>Status</th>
+      </columns>
+      { 
+        function(record,index) { // function generating single row
+          return 
+            <tr key={record.key} 
+             :current={this.currentRecord===record} 
+             :checked={this.isSelected(record)}>
+              <td>{record.key}</td>
+              <td>{record.name}</td>
+              <td>{record.status}</td>
+            </tr>;
         }
-      </VTable>
-  }
+      }
+    </BoundVTable>
 }
 
 
@@ -89,7 +97,7 @@ event click $(button#change-record) {
       <button#insert-record>Insert record</button>
       <button#change-record>Change first record</button>
 
-      <reactor|BoundVTable />
+      <reactor|DemoTable />
 
     </body>
 </html>

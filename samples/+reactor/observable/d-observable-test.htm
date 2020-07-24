@@ -1,0 +1,63 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style></style>
+        <script type="text/tiscript">
+
+include "../reactor.observable.tis";
+
+@observable namespace Data {
+
+  namespace sub {
+    var obj = { foo : 12, bar : 42 };
+    var arr = [0, 1, 2];
+  }
+}
+
+class Probe : Reactor.Component 
+{
+  this var updateCounter = 0;
+  this var path;
+
+  function this(props,kids) {
+    this.path = props.path;    
+  }
+
+  function attached() {
+    debug attached: this.path;
+    this.detached = Reactor.observe(this,this.path);
+  }
+
+  function update(what = null) {
+    ++this.updateCounter;
+    super.update(what);
+  }
+
+  function render() {
+    return <p>updates of {this.path} {this.updateCounter}</p>;
+  }
+}
+
+event click $(button#change-bar) {
+  Data.sub.obj.bar += 1;
+  debug: Data.sub.obj.bar;
+}
+
+event click $(button#change-arr) {
+  Data.sub.arr[1] += 1;
+  debug: Data.sub.arr[1];
+}
+
+
+        </script>
+    </head>
+    <body>
+
+<button#change-bar>Change Data.sub.obj.bar</button> 
+<button#change-arr>Change Data.sub.arr[1]</button> 
+
+<reactor|Probe path="Data.sub.obj.*" />
+<reactor|Probe path="Data.sub.arr[]*" />
+
+    </body>
+</html>
