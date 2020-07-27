@@ -4,7 +4,7 @@
 </section>
 <section>
   <h2>&lt;button.flat&gt;</h2> 
-  <button.flat>Button</button>
+  <button.flat #test >Button</button>
 </section>
 
 <section>
@@ -37,8 +37,14 @@
   <hbox>
     <toggle/>
     <toggle checked />
-
     <label.hbox><toggle/> with label</label>
+  </hbox>
+</section>
 
+<section>
+  <h2>&lt;slider&gt;</h2> 
+  <hbox>
+    <slider />
+    <slider value="50" min="0" max="100" step="10" />
   </hbox>
 </section>

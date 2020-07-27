@@ -407,7 +407,14 @@ const Plus = function() {
       var ff = eachRecord; // filter function
       var fs = null;       // filter value
 
-      function rqRenderList() { thing.post(renderList,true); } 
+      function rqRenderList(changedef = null) { 
+        if( thing.post ) 
+          thing.post(renderList,true); 
+        else if(changedef) { // the element is removed from the DOM, so
+          var obj = changedef[1];
+          Object.removeObserver(obj,this function);
+        }
+      } 
       var updateCollectionObserves;
       function rqUpdateCollectionObserves(changedef) { 
         if( thing.post ) 
@@ -521,9 +528,23 @@ const Plus = function() {
       var ff = eachRecord; // filter function
       var fs = null;       // filter value
 
-      function rqRenderList() { thingParent.post(renderList,true); } 
+      function rqRenderList(changedef = null) { 
+        if( thing.post ) 
+          thing.post(renderList,true); 
+        else if(changedef){ // the element is removed from the DOM, so
+          var obj = changedef[1];
+          Object.removeObserver(obj,this function);
+        }
+      } 
       var updateCollectionObserves;
-      function rqUpdateCollectionObserves() { thingParent.post(updateCollectionObserves,true); } 
+      function rqUpdateCollectionObserves(changedef) { 
+        if( thingParent.post ) 
+          thingParent.post(updateCollectionObserves,true); 
+        else { // the element is removed from the DOM, so
+          var obj = changedef[1];
+          Object.removeObserver(obj,this function);
+        }
+      } 
 
       function appendRepeatableItem(coll, idx, val, lastNode)
       {

@@ -1,0 +1,21 @@
+
+/* default set of material colors based on current window-accent-color */
+
+html 
+{
+  font:system; 
+  var(normal)   : window-accent-color;
+  var(lighten5) : morph(window-accent-color, lighten:60%);
+  var(lighten4) : morph(window-accent-color, lighten:53%);
+  var(lighten3) : morph(window-accent-color, lighten:41%);
+  var(lighten2) : morph(window-accent-color, lighten:30%);
+  var(lighten1) : morph(window-accent-color, lighten:12%);
+  var(darken1)  : morph(window-accent-color, darken:3%);
+  var(darken2)  : morph(window-accent-color, darken:6%);
+  var(darken3)  : morph(window-accent-color, darken:9%);
+  var(darken4)  : morph(window-accent-color, darken:12%);
+  var(ascent1)  : morph(window-accent-color, rotate:-20deg);
+  var(ascent2)  : morph(window-accent-color, rotate:-10deg);
+  var(ascent3)  : morph(window-accent-color, rotate:10deg);
+  var(ascent4)  : morph(window-accent-color, rotate:20deg);
+}

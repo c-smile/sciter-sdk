@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <title>Plus: very basic sample</title>
+    <style>
+      @import url(../plus.css); /* the only thing needed to include Plus framework */
+      
+    </style>
+    
+    <script type="text/tiscript">
+    
+      include "../plus.tis"; // we use @observing so need to include plus.tis upfront.
+  
+      namespace Data // our model
+      {  
+        var status = "alarm"; // observable variable 
+        var items = ["ok", "warning", "alarm"];
+      }    
+
+     $(select#test).on("change", function(evt){
+        stdout.$n(this.value = {this.value});
+        if(this.value == 0){
+            Data.items.push("5555");
+            self.timer(20ms, function(){Data.status = "5555"});
+            // then I want change another select dropdown, and expect that it can show 5555. but nothing.
+        }
+        if(this.value == 1){
+            Data.status = "warning";      // here, it can work correctly
+        }
+        if(this.value == 2){
+            Data.status = "alarm";        // here, it can work correctly
+        }
+     });
+
+    </script>
+  </head>
+
+<body model="Data"> <!-- define data model we observe -->
+
+  <note>This sample demonstrates CSS class name binding. Class name is taken from <code>status</code> variable.</note>
+
+  <div class="{{status}}">Status: <(status)>
+  </div>
+  
+    <select #test>       <!-- this is what I want control-->
+        <option value = 0>aaa</option>
+        <option value = 1>bbb</option>
+        <option value = 2>ccc</option>
+    </select>
+  Change status 
+  <select each="item in items" (status) #targ>         <!-- this is what I refresh-->
+      <option @value="item"><output(item)/></option>
+  </select>
+  
+</body>
+</html>

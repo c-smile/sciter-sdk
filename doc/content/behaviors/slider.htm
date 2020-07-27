@@ -33,15 +33,13 @@
     <dd><em>integer|float</em>, initial value of the input</dd>
     <dt>buddy</dt>
     <dd>string, ID of &quot;buddy&quot; element, usually some &lt;span&gt; that receives textual representation of the value.</dd>
-    <h2>Methods</h2>
-    <dt>sliderMin</dt>
-    <dd>() : <em>integer|float</em><br/>reports current (runtime) minimal value.</dd>
-    <dt>sliderMax</dt>
-    <dd>() : <em>integer|float</em><br/>reports current (runtime) maximal value.</dd>
-    <dt>sliderStep</dt>
-    <dd>() : <em>integer|float|undefined</em><br/>reports current (runtime) step value.</dd>
-    <dt>sliderRange</dt>
-    <dd>(<strong>min</strong> : <em>integer|float</em>, <strong>max</strong> : <em>integer|float</em> [, <strong>step</strong> : <em>integer|float</em>]) <br/>sets range and optionally step.</dd>
+    <h2>Properties</h2>
+    <dt>slider.min</dt>
+    <dd>r/w -&nbsp;<em>integer|float</em>, reports current (runtime) minimal value.</dd>
+    <dt>slider.max</dt>
+    <dd>r/w -&nbsp;<em>integer|float, </em> reports current (runtime) maximal value.</dd>
+    <dt>slider.step</dt>
+    <dd>r/w -&nbsp;<em>integer|float|undefined</em>, reports current (runtime) step value.</dd>
     <h2>Events</h2>
     <dt>BUTTON_STATE_CHANGED</dt>
     <dd>- posted when value of the input is changed by the user.</dd>

@@ -147,7 +147,7 @@ class DomTree : Element
    
   function onElementChanged(uid)
   {
-     var node = this.$(option[value={uid}]);
+     var node = this.$(option[value="{uid}"]);
      //view.log("onNodeModelChanged",node);
      if(node && node.state.expanded) {
        this.collapseOption(node);
@@ -165,7 +165,7 @@ class DomTree : Element
   function showStack(/*uid*/stack, opt = null) 
   {
     var uid = stack.shift().uid;
-    var node = (opt || this).$(:root > option[value={uid}]);
+    var node = (opt || this).$(:root>option[value="{uid}"]);
     //stdout.println("showStack, uid",uid, (opt || this), node);
     if( !node ) { 
       return;

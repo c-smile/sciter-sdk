@@ -13,50 +13,28 @@
         overflow:auto;
       }
       
-      footer 
+      panel 
       {
+        display:block;
+        flow:vertical;
         position:fixed;
-        bottom:0;
-        left:0;
-        right:0;
+        top:*;
+        bottom:*;
+        left:*;
+        right:*;
+        bottom:*;
+        width:50%;
         height:50%;
-      }
-      footer.shim 
-      {
-        background: url(in-memory:footer-back) no-repeat 0 100%;
-        filter: blur(5dip) ;
-      }
-      
-      footer.content 
-      {
-        background: rgba(255,255,255,0.75);
         text-align:center;
         vertical-align:middle;
-      } 
+        background: rgba(255,255,255,0.75);
+        backdrop-filter: blur(7dip);
+        box-shadow: 2dip 4dip 10dip rgba(0,0,0,0.5);
+      }
       
     
     </style>
     <script type="text/tiscript">
-    
-    function self.ready()
-    {
-      const main = $(main);
-      var   image = null;
-      
-      function update() {
-        var (x,y,w,h) = main.box(#rectw,#border, #view);
-        var newImage = new Image(w,h,main); // make snapshot of the element in the image
-        self.bindImage("in-memory:footer-back", newImage);
-        if(image)
-          image.destroy();
-        image = newImage;
-        return true;
-      }
-      main.onSize = update;
-      main.post(update);
-    }
-    
-   
     </script>
   </head>
 <body>
@@ -69,9 +47,8 @@
     <p>turpis maecenas sollicitudin condimentum magna, sed et nibh mi, in proin ut faucibus sit. Odio euismod odio urna lobortis pretium,      </p>
     <p>eget volutpat libero vestibulum volutpat ullamcorper.                                                                                   </p>
   </main>
-  <footer.shim></footer>
-  <footer.content>
-    Frosty background
-  </footer>
+  <panel>
+    backdrop-filter:blur(10dip);
+  </panel>
 </body>
 </html>

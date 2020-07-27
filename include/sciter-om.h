@@ -21,6 +21,11 @@ struct som_asset_t {
   som_asset_class_t* isa;
 };
 
+inline som_asset_class_t* som_asset_get_class(const som_asset_t* pass)
+{
+  return pass ? pass->isa : nullptr;
+}
+
 #ifdef CPP11
 
 #include <atomic>
@@ -68,8 +73,7 @@ namespace sciter {
       static const char* interface_name() { return "asset.sciter.com"; }
       //template<class C> hasset<C> interface_of() { hasset<C> p; get_interface(C::interface_name(), p.target()); return p; }
     };
-
-
+    
     inline long asset_add_ref(som_asset_t *ptr) {
       assert(ptr);
       assert(ptr->isa);
@@ -96,6 +100,11 @@ namespace sciter {
       return ptr->isa->asset_get_passport(ptr);
     }
 
+    inline som_asset_class_t* asset_get_class(som_asset_t *ptr) {
+      assert(ptr);
+      return ptr->isa;
+    }
+    
     //hasset - yet another shared_ptr
     //         R here is something derived from the iasset (om::iasset) above
     template <class R> class hasset

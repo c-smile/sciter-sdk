@@ -16,6 +16,7 @@
           var inputCommand = $(input#command);
           var buttonSend = $(button#send);
           var buttonExec = $(button#exec);
+          var buttonTerminate = $(button#terminate);
 
           event click $(#exec) {
             var out = $(plaintext);
@@ -45,6 +46,7 @@
             this.state.disabled = true; // disabling the button
 
             buttonSend.state.disabled = false;
+            buttonTerminate.state.disabled = false;
 
             childProc = System.Process.exec(cmd,[]);
 
@@ -54,8 +56,9 @@
                        << event terminate (status) { 
                             out.$append(<text.done>Done:{status.toString()}</text>); 
                             out.state.busy = false;
-                            buttonExec.disabled = false;
+                            buttonExec.state.disabled = false;
                             buttonSend.state.disabled = true;
+                            buttonTerminate.state.disabled = true;
                             childProc = null;
                           };
 
@@ -69,11 +72,16 @@
             childProc.send(text + "\n");
           }
 
+          event click $(button#terminate) {
+            childProc.terminate();
+          }
+
+
         </script>
     </head>
     <body>
 
-      <button #exec>Start terminal...</button>
+      <button #exec>Start terminal...</button> <button #terminate disabled>Stop terminal</button>
       <p>  
         <input #command novalue="command to execute"> <button #send disabled>Exec</button>
       </p>

@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+.mono { font-family: "Cascadia Code", monospace; }
+
+body { font-rendering-mode: sub-pixel; font-family: Arial, sans-serif; font-size:12pt; behavior:htmlarea; }
+
+p.no-ligatures { font-variant-ligatures:none; }
+
+p.small-caps { font-variant-caps:small-caps; }
+
+        </style>
+    </head>
+    <body>
+
+      <div class="mono">
+          With ligatures (default). This sample requires <a href="https://github.com/microsoft/cascadia-code/releases">Cascadia Code</a> font to be installed.
+          <p>++ -- /= &amp;&amp; || ||= ## != ~= !~ &lt;= &gt;= &lt;=&gt; #{</p>
+          No ligatures
+          <p class=no-ligatures>++ -- /= &amp;&amp; || ||= ## != ~= !~ &lt;= &gt;= &lt;=&gt; #{</p>
+      </div>
+      <div>
+          Normal caps (default)
+          <p>Hello World</p>
+
+          Small caps
+          <p class="small-caps">Hello World</p>
+      </div>
+
+    </body>
+</html>

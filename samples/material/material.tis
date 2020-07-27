@@ -69,63 +69,12 @@ namespace Material
       this.animate( step, 200ms );
       return false;
     }
-
-
   }
 
 
-  class EditBox : Element
-  {
-
-    function attached() 
-    {
-      this.content([<caption/>,<text>{this.attributes["value"] || ""}</text>]);
-      this.editor = this.$(text);
-      this.attributes.toggleClass("is-empty", this.editor.state.empty);
-      this.progress = 0.0;
-    }
-
-    property value(v) {
-      get return this.editor.value; 
-      set { 
-        this.editor.value = v.toString();
-        this.attributes.toggleClass("is-empty", !v);
-      }
-    }
-
-    event change { this.attributes.toggleClass("is-empty", this.editor.state.empty); }
-
-    function paint(gfx) 
-    {
-      var bcolor = this.style["-focus-color"] || color(0,0,0);
-      var (x,y,w,h) = this.box(#rectw,#border,#self);
-      var bw = 2 * this.box(#bottom,#border,#padding);
-      gfx.fillColor(bcolor);
-      gfx.rectangle((w - this.progress * w) / 2, y + h - bw, this.progress * w, bw);
-    }
-
-    event focusin 
-    {
-       function step(p) {
-         this.progress = p;
-         this.refresh();
-       }
-       this.paintContent = paint;
-       this.animate(step,200ms);
-    }
-    event focusout 
-    {
-       function step(p) {
-         this.progress = 1.0 - p;
-         this.refresh();
-       }
-       this.animate(step, ::this.paintContent = null, 200ms);
-    }
-  }
-
-  function Toggle()
+  /*function Toggle()
   {
     this.$append(<knob/>);
-  }
+  }*/
 
 }

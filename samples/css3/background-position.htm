@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+body { font:system; }
+
+div { 
+  size:120dip; 
+  border: solid 1dip; 
+  margin:0.5em; 
+  background: url(sciter:copy.png) no-repeat;
+}
+
+div.a { background-position: bottom 10dip right 10dip; }
+div.b { background-position: bottom 10dip center; }
+div.c { background-position: right 10dip center; }
+div.d { background-position: center center; }
+
+div.e { background: url(sciter:paste.png) no-repeat bottom 10dip right 10dip; }
+
+        </style>
+        <script type="text/tiscript"></script>
+    </head>
+    <body>
+
+
+      <div.a>background-position: bottom 10dip right 10dip;</div>
+      <div.b>background-position: bottom 10dip center;</div>
+      <div.c>background-position: right 10dip center;</div>
+      <div.d>background-position: center center;</div>
+
+
+      <div.e>background: url(sciter:paste.png) no-repeat bottom 10dip right 10dip;</div>   
+
+    </body>
+</html>

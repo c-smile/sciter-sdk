@@ -40,7 +40,10 @@
   #pragma warning(disable:4786) //identifier was truncated...
 
   struct som_asset_t;
+  struct som_asset_class_t;
 
+  som_asset_class_t* som_asset_get_class(som_asset_t* pass);
+  
   namespace sciter
   {
 
@@ -351,9 +354,9 @@
       }
 
       // sqlite::Recordset* prs = val.get_asset<sqlite::Recordset>()
-      template <typename AT> AT* get_asset() const { 
+      template <class AT> AT* get_asset() const { 
         som_asset_t* pass = get_asset();
-        if (pass && (pass->isa == AT::get_asset_class()))
+        if (pass && (som_asset_get_class(pass) == AT::get_asset_class()))
           return static_cast<AT*>(pass);
         return nullptr;
       }
