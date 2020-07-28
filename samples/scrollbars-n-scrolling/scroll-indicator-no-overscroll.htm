@@ -1,0 +1,69 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+    
+    body { flow:horizontal; border-spacing:8px; }
+    section {
+      size:*;
+      background: white;
+      overflow: scroll-indicator;
+      border:1px solid;
+    }
+    
+    section > div {
+      background: white white gold gold;
+      width:*;
+      height:800dip;
+    }    
+    
+  
+    section.no-overscroll {
+      aspect: suppressoverscroll;
+    }
+    
+    </style>
+    <script type="text/tiscript">
+
+      function suppressoverscroll() 
+      {
+        this << event mousewheel (evt) 
+        {
+          var (dx,dy) = evt.wheelDeltas;
+          if(this.scroll(#top) <= 0 && dy > 0)
+            return true; 
+          else if(this.scroll(#bottom) <= 0 && dy < 0)
+            return true; 
+        }
+
+        this << event scroll (evt) 
+        {
+          if( evt.type != Event.SCROLL_POS )
+            return;
+
+          if(this.scroll(#top) <= 0) {
+            this.scrollTo(this.scroll(#left),0);
+            return true; 
+          }
+          else if(this.scroll(#bottom) <= 0) {
+            this.scrollTo(this.scroll(#left), this.box(#height,#content) - this.scroll(#height));
+            return true; 
+          }
+        }
+
+      }
+
+    </script>
+  </head>
+<body>
+
+<section.default>
+  <div>Default scroll indicator</div> 
+</section>
+
+<section.no-overscroll>
+  <div>No overscroll</div> 
+</section>
+
+</body>
+</html>

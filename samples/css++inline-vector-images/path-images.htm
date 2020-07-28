@@ -25,6 +25,7 @@
         foreground-image-cursor: pointer;
         fill:#aaa; stroke:none; 
         aspect: IconClick;
+        box-sizing:content-box;
       }
       input.search:focus,
       input.search:hover { fill:#07a; }
@@ -55,7 +56,7 @@
     
   <p>Demo of path:... image used as background-image (that icon)</p>
 
-  <input|text.search novalue="search">
+  <input|text.search novalue="search" id="test">
 
   <p>Demo of path:... images as img src... </p>
   <section.images>
@@ -86,7 +87,7 @@
   <note><p>You can create such images in any SVG editor.</p>
     <p>Path image "url" is a content of attribute "d" of SVG's &lt;path&gt; element. So this SVG element:</p>   
     <pre>&lt;path d="c 50,0 50,100 100,100 50,0 50,-100 100,-100" /&gt;</pre>
-    <p>in CSS will look as:</pre> 
+    <p>in CSS will look as:</p> 
     <pre> div { background-image:
                 url(path:c 50,0 50,100 100,100 50,0 50,-100 100,-100); }</pre>
     <p>Note: content of "d" prepended by "path:"</p> 
