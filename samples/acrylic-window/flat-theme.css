@@ -86,13 +86,13 @@ html {
     foreground-size:0.7em;
     fill:color(text);
     stroke:none;
+    transition: foreground-position sine-in 120ms, background-color linear 120ms, fill linear 120ms, border linear 120ms;
   }
   :root:checked::marker {
     foreground-position:1.52em 50%;
     background: color(accent); 
     border:color(accent);
     fill:color(accent-text);
-    transition:foreground-position(sine-in,120ms,sine-out,120ms) background-color(linear,120ms) fill(linear,120ms) border(linear,120ms);
   }
 
   :root > option:first-child { visibility:visible; }
@@ -493,15 +493,21 @@ editbox { display:inline-block; style-set:std-edit; }
   :root 
   {
     width:8em;
-    aspect: Flat.HSlider url(flat-theme.tis);
+    //aspect: Flat.HSlider url(flat-theme.tis);
     height:0.14em;
     background: color(border);
     background-clip: content-box;
     padding:0.7em;
     overflow:visible;
+    background-clip: content-box;
+    background-image: url(stock:block);
+    background-repeat:no-repeat;
+    background-position:0 0;
+    fill:color(accent);
+    background-size: var(slider-position,0px) 0.14em; // "value" part 
   }
       
-  :root > button.slider { 
+  :root > .slider { 
     width:0.56em; 
     height:1.4em; 
     foreground: none; 
@@ -511,7 +517,7 @@ editbox { display:inline-block; style-set:std-edit; }
   }
   
   :root:disabled { background: color(disabled-text); }
-  :root:disabled > button { background: color(disabled-text); }
+  :root:disabled > .slider { background: color(disabled-text); }
 }
 
 slider { display:inline-block; style-set:std-hslider; }

@@ -1,0 +1,85 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+          plaintext {
+            prototype: EditorPlus; 
+            background:window;
+            border:1dip solid #999;
+            overflow-x: auto;
+            overflow-y: scroll;
+            tab-size:4;
+            padding:0;
+          } 
+          plaintext > text {
+            display:block;
+            padding-left: 1em; 
+          }
+
+          plaintext > text.section-head {
+            prototype: CollapsibleLine;
+            foreground: url(stock:arrow-right) no-repeat 0.2em 50%;
+            foreground-image-cursor: pointer;
+          }
+
+          plaintext > text:collapsed {
+            visibility:none;
+          }
+          plaintext > text.section-head:collapsed {
+            foreground-image: url(stock:arrow-down); 
+            border-bottom:1dip solid #999;
+            visibility:visible;
+          }
+
+        </style>
+        <script type="text/tiscript">
+
+
+class CollapsibleLine : Element 
+{
+  event mousedown (evt) {
+    if( evt.x >= 0 ) return;
+    this.toggle();
+    return true;
+  }
+
+  function toggle() {
+    for( var line = this; line; line = line.next ) 
+    {
+      const isLast = line.text.indexOf("}") >= 0;
+      line.state.collapsed = !line.state.collapsed;
+      if(isLast) break;
+    }
+  }
+
+}
+
+class EditorPlus : Element {
+  function attached() {
+    for(var elLine in this) {
+      if( elLine.text.indexOf("{") >= 0 )
+        elLine.attributes.addClass("section-head");
+    }
+  }
+}
+        </script>
+    </head>
+    <body>
+
+<plaintext spellcheck="true">
+plaintext {
+  padding:1em;
+  background:window;
+  border:1dip solid #999;
+  overflow-x: auto;
+  overflow-y: scroll;
+  tab-size:4;
+} 
+plaintext > text {
+  display:block;
+  background:transparent;
+}
+</plaintext>
+
+    </body>
+</html>

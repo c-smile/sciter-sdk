@@ -41,11 +41,11 @@
           if( evt.type != Event.SCROLL_POS )
             return;
 
-          if(this.scroll(#top) <= 0) {
+          if(this.scroll(#top) < 0) {
             this.scrollTo(this.scroll(#left),0);
             return true; 
           }
-          else if(this.scroll(#bottom) <= 0) {
+          else if(this.scroll(#bottom) < 0) {
             this.scrollTo(this.scroll(#left), this.box(#height,#content) - this.scroll(#height));
             return true; 
           }

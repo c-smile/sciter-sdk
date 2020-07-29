@@ -35,7 +35,7 @@
     fill:window;
     stroke:threedshadow;
     stroke-width:1dip;
-    //transition:foreground-position circ-in-out 100ms, background-color linear 100ms;
+    transition:foreground-position circ-in-out 100ms, background-color linear 100ms;
   }
   :root:checked::marker {
     foreground-position:14dip 50%;

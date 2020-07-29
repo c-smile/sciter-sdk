@@ -2,12 +2,10 @@
     <head>
         <title>Test</title>
         <style>
-
-          @const CONTENT-OFFSET: 1em;
-
+          
           plaintext {
-            padding:0;
-            background:yellow;
+            padding:1em;
+            background:window;
             border:1dip solid #999;
             overflow-x: auto;
             overflow-y: scroll;
@@ -15,11 +13,8 @@
           } 
           plaintext > text {
             display:block;
-            margin:0 @CONTENT-OFFSET;
             background:transparent;
           }
-          plaintext > text:first-child {margin-top:@CONTENT-OFFSET;}
-          plaintext > text:last-child {margin-bottom:@CONTENT-OFFSET;}
 
         </style>
         <script type="text/tiscript"></script>
