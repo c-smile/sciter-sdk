@@ -15,33 +15,59 @@ vlist > li:checked { border-color:red; }
 
 include "vlist.tis";
 
-function recordsGenerator() {
+function recordsGeneratorA() {
   var out = [];
-  for(var i in 1000) out.push {key:i.toString()};
+  for(var i in 1000) out.push {key:"A" + i.toString()};
   return out;
 }
 
-var records = recordsGenerator();
-
-function renderRecord(record,index) {
-  return <li key={record.key} 
-     :current={this.currentRecord===record} 
-     :checked={this.isSelected(record)}>This is an item # {index}.</li>;
+function recordsGeneratorB() {
+  var out = [];
+  for(var i in 500) out.push {key:"B" + i.toString()};
+  return out;
 }
 
-var vlist;
+var recordsA = recordsGeneratorA();
+var recordsB = recordsGeneratorB();
 
-$(main).content(
-  <VList
-    multiselect
-    recordset={records}
-    recordview={renderRecord}
-    @{vlist} />);
+class Main : Reactor.Component {
 
-event click $(#go) {
-  var rn = $(#record-number).value;
-  vlist.navigateTo(records[rn]);
-  
+  this var vlist;
+  this var records = recordsA;
+
+  function renderRecord(record,index) {
+    return <li key={record.key} 
+       :current={this.currentRecord===record} 
+       :checked={this.isSelected(record)}>item #{index} of key {record.key}.</li>;
+  }
+
+  function render() {
+    return <main>  
+      <form>
+        <div>Record <input|integer #record-number min="0" max="1000" novalue="#" step="10" /> <button#go>Go</button></div>
+        <div>Recordset <button|radio(rs) value="A" checked>first</button> or <button|radio(rs) value="B">second</button></div>
+      </form>
+      <VList
+        multiselect
+        recordset={this.records}
+        recordview={renderRecord}
+        @{this.vlist} />
+    </main>;
+  }
+
+  event click $(#go) {
+    var rn = this.$(#record-number).value;
+    this.vlist.navigateTo(this.records[rn]);
+  }
+
+  event change $(button[name=rs]) (e,button)  {
+    if(button.attributes["value"] == "B")  
+      this.update { records: recordsB };
+    else 
+      this.update { records: recordsA };
+  }
+
+
 }
 
         </script>
@@ -51,10 +77,9 @@ event click $(#go) {
       <p>The caller shall suply record view producer function.</p>
       <p>The list supports multiselection (CTRL+CLICK).</p>
 
-      <form>
-        Record <input|integer #record-number min=0 max=1000 novalue="#" step="10" /> <button#go>Go</button> 
-      </form>
+      <reactor|Main />
 
-      <main></main>
+
+      
     </body>
 </html>

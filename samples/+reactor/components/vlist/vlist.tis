@@ -12,10 +12,12 @@ class VList : Reactor.Component
 {
   const styleset = ["vlist", $url(vlist.css)];
 
-  this var swIndex = 0;        // scrolling window (buffer) position
-  this var swLength = 40;      // scrolling window (buffer) length
-  this var itemHeight = 10;    // will be recalculated later
-  this var visibleItems = 1;   // will be recalculated later
+  this var swIndex = 0;           // scrolling window (buffer) position
+  this var swLength = 40;         // scrolling window (buffer) length
+  this var itemHeight = 10;       // will be recalculated later
+  this var visibleItems = 1;      // will be recalculated later
+  this var renderedRecordset = null; // previously rendered recordset
+  this var nRenderedItems = 0; // total number of items in recordset
 
   this var recordset = [];
   this var multiselect = false;
@@ -33,11 +35,33 @@ class VList : Reactor.Component
     assert typeof this.recordview == #function;
   }
 
-  function render() {
+  function render() 
+  {
+    var {recordview, recordset} = this;
+
+    if(this.renderedRecordset && (this.renderedRecordset !== recordset)) {
+      // recordeset changed
+      this.selectedRecords = {}; 
+      this.currentRecord = null;
+      this.swIndex = 0; // rewind to start
+      this.post(() => {
+        this.resetPaddings();
+        this.scrollTo(0,0,false);
+      });
+    }
+    else if(this.nRenderedItems != recordset.length) {
+      // recordeset length changed 
+      if( (this.swIndex + this.swLength) > recordset.length ) 
+        this.swIndex = Integer.max(0,recordset.length - this.swLength);
+      this.post(this.resetPaddings);
+    }
+
+    this.renderedRecordset = recordset;
+    this.nRenderedItems = recordset.length;
+    
+    var end = Integer.min(recordset.length,this.swIndex + this.swLength);
     var items = [];
-    var {recordview, recordset, swIndex, swLength} = this;
-    var end = Integer.min(recordset.length,swIndex + swLength);
-    for( var i = swIndex; i < end; ++i )
+    for( var i = this.swIndex; i < end; ++i )
       items.push( recordview.call(this,recordset[i],i) );
     return <vlist>{items}</vlist>;
   }
@@ -50,15 +74,6 @@ class VList : Reactor.Component
       this.paintContent = null; // we need this only once
       this.post(this.resetPaddings); // as we've discovered height of the single item we need to resetPaddings
     };
-  }
-
-  function update(state = null) {
-    if( var recordset = state?.recordset ) {
-      if((this.swIndex + this.swLength) > recordset.length ) 
-        this.swIndex = Integer.max(0,recordset.length - this.swLength);
-    }
-    super.update(state);
-    this.post(this.resetPaddings);
   }
 
   function onSize() {
