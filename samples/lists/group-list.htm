@@ -3,7 +3,8 @@
     <title></title>
     <style>
     
-      ul { width:25%;
+      ul { aspect: GroupList;
+           width:25%;
            height:*; 
            overflow-y:scroll-indicator; padding:0;
            border: 1px solid; }
@@ -22,8 +23,8 @@
     </style>
     <script type="text/tiscript">
     
-      function GroupList(el) {
-      
+      function GroupList() {
+        var el = this;
         var headers = [];  // header elements
         var headerys = []; // original header elements positions
         var y = 0,viewy;
@@ -63,20 +64,27 @@
             }
           }
         }
-        
-        el.onSize = function() {
+
+        function init() {
+          if( headers.length )
+            return; // already initialized
           headers = el.$$(header);
           headerys = [];
           for(var h in headers) {
             var (x1,y1,x2,y2) = h.box(#rect,#border,#content);
             headerys.push(y1);
           }
+        }
+        
+        el.onSize = function() {
+          init();
           delete el.onSize; // run it once
         }
+
+        init();
       
       }
-      
-      GroupList($(ul));
+     
     
     </script>
   </head>
