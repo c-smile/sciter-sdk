@@ -16,23 +16,19 @@
         border:2dip solid;
         margin:*;
         padding: 1em 2em;
-      }
-
-      div.flipflop.on {
         animation: 1200ms infinite alternate flipflop;      
       }
-    
+
+   
     </style>
     <script type="text/tiscript">
-    
-      self.timer(20ms,:: $(div.flipflop).attributes.addClass("on") );
-
+   
 
     </script>
   </head>
 <body>
 
-  <div.flipflop>
+  <div.flipflop #test>
     Voulez-Vous Danser?
   </div>
 

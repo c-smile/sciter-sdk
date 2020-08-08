@@ -1,6 +1,6 @@
 ﻿<html>
   <head>
-    <meta name="generator" content="h-smile:richtext">
+    <meta name="generator" content="h-smile:richtext"/>
   </head>
 <body class="root">
   <h1>Bytes object</h1>
@@ -55,12 +55,14 @@
       <p>Static method. Creates new Bytes object, loads file into it and returns that object.</p></dd>
     <dt>compress</dt>
     <dd>
-      <div><strong>( </strong><strong>)</strong> returns: <em>Bytes</em></div>
-      <p>Creates new Bytes object - compression version of original bytes object.</p></dd>
+      <div><strong>(</strong> [<b>#gzip</b>]<strong> )</strong> returns: <em>Bytes</em></div>
+      <p>Creates new Bytes object - compression version of original bytes object.</p>
+			<p>Uses gzip deflate if #gzip parameter is provided, otherwise - LZF.</p></dd>
     <dt>decompress</dt>
     <dd>
-      <div><strong>( </strong><strong>)</strong> returns: <em>Bytes | null</em></div>
-      <p>Creates new Bytes object, restores previously compressed byte array. Returns <i>null</i> if the array was not previously compressed.</p></dd>
+      <div><strong>( </strong> [<b>#gzip</b>] <strong></strong><strong>)</strong> returns: <em>Bytes | null</em></div>
+      <p>Creates new Bytes object, restores previously compressed byte array. Returns <i>null</i> if the array was not previously compressed.</p>
+			<p>Uses gzip inflate if #gzip parameter is provided, otherwise - LZF.</p></dd>
 
 
 </dl>

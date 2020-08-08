@@ -14,26 +14,19 @@
         background:gold;
         border:2dip solid;
         margin:*;
-      }
-
-      div.spin.animate {
         animation: 3s infinite linear rotate;      
       }
 
-      div.spin.animate.paused {
+      div.spin.paused {
         animation-play-state: paused;
       }
     
     </style>
     <script type="text/tiscript">
 
-    self.timer(20ms, function() {
-      $(div.spin).attributes.addClass("animate");
-    });
-    
-    $(#pause).on("click", function() {
+    event click $(#pause) {
       $(div.spin).attributes.toggleClass("paused", this.value);
-    });
+    }
     
     
     </script>

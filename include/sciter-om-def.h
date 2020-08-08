@@ -206,6 +206,17 @@ namespace sciter {
         }
       };
 
+    template <class Type, class Ret, class P0, class P1, class P2, class P3, class P4>
+      struct member_function<Ret(Type::*)(P0, P1, P2, P3, P4)> {
+        enum { n_params = 5 };
+        template <Ret(Type::*Func)(P0, P1, P2, P3, P4)> static BOOL thunk(som_asset_t* thing, UINT argc, const SOM_VALUE* argv, SOM_VALUE* p_result)
+        {
+          try { *p_result = SOM_VALUE((static_cast<Type*>(thing)->*Func)(argv[0].get<P0>(), argv[1].get<P1>(), argv[2].get<P2>(), argv[3].get<P3>(), argv[4].get<P4>())); return TRUE; }
+          catch (exception& e) { *p_result = SOM_VALUE::make_error(e.what()); return TRUE; }
+        }
+      };
+
+
       // func() const  variants of the above
       template <class Type, class Ret>
       struct member_function<Ret(Type::*)() const> {
@@ -253,6 +264,16 @@ namespace sciter {
         template <Ret(Type::*Func)(P0, P1, P2, P3) const> static BOOL thunk(som_asset_t* thing, UINT argc, const SOM_VALUE* argv, SOM_VALUE* p_result)
         {
           try { *p_result = SOM_VALUE((static_cast<Type*>(thing)->*Func)(argv[0].get<P0>(), argv[1].get<P1>(), argv[2].get<P2>(), argv[3].get<P3>())); return TRUE; }
+          catch (exception& e) { *p_result = SOM_VALUE::make_error(e.what()); return TRUE; }
+        }
+      };
+
+      template <class Type, class Ret, class P0, class P1, class P2, class P3, class P4>
+      struct member_function<Ret(Type::*)(P0, P1, P2, P3, P4) const> {
+        enum { n_params = 5 };
+        template <Ret(Type::*Func)(P0, P1, P2, P3, P4) const> static BOOL thunk(som_asset_t* thing, UINT argc, const SOM_VALUE* argv, SOM_VALUE* p_result)
+        {
+          try { *p_result = SOM_VALUE((static_cast<Type*>(thing)->*Func)(argv[0].get<P0>(), argv[1].get<P1>(), argv[2].get<P2>(), argv[3].get<P3>(), argv[4].get<P4>())); return TRUE; }
           catch (exception& e) { *p_result = SOM_VALUE::make_error(e.what()); return TRUE; }
         }
       };

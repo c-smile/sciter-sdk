@@ -1,0 +1,75 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+@const TOOLBAR_HEIGHT: 64dip;
+
+body { margin: 0; }
+
+main {
+  flow:stack;
+  size:*;
+}
+
+toolbar {
+  height: @TOOLBAR_HEIGHT;
+  z-index:1;
+  background-color: rgba(240, 240, 240, 0.55);
+  backdrop-filter: blur(40dip);    
+}
+
+section {
+  size:*;
+  overflow:auto;
+  margin: @TOOLBAR_HEIGHT 0 0 0;
+  clip-box: margin-box;
+  border-spacing:20dip;
+  flow:horizontal-wrap;
+}
+
+section > picture {
+  size: 128dip;
+}
+
+
+
+        </style>
+        <script type="text/tiscript"></script>
+    </head>
+    <body>
+
+      <main>
+        <toolbar>toolbar</toolbar>
+        <section>
+
+<picture src="../ideas/carousel/images/199480111_87d4cb3e38_s.jpg"/>
+<picture src="../ideas/carousel/images/199481072_b4a0d09597_s.jpg"/>
+<picture src="../ideas/carousel/images/199481087_33ae73a8de_s.jpg"/>
+<picture src="../ideas/carousel/images/199481108_4359e6b971_s.jpg"/>
+<picture src="../ideas/carousel/images/199481143_3c148d9dd3_s.jpg"/>
+<picture src="../ideas/carousel/images/199481203_ad4cdcf109_s.jpg"/>
+<picture src="../ideas/carousel/images/199481218_264ce20da0_s.jpg"/>
+<picture src="../ideas/carousel/images/199481236_dc98b5abb3_s.jpg"/>
+<picture src="../ideas/carousel/images/199481255_fdfe885f87_s.jpg"/>
+<picture src="../ideas/carousel/images/229228324_08223b70fa_s.jpg"/>
+
+<picture src="../ideas/carousel/images/199480111_87d4cb3e38_s.jpg"/>
+<picture src="../ideas/carousel/images/199481072_b4a0d09597_s.jpg"/>
+<picture src="../ideas/carousel/images/199481087_33ae73a8de_s.jpg"/>
+<picture src="../ideas/carousel/images/199481108_4359e6b971_s.jpg"/>
+<picture src="../ideas/carousel/images/199481143_3c148d9dd3_s.jpg"/>
+<picture src="../ideas/carousel/images/199481203_ad4cdcf109_s.jpg"/>
+<picture src="../ideas/carousel/images/199481218_264ce20da0_s.jpg"/>
+<picture src="../ideas/carousel/images/199481236_dc98b5abb3_s.jpg"/>
+<picture src="../ideas/carousel/images/199481255_fdfe885f87_s.jpg"/>
+<picture src="../ideas/carousel/images/229228324_08223b70fa_s.jpg"/>
+
+
+        </section>
+
+
+      </main>
+
+    </body>
+</html>

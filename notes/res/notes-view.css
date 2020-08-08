@@ -155,7 +155,8 @@ notes-view > header > input.search {
   foreground-position:0.6em 50%;
   foreground-image-cursor: pointer;
   fill:#aaa; 
-  stroke:none; 
+  stroke:none;
+  box-sizing:content-box;
 }
 
 notes-view > header > input.search:not(:empty),

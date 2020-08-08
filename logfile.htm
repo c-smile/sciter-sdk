@@ -10,7 +10,23 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#fff7e6">4.4.3.30</td><td nowrap valign="top" align="center">2020-07-28</td><td>Fixes:
+    <tr><td valign="top" bgcolor="#fdf6ff">4.4.4.0</td><td nowrap valign="top" align="center">2020-08-08</td><td>New:
+					<ul>
+						<li>[css] support of <code>box-sizing:&nbsp;content-box | padding-box | border-box;</code> as per CSS spec.</li><li>[css] new property: <code>clip-box: default | content-box | padding-box | border-box | margin-box | hit-margin-box;</code> &nbsp;- defines clip box for scrolling. See: sdk/samples/scrollbars-n-scrolling/clip-box.htm sample.</li>
+						<li>[script] <code>bytes.compress(#gzip).decompress(#gzip) == bytes</code>. Compressing buffers using GZIP.</li>
+						</ul>
+					<p>Fixes:</p>
+					<ul>
+						
+						
+						<li>[audio] Audio.play()/Audio.pause() fix + sample update.</li><li>[scapp] main.html as entry point fix.</li><li>[reactor] fix of recordset changes in sdk/samples/+reactor/components/vlist/vlist.tis</li><li>sample fixes and refactoring:<ul><li>sdk/samples/acrylic-window/flat-theme;</li>
+								<li>sdk/samples/css++inline-vector-images/path-images.htm;</li>
+								<li>sdk/samples/plaintext-editor/basic.htm;</li>
+								<li>sdk/samples/scrollbars-n-scrolling/scroll-indicator-no-overscroll.htm;</li>
+								</ul></li>
+						<li>[css, selectors] fix of <code>*</code>&nbsp;matching pseudo elements.</li>
+						<li>[css animation] start animations that are defined by default.</li>
+						</ul></td></tr><tr><td valign="top" bgcolor="#fff7e6">4.4.3.30</td><td nowrap valign="top" align="center">2020-07-28</td><td>Fixes:
 					<ul>
 						
 						<li>[css] <code>box-sizing: content-box;</code> handling in conjunction with <code>overflow: hidden | hidden-scroll | scroll | auto;</code> see: /sdk/samples/css++inline-vector-images/path-images.htm</li><li>[css] regression fix of <code>background</code>/<code>foreground</code> shortcut parsing;</li><li>[DOM] <code>behavior:slider;</code> regression  fix;</li></ul></td></tr><tr><td valign="top" bgcolor="#fff7e6">4.4.3.29</td><td nowrap valign="top" align="center">2020-07-27</td><td>New:
@@ -20,17 +36,7 @@
 						<li>[css3] + support of <code>background-position: bottom 14dip right 14dip;</code> format (allows to define offsets from right/bottom).</li>
 						</ul>
 					<p>Fixes:</p>
-					<ul>
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						<li>[osx] workaround fix of <code>view.dialog()</code> when <code>view.state == View.WINDOW.MINIMIZED</code>;</li><li>[System.Process] <code>System.Process.terminate()</code> fix.</li><li>[reactor] @observable feature fixes;</li><li>[css] better <code>style-set: name;</code> handling.</li><li>[css] fix of transition of <code>background-position</code> and <code>background-size</code></li><li><code>Element.request</code> -&gt; promise fix for statuses 201..300.</li><li>[CSS] sdk/samples/material/material.css refactoring.</li><li>[Windows 10] <code>window-frame=&quot;extended&quot;</code>, correct <code>window-button-width</code> computation.</li><li>[CSS] transition: back/foreground-image linear 200ms; - image transitions;</li><li>[+plus] fix of needless exception generation.</li><li>[CSS] overflow-x:hidden-scroll fix, see: <a href="https://sciter.com/forums/topic/input-with-behaviors-doesnt-layout-properly/">https://sciter.com/forums/topic/input-with-behaviors-doesnt-layout-properly/</a>&nbsp;</li></ul></td></tr><tr><td valign="top" bgcolor="#fff7e6">4.4.3.28</td><td nowrap valign="top" align="center">2020-07-16</td><td>Fixes:
+					<ul><li>[osx] workaround fix of <code>view.dialog()</code> when <code>view.state == View.WINDOW.MINIMIZED</code>;</li><li>[System.Process] <code>System.Process.terminate()</code> fix.</li><li>[reactor] @observable feature fixes;</li><li>[css] better <code>style-set: name;</code> handling.</li><li>[css] fix of transition of <code>background-position</code> and <code>background-size</code></li><li><code>Element.request</code> -&gt; promise fix for statuses 201..300.</li><li>[CSS] sdk/samples/material/material.css refactoring.</li><li>[Windows 10] <code>window-frame=&quot;extended&quot;</code>, correct <code>window-button-width</code> computation.</li><li>[CSS] transition: back/foreground-image linear 200ms; - image transitions;</li><li>[+plus] fix of needless exception generation.</li><li>[CSS] overflow-x:hidden-scroll fix, see: <a href="https://sciter.com/forums/topic/input-with-behaviors-doesnt-layout-properly/">https://sciter.com/forums/topic/input-with-behaviors-doesnt-layout-properly/</a>&nbsp;</li></ul></td></tr><tr><td valign="top" bgcolor="#fff7e6">4.4.3.28</td><td nowrap valign="top" align="center">2020-07-16</td><td>Fixes:
 					<ul>
 						
 						

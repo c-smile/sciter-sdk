@@ -1622,6 +1622,14 @@ function import_test() {
   //assert module.modConst == #modConst;
 }
 
+function Bytes_test() {
+    var bytes = Bytes.fromBase64("SGVsbG8gV29ybGQh");
+    assert bytes.length == 12;
+    assert bytes.toString("utf-8") == "Hello World!";
+    assert bytes.compress().decompress() == bytes;
+    assert bytes.compress(#gzip).decompress(#gzip) == bytes;
+}
+
 
 function showMemStats(msg) {
   var (total,free, used) = gc();
@@ -1663,6 +1671,7 @@ run( referenceOf_test );
 run( destructurung_assignment_test);
 run( value_list_test);
 run( import_test);
+run( Bytes_test);
 
 showMemStats("after");
 
