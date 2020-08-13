@@ -6,15 +6,15 @@
     </style>
     <script type="text/tiscript">
     
-      $(#get).onClick = function()
+      event click $(#get)
       {
         stdout.printf("%V\n",$(select).value);
       }
-      $(#set).onClick = function()
+      event click $(#set)
       {
         $(select).value = [8,9,11];
       }
-      $(#clear).onClick = function()
+      event click $(#clear)
       {
         $(select).value = undefined;
       }      

@@ -39,8 +39,10 @@ class Clock: Reactor.Component
   }
 }</pre>
 	<p>Check sample: <u>{sdk}/samples/+reactor/doc-samples/styles-events/clock.htm</u></p><p>As you see it defines independent set of CSS rules that define content (and only content) of our clock component and its internals.</p>
-	<p>General consideration: if component is designed to be used in many applications then its default style set should include only rules needed for layout and those are critical for operation. Each application will add its own styling on top of these default styles. &nbsp;</p>
-	<p>Note that style sets in Sciter are not polluting global list of style rules and so are very effective - reduce time needed for style resolution of DOM elements.&nbsp;</p>
+	<p>General consideration: if component is designed to be used in many applications then its default style set should include only rules needed for layout and those are critical for operation. Each application will add its own styling on top of these default styles.&nbsp;</p>
+	<p>Styles in&nbsp;<code>const styleset</code> are applied <b>before</b> styles defined in document styles (so they have lower specificity). If you want&nbsp;<code>const styleset</code> styles to override document styles then use <code>#important</code> flag:</p>
+	
+	<pre>const styleset = [&quot;clock&quot;, $url(clock.css), #important]; // styles applied on top of doc styles</pre><p>Note that style sets in Sciter are not polluting global list of style rules and so are very effective - reduce time needed for style resolution of DOM elements.&nbsp;</p>
 	<h2>Event Handling in Components</h2>
 	<p>In contrast with ReactJS Sciter does not require any special constructs for handling events - we can use normal (for the Sciter) event handling definitions in classes.</p>
 	<p>Sample of small component that encapsulates search block enclosing&nbsp;&lt;input&gt; and &lt;button&gt; in one entity: &nbsp;&nbsp;</p>
