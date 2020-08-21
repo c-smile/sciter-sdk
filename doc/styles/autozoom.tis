@@ -47,3 +47,14 @@ function AutoScrollX() {
   }
 
 }*/
+
+class HighlightIt : Element 
+{
+  function attached() {
+    debug on: this;
+    this.timer(1s, function() {
+      debug off: this;
+      this.attributes["highlighted"] = undefined;
+    });
+  }
+}

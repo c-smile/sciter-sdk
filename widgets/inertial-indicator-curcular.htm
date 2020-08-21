@@ -1,0 +1,96 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+        indicator 
+        {
+          aspect:BusyIndicator(particleSize: 1em, particles: 5);
+          display:block;
+          size:200dip;
+          color: #00b;
+          padding:1em;
+          border:1dip solid black;
+        }
+
+        </style>
+        <script type="text/tiscript">
+
+        function BusyIndicator(params = {}) {
+
+          var me = this;
+
+          const particleSize = params.particleSize || 10pt;
+          const particles = params.particles || 4;
+
+          var positions = new Array(particles);
+
+          function init() {
+            for( var i in particles ) positions[i] = i * 0.15 - 1;  
+          }
+
+          function paint(gfx) {
+            var (width,height) = me.box(#dimension);
+            var cx = width / 2.0;
+            var cy = height / 2.0;
+            var size = me.toPixels(particleSize);
+            var radius = size / 2;
+            const PI = Math.PI;
+            var ss = PI * radius.toFloat() / width; // diff angle
+            gfx.fillColor(me.style#color);
+            for( var (i,p) in positions ) {
+              var offa = (i - particles / 2) * ss;
+              var x = Math.cos((0.5 - p) * PI - offa) * cx + cx;
+              var y = Math.sin((-0.5 - p) * PI - offa) * cy + cy;
+              gfx.arc(x,y,radius,radius,0deg,360deg);
+            }
+            return true; // discard default content drawing
+          }
+
+          function step() {
+            if(!me.state.busy) {
+              me.refresh();
+              return false;
+            }
+            for( var (i,p) in positions ) {
+              var dx = Float.max(0.002, Math.abs(p) / 16.0);
+              p += dx; if( p > 1.0 ) p = -1.0;
+              positions[i] = p;
+            }
+            me.refresh();
+            return true;
+          }
+    
+          // this.value = true | false;
+          me[#busy] = property (v) {
+            get return me.state.busy;
+            set {
+              if(v) {
+                init();
+                me.paintContent = paint; // setup painter
+                me.state.busy = true;
+                me.animate(step);
+              } else {
+                me.paintContent = null; // remove script painter 
+                me.state.busy = false;
+              }
+            }
+          };
+
+        }
+
+        event change $(button#run) {
+          $(indicator).busy = this.value;
+        }
+
+
+        </script>
+    </head>
+    <body>
+
+    <indicator>Click on checkbox to run</indicator>
+
+    <button|checkbox #run>Run</button>
+
+    </body>
+</html>

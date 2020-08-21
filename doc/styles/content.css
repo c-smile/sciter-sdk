@@ -46,16 +46,19 @@ body > table tr > td {
   
 body > table tr > td:first-child:not([colspan]) { text-align: right; white-space:nowrap; border-right:1px solid #dedede; }
 
-body > dl:not(.flat) { flow:row(dt, dd); width:100%; }
+body > dl:not(.flat) { flow:row(dt, dd); width:*; }
 body > dl:not(.flat) > dt { text-align: right; font-weight:bold; margin:0; margin-top:2em; padding-right: 0.3em; 
-                            width:max-content; max-width:50%;white-space:nowrap; overflow-x:hidden; text-overflow:ellipsis; }
+                            width:max-content; max-width:50vw;white-space:nowrap; overflow-x:hidden; text-overflow:ellipsis; }
 body > dl:not(.flat) > dd { border-left:1px solid #dedede; margin:0; margin-top:2em; padding-left: 0.3em; width:*;  }
 
 
+dt {
+  transition: background-color linear 1s;
+}
+
 [highlighted]
 {
-  background-color: red;
-  color: white;
-  assigned!: self.start-timer(1000); /* red blink */
-  timer!: self.highlighted = null, return cancel;
+  prototype: HighlightIt url(autozoom.tis);
+  background-color: orange;
+  transition: background-color linear 0s;
 }
