@@ -17,12 +17,13 @@
     size: max-content;
     transform: translate(0,0); opacity:1.0;
     font:system;
+    transition: transform quad-out 500ms, opacity linear 500ms;
   }
   
   body[state] {visibility:visible;}
   body[state=initial] { transform: translate(0,100%); opacity:0.0; } /* offstage */
-  body[state=shown]   { transform: translate(0,0);    opacity:1.0; transition: transform(quad-out,500ms) opacity(linear,500ms);  }
-  body[state=closed]  { transform: translate(100%,0); opacity:0.0; transition: transform(linear,500ms) opacity(linear,500ms);  }
+  body[state=shown]   { transform: translate(0,0);    opacity:1.0; }
+  body[state=closed]  { transform: translate(100%,0); opacity:0.0; transition: transform linear 500ms, opacity linear 500ms; }
     
   header { border-bottom: 1dip dashed gray; padding: 4dip; }
   main { padding: 8dip; }

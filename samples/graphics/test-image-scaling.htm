@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+        picture#dst {
+          size: *; // spans whole area of <body>
+          foreground-size: cover;
+        }
+
+        </style>
+        <script type="text/tiscript">
+
+        event gcrequest { gc(); }
+
+        function downscaleImage(image, factor) {
+          var dstwidth = image.width / factor;
+          var dstheight = image.height / factor;
+          var newImage = new Image(dstwidth,dstheight, function(gfx) {
+            gfx.drawImage(image,0,0,dstwidth,dstheight);// draw scaled image on newImage
+          });
+          return newImage;
+        }
+
+        function self.ready() {
+          self.loadImage( "https://images3.alphacoders.com/842/thumb-1920-842558.jpg", function(image) {
+            $(picture#dst).value = downscaleImage(image,2);
+            self.postEvent("gcrequest"); // to free temporal image objects
+          });
+        }
+
+        </script>
+    </head>
+    <body>
+
+       <picture#dst />
+
+    </body>
+</html>

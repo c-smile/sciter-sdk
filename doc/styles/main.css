@@ -66,9 +66,9 @@ toolbar > button.forward { background-image:url(path: M1413 896q0-27-18-45l-91-9
   overflow:hidden;
 }
 
-#index > section { height:1*; }   
+#index > section { height:1*; transition: height sine-in-out 400ms; }   
 #index > section > ul { visibility:collapse; background:@INFO-COLOR; }
-#index > section:expanded { height:100*; transition: height(sine-in-out,400ms); }
+#index > section:expanded { height:100*; }
 #index > section:animating > ul { visibility:visible; overflow:hidden; }
 #index > section:expanded > ul { visibility:visible; }
 

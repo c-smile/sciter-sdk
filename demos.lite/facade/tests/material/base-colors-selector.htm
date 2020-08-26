@@ -2,7 +2,8 @@
 
   section#color-selector { 
     aspect: MaterialColorSelector;
-    flow:vertical; border-spacing: 10dip; 
+    flow:vertical; border-spacing: 10dip; size:210dip *; 
+    overflow-y:auto;
   }
 
   section#color-selector > input#hue
@@ -87,7 +88,7 @@
       updateVariables();
     });
     
-    updateVariables();
+    //updateVariables();
   }
 
 
@@ -96,5 +97,19 @@
 <section#color-selector>
   <h2>Material colors</h2>
   <input|hslider#hue min=0 max=360 />
+  <div.lighten5>lighten5</div>
+  <div.lighten4>lighten4</div>
+  <div.lighten3>lighten3</div>
+  <div.lighten2>lighten2</div>
+  <div.lighten1>lighten1</div>
+  <div.normal>normal</div>    
+  <div.darken1>darken1</div>  
+  <div.darken2>darken2</div>  
+  <div.darken3>darken3</div>  
+  <div.darken4>darken4</div>  
+  <div.ascent1>ascent1</div>  
+  <div.ascent2>ascent2</div>  
+  <div.ascent3>ascent3</div>  
+  <div.ascent4>ascent4</div>  
 </section>
 

@@ -28,19 +28,21 @@
       z-index:10;
       background-color: gold; 
       padding:6dip;
+      transition: transform quad-out @ANIMATION-DURATION, background-color linear @ANIMATION-DURATION;
     }
     
-    aside > ol { transform: translate(-29dip,0); }
+    aside > ol { 
+      transform: translate(-29dip,0); 
+      transition: transform quad-out @ANIMATION-DURATION;
+    }
     
     aside:expanded {
       background-color: #fff; 
       transform: translate(0%,0) translate(0dip,0);
-      transition: transform(quad-out, @ANIMATION-DURATION) background-color(linear, @ANIMATION-DURATION);
     }
     
     aside:expanded > ol { 
-      transform: translate(0dip,0); 
-      transition: transform(quad-out, @ANIMATION-DURATION);
+      transform: translate(0dip,0);       
     }
     
     main {
@@ -48,10 +50,10 @@
       margin-left:29dip;
       padding:1em;
       foreground-color: rgba(255,215,0,0.0);
+      transition: foreground-color linear @ANIMATION-DURATION;
     }
     aside:expanded + main {
       foreground-color: rgba(255,215,0,0.8);
-      transition: foreground-color(linear, @ANIMATION-DURATION);
     }
     
     </style>

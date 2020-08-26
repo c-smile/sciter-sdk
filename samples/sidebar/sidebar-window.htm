@@ -1,4 +1,4 @@
-<html custom-frame="layered" state="hidden">
+<html window-frame="transparent" state="hidden" window-resizable="false">
 <head>
   <title>Glassy window</title>
   <style>
@@ -17,11 +17,11 @@
       padding:8dip; margin:0;
       border-left:1dip solid rgba(150,150,150,0.25); 
       transform: translate(100%,0);
+      transition: transform quad-out 200ms;
     }
     
     html[state="shown"] > body {
       transform: translate(0%,0);
-      transition: transform(quad-out,200ms);
     }
     
     section {
@@ -49,14 +49,14 @@
     }
   
     self.on("click","#hide", function() {
-      view.isBlurBehind = false;
+      view.windowBlurbehind = #none;
       self.attributes["state"] = "hidden";
     });
     
     self.on("animationend", function() {
       var state = self.attributes["state"];
       if(state == "shown")
-        view.isBlurBehind = true;
+        view.windowBlurbehind = #dark;
       else if(state == "hidden")
         view.state = View.WINDOW_HIDDEN;
     });

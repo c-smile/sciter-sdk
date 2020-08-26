@@ -6,7 +6,7 @@
   body 
   { 
     margin:0;
-    padding:10px;
+    padding:10dip;
     background-color:#c7c5c6; 
   }
   
@@ -16,28 +16,33 @@
   
   img 
   { 
-    width:16px; 
-    height:16px; 
+    width:16dip; 
+    height:16dip; 
     foreground-image:url(images/led-green.png);
+    transition: blend-atop linear 400ms;
   }
 
   img:hover
   { 
     foreground-image:url(images/led-red.png);
-    transition: blend-atop( timing-function: linear, duration-in:1ms, duration-out:400ms );
+    transition: blend-atop linear 20ms;
   }
   
   /* styles for our popup element */
+
+  #test > caption {
+    line-height:2em;
+  }
   
   #test > popup
   { 
-    width: 164px;
-    padding:4px;
+    width: 164dip;
+    padding:4dip;
 	  background: radial-gradient(0% 0%, ellipse farthest-corner, white, #c7c5c6 );
-    border-left: 1px solid gray;
-	  border-top: 1px solid gray;
-	  border-right: 1px solid black;
-	  border-bottom: 1px solid black;
+    border-left: 1dip solid gray;
+	  border-top: 1dip solid gray;
+	  border-right: 1dip solid black;
+	  border-bottom: 1dip solid black;
     flow:horizontal-wrap;
     horizontal-align:center;
   }
@@ -46,12 +51,13 @@
   { 
     display:block;  
     foreground-image:url(images/led-yellow.png);
+    transition: blend-atop linear 400ms;
   }
   
   #test > popup > img:hover
   { 
     foreground-image:url(images/led-blue.png);
-    transition: blend-atop( timing-function: linear, duration-in:20ms, duration-out:400ms );
+    transition: blend-atop linear 20ms;
   }
   
 	</style>

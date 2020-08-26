@@ -25,16 +25,17 @@ notifications > div {
   background-color:gold;
   overflow:hidden;
   border-bottom:1px solid #888;
+  transition: height linear 1s, opacity linear 0.5s;
+}
+
+notifications > div:expanded {
+  height:min-content;
+  opacity:1.0;    
 }
 
 notifications > div > div {
   padding:0.5em 1em;
 }
 
-notifications > div:expanded {
-  height:min-content;
-  opacity:1.0;    
-  transition: height(linear,1s) opacity(linear,0.5s);
-}
 
 

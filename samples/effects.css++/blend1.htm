@@ -10,17 +10,15 @@
         color:yellow;
         size:300dip 40dip;
         margin:10dip;
+        transition: blend linear 200ms ;
       }
       div.area:hover 
       {
         background:orange;
         color:red;
-        
       }
-      div.area.case1:hover  { transition: blend linear 400ms ; }
+      div.area.case1:hover  { transition: blend linear 400ms; }      
       div.area.case2:hover  { transition: blend cubic-in-out 400ms; }
-
-      div.area.case3  { transition: blend quad-out 400ms; }
       div.area.case3:hover  { transition: blend quad-in 400ms; }
       
       div.area.area:active 
@@ -36,7 +34,7 @@
   <div .area.case1>transition:blend linear 400ms</div>
   <div .area.case2>transition:blend cubic-in-out 400ms</div>
   <div .area.case3>hover: transition:blend quad-in 400ms<br>
-                   leave: transition:blend quad-out 400ms</div>
+                   leave: blend linear 200ms</div>
 
 </body>
 </html>

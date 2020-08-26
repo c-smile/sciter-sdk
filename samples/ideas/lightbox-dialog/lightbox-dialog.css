@@ -31,11 +31,11 @@ div.dialog-frame
   padding:10px;
 
   opacity:0.01;
+  transition: opacity @DIALOG-SHOW-EASING @DIALOG-SHOW-DURATION;  
 }
 
 div.dialog-frame.shown {
   opacity:1.0;
-  transition: opacity(@DIALOG-SHOW-EASING,@DIALOG-SHOW-DURATION);
 }
 
 /* dialog "window" caption */

@@ -6,12 +6,13 @@
       table { 
         border:1px solid red;  
         width:25%;
-        height:0.5*;
+        height:*;
         background:white;
         border-spacing: 0;
       }
       table > tbody
       {
+        size:*;
         overflow:scroll;
       }
       th { border:1px solid blue; padding:2px; width:*;}
@@ -26,7 +27,7 @@
     </style>
     <script type="text/tiscript">
     
-      $(#append-100).onClick = function()
+      event click $(#append-100)
       {
         var tb = $(table>tbody);
         var n = tb.length;
@@ -40,7 +41,7 @@
         }
       }
 
-      $(#append-1000).onClick = function()
+      event click $(#append-1000)
       {
         var tb = $(table>tbody);
         var n = tb.length;
@@ -61,7 +62,7 @@
       }
 
       // slow
-      $(#append-5000).onClick = function()
+      event click $(#append-5000)
       {
         var tb = $(table>tbody);
         tb.clear();
@@ -82,9 +83,35 @@
         $(#out).$content(5000 rows added in {et - st} ms);
         
       }
+
+      // faster
+
+      event click $(#append-5000-transactional)
+      {
+        var tb = $(table>tbody);
+        var st = (new Date()).valueOf();
+
+        tb.update(function(){
+          var n = tb.length;
+          for(var i in 5000)
+          {
+            var tr = new Element(#tr);
+            tr.append(new Element(#td, "" + n++));
+            tr.append(new Element(#td, "2"));
+            tr.append(new Element(#td, "3"));
+            tb.append(tr);
+          }
+        });
+
+        var et = (new Date()).valueOf();
+        
+        $(#out).$content(5000 rows added in {et - st} ms);
+
+      }
+
       
       // fast
-      $(#append-5000-html).onClick = function()
+      event click $(#append-5000-html)
       {
         var tb = $(table>tbody);
         
@@ -105,7 +132,7 @@
       
       // fast
       
-      $(#append-5000-vec).onClick = function()
+      event click $(#append-5000-vec)
       {
         var tb = $(table>tbody);
         
@@ -115,12 +142,7 @@
   
         for(var i in 5000)
         {
-          //var tr = new Element(#tr);
-          //tr.append(new Element(#td, i.toString()));
-          //tr.append(new Element(#td, "2"));
-          //tr.append(new Element(#td, "3"));
-          //arr[i] = tr;
-          arr[i] = [tr: [td:i.toString()], [td:"2"], [td:"3"]];
+          arr[i] = <tr><td>{i}</td><td>2</td><td>3</td></tr>;
         }
         
         tb.content(arr);
@@ -132,7 +154,7 @@
       }  
 
       // async    
-      $(#append-5000-async).onClick = function()
+      event click $(#append-5000-async)
       {
         var tb = $(table>tbody);
         tb.clear();
@@ -146,11 +168,7 @@
         function appendNext1000() {
            var arr = [];  
            for(var n in 1000) {
-             //var tr = new Element(#tr);
-             //tr.append(new Element(#td, i.toString()));
-             //tr.append(new Element(#td, "2"));
-             //tr.append(new Element(#td, "3"));
-             var tr = [tr: [td:i.toString()], [td:"2"], [td:"3"]];
+             var tr = <tr><td>{i}</td><td>2</td><td>3</td></tr>;
              arr.push(tr);
              if(++i >= 5000) {
                tb.append(arr);
@@ -169,8 +187,6 @@
         $(#out).$content(first 1000 rows added in {et - st} ms);
         
       }
-
-      
     
     </script>
   </head>
@@ -178,6 +194,7 @@
   <button #append-100>Append 100</button>
   <button #append-1000>Append 1,000</button>
   <button #append-5000>Set 5,000 one by one</button>
+  <button #append-5000-transactional>transactional 5,000 update</button>
   <button #append-5000-html>Set 5,000 by HTML</button>
   <button #append-5000-vec>Set 5,000 from array</button>
   <button #append-5000-async>Set 5,000 by 1000 portions,async</button>

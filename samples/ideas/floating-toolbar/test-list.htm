@@ -3,11 +3,19 @@
     <title></title>
     <style>
     
-      toolbar#floating { opacity:0.1; background:#EEE; border:1px solid; flow:horizontal; }
+      toolbar#floating { 
+        opacity:0.1; 
+        background:#EEE; 
+        border:1px solid; 
+        flow:horizontal; 
+      }
       toolbar#floating > button { size:18dip; }
       toolbar#floating > caption { width:max-content; line-height:18dip;  }
       
-      toolbar#floating:popup { opacity:1; transition: opacity(linear,400ms); }
+      toolbar#floating:popup { 
+        opacity:1; 
+        transition: opacity linear 400ms; 
+      }
       
       ol { width:max-content; }
       ol > li:hover { background:gold; }
@@ -32,15 +40,19 @@
 
 <script type="text/tiscript">
 
-  $(ol).on("mouseidle", "li", function(evt) 
+  event mouseidle $(ol > li) (evt,li) 
   {
+    if( li.state.ownspopup )
+      return false;
     var tb = $(toolbar#floating); 
     tb.state.popup = false;
-    tb.$(caption).text = this.text;
-    var (x,y,w,h) = this.box(#rectw,#border,#view);
-    this.popup( tb, x, y + h);
+
+    tb.$(caption).text = li.text;
+    var (x,y,w,h) = li.box(#rectw,#border,#view);
+    li.popup( tb, x, y + h);
+
     return true;
-  });
+  }
   
 </script>
 </html>

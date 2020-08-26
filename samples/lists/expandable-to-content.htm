@@ -8,7 +8,7 @@
     ul {
       font: system;
       behavior:expandable-list;
-      width:230dip;
+      width:260dip;
       height:*;
       padding:0;
       overflow:hidden;
@@ -23,14 +23,14 @@
       min-height:24dip;
       height:0;
       overflow:hidden;
+      transition: height sine-in-out 400ms;
     }
     
     ul > li > div.details { 
       background:#FEA url(images/inner-shadow.png) expand; 
       background-position:10 5 5 10;
       size:*;
-      padding:10px;
-      //-- overflow:auto; 
+      padding:10dip;
     }
     ul > li > caption
     {
@@ -49,7 +49,7 @@
     
     //-- ul > li > div.details { visibility:collapse; }
     
-    ul > li:expanded { height:max-content; transition: height(sine-in-out,400ms); } //++
+    ul > li:expanded { height:max-content; } //++
     
     //-- ul > li:animating > div.details { visibility:visible; overflow:hidden; }
     //-- ul > li:expanded > div.details { visibility:visible; }

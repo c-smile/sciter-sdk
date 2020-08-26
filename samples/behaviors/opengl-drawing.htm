@@ -27,11 +27,11 @@
         padding:10dip;
         border-left: rgba(240,240,240,0.5) solid 1dip;
         transform: translate(95%, 0);
+        transition: transform quad-out 300ms 200ms; /*300ms transition, 200ms delay to start */
       }
       section#side-panel:hover 
       {
         transform: translate(0%, 0);
-        transition: transform(quad-out, 300ms, 200ms); /*300ms transition, 200ms delay to start */
       }
       
       section#side-panel > p 

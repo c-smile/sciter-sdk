@@ -49,24 +49,6 @@ section#intro code { background:#eee; }
 section#intro pre { background:#eee; padding:4dip; border:1px solid #ccc; max-width:max-content; }
 section#intro pre .comment{ color:green; }
 
-/*
-body > header { 
-      display:block; width:*; 
-      flow:horizontal; 
-      border-spacing: 4dip;
-      border-bottom:1dip solid #ccc;
-    }
-
-body > header > window-caption { display:block; flow:text; width:*; font:system; }
-body > header > window-button  { display:block; width:17dip; text-align:center; font-family: Marlett; font-size:17dip; behavior:clickable; }
-body > header > window-button#window-close { background-color:#dbb7ab; color:white; }
-body > header > window-button#window-close:hover { background-color:red; outline:4dip glow red -1px; transition: outline(linear,200ms) background-color(linear,200ms); }
-body > header > window-button#window-minimize { background-color:#ccc; color:white; width:15dip; padding-left:2dip; }
-body > header > window-button#window-minimize:hover { background-color:#4d4d4d; outline:4dip glow #ccc -1px; transition: outline(linear,200ms) background-color(linear,200ms); }
-body > header > window-button#window-maximize { background-color:#ccc; color:white; width:16dip; padding-left:1dip; }
-body > header > window-button#window-maximize:hover { background-color:#4d4d4d; outline:4dip glow #ccc -1px; transition: outline(linear,200ms) background-color(linear,200ms); }
-*/
-
 body > main > * { visibility:none; }
 body > main[state=intro] > #intro { visibility:visible; }
 body > main[state=views] > frameset { visibility:visible; }

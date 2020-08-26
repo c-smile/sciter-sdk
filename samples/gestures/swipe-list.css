@@ -33,19 +33,18 @@
     left:0; right:0;  
     transform: translate(0,0);
     background: linear-gradient(top,rgba(12,12,12,0.7), rgba(64,64,96,0.6) 90%, rgb(168,168,200));
-    transition: transform(quad-out,0.4s,none)
-                background(quad-in,0.4s,none);
+    transition: transform quad-out 0.4s, background quad-in 0.4s;
   }
     
   :root > li.deletion 
   {
     transform: translate(-100%,0); 
-    transition: transform(linear,0.4s);
+    transition: transform linear 0.4s;
   }
   :root > li.shifting 
   {
     transform: translate(0,-100%); 
-    transition: transform(quad-out,0.4s,0.3s,none);
+    transition: transform quad-out 0.4s;
   }
   
 }

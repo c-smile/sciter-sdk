@@ -19,31 +19,34 @@
    body.shown 
    {
      transform:scale(1);
-     transition: transform(back-out,600ms); 
+     transition: transform back-out 600ms; 
    }
    
    body.hidden 
    {
      transform:scale(0);
-     transition: transform(linear,600ms); 
+     transition: transform linear 600ms; 
    }
   
-   body > p { text-align:center; color:black; }
+   body > p { text-align:center; color:black; transition: color linear 1s; }
    
-   body > p:hover { text-align:center; color:white; transition: color(linear,3s); }
+   body > p:hover { text-align:center; color:white; }
    
    body > button { display:block; margin:8dip *; font-rendering-mode:sub-pixel; /*for better font scaling*/ }
    body > select { display:block; margin:8dip *; font-rendering-mode:sub-pixel; /*for better font scaling*/ }
    body > select > popup { font-rendering-mode:snap-pixel; }
    
-   button#minimize { background-image: none; background-color:orange; border-radius:4dip; outline: blue glow 0; }
-   button#minimize:hover{ outline: blue glow 4dip; transition: outline(linear,300ms); }
+   button#minimize { background-image: none; background-color:orange; border-radius:4dip; outline: blue glow 0;
+      transition: outline linear 300ms; }
+   button#minimize:hover{ outline: blue glow 4dip; }
    
-   button#hide { background-image: none; background-color:goldenrod; border-radius:4dip; outline: blue glow 0; }
-   button#hide:hover{ outline: blue glow 4dip; transition: outline(linear,300ms); }
+   button#hide { background-image: none; background-color:goldenrod; border-radius:4dip; outline: blue glow 0;
+      transition: outline linear 300ms; }
+   button#hide:hover{ outline: blue glow 4dip;  }
    
-   button#close { background-image: none; background-color:red; border-radius:4dip; outline: blue glow 0; }
-   button#close:hover { outline: blue glow 4dip; transition: outline(linear,300ms); } 
+   button#close { background-image: none; background-color:red; border-radius:4dip; outline: blue glow 0;
+      transition: outline linear 300ms; }
+   button#close:hover { outline: blue glow 4dip; } 
 
    img { size:16dip; foreground-size:cover; }
 

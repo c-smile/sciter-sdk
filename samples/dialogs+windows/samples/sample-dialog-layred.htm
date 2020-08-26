@@ -21,8 +21,11 @@
     
     window-button  { display:inline-block; width:max-content; font-family: Marlett; font-size:14px; outline-color:red; behavior:clickable; }
     window-caption { display:block; flow:text; width:*; font:system; padding: 4px 8px; }
-    window-button#window-close { background-color:#dbb7ab; color:white; }
-    window-button#window-close:hover { background-color:red; outline:5px glow red -1px; transition: outline(linear,200ms) background-color(linear,200ms); }
+    window-button#window-close { 
+      background-color:#dbb7ab; color:white; 
+      transition: outline linear 200ms, background-color linear 200ms;
+    }
+    window-button#window-close:hover { background-color:red; outline:5px glow red -1px; }
         
     body { 
       padding:0; 

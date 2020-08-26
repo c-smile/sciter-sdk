@@ -80,7 +80,7 @@ int uimain(std::function<int()> run ) {
 
   sciter::archive::instance().open(aux::elements_of(resources)); // bind resources[] (defined in "resources.cpp") with the archive
 
-  frame *pwin = new frame();
+  sciter::om::hasset<frame> pwin = new frame();
 
   // note: this:://app URL is dedicated to the sciter::archive content associated with the application
   pwin->load( WSTR("this://app/main.htm") );
@@ -88,5 +88,5 @@ int uimain(std::function<int()> run ) {
   pwin->expand();
 
   return run();
-
+    
 }

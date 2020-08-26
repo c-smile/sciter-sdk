@@ -23,6 +23,7 @@
       min-height:24dip;
       height:1*;
       overflow:hidden;
+      transition: height sine-in-out 400ms;
     }
     
     ul > li > div.details { 
@@ -49,7 +50,7 @@
     
     ul > li > div.details { visibility:collapse; }
     
-    ul > li:expanded { height:100*; transition: height(sine-in-out,400ms); }
+    ul > li:expanded { height:100*; }
     ul > li:animating > div.details { visibility:visible; overflow:hidden; }
     ul > li:expanded > div.details { visibility:visible; }
   

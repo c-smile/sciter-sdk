@@ -4,12 +4,14 @@
 		<STYLE>
       html { background-color:threedlight; }
       
-      progress { vertical-align:middle; }
+      progress { 
+        vertical-align:middle; 
+        transition: transform quart-out 0.5s;
+      }
       
       progress:hover /* just for fun */
       {
         transform:rotate(15deg) scale(.5);
-        transition: transform(quart-out,0.5s,quart-in);
       }
       
       progress#dyn1 { height:18dip; width:200dip; }

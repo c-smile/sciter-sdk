@@ -50,11 +50,13 @@
         behavior:none;
         background: rgba(255,255,255,0.45);
       }
+
+      widget.tabs > div.selectors > picture:not([current]) {
+        transition: transform 0.3s quart-in;
+      }
       widget.tabs > div.selectors > picture:hover:not([current]) { 
         transform: scale(1.3); 
-        transition: transform(xx-back-out,0.3s,quart-in);
-        //size:96px;
-        //transition: size(quart-out,0.3s,quart-in);
+        transition: transform xx-back-out 0.3s;
       }
       
     </style>

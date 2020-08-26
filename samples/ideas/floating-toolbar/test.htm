@@ -6,7 +6,7 @@
       toolbar#floating { opacity:0.1; background:#EEE; border:1px solid; flow:horizontal; }
       toolbar#floating > button { size:18dip; }
       
-      toolbar#floating:popup { opacity:1; transition: opacity(linear,800ms); }
+      toolbar#floating:popup { opacity:1; transition: opacity linear 800ms; }
     
     </style>
    
@@ -18,19 +18,23 @@
 <body>
 
   <htmlarea>
-    with <i>floating</i> toolbar 
+    <p>with <i>floating</i> toolbar</p> 
   </htmlarea>
   
 </body>
 
 <script type="text/tiscript">
 
-  $(htmlarea).on("mouseidle",function(evt) 
+  event mouseidle $(htmlarea) (evt,htmlarea)
   {
+    if(!evt.target.belongsTo(htmlarea)) {
+      debug: evt.target;
+      return true; // mouseidle on toolbar itself
+    }
     var tb = $(toolbar#floating); 
     this.popup( tb, evt.xView, evt.yView + 24);
     return true;
-  });
+  }
   
 </script>
 </html>

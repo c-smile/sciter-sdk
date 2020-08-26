@@ -18,10 +18,10 @@ video[controls] {
     color:white;
     padding:4dip;
     border-spacing:4dip;
+    transition: transform quart-in-out 400ms;
   }
   :root > div.bar.hidden {
     transform:translate(0,100%);
-    transition: transform(quart-in-out,400ms);
   }
   
   :root > div.bar > * { display:block; margin:* 0; }
