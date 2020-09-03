@@ -1,0 +1,127 @@
+
+
+include "sciter:reactor.tis";
+
+class FolderView : Reactor.Component 
+{
+  const styleset = [folder-view: $url(folder-view.css)];
+
+  this var path;
+  this var currentNode; // like "foo.txt" or ".."
+
+  function this(props) {
+    this.path = props?.path || (System.path(#USER_DOCUMENTS) + "/");
+  }
+
+  event dblclick $(option) { 
+    this.activateCurrent(); 
+  }
+  event change 
+  { 
+    if(var option = this.$(option:current))
+      this.currentNode = option.text;
+    else 
+      this.currentNode = null;
+  }
+
+  event keyup (evt) {
+    switch(evt.keyCode) {
+      case Event.VK_ESCAPE: 
+        this.navigateTo(this.parentPath); 
+        return true;
+      case Event.VK_RETURN: 
+        this.activateCurrent();
+        return true;
+    }
+  }
+
+  function activateCurrent() {
+    var (type,name,path) = this.current;
+    if( type == #dir ) 
+    {
+      if(name == "..")
+        this.navigateTo(path, this.path /~ "/" %~ "/");
+      else
+        this.navigateTo(path, "..");
+    }
+    return true;
+  }
+
+  // sort predicate
+  function foldersFirst(a,b) {
+    if( a.type == #dir && b.type != #dir) return -1;
+    if( a.type != #dir && b.type == #dir) return +1;
+    if( a.name == b.name ) return 0;
+    return a.name.lexicalCompare(b.name);
+  }
+
+  function render() 
+  {
+    var path = this.path;
+    do 
+    {
+      if(this.watcher) 
+      {
+        if(this.watcher.path == path) break;
+        this.watcher.close();
+      }
+      this.watcher = System.watch(path)
+                   << event change (path) { (this super).update {} } 
+                   << event rename (path) { (this super).update {} };
+    } while(false);
+
+    var currentIndex = 0;
+    
+    if(var option = this.$(option:current))
+      currentIndex = option.index;
+
+    var list = [];
+
+    function entry(fileName, type, stat) 
+    {
+      if(fileName like ".*" || fileName like "~*")
+        return;
+      stat.name = fileName;
+      stat.type = type;
+      list.push(stat); 
+      return true;
+    }
+    System.dir(this.path, entry);
+
+    var current = this.currentNode == "..";
+
+    var first = ( this.path && this.path != "/" ) ? <option.parent type="dir" filename={this.parentPath} value=".." :current={current}>..</option> : [];
+
+    list.sort(foldersFirst);
+
+    for( var (i, entry) in list) {
+      current = this.currentNode == entry.name;  
+      list[i] = <option type={entry.type} filename={path + entry.name} :current={current}>{entry.name}</option>;
+    }
+
+    return <select|list>{first}{list}</select>;
+  }
+
+  function fullPath(localName) { return this._path + localName; } 
+
+  get current { 
+    if(var option = this.$(option:current))
+      return (symbol(option.attributes["type"]),
+              option.text,
+              option.attributes["filename"]);
+    return null;
+  }
+
+  get parentPath { 
+    return ((this.path /~ "/") /~ "/") + "/";
+  }
+
+  function navigateTo(path, currentNode = "..") 
+  {
+    if(path like "file://*") path = crackUrl(path).filename;
+    if(path !like "*/" ) path += "/";
+    this.update { path:path, currentNode:currentNode };
+  }
+
+
+}

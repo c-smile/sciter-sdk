@@ -122,16 +122,26 @@ namespace sciter
     return reinterpret_cast<frame*>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
   }
 
-
   sciter::value frame::debug(unsigned argc, const sciter::value* argv)
   {
-    for(unsigned n = 0; n < argc; ++n)
+    for (unsigned n = 0; n < argc; ++n)
     {
-      if(n) OutputDebugStringW(L",");
+      if (n) OutputDebugStringW(L",");
       auto s = argv[n].to_string(CVT_JSON_LITERAL);
       OutputDebugStringW(s.c_str());
     }
     OutputDebugStringW(L"\n");
+    return sciter::value();
+  }
+
+  // test of passing HELEMENT through VALUE wrapper 
+  sciter::value  frame::getElementId(sciter::value arg)
+  {
+    dom::element el = dom::element::from_value(arg);
+    if (el) {
+      auto id = el.get_attribute("id");
+      return sciter::value(id);
+    }
     return sciter::value();
   }
 

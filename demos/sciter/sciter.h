@@ -51,6 +51,7 @@ namespace sciter
     void           enable_debugger(bool onoff) { SciterSetOption(get_hwnd(),SCITER_SET_DEBUG_MODE,onoff?TRUE:FALSE); }
 
     sciter::value  debug(unsigned argc, const sciter::value* arg);
+    sciter::value  getElementId(sciter::value arg);
 
     virtual LRESULT on_load_data(LPSCN_LOAD_DATA pnmld)
     {
@@ -83,7 +84,10 @@ namespace sciter
 
     BEGIN_FUNCTION_MAP
       FUNCTION_V("debug", debug);
+      FUNCTION_1("getElementId", getElementId);
     END_FUNCTION_MAP
+
+
 
   };
 

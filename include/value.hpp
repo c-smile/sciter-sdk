@@ -529,7 +529,7 @@
         return r;
       }
       
-      // T_OBJECT and T_DOM_OBJECT only, get value of object's data slot
+      // T_OBJECT only, get value of object's data slot
       void* get_object_data() const
       {
         LPCBYTE pv = 0; unsigned int dummy;
