@@ -65,7 +65,7 @@ function recordView(record,index) { // function generating single row
   const isCurrent = this.currentRecord === record;
   if(record.group)
     return
-      <tr.group key={record.key} :current={isCurrent} :expanded={!!record.expanded}>
+      <tr.group key={record.key} :current={isCurrent} :expanded={record.expanded}>
         <th colspan="3">{record.group}</th>
       </tr>;
   else 
