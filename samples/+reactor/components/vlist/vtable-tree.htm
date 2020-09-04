@@ -111,7 +111,7 @@ function recordView(record,index) { // function generating single row
     <tr key={record.key} 
           class={record.items ? "node" : "leaf"} 
           :current={isCurrent} 
-          :expanded={record.expanded} >
+          :expanded={!!record.expanded} >
       <td><caption level={record.level}>cell {record.name}</caption></td>
       <td>cell {record.field1}</td>
       <td>cell {record.field2}</td>
