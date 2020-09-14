@@ -25,7 +25,7 @@ SAMPLE:
   {
     HELEMENT self = 0;
     // ctor
-    tabs() : event_handler() {}
+    tabs() : event_handler() {   }
 
     virtual bool subscription(HELEMENT he, UINT& event_groups)
     {

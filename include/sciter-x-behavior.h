@@ -659,12 +659,13 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
     struct event_handler
 #endif
     {
-      event_handler() // EVENT_GROUPS flags
+      event_handler() 
       {
+        asset_add_ref(); 
       }
       
-      virtual void detached  (HELEMENT /*he*/ ) { }
-      virtual void attached  (HELEMENT /*he*/ ) { }
+      virtual void detached  (HELEMENT /*he*/ ) { asset_release(); }
+      virtual void attached(HELEMENT /*he*/) { }
 
       // defines list of event groups this event_handler is subscribed to
       virtual bool subscription( HELEMENT he, UINT& event_groups )
@@ -673,11 +674,11 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
          return true;
       }
 
-      // lifecycle of the event handler is determined by owner element, so:
-      virtual long asset_add_ref() { return 0; }
-      virtual long asset_release() { return 0; }
+      // redefine by these if lifecycle is different from normal
+      //virtual long asset_add_ref() override { return 0; }
+      //virtual long asset_release() override { return 0; }
 
-      virtual som_passport_t* asset_get_passport() const { return nullptr; }
+      virtual som_passport_t* asset_get_passport() const override { return nullptr; }
 
       // handlers with extended interface
       // by default they are calling old set of handlers (for compatibility with legacy code)

@@ -36,7 +36,8 @@ struct native_clock: public event_handler
     }
     virtual void detached  (HELEMENT he ) { 
       dom::element(he).stop_timer(this);
-      asset_release();     }
+      asset_release(); 
+    }
 
 
     virtual bool handle_timer  (HELEMENT he,TIMER_PARAMS& params )

@@ -1,24 +1,48 @@
-<html>
+﻿<html>
   <head>
     <meta name="generator" content="h-smile:richtext"/>
   </head>
 <body>
-  <h1>Behavior methods</h1>
-  <h2>scrollbar</h2>
-  <dl>
-    <dt>element.<strong>setValues(position</strong>:int, <strong>minValue</strong>:int, <strong>maxValue</strong>:int, <strong>page</strong>:int, <strong>step</strong>:int):void</dt>
-    <dd>set values of scrollbar element - position, minValue, maxValue, page - reflects to size of the slider, step - increment value of arrow buttons.</dd>
-    <dt>element.<strong>position</strong>():int</dt>
-    <dd>returns current position.</dd>
-    <dt>element.<strong>minValue</strong>():int </dt>
-    <dd>returns current minValue.</dd>
-    <dt>element.<strong>maxValue</strong>():int</dt>
-    <dd>returns current maxValue.</dd>
-    <dt>element.<strong>page</strong>():int</dt>
-    <dd>returns current page value.</dd>
-    <dt>element.<strong>step</strong>():int</dt>
-    <dd>returns current minValue.</dd></dl>
+  
+	<h1>behavior: scrollbar</h1>
+  <p>Implements standalone scrollbar input element.&nbsp;</p>
+  <h2>Elements</h2>
+  <p>that have this behavior applied by default:</p>
   <ul>
-    <div></div></ul>
+    <li><code>&lt;widget|vscrollbar /&gt;</code> and <code>&lt;widget|hscrollbar /&gt; </code> - vertical and horizontal scrollbars</li>
+		</ul>
+	<h2>Attributes</h2>
+  <p>that this behavior knows about:</p>
+  <ul>
+    <li><code>for=&quot;selector&quot;</code> - declares that this scrollbar is bound to other scrollable element as its (external) scrollbar.</li></ul>
+  <h2>Methods</h2>
+  <dl>
+    <dt><strong>scrollbar.values</strong></dt>
+    <dd><strong>(position</strong>:int, <strong>min</strong>:int, <strong>max</strong>:int, <strong>page</strong>:int, <strong>step</strong>:int)<p>Sets values of scrollbar element - position, min, max, page - reflects to size of scrollbar slider, step - increment value of on arrow buttons clicks.</p></dd>
+		</dl>
+	<h2>Properties</h2><dl>
+    <dt>scrollbar.<strong>position</strong></dt>
+    <dd>read/write, integer - current slider position.</dd>
+    <dt>scrollbar.<strong>min</strong> </dt>
+    <dd>read-only, integer - min value.</dd>
+    <dt>scrollbar.<strong>max</strong></dt>
+    <dd>read-only, integer - max value.</dd>
+    <dt>scrollbar.<strong>page</strong></dt>
+    <dd>read-only, integer - page value, reflects also size of scrollbar's slider.</dd>
+    <dt>scrollbar.<strong>step</strong></dt>
+    <dd>read-only, integer - page value, defines position increment/decrement of clicks on arrow buttons.</dd>
+		</dl>
+	<h2>Value</h2>
+  <p>integer, reflects position of slider, integer in range [min ... max].</p>
+	<h2>Events</h2>
+  <p>Along with the standard set of events (mouse, keyboard, focus) <em>behavior: scrollbar</em> generates:</p>
+  <ul>
+    <li>SCROLL_STEP_PLUS - down-arrow clicked;</li>
+    <li>SCROLL_STEP_MINUS - up-arrow clicked;&nbsp;</li>
+		<li>SCROLL_PAGE_PLUS - down-page area clicked;</li>
+		<li>SCROLL_PAGE_MINUS - up-page area clicked;</li>
+		<li>SCROLL_POS - slider dragging event;</li>
+		</ul>
+	<p>Events are delivered to the element and are bubbling up to its parents. Use <code>element.onScroll = function(evt) {}</code> handler in script to handle scroll events.</p>
 </body>
 </html>

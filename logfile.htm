@@ -10,7 +10,23 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#fdf6ff">4.4.4.6</td><td nowrap valign="top" align="center">2020-09-04</td><td>
+    <tr><td valign="top" bgcolor="#fdf6ff">4.4.4.7</td><td nowrap valign="top" align="center">2020-09-14</td><td>
+					
+					<p>New:</p>
+					<ul><li><code>behavior:scrollbar</code> - support of bound (a.k.a.) external scrollbars. See: sdk/samples/scrollbars-n-scrolling/scrollbar-bound.htm sample.  </li></ul><p>Fixes:
+					</p><ul>
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						<li>[doc] <code>behavior:scrollbar</code> documented;&nbsp;</li><li><code>sciter::dom::element::call_method(&quot;frame.load&quot;, url);</code> - support of behavior/asset methods using assetname.methodname notation.&nbsp;</li><li>[css] <code>cursor: ew-resize | ns-resize</code> cursor types;</li><li>[windows, scrolling] &quot;overscroll&quot; feature is disabled until I'll find answer on this question: <a href="https://stackoverflow.com/questions/63851594/how-to-distinguish-wm-mouse-messages-generated-by-touch-pad-from-generated-by">https://stackoverflow.com/questions/63851594/how-to-distinguish-wm-mouse-messages-generated-by-touch-pad-from-generated-by</a> and <a href="https://sciter.com/forums/topic/scrolling-issues-with-touchpad-touch-screen/#post-67304">https://sciter.com/forums/topic/scrolling-issues-with-touchpad-touch-screen/#post-67304</a>&nbsp;</li><li>[css] <code>backdrop-filter</code> rendering fix for multiple elements with the backdrop in the same container;</li><li>[windows] fix of <code>Event.keyPressed(Event.VK_CAPITAL)</code> to return toggled state too, same thing for scroll lock;</li><li>[DOM] <code>view.request { trySync:true }</code> flag, used to get resources from local files and archives. For local data view.request will call callbacks inside the function call - not asynchronously;</li><li>[notepad] &quot;Paste Text Only&quot; functionality - useful to paste only non-formatted version of clipboard content;</li><li>[macos] shortcuts: Command-Up/Down, etc. in editors;&nbsp;</li><li>[script] auto <code>gc()</code> on window close to free resources used by the window;</li><li>[html, rendering] ZWJ (zero width join) character handling;</li><li>[windows, a11y] minor fixes;</li><li>[svg] fix of gradients handling;</li></ul></td></tr><tr><td valign="top" bgcolor="#fdf6ff">4.4.4.6</td><td nowrap valign="top" align="center">2020-09-04</td><td>
 					
 					<p>Note: version number have not changed.</p><p>Fixes:
 					</p><ul><li>[reactor] setting <code>element.state</code> flag fix;</li>

@@ -47,16 +47,22 @@ var someBtn = childDoc.$(&quot;button#some&quot;);
     <li>DOCUMENT_COMPLETE event - document has finished loading - DOM is ready and all penfing resource requests have finished. Note: this attribute is Sciter specific.</li></ul>
   <h2>Methods</h2>
   <dl>
-    <dt>load</dt>
-    <dd>(url:string) - initiates loading of the document from the URL;</dd>
-    <dt>load</dt>
-    <dd>(html:string, baseUrl: string) - loads content from the <em>html</em> string. baseUrl is used for resolving relative URLs inside the document.</dd>
-    <dt>clear</dt>
+    <dt>frame.load</dt>
+    <dd>(url:string) : bool - initiates loading of the document from the URL;</dd>
+    <dt>frame.load</dt>
+    <dd>(html:string | bytes, baseUrl: string) : bool - loads content from the <em>html</em> string. baseUrl is used for resolving relative URLs inside the document.</dd>
+    <dt>frame.loadEmpty</dt>
     <dd>() - clears the content of the frame by loading empty document in it.</dd>
-    <dt>mediaVars</dt>
-    <dd>() : object - returns key/value map of media variables used by the document.</dd>
-    <dt>mediaVars</dt>
-    <dd>( map: object [,reset: true | false] ) - sets media variables to the loaded document and if <em>reset</em> is true applies them.</dd></dl>
+		<dt>frame.save</dt>
+		<dd>() : bytes - saves document as byte array in UTF-8 encoding;</dd>
+		<dt>frame.save</dt>
+		<dd>(fileUrl:string) : bool - saves document in file in UTF-8 encoding;</dd>
+		</dl>
+	<h2>Properties</h2><dl>
+    <dt>frame.mediaVars</dt>
+    <dd>read/write, object (name/value map) - key/value map of media variables used by the document.</dd>
+    <dt>frame.url</dt>
+    <dd>read/write, string - URL of document loaded into the frame.</dd></dl>
   <h2>Value</h2>
   <p>N/A</p>
   <h2>Frame events handling in script</h2>
@@ -70,7 +76,8 @@ btn.onControlEvent = function(evt)
 }
 </pre>
   <h3>event &nbsp;handler</h3>
-  <pre>event complete $(frame#some) { ... event handling code ... }
+  <pre>event newdocument $(frame#some) { ... event handling code ... }
+event complete $(frame#some) { ... event handling code ... }
 </pre>
 </body>
 </html>

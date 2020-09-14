@@ -255,7 +255,7 @@ namespace dom
 
   /**Get attribute value by name.
     * \param name \b const \b char*, name of the attribute
-    * \return \b const \b WCHAR*, value of the n-th attribute
+    * \return \b sciter::string, value of the n-th attribute
     **/
     sciter::string get_attribute( const char* name, const WCHAR* def_value = 0 ) const
     {
@@ -976,7 +976,7 @@ namespace dom
       SciterDetachEventHandler(he, &event_handler::element_proc, p_event_handler);
     }
 
-    // call scripting method attached to the element (directly or through of scripting behavior)
+    // call scripting method attached to the element (directly or through scripting behavior)
     // Example, script:
     //   var elem = ...
     //   elem.foo = function() {...}

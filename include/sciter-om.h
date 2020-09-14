@@ -26,16 +26,28 @@ inline som_asset_class_t* som_asset_get_class(const som_asset_t* pass)
   return pass ? pass->isa : nullptr;
 }
 
+som_atom_t SCAPI SciterAtomValue(const char* name);
+
 #ifdef CPP11
 
 #include <atomic>
 
 namespace sciter {
 
+  class atom {
+    som_atom_t _atom;
+  public:
+    atom(const char* name) { _atom = SciterAtomValue(name); }
+    atom(const atom& other) { _atom = other._atom; }
+    operator som_atom_t() const { return _atom; }
+  };
+
   namespace om {
 
     template <class R> class hasset;
 
+    // implementation of som_asset_t ISA
+    // note: does not define asset_add_ref()/asset_release() as they shall be defined in specializations 
     template <class A>
     class iasset : public som_asset_t
     {
@@ -106,7 +118,7 @@ namespace sciter {
     }
     
     //hasset - yet another shared_ptr
-    //         R here is something derived from the iasset (om::iasset) above
+    //         R here is an entity derived from som_asset_t
     template <class R> class hasset
     {
     protected:
@@ -116,10 +128,10 @@ namespace sciter {
       typedef R asset_t;
 
       hasset() :p(nullptr) {}
-      hasset(R* lp) :p(nullptr) { if (lp) (p = lp)->asset_add_ref(); }
-      hasset(const hasset<R>& cp) :p(nullptr) { if (cp.p) (p = cp.p)->asset_add_ref(); }
+      hasset(R* lp) :p(nullptr) { if (lp) asset_add_ref(p = lp); }
+      hasset(const hasset<R>& cp) :p(nullptr) { if (cp.p) asset_add_ref(p = cp.p); }
 
-      ~hasset() { if (p)	p->asset_release(); }
+      ~hasset() { if (p)	asset_release(p); }
       operator R*() const { return p; }
       R* operator->() const { assert(p != 0); return p; }
 
@@ -129,7 +141,7 @@ namespace sciter {
       bool operator==(R* pR) const { return p == pR; }
 
       // release the interface and set it to NULL
-      void release() { if (p) { R* pt = p; p = 0; pt->asset_release(); } }
+      void release() { if (p) { R* pt = p; p = 0; asset_release(pt); } }
 
       // attach to an existing interface (does not AddRef)
       void attach(R* p2) { asset_release(p); p = p2; }
@@ -138,8 +150,8 @@ namespace sciter {
 
       static R* assign(R* &pp, R* lp)
       {
-        if (lp != 0) lp->asset_add_ref();
-        if (pp) pp->asset_release();
+        if (lp != 0) asset_add_ref(lp);
+        if (pp) asset_release(pp);
         pp = lp;
         return lp;
       }
@@ -150,11 +162,9 @@ namespace sciter {
       void** target() { release(); return (void**)&p; }
 
     };
-
-
-    // intrusive add_ref/release counter
-
-   template<class C> 
+    
+    // reference counted asset, uses intrusive add_ref/release counter
+    template<class C> 
       class asset : public iasset<asset<C>>
     {
       std::atomic<long> _ref_cntr;

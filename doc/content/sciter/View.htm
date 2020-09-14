@@ -317,7 +317,8 @@ if( fn ) view.<strong>load</strong>(fn);
         <li> <strong>toFile</strong> - <strong>  </strong><em>string</em>, if provided shall contain path of the file where to store the response. Used in file download scenarios.</li>
         <li> <strong>proxyHost</strong>, <strong>proxyPort</strong> - <em>string</em>, <em>integer</em>. If these two are provided then the request will go through that proxy host.</li>
         <li> <strong>output</strong> - symbol, one of <strong>#string</strong> | <strong>#stream</strong> | <strong>#bytes</strong> | <strong>#json</strong>. If provided forces <em>data</em> to be reported as instance of String, Stream, Bytes or a value - result of JSON parsing.</li>
-        <li><b>noCache</b> - true | false, if <i>true</i> then request will not use reading from cache nor writing the request response to cache.&nbsp;</li></ul>
+        <li><b>noCache</b> - true | false, if <i>true</i> then request will not use reading from cache nor writing the request response to cache.&nbsp;</li>
+				<li><b>trySync</b> - true | false,&nbsp;if <i>true</i> then the engine will try to execute the request immediately (inside the function call). This flag makes sense only for local resources: res:..., this:... and file:... urls.</li></ul>
       <p>Sample: <u>sdk/samples/communication/file-download.htm</u> and <u>sdk/samples/communication/http.tis</u></p>
 			<p>Note, use this to get body of server error response: </p>
 			

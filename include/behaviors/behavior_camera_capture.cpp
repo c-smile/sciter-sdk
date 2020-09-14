@@ -34,8 +34,8 @@ struct camera_stream: public event_handler
     }
 
     virtual void attached  (HELEMENT he ) { } 
-
     virtual void detached  (HELEMENT he ) { asset_release(); } 
+
     virtual bool on_event (HELEMENT he, HELEMENT target, BEHAVIOR_EVENTS type, UINT_PTR reason ) 
     { 
       if(type != VIDEO_BIND_RQ)
