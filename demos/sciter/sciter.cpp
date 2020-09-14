@@ -188,13 +188,19 @@ namespace sciter
         case VK_F1: {
           sciter::dom::element el = self->get_root();
           sciter::dom::element fr = el.find_first("frame");
-          fr.call_method("frame.clear");
+          fr.call_method("frame.loadEmpty");
         } break;
         case VK_F2: {
           sciter::dom::element el = self->get_root();
           sciter::dom::element fr = el.find_first("frame");
           fr.call_method("frame.load", const_wchars("res:sys-info.htm"));
         } break;
+        case VK_F4: {
+          sciter::dom::element el = self->get_root();
+          sciter::dom::element fr = el.find_first("frame");
+          fr.call_method("load", const_wchars("res:sys-info.htm"));
+        } break;
+
 
         
 
