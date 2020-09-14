@@ -1,0 +1,56 @@
+<html>
+  <head>
+    <title>widget scrollbar demo</title>
+    <style>
+
+      html { background:gold; }
+
+      main {
+        flow: grid(1 2,
+                   3 *);
+        size:*;
+      }
+    
+      main > #scrollable {
+        size:*;
+        overflow:scroll; // scrollable but no scrollbars
+      }
+      main > #scrollable > div {
+        size:700dip; // large content
+        background: linear-gradient(45deg, blue, red);
+      }
+      main > widget.vsb {
+        display:inline-block; // replaced inside grid cell
+        margin-top:*;
+        height:*;
+        width:auto;
+      }
+      main > widget.hsb {
+        display:inline-block; // replaced inside grid cell
+        margin-left:*;
+        width:*;
+        height:auto;
+      }
+    
+    </style>
+    <script type="text/tiscript">
+   
+    
+    </script>
+  </head>
+<body>
+ 
+  <h2>External (bound) scrollbars demo.</h2>   
+
+  <p>Standalone scrollbar elements can be bound with other scrollable replacing ordinary scrollbars in it.</p>
+ 
+  <main>
+    <div #scrollable>
+      <div></div>
+    </div>
+    <widget|vscrollbar.vsb for="#scrollable" /> 
+    <widget|hscrollbar.hsb for="#scrollable" /> 
+  </main>
+
+</body>
+</html>
