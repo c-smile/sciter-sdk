@@ -5,7 +5,7 @@
 You can help to Open Source the Sciter by:
 
 * donating to the campaign or/and</li>
-* by spreading the word about the campaign.</li></ul>
+* by spreading the word about the campaign.
 
 #### [Let's make it happen!](https://www.kickstarter.com/projects/c-smile/open-source-sciter-engine)
 
