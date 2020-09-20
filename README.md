@@ -1,3 +1,14 @@
+# Attention!
+
+> :warning: [Crowdfunding campaign to Open Source Sciter and Sciter.JS engines is in effect right now on KickStarter](https://www.kickstarter.com/projects/c-smile/open-source-sciter-engine)
+
+You can help to Open Source the Sciter by:
+
+* donating to the campaign or/and</li>
+* by spreading the word about the campaign.
+
+#### [Let's make it happen!](https://www.kickstarter.com/projects/c-smile/open-source-sciter-engine)
+
 # sciter-sdk
 Sciter is an embeddable HTML/CSS/scripting engine, Windows, Mac OSX and Linux.
 
