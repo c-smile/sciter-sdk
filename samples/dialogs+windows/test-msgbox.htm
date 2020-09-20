@@ -67,7 +67,7 @@
                                title: "Login",
                                content:$(#msg-box-contnent).text, // see <script type=...> above
                                onClose: onClose,
-                               buttons:[{id:#login,text:"Login"},{id:#cancel,text:"Not now"}]
+                               buttons:[{id:#login,text:"Login",accesskey:"^L"},{id:#cancel,text:"Not now"}]
                              };
     if( result == #login )
       stdout.printf("Got login request: %V\n",data);

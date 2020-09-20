@@ -1,0 +1,135 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+body { flow: horizontal; border-spacing: 1em;}
+
+lottie {
+  width:300dip;
+  height:300dip;
+}
+
+section.lottie-player {
+  width: max-content;
+  border:1dip solid #ccc;
+}
+
+section.lottie-player > toolbar {
+  line-height:1.6em;
+}
+
+section.lottie-player > toolbar > button.play {
+  height:*;
+  width:2em;
+  background-image: url(path:M1312 896q0 37-32 55l-544 320q-15 9-32 9-16 0-32-8-32-19-32-56v-640q0-37 32-56 33-18 64 1l544 320q32 18 32 55zm128 0q0-148-73-273t-198-198-273-73-273 73-198 198-73 273 73 273 198 198 273 73 273-73 198-198 73-273zm224 0q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z);
+  background-size: 1.6em;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  fill: #000;
+}
+
+section.lottie-player > toolbar > button.play:checked {
+  background-image: url(path:M896 128q209 0 385.5 103t279.5 279.5 103 385.5-103 385.5-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103zm0 1312q148 0 273-73t198-198 73-273-73-273-198-198-273-73-273 73-198 198-73 273 73 273 198 198 273 73zm96-224q-14 0-23-9t-9-23v-576q0-14 9-23t23-9h192q14 0 23 9t9 23v576q0 14-9 23t-23 9h-192zm-384 0q-14 0-23-9t-9-23v-576q0-14 9-23t23-9h192q14 0 23 9t9 23v576q0 14-9 23t-23 9h-192z);
+}
+
+section.lottie-player > toolbar > input {
+  display:block;
+  width:*;
+}
+
+section.lottie-player > toolbar > output {
+  display:block;
+  min-width:2em;
+}
+
+#files {
+  display:block;
+  width:20em;
+  height:*;
+}
+
+        </style>
+        <script type="text/tiscript">
+
+const ellottie = $(lottie);
+const buttonplay = $(button.play);
+const elposition = $(input.position);
+const elframeno = $(output.frame-no);
+const eltotalframes = $(output.total-frames);
+
+function Files() {
+
+  var folderUrl = self.url("lotties/");
+  var list = [];
+  
+  System.scanFiles(URL.toPath(folderUrl + "*.json"), 
+    function(filename,stat) {
+      list.push {
+        name: filename,
+        url: folderUrl + filename
+      };
+      return true;
+    });
+
+  return <select|list #files>
+    { list.map( (fd) => <option value={fd.url}>{fd.name}</option> ) }
+  </select>;
+}
+
+
+event change $(#files) {
+  ellottie.lottie.stop();
+  ellottie.lottie.load( this.value );
+  buttonplay.value = false;
+  showLottieState();
+  return true;
+}
+
+function showLottieState() {
+  
+  elposition.value = ellottie.lottie.position;
+  elframeno.value = ellottie.lottie.frame;
+  eltotalframes.value = ellottie.lottie.frames;
+
+  return ellottie.lottie.playing;
+}
+
+event change $(button.play) {
+  if( this.value ) {
+    ellottie.lottie.play();
+    ellottie.timer(32ms, showLottieState);
+  }
+  else
+    ellottie.lottie.stop();
+  return true;
+}
+
+event change $(input.position) {
+  buttonplay.value = false;
+  ellottie.lottie.stop();
+  ellottie.lottie.position = this.value;
+  showLottieState();
+}
+
+
+
+        </script>
+    </head>
+    <body>
+
+    <reactor|Files />  
+
+    <section.lottie-player>
+      <lottie loop />
+      <toolbar>
+        <button|checkbox.play />
+        <input|hslider.position min="0.0" max="1.0" />
+        <output.frame-no/><span>:</span>
+        <output.total-frames/>
+      </toolbar>
+    </section>
+
+
+    </body>
+</html>

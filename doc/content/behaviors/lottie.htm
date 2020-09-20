@@ -1,0 +1,86 @@
+﻿<html>
+  <head>
+    <meta name="source"/>
+    <meta name="source"/>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1><a name="behaviorradio" id="behaviorradio">behavior:lottie</a></h1>
+  <p>This behavior provides playback of Lottie animations.&nbsp;
+It parses&nbsp;<a href="http://www.adobe.com/products/aftereffects.html">Adobe After Effects</a>&nbsp;animations exported as json with&nbsp;<a href="https://github.com/airbnb/lottie-web">Bodymovin</a>&nbsp;and renders them natively inside the Sciter.
+</p>
+  <h2><a name="elements" id="elements">Elements</a></h2>
+  <p>that have this behavior applied by default to:</p>
+  <ul>
+    <li><code>&lt;lottie&gt;</code> - the lottie player element;&nbsp;</li>
+		<li>  <code>&lt;param path=&quot;keyPath&quot; property=&quot;propName&quot; value=&quot;propVal&quot; /&gt;</code> inside <code>&lt;lottie&gt;</code> - redefines variable in the animation,<br/> used for parametrization and theming. For the meaning of attributes see <a href="#redefining">below</a>.&nbsp;</li></ul>
+  <h2><a name="attributes" id="attributes">Attributes</a></h2>
+  <p>this behavior knows about:</p>
+  <dl>
+    <dt>src</dt>
+    <dd>- string, url of the lottie file (json).&nbsp;</dd>
+    <dt>autoplay</dt>
+    <dd>- if provided will start animation immediately after loading.</dd>
+		<dt>loop</dt>
+		<dd>- if provided will repeat playback.&nbsp;</dd>
+    <h2>Properties</h2>
+    <dt>lottie.playing</dt>
+    <dd>read-only,<em> true</em> | <em>false</em>, reports playback status. If <em>true</em> animation is playing at the moment.</dd>
+    <dt>lottie.speed</dt>
+    <dd>read-write, <i>float</i>, speed multiplier, 1.0 by default. 2.0 will play animation 2 times faster, 0.5 will playback two times slower.</dd>
+    <dt>lottie.loop</dt>
+    <dd>read-write, <i>true | false </i> if set to <i>true</i> will loop playback.</dd>
+    <dt>lottie.frame</dt>
+    <dd>read-write, <i>integer</i>, current frame in range [0..frames).</dd>
+		<dt>lottie.frames</dt>
+    <dd>read-only, <i>integer</i>, total number of frames in animation.</dd>
+		<dt>lottie.position</dt>
+    <dd>read-write, <i>float</i>, current animation position, number in range 0.0 .. 1.0 </dd>
+		<dt>lottie.duration</dt>
+    <dd>read-only, <i>duration</i>, total duration of full animation loop as defined by animation designer.</dd>
+		<dt>lottie.markers</dt>
+		<dd>read-only, array (list) of marker definitions. Each definition is an array (tuple): [<i>tagName</i>:string, <i>startFrame</i>: integer, <i>endFrame</i>: integer].<p>Markers can be used to rise events bound with particular named frame in animation, partial playbacks, etc. See <a href="https://swiftsenpai.com/development/lottie-animation-markers/">Controlling Lottie Animation with Markers</a>.&nbsp;</p></dd>
+		<h2>Methods</h2>
+    <dt>lottie.load</dt>
+    <dd>( <b>url</b> : string ) : bool<br/>load (potentially asynchronously) animation from JSON file at URL.</dd>
+    <dt>lottie.play</dt>
+    <dd>( [ <b>firstFrame</b> : integer, <b>lastFrame</b> : integer ] ) : boolean <br/>start playback. If first/last frame is provided will play only frames in the range.</dd>
+    <dt>lottie.stop</dt>
+    <dd>() : boolean<br/>stop (pause) animation.</dd>
+    <dt>lotie.update</dt>
+    <dd>( <b>keyPath</b>: string, <b>propName</b> : string, <b>value</b> : color | float | integer ) : boolean<br/>
+update animation properties dynamically at runtime. For <i>keyPath</i>, <i>propName</i> and <i>value</i> see <a href="#redefining">below</a>.</dd>
+    <h2><a name="events" id="events">Events</a></h2>
+    <p>Besides of standard set of events (mouse, keyboard, focus) <em>behavior:lottie</em> generates following events:</p>
+    <dt>event animationstart</dt>
+    <dd>- the animation has been loaded successfully and animation has been started.</dd>
+    <dt>event animationloop</dt>
+    <dd>- last frame shown and animation restarted from its beginning.</dd>
+    <dt>event animationend</dt>
+    <dd>- animation playback stopped.</dd></dl>
+  <h2><a name="value" id="value">Value</a></h2>
+  <p>N/A, the behavior does not implement value concept.</p>
+	
+	<h2 id="redefining">Redefining animation variables</h2><h3>Understanding After Effects</h3><p>To understand how to change animation properties in Lottie, you should first understand how animation properties are stored in Lottie. Animation properties are stored in a data tree that mimics the information hierarchy of After Effects. In After Effects a Composition is a collection of Layers that each have their own timelines. Layer objects have string names, and their contents can be an image, shape layers, fills, strokes, or just about anything that is drawable. Each object in After Effects has a name. Lottie can find these objects and properties by their name using a <i>KeyPath</i>.</p>
+<h3 id="usage">Usage</h3><p>To update a property at runtime, you need 3 things:</p><ol><li>KeyPath</li><li>PropName</li><li>value</li></ol>
+<h3 id="keypath">KeyPath</h3><p>A KeyPath is used to target a specific content or a set of contents that will be updated. A KeyPath is specified by a list of strings that correspond to the hierarchy of After Effects contents in the original animation. KeyPaths can include the specific name of the contents or wildcards:</p>
+<dl><dt>Wildcard <code>*</code></dt><dd>Wildcards match any single content name in its position in the keypath.</dd>
+<dt>Globstar <code>**</code></dt><dd>Globstars match zero or more layers.</dd></dl>
+<h3><a id="properties">PropName</a></h3><p><a id="properties"><code>PropName</code> is a name of property to set. They correspond to the animatable value in After Effects and the available properties are listed below:</a></p>
+	<dl><dt>FillColor</dt>
+<dd>- color property of Fill object , value type is Color;</dd><dt>FillOpacity</dt><dd>- opacity property of Fill object , value type is number in range [ 0 .. 100];</dd>
+<dt>StrokeColor</dt>
+<dd>- color property of Stroke object , value type is Color;</dd>
+<dt>StrokeOpacity</dt><dd>- opacity property of Stroke object , value type is number in range [ 0 .. 100];</dd><dt> StrokeWidth</dt>
+		<dd>- stroke with property of Stroke object , value type is float </dd>
+<dt>TrAnchor</dt><dd>- transform Anchor property of Layer and Group object , value type is [x,y] array;</dd><dt>TrPosition</dt>
+		<dd>- Transform Position property of Layer and Group object , value type is [x,y] array - point;</dd>
+<dt>TrScale</dt><dd>- Transform Scale property of Layer and Group object , value type is [x,y] array, x and y are numbers in range[0 ..100];</dd><dt>TrRotation</dt>
+		<dd>- Transform Scale property of Layer and Group object , value type is Angle;</dd>
+<dt>TrOpacity</dt><dd>- Transform Opacity property of Layer and Group object , value type is number in range [ 0 .. 100].</dd></dl>
+
+<h3>Setting Values</h3>
+
+	<p>Animation values can be set as at design time by using set of <code>&lt;param path=&quot;...&quot; prop=&quot;...&quot; value=&quot;...&quot; /&gt;</code> declarations inside <code>&lt;lottie&gt;</code> element or at runtime by calling <code>el.lottie.update(path,prop,value)</code> method.</p>
+</body>
+</html>

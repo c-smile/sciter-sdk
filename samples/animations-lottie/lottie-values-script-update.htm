@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+lottie {
+  display:block;
+  behavior: lottie;
+  width:300dip;
+  height:300dip;
+  foreground-position: 50% 50%;
+  foreground-repeat:no-repeat;
+  foreground-size:contain;
+  border:1dip solid;
+}
+
+        </style>
+        <script type="text/tiscript">
+
+event change $(form.colors) {
+  const hcolor = color(this.value.heartcolor);
+  $(lottie).lottie.update("Shape Layer 1.Ellipse 1.Fill 1","FillColor",hcolor);
+}
+
+event change $(form.stroke) {
+  const w = this.value.strokewidth;
+  $(lottie).lottie.update("**","StrokeWidth",w);
+}
+
+        </script>
+    </head>
+    <body>
+      <form.colors>
+        FillColor: 
+        <button|radio(heartcolor) value="red">Red</button> 
+        <button|radio(heartcolor) value="green">Green</button> 
+        <button|radio(heartcolor) value="blue">Blue</button> 
+      </form>
+
+      <form.stroke>
+        StrokeWidth: 
+        <input|hslider(strokewidth) min="1.0" max="5.0" value="1.0" />
+      </form>
+
+
+      <lottie src="lotties/done.json" autoplay loop />
+
+    </body>
+</html>

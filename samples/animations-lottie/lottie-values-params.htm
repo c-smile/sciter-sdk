@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+lottie {
+  width:150dip;
+  height:150dip;
+  border:1dip solid;
+  var(shape-color): #FFD700; // color used by lottie through param
+}
+        </style>
+    </head>
+    <body>
+      <p>Lottie parametrization sample</p>
+      <p>Shape color is defined by param / CSS varible:</p>
+
+      <lottie src="lotties/done.json" autoplay>
+        <param path="Shape Layer 1.Ellipse 1.Fill 1" prop="FillColor" value="var(shape-color,#0f0)" />
+      </lottie>
+
+    </body>
+</html>
