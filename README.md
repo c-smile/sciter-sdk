@@ -1,14 +1,3 @@
-# Attention!
-
-> :warning: [Crowdfunding campaign to Open Source Sciter and Sciter.JS engines is in effect right now on KickStarter](https://www.kickstarter.com/projects/c-smile/open-source-sciter-engine)
-
-You can help to Open Source the Sciter by:
-
-* donating to the campaign or/and</li>
-* by spreading the word about the campaign.
-
-#### [Let's make it happen!](https://www.kickstarter.com/projects/c-smile/open-source-sciter-engine)
-
 # sciter-sdk
 Sciter is an embeddable HTML/CSS/scripting engine, Windows, Mac OSX and Linux.
 
@@ -50,12 +39,12 @@ Sciter is an embeddable HTML/CSS/scripting engine, Windows, Mac OSX and Linux.
 
 * [usciter](demos/usciter) - demo "browser" for all supported platforms - use it to load samples from /samples/ folder.
 * [uminimal](demos/uminimal) - minimalistic multiplatform integration sample.
-* [notepad](https://github.com/c-smile/sciter-sdk/tree/master/notepad) sources of https://html-notepad.com application.
-* [notes](https://github.com/c-smile/sciter-sdk/tree/master/notes) sources of https://notes.sciter.com - Sciter Notes application.
+* [notepad](demos/notepad) sources of https://html-notepad.com application.
+* [notes](demos/notes) sources of https://notes.sciter.com - Sciter Notes application.
 
 
 
 
-https://github.com/c-smile/sciter-sdk/tree/master/notepad
+
 
 

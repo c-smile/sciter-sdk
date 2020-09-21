@@ -399,7 +399,8 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
       EDIT_VALUE_CHANGING = 3,       // before text change
       EDIT_VALUE_CHANGED = 4,        // after text change
       SELECT_SELECTION_CHANGED = 5,  // selection in <select> changed
-      SELECT_STATE_CHANGED = 6,      // node in select expanded/collapsed, heTarget is the node
+      SELECT_VALUE_CHANGED = 6,      // value of <select> changed
+      SELECT_STATE_CHANGED = SELECT_VALUE_CHANGED, // OBSOLETE, alias of SELECT_VALUE_CHANGED
 
       POPUP_REQUEST   = 7,           // request to show popup just received,
                                      //     here DOM of popup element can be modifed.

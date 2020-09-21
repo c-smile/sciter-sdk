@@ -25,6 +25,10 @@
       $(#clear).on("click", :: $(select).value = undefined );
 
       $(select).on("change", :: $(pre#out).text = String.printf("%V",this.value) );
+
+      event change $(select) {
+        debug change: this, this.value;
+      }
      
     </script>
   </head>

@@ -35,6 +35,10 @@
       {
         $(option[value=K]).execCommand("set-current");
       }  
+
+      event change $(select) {
+        debug change: this, this.value;
+      }
     </script>
   </head>
 <body>
