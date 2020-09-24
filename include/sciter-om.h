@@ -1,12 +1,8 @@
 #pragma once
 
-#include <cstring>
-#include <cassert>
-
 struct som_passport_t;
 
 typedef UINT64 som_atom_t;
-
 
 struct som_asset_t;
 
@@ -30,6 +26,8 @@ som_atom_t SCAPI SciterAtomValue(const char* name);
 
 #ifdef CPP11
 
+#include <cstring>
+#include <cassert>
 #include <atomic>
 
 namespace sciter {
