@@ -27,6 +27,7 @@
     }
     
     ul > li > div.details { 
+      prototype: ItemDetails;
       background:#FEA url(images/inner-shadow.png) expand; 
       background-position:10 5 5 10;
       size:*;
@@ -55,7 +56,16 @@
     ul > li:expanded > div.details { visibility:visible; }
   
   </style>
-  <script type="text/tiscript"></script>
+  <script type="text/tiscript">
+
+     class ItemDetails: Element {
+        event visualstatechange (evt) {
+          debug visibility: this, evt.reason, this.isVisible;
+        }
+     } 
+
+
+  </script>
   </head>
 <body>
   <header>Expandable list sample</header>

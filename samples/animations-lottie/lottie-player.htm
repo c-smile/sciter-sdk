@@ -98,6 +98,7 @@ function showLottieState() {
 event change $(button.play) {
   if( this.value ) {
     ellottie.lottie.play();
+    debug: ellottie.lottie.markers;
     ellottie.timer(32ms, showLottieState);
   }
   else

@@ -139,7 +139,7 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
       MOUSE_MOVE,
       MOUSE_UP,
       MOUSE_DOWN,
-      MOUSE_DCLICK,
+      MOUSE_DCLICK, // double click
       MOUSE_WHEEL,
       MOUSE_TICK, // mouse pressed ticks
       MOUSE_IDLE, // mouse stay idle for some time
@@ -148,6 +148,8 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
       DRAG_ENTER  = 0xA, // drag arrived to the target element that is one of current drop targets.  
       DRAG_LEAVE  = 0xB, // drag left one of current drop targets. target is the drop target element.  
       DRAG_REQUEST = 0xC,  // drag src notification before drag start. To cancel - return true from handler.
+
+      MOUSE_TCLICK = 0xF, // tripple click
 
       MOUSE_CLICK = 0xFF, // mouse click event
 
