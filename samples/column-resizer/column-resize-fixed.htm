@@ -6,17 +6,28 @@
                   border:1dip solid red;
                   overflow-x:auto;
                   background:#ddd; }
-         td, th { border: solid 1dip grey; height: 24dip; background:#fff;}
+         td, th { border: solid 1dip grey; height: 24dip; background:#fff; padding:0 6dip;}
+
+         th { 
+           hit-margin: 0 6dip; // resizing sensitive area 
+         }
 
          body
          {
            background-color:hsl(103, 11, 195);
          }
       </style>
+      <script type="text/tiscript">
+        event doubleclick-gap $(th) (evt,th) {
+          view.msgbox(#info, "got doubleclick-gap on th #" + th.index);
+        }
+      </script>
    </head>
    <body>
       <p>The table contains only fixed columns. Normally it is scrollable in horizontal direction.</p>
       <p>First column is not resizeable due to min/max constraints</p>
+      <p>NOTE #1: resizing sensitive area is defined by <code>th {hit-margin: 0 6dip;}</code></p>
+      <p>NOTE #2: doubleclick-gap event generation!</code></p>
 
       <table fixedlayout>
         <thead>

@@ -3,17 +3,27 @@
       <style type="text/css">
          table thead { behavior: column-resizer; }
          table  { border-spacing:0; border-collapse:collapse; width:*; border:1dip dashed red;}
-         td, th { border: solid 1dip grey; height: 24dip;}
+         td, th { border: solid 1dip grey; height: 24dip; padding:0 6dip;}
          td:nth-child(2), th:nth-child(2) { background:gold; }
          body
          {
            background-color:hsl(103, 11, 195);
          }
+         th { 
+           hit-margin: 0 6dip; // resizing sensitive area 
+         }
       </style>
+      <script type="text/tiscript">
+        event doubleclick-gap $(th) (evt,th) {
+          view.msgbox(#info, "got doubleclick-gap on th #" + th.index);
+        }
+      </script>
    </head>
    <body>
 
       <p>The table contains flexible column. Normally it is not scrollable in horizontal direction.</p>
+      <p>NOTE #1: resizing sensitive area is defined by <code>th {hit-margin: 0 6dip;}</code></p>
+      <p>NOTE #2: doubleclick-gap event generation!</code></p>
 
       <table fixedlayout>
         <thead>
