@@ -44,7 +44,7 @@
   <div>
     Dropdown &lt;select&gt; with bound &lt;option&gt;s
     <select each="item in items" (currentVal)>
-      <option(item.name) @value="item.value" />
+      <option @value="item.value"><output(item.name)/></option>
     </select> 
   </div>
   <div>
