@@ -651,23 +651,11 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
 
   namespace sciter
   {
-
-    // event handler which can be attached to any DOM element.
-    // event handler can be attached to the element as a "behavior" (see below)
-    // or by sciter::dom::element::attach( event_handler* eh )
-
-#ifdef CPP11
-    struct event_handler : public sciter::om::asset<event_handler>
-#else
-    struct event_handler
-#endif
+    struct event_handler_raw // "raw", non-reference counted event handler
     {
-      event_handler() 
-      {
-        asset_add_ref(); 
-      }
+      event_handler_raw() {}
       
-      virtual void detached  (HELEMENT /*he*/ ) { asset_release(); }
+      virtual void detached  (HELEMENT /*he*/ ) { }
       virtual void attached(HELEMENT /*he*/) { }
 
       // defines list of event groups this event_handler is subscribed to
@@ -676,12 +664,6 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
          event_groups = HANDLE_ALL;
          return true;
       }
-
-      // redefine by these if lifecycle is different from normal
-      //virtual long asset_add_ref() override { return 0; }
-      //virtual long asset_release() override { return 0; }
-
-      virtual som_passport_t* asset_get_passport() const override { return nullptr; }
 
       // handlers with extended interface
       // by default they are calling old set of handlers (for compatibility with legacy code)
@@ -749,6 +731,8 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
           return on_method_call(he, UINT(params.methodID), &params );
         }
 
+      virtual bool handle_som(HELEMENT he, SOM_PARAMS& params) { return false; }
+
       // notification events from builtin behaviors - synthesized events: BUTTON_CLICK, VALUE_CHANGED
       // see enum BEHAVIOR_EVENTS
       virtual bool handle_event (HELEMENT he, BEHAVIOR_EVENT_PARAMS& params )
@@ -802,7 +786,7 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
       // ElementEventProc implementeation
       static BOOL SC_CALLBACK  element_proc(LPVOID tag, HELEMENT he, UINT evtg, LPVOID prms )
       {
-        event_handler* pThis = static_cast<event_handler*>(tag);
+        event_handler_raw* pThis = static_cast<event_handler_raw*>(tag);
         if( pThis ) switch( evtg )
         {
             case SUBSCRIPTIONS_REQUEST:
@@ -821,20 +805,7 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
                 }
                 return true;
               }
-            case HANDLE_SOM:
-              {
-#ifdef CPP11
-                SOM_PARAMS *p = (SOM_PARAMS *)prms;
-                if (p->cmd == SOM_GET_PASSPORT)
-                  p->data.passport = pThis->asset_get_passport();
-                else if (p->cmd == SOM_GET_ASSET)
-                  p->data.asset = static_cast<som_asset_t*>(pThis); // note: no add_ref
-                return true;
-#else           
-                return false;
-#endif   
-              }
-
+            case HANDLE_SOM:   {  SOM_PARAMS *p = (SOM_PARAMS *)prms; return pThis->handle_som(he, *p);  }
             case HANDLE_MOUSE: {  MOUSE_PARAMS *p = (MOUSE_PARAMS *)prms; return pThis->handle_mouse( he, *p );  }
             case HANDLE_KEY:   {  KEY_PARAMS *p = (KEY_PARAMS *)prms; return pThis->handle_key( he, *p ); }
             case HANDLE_FOCUS: {  FOCUS_PARAMS *p = (FOCUS_PARAMS *)prms; return pThis->handle_focus( he, *p ); }
@@ -857,6 +828,29 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
       }
     };
 
+#ifdef CPP11
+    // reference counted event handler
+    struct event_handler : public event_handler_raw, public sciter::om::asset<event_handler>
+    {
+      event_handler() { asset_add_ref(); }
+      virtual void detached(HELEMENT /*he*/) override { asset_release(); }
+
+      virtual som_passport_t* asset_get_passport() const override { return nullptr; }
+
+      virtual bool handle_som(HELEMENT he, SOM_PARAMS& params)
+      {
+        if (params.cmd == SOM_GET_PASSPORT)
+          params.data.passport = asset_get_passport();
+        else if (params.cmd == SOM_GET_ASSET)
+          params.data.asset = static_cast<som_asset_t*>(this); // note: no add_ref
+        else
+          return false;
+        return true;
+      }
+    };
+#else 
+    typedef event_handler event_handler_raw;
+#endif
 
     //
     // "behavior" is a named event_handler
@@ -903,12 +897,12 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
 
     inline void attach_dom_event_handler(HWINDOW hwnd, event_handler* ph)
     {
-      int r = SciterWindowAttachEventHandler( hwnd, &event_handler::element_proc, ph, HANDLE_ALL );
+      int r = SciterWindowAttachEventHandler( hwnd, &event_handler_raw::element_proc, static_cast<event_handler_raw*>(ph), HANDLE_ALL );
       assert(r == SCDOM_OK); (void)r;
     }
     inline void detach_dom_event_handler(HWINDOW hwnd, event_handler* ph)
     {
-      int r = SciterWindowDetachEventHandler( hwnd, &event_handler::element_proc, ph );
+      int r = SciterWindowDetachEventHandler( hwnd, &event_handler_raw::element_proc, static_cast<event_handler_raw*>(ph));
       assert(r == SCDOM_OK); (void)r;
     }
 

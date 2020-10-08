@@ -968,12 +968,12 @@ namespace dom
     // "manually" attach event_handler proc to the DOM element
     void attach_event_handler(event_handler* p_event_handler )
     {
-      SciterAttachEventHandler(he, &event_handler::element_proc, p_event_handler);
+      SciterAttachEventHandler(he, &event_handler_raw::element_proc, static_cast<event_handler_raw*>(p_event_handler));
     }
 
     void detach_event_handler(event_handler* p_event_handler )
     {
-      SciterDetachEventHandler(he, &event_handler::element_proc, p_event_handler);
+      SciterDetachEventHandler(he, &event_handler_raw::element_proc, static_cast<event_handler_raw*>(p_event_handler));
     }
 
     // call scripting method attached to the element (directly or through scripting behavior)
