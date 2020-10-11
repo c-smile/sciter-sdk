@@ -168,4 +168,9 @@ namespace sqlite {
     return false;
   }
 
+  bool Recordset::set_prop(const std::string& field_name, sciter::value val) {
+    return true;
+  }
+
+
 }

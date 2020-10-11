@@ -10,8 +10,8 @@ const MicroChart = function()
   
   function dimension(svg)
   {
-    var w = svg.toPixels(svg.style#width,#width).toFloat();
-    var h = svg.toPixels(svg.style#height,#height).toFloat();
+    var w = svg.toPixels(svg.style#width,#width,#logical).toFloat();
+    var h = svg.toPixels(svg.style#height,#height,#logical).toFloat();
     return (w,h);
   }
 

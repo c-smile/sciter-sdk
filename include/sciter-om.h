@@ -195,9 +195,16 @@ namespace sciter {
         delete static_cast<C*>(this);
       }
     };
-
-
   }
+
+  template <class AT>
+  inline AT* value::get_asset() const {
+    som_asset_t* pass = get_asset();
+    if (pass && (som_asset_get_class(pass) == AT::get_asset_class()))
+      return static_cast<AT*>(pass);
+    return nullptr;
+  }
+
 }
 
 #endif

@@ -41,8 +41,6 @@
 
   struct som_asset_t;
   struct som_asset_class_t;
-
-  som_asset_class_t* som_asset_get_class(som_asset_t* pass);
   
   namespace sciter
   {
@@ -354,13 +352,7 @@
       }
 
       // sqlite::Recordset* prs = val.get_asset<sqlite::Recordset>()
-      template <class AT> AT* get_asset() const { 
-        som_asset_t* pass = get_asset();
-        if (pass && (som_asset_get_class(pass) == AT::get_asset_class()))
-          return static_cast<AT*>(pass);
-        return nullptr;
-      }
-      
+      template <class AT> AT* get_asset() const;
 
       static value wrap_asset(som_asset_t* pass) {
         value r;
@@ -375,7 +367,7 @@
         return defv;
       }
 
-      template<typename T> T get() const { return getter(static_cast<T*>(0)); }
+      template<typename T> T get() const { return getter(static_cast<std::decay_t<T>*>(0)); }
 
       static value from_string(const WCHAR* s, size_t len = 0, VALUE_STRING_CVT_TYPE ct = CVT_SIMPLE)
       {
@@ -836,7 +828,7 @@
             return value(r); }); 
       }
 
-      
+
   }
 #endif
 

@@ -351,10 +351,11 @@ some.selectParent(printel, &quot;div&quot;);
       <p>returns min-intrinsic height of the element for the given <em>forWidth</em>. min-intrinsic heigh is minimal height needed to show element without vertical scrollbar.</p></dd>
     <dt>toPixels</dt>
     <dd>
-      <div> <strong>( length : </strong>length | string | symbol [, <strong>#width</strong> | <strong>#height</strong> ]<strong> ) :</strong> integer, device pixels</div>
-      <p>returns the length value converted to the number of device pixels. Conversion is made in context of current element style so <code>el.toPixels( em(1.4) )</code> will return number of pixel correspond to 1.4em that is dependent on current font size of the element.</p>
-      <p>length is a string or symbol then this string is treated as a CSS length literal so it is possible to get values like: <code>el.toPixels(#xx-small)</code> or <code>el.toPixels(#system-scrollbar-width)</code>,</p>
-      <p>Second symbol parameter is used with the conversion from percentage lengths:<br/><code>var h50p = el.toPixels( pr(50.0), #height );</code> - will calculate the same value as the following CSS declaration: <code>height:50%</code>.</p></dd>
+      <div> <strong>( length</strong> <strong>: </strong> length | string | symbol [, <strong>#width</strong> | <strong>#height</strong> [, <b>#logical</b> ]]<strong> ) :</strong> integer, device or logical pixels</div>
+      <p>returns the length value converted to the number of device pixels. Conversion is made in context of current element style so <code>el.toPixels( 1.4em )</code> will return number of devices pixels corresponding to 1.4em that is dependent on current font size of the element.</p>
+      <p>The <i>length</i> is a string or symbol then this string is treated as a CSS length literal so it is possible to get values like: <code>el.toPixels(#xx-small)</code> or <code>el.toPixels(#system-scrollbar-width)</code>,</p>
+      <p>Second symbol parameter is used with the conversion from percentage lengths:<br/><code>var h50p = el.toPixels( pr(50.0), #height );</code> - will calculate the same value as the following CSS declaration: <code>height:50%</code>.</p>
+			<p>Third parameter, if provided literally as #logical, will instruct to return value in <i>logical pixel</i><i>s</i> - either as <code>dip</code> or <code>ppx</code> - depends on engine configuration.<code> </code></p></dd>
     <dt id="method-scroll">scroll</dt>
     <dd> <img src="images/scroll.gif" align="right"/><strong>(part) </strong>returns: integer, device pixels
       <p>Returns various scrolling related positions of the element. Parameters:</p>

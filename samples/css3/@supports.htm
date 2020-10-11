@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+.indicator { display:none; font-weight:bold;}
+
+@supports (display:flex) and (display:grid) {
+  .browser { display:block; }
+  main {display:flex;}
+}
+
+@supports (flow:horizontal) and (flow:vertical) {
+  .sciter { display:block; }     
+  main {flow:horizontal;}
+}
+        </style>
+        <script type="text/tiscript"></script>
+    </head>
+    <body>
+      <p>Demo of <code>@supports</code> in CSS.</p> 
+      <p>This document can be loaded either in Sciter or in browser and will show:</p> 
+
+      <main>
+        <div>Running in&nbsp;</div>
+        <div class="indicator browser">browser</div>
+        <div class="indicator sciter">Sciter</div>
+      </main>
+    </body>
+</html>

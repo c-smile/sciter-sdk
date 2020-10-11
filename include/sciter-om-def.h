@@ -382,42 +382,19 @@ namespace sciter {
 
       template <class Type> struct prop_set_accessor;
 
-      // bool set_any_prop(som_atom_t name, TV val);
-      template <class Type, class TV>
-      struct prop_set_accessor<bool(Type::*)(som_atom_t, TV)> {
-        template <bool(Type::*Func)(som_atom_t, TV)>
-        static BOOL thunk(som_asset_t* thing, som_atom_t name, const SOM_VALUE* p_value)
-        {
-          return (static_cast<Type*>(thing)->*Func)(name, p_value->get<TV>()) ? TRUE : FALSE;
-        }
-      };
 
       // bool set_any_prop(const std::string& name, TV val);
       template <class Type, class TV>
       struct prop_set_accessor<bool(Type::*)(const std::string&,  TV)> {
         template <bool(Type::*Func)(const std::string&,TV)>
-        static BOOL thunk(som_asset_t* thing, UINT64 name, const SOM_VALUE* p_value)
+        static BOOL thunk(som_asset_t* thing, som_atom_t name, const SOM_VALUE* p_value)
         {
           return (static_cast<Type*>(thing)->*Func)(atom_name(name), p_value->get<TV>()) ? TRUE : FALSE;
         }
       };
 
       template <class Type> struct prop_get_accessor;
-
-      // bool get_any_prop(som_atom_t name, TV& val);
-      template <class Type, class TV>
-      struct prop_get_accessor<bool(Type::*)(som_atom_t, TV)> {
-        template <bool(Type::*Func)(som_atom_t,TV)>
-        static BOOL thunk(som_asset_t* thing, som_atom_t name, SOM_VALUE* p_value)
-        {
-          typename std::remove_reference<TV>::type val;
-          if ((static_cast<Type*>(thing)->*Func)(name, val)) {
-            *p_value = SOM_VALUE(val);
-            return TRUE;
-          }
-          return FALSE;
-        }
-      };
+            
 
       // bool get_any_prop(const std::string& name, TV& val);
       template <class Type, class TV>

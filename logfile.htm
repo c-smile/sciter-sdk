@@ -10,10 +10,17 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#fdf6ff">4.4.4.14</td><td nowrap valign="top" align="center">2020-10-07</td><td>Fixes:
-					<ul><li>[reactor] stabilization fixes.</li>
+    <tr><td valign="top" bgcolor="#fdf6ff">4.4.5.0</td><td nowrap valign="top" align="center">2020-10-11</td><td>New:
+					<ul><li>[css] support of <code>@supports (...) {}</code> blocks;</li>
+						<li><code>px</code> length units are conditional now, see <a href="https://sciter.com/road-to-sciter-js-step-i-supports-px-ppx-dip/">this document</a>. By default <code>px</code>'es are configured as <code>dip</code>'s , use <code>SciterSetOption(NULL,SCITER_SET_PX_AS_DIP,&nbsp;FALSE)</code> to set them otherwise.
+</li>
+						<li>[api, headers] <code>sciter::event_handler_raw</code> for non reference counting cases .&nbsp;</li>
 						</ul>
-					<p>NOTE: This is the last build of 4.4.4.* series. Sciter/Sciter.JS combined builds will go next.</p></td></tr><tr><td valign="top" bgcolor="#fdf6ff">4.4.4.13</td><td nowrap valign="top" align="center">2020-10-05</td><td>Fixes:
+					<p>Fixes:</p>
+					<ul><li>[assets] fix of universal prop_get_accessor handling.</li>
+						<li>[assets] fix of AV in attempts to change read-only properties.</li>
+						<li>[DOM] fix of hang in <code>event doubleclick</code> in text editors.</li>
+						<li>[reactor] <code>&lt;input :value=&quot;...&quot; /&gt;</code> is not handling <code>property value</code> defined in script, see: <a href="https://sciter.com/forums/topic/reactor-component-state-is-undefined/#post-67738">https://sciter.com/forums/topic/reactor-component-state-is-undefined/#post-67738</a>&nbsp;</li></ul></td></tr><tr><td valign="top" bgcolor="#fdf6ff">4.4.4.13</td><td nowrap valign="top" align="center">2020-10-05</td><td>Fixes:
 					<ul><li>[reactor] one more r13n fix.</li>
 						<li>[reactor] <code>&lt;input value=&quot;updatedval&quot; /&gt;</code> fix.</li>
 						<li>[win] <code>Date.toLocaleString()</code> fix to emit date and time.</li></ul></td></tr><tr><td valign="top" bgcolor="#fdf6ff">4.4.4.12</td><td nowrap valign="top" align="center">2020-10-04</td><td>New:

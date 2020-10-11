@@ -101,6 +101,7 @@ namespace sqlite {
     //     - supported cases:
     //       var cv = rs.columnname;
     bool get_prop(const std::string& field_name, sciter::value& val);
+    bool set_prop(const std::string& field_name, sciter::value val);
 
 
     // iterator, handler of for( var v in rs ) calls
@@ -117,7 +118,8 @@ namespace sqlite {
         SOM_RO_VIRTUAL_PROP(length,get_length) 
       )
       SOM_ITEM_GET(get_item)
-      //SOM_PROP_GET(get_prop) -- see https://sciter.com/forums/topic/recordset-props-fails-if-data-has-column-name/
+      //SOM_PROP_GET(get_prop) //-- see https://sciter.com/forums/topic/recordset-props-fails-if-data-has-column-name/
+      //SOM_PROP_SET(set_prop) //-- 
       SOM_ITEM_NEXT(get_next)
     SOM_PASSPORT_END
 
