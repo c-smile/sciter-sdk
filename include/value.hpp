@@ -26,6 +26,7 @@
 #ifdef CPP11
   #include <initializer_list>
   #include <utility>
+  #include <type_traits>
 #endif
 
   #include "aux-slice.h"
@@ -367,7 +368,7 @@
         return defv;
       }
 
-      template<typename T> T get() const { return getter(static_cast<std::decay_t<T>*>(0)); }
+      template<typename T> T get() const { return getter(static_cast<T *>(0)); }
 
       static value from_string(const WCHAR* s, size_t len = 0, VALUE_STRING_CVT_TYPE ct = CVT_SIMPLE)
       {
