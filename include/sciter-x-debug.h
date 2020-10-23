@@ -179,60 +179,6 @@ inline  VOID    SCAPI SciterSetupDebugOutput ( HWINDOW hwndOrNull, LPVOID param,
       }
 #endif
 
-#ifdef WINDOWS
-      virtual void output(OUTPUT_SUBSYTEMS subsystem, OUTPUT_SEVERITY severity, const WCHAR* text, unsigned int text_length)
-      {
-        /*const char* RESET   = "\033[0m";
-        const char* BLACK   = "\033[1;30m";
-        const char* RED     = "\033[1;31m";
-        const char* GREEN   = "\033[1;32m";
-        const char* YELLOW  = "\033[1;33m";
-        const char* BLUE    = "\033[1;34m";
-        const char* MAGENTA = "\033[1;35m";
-        const char* CYAN    = "\033[1;36m";
-        const char* WHITE   = "\033[1;37m";*/
-
-        #define LOG_COLOR_WHITE (FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY)
-        #define LOG_COLOR_GREEN (FOREGROUND_GREEN | FOREGROUND_INTENSITY)
-        #define LOG_COLOR_YELLOW (FOREGROUND_RED | FOREGROUND_GREEN) 
-        #define LOG_COLOR_MAGENTA (FOREGROUND_RED | FOREGROUND_BLUE) 
-        #define LOG_COLOR_CYAN (FOREGROUND_GREEN | FOREGROUND_BLUE) 
-        #define LOG_COLOR_RED (FOREGROUND_RED | FOREGROUND_INTENSITY) 
-        #define LOG_COLOR_BLACK (0) 
-                
-        auto setcolor = [](int textcol, int backcol = 0) {
-          if ((textcol % 16) == (backcol % 16))textcol++;
-          textcol %= 16; backcol %= 16;
-          unsigned short wAttributes = ((unsigned)backcol << 4) | (unsigned)textcol;
-          HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
-          SetConsoleTextAttribute(hStdOut, wAttributes);
-        };
-
-        print("");
-        
-        switch (severity)
-        {
-        case OS_INFO: setcolor(LOG_COLOR_GREEN); break;
-        case OS_WARNING: setcolor(LOG_COLOR_YELLOW); break;
-        case OS_ERROR: setcolor(LOG_COLOR_RED); break;
-        }
-        /*switch (subsystem)
-        {
-        case OT_DOM: print("DOM: "); break;
-        case OT_CSSS: print("csss!: "); break;
-        case OT_CSS:  print("css: "); break;
-        case OT_TIS:  print("script: "); break;
-        }*/
-        if (text[text_length])
-        {
-          //unsigned n = wcslen(text);
-          assert(false);
-        }
-        else
-          print(text);
-        setcolor(LOG_COLOR_WHITE);
-      }
-#endif
     };
 
   }
