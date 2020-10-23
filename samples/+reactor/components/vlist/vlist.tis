@@ -136,8 +136,8 @@ class VList : Reactor.Component
       top = Integer.max(0,total - middle);
     } else if(bottom + top + middle < total)
       bottom = top = 0;
-    this.style[#padding-top] = px(top);
-    this.style[#padding-bottom] = px(bottom);
+    this.style.set { padding-top: ppx(top),
+                     padding-bottom: ppx(bottom) };
     Element.update.call(this); // use original Element.update method.
   }
 

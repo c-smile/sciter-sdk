@@ -163,10 +163,10 @@ function VirtualList(params) {
           }
         }
 
-        list.first.style#margin-top = px( bsn * item_height );
+        list.first.style#margin-top = ppx( bsn * item_height );
         if(niend < records.length) {
           var extra = (records.length - niend) * item_height;
-          list.last.style#margin-bottom = px(extra);
+          list.last.style#margin-bottom = ppx(extra);
         }
       }
     };
@@ -201,11 +201,11 @@ function VirtualList(params) {
       }
             
       if(list.first) {
-        list.first.style#margin-top = px( buffer_start * item_height );
+        list.first.style#margin-top = ppx( buffer_start * item_height );
         if(buffer_start + list.length < records.length) {
           var extra = (records.length - buffer_start - list.length) * item_height;
           if(extra > 0)
-            list.last.style#margin-bottom = px(extra);
+            list.last.style#margin-bottom = ppx(extra);
         }
       }
     };
@@ -259,10 +259,10 @@ function VirtualList(params) {
       
       if(list.first) {
         var before = buffer_start * item_height;
-        list.first.style#margin-top = px( before );
+        list.first.style#margin-top = ppx( before );
         var rest = records.length - (buffer_start + list.length);
         var after = rest >= 0? rest * item_height : 0;
-        list.last.style#margin-bottom = px(after);
+        list.last.style#margin-bottom = ppx(after);
       }
       list.scrollTo(0, sy);
     }
@@ -326,7 +326,7 @@ function VirtualList(params) {
         
         buffer_start += (end - start);
 
-        list.first.style#margin-top = px(topm + extra);
+        list.first.style#margin-top = ppx(topm + extra);
         list.update();
         list.scrollTo(0, sy + extra);
       } 
@@ -334,7 +334,7 @@ function VirtualList(params) {
       {
         var extra = (records.length - buffer_start - list.length) * item_height;
         if(extra > 0)
-          list.last.style#margin-bottom = px(extra);
+          list.last.style#margin-bottom = ppx(extra);
       }
       else {
         resetView();
@@ -358,13 +358,13 @@ function VirtualList(params) {
         var sy = list.scroll(#top);
         list.scrollTo(0, sy - extra);
         if(list.first)
-          list.first.style#margin-top = px(Integer.max(0,oldtop-extra));
+          list.first.style#margin-top = ppx(Integer.max(0,oldtop-extra));
       }
       else if( start > buffer_start + buffer_size ) {
         var extra = (records.length - buffer_start - list.length) * item_height;
         if(list.last) {
           if(extra > 0)
-            list.last.style#margin-bottom = px(extra);
+            list.last.style#margin-bottom = ppx(extra);
           else
             list.last.style#margin-bottom = undefined;
         }
