@@ -10,7 +10,10 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#fdfff6">4.4.5.2</td><td nowrap valign="top" align="center">2020-10-23</td><td>New:
+    <tr><td valign="top" bgcolor="#fdfff6">4.4.5.3</td><td nowrap valign="top" align="center">2020-10-24</td><td>Fixes:
+					<ul><li>[DOM, events] event subscription/matching fix.</li>
+						<li>[reactor] expressions that produce &quot;falsy&quot; results generate no content (as if their value was []).</li>
+						<li>[css/rendering] fix of outline rendering on <code>position:relative</code> containers, see: <a href="https://sciter.com/forums/topic/widgetscrollbar-and-hover-outline/">https://sciter.com/forums/topic/widgetscrollbar-and-hover-outline/</a>&nbsp;</li></ul></td></tr><tr><td valign="top" bgcolor="#fdfff6">4.4.5.2</td><td nowrap valign="top" align="center">2020-10-23</td><td>New:
 					<ul><li>[Sciter, reactor] + <code>&lt;Reactor.Fragment&gt;</code>...elements...<code>&lt;/Reactor.Fragment&gt;</code> support;</li>
 						<li>[html] + DOM attribute <code>styleset</code>: defines style set of the element explicitly, <code>&lt;div styleset=&quot;styles.css#setname&quot;&gt;</code>, the url can end with '<code>!</code>' to signify <code>!important</code>'ce. This enables style sets in reactor's functional components.&nbsp;</li>
 						</ul>
