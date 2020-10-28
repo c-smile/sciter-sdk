@@ -607,7 +607,7 @@
       float    getter(float*) const { return (float)get(0.0); }
       string   getter(string*) const { return to_string(); }
 #ifdef CPP11
-      astring  getter(astring*) const { auto chars = aux::w2utf(to_string())(); return astring(chars.start, chars.end()); }
+      astring  getter(astring*) const { aux::w2utf a(to_string()); return astring(a.c_str(), a.length()); }
 #endif
       value    getter(value*) const { return *this; }
 
