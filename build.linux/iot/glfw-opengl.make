@@ -105,8 +105,6 @@ ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -flto -Os `pkg-config gtk+-3.0 --cflags`
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -flto -Os -std=c++17 `pkg-config gtk+-3.0 --cflags` `pkg-config fontconfig --cflags` -fPIC -Wno-unknown-pragmas -Wno-write-strings -ldl
 ALL_LDFLAGS += $(LDFLAGS) -flto -s -fPIC -Wall -pthread -lm -lX11 -lXrandr -lXinerama -lXcursor -lGL -lGLU -ldl
 
-else
-  $(error "invalid configuration $(config)")
 endif
 
 # Per File Configurations
@@ -116,8 +114,28 @@ endif
 # File sets
 # #############################################
 
+GENERATED :=
 OBJECTS :=
 
+GENERATED += $(OBJDIR)/basic.o
+GENERATED += $(OBJDIR)/behavior_drawing.o
+GENERATED += $(OBJDIR)/context.o
+GENERATED += $(OBJDIR)/egl_context.o
+GENERATED += $(OBJDIR)/glad.o
+GENERATED += $(OBJDIR)/glx_context.o
+GENERATED += $(OBJDIR)/init.o
+GENERATED += $(OBJDIR)/input.o
+GENERATED += $(OBJDIR)/linux_joystick.o
+GENERATED += $(OBJDIR)/monitor.o
+GENERATED += $(OBJDIR)/osmesa_context.o
+GENERATED += $(OBJDIR)/posix_thread.o
+GENERATED += $(OBJDIR)/posix_time.o
+GENERATED += $(OBJDIR)/vulkan.o
+GENERATED += $(OBJDIR)/window.o
+GENERATED += $(OBJDIR)/x11_init.o
+GENERATED += $(OBJDIR)/x11_monitor.o
+GENERATED += $(OBJDIR)/x11_window.o
+GENERATED += $(OBJDIR)/xkb_unicode.o
 OBJECTS += $(OBJDIR)/basic.o
 OBJECTS += $(OBJDIR)/behavior_drawing.o
 OBJECTS += $(OBJDIR)/context.o
@@ -144,7 +162,7 @@ OBJECTS += $(OBJDIR)/xkb_unicode.o
 all: $(TARGET)
 	@:
 
-$(TARGET): $(OBJECTS) $(LDDEPS) | $(TARGETDIR)
+$(TARGET): $(GENERATED) $(OBJECTS) $(LDDEPS) | $(TARGETDIR)
 	$(PRELINKCMDS)
 	@echo Linking glfw-opengl
 	$(SILENT) $(LINKCMD)
@@ -170,9 +188,11 @@ clean:
 	@echo Cleaning glfw-opengl
 ifeq (posix,$(SHELLTYPE))
 	$(SILENT) rm -f  $(TARGET)
+	$(SILENT) rm -rf $(GENERATED)
 	$(SILENT) rm -rf $(OBJDIR)
 else
 	$(SILENT) if exist $(subst /,\\,$(TARGET)) del $(subst /,\\,$(TARGET))
+	$(SILENT) if exist $(subst /,\\,$(GENERATED)) rmdir /s /q $(subst /,\\,$(GENERATED))
 	$(SILENT) if exist $(subst /,\\,$(OBJDIR)) rmdir /s /q $(subst /,\\,$(OBJDIR))
 endif
 

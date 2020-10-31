@@ -19,7 +19,7 @@ const http = function() {
   
   function download(from, to, args..) 
   {
-      var rqp = { type:#get, url: from, toFile: to };
+      var rqp = { type:#get, url: from, toFile: to, noCache: true };
       var fn = 0;
       var on = 0;
       for( var p in args )

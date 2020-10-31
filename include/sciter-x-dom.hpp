@@ -104,6 +104,24 @@ namespace dom
     void prepend(HNODE hn); // as a first child node
     void insert_before(HNODE hn); // as a previous sibling
     void insert_after(HNODE hn);  // as a next sibling
+
+    // fetch DOM node reference from SCITER_VALUE envelope
+    static node from_value(const SCITER_VALUE& v) {
+      HNODE hn = 0;
+      SCDOM_RESULT r = SciterNodeUnwrap(&v, &hn);
+      assert(r == SCDOM_OK); (void)r;
+      return node(hn);
+    }
+
+    // wrap DOM node reference into sciter::value envelope
+    SCITER_VALUE to_value() const {
+      SCITER_VALUE v;
+      SCDOM_RESULT r = SciterNodeWrap(&v, hn);
+      assert(r == SCDOM_OK); (void)r;
+      return v;
+    }
+
+
   };
 
 
@@ -1107,20 +1125,25 @@ namespace dom
       assert(r == SCDOM_OK); (void)r;
     }
 
-    // wrap DOM element reference into sciter::value
-    SCITER_VALUE as_value()
-    {
-      SCITER_VALUE rv;
-      SCDOM_RESULT r = SciterGetExpando(he, &rv, TRUE);
+    // fetch DOM element reference from SCITER_VALUE envelope
+    static element from_value(const SCITER_VALUE& v) {
+      //element el = (HELEMENT)v.get_object_data();
+      HELEMENT hel = 0;
+      SCDOM_RESULT r = SciterElementUnwrap(&v, &hel);
       assert(r == SCDOM_OK); (void)r;
-      return rv;
+      return element(hel);
     }
 
-    static element from_value(const SCITER_VALUE& v) {
-      element el = (HELEMENT)v.get_object_data();
-      return el;
+    // wrap DOM element reference into sciter::value envelope
+    SCITER_VALUE to_value() const {
+      SCITER_VALUE v;
+      SCDOM_RESULT r = SciterElementWrap(&v, he);
+      assert(r == SCDOM_OK); (void)r;
+      return v;
     }
-    
+
+    SCITER_VALUE as_value() { return to_value(); }
+        
     struct find_first_callback: callback
     {
       HELEMENT hfound;

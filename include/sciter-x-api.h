@@ -42,9 +42,9 @@ struct SciterGraphicsAPI;
 struct SCITER_X_MSG;
 
 #ifdef WINDOWLESS
-  #define SCITER_API_VERSION 0x10006
+  #define SCITER_API_VERSION 0x10007
 #else
-  #define SCITER_API_VERSION 6
+  #define SCITER_API_VERSION 7
 #endif // !WINDOWLESS
 
 typedef struct _ISciterAPI {
@@ -271,8 +271,15 @@ typedef struct _ISciterAPI {
 
   SCDOM_RESULT SCFN(SciterGetElementAsset)(HELEMENT el, UINT64 nameAtom, som_asset_t** ppass);
 
-  BOOL   SCFN(SciterSetVariable)(HWINDOW hwndOrNull, LPCWSTR path, const VALUE* pval_to_set);
-  BOOL   SCFN(SciterGetVariable)(HWINDOW hwndOrNull, LPCWSTR path, VALUE* pval_to_get);
+  UINT   SCFN(SciterSetVariable)(HWINDOW hwndOrNull, LPCWSTR path, const VALUE* pvalToSet);
+  UINT   SCFN(SciterGetVariable)(HWINDOW hwndOrNull, LPCWSTR path, VALUE* pvalToGet);
+
+  UINT   SCFN(SciterElementUnwrap)(const VALUE* pval, HELEMENT* ppElement);
+  UINT   SCFN(SciterElementWrap)(VALUE* pval, HELEMENT pElement);
+
+  UINT   SCFN(SciterNodeUnwrap)(const VALUE* pval, HNODE* ppNode);
+  UINT   SCFN(SciterNodeWrap)(VALUE* pval, HNODE pNode);
+
 
 } ISciterAPI;
 
@@ -688,5 +695,11 @@ inline ISciterAPI *_SAPI(ISciterAPI *ext) {
   inline UINT64 SCAPI SciterAtomValue(const char* name) { return SAPI()->SciterAtomValue(name); }
   inline UINT64 SCAPI SciterAtomNameCB(UINT64 atomv, LPCSTR_RECEIVER* rcv, LPVOID rcv_param) { return SAPI()->SciterAtomNameCB(atomv, rcv, rcv_param); }
   inline BOOL   SCAPI SciterSetGlobalAsset(som_asset_t* pass) { return SAPI()->SciterSetGlobalAsset(pass); }
+
+  inline UINT   SCAPI SciterElementUnwrap(const VALUE* pval, HELEMENT* ppElement) { return SAPI()->SciterElementUnwrap(pval, ppElement); }
+  inline UINT   SCAPI SciterElementWrap(VALUE* pval, HELEMENT pElement) { return SAPI()->SciterElementWrap(pval, pElement); }
+
+  inline UINT   SCAPI SciterNodeUnwrap(const VALUE* pval, HNODE* ppNode) { return SAPI()->SciterNodeUnwrap(pval, ppNode); }
+  inline UINT   SCAPI SciterNodeWrap(VALUE* pval, HNODE pNode) { return SAPI()->SciterNodeWrap(pval, pNode); }
 
 #endif
