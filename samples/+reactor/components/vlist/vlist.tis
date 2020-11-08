@@ -280,6 +280,8 @@ class VTable: Reactor.Component
     this.recordview = props.recordview ?? kids[1]; // function producing record markup (a.k.a. record view)    
     this.multiselect = isTruthy(props.multiselect);
     this.sortable = isTruthy(props.sortable);
+    this.sortField = props.sortField;
+    this.sortOrder = props.sortOrder;
 
     assert typeof this.recordset == #array;
     assert typeof this.recordview == #function;
@@ -394,7 +396,7 @@ class VTableFiltered: Reactor.Component
   this var filter = null;         
   this var filterData = {};       // value of <form.filter>, json
   this var sortField = undefined; // sorting
-  this var sortOrder = true;      // true - ascending, false - descending
+  this var sortOrder = undefined;      // true - ascending, false - descending
 
   function this(props,kids) {
     assert kids[0].tag == #filter;        // expect <filter>...</filter>
@@ -410,6 +412,9 @@ class VTableFiltered: Reactor.Component
     this.recordset = props.recordset ?? [],        // recordset
     this.recordview = props.recordview;            // function producing record markup (a.k.a. record view)    
     this.multiselect = props.multiselect;
+    this.sortable = isTruthy(props.sortable);
+    this.sortField = props.sortField;
+    this.sortOrder = props.sortOrder;
     assert typeof this.recordset == #array;
     assert typeof this.recordview == #function;
 
@@ -422,6 +427,9 @@ class VTableFiltered: Reactor.Component
       <VTable recordset={this.filteredset} 
               multiselect={this.multiselect} 
               recordview={this.recordview}
+              sortable={this.sortable}
+              sortField={this.sortField}
+              sortOrder={this.sortOrder}
               @{this.vtable}>
         <columns>{this.columnsContent}</columns>
       </VTable>
