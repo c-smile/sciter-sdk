@@ -54,6 +54,7 @@ function getPackfolderPath() {
 function getScappPath(target) {
   switch(target) {
     case "winX32": return checkFile( System.home("../x32/scapp.exe") ) || checkFile( System.home("../../bin.win/x32/scapp.exe"));
+    case "winX64": return checkFile( System.home("../x64/scapp.exe") ) || checkFile( System.home("../../bin.win/x64/scapp.exe"));
     case "winARM64": return checkFile( System.home("../arm64/scapp.exe") ) || checkFile(System.home("../../bin.win/arm64/scapp.exe"));
     case "macX64": return checkFile( System.home("scapp") ) || checkFile(System.home("../../bin.osx/scapp"));
     case "linuxX64": return checkFile( System.home("../x64/scapp") ) || checkFile( System.home("../../bin.lnx/x64/scapp"));
@@ -123,6 +124,13 @@ async function assemble(params) {
           await convertSvgToIco(params.logo,icofile);
           const scapp = checkFile( System.home("../x32/scapp.exe") ) || checkFile( System.home("../../bin.win/x32/scapp.exe"));
           const exefile = makePath(params.out, ["windows","x32"], params.exe + ".exe");
+          var p = {}.extend(params,{icofile:icofile});
+          assembleExe(target,scapp,datfile,exefile,p);
+        } break;
+        case "winX64": {
+          await convertSvgToIco(params.logo,icofile);
+          const scapp = checkFile( System.home("../x64/scapp.exe") ) || checkFile( System.home("../../bin.win/x64/scapp.exe"));
+          const exefile = makePath(params.out, ["windows","x64"], params.exe + ".exe");
           var p = {}.extend(params,{icofile:icofile});
           assembleExe(target,scapp,datfile,exefile,p);
         } break;
