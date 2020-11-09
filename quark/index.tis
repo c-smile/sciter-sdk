@@ -108,7 +108,8 @@ class ProjectView : Reactor.Component {
               <input|text(productCopyright) novalue="product copyright"/>
         <label>Targets</label>
             <select|select(targets) multiple="checkmarks">
-              <option value="winX32">Windows</option>
+              <option value="winX32">Windows X32</option>
+              <option value="winX64">Windows X64</option>
               <option value="winARM64">Windows/ARM64</option>
               <option value="macX64">Mac OSX</option>
               <option value="macARM64" disabled>Mac OSX/ARM64</option>
