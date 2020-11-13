@@ -10,7 +10,20 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#fdfff6">4.4.5.4</td><td nowrap valign="top" align="center">2020-10-31</td><td>
+    <tr><td valign="top" bgcolor="#fdfff6">4.4.5.5</td><td nowrap valign="top" align="center">2020-11-12</td><td>Fixes:
+					<ul><li>[svg] support of dominant-baseline, alignment-baseline and text-anchor attributes in &lt;text&gt;.</li>
+						<li>[script] <code>Date.toLocaleString(#time)</code> fix.</li>
+						<li>[UI] fix of cursor appearance while animating and updates.</li>
+						<li>[a11y] checkbox handling.</li>
+						<li>libuv: 2020.09.26, Version 1.40.0</li>
+						<li>[sciter] native asset handling ( to/from script ), see: <a href="https://sciter.com/forums/topic/asset-wrap-bug/">https://sciter.com/forums/topic/asset-wrap-bug/</a>&nbsp;</li>
+						<li>[css] fix of specificity handling in @media {} sections, see: https://sciter.com/forums/topic/load_html-and-load_file-has-different-css-behavior/&nbsp;</li>
+						<li>[reactor] allowing reconciliation on elements with custom behaviors.</li>
+						<li>[CSS] <code>flow:grid(...)</code> fix of layout calculation (off by one pixel).</li>
+						<li>[spellcheck] <code>&lt;richtext lang=&quot;...&quot;&gt;</code>, if <code>lang</code> is defined explicitly then it is used as a spell check language.</li>
+						<li>[layout] fix of double click handling on first word in textarea.</li>
+						<li>[richtext] better handling &lt;inline-block&gt; removals.</li>
+						<li>fix of emojii handling.</li></ul></td></tr><tr><td valign="top" bgcolor="#fdfff6">4.4.5.4</td><td nowrap valign="top" align="center">2020-10-31</td><td>
 					
 					<p>New:</p>
 					<ul><li>API, explicit methods to wrap/unwrap HELEMENT and HNODE handles into VALUE<ul><li>UINT &nbsp; SciterElementUnwrap(const VALUE* pval, HELEMENT* ppElement);</li><li> UINT &nbsp; SciterElementWrap(VALUE* pval, HELEMENT pElement);</li><li> UINT &nbsp; SciterNodeUnwrap(const VALUE* pval, HNODE* ppNode);</li><li> UINT &nbsp; SciterNodeWrap(VALUE* pval, HNODE pNode);</li></ul></li>

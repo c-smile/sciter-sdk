@@ -78,10 +78,10 @@
       <p>Returns ISO 8601 string representation of this date object as either local or UTC date/time.</p></dd>
     <dt>toLocaleString</dt>
     <dd>
-      <p><strong>( </strong>[<em>longFormat:</em>false|true[, <i>andTime</i>:false|true]]<strong> )</strong> returns: string</p>
+      <p><strong>( </strong> &nbsp;[<em> #date | #time ] </em> [, <i>#long</i> ] <strong>)</strong> returns: string</p>
       <p>Returns string representation of the date using current system settings. Local time.</p>
-			<p>If&nbsp;<em>longFormat</em> is equal exactly <em>true</em> then formats date using system long date format.</p>
-			<p>If <i>andTime</i> is true then result string will also contain time.</p></dd>
+			<p>If&nbsp;<em>#date</em> is provided then it will return only date portion. If <i>#time</i> - only time.</p>
+			<p>If <i>#long</i> is provided then it will use long time format as defined by the system.</p></dd>
     <dt>valueOf</dt>
     <dd>
       <div><strong>()</strong> returns: <em>float</em></div>

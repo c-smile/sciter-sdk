@@ -147,11 +147,13 @@ inline  VOID    SCAPI SciterSetupDebugOutput ( HWINDOW hwndOrNull, LPVOID param,
           freopen("conin$", "r", stdin);
           freopen("conout$", "w", stdout);
           freopen("conout$", "w", stderr);
+#if 0          
           DWORD cm;
           if(GetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE),&cm))
             SetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), cm | ENABLE_VIRTUAL_TERMINAL_INPUT);
           if (GetConsoleMode(GetStdHandle(STD_ERROR_HANDLE), &cm))
             SetConsoleMode(GetStdHandle(STD_ERROR_HANDLE), cm | ENABLE_VIRTUAL_TERMINAL_INPUT);
+#endif            
 #pragma warning( pop )
           initialized = true;
         }
