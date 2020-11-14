@@ -12,7 +12,7 @@
 
 class CSciterChildView : public CWnd, 
                          public sciter::host<CSciterChildView>, // Sciter host window primitives
-                         public sciter::event_handler           // Sciter DOM event handling
+                         public sciter::event_handler_raw       // Sciter DOM event handling
 {
 // Construction
 public:

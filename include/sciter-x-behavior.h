@@ -895,12 +895,12 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
 
     };
 
-    inline void attach_dom_event_handler(HWINDOW hwnd, event_handler* ph)
+    inline void attach_dom_event_handler(HWINDOW hwnd, event_handler_raw* ph)
     {
       int r = SciterWindowAttachEventHandler( hwnd, &event_handler_raw::element_proc, static_cast<event_handler_raw*>(ph), HANDLE_ALL );
       assert(r == SCDOM_OK); (void)r;
     }
-    inline void detach_dom_event_handler(HWINDOW hwnd, event_handler* ph)
+    inline void detach_dom_event_handler(HWINDOW hwnd, event_handler_raw* ph)
     {
       int r = SciterWindowDetachEventHandler( hwnd, &event_handler_raw::element_proc, static_cast<event_handler_raw*>(ph));
       assert(r == SCDOM_OK); (void)r;
