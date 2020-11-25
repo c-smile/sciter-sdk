@@ -105,8 +105,6 @@ ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -flto -Os `pkg-config gtk+-3.0 --cflags`
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -flto -Os -std=c++14 `pkg-config gtk+-3.0 --cflags` `pkg-config fontconfig --cflags` -fPIC -Wno-unknown-pragmas -Wno-write-strings -ldl
 ALL_LDFLAGS += $(LDFLAGS) -flto -s `pkg-config gtk+-3.0 --libs` `pkg-config fontconfig --libs` -fPIC -pthread -Wl,--no-undefined -ldl
 
-else
-  $(error "invalid configuration $(config)")
 endif
 
 # Per File Configurations
@@ -116,8 +114,11 @@ endif
 # File sets
 # #############################################
 
+GENERATED :=
 OBJECTS :=
 
+GENERATED += $(OBJDIR)/inspector.o
+GENERATED += $(OBJDIR)/sciter-gtk-main.o
 OBJECTS += $(OBJDIR)/inspector.o
 OBJECTS += $(OBJDIR)/sciter-gtk-main.o
 
@@ -127,7 +128,7 @@ OBJECTS += $(OBJDIR)/sciter-gtk-main.o
 all: $(TARGET)
 	@:
 
-$(TARGET): $(OBJECTS) $(LDDEPS) | $(TARGETDIR)
+$(TARGET): $(GENERATED) $(OBJECTS) $(LDDEPS) | $(TARGETDIR)
 	$(PRELINKCMDS)
 	@echo Linking inspector
 	$(SILENT) $(LINKCMD)
@@ -153,9 +154,11 @@ clean:
 	@echo Cleaning inspector
 ifeq (posix,$(SHELLTYPE))
 	$(SILENT) rm -f  $(TARGET)
+	$(SILENT) rm -rf $(GENERATED)
 	$(SILENT) rm -rf $(OBJDIR)
 else
 	$(SILENT) if exist $(subst /,\\,$(TARGET)) del $(subst /,\\,$(TARGET))
+	$(SILENT) if exist $(subst /,\\,$(GENERATED)) rmdir /s /q $(subst /,\\,$(GENERATED))
 	$(SILENT) if exist $(subst /,\\,$(OBJDIR)) rmdir /s /q $(subst /,\\,$(OBJDIR))
 endif
 

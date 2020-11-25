@@ -1,4 +1,4 @@
-<html>
+﻿<html>
   <head>
   <title></title>
   <style> 
@@ -14,12 +14,17 @@
 
     event click $(#load) {
       var fn = view.selectFile(#load, HTML_FILES , "html" );
-      if( fn ) $(richtext).load(fn);
+      if( fn ) $(richtext).richtext.load(fn);
     }
+
+    event click $(#load-from-string) {
+       $(richtext).richtext.load("<p>Привет,мир!</p>","about:blank");
+    }
+
     
     event click $(#save) {
-      var fn = view.selectFile(#save, HTML_FILES , "html", "rtext.htm", "�File name:");
-      if( fn ) $(richtext).save(fn);
+      var fn = view.selectFile(#save, HTML_FILES , "html", "rtext.htm", "‘File name:");
+      if( fn ) $(richtext).richtext.save(fn);
     }
     
   </script>
@@ -27,6 +32,7 @@
 <body>
   <button #load>Load</button>
   <button #save>Save</button>
+  <button #load-from-string>Load from String</button>
   <richtext src="test-doc.htm" />
 
 
