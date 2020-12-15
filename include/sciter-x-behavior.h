@@ -65,10 +65,10 @@
  * \return true if event was handled, false otherwise.
  **/
 
-typedef  BOOL SC_CALLBACK ElementEventProc(LPVOID tag, HELEMENT he, UINT evtg, LPVOID prms );
+typedef  SBOOL SC_CALLBACK ElementEventProc(LPVOID tag, HELEMENT he, UINT evtg, LPVOID prms );
 typedef  ElementEventProc * LPElementEventProc;
 // signature of the function exported from external behavior/dll.
-typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEventProc*, LPVOID* );
+typedef SBOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEventProc*, LPVOID* );
 
   enum PHASE_MASK
   {
@@ -167,7 +167,7 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
       UINT      button_state; // MOUSE_BUTTONS
       UINT      alt_state;    // KEYBOARD_STATES
       UINT      cursor_type;  // CURSOR_TYPE to set, see CURSOR_TYPE
-      BOOL      is_on_icon;   // mouse is over icon (foreground-image, foreground-repeat:no-repeat)
+      SBOOL      is_on_icon;   // mouse is over icon (foreground-image, foreground-repeat:no-repeat)
 
       HELEMENT  dragging;     // element that is being dragged over, this field is not NULL if (cmd & DRAGGING) != 0
       UINT      dragging_mode;// see DRAGGING_TYPE. 
@@ -245,7 +245,7 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
       HELEMENT  target;         /**< target element, for #FOCUS_LOST it is a handle of new focus element
                                      and for #FOCUS_GOT it is a handle of old focus element, can be NULL */
       UINT      cause;          /**< focus cause params or FOCUS_CMD_TYPE for FOCUS_ADVANCE_REQUEST */
-      BOOL      cancel;         /**< in #FOCUS_REQUEST and #FOCUS_LOST phase setting this field to true will cancel transfer focus from old element to the new one. */
+      SBOOL      cancel;         /**< in #FOCUS_REQUEST and #FOCUS_LOST phase setting this field to true will cancel transfer focus from old element to the new one. */
   };
 
 // parameters of evtg == HANDLE_SCROLL
@@ -289,7 +289,7 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
       UINT      cmd;          // SCROLL_EVENTS
       HELEMENT  target;       // target element
       INT       pos;          // scroll position if SCROLL_POS
-      BOOL      vertical;     // true if from vertical scrollbar
+      SBOOL      vertical;     // true if from vertical scrollbar
       UINT      source;       // SCROLL_SOURCE
       UINT      reason;       // key or scrollbar part
   };
@@ -781,10 +781,10 @@ typedef BOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEvent
       // notification event: data requested by SciterRequestElementData just delivered
       virtual bool on_data_arrived (HELEMENT he, HELEMENT initiator, LPCBYTE data, UINT dataSize, UINT dataType ) { return false; }
 
-      virtual bool on_scroll( HELEMENT he, HELEMENT target, SCROLL_EVENTS cmd, INT pos, BOOL isVertical ) { return false; }
+      virtual bool on_scroll( HELEMENT he, HELEMENT target, SCROLL_EVENTS cmd, INT pos, SBOOL isVertical ) { return false; }
 
       // ElementEventProc implementeation
-      static BOOL SC_CALLBACK  element_proc(LPVOID tag, HELEMENT he, UINT evtg, LPVOID prms )
+      static SBOOL SC_CALLBACK  element_proc(LPVOID tag, HELEMENT he, UINT evtg, LPVOID prms )
       {
         event_handler_raw* pThis = static_cast<event_handler_raw*>(tag);
         if( pThis ) switch( evtg )

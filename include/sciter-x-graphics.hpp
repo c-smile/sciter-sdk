@@ -38,7 +38,7 @@ namespace sciter
   struct writer
   {
     virtual bool write( aux::bytes data ) = 0; // redefine to do actual writing of data.start/data.length
-    static BOOL SCAPI image_write_function(LPVOID prm, const BYTE* data, UINT data_length)
+    static SBOOL SCAPI image_write_function(LPVOID prm, const BYTE* data, UINT data_length)
     {
       writer* pw = (writer* )prm;
       return pw->write( aux::bytes(data,data_length) );
@@ -136,7 +136,7 @@ namespace sciter
     
     bool dimensions( UINT& width, UINT& height ) {
       if( himg ) {
-        BOOL usesAlpha;
+        SBOOL usesAlpha;
         GRAPHIN_RESULT r = gapi()->imageGetInfo(himg,&width,&height,&usesAlpha); assert(r == GRAPHIN_OK); (void)(r);
         return true;
       }

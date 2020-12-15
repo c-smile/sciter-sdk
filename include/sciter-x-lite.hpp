@@ -39,7 +39,7 @@ namespace sciter
   {
   public:
     lite(UINT backend = GFX_LAYER_SKIA_OPENGL) { // or GFX_LAYER_D2D
-      BOOL r = SciterProcX(this, SCITER_X_MSG_CREATE(backend, FALSE));
+      SBOOL r = SciterProcX(this, SCITER_X_MSG_CREATE(backend, FALSE));
       assert(r);
       if (r) {
         setup_callback();

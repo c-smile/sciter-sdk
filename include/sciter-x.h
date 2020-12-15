@@ -50,7 +50,7 @@
   *
  **/
 
-typedef BOOL SCAPI SciterLibraryInitFunc(ISciterAPI* psapi, SCITER_VALUE* plibobject);
+typedef SBOOL SCAPI SciterLibraryInitFunc(ISciterAPI* psapi, SCITER_VALUE* plibobject);
 
 
 

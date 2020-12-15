@@ -217,7 +217,7 @@ namespace sciter
       {
         HWINDOW hwnd = static_cast< BASE* >(this)->get_hwnd();
         SCITER_VALUE rv;
-        BOOL r = SciterCall(hwnd, name, argc, argv, &rv);
+        SBOOL r = SciterCall(hwnd, name, argc, argv, &rv);
 #if !defined(SCITER_SUPPRESS_SCRIPT_ERROR_THROW)
         if( (r == FALSE) && rv.is_error_string()) {
           aux::w2a u8 (rv.get(WSTR("")));

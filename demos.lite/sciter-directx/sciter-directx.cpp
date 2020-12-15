@@ -832,7 +832,7 @@ void Render()
 
   // view_dom_event_handler, provides native methods to be used in script
 
-  struct view_dom_event_handler : public sciter::event_handler{
+  struct view_dom_event_handler : public sciter::event_handler_raw {
     BEGIN_FUNCTION_MAP
       FUNCTION_1("setRotationSpeed",setRotationSpeed)
       FUNCTION_1("setColorSpeed",setColorSpeed)

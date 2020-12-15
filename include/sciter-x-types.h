@@ -43,6 +43,13 @@ enum GFX_LAYER
   #define WINDOWLESS
 #endif
 
+#ifndef SBOOL
+  typedef int SBOOL;
+#endif
+#ifndef TRUE
+  #define TRUE (1)
+  #define FALSE (0)
+#endif
 
 #if defined(_WIN32) || defined(_WIN64)
 
@@ -120,13 +127,6 @@ enum GFX_LAYER
   //#ifdef __OBJC__
   //  #define char16_t uint16_t
   //#endif
-  #ifndef BOOL
-    typedef signed char BOOL;
-  #endif
-  #ifndef TRUE
-    #define TRUE (1)
-    #define FALSE (0)
-  #endif
 
   typedef unsigned int UINT;
   typedef int INT;
@@ -202,13 +202,6 @@ enum GFX_LAYER
   #include <string.h>
   #include <wctype.h>
 
-  #ifndef BOOL
-    typedef signed char BOOL;
-  #endif
-  #ifndef TRUE
-    #define TRUE (1)
-    #define FALSE (0)
-  #endif
   typedef unsigned int UINT;
   typedef int INT;
   typedef unsigned int UINT32;
@@ -283,8 +276,8 @@ enum GFX_LAYER
   #include <uchar.h>
   #include <string.h>
 
-  #ifndef BOOL
-  typedef signed char        BOOL;
+  #ifndef SBOOL
+  typedef signed char        SBOOL;
   #endif
   #ifndef TRUE
   #define TRUE (1)

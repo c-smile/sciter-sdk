@@ -389,10 +389,10 @@ namespace dom
     **/
     void release_capture() { SciterReleaseCapture(he); }
 
-    inline static BOOL SC_CALLBACK callback_func( HELEMENT he, LPVOID param )
+    inline static SBOOL SC_CALLBACK callback_func( HELEMENT he, LPVOID param )
     {
       callback *pcall = (callback *)param;
-      return (BOOL)pcall->on_element(he); // BOOL(true) - stop enumeration
+      return (SBOOL)pcall->on_element(he); // SBOOL(true) - stop enumeration
     }
 
     inline void select_elements( callback *pcall,
@@ -425,7 +425,7 @@ namespace dom
     **/
     void update( bool render_now = false ) const
     {
-      SciterUpdateElement(he, (BOOL)render_now);
+      SciterUpdateElement(he, (SBOOL)render_now);
     }
 
     void refresh( RECT rc ) const
@@ -585,7 +585,7 @@ namespace dom
     HWINDOW get_element_hwnd(bool root_window) const
     {
       HWINDOW hwnd = 0;
-      SciterGetElementHwnd(he,&hwnd, (BOOL)root_window);
+      SciterGetElementHwnd(he,&hwnd, (SBOOL)root_window);
       return hwnd;
     }
 
@@ -666,7 +666,7 @@ namespace dom
         get_html( bool outer = true) const
     {
       sciter::astring s;
-      SCDOM_RESULT r = SciterGetElementHtmlCB(he, BOOL(outer), &_LPCBYTE2ASTRING,&s);
+      SCDOM_RESULT r = SciterGetElementHtmlCB(he, SBOOL(outer), &_LPCBYTE2ASTRING,&s);
       assert(r == SCDOM_OK); (void)r;
       return s;
     }
@@ -797,14 +797,14 @@ namespace dom
       /*ELEMENT_STATE_BITS*/ unsigned int bitsToSet,
       /*ELEMENT_STATE_BITS*/ unsigned int bitsToClear = 0, bool update = true )
     {
-      SCDOM_RESULT r = SciterSetElementState(he,bitsToSet,bitsToClear, BOOL(update));
+      SCDOM_RESULT r = SciterSetElementState(he,bitsToSet,bitsToClear, SBOOL(update));
       assert(r == SCDOM_OK); (void)r;
     }
 
     /** "deeply enabled" **/
     bool enabled()
     {
-      BOOL b = false;
+      SBOOL b = false;
       SCDOM_RESULT r = SciterIsElementEnabled(he,&b);
       assert(r == SCDOM_OK); (void)r;
       return b != 0;
@@ -813,7 +813,7 @@ namespace dom
     /** "deeply visible" **/
     bool visible()
     {
-      BOOL b = false;
+      SBOOL b = false;
       SCDOM_RESULT r = SciterIsElementVisible(he,&b);
       assert(r == SCDOM_OK); (void)r;
       return b != 0;
@@ -910,7 +910,7 @@ namespace dom
       **/
     bool send_event(unsigned int event_code, uintptr_t reason = 0, HELEMENT heSource = 0)
     {
-      BOOL handled = false;
+      SBOOL handled = false;
       SCDOM_RESULT r = SciterSendEvent(he, event_code, heSource? heSource: he, reason, &handled);
       assert(r == SCDOM_OK); (void)r;
       return handled != 0;
@@ -928,7 +928,7 @@ namespace dom
 
     bool fire_event(const BEHAVIOR_EVENT_PARAMS& evt, bool post = true)
     {
-      BOOL handled = false;
+      SBOOL handled = false;
       SCDOM_RESULT r = SciterFireEvent(&evt, post, &handled);
       assert(r == SCDOM_OK); (void)r;
       return handled != 0;
@@ -1333,7 +1333,7 @@ namespace dom
 
   inline void node::remove()
   {
-    SCDOM_RESULT r = SciterNodeRemove(hn,BOOL(true));
+    SCDOM_RESULT r = SciterNodeRemove(hn,SBOOL(true));
     assert(r == SCDOM_OK); (void)r;
     SciterNodeRelease(hn);
     hn = 0;
@@ -1341,7 +1341,7 @@ namespace dom
 
   inline void node::detach()
   {
-    SCDOM_RESULT r = SciterNodeRemove(hn,BOOL(false));
+    SCDOM_RESULT r = SciterNodeRemove(hn,SBOOL(false));
     assert(r == SCDOM_OK); (void)r;
   }
 

@@ -85,7 +85,7 @@ namespace sciter {
     }
   }
   
-  LRESULT window::on_message( HWINDOW hwnd, UINT msg, WPARAM wParam, LPARAM lParam, BOOL& pHandled )
+  LRESULT window::on_message( HWINDOW hwnd, UINT msg, WPARAM wParam, LPARAM lParam, SBOOL& pHandled )
   {
      //switch(msg) {
      //  case WM_SIZE: on_size(); break; 
@@ -94,7 +94,7 @@ namespace sciter {
      return 0;
   }
 
-  LRESULT SC_CALLBACK window::msg_delegate(HWINDOW hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LPVOID pParam, BOOL* pHandled)
+  LRESULT SC_CALLBACK window::msg_delegate(HWINDOW hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LPVOID pParam, SBOOL* pHandled)
   {
     window* win = static_cast<window*>( pParam );
     return win->on_message( hwnd, msg, wParam, lParam,*pHandled);

@@ -221,7 +221,7 @@ UINT SCAPI ValueNthElementValueSet( VALUE* pval, INT n, const VALUE* pval_to_set
 /**Callback function used with #ValueEnumElements().
  * return TRUE to continue enumeration
  */
-typedef BOOL SC_CALLBACK KeyValueCallback( LPVOID param, const VALUE* pkey, const VALUE* pval );
+typedef SBOOL SC_CALLBACK KeyValueCallback( LPVOID param, const VALUE* pkey, const VALUE* pval );
 
 /**
  * ValueEnumElements - enumeartes key/value pairs of T_MAP, T_FUNCTION and T_OBJECT values
@@ -307,7 +307,7 @@ UINT SCAPI ValueNativeFunctorSet( VALUE* pval,
     NATIVE_FUNCTOR_RELEASE* prelease /* = NULL*/,
     VOID* tag /* = NULL*/ );
 
-BOOL SCAPI ValueIsNativeFunctor( const VALUE* pval);
+SBOOL SCAPI ValueIsNativeFunctor( const VALUE* pval);
 
 
 #if defined(__cplusplus) && !defined(__value_hpp__) && !defined(PLAIN_API_ONLY)

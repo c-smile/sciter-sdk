@@ -45,9 +45,9 @@ typedef struct SCITER_X_MSG_CREATE
 {
   SCITER_X_MSG header;
           UINT backend;
-          BOOL transparent;
+          SBOOL transparent;
 #ifdef __cplusplus
-   SCITER_X_MSG_CREATE(UINT backendType = GFX_LAYER_SKIA_OPENGL, BOOL isTransparent = TRUE ) 
+   SCITER_X_MSG_CREATE(UINT backendType = GFX_LAYER_SKIA_OPENGL, SBOOL isTransparent = TRUE ) 
      : header(SXM_CREATE), backend(backendType), transparent(isTransparent) {}
 #endif
 } SCITER_X_MSG_CREATE;
@@ -99,9 +99,9 @@ typedef struct SCITER_X_MSG_KEY {
 
 typedef struct SCITER_X_MSG_FOCUS {
   SCITER_X_MSG    header;
-  BOOL            got; // true - got, false - lost
+  SBOOL            got; // true - got, false - lost
 #ifdef __cplusplus
-  SCITER_X_MSG_FOCUS(BOOL g) : header(SXM_FOCUS), got(g) {}
+  SCITER_X_MSG_FOCUS(SBOOL g) : header(SXM_FOCUS), got(g) {}
 #endif
 } SCITER_X_MSG_FOCUS;
 
@@ -138,7 +138,7 @@ typedef enum SCITER_PAINT_TARGET_TYPE {
 typedef struct SCITER_X_MSG_PAINT {
   SCITER_X_MSG header;
       HELEMENT element;    /**< [in] layer #HELEMENT, can be NULL if whole tree (document) needs to be rendered.*/
-      BOOL     isFore;     /**< [in] if element is not null tells if that element is fore-layer.*/    
+      SBOOL     isFore;     /**< [in] if element is not null tells if that element is fore-layer.*/    
       UINT     targetType; /**< [in] one of #SCITER_PAINT_TARGET_TYPE values */
       union {
         LPVOID pSurface;   /**< [in] must be IDXGISurface* */
@@ -149,7 +149,7 @@ typedef struct SCITER_X_MSG_PAINT {
       } target;
 
 #ifdef __cplusplus
-  SCITER_X_MSG_PAINT(HELEMENT layerElement = NULL, BOOL foreLayer = TRUE) : header(SXM_PAINT), element(layerElement), isFore(foreLayer), targetType(SPT_DEFAULT) {}
+  SCITER_X_MSG_PAINT(HELEMENT layerElement = NULL, SBOOL foreLayer = TRUE) : header(SXM_PAINT), element(layerElement), isFore(foreLayer), targetType(SPT_DEFAULT) {}
 #endif
 } SCITER_X_MSG_PAINT;
 
