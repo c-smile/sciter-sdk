@@ -10,7 +10,7 @@ extern HINSTANCE ghInstance;
 
 class window :
   public sciter::host<window>,
-  public sciter::event_handler
+  public sciter::event_handler_raw
 {
   HWND hwnd;
   bool loaded;
@@ -20,6 +20,8 @@ class window :
   HBITMAP memBm;
   SIZE memSize;
 
+  typedef sciter::host<window> super;
+
 public:
   // notification_handler traits:
   HWINDOW   get_hwnd() const { return (HWINDOW)this; }
@@ -27,7 +29,7 @@ public:
   LRESULT handle_notification(LPSCITER_CALLBACK_NOTIFICATION pnm);
 
   virtual LRESULT on_load_data(LPSCN_LOAD_DATA pnmld) override;
-  virtual bool handle_scripting_call(HELEMENT he, SCRIPTING_METHOD_PARAMS& params) override;
+  //virtual bool handle_scripting_call(HELEMENT he, SCRIPTING_METHOD_PARAMS& params) override;
 
   /* sciter::request / LOAD_MYSELF testing */
   /*LRESULT on_load_data(LPSCN_LOAD_DATA pnmld) {

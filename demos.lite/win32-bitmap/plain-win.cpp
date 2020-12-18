@@ -44,20 +44,14 @@ LRESULT window::handle_notification(LPSCITER_CALLBACK_NOTIFICATION pnm)
     InvalidateRect(hwnd, &((SCN_INVALIDATE_RECT*)pnm)->invalidRect,FALSE);
     return 0;
   }
-  return __super::handle_notification(pnm);
+  return super::handle_notification(pnm);
 }
 
 LRESULT window::on_load_data(LPSCN_LOAD_DATA nm)
 {
   sciter::debug_output::instance()->printf("%ws\n", nm->uri);
 
-  return __super::on_load_data(nm);
-}
-
-bool window::handle_scripting_call(HELEMENT he, SCRIPTING_METHOD_PARAMS& params)
-{
-  sciter::debug_output::instance()->printf("he %p call '%s'\n", he, params.name);
-  return __super::handle_scripting_call(he, params);
+  return super::on_load_data(nm);
 }
 
 window::window()
@@ -267,8 +261,8 @@ LRESULT CALLBACK window::wnd_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
     if (!self->loaded)
       break;
 
-    static int pcnt = 0;
-    sciter::debug_output::instance()->printf("print %d\n",++pcnt);
+    //static int pcnt = 0;
+    //sciter::debug_output::instance()->printf("print %d\n",++pcnt);
 
     auto on_bitmap = [](LPCBYTE rgba, INT x, INT y, UINT width, UINT height, LPVOID param)
     {

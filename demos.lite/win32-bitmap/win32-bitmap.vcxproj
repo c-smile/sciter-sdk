@@ -166,11 +166,6 @@
   <ItemGroup>
     <ClInclude Include="plain-win.h" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\build.windows\sciter.lite.vcxproj">
-      <Project>{2ba127a5-9756-a09a-204b-9a718cff969e}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
