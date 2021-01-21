@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
 		<Option title="usciter" />
 		<Option pch_mode="2" />
-		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug|x32">
 				<Option output="../../bin.lnx/x32/usciter" prefix_auto="0" extension_auto="0" />
@@ -12,6 +11,8 @@
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-m32" />
+					<Add option="-g" />
 					<Add option="-m32" />
 					<Add option="-g" />
 					<Add option="-std=c++14" />
@@ -43,6 +44,9 @@
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-m32" />
+					<Add option="-flto" />
+					<Add option="-Os" />
 					<Add option="-m32" />
 					<Add option="-flto" />
 					<Add option="-Os" />
@@ -78,6 +82,8 @@
 				<Compiler>
 					<Add option="-m64" />
 					<Add option="-g" />
+					<Add option="-m64" />
+					<Add option="-g" />
 					<Add option="-std=c++14" />
 					<Add option="-DDEVICE=DESKTOP" />
 					<Add option="-D_GNU_SOURCE" />
@@ -107,6 +113,9 @@
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-m64" />
+					<Add option="-flto" />
+					<Add option="-Os" />
 					<Add option="-m64" />
 					<Add option="-flto" />
 					<Add option="-Os" />
@@ -141,6 +150,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add option="-g" />
 					<Add option="-std=c++14" />
 					<Add option="-DDEVICE=DESKTOP" />
 					<Add option="-D_GNU_SOURCE" />
@@ -169,6 +179,8 @@
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-flto" />
+					<Add option="-Os" />
 					<Add option="-flto" />
 					<Add option="-Os" />
 					<Add option="-std=c++14" />
@@ -201,6 +213,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add option="-g" />
 					<Add option="-std=c++14" />
 					<Add option="-DDEVICE=DESKTOP" />
 					<Add option="-D_GNU_SOURCE" />
@@ -231,6 +244,8 @@
 				<Compiler>
 					<Add option="-flto" />
 					<Add option="-Os" />
+					<Add option="-flto" />
+					<Add option="-Os" />
 					<Add option="-std=c++14" />
 					<Add option="-DDEVICE=DESKTOP" />
 					<Add option="-D_GNU_SOURCE" />
@@ -255,20 +270,26 @@
 				</Linker>
 			</Target>
 		</Build>
-		<Unit filename="../../demos/usciter/usciter.cpp" />
-		<Unit filename="../../include/sciter-gtk-main.cpp" />
-		<Unit filename="../../sqlite/sciter-sqlite-db.cpp" />
-		<Unit filename="../../sqlite/sciter-sqlite-rs.cpp" />
-		<Unit filename="../../sqlite/sciter-sqlite.cpp" />
-		<Unit filename="../../sqlite/sciter-sqlite.h" />
+		<Unit filename="../../demos/usciter/usciter.cpp">
+		</Unit>
+		<Unit filename="../../include/sciter-gtk-main.cpp">
+		</Unit>
+		<Unit filename="../../sqlite/sciter-sqlite-db.cpp">
+		</Unit>
+		<Unit filename="../../sqlite/sciter-sqlite-rs.cpp">
+		</Unit>
+		<Unit filename="../../sqlite/sciter-sqlite.cpp">
+		</Unit>
+		<Unit filename="../../sqlite/sciter-sqlite.h">
+		</Unit>
 		<Unit filename="../../sqlite/sqlite-wrap.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../sqlite/sqlite-wrap.h" />
-		<Unit filename="../../sqlite/sqlite3.h" />
-		<Unit filename="../../sqlite/sqlite3ext.h" />
-		<Extensions>
-			<lib_finder disable_auto="1" />
-		</Extensions>
+		<Unit filename="../../sqlite/sqlite-wrap.h">
+		</Unit>
+		<Unit filename="../../sqlite/sqlite3.h">
+		</Unit>
+		<Unit filename="../../sqlite/sqlite3ext.h">
+		</Unit>
 	</Project>
 </CodeBlocks_project_file>

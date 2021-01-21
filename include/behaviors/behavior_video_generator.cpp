@@ -7,59 +7,59 @@
 
 namespace sciter
 {
-/*
-BEHAVIOR: video_generated_stream
-  - provides synthetic video frames.
-	- this code is here solely for the demo purposes - how
-	  to connect your own video frame stream with the rendering site
+  /*
+  BEHAVIOR: video_generated_stream
+    - provides synthetic video frames.
+    - this code is here solely for the demo purposes - how
+      to connect your own video frame stream with the rendering site
 
-COMMENTS:
-   <video style="behavior:video-generator video" />
-SAMPLE:
-   See: samples/video/video-generator-behavior.htm
-*/
+  COMMENTS:
+     <video style="behavior:video-generator video" />
+  SAMPLE:
+     See: samples/video/video-generator-behavior.htm
+  */
 
-struct video_generated_stream: public event_handler
-{
+  struct video_generated_stream : public event_handler
+  {
     sciter::om::hasset<sciter::video_destination> rendering_site;
     // ctor
     video_generated_stream() {}
     virtual ~video_generated_stream() {}
 
-    virtual bool subscription( HELEMENT he, UINT& event_groups )
+    virtual bool subscription(HELEMENT he, UINT& event_groups)
     {
       event_groups = HANDLE_BEHAVIOR_EVENT; // we only handle VIDEO_BIND_RQ here
       return true;
     }
 
-    virtual void attached  (HELEMENT he ) {
+    virtual void attached(HELEMENT he) {
       he = he;
     }
 
-    virtual void detached  (HELEMENT he ) { asset_release(); }
-    virtual bool on_event (HELEMENT he, HELEMENT target, BEHAVIOR_EVENTS type, UINT_PTR reason )
+    virtual void detached(HELEMENT he) { asset_release(); }
+    virtual bool on_event(HELEMENT he, HELEMENT target, BEHAVIOR_EVENTS type, UINT_PTR reason)
     {
-      if(type != VIDEO_BIND_RQ)
+      if (type != VIDEO_BIND_RQ)
         return false;
       // we handle only VIDEO_BIND_RQ requests here
 
       //printf("VIDEO_BIND_RQ %d\n",reason);
 
-      if( !reason )
+      if (!reason)
         return true; // first phase, consume the event to mark as we will provide frames
 
       rendering_site = (sciter::video_destination*) reason;
       sciter::om::hasset<sciter::fragmented_video_destination> fsite;
 
-      if(rendering_site->asset_get_interface(FRAGMENTED_VIDEO_DESTINATION_INAME,fsite.target()))
+      if (rendering_site->asset_get_interface(FRAGMENTED_VIDEO_DESTINATION_INAME, fsite.target()))
       {
-        sciter::thread(generation_thread,fsite);
+        sciter::thread(generation_thread, fsite);
       }
 
       return true;
     }
 
-	static void generation_thread(sciter::fragmented_video_destination* dst) {
+    static void generation_thread(sciter::fragmented_video_destination* dst) {
       sciter::om::hasset<sciter::fragmented_video_destination> rendering_site = dst;
       // simulate video stream
       sciter::sync::sleep(100);
@@ -69,10 +69,10 @@ struct video_generated_stream: public event_handler
       const int FRAGMENT_WIDTH = 256;
       const int FRAGMENT_HEIGHT = 32;
 
-      srand ((unsigned int)(UINT_PTR)dst);
+      srand((unsigned int)(UINT_PTR)dst);
 
       // let's pretend that we have 640*480 video frames
-      rendering_site->start_streaming(VIDEO_WIDTH,VIDEO_HEIGHT,COLOR_SPACE_RGB32);
+      rendering_site->start_streaming(VIDEO_WIDTH, VIDEO_HEIGHT, COLOR_SPACE_RGB32);
 
       unsigned int figure[FRAGMENT_WIDTH*FRAGMENT_HEIGHT];// = {0xFFFF00FF};
 
@@ -82,7 +82,7 @@ struct video_generated_stream: public event_handler
           ((unsigned(rand()) & 0xff) << 16) |
           ((unsigned(rand()) & 0xff) << 8) |
           ((unsigned(rand()) & 0xff) << 0);
-        for( int i = 0; i < FRAGMENT_WIDTH * FRAGMENT_HEIGHT; ++i )
+        for (int i = 0; i < FRAGMENT_WIDTH * FRAGMENT_HEIGHT; ++i)
           figure[i] = color;
       };
 
@@ -93,40 +93,40 @@ struct video_generated_stream: public event_handler
       int stepx = +1;
       int stepy = +1;
 
-      while(rendering_site->is_alive())
+      while (rendering_site->is_alive())
       {
         sciter::sync::sleep(40); // simulate 24 FPS rate
 
         xpos += stepx;
-        if( xpos < 0  ) { xpos = 0; stepx = -stepx; generate_fill_color(); }
-        if( xpos >= VIDEO_WIDTH - FRAGMENT_WIDTH) { xpos = VIDEO_WIDTH - FRAGMENT_WIDTH; stepx = -stepx; generate_fill_color(); }
+        if (xpos < 0) { xpos = 0; stepx = -stepx; generate_fill_color(); }
+        if (xpos >= VIDEO_WIDTH - FRAGMENT_WIDTH) { xpos = VIDEO_WIDTH - FRAGMENT_WIDTH; stepx = -stepx; generate_fill_color(); }
 
         ypos += stepy;
-        if( ypos < 0 ) { ypos = 0; stepy = -stepy; generate_fill_color(); }
-        if( ypos >= VIDEO_HEIGHT - FRAGMENT_HEIGHT ) { ypos = VIDEO_HEIGHT - FRAGMENT_HEIGHT; stepy = -stepy; generate_fill_color(); }
+        if (ypos < 0) { ypos = 0; stepy = -stepy; generate_fill_color(); }
+        if (ypos >= VIDEO_HEIGHT - FRAGMENT_HEIGHT) { ypos = VIDEO_HEIGHT - FRAGMENT_HEIGHT; stepy = -stepy; generate_fill_color(); }
 
-        rendering_site->render_frame_part((const unsigned char*)figure,sizeof(figure),xpos,ypos,FRAGMENT_WIDTH,FRAGMENT_HEIGHT);
+        rendering_site->render_frame_part((const unsigned char*)figure, sizeof(figure), xpos, ypos, FRAGMENT_WIDTH, FRAGMENT_HEIGHT);
       }
 
-		}
+    }
 
-};
+  };
 
-struct video_generated_stream_factory: public behavior_factory {
+  struct video_generated_stream_factory : public behavior_factory {
 
-  video_generated_stream_factory(): behavior_factory("video-generator") {
+    video_generated_stream_factory() : behavior_factory("video-generator") {
 
-  }
+    }
 
-  // the only behavior_factory method:
-  virtual event_handler* create(HELEMENT he) {
-    return new video_generated_stream();
-  }
+    // the only behavior_factory method:
+    virtual event_handler* create(HELEMENT he) {
+      return new video_generated_stream();
+    }
 
-};
+  };
 
-// instantiating and attaching it to the global list
-video_generated_stream_factory video_generated_stream_factory_instance;
+  // instantiating and attaching it to the global list
+  video_generated_stream_factory video_generated_stream_factory_instance;
 
 
 }

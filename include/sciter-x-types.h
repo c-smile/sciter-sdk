@@ -273,11 +273,11 @@ enum GFX_LAYER
 
   #define WINDOWLESS
 
-  #include <uchar.h>
+  //#include <uchar.h>
   #include <string.h>
 
   #ifndef SBOOL
-  typedef signed char        SBOOL;
+  typedef signed int        SBOOL;
   #endif
   #ifndef TRUE
   #define TRUE (1)
