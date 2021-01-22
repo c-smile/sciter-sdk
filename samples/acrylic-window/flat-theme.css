@@ -514,6 +514,10 @@ editbox { display:inline-block; style-set:std-edit; }
     background: color(accent); 
     border:none;
     border-radius:0.28em;
+
+    margin-left: var(slider-position,0px);
+    margin-top:-0.63em;
+
   }
   
   :root:disabled { background: color(disabled-text); }
