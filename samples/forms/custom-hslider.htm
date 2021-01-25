@@ -4,7 +4,6 @@
     <style>
     
       input[type=hslider] {
-        aspect: MySlider;
         height:4dip;
         background:#ccc;
         padding:12dip;
@@ -20,25 +19,19 @@
       input[type=hslider]:focus > button.slider {
         border-color: highlight;
       }
-    
-    </style>
-    <script type="text/tiscript">
-    
-      function MySlider() {
-        var button = this.$(button);
-        this.paintContent = function(gfx) // using paintContent here to draw on top of background
-        {
-          var (x1,y1,x2,y2) = button.box(#rect,#border,#parent);
-          var (w,h) = this.box(#dimension,#inner);
-          gfx.fillColor( button.style["border-left-color"] )
-             .rectangle(0,0,(x1+x2)/2,h);
-        }
+
+      input[type=hslider] {
+        background-image: url(stock:block);
+        background-repeat: no-repeat;
+        background-size: length(slider-position) 100%;
+        fill: rgb(32,32,32);
+        stroke-width:0;
       }
     
-    </script>
+    </style>
   </head>
 <body>
-  Custom input: <input|hslider min=0 max=100 value=50 /> 
+  Custom input: <input|hslider #test min=0 max=100 value=50 /> 
 
 </body>
 </html>

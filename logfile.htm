@@ -10,7 +10,14 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#fdfff6">4.4.5.10</td><td nowrap valign="top" align="center">2021-01-21</td><td>
+    <tr><td valign="top" bgcolor="#fdfff6">4.4.5.11</td><td nowrap valign="top" align="center">2021-01-25</td><td>Fixes:
+					<ul><li>[windows] fix of icon generation routine (used in tray-icons);</li>
+						<li><code>element.style.variable[s]</code>, fix of updates.</li>
+						<li><code>behavior:slider</code>, <code>&lt;input|hslider /&gt;</code> and <code>&lt;input|vslider /&gt;</code> refactoring. Note you may see broken rendering if you use customization of the input. See: sdk/samples/forms/custom-hslider.htm and custom-vslider.htm for the demo.</li>
+						<li><code>appearance:none;</code> activation in Sciter. See: sdk/samples/forms/custom-input-appearance.htm</li>
+						<li>fix of mouse handling on popups over scrollbars, see: <a href="https://sciter.com/forums/topic/popup-issue/">https://sciter.com/forums/topic/popup-issue/</a> &nbsp;</li>
+						<li>[css] fix of color(name) and var(name,defcolor) handling.</li>
+						<li>[css] + <code>content-vertical-align</code> property. <code>vertical-align</code> and <code>content-vertical-align</code> can be defined independently for inline-block elements.</li></ul></td></tr><tr><td valign="top" bgcolor="#fdfff6">4.4.5.10</td><td nowrap valign="top" align="center">2021-01-21</td><td>
 					
 					<p>New:</p>
 					<ul><li>[css] + support of <code>transition: ... cubic-bezier(x1,y1,x2,y2)</code>;</li>

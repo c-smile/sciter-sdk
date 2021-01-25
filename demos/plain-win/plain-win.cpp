@@ -142,6 +142,17 @@ LRESULT CALLBACK window::wnd_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
     return 0;
   }
 
+  if (message == WM_KEYDOWN && wParam == VK_F7)
+  {
+    window* self = ptr(hWnd);
+    sciter::dom::element root = self->get_root();
+    sciter::dom::element body = root.find_first("em");
+
+    SciterSetElementText(body, L"TEST", 4);
+
+    return 0;
+  }
+
 
   //date_time::DT_UTC | date_time::DT_HAS_DATE | date_time::DT_HAS_TIME | date_time::DT_HAS_SECONDS
 
@@ -216,11 +227,11 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
     ALLOW_SYSINFO);
 
   // multiple GUI threads test, Windows only feature.
-  auto x = std::thread(foo, hInstance);
 
   foo(hInstance);
 
-  x.join();
+  //auto x = std::thread(foo, hInstance);
+  //x.join();
 
   return (int)0;
 }

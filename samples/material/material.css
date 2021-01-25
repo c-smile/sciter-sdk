@@ -188,11 +188,8 @@
   :root:tab-focus { outline:1dip dashed color(normal) 2dip; }
 }
 
-@set m-slider {
+@set m-slider < std-hslider-base{
   :root {
-    behavior:slider;
-    display:block;
-    flow:stack;
     background:#ddd;
     padding:7dip;
     background-clip: content-box;
@@ -205,7 +202,6 @@
     background-size: var(slider-position,0px) 2dip; // "value" part 
   }
   :root > knob {
-    //display:block;
     style-set: m-slider;
     size:16dip;
     box-shadow: #aaa 1dip 1dip 1dip;

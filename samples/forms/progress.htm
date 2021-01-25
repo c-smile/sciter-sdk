@@ -34,22 +34,6 @@
         foreground-position:5px 5px 5px 5px; /*left top right bottom offsets*/
         
       }
-
-      progress.custom-clip
-      {
-        -bar:"clip";
-        border:none; border-radius:none;
-        background:url(images/progress-body-dark.png) expand;
-        background-position:5 5 5 5; 
-      
-        height: 13px;
-        width: 64px;
-        padding:0;
-        
-        foreground:url(images/progress-body.png) expand;  
-        foreground-position:5 5 5 5; 
-        
-      }
       
       div { flow:horizontal; border-spacing:10px; }
       //div > * { height:*; }
@@ -134,13 +118,6 @@
          50%:<progress .custom name="p3" max="100" value="50"/>
          75%:<progress .custom name="p4" max="100" value="75" />
          100%:<progress .custom name="p5" max="100" value="100"/></p>
-      <h2>custom</h2>         
-      Clipping foreground image:
-      <p>0%:<progress .custom-clip name="p1" max="100" value="0" />
-         25%:<progress .custom-clip name="p2" max="100" value="25" />
-         50%:<progress .custom-clip name="p3" max="100" value="50" />
-         75%:<progress .custom-clip name="p4" max="100" value="75" />
-         100%:<progress .custom-clip name="p5" max="100" value="100" /></p>
 
          
 	</BODY>
