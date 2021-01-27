@@ -24,10 +24,18 @@
    
     var content = $(div#content);
     var i = 0;
+
+    var transitionParams = 
+    {
+      ease: "cubic-in-out",
+      duration: 800ms,
+      effect: "blend",
+      direction: "forward"
+    }
       
     event click $(button[name=at])
     {
-      $(div#content).style#transition = [this.text, "cubic-in-out", 800ms]; 
+      transitionParams.effect = this.text;
     }
     
     event click $(button#generate)
@@ -42,7 +50,7 @@
         for(var i = 0; i < 10 + rand(40); ++i )
           content.$append(<p style="background:{randomColor()}">Item #{i}</p>);
       }
-      content.update(updater); // "transactioned" update using worker function    
+      content.update(updater, transitionParams); // "transactioned" update using worker function    
     }
    
   </script>
