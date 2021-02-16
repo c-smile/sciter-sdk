@@ -166,6 +166,16 @@ namespace sciter {
           }
       };
 
+    template <class Type>
+      struct member_function<void(Type::*)()> {
+        enum { n_params = 0 };
+        template <void(Type::*Func)()> static SBOOL thunk(som_asset_t* thing, UINT argc, const SOM_VALUE* argv, SOM_VALUE* p_result)
+        {
+          try { (static_cast<Type*>(thing)->*Func)(); *p_result = SOM_VALUE(); return TRUE; }
+          catch (exception& e) { *p_result = SOM_VALUE::make_error(e.what()); return TRUE; }
+        }
+      };
+
     template <class Type, class Ret, class P0>
       struct member_function<Ret(Type::*)(P0)> {
         enum { n_params = 1 };
@@ -174,6 +184,16 @@ namespace sciter {
             try { *p_result = SOM_VALUE((static_cast<Type*>(thing)->*Func)(argv[0].get<P0>())); return TRUE; }
             catch (exception& e) { *p_result = SOM_VALUE::make_error(e.what()); return TRUE; }
           }
+      };
+
+    template <class Type, class P0>
+      struct member_function<void(Type::*)(P0)> {
+        enum { n_params = 1 };
+        template <void(Type::*Func)(P0)> static SBOOL thunk(som_asset_t* thing, UINT argc, const SOM_VALUE* argv, SOM_VALUE* p_result)
+        {
+          try { (static_cast<Type*>(thing)->*Func)(argv[0].get<P0>()); *p_result = SOM_VALUE(); return TRUE; }
+          catch (exception& e) { *p_result = SOM_VALUE::make_error(e.what()); return TRUE; }
+        }
       };
 
     template <class Type, class Ret, class P0, class P1>
@@ -186,6 +206,16 @@ namespace sciter {
           }
       };
 
+    template <class Type, class P0, class P1>
+      struct member_function<void(Type::*)(P0, P1)> {
+        enum { n_params = 2 };
+        template <void(Type::*Func)(P0, P1)> static SBOOL thunk(som_asset_t* thing, UINT argc, const SOM_VALUE* argv, SOM_VALUE* p_result)
+        {
+          try { (static_cast<Type*>(thing)->*Func)(argv[0].get<P0>(), argv[1].get<P1>()); *p_result = SOM_VALUE(); return TRUE; }
+          catch (exception& e) { *p_result = SOM_VALUE::make_error(e.what()); return TRUE; }
+        }
+      };
+
     template <class Type, class Ret, class P0, class P1, class P2>
       struct member_function<Ret(Type::*)(P0, P1, P2)> {
         enum { n_params = 3 };
@@ -196,12 +226,32 @@ namespace sciter {
           }
       };
 
+    template <class Type, class P0, class P1, class P2>
+      struct member_function<void(Type::*)(P0, P1, P2)> {
+        enum { n_params = 3 };
+        template <void(Type::*Func)(P0, P1, P2)> static SBOOL thunk(som_asset_t* thing, UINT argc, const SOM_VALUE* argv, SOM_VALUE* p_result)
+        {
+          try { (static_cast<Type*>(thing)->*Func)(argv[0].get<P0>(), argv[1].get<P1>(), argv[2].get<P2>()); *p_result = SOM_VALUE(); return TRUE; }
+          catch (exception& e) { *p_result = SOM_VALUE::make_error(e.what()); return TRUE; }
+        }
+      };
+
     template <class Type, class Ret, class P0, class P1, class P2, class P3>
       struct member_function<Ret(Type::*)(P0, P1, P2, P3)> {
         enum { n_params = 4 };
         template <Ret(Type::*Func)(P0, P1, P2, P3)> static SBOOL thunk(som_asset_t* thing, UINT argc, const SOM_VALUE* argv, SOM_VALUE* p_result)
         {
           try { *p_result = SOM_VALUE((static_cast<Type*>(thing)->*Func)(argv[0].get<P0>(), argv[1].get<P1>(), argv[2].get<P2>(), argv[3].get<P3>())); return TRUE; }
+          catch (exception& e) { *p_result = SOM_VALUE::make_error(e.what()); return TRUE; }
+        }
+      };
+
+    template <class Type, class P0, class P1, class P2, class P3>
+      struct member_function<void(Type::*)(P0, P1, P2, P3)> {
+        enum { n_params = 4 };
+        template <void(Type::*Func)(P0, P1, P2, P3)> static SBOOL thunk(som_asset_t* thing, UINT argc, const SOM_VALUE* argv, SOM_VALUE* p_result)
+        {
+          try { (static_cast<Type*>(thing)->*Func)(argv[0].get<P0>(), argv[1].get<P1>(), argv[2].get<P2>(), argv[3].get<P3>()); *p_result = SOM_VALUE(); return TRUE; }
           catch (exception& e) { *p_result = SOM_VALUE::make_error(e.what()); return TRUE; }
         }
       };
@@ -216,9 +266,18 @@ namespace sciter {
         }
       };
 
+    template <class Type, class P0, class P1, class P2, class P3, class P4>
+      struct member_function<void(Type::*)(P0, P1, P2, P3, P4)> {
+        enum { n_params = 5 };
+        template <void(Type::*Func)(P0, P1, P2, P3, P4)> static SBOOL thunk(som_asset_t* thing, UINT argc, const SOM_VALUE* argv, SOM_VALUE* p_result)
+        {
+          try { (static_cast<Type*>(thing)->*Func)(argv[0].get<P0>(), argv[1].get<P1>(), argv[2].get<P2>(), argv[3].get<P3>(), argv[4].get<P4>()); *p_result = SOM_VALUE(); return TRUE; }
+          catch (exception& e) { *p_result = SOM_VALUE::make_error(e.what()); return TRUE; }
+        }
+      };
 
-      // func() const  variants of the above
-      template <class Type, class Ret>
+    // func() const  variants of the above
+    template <class Type, class Ret>
       struct member_function<Ret(Type::*)() const> {
         enum { n_params = 0 };
         template <Ret(Type::*Func)() const> static SBOOL thunk(som_asset_t* thing, UINT argc, const SOM_VALUE* argv, SOM_VALUE* p_result)
@@ -228,7 +287,17 @@ namespace sciter {
         }
       };
 
-      template <class Type, class Ret, class P0>
+    template <class Type>
+      struct member_function<void(Type::*)() const> {
+        enum { n_params = 0 };
+        template <void(Type::*Func)() const> static SBOOL thunk(som_asset_t* thing, UINT argc, const SOM_VALUE* argv, SOM_VALUE* p_result)
+        {
+          try { (static_cast<Type*>(thing)->*Func)(); *p_result = SOM_VALUE(); return TRUE; }
+          catch (exception& e) { *p_result = SOM_VALUE::make_error(e.what()); return TRUE; }
+        }
+      };
+
+    template <class Type, class Ret, class P0>
       struct member_function<Ret(Type::*)(P0) const> {
         enum { n_params = 1 };
         template <Ret(Type::*Func)(P0) const> static SBOOL thunk(som_asset_t* thing, UINT argc, const SOM_VALUE* argv, SOM_VALUE* p_result)
@@ -238,7 +307,17 @@ namespace sciter {
         }
       };
 
-      template <class Type, class Ret, class P0, class P1>
+    template <class Type, class P0>
+      struct member_function<void(Type::*)(P0) const> {
+        enum { n_params = 1 };
+        template <void(Type::*Func)(P0) const> static SBOOL thunk(som_asset_t* thing, UINT argc, const SOM_VALUE* argv, SOM_VALUE* p_result)
+        {
+          try { (static_cast<Type*>(thing)->*Func)(argv[0].get<P0>()); *p_result = SOM_VALUE(); return TRUE; }
+          catch (exception& e) { *p_result = SOM_VALUE::make_error(e.what()); return TRUE; }
+        }
+      };
+
+    template <class Type, class Ret, class P0, class P1>
       struct member_function<Ret(Type::*)(P0, P1) const> {
         enum { n_params = 2 };
         template <Ret(Type::*Func)(P0, P1) const> static SBOOL thunk(som_asset_t* thing, UINT argc, const SOM_VALUE* argv, SOM_VALUE* p_result)
@@ -248,7 +327,17 @@ namespace sciter {
         }
       };
 
-      template <class Type, class Ret, class P0, class P1, class P2>
+    template <class Type, class P0, class P1>
+      struct member_function<void(Type::*)(P0, P1) const> {
+        enum { n_params = 2 };
+        template <void(Type::*Func)(P0, P1) const> static SBOOL thunk(som_asset_t* thing, UINT argc, const SOM_VALUE* argv, SOM_VALUE* p_result)
+        {
+          try { (static_cast<Type*>(thing)->*Func)(argv[0].get<P0>(), argv[1].get<P1>()); *p_result = SOM_VALUE(); return TRUE; }
+          catch (exception& e) { *p_result = SOM_VALUE::make_error(e.what()); return TRUE; }
+        }
+      };
+
+    template <class Type, class Ret, class P0, class P1, class P2>
       struct member_function<Ret(Type::*)(P0, P1, P2) const> {
         enum { n_params = 3 };
         template <Ret(Type::*Func)(P0, P1, P2) const> static SBOOL thunk(som_asset_t* thing, UINT argc, const SOM_VALUE* argv, SOM_VALUE* p_result)
@@ -258,7 +347,17 @@ namespace sciter {
         }
       };
 
-      template <class Type, class Ret, class P0, class P1, class P2, class P3>
+    template <class Type, class P0, class P1, class P2>
+      struct member_function<void(Type::*)(P0, P1, P2) const> {
+        enum { n_params = 3 };
+        template <void(Type::*Func)(P0, P1, P2) const> static SBOOL thunk(som_asset_t* thing, UINT argc, const SOM_VALUE* argv, SOM_VALUE* p_result)
+        {
+          try { (static_cast<Type*>(thing)->*Func)(argv[0].get<P0>(), argv[1].get<P1>(), argv[2].get<P2>()); *p_result = SOM_VALUE(); return TRUE; }
+          catch (exception& e) { *p_result = SOM_VALUE::make_error(e.what()); return TRUE; }
+        }
+      };
+
+    template <class Type, class Ret, class P0, class P1, class P2, class P3>
       struct member_function<Ret(Type::*)(P0, P1, P2, P3) const> {
         enum { n_params = 4 };
         template <Ret(Type::*Func)(P0, P1, P2, P3) const> static SBOOL thunk(som_asset_t* thing, UINT argc, const SOM_VALUE* argv, SOM_VALUE* p_result)
@@ -268,7 +367,17 @@ namespace sciter {
         }
       };
 
-      template <class Type, class Ret, class P0, class P1, class P2, class P3, class P4>
+    template <class Type, class P0, class P1, class P2, class P3>
+      struct member_function<void(Type::*)(P0, P1, P2, P3) const> {
+        enum { n_params = 4 };
+        template <void(Type::*Func)(P0, P1, P2, P3) const> static SBOOL thunk(som_asset_t* thing, UINT argc, const SOM_VALUE* argv, SOM_VALUE* p_result)
+        {
+          try { (static_cast<Type*>(thing)->*Func)(argv[0].get<P0>(), argv[1].get<P1>(), argv[2].get<P2>(), argv[3].get<P3>()); *p_result = SOM_VALUE(); return TRUE; }
+          catch (exception& e) { *p_result = SOM_VALUE::make_error(e.what()); return TRUE; }
+        }
+      };
+
+    template <class Type, class Ret, class P0, class P1, class P2, class P3, class P4>
       struct member_function<Ret(Type::*)(P0, P1, P2, P3, P4) const> {
         enum { n_params = 5 };
         template <Ret(Type::*Func)(P0, P1, P2, P3, P4) const> static SBOOL thunk(som_asset_t* thing, UINT argc, const SOM_VALUE* argv, SOM_VALUE* p_result)
@@ -278,6 +387,15 @@ namespace sciter {
         }
       };
 
+    template <class Type, class P0, class P1, class P2, class P3, class P4>
+      struct member_function<void(Type::*)(P0, P1, P2, P3, P4) const> {
+        enum { n_params = 5 };
+        template <void(Type::*Func)(P0, P1, P2, P3, P4) const> static SBOOL thunk(som_asset_t* thing, UINT argc, const SOM_VALUE* argv, SOM_VALUE* p_result)
+        {
+          try { (static_cast<Type*>(thing)->*Func)(argv[0].get<P0>(), argv[1].get<P1>(), argv[2].get<P2>(), argv[3].get<P3>(), argv[4].get<P4>()); *p_result = SOM_VALUE(); return TRUE; }
+          catch (exception& e) { *p_result = SOM_VALUE::make_error(e.what()); return TRUE; }
+        }
+      };
 
     template <class Type> struct item_set_accessor;
 
