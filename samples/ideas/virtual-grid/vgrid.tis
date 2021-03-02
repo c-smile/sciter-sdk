@@ -182,7 +182,7 @@ class VGrid: Element
     if( this.isVisible )
     {
       // adjust scrollbar
-      this.sb.setValues(this.firstRowNo, 0, rowCount, this.visibleRows, 1); 
+      this.sb.scrollbar.values(this.firstRowNo, 0, rowCount, this.visibleRows, 1); 
       this.show( this.firstRowNo );
       this.updateScrollbarVisibility();
     }
