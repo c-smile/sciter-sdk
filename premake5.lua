@@ -386,6 +386,7 @@ if _TARGET_OS == "windows" then
             "include/behaviors/behavior_native_textarea.cpp",
             "include/behaviors/behavior_tabs.cpp",
             "include/behaviors/behavior_video_generator.cpp",
+            "include/behaviors/behavior_video_generator_full.cpp",
             "include/behaviors/behavior_camera_capture.cpp",
             "include/behaviors/behavior_drawing-opengl.cpp",
             "demos/sciter/res/dpi-aware.manifest" }

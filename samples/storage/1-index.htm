@@ -7,11 +7,12 @@
       include "init-storage-1.tis";
       
       var storage;
+      var root;
     
       function self.ready() {
         const url = self.url("storage1.sdb");
         storage = Storage.open(url);
-        var root = storage.root || initStorage(storage);
+        root = storage.root || initStorage(storage);
         
         var form = $(form);
         var ol = $(ol);
@@ -39,16 +40,28 @@
          storage.close();
          stdout.println("closed");
       }
+
+      event click $(button#rename) {
+        storage.commit();
+        storage.close();
+        System.rename(URL.toPath(self.url("storage1.sdb")), URL.toPath(self.url("storage1new.sdb"))).then(
+          function() {
+            storage = Storage.open(self.url("storage1new.sdb"));
+            root = storage.root;
+            debug: root;
+          }
+        );
+      }
     
     </script>
   </head>
 <body>
+  <button#rename>Rename storage</button>
   <form>
     Order by:
     <button|radio(index) value="by-index" checked>Index</button>
     <button|radio(index) value="by-text">Text</button>
   </form>
-  
   <ol></ol>
   
 </body>

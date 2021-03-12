@@ -1,0 +1,76 @@
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+
+    main {
+      size:*;
+      flow:horizontal-wrap;
+    }
+
+    video.generator {
+      behavior: video-generator-full video;
+      width:*;
+      height:80px;
+      foreground-size:contain;
+      border:1px solid #000;
+    }
+
+    video.generator:nth-child(5n) {
+      clear:after; // row wrap
+    }
+
+        </style>
+        <script type="text/tiscript">
+
+include "sciter:reactor.tis";        
+
+class Videos : Reactor.Component 
+{
+  function render() {
+    var videos = [];
+    for(var n in 25)
+      videos.push(<video.generator />);
+    return <main>{videos}</main>;
+  }
+
+  function attached() {
+    this.animate(function() {
+      this.refresh(); // draw all contained video at once
+      return 34; // ~30 FPS 
+    });
+  }  
+
+  event videocoordinate (evt) {
+    evt.source = this; // this will be video coordinator
+    return true; // consume
+  }
+
+}
+
+function self.ready() {
+     
+  var deltas = [1];
+  var ptick = System.ticks;
+  
+  self.paintForeground = function(gfx) {
+    var tick = System.ticks;
+    deltas.push( tick - ptick );
+    if( deltas.length > 10 )
+      deltas.shift();
+    ptick = tick;
+    var avdelta = deltas.reduce(:a,b: a + b) / deltas.length;
+    view.windowCaption = "FPS:" + (1000 / avdelta).toString();
+  };
+}
+
+        </script>
+    </head>
+    <body>
+
+<p>Coordinated video output, this video coordinator component synchronizes output of all 25 video with ~30 FPS.</p>
+
+<reactor|Videos />
+
+    </body>
+</html>

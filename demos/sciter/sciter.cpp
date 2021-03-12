@@ -83,6 +83,8 @@ namespace sciter
 
     dom::element root_el = root();
 
+    //root_el.call_function("sayHello", sciter::value(WSTR("world")));
+
     //json::string s = root_el.combine_url(json::string());
 
     assert(root_el.is_valid());

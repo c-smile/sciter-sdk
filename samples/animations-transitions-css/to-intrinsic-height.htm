@@ -17,7 +17,8 @@
       color:white;
       padding:4dip;
       vertical-align:bottom;
-      transition: height 0.4s, background-color 0.4s, color 0.4s;
+      transition: height 0.4s, background-color 0.4s, color 0.4s, visibility linear 0.4s;
+      overflow-y:hidden;  // and clip content
     }
     
     caption:checked
@@ -31,13 +32,9 @@
       height:min-content;
       background-color:#EEE;
       color:#000;
+      visibility:visible; // while animating it still should be visible
     }
         
-    div:animating
-    {
-      visibility:visible; // while animating it still should be visible
-      overflow-y:hidden;  // and clip content
-    }
   </style>  
   <script type="text/tiscript"></script>  
 </head>

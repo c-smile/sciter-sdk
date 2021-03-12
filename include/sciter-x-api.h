@@ -540,7 +540,7 @@ inline ISciterAPI *_SAPI(ISciterAPI *ext) {
 #endif
   inline  SBOOL    SCAPI SciterGraphicsCaps (LPUINT pcaps) { return SAPI()->SciterGraphicsCaps (pcaps); }
   inline  SBOOL    SCAPI SciterSetHomeURL (HWINDOW hWndSciter, LPCWSTR baseUrl) { return SAPI()->SciterSetHomeURL (hWndSciter,baseUrl); }
-#if defined(OSX)
+#if defined(OSX) && !defined(WINDOWLESS)
   inline  HWINDOW SCAPI SciterCreateNSView ( LPRECT frame ) { return SAPI()->SciterCreateNSView ( frame ); }
 #endif
 #if !defined(WINDOWLESS)

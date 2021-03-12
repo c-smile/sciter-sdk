@@ -33,7 +33,7 @@
   #include "aux-cvt.h"
   #include "sciter-x-types.h"
 
-#if _MSC_VER < 1600 // MSVC version < 8
+#if defined(_MSC_VER) && (_MSC_VER < 1600) // MSVC version < 8
      #include "nullptr.hpp"
 #endif
 

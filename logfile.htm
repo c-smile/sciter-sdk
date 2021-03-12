@@ -10,7 +10,29 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#fdfff6">4.4.5.11</td><td nowrap valign="top" align="center">2021-01-25</td><td>Fixes:
+    <tr><td valign="top" bgcolor="#fdfff6">4.4.6.2</td><td nowrap valign="top" align="center">2021-03-12</td><td>New:
+					<ul><li>MacOS - binaries are universal now - contain as x86/64 as ARM64 code.</li>
+						<li>[core] <code>behavior:virtual-list</code> - native virtual list.</li>
+						<li>[video] <code>event videocoordinate</code> - allows to coordinate output of multiple &lt;video&gt;'s. Coordinated output allows to reduce FPS rate of several videos running at the same time. See: sdk/samples/video/video-25-videos.htm</li>
+						</ul>
+					<p>Fixes:</p>
+					<ul><li>fix of <code>transition:backround</code> to include <code>backround-color</code> too.</li>
+						<li>[tis] <code>date.dayOfWeekName()</code>, local time fix.</li>
+						<li>[API] <code>ValueFromString(&quot; &quot;)</code> fix.</li>
+						<li>[css] fix of animation of shortcut properties.&nbsp;</li>
+						<li>[css] fix of color::morph rules.</li>
+						<li>[plaintext] fix of <a href="https://sciter.com/forums/topic/plaintext-again/">https://sciter.com/forums/topic/plaintext-again/</a>&nbsp;</li>
+						<li>[inspector] fix of style url reporting, see: <a href="https://sciter.com/forums/topic/inspector-cant-loads-css-files/">https://sciter.com/forums/topic/inspector-cant-loads-css-files/</a>&nbsp;</li>
+						<li>[css] support of <code>@keyframes</code> inside <code>@set</code>'s;</li>
+						<li>&lt;frame&gt;, fix of <code>frame.attributes[&quot;src&quot;] = ...;</code></li>
+						<li>sdk/include/sciter-x-behavior.h event codes sync with internal declarations.</li>
+						<li>[API] <code>gPushClipPath</code> fix.</li>
+						<li>[core] <code>flow:vertical-wrap;</code> fix of stack overflow when percent units used. &nbsp;</li>
+						<li>[sciter.tis] fix of <code>element.call_method(&quot;...&quot;, ...)</code> when receiver is a native behavior.</li>
+						<li><code>frame.loadFile(pathButNotUrl)</code> fix.</li>
+						<li><code>input.edit.selectRange(-1);</code> to remove selection completely.&nbsp;</li>
+						<li>[sciter.tis] attempt to fix &quot;BrokenHeart&quot; issue in <code>element.patch()</code></li>
+						<li>[behavior:edit] now drops selection on <code>FOCUS_OUT</code> as do browsers.</li></ul></td></tr><tr><td valign="top" bgcolor="#fdfff6">4.4.5.11</td><td nowrap valign="top" align="center">2021-01-25</td><td>Fixes:
 					<ul><li>[windows] fix of icon generation routine (used in tray-icons);</li>
 						<li><code>element.style.variable[s]</code>, fix of updates.</li>
 						<li><code>behavior:slider</code>, <code>&lt;input|hslider /&gt;</code> and <code>&lt;input|vslider /&gt;</code> refactoring. Note you may see broken rendering if you use customization of the input. See: sdk/samples/forms/custom-hslider.htm and custom-vslider.htm for the demo.</li>

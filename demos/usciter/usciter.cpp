@@ -10,7 +10,7 @@ class uSciter: public sciter::window {
 public:
   uSciter() : window(SW_TITLEBAR | SW_RESIZEABLE | SW_CONTROLS | SW_MAIN | SW_GLASSY | SW_ENABLE_DEBUG) {}
 
-  //int foo(int p) { return p + 42; }
+  int foo(int p) { return p + 42; }
   //int bar(int p1, int p2) { return p1 + p2; }
   //std::vector<int> vector() { return {1,2,3}; }
 
@@ -19,11 +19,11 @@ public:
   }
 
   SOM_PASSPORT_BEGIN(uSciter)
-    //SOM_FUNCS(
-      //SOM_FUNC(foo),
+    SOM_FUNCS(
+      SOM_FUNC(foo),
       //SOM_FUNC(bar),
       //SOM_FUNC(vector),
-    //)
+    )
     SOM_PROPS(SOM_RO_VIRTUAL_PROP(windowHandle,get_windowHandle))
   SOM_PASSPORT_END
 

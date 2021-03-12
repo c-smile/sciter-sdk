@@ -1,5 +1,9 @@
 #pragma once
 
+#ifndef __SCITER_OM_H__
+#define __SCITER_OM_H__
+
+
 struct som_passport_t;
 
 typedef UINT64 som_atom_t;
@@ -210,3 +214,5 @@ namespace sciter {
 #endif
 
 #include "sciter-om-def.h"
+
+#endif

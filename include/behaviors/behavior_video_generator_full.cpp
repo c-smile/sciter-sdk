@@ -64,10 +64,10 @@ namespace sciter
       // simulate video stream
       sciter::sync::sleep(100);
 
-      const int VIDEO_WIDTH = 1200;
-      const int VIDEO_HEIGHT = 800;
+      const int VIDEO_WIDTH = 800;
+      const int VIDEO_HEIGHT = 600;
 
-      // let's pretend that we have 640*480 video frames
+      // let's pretend that we have 800*600 video frames
       rendering_site->start_streaming(VIDEO_WIDTH, VIDEO_HEIGHT, COLOR_SPACE_RGB32);
 
       unsigned int *frame = new unsigned int[VIDEO_WIDTH*VIDEO_HEIGHT];
@@ -87,15 +87,15 @@ namespace sciter
 
       while (rendering_site->is_alive())
       {
-        std::this_thread::sleep_for(std::chrono::milliseconds(33)); // simulate 30 FPS rate
+        std::this_thread::sleep_for(std::chrono::milliseconds(30)); // simulate 33 FPS rate
 
         ++start;
-        if (start > 120) {
+        if (start > 80) {
           start = 0;
           generate_fill_color();
         }
         
-        for (int n = start; n < VIDEO_WIDTH*VIDEO_HEIGHT; n += 120) {
+        for (int n = start; n < VIDEO_WIDTH*VIDEO_HEIGHT; n += 80) {
           frame[n] = color;
         }
         rendering_site->render_frame((const unsigned char*)frame, sizeof(unsigned int) * VIDEO_WIDTH * VIDEO_HEIGHT);

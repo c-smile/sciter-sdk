@@ -55,6 +55,8 @@
     white-space:pre; 
     behavior:edit; 
     line-height:1.6em;
+
+    text-selection: #000 transparent;
   }
   :root::marker { 
     margin-top:0.5em;
@@ -75,6 +77,10 @@
   :root:owns-focus
   {
     foreground-size: 100% 2dip; 
+  }
+
+  :root:focus {
+    text-selection: #000 color(lighten4);
   }
 
 }

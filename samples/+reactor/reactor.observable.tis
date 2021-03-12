@@ -66,13 +66,20 @@ function @observable(ns) {
   observeChanges(ns,function(path) {
     //debug change: list,path;
     var cnt = 0;
+    var inactiveCount = 0;
     for( var def in list ) {
+      if(!def.component.view) {
+        ++inactiveCount; // component removed from the DOM
+        continue;
+      }
       if(path like def.path ) {
         def.component.post(def.component.update,true); // collapse multiple updates
         ++cnt;
       } else if(cnt)
         break;
     }
+    if(inactiveCount) // remove components that were removed from the DOM
+      list = list.filter(def => def.component.view)
   });
   return ns;
 }
