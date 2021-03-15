@@ -13,7 +13,7 @@ class FileSelector : Reactor.Component
 
   function render() {
     return <fileselector {{class:this.type}}>
-      <input|text name={this.name} novalue={this.novalue}/>
+      <input|text novalue={this.novalue}/>
       <button.select/>
     </fileselector>;
   }
