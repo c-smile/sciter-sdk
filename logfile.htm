@@ -9,8 +9,17 @@
     <tbody><tr>
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
-      <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#fdfff6">4.4.6.2</td><td nowrap valign="top" align="center">2021-03-12</td><td>New:
+      <td align="center">ТЩЕУUpdates</td></tr>
+    <tr><td valign="top" bgcolor="#fdfff6">4.4.6.3</td><td nowrap valign="top" align="center">2021-03-23</td><td>
+					
+					<p><b>NOTE</b><b>:</b> Sciter MacOS&nbsp;library is named now <b>libsciter.dylib</b> . &nbsp;Rationale - standard name and compatibility with Sciter.JS. </p>
+					<p>So Go, Rust, Python wrappers can be used as for Sciter.TIS as for Sciter.JS.</p><p>Fixes:
+					</p><ul><li>[windows] <code>view.selectFile()</code> uses <code>OFN_NOCHANGEDIR</code> by default, see:  <a href="https://devblogs.microsoft.com/oldnewthing/20101112-00/?p=12293">https://devblogs.microsoft.com/oldnewthing/20101112-00/?p=12293</a>&nbsp;</li>
+						<li>[linux] fix of AV on msgbox close.</li>
+						<li>[Sciter][Sciter.JS] Reactor fix of <code>&lt;select|dropdown&gt;</code> reconciliation. See: <a href="https://sciter.com/forums/topic/select-behaves-erratically-in-reactor-component/">https://sciter.com/forums/topic/select-behaves-erratically-in-reactor-component/</a>&nbsp;</li>
+						<li>[frameset] fix of <a href="https://sciter.com/forums/topic/frameset-column-changes-height-when-container-is-resized/">https://sciter.com/forums/topic/frameset-column-changes-height-when-container-is-resized/</a> issue.</li>
+						<li>[sciter, reactor] fix of missed attached() call when element changes prototype.</li>
+						<li>[osx] fix of font ascent/descent calculation in Skia backend.</li></ul></td></tr><tr><td valign="top" bgcolor="#fdfff6">4.4.6.2</td><td nowrap valign="top" align="center">2021-03-12</td><td>New:
 					<ul><li>MacOS - binaries are universal now - contain as x86/64 as ARM64 code.</li>
 						<li>[core] <code>behavior:virtual-list</code> - native virtual list.</li>
 						<li>[video] <code>event videocoordinate</code> - allows to coordinate output of multiple &lt;video&gt;'s. Coordinated output allows to reduce FPS rate of several videos running at the same time. See: sdk/samples/video/video-25-videos.htm</li>

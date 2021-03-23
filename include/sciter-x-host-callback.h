@@ -36,7 +36,7 @@ namespace sciter
     archive& operator=(const archive&);
   public:
     archive():har(0) {}
-    // open archive blob:
+    // open archive blob (NOTE: archive does not copy the data - it has to be available while archive is used )
     bool open( LPCBYTE data, UINT data_length ) { close(); har = SAPI()->SciterOpenArchive(data,data_length); return har != 0; }
     bool open( aux::bytes data ) { return open( data.start, UINT(data.length) ); }
     void close() { if(har) SAPI()->SciterCloseArchive(har); har = 0; }

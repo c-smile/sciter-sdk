@@ -449,29 +449,11 @@ typedef SBOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEven
       // "grey" event codes  - notfications from behaviors from this SDK
       HYPERLINK_CLICK = 0x80,        // hyperlink click
 
-      //TABLE_HEADER_CLICK,            // click on some cell in table header,
-      //                               //     target = the cell,
-      //                               //     reason = index of the cell (column number, 0..n)
-      //TABLE_ROW_CLICK,               // click on data row in the table, target is the row
-      //                               //     target = the row,
-      //                               //     reason = index of the row (fixed_rows..n)
-      //TABLE_ROW_DBL_CLICK,           // mouse dbl click on data row in the table, target is the row
-      //                               //     target = the row,
-      //                               //     reason = index of the row (fixed_rows..n)
-
       ELEMENT_COLLAPSED = 0x90,      // element was collapsed, so far only behavior:tabs is sending these two to the panels
       ELEMENT_EXPANDED = 0x91,       // element was expanded,
 
       ACTIVATE_CHILD = 0x92,         // activate (select) child,
                                      // used for example by accesskeys behaviors to send activation request, e.g. tab on behavior:tabs.
-
-      //DO_SWITCH_TAB = ACTIVATE_CHILD,// command to switch tab programmatically, handled by behavior:tabs
-      //                               // use it as SciterPostEvent(tabsElementOrItsChild, DO_SWITCH_TAB, tabElementToShow, 0);
-
-      //INIT_DATA_VIEW,                // request to virtual grid to initialize its view
-      
-      //ROWS_DATA_REQUEST,             // request from virtual grid to data source behavior to fill data in the table
-      //                               // parameters passed throug DATA_ROWS_PARAMS structure.
 
       UI_STATE_CHANGED = 0x95,       // ui state changed, observers shall update their visual states.
                                      // is sent for example by behavior:richtext when caret position/selection has changed.

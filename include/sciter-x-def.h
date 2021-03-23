@@ -655,7 +655,6 @@ enum SCITER_CREATE_WINDOW_FLAGS {
 };
 
 #if !defined(WINDOWLESS)
-
 /** Create sciter window.
  *  On Windows returns HWND of either top-level or child window created.
  *  On OS X returns NSView* of either top-level window or child view .

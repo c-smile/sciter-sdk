@@ -1,0 +1,133 @@
+<html>
+
+<head>
+    <title>request</title>
+    <style>
+        #list {
+            flow:vertical;
+            size: *;
+            behavior: virtual-list;
+            
+            background: orange;
+            overflow: scroll;
+        }
+        #list > div {
+            background: lightgrey;
+            margin-bottom: 10dip;
+            padding: 10dip;
+        }
+        block {
+            display: block;
+            flow: horizontal;
+            border-spacing: *;
+        }
+    </style>
+    <script type="text/tiscript">
+        var Feed = new Element("feed"); // to parse xml result
+        var Items; // = Feed.$$(channel>item);
+        function Get(params) {
+            var defaultParams = { type:#get, output:#stream };
+            var query = {...defaultParams, ...params};
+            return view.request(query);
+        }
+        
+        async function getPodcast(link) {
+            try {
+                var r = await Get({url: link});
+                Feed.html = r[0].toString().replace("<![CDATA[", "").replace("]]>", "");
+                Items = Feed.$$(channel>item);
+                r[0].close();
+                var list = $(#list);
+                list.@#disabled = undefined;
+                list.vlist.navigate("start")
+                debug READY: Items.length;
+            } catch (e) {
+                debug error: e.toString();
+            }
+        }
+
+        function rnr(it) {
+            if (it.$(enclosure)) {
+            return <div>
+                       <block>
+                           <p>{it.$(title)?.text}</p>
+                           <p>{it.$(pubDate)?.text}</p>
+                       </block>
+                       <block>
+                           <div>
+                               <button .bPlay>PLAY</button>
+                           </div>
+                           <div>
+                               <button .bPlaylist>PLAYLIST</button>
+                           </div>
+                       </block>
+                       <p>{it.$(description)?.text}</p>
+                   </div>;
+            }
+        }
+
+        //function appendElements(index, n) {
+        function scrollDown(index, n) {
+            if (index == undefined) index = 0;
+            var elements = [];
+            for (var i = 0; i<n; ++i, ++index) {
+                if (index >= Items.length) break;
+                if (Items[index])
+                    elements.push(rnr(Items[index]));
+            }
+            $(#list).append(elements);
+            return { moreafter: (Items.length - index) };
+        }
+
+        //function prependElements(index, n) {
+        function scrollUp(index, n) {
+            if (index == undefined) index = Items.length - 1;
+            var elements = [];
+            for (var i = 0; i<n; ++i, --index) {
+                if(index < 0) break;
+                if (Items[index])
+                    elements.push(rnr(Items[index]));
+            }
+            elements.reverse();
+            $(#list).prepend(elements);
+            return { morebefore: (index < 0 ? 0:index) };
+        }
+
+        //function replaceElements(index,n) {
+        function scrollTo(index,n) {
+            var elements = [];
+            var start = index;
+            for (var i = 0; i<n; ++i, ++index) {
+                if(index >= Items.length) break;
+                if (Items[start])
+                    elements.push(rnr(Items[index]));
+            }
+            $(#list).content(elements);
+            return {
+                morebefore: (start <=0 ? 0 : start),
+                moreafter: (Items.length - index)
+            };
+        }
+
+        $(#list).on("contentrequired", function(evt) {
+            //debug: "content", evt.data;
+            if (!Items) return false;
+            var {length, start, where} = evt.data;
+            //debug: length, start, where;
+            if (where > 0)
+                evt.data = scrollDown(start, length);
+            else if (where < 0)
+                evt.data = scrollUp(start, length);
+            else
+                evt.data = scrollTo(start, length);
+            return true;
+        });
+        getPodcast("https://feeds.megaphone.fm/ADL1860390959");
+    </script>
+</head>
+
+<body>
+    <div #list disabled></div>
+</body>
+
+</html>
