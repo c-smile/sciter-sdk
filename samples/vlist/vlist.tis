@@ -64,10 +64,10 @@ class VList : Behavior
       }
     
       if(this.first) {
-        this.first.style#margin-top = px( bsn * item_height );
+        this.first.style#margin-top = ppx( bsn * item_height );
         if(niend < records.length) {
           var extra = (records.length - niend) * item_height;
-          this.last.style#margin-bottom = px(extra);
+          this.last.style#margin-bottom = ppx(extra);
         }
       }
       this.update();
@@ -98,11 +98,11 @@ class VList : Behavior
       }
       
       if(this.first) {
-        this.first.style#margin-top = px( buffer_start * item_height );
+        this.first.style#margin-top = ppx( buffer_start * item_height );
         if(buffer_start + this.length < records.length) {
           var extra = (records.length - buffer_start - this.length) * item_height;
           if(extra > 0)
-            this.last.style#margin-bottom = px(extra);
+            this.last.style#margin-bottom = ppx(extra);
         }
       }
       this.update();
