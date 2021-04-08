@@ -583,8 +583,9 @@ const Plus = function() {
       renderList = function () {
         var node = placeholder;
         for(var (k,v) in coll)
-          if( ff(v,k,fs,thingParent) )
+          if( ff(v,k,fs,thingParent) ) {
             node = appendRepeatableItem(coll,k,v,node);
+          }
      
         node = node.nextNode;
         while( node ) {
