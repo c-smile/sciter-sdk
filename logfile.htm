@@ -10,7 +10,13 @@
       <td width="60" nowrap valign="top" align="center">Build#</td>
       <td width="78" nowrap valign="top" align="center">Date</td>
       <td align="center">Updates</td></tr>
-    <tr><td valign="top" bgcolor="#fdfff6">4.4.6.6</td><td nowrap valign="top" align="center">2021-04-08</td><td>Fixes:
+    <tr><td valign="top" bgcolor="#fdfff6">4.4.7.0</td><td nowrap valign="top" align="center">2021-04-08</td><td>Unified API: ISciterAPI uses the same structure (list of functions) on all platforms and variants (Sciter and Sciter.Lite). Functions that are not available on particular platform/variant are set to NULL.
+					<p>Note: that is breaking change for Rust/Go/Python/C# wrappers - they need to be updated.</p><p>Fixes:</p>
+					<ul><li>fix of scrollable rendering;</li>
+						<li><code>element.value = ...;</code> rollback to 4.4.5.11 state.&nbsp;</li>
+						<li>[select|dropdown] fix of first item set when @novalue is used.</li>
+						<li>[drawing] fix of <code>position:absolute</code> / <code>outline</code> drawing.</li>
+						<li><code>behavior:virtual-list;</code> fix of <a href="https://sciter.com/forums/topic/bug-scroll-indicator-not-work/">https://sciter.com/forums/topic/bug-scroll-indicator-not-work/</a>&nbsp;</li></ul></td></tr><tr><td valign="top" bgcolor="#fdfff6">4.4.6.6</td><td nowrap valign="top" align="center">2021-04-08</td><td>Fixes:
 					<ul><li>Fix of issues mentioned here: <a href="https://sciter.com/forums/topic/plussample-not-work/">https://sciter.com/forums/topic/plussample-not-work/</a>&nbsp;</li>
 						<li>[sciter] form.value = ... fix;</li>
 						<li>[scrollable] 1px off at last position;</li>

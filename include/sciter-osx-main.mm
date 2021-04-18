@@ -20,7 +20,8 @@ int main(int argc, const char * argv[])
 {
   NSApplication * application = [NSApplication sharedApplication];
   NSArray *tl;
-  [[NSBundle mainBundle] loadNibNamed:@"MainMenu" owner:application topLevelObjects:&tl];
+  auto mb = [NSBundle mainBundle];
+  [mb loadNibNamed:@"MainMenu" owner:application topLevelObjects:&tl];
   
     
   for( int i = 0; i < argc; ++i ) {
@@ -35,10 +36,10 @@ int main(int argc, const char * argv[])
     
   return uimain(message_pump);
    
-  //auto message_pump = [&]() -> int {
-  //  return NSApplicationMain(argc,argv);
-  //};
-  //return uimain(message_pump);
+  /*auto message_pump = [&]() -> int {
+    return NSApplicationMain(argc,argv);
+  };
+  return uimain(message_pump);*/
 }
 #endif
 

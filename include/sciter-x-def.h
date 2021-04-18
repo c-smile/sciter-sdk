@@ -631,12 +631,12 @@ SBOOL SCAPI SciterRenderOnDirectXTexture(HWINDOW hwnd, HELEMENT elementToRenderO
 
  SBOOL SCAPI     SciterSetHomeURL(HWINDOW hWndSciter, LPCWSTR baseUrl);
 
-#if defined(OSX) && !defined(WINDOWLESS)
+#if defined(OSX)
    HWINDOW SCAPI  SciterCreateNSView( LPRECT frame ); // returns NSView*
   typedef LPVOID SciterWindowDelegate; // Obj-C id, NSWindowDelegate and NSResponder
-#elif defined(WINDOWS) && !defined(WINDOWLESS)
+#elif defined(WINDOWS)
   typedef LRESULT SC_CALLBACK SciterWindowDelegate(HWINDOW hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LPVOID pParam, SBOOL* handled);
-#elif defined(LINUX) && !defined(WINDOWLESS)
+#elif defined(LINUX)
   typedef LPVOID SciterWindowDelegate;
 #endif
 

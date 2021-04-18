@@ -284,7 +284,7 @@ namespace sciter
 
       sciter::value message = sciter::value(L"native functor called");
 
-      auto test_functor = [=](unsigned int argc, const sciter::value* argv ) -> sciter::value { 
+      native_function_t test_functor = [=](unsigned int argc, const sciter::value* argv ) -> sciter::value {
         return message;
       };
 /*
