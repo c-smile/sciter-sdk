@@ -83,8 +83,15 @@ struct som_passport_t {
     &sciter::om::member_property<TC,decltype(TC::name),&TC::name>::getter,\
     &sciter::om::member_property<TC,decltype(TC::name),&TC::name>::setter)
 
+#define SOM_PROP_EX(ename,pname) som_property_def_t(#ename,\
+    &sciter::om::member_property<TC,decltype(TC::pname),&TC::pname>::getter,\
+    &sciter::om::member_property<TC,decltype(TC::pname),&TC::pname>::setter)
+
 #define SOM_RO_PROP(name) som_property_def_t(#name, \
     &sciter::om::member_property<TC,decltype(TC::name),&TC::name>::getter)
+
+#define SOM_RO_PROP_EX(ename,pname) som_property_def_t(#ename, \
+    &sciter::om::member_property<TC,decltype(TC::pname),&TC::pname>::getter)
 
 #define SOM_VIRTUAL_PROP(name,prop_getter,prop_setter) som_property_def_t(#name, \
     &sciter::om::member_getter_function<decltype(&TC::prop_getter)>::thunk<&TC::prop_getter>,\

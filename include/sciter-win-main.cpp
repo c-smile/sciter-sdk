@@ -68,21 +68,7 @@ namespace sciter {
     HINSTANCE hinstance() {
       return ghInstance;
     }
-
-    bool pump_messages()
-    {
-      MSG msg;
-      for (int n = 0; n < 10; ++n)
-      {
-        if (!PeekMessage(&msg, NULL, 0, 0, PM_REMOVE | PM_QS_INPUT | PM_QS_POSTMESSAGE | PM_QS_PAINT | PM_QS_SENDMESSAGE))
-          break;
-        if (msg.message == WM_QUIT)
-          return false;
-        TranslateMessage(&msg);
-        DispatchMessage(&msg);
-      }
-      return true;
-    }
+        
   }
   
   LRESULT window::on_message( HWINDOW hwnd, UINT msg, WPARAM wParam, LPARAM lParam, SBOOL& pHandled )

@@ -68,6 +68,7 @@ namespace sciter {
 
      // render frame request, false - video_destination is not available ( isn't alive, document unloaded etc.) 
      virtual bool render_frame(const BYTE* frame_data, UINT frame_data_size) = 0;
+     virtual bool render_frame_with_stride(const BYTE* frame_data, UINT frame_data_size, UINT stride) = 0;
 
   };
 

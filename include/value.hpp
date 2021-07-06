@@ -371,7 +371,7 @@
         return defv;
       }
 
-      template<typename T> T get() const { return getter(*this,static_cast<T *>(0)); }
+      template<typename T> T get() const { return getter(*this,static_cast<T *>(nullptr)); }
 
       static value from_string(const WCHAR* s, size_t len = 0, VALUE_STRING_CVT_TYPE ct = CVT_SIMPLE)
       {
@@ -725,61 +725,70 @@
       ValueNativeFunctorSet(this, native_function::invoke_impl, native_function::release_impl, pnf );
     }
 
-    // vfunc(native function) is a wrapper that produces sciter::value from native function
+    // value(native function) is a wrapper that produces sciter::value from native function
     // see uminimal sample 
+
     template<typename R> 
-    inline value vfunc( R(*func)() ) {
-      return value([func](unsigned int argc, const value* argv) -> value { R r = func(); return value(r); }); 
+    inline value setter(R(*func)()) {
+      native_function_t tf = [func](unsigned int argc, const value* argv) -> value { R r = func(); return value(r); };
+      return value(tf);
     }
+
     template<typename R, typename T1> 
-    inline value vfunc( R(*func)(T1 t1) ) {
-      return value([func](unsigned int argc, const value* argv) -> value { 
-          R r = func(argc >= 1? argv[0].get<T1>(): T1() ); 
+    inline value setter( R(*func)(T1 t1) ) {
+      native_function_t tf = [func](unsigned int argc, const value* argv) -> value {
+        R r = func(argc >= 1 ? argv[0].get<T1>() : T1());
           return value(r); 
-      }); 
+      };
+      return value(tf); 
     }
+
     template<typename R, typename T1, typename T2> 
-    inline value vfunc( R(*func)(T1 t1,T2 t2) ) {
-      return value([func](unsigned int argc, const value* argv) -> value { 
-          R r = func(argc >= 1? argv[0].get<T1>(): T1(),
-                    argc >= 2? argv[1].get<T2>(): T2() ); 
+    inline value setter( R(*func)(T1 t1,T2 t2) ) {
+      native_function_t tf = [func](unsigned int argc, const value* argv) -> value {
+        R r = func(argc >= 1 ? argv[0].get<T1>() : T1(),
+          argc >= 2 ? argv[1].get<T2>() : T2());
           return value(r); 
-      }); 
+      };
+      return value(tf); 
     }
     template<typename R, typename T1, typename T2, typename T3> 
-    inline value vfunc( R(*func)(T1 t1,T2 t2,T3 t3) ) {
-      return value([func](unsigned int argc, const value* argv) -> value { 
-          R r = func(argc >= 1? argv[0].get<T1>(): T1(),
-                    argc >= 2? argv[1].get<T2>(): T2(),
-                    argc >= 3? argv[2].get<T3>(): T3()); 
+    inline value setter( R(*func)(T1 t1,T2 t2,T3 t3) ) {
+      native_function_t tf = [func](unsigned int argc, const value* argv) -> value {
+        R r = func(argc >= 1 ? argv[0].get<T1>() : T1(),
+          argc >= 2 ? argv[1].get<T2>() : T2(),
+          argc >= 3 ? argv[2].get<T3>() : T3());
           return value(r); 
-      }); 
+      };
+      return value(tf); 
     }
     template<typename R, typename T1, typename T2, typename T3, typename T4> 
-    inline value vfunc( R(*func)(T1 t1,T2 t2,T3 t3,T4 t4) ) {
-      return value([func](unsigned int argc, const value* argv) -> value { 
+    inline value setter( R(*func)(T1 t1,T2 t2,T3 t3,T4 t4) ) {
+      native_function_t tf = [func](unsigned int argc, const value* argv) -> value { 
           R r = func(argc >= 1? argv[0].get<T1>(): T1(),
                     argc >= 2? argv[1].get<T2>(): T2(),
                     argc >= 3? argv[2].get<T3>(): T3(),
                     argc >= 4? argv[3].get<T4>(): T4()); 
           return value(r); 
-      }); 
+      }; 
+      return value(tf);
     }
 
     template<typename R, typename T1, typename T2, typename T3, typename T4, typename T5>
-    inline value vfunc( R(*func)(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5)) {
-      return value([func](unsigned int argc, const value *argv) -> value {
+    inline value setter( R(*func)(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5)) {
+      native_function_t tf = [func](unsigned int argc, const value *argv) -> value {
         R r = func(argc >= 1 ? argv[0].get<T1>() : T1(),
           argc >= 2 ? argv[1].get<T2>() : T2(),
           argc >= 3 ? argv[2].get<T3>() : T3(),
           argc >= 4 ? argv[3].get<T4>() : T4(),
           argc >= 5 ? argv[4].get<T5>() : T5());
         return value(r);
-      });
+      };
+      return value(tf);
     }
     template<typename R, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
-    inline value vfunc( R(*func)(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6)) {
-      return value([func](unsigned int argc, const value *argv) -> value {
+    inline value setter( R(*func)(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6)) {
+      native_function_t tf = [func](unsigned int argc, const value *argv) -> value {
         R r = func(argc >= 1 ? argv[0].get<T1>() : T1(),
           argc >= 2 ? argv[1].get<T2>() : T2(),
           argc >= 3 ? argv[2].get<T3>() : T3(),
@@ -787,55 +796,61 @@
           argc >= 5 ? argv[4].get<T5>() : T5(),
           argc >= 6 ? argv[5].get<T6>() : T6());
         return value(r);
-      });
+      };
+      return value(tf);
     }
-
 
     // versions of the above but for generic std::function
     template<typename R>
-      inline value vfunc( std::function<R()> func ) 
+      inline value setter( std::function<R()> func ) 
       {
-         return value([func](unsigned int argc, const value* argv) -> value { 
-            R r = func(); return value(r); 
-         }); 
+        native_function_t tf = [func](unsigned int argc, const value* argv) -> value { R r = func(); return value(r); };
+        return value(tf);
       }
 
     template<typename R,typename P0>
-      inline value vfunc( std::function<R(P0)> func )
+      inline value setter( std::function<R(P0)> func )
       {
-        return value([func](unsigned int argc, const value* argv) -> value { 
-          R r = func(argc >= 1? argv[0].get<P0>(): P0() ); 
-          return value(r); }); 
+        native_function_t tf = [func](unsigned int argc, const value* argv) -> value {
+          R r = func(argc >= 1 ? argv[0].get<P0>() : P0());
+          return value(r);
+        };
+        return value(tf);
       }
     template<typename R,typename P0,typename P1>
-      inline value vfunc( std::function<R(P0,P1)> func )
+      inline value setter( std::function<R(P0,P1)> func )
       {
-        return value([func](unsigned int argc, const value* argv) -> value { 
+        native_function_t tf = [func](unsigned int argc, const value* argv) -> value { 
           R r = func(argc >= 1? argv[0].get<P0>(): P0(),
                      argc >= 2? argv[1].get<P1>(): P1() ); 
-          return value(r); }); 
+          return value(r); 
+        };
+        return value(tf);
       }
 
     template<typename R, typename P0, typename P1, typename P2> 
-      inline value vfunc( std::function<R(P0,P1,P2)> func ) 
+      inline value setter( std::function<R(P0,P1,P2)> func )
       {
-        return value([func](unsigned int argc, const value* argv) -> value { 
+        native_function_t tf = [func](unsigned int argc, const value* argv) -> value { 
           R r = func(argc >= 1? argv[0].get<P0>(): P0(),
                     argc >= 2? argv[1].get<P1>(): P1(),
                     argc >= 3? argv[2].get<P2>(): P2()); 
-          return value(r); }); 
+          return value(r); 
+        }; 
+        return value(tf);
       }
 
     template<typename R, typename P0, typename P1, typename P2, typename P3> 
-      inline value vfunc( std::function<R(P0,P1,P2,P3)> func ) {
-        return value([func](unsigned int argc, const value* argv) -> value { 
+      inline value setter( std::function<R(P0,P1,P2,P3)> func ) {
+        native_function_t tf = [func](unsigned int argc, const value* argv) -> value { 
             R r = func(argc >= 1? argv[0].get<P0>(): P0(),
                       argc >= 2? argv[1].get<P1>(): P1(),
                       argc >= 3? argv[2].get<P2>(): P2(),
                       argc >= 4? argv[3].get<P3>(): P3()); 
-            return value(r); }); 
+            return value(r); 
+        }; 
+        return value(tf);
       }
-
 
   }
 #endif
