@@ -37,7 +37,7 @@ class Tabs : Reactor.Component {
       labels.push(<label for={name} :current={current}>{ kid[ATTS].label }</label>);
     }
     if( extSource )
-      this.post( function(){ this.$(>div).load(self.url(extSource)); } );
+      self.post( () => { this.$(>div).load(self.url(extSource)); } );
     return <tabs><stripe>{labels}</stripe><div>{tabContent}</div></tabs>;
   }
 
