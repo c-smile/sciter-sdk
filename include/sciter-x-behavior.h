@@ -500,6 +500,8 @@ typedef SBOOL SC_CALLBACK SciterBehaviorFactory( LPCSTR, HELEMENT, LPElementEven
                                      //      call sciter::video_destination::render_frame(...) as soon as they are available
                                      //      call sciter::video_destination::stop_streaming() to stop the rendering (a.k.a. end of movie reached)
 
+      VIDEO_FRAME_REQUEST = 0xD8,    // animation step, a.k.a. animation frame
+
       PAGINATION_STARTS  = 0xE0,     // behavior:pager starts pagination
       PAGINATION_PAGE    = 0xE1,     // behavior:pager paginated page no, reason -> page no
       PAGINATION_ENDS    = 0xE2,     // behavior:pager end pagination, reason -> total pages

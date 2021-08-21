@@ -505,7 +505,12 @@ inline ISciterAPI *_SAPI(ISciterAPI *ext) {
 
 
   inline ISciterAPI* SAPI() {
+#if defined(__cplusplus) && !defined(PLAIN_API_ONLY)
     static ISciterAPI* _api = _SAPI(NULL);
+#else 
+    static ISciterAPI* _api = NULL;
+    if (!_api) _api = _SAPI(NULL);
+#endif
     return _api;
   }
 
