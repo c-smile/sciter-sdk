@@ -444,15 +444,15 @@ typedef SCN_INVALIDATE_RECT *LPSCN_INVALIDATE_RECT;
  *
  **/
 
-enum SCRIPT_RUNTIME_FEATURES
+typedef enum SCRIPT_RUNTIME_FEATURES
 {
   ALLOW_FILE_IO = 0x00000001,
   ALLOW_SOCKET_IO = 0x00000002,
   ALLOW_EVAL = 0x00000004,
   ALLOW_SYSINFO = 0x00000008
-};
+} SCRIPT_RUNTIME_FEATURES;
 
-enum SCITER_RT_OPTIONS
+typedef enum SCITER_RT_OPTIONS
 {
    SCITER_SMOOTH_SCROLL = 1,      // value:TRUE - enable, value:FALSE - disable, enabled by default
    SCITER_CONNECTION_TIMEOUT = 2, // value: milliseconds, connection timeout of http client
@@ -482,7 +482,9 @@ enum SCITER_RT_OPTIONS
 
    SCITER_SET_PX_AS_DIP = 16, // value 1 - 1px in CSS is treated as 1dip, value 0 - default behavior - 1px is a physical pixel 
 
-};
+   SCITER_ENABLE_UIAUTOMATION = 17,  // hWnd - N/A , TRUE/FALSE, enables UIAutomation support. 
+
+} SCITER_RT_OPTIONS;
 
  SBOOL SCAPI SciterSetOption(HWINDOW hWnd, UINT option, UINT_PTR value );
 
@@ -601,7 +603,7 @@ SBOOL SCAPI SciterRenderOnDirectXTexture(HWINDOW hwnd, HELEMENT elementToRenderO
  *
  **/
 
- SBOOL SCAPI     SciterDWFactory(void** /*IDWriteFactory ***/ ppf);
+ SBOOL SCAPI     SciterDWFactory(IUnknown** /*IDWriteFactory ***/ ppf);
 
 #endif
 
@@ -640,7 +642,7 @@ SBOOL SCAPI SciterRenderOnDirectXTexture(HWINDOW hwnd, HELEMENT elementToRenderO
   typedef LPVOID SciterWindowDelegate;
 #endif
 
-enum SCITER_CREATE_WINDOW_FLAGS {
+typedef enum SCITER_CREATE_WINDOW_FLAGS {
    SW_CHILD      = (1 << 0), // child window only, if this flag is set all other flags ignored
    SW_TITLEBAR   = (1 << 1), // toplevel window, has titlebar
    SW_RESIZEABLE = (1 << 2), // has resizeable frame
@@ -652,7 +654,7 @@ enum SCITER_CREATE_WINDOW_FLAGS {
    SW_POPUP      = (1 << 8), // the window is created as topmost window.
    SW_ENABLE_DEBUG = (1 << 9), // make this window inspector ready
    SW_OWNS_VM      = (1 << 10), // it has its own script VM
-};
+} SCITER_CREATE_WINDOW_FLAGS;
 
 #if !defined(WINDOWLESS)
 /** Create sciter window.
@@ -681,19 +683,20 @@ enum SCITER_CREATE_WINDOW_FLAGS {
  *
  **/
 
-enum OUTPUT_SUBSYTEMS
+typedef enum OUTPUT_SUBSYTEMS
 {
    OT_DOM = 0,       // html parser & runtime
    OT_CSSS,          // csss! parser & runtime
    OT_CSS,           // css parser
    OT_TIS,           // TIS parser & runtime
-};
-enum OUTPUT_SEVERITY
+} OUTPUT_SUBSYTEMS;
+
+typedef enum OUTPUT_SEVERITY
 {
   OS_INFO,
   OS_WARNING,
   OS_ERROR,
-};
+} OUTPUT_SEVERITY;
 
 typedef VOID (SC_CALLBACK* DEBUG_OUTPUT_PROC)(LPVOID param, UINT subsystem /*OUTPUT_SUBSYTEMS*/, UINT severity, LPCWSTR text, UINT text_length);
 

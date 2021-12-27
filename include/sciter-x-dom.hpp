@@ -595,7 +595,6 @@ namespace dom
       assert( r == SCDOM_OK ); (void)r;
     }
 
-
   /**Get element UID - identifier suitable for storage.
     * \return \b UID
     **/

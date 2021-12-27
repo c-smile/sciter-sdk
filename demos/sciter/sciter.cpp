@@ -31,7 +31,7 @@ namespace sciter
 
 	  wcex.cbSize = sizeof(WNDCLASSEX);
 
-	  wcex.style			    = 0;//CS_HREDRAW | CS_VREDRAW;
+	  wcex.style			    = CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS | CS_OWNDC;
 	  wcex.lpfnWndProc	  = wnd_proc;
 	  wcex.cbClsExtra		  = 0;
 	  wcex.cbWndExtra		  = 0;

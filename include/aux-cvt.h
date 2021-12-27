@@ -533,6 +533,12 @@ namespace aux
       utf8::towcs((const BYTE*)utf8.c_str(), utf8.length() ,buffer);
     }
 
+    explicit utf2w(const aux::chars& utf8)
+    {
+      utf8::towcs((const BYTE*)utf8.start, utf8.length, buffer);
+    }
+
+
     ~utf2w() {}
 
     operator const WCHAR*() const { return buffer.data(); }

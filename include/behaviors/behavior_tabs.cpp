@@ -255,7 +255,7 @@ SAMPLE:
       dom::element tabs_el = self;
       dom::element current_tab_el = tabs_el.find_first(":root>.strip>[panel]:current");
       if (current_tab_el)
-        current_tab_el.get_attribute("panel");
+        return current_tab_el.get_attribute("panel");
       return sciter::string();
     }
 

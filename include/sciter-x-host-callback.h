@@ -253,6 +253,18 @@ namespace sciter
         return call_function(name,4,argv);
       }
 
+      SCITER_VALUE  eval(aux::wchars script) {
+        HWINDOW hwnd = static_cast<BASE*>(this)->get_hwnd();
+        SCITER_VALUE rv;
+        if(!SciterEval(hwnd, script.start, script.length, &rv))
+          throw sciter::script_error("eval() error");
+        return rv;
+      }
+
+      SCITER_VALUE  eval(aux::chars script) {
+        return eval(u2w(script).chars());
+      }
+
       // will post or send custom event to all windows in this GUI thread
       // To subscribe on such events use this in JS:
       //   Window.this.on("event-name",function(evt) {

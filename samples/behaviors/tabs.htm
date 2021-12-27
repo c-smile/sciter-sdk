@@ -147,11 +147,11 @@
 </style>
 
 <script type="text/tiscript">
-      
-  function Tabs() 
-  {
-    this.subscribe("expand", "[panel]", :: stdout.println("expanded", this.attributes["panel"]));
+
+  event expand $(.tabs) (evt, elTabs) {
+    debug expanded: elTabs, elTabs.tabs.current;
   }
+      
   
 </script>
 

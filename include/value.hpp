@@ -96,6 +96,7 @@
 
       value( bool v )           { ValueInit(this); ValueIntDataSet(this, v?1:0, T_BOOL, 0); }
       value( int  v )           { ValueInit(this); ValueIntDataSet(this, v, T_INT, 0); }
+      value( long v)            { ValueInit(this); ValueIntDataSet(this, INT(v), T_INT, 0); }
       value( unsigned int v )   { ValueInit(this); ValueIntDataSet(this, int(v), T_INT, 0); }
       value( double v )         { ValueInit(this); ValueFloatDataSet(this, v, T_FLOAT, 0); }
       value( float v )          { ValueInit(this); ValueFloatDataSet(this, v, T_FLOAT, 0); }

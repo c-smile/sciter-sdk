@@ -313,7 +313,7 @@ SCDOM_RESULT SCAPI SciterSetStyleAttribute(HELEMENT he, LPCSTR name, LPCWSTR val
  * \return \b #SCDOM_RESULT SCAPI
  **/
 
-enum ELEMENT_AREAS
+typedef enum ELEMENT_AREAS
 {
   ROOT_RELATIVE = 0x01,       // - or this flag if you want to get Sciter window relative coordinates,
                               //   otherwise it will use nearest windowed container e.g. popup window.
@@ -332,15 +332,15 @@ enum ELEMENT_AREAS
 
   SCROLLABLE_AREA = 0x60,   // scroll_area - scrollable area in content box
 
-};
+} ELEMENT_AREAS;
 
 SCDOM_RESULT SCAPI SciterGetElementLocation(HELEMENT he, LPRECT p_location, UINT areas /*ELEMENT_AREAS*/);
 
-enum SCITER_SCROLL_FLAGS
+typedef enum SCITER_SCROLL_FLAGS
 {
   SCROLL_TO_TOP = 0x01,
   SCROLL_SMOOTH = 0x10,
-};
+} SCITER_SCROLL_FLAGS;
 
 /*Scroll to view.
  * \param[in] he \b #HELEMENT
@@ -456,7 +456,7 @@ SCDOM_RESULT SCAPI SciterSelectParentW(
           /*out*/ HELEMENT* heFound);
 
 
-enum SET_ELEMENT_HTML
+typedef enum SET_ELEMENT_HTML
 {
   SIH_REPLACE_CONTENT     = 0,
   SIH_INSERT_AT_START     = 1,
@@ -464,7 +464,7 @@ enum SET_ELEMENT_HTML
   SOH_REPLACE             = 3,
   SOH_INSERT_BEFORE       = 4,
   SOH_INSERT_AFTER        = 5
-};
+} SET_ELEMENT_HTML;
 
 /**Set inner or outer html of the element.
  * \param[in] he \b #HELEMENT
@@ -558,7 +558,7 @@ SCDOM_RESULT SCAPI SciterHidePopup(HELEMENT he);
 typedef SBOOL SC_CALLBACK ElementEventProc(LPVOID tag, HELEMENT he, UINT evtg, LPVOID prms );
 typedef ElementEventProc* LPELEMENT_EVENT_PROC;
 
-enum ELEMENT_STATE_BITS
+typedef enum ELEMENT_STATE_BITS
 {
    STATE_LINK             = 0x00000001,  // :link pseudo-class in CSS
    STATE_HOVER            = 0x00000002,  // :hover pseudo-class in CSS
@@ -596,7 +596,7 @@ enum ELEMENT_STATE_BITS
    STATE_IS_LTR           = 0x10000000,  // the element or one of its containers has dir=ltr declared
    STATE_IS_RTL           = 0x20000000,  // the element or one of its containers has dir=rtl declared
 
-};
+} ELEMENT_STATE_BITS;
 
   /** Get/set state bits, stateBits*** accept or'ed values above
    **/
@@ -736,13 +736,13 @@ SCDOM_RESULT SCAPI SciterRequestElementData(
  *
  **/
 
-enum REQUEST_TYPE
+typedef enum REQUEST_TYPE
 {
   GET_ASYNC,  // async GET
   POST_ASYNC, // async POST
   GET_SYNC,   // synchronous GET
   POST_SYNC   // synchronous POST
-};
+} REQUEST_TYPE;
 
 //struct REQUEST_PARAM { LPCWSTR name; LPCWSTR value; };
 
