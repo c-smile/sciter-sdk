@@ -1,3 +1,13 @@
+# NOTE: Sciter.TIS development has stopped. 
+
+## This version of Sciter uses TIScript language as a language-behind-the-UI. 
+
+## Development of this branch wsas stopped in favour of Sciter.JS.
+
+Sciter.JS uses modern JavaScript (ES2020) instead of TIScript.
+
+## Please visit [Sciter.JS SDK](https://gitlab.com/c-smile/sciter-js-sdk/) 
+
 # sciter-sdk
 Sciter is an embeddable HTML/CSS/scripting engine, Windows, Mac OSX and Linux.
 
